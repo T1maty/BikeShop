@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BikeShop.Workspace.Application\BikeShop.Workspace.Application.csproj" />
+      <ProjectReference Include="..\BikeShop.Workspace.Domain\BikeShop.Workspace.Domain.csproj" />
+      <ProjectReference Include="..\BikeShop.Workspace.Persistence\BikeShop.Workspace.Persistence.csproj" />
+    </ItemGroup>
+
+</Project>
