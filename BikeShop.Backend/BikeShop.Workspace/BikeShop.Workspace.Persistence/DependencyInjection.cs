@@ -1,4 +1,5 @@
 ﻿using BikeShop.Workspace.Application.Interfaces;
+using BikeShop.Workspace.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +24,9 @@ public static class DependencyInjection
         // Инжектнул ранее созданный сервис дб контекста
         services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetService<ApplicationDbContext>());
+
+        // Инжект универсального репозитория
+        services.AddScoped(typeof(IRepository<>), typeof(EfCoreRepository<>));
 
         return services;
     }

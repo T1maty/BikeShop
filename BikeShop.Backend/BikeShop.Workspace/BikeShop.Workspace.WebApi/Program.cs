@@ -2,6 +2,7 @@ using System.Reflection;
 using BikeShop.Workspace.Application;
 using BikeShop.Workspace.Application.Common.Mappings;
 using BikeShop.Workspace.Application.Interfaces;
+using BikeShop.Workspace.Domain.Entities;
 using BikeShop.Workspace.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +49,9 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () =>
+{
+
+});
 
 app.Run();
