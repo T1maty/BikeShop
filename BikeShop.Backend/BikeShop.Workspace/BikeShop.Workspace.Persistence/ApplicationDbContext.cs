@@ -14,6 +14,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // apply configuration ...
+        // todo apply configuration ...
     }
 }

@@ -11,10 +11,14 @@ public static class DependencyInjection
         // inject db context
         
         // todo json config load
-        string connectionString =
-            "Host=localhost;Port=5432;Database=usersdb;Username=postgres;Password=54321";
+        // string connectionString =
+        //     "Host=localhost;Port=5432;Database=usersdb;Username=postgres;Password=54321";
 
-        services.AddDbContext<ApplicationDbContext>(options => { options.UseNpgsql(connectionString); });
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            //options.UseNpgsql(connectionString);
+            options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BikeShopDB;Trusted_Connection=True;");
+        });
 
         // Инжектнул ранее созданный сервис дб контекста
         services.AddScoped<IApplicationDbContext>(provider =>
