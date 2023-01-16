@@ -10,7 +10,12 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Shop> Shops { get; set; }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    {
+        // Позволяет не конвертировать время в UTC для postgresql
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

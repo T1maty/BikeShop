@@ -7,6 +7,8 @@ using BikeShop.Workspace.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+
 // Инъекция сервисов из слоя Application и Persistence
 builder.Services.AddApplication();
 builder.Services.AddPersistence();
@@ -48,10 +50,6 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
-
-app.MapGet("/", () =>
-{
-
-});
+app.MapControllers();
 
 app.Run();

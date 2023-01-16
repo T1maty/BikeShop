@@ -30,6 +30,11 @@ public class EfCoreRepository<TEntity> : IRepository<TEntity>
         return entity;
     }
 
+    public async Task<int> Save(CancellationToken cancellationToken)
+    {
+        return await _context.SaveChangesAsync(cancellationToken);
+    }
+
     // Получение одной сущности по айди, при ненаходе возвращает null
     public async Task<TEntity?> Get(int id)
     {
