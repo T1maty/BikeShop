@@ -10,6 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication();
 builder.Services.AddPersistence();
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    // Доступ ко всем клиентам
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowAnyOrigin();
+    });
+});
+
 // Инжект конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>
 {
@@ -32,6 +44,9 @@ catch (Exception ex)
 
 
 var app = builder.Build();
+
+app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
 app.MapGet("/", () => "Hello World!");
 
