@@ -17,8 +17,8 @@ public class Work : BaseEntity
     // Группа работ, к которой принадлежит эта услуга
     public int WorkGroupId { get; set; }
     [JsonIgnore] public WorkGroup WorkGroup { get; set; }
-    
+
     // Валюта, за которую будет проходить операция
     public int CurrencyId { get; set; }
-    public Currency Currency { get; set; }
+    [JsonIgnore] public Currency Currency { get; set; }
 }
