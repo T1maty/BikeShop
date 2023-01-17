@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<CurrencyHistory> CurrencyHistories { get; set; }
     public DbSet<WorkGroup> WorkGroups { get; set; }
     public DbSet<Work> Works { get; set; }
-
+    
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         // Позволяет не конвертировать время в UTC для postgresql

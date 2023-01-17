@@ -3,4 +3,5 @@
 public class Shop : BaseEntity
 {
     // todo
+    public string Name { get; set; }
 }

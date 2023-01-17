@@ -9,6 +9,5 @@ public static class DbInitializer
     {
         // Создает базу, если её не существует
         context.Database.EnsureCreated();
-        
     }
 }
