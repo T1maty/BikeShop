@@ -52,10 +52,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
             Patronymic = request.Patronymic,
             Phone = request.Phone,
             RoleId = defaultUserRole.Id,
-
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
-            Enabled = true
         };
 
         // Добавляю пользователя в базу и сохраняю
