@@ -1,4 +1,5 @@
 ﻿using BikeShop.Workspace.Application.Interfaces;
+using BikeShop.Workspace.Application.Services;
 using BikeShop.Workspace.Domain.Entities;
 using MediatR;
 
@@ -7,13 +8,13 @@ namespace BikeShop.Workspace.Application.CQRS.Commands.CreateUser;
 // Создание нового пользователя в базе, автоматически выдает стандартную роль user
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
 {
-    private readonly IRepository<User> _usersRepository;
-    private readonly IRepository<UserRole> _userRolesRepository;
+    private readonly IApplicationDbContext _context;
+    private readonly UserService _userService;
 
-    public CreateUserCommandHandler(IRepository<User> usersRepository, IRepository<UserRole> userRolesRepository)
+    public CreateUserCommandHandler(IApplicationDbContext context, UserService userService)
     {
-        _usersRepository = usersRepository;
-        _userRolesRepository = userRolesRepository;
+        _context = context;
+        _userService = userService;
     }
 
     public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
