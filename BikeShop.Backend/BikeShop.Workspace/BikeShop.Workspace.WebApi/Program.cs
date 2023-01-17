@@ -1,11 +1,20 @@
 using System.Reflection;
 using BikeShop.Workspace.Application;
+using BikeShop.Workspace.Application.Common.Configurations;
 using BikeShop.Workspace.Application.Common.Mappings;
 using BikeShop.Workspace.Application.Interfaces;
-using BikeShop.Workspace.Domain.Entities;
 using BikeShop.Workspace.Persistence;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Инжект кастомных классов конфигураций. Должен стоять до инжектов слоев Application и Persistence
+
+// Привязка класса ConnectionConfiguration к разделу ConnectionString в appsettings
+builder.Services.Configure<ConnectionConfiguration>(builder.Configuration.GetSection("ConnectionStrings"));
+builder.Services.AddSingleton(resolver =>
+    resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
+
 
 builder.Services.AddControllers();
 
@@ -24,6 +33,7 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin();
     });
 });
+
 
 // Инжект конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>

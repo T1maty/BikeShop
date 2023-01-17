@@ -17,10 +17,10 @@ public class TempController : ControllerBase
 
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetUser(int id)
+    [HttpGet]
+    public async Task<IActionResult> GetUser()
     {
-        return Ok(await _userRepository.Get(id));
+        return Ok("Hello world");
     }
 
     [HttpPost]

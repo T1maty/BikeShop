@@ -1,4 +1,5 @@
-﻿using BikeShop.Workspace.Application.Interfaces;
+﻿using BikeShop.Workspace.Application.Common.Configurations;
+using BikeShop.Workspace.Application.Interfaces;
 using BikeShop.Workspace.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,19 +10,17 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
-        // inject db context
-        
-        // todo json config load
-        string connectionString =
-             "Host=localhost;Port=5432;Database=bikeshop;Username=postgres;Password=master";
+        // Получаю сущность ConnectionConfiguration из сервисов
+        var scope = services.BuildServiceProvider().CreateScope();
+        var connectionConfiguration = scope.ServiceProvider.GetService<ConnectionConfiguration>();
 
+        // Инжект DbContext-а
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(connectionString);
-            //options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BikeShopDB;Trusted_Connection=True;");
+            options.UseNpgsql(connectionConfiguration.PostgreSQL);
         });
 
-        // Инжектнул ранее созданный сервис дб контекста
+        // Связал интерфейс контекста с ранее созданным сервисом на классе 
         services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetService<ApplicationDbContext>());
 
