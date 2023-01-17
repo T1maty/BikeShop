@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json;
 using BikeShop.Workspace.Application;
 using BikeShop.Workspace.Application.Common.Configurations;
 using BikeShop.Workspace.Application.Common.Mappings;
@@ -16,7 +17,15 @@ builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
 
 
-builder.Services.AddControllers();
+// Подключение контроллеров, так же настройка именования JSON данных
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // Чтобы выходные JSON-ключи были с маленькой буквы
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    });
+
 
 // Инъекция сервисов из слоя Application и Persistence
 builder.Services.AddApplication();
