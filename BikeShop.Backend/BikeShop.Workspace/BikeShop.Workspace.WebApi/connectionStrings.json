@@ -1,5 +1,0 @@
-﻿{
-  "ConnectionStrings" : {
-    "Postgres" : "host=postgres17.1gb.ua;port=5432;database=xgbua_bikeshopdb;user id=xgbua_bikeshopdb;password=8zfe69b989a"
-  }
-}
