@@ -16,6 +16,11 @@ builder.Services.Configure<ConnectionConfiguration>(builder.Configuration.GetSec
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
 
+// Привязка класса RoleConfiguration к разделу DefaultRoles в appsettings
+builder.Services.Configure<RoleConfiguration>(builder.Configuration.GetSection("DefaultRoles"));
+builder.Services.AddSingleton(resolver =>
+    resolver.GetRequiredService<IOptions<RoleConfiguration>>().Value);
+
 
 // Подключение контроллеров, так же настройка именования JSON данных
 builder.Services.AddControllers()
