@@ -1,13 +1,36 @@
 using System.Reflection;
+using System.Text.Json;
 using BikeShop.Workspace.Application;
+using BikeShop.Workspace.Application.Common.Configurations;
 using BikeShop.Workspace.Application.Common.Mappings;
 using BikeShop.Workspace.Application.Interfaces;
-using BikeShop.Workspace.Domain.Entities;
 using BikeShop.Workspace.Persistence;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// Инжект кастомных классов конфигураций. Должен стоять до инжектов слоев Application и Persistence
+
+// Привязка класса ConnectionConfiguration к разделу ConnectionString в appsettings
+builder.Services.Configure<ConnectionConfiguration>(builder.Configuration.GetSection("ConnectionStrings"));
+builder.Services.AddSingleton(resolver =>
+    resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
+
+// Привязка класса RoleConfiguration к разделу DefaultRoles в appsettings
+builder.Services.Configure<RoleConfiguration>(builder.Configuration.GetSection("DefaultRoles"));
+builder.Services.AddSingleton(resolver =>
+    resolver.GetRequiredService<IOptions<RoleConfiguration>>().Value);
+
+
+// Подключение контроллеров, так же настройка именования JSON данных
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // Чтобы выходные JSON-ключи были с маленькой буквы
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    });
+
 
 // Инъекция сервисов из слоя Application и Persistence
 builder.Services.AddApplication();
@@ -24,6 +47,7 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin();
     });
 });
+
 
 // Инжект конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>
