@@ -9,14 +9,6 @@ public static class DbInitializer
     {
         // Создает базу, если её не существует
         context.Database.EnsureCreated();
-
-        // // Создает роли по умолчанию, если их нет
-        // if (!context.UserRoles.Any())
-        // {
-        //     context.UserRoles.Add(new UserRole()
-        //     {
-
-        //     })
-        // }
+        
     }
 }

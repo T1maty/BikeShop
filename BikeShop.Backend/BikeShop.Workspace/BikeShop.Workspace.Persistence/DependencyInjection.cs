@@ -16,7 +16,7 @@ public static class DependencyInjection
         // Инжект DbContext-а
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(connectionConfiguration.PostgreSQL);
+            options.UseNpgsql(connectionConfiguration.Postgres);
         });
 
         // Связал интерфейс контекста с ранее созданным сервисом на классе 

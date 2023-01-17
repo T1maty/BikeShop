@@ -2,5 +2,5 @@
 
 public class ConnectionConfiguration
 {
-    public string PostgreSQL { get; set; }
+    public string Postgres { get; set; }
 }
