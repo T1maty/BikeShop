@@ -16,13 +16,14 @@ builder.Configuration.AddJsonFile("connectionStrings.json");
 
 // Привязка класса ConnectionConfiguration к разделу ConnectionString в appsettings
 builder.Services.Configure<ConnectionConfiguration>(builder.Configuration.GetSection("ConnectionStrings"));
+
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
 
-// Привязка класса RoleConfiguration к разделу DefaultRoles в appsettings
-builder.Services.Configure<RoleConfiguration>(builder.Configuration.GetSection("DefaultRoles"));
+// Привязка класса DefaultValuesConfiguration к разделу DefaultValues в appsettings
+builder.Services.Configure<DefaultValuesConfiguration>(builder.Configuration.GetSection("DefaultValues"));
 builder.Services.AddSingleton(resolver =>
-    resolver.GetRequiredService<IOptions<RoleConfiguration>>().Value);
+    resolver.GetRequiredService<IOptions<DefaultValuesConfiguration>>().Value);
 
 
 // Подключение контроллеров, так же настройка именования JSON данных
@@ -64,9 +65,9 @@ try
 {
     var scope = builder.Services.BuildServiceProvider().CreateScope();
     var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-    var config = scope.ServiceProvider.GetService<ConnectionConfiguration>();
-    Console.WriteLine(config.Postgres);
-    DbInitializer.Initialize(context);
+    var defaultConfiguration = scope.ServiceProvider.GetService<DefaultValuesConfiguration>();
+
+    DbInitializer.Initialize(context, defaultConfiguration);
 }
 catch (Exception ex)
 {
