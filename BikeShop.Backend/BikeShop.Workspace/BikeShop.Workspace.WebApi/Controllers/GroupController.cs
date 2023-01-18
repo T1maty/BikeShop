@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using BikeShop.Workspace.Application.CQRS.Commands.Work.UpdateWork;
 using BikeShop.Workspace.Application.CQRS.Commands.WorkGroup.CreateWorkGroup;
+using BikeShop.Workspace.Application.CQRS.Commands.WorkGroup.UpdateWorkGroup;
 using BikeShop.Workspace.Application.CQRS.Queries.WorkGroup.GetWorkGroupByShopId;
 using BikeShop.Workspace.WebApi.Models.WorkGroup;
 using MediatR;
@@ -32,19 +34,35 @@ public class GroupController : ControllerBase
 
         return Ok(result);
     }
-    
+
     // Создание группы услуг
     [HttpPost("create")]
-    public async Task<IActionResult> CreateWorkGroup(CreateWorkGroupModel model)
+    public async Task<IActionResult> CreateWorkGroup([FromBody] CreateWorkGroupModel model)
     {
         // Если не валидная модель
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
-        
+
         // Маплю модель в cqrs команду
         var command = _mapper.Map<CreateWorkGroupCommand>(model);
 
         // Кидаю команду на добавление на исполнение
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> UpdateWorkGroup([FromBody] UpdateWorkGroupModel model)
+    {
+        // Проверяю модель на валидность
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(model);
+
+        // Модель в cqrs команду
+        var command = _mapper.Map<UpdateWorkGroupCommand>(model);
+
+        // Отправляю на исполнение
         await _mediator.Send(command);
 
         return Ok();
