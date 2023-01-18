@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BikeShop.Workspace.Application.CQRS.Commands.Work.GetWorksByGroupId;
+namespace BikeShop.Workspace.Application.CQRS.Queries.GetWorksByGroupId;
 
 // Получение всех услуг по айди группы услуг
 public class GetWorkByGroupIdQueryHandler : IRequestHandler<GetWorksByGroupIdQuery, WorkListModel>

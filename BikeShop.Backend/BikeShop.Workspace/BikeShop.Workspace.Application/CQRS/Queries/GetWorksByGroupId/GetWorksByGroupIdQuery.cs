@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace BikeShop.Workspace.Application.CQRS.Commands.Work.GetWorksByGroupId;
+namespace BikeShop.Workspace.Application.CQRS.Queries.GetWorksByGroupId;
 
 // Получение всех услуг по айди группы работ
 public class GetWorksByGroupIdQuery : IRequest<WorkListModel>

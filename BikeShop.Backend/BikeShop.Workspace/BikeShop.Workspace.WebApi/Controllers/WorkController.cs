@@ -1,4 +1,4 @@
-﻿using BikeShop.Workspace.Application.CQRS.Commands.Work.GetWorksByGroupId;
+﻿using BikeShop.Workspace.Application.CQRS.Queries.GetWorksByGroupId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
