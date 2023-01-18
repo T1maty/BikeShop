@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using BikeShop.Workspace.Application.Common.Exceptions;
+﻿using BikeShop.Workspace.Application.Common.Exceptions;
 using BikeShop.Workspace.Application.Interfaces;
 using BikeShop.Workspace.Domain.Entities;
 using MediatR;
@@ -19,9 +18,6 @@ public class CreateWorkGroupCommandHandler : IRequestHandler<CreateWorkGroupComm
 
     public async Task<Unit> Handle(CreateWorkGroupCommand request, CancellationToken cancellationToken)
     {
-        Console.WriteLine("COMMAND");
-        Console.WriteLine(JsonSerializer.Serialize(request));
-        
         // Получаю магазин по указанному айди
         var existingShop = await _context.Shops
             .FirstOrDefaultAsync(shop => shop.Id == request.ShopId,

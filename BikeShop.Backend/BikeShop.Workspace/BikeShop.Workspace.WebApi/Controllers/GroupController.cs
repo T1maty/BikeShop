@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using AutoMapper;
+﻿using AutoMapper;
 using BikeShop.Workspace.Application.CQRS.Commands.WorkGroup.CreateWorkGroup;
 using BikeShop.Workspace.Application.CQRS.Queries.WorkGroup.GetWorkGroupByShopId;
 using BikeShop.Workspace.WebApi.Models.WorkGroup;
@@ -38,9 +37,6 @@ public class GroupController : ControllerBase
     [HttpPost("create")]
     public async Task<IActionResult> CreateWorkGroup(CreateWorkGroupModel model)
     {
-        Console.WriteLine("MODEL");
-        Console.WriteLine(JsonSerializer.Serialize(model));
-        
         // Если не валидная модель
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);

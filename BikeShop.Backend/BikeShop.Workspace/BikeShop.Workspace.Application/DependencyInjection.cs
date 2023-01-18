@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using BikeShop.Workspace.Application.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,8 +12,8 @@ public static class DependencyInjection
         services.AddMediatR(Assembly.GetExecutingAssembly());
         
         // Инжект кастомных сервисов
-        services.AddScoped<UserRoleService>();
-        services.AddScoped<UserService>();
+        // services.AddScoped<UserRoleService>();
+        // services.AddScoped<UserService>();
 
         return services;
     }
