@@ -18,8 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="CQRS\Commands\Work" />
-      <Folder Include="CQRS\Queries" />
+      <Folder Include="CQRS\Queries\Work" />
     </ItemGroup>
 
 </Project>

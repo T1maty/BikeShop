@@ -1,4 +1,4 @@
-﻿namespace BikeShop.Workspace.Application.CQRS.Queries.GetWorksByGroupId;
+﻿namespace BikeShop.Workspace.Application.CQRS.Queries.Work.GetWorksByGroupId;
 
 public class WorkListModel
 {
