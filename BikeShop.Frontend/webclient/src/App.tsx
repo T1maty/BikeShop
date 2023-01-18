@@ -1,9 +1,9 @@
-import {Button} from "@mui/material";
+import React from 'react';
 
 function App() {
   return (
     <div>
-      <Button>Hello World!</Button>
+      Hello World!
     </div>
   );
 }
