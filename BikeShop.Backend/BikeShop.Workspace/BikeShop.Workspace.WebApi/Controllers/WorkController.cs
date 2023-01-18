@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BikeShop.Workspace.Application.CQRS.Commands.Work.CreateWork;
+using BikeShop.Workspace.Application.CQRS.Commands.Work.UpdateWork;
 using BikeShop.Workspace.Application.CQRS.Queries.Work.GetWorksByGroupId;
 using BikeShop.Workspace.WebApi.Models.Work;
 using MediatR;
@@ -35,12 +36,29 @@ public class WorkController : ControllerBase
         // Если модель невалидная - возвращаю ошибку о невалидности
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
-        
+
         // Маплю модель на cqrs команду
         var createWorkCommand = _mapper.Map<CreateWorkCommand>(model);
 
         // Отправляю команду на исполнение
         await _mediator.Send(createWorkCommand);
+
+        // Если дожило до этого момента - все ок
+        return Ok();
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> UpdateWork([FromBody] UpdateWorkModel model)
+    {
+        // Если модель невалидная - возвращаю ошибку о невалидности
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+
+        // Маплю модель на cqrs команду
+        var updateWorkCommand = _mapper.Map<UpdateWorkCommand>(model);
+
+        // Отправляю команду на исполнение
+        await _mediator.Send(updateWorkCommand);
 
         // Если дожило до этого момента - все ок
         return Ok();
