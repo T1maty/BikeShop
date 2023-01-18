@@ -19,7 +19,8 @@ public static class DbInitializer
             context.Currencies.Add(new Currency
             {
                 Name = configuration.DefaultCurrency,
-                Coefficient = 1
+                Coefficient = 1,
+                IsBaseCurrency = true
             });
 
         // Создание стандартных ролей
