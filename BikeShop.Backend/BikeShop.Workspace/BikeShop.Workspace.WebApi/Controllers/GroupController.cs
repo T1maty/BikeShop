@@ -1,5 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
+using BikeShop.Workspace.Application.CQRS.Commands.WorkGroup.CreateWorkGroup;
 using BikeShop.Workspace.Application.CQRS.Queries.WorkGroup.GetWorkGroupByShopId;
+using BikeShop.Workspace.WebApi.Models.WorkGroup;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,5 +32,25 @@ public class GroupController : ControllerBase
         var result = await _mediator.Send(query);
 
         return Ok(result);
+    }
+    
+    // Создание группы услуг
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateWorkGroup(CreateWorkGroupModel model)
+    {
+        Console.WriteLine("MODEL");
+        Console.WriteLine(JsonSerializer.Serialize(model));
+        
+        // Если не валидная модель
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+        
+        // Маплю модель в cqrs команду
+        var command = _mapper.Map<CreateWorkGroupCommand>(model);
+
+        // Кидаю команду на добавление на исполнение
+        await _mediator.Send(command);
+
+        return Ok();
     }
 }
