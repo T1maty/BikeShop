@@ -22,7 +22,19 @@ public class GroupController : ControllerBase
         _mediator = mediator;
     }
 
-    // Получение групп услуг по айди магазина
+    /// <summary>
+    /// Получение всех групп услуг у указанного магазина
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Пример запроса:
+    /// GET /group/getbyshopid/1
+    /// </remarks>
+    /// 
+    /// <param name="id">ID магазина</param>
+    /// <returns>Возвращает модель, хранящую массив со всеми группами услуг в магазине</returns>
+    ///
+    /// <response code="200">Успех. Возвращает массив групп услуг.</response>
     [HttpGet("getbyshopid/{id:int}")]
     public async Task<ActionResult<WorkGroupListModel>> GetWorkGroupsByShopId(int id)
     {
@@ -35,7 +47,27 @@ public class GroupController : ControllerBase
         return Ok(result);
     }
 
-    // Создание группы услуг
+    /// <summary>
+    /// Создание группы услуг в магазине
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Пример запроса:
+    /// <code>
+    /// POST /group/create
+    /// {
+    ///     name : "Замена частей",
+    ///     parentId : 0,
+    ///     shopId: 3
+    ///     isCollapsed: false
+    /// }
+    /// </code>
+    /// </remarks>
+    /// 
+    /// <param name="model">CreateWorkGroupModel (модель создания группы услуг)</param>
+    /// <returns>Ничего</returns>
+    ///
+    /// <response code="200">Успех</response>
     [HttpPost("create")]
     public async Task<IActionResult> CreateWorkGroup([FromBody] CreateWorkGroupModel model)
     {
@@ -52,6 +84,28 @@ public class GroupController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Создание группы услуг в магазине
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Пример запроса:
+    /// <code>
+    /// PUT /group/update
+    /// {
+    ///     id: 3
+    ///     name : "Замена частей",
+    ///     parentId : 0,
+    ///     shopId: 3
+    ///     isCollapsed: false
+    /// }
+    /// </code>
+    /// </remarks>
+    /// 
+    /// <param name="model">UpdateWorkGroupModel (модель обновления группы услуг)</param>
+    /// <returns>Ничего</returns>
+    ///
+    /// <response code="200">Успех</response>
     [HttpPut("update")]
     public async Task<IActionResult> UpdateWorkGroup([FromBody] UpdateWorkGroupModel model)
     {

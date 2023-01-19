@@ -62,10 +62,6 @@ public class WorkController : ControllerBase
     /// }
     /// </code>
     /// </remarks>
-    ///
-    /// <remarks>
-    /// Поле description не обязательное
-    /// </remarks>
     /// 
     /// <param name="model">CreateWorkModel (модель создания услуги)</param>
     /// <returns>Ничего</returns>
@@ -88,6 +84,29 @@ public class WorkController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Обновление услуги в группе услуг
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Пример запроса:
+    /// <code>
+    /// PUT /work/create
+    /// {
+    ///     id: 2,
+    ///     name : "Замена подшипников",
+    ///     description : "Покупка и замена подшипников руля" (не обязательное поле),
+    ///     price : 265,
+    ///     currencyId : 1,
+    ///     groupId : 3
+    /// }
+    /// </code>
+    /// </remarks>
+    /// 
+    /// <param name="model">UpdateWorkModel (модель обновления услуги)</param>
+    /// <returns>Ничего</returns>
+    ///
+    /// <response code="200">Успех</response>
     [HttpPut("update")]
     public async Task<IActionResult> UpdateWork([FromBody] UpdateWorkModel model)
     {
