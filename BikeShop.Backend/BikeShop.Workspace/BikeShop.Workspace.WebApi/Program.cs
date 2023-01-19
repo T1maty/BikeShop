@@ -16,7 +16,6 @@ builder.Configuration.AddJsonFile("connectionStrings.json");
 
 // Привязка класса ConnectionConfiguration к разделу ConnectionString в appsettings
 builder.Services.Configure<ConnectionConfiguration>(builder.Configuration.GetSection("ConnectionStrings"));
-
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
 
@@ -52,6 +51,15 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Swagger
+builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    // Включаю хml комментарии и путь к ним
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    config.IncludeXmlComments(xmlPath);
+});
 
 // Инжект конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>
@@ -77,6 +85,15 @@ catch (Exception ex)
 
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI(config =>
+{
+    // get to swagger UI using root uri
+    config.RoutePrefix = string.Empty;
+
+    config.SwaggerEndpoint("swagger/v1/swagger.json", "Bikeshop.Workspace API");
+});
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
