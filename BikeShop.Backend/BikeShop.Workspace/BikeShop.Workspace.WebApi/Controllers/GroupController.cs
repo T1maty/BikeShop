@@ -36,6 +36,7 @@ public class GroupController : ControllerBase
     ///
     /// <response code="200">Успех. Возвращает массив групп услуг.</response>
     [HttpGet("getbyshopid/{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WorkGroupListModel>> GetWorkGroupsByShopId(int id)
     {
         // Создаю запрос
@@ -69,6 +70,7 @@ public class GroupController : ControllerBase
     ///
     /// <response code="200">Успех</response>
     [HttpPost("create")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> CreateWorkGroup([FromBody] CreateWorkGroupModel model)
     {
         // Если не валидная модель
@@ -107,6 +109,7 @@ public class GroupController : ControllerBase
     ///
     /// <response code="200">Успех</response>
     [HttpPut("update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateWorkGroup([FromBody] UpdateWorkGroupModel model)
     {
         // Проверяю модель на валидность

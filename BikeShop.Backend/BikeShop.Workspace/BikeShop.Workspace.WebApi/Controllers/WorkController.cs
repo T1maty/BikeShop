@@ -35,8 +35,8 @@ public class WorkController : ControllerBase
     /// <returns>Возвращает модель, хранящую массив со всеми услугами касающихся указанной группы услуг</returns>
     ///
     /// <response code="200">Успех. Возвращает массив услуг</response>
-    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet("getbygroupid/{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WorkListModel>> GetWorksByGroupId(int id)
     {
         var query = new GetWorksByGroupIdQuery { GroupId = id };
@@ -68,6 +68,7 @@ public class WorkController : ControllerBase
     ///
     /// <response code="200">Успех</response>
     [HttpPost("create")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> CreateWork([FromBody] CreateWorkModel model)
     {
         // Если модель невалидная - возвращаю ошибку о невалидности
@@ -108,6 +109,7 @@ public class WorkController : ControllerBase
     ///
     /// <response code="200">Успех</response>
     [HttpPut("update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateWork([FromBody] UpdateWorkModel model)
     {
         // Если модель невалидная - возвращаю ошибку о невалидности
