@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BikeShop.Identity.Application\BikeShop.Identity.Application.csproj" />
+      <ProjectReference Include="..\BikeShop.Identity.Domain\BikeShop.Identity.Domain.csproj" />
+      <ProjectReference Include="..\BikeShop.Identity.Persistence\BikeShop.Identity.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="IdentityServer4" Version="4.1.2" />
+      <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
+      <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
+    </ItemGroup>
+
+</Project>

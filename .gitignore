@@ -483,3 +483,6 @@ $RECYCLE.BIN/
 # temp db files
 *.db-shm
 *.db-wal
+
+connectionStrings.json
+/connectionStrings.json
