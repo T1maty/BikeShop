@@ -52,10 +52,7 @@ public static class IdentityConfiguration
                 {
                     "http://.../signin-oidc"
                 },
-                AllowedCorsOrigins =
-                {
-                    "http://..."
-                },
+               
                 PostLogoutRedirectUris =
                 {
                     "http://.../signout-oidc"

@@ -27,7 +27,6 @@ builder.Services.AddIdentityServer()
     .AddInMemoryClients(IdentityConfiguration.Clients)
     .AddDeveloperSigningCredential();
 
-
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.Cookie.Name = "Notes.Identity.Cookie";
@@ -35,12 +34,25 @@ builder.Services.ConfigureApplicationCookie(config =>
     config.LogoutPath = "/Auth/Logout";
 });
 
+// Инициализация базы, если её нет
+try
+{
+    var scope = builder.Services.BuildServiceProvider().CreateScope();
+    var context = scope.ServiceProvider.GetService<AuthDbContext>();
+
+    DbInitializer.Initialize(context);
+}
+catch (Exception ex)
+{
+    // temporary
+    Console.WriteLine(ex);
+}
+
 var app = builder.Build();
 
 // Для маршрутизации эндпоинтов ООС и openId connect
 app.UseIdentityServer();
-app.MapControllers();
 
-app.MapGet("/", () => "Hello World!");
+app.MapControllers();
 
 app.Run();

@@ -13,6 +13,10 @@ public class AuthDbContext : IdentityDbContext<BikeShopUser>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        base.OnModelCreating(builder);
+        
+        builder.ApplyConfiguration(new BikeShopUserConfiguration());
+        
         builder.Entity<BikeShopUser>(entity => entity.ToTable(name: "Users"));
         builder.Entity<IdentityRole>(entity => entity.ToTable(name: "Roles"));
         builder.Entity<IdentityUserRole<string>>(entity =>
@@ -26,6 +30,5 @@ public class AuthDbContext : IdentityDbContext<BikeShopUser>
         builder.Entity<IdentityRoleClaim<string>>(entity =>
             entity.ToTable("RoleClaims"));
 
-        builder.ApplyConfiguration(new BikeShopUserConfiguration());
     }
 }

@@ -9,5 +9,6 @@ public class BikeShopUserConfiguration : IEntityTypeConfiguration<BikeShopUser>
     public void Configure(EntityTypeBuilder<BikeShopUser> builder)
     {
         builder.HasKey(x => x.Id);
+        
     }
 }
