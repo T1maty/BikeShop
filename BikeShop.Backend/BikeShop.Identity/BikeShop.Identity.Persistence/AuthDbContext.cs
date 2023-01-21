@@ -1,4 +1,5 @@
 ﻿using BikeShop.Identity.Domain;
+using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence.EntityConfigurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

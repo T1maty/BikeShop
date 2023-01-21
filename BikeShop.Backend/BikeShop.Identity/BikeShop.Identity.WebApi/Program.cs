@@ -1,10 +1,14 @@
+using System.Reflection;
 using BikeShop.Identity.Application;
-using BikeShop.Identity.Domain;
+using BikeShop.Identity.Application.Common.Mappings;
+using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence;
+using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddApplication();
 builder.Services.AddPersistence();
 
 builder.Services.AddControllers();
@@ -27,11 +31,20 @@ builder.Services.AddIdentityServer()
     .AddInMemoryClients(IdentityConfiguration.Clients)
     .AddDeveloperSigningCredential();
 
-builder.Services.ConfigureApplicationCookie(config =>
+// builder.Services.ConfigureApplicationCookie(config =>
+// {
+//     config.Cookie.Name = "Notes.Identity.Cookie";
+//     config.LoginPath = "/Auth/Login";
+//     config.LogoutPath = "/Auth/Logout";
+// });
+
+
+
+// Инжект конфигурации автомаппера
+builder.Services.AddAutoMapper(config =>
 {
-    config.Cookie.Name = "Notes.Identity.Cookie";
-    config.LoginPath = "/Auth/Login";
-    config.LogoutPath = "/Auth/Logout";
+    config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+    config.AddProfile(new AssemblyMappingProfile(typeof(AssemblyMappingProfile).Assembly));
 });
 
 // Инициализация базы, если её нет

@@ -12,7 +12,7 @@ public static class IdentityConfiguration
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            new("MainScope", "Main web api scope")
+            new("webapi", "Main web api scope")
         };
 
     // Области, куда можно получить доступ, называются ресурсы
@@ -30,10 +30,10 @@ public static class IdentityConfiguration
     public static IEnumerable<ApiResource> ApiResources =>
         new List<ApiResource>
         {
-            new ApiResource("MainResource", "Main web api resource",
+            new("webapi", "Main web api resource",
                 new[] { JwtClaimTypes.Name })
             {
-                Scopes = new List<string>() { "MainScope" }
+                Scopes = new List<string>() { "webapi" }
             }
         };
 
@@ -41,27 +41,21 @@ public static class IdentityConfiguration
     public static IEnumerable<Client> Clients =>
         new List<Client>
         {
-            new Client
+            new()
             {
-                ClientId = "test",
-                ClientName = "test-name",
+                ClientId = "bike-webapp-01",
+                ClientName = "React Web Application",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                 RequireClientSecret = false,
                 RequirePkce = false,
-                RedirectUris =
-                {
-                    "https://localhost:7214"
-                },
-               
-                PostLogoutRedirectUris =
-                {
-                    "http://.../signout-oidc"
-                },
+
+                //ClientSecrets = new[] { new Secret { Value = "test".Sha512() } },
+
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "MainScope"
+                    "webapi"
                 },
                 AllowAccessTokensViaBrowser = true,
                 AllowOfflineAccess = true

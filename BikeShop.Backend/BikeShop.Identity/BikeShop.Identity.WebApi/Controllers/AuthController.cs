@@ -1,9 +1,11 @@
-using BikeShop.Identity.Domain;
+using System.Text.Json;
+using AutoMapper;
+using BikeShop.Identity.Application.CQRS.Queries.GetAccessTokens;
 using BikeShop.Identity.WebApi.Models;
-using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using BikeShop.Identity.Domain.Entities;
+using MediatR;
 
 namespace BikeShop.Identity.WebApi.Controllers;
 
@@ -11,37 +13,33 @@ public class AuthController : ControllerBase
 {
     private readonly SignInManager<BikeShopUser> _signInManager;
     private readonly UserManager<BikeShopUser> _userManager;
-    private readonly IIdentityServerInteractionService _interactionService;
+
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
 
     public AuthController(SignInManager<BikeShopUser> signInManager, UserManager<BikeShopUser> userManager,
-        IIdentityServerInteractionService interactionService)
+        IMapper mapper, IMediator mediator)
     {
         _signInManager = signInManager;
         _userManager = userManager;
-        _interactionService = interactionService;
+        _mapper = mapper;
+        _mediator = mediator;
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Login([FromBody]LoginModel viewModel)
+    [Consumes("application/x-www-form-urlencoded")]
+    public async Task<ActionResult<AccessTokensModel>> Login([FromQuery] LoginModel model)
     {
-        var user = await _userManager.FindByNameAsync(viewModel.Username);
-        if (user == null)
-        {
-            ModelState.AddModelError(string.Empty, "User not found");
-            return NotFound(viewModel);
-        }
+        Console.WriteLine("MODEL");
+        Console.WriteLine(JsonSerializer.Serialize(model));
+        
+        var getTokensQuery = _mapper.Map<GetAccessTokensQuery>(model);
+        var response = await _mediator.Send(getTokensQuery);
 
-        var result = await _signInManager.PasswordSignInAsync(viewModel.Username,
-            viewModel.Password, false, false);
-        if (result.Succeeded)
-        {
-            return Ok();
-            
-            
-        }
+        if (!string.IsNullOrEmpty(response.Error))
+            return new BadRequestObjectResult(response);
 
-        ModelState.AddModelError(string.Empty, "Login error");
-        return BadRequest(ModelState);
+        return Ok(response);
     }
 
     [HttpPost("[action]")]
@@ -59,14 +57,16 @@ public class AuthController : ControllerBase
             ShopId = model.ShopId,
             PhoneNumber = model.Phone
         };
-
+        Console.WriteLine("BIKESHOPUSER");
+        Console.WriteLine(JsonSerializer.Serialize(user));
+    
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
             await _signInManager.SignInAsync(user, false);
             return Ok();
         }
-
+        
         return BadRequest();
     }
 }
