@@ -22,7 +22,30 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Register([FromBody]RegisterModel model)
+    public async Task<IActionResult> Login([FromBody]LoginModel viewModel)
+    {
+        var user = await _userManager.FindByNameAsync(viewModel.Username);
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "User not found");
+            return NotFound(viewModel);
+        }
+
+        var result = await _signInManager.PasswordSignInAsync(viewModel.Username,
+            viewModel.Password, false, false);
+        if (result.Succeeded)
+        {
+            return Ok();
+            
+            
+        }
+
+        ModelState.AddModelError(string.Empty, "Login error");
+        return BadRequest(ModelState);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<IActionResult> Register([FromBody] RegisterModel model)
     {
         Console.WriteLine("REGISTER");
         Console.WriteLine(JsonSerializer.Serialize(model));

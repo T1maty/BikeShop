@@ -43,14 +43,14 @@ public static class IdentityConfiguration
         {
             new Client
             {
-                ClientId = "test-client-id",
-                ClientName = "test-client-name",
+                ClientId = "test",
+                ClientName = "test-name",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                 RequireClientSecret = false,
                 RequirePkce = false,
                 RedirectUris =
                 {
-                    "http://.../signin-oidc"
+                    "https://localhost:7214"
                 },
                
                 PostLogoutRedirectUris =
@@ -63,7 +63,8 @@ public static class IdentityConfiguration
                     IdentityServerConstants.StandardScopes.Profile,
                     "MainScope"
                 },
-                AllowAccessTokensViaBrowser = true
+                AllowAccessTokensViaBrowser = true,
+                AllowOfflineAccess = true
             }
         };
 }
