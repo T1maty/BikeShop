@@ -10,7 +10,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
     private readonly UserManager<BikeShopUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    private string _userRole = "user";
+    private const string UserRole = "user";
 
     public CreateUserCommandHandler(UserManager<BikeShopUser> userManager, RoleManager<IdentityRole> roleManager)
     {
@@ -20,6 +20,17 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 
     public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
+        // Проверка - есть ли пользователь с таким номером телефона
+        var username = request.PhoneNumber.TrimStart('+');
+        var existingUser = await _userManager.FindByNameAsync(username);
+        if (existingUser is not null)
+            throw new RegistrationException
+            {
+                Error = "phone_exists",
+                ErrorDescription = $"User with phone {request.PhoneNumber} already exists"
+            };
+
+        // Если нету еще такого телефона
         // Формирую нового пользователя из запроса 
         var user = new BikeShopUser
         {
@@ -34,19 +45,22 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 
         // Пытаюсь создать пользователя в базе
         var result = await _userManager.CreateAsync(user, request.Password);
-        // для результата создания роли
-        IdentityResult identityResult;
 
         // Если проблема
         if (!result.Succeeded)
-            throw new RegistrationException();
+            throw new RegistrationException
+            {
+                Error = "invalid_signup_data",
+                ErrorDescription = "Invalid sign up data. Might be simple password"
+            };
 
-        var userRoleExists = await _roleManager.RoleExistsAsync(_userRole);
+        // Выдача роли юзера
+        var userRoleExists = await _roleManager.RoleExistsAsync(UserRole);
 
         if (!userRoleExists)
-            identityResult = await _roleManager.CreateAsync(new IdentityRole(_userRole));
+            await _roleManager.CreateAsync(new IdentityRole(UserRole));
 
-        await _userManager.AddToRoleAsync(user, _userRole);
+        await _userManager.AddToRoleAsync(user, UserRole);
 
         return Unit.Value;
     }
