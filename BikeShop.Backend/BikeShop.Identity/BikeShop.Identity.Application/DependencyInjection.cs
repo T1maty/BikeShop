@@ -1,4 +1,5 @@
 using System.Reflection;
+using BikeShop.Identity.Application.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,8 @@ public static class DependencyInjection
     {
         // Инжект библиотеки mediatr для CQRS
         services.AddMediatR(Assembly.GetExecutingAssembly());
+
+        services.AddScoped<TokenService>();
 
         return services;
     }

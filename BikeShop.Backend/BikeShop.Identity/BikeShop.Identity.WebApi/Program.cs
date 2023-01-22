@@ -34,7 +34,7 @@ builder.Services.AddIdentityServer()
 // builder.Services.ConfigureApplicationCookie(config =>
 // {
 //     config.Cookie.Name = "Notes.Identity.Cookie";
-//     config.LoginPath = "/Auth/Login";
+//     config.LoginPath = "/Auth/SignIn";
 //     config.LogoutPath = "/Auth/Logout";
 // });
 

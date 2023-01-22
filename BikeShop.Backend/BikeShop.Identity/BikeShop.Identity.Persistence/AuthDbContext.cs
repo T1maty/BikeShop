@@ -9,15 +9,19 @@ namespace BikeShop.Identity.Persistence;
 
 public class AuthDbContext : IdentityDbContext<BikeShopUser>
 {
-    public AuthDbContext(DbContextOptions<AuthDbContext> options) 
-        : base(options) {}
+    public DbSet<RefreshSession> RefreshSessions { get; set; }
+
+    public AuthDbContext(DbContextOptions<AuthDbContext> options)
+        : base(options)
+    {
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        
+
         builder.ApplyConfiguration(new BikeShopUserConfiguration());
-        
+
         builder.Entity<BikeShopUser>(entity => entity.ToTable(name: "Users"));
         builder.Entity<IdentityRole>(entity => entity.ToTable(name: "Roles"));
         builder.Entity<IdentityUserRole<string>>(entity =>
@@ -31,5 +35,7 @@ public class AuthDbContext : IdentityDbContext<BikeShopUser>
         builder.Entity<IdentityRoleClaim<string>>(entity =>
             entity.ToTable("RoleClaims"));
 
+        builder.Entity<RefreshSession>(entity =>
+            entity.ToTable("Sessions"));
     }
 }

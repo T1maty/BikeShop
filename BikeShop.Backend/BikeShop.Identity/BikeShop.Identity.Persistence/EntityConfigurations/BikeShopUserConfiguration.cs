@@ -10,6 +10,6 @@ public class BikeShopUserConfiguration : IEntityTypeConfiguration<BikeShopUser>
     public void Configure(EntityTypeBuilder<BikeShopUser> builder)
     {
         builder.HasKey(x => x.Id);
-        
+        builder.HasIndex(x => x.PhoneNumber).IsUnique();
     }
 }
