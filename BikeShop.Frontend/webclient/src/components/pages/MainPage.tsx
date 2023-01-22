@@ -1,13 +1,26 @@
 import React from 'react';
-import { Container, Stack, Button, Box, Paper, Typography } from '@mui/material';
+import { Container, Stack, Button, Box, Paper, Typography, Divider } from '@mui/material';
+
 
 const navLinks = ['Create repairing', 'Create order', 'Add hot client', 'Rent', 'Repair', 'Check', 'All Orders']
 
 const MainPage = () => {
     return (
         <Container>
-            <Stack sx={{ mb: 2 }} direction="row" alignItems='center' justifyContent='space-around' flexWrap='wrap'>
-                {navLinks.map((item, index) => <Button key={index} sx={{ mt: 2, mx: 1 }} variant='contained' color='primary'>{item}</Button>)}
+            <Stack sx={{ mb: 2 }}
+                direction="row"
+                alignItems='center'
+                justifyContent='space-around'
+                flexWrap='wrap'
+                divider={<Divider orientation='vertical' flexItem sx={{ mt: '21px', mb: '5px' }} />}
+            >
+                {navLinks.map((item, index) => <Button
+                    key={index}
+                    sx={{ mt: 2, mx: 1 }}
+                    variant='contained'
+                    color='primary'>
+                    {item}
+                </Button>)}
             </Stack>
             <Stack sx={{ mt: 2 }} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <Box sx={{ width: { xs: '100%', sm: '50%' }, p: 2, backgroundColor: 'grey.800', borderRadius: 2 }}>
