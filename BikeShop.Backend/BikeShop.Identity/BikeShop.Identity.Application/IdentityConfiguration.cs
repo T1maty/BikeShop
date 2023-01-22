@@ -24,14 +24,21 @@ public static class IdentityConfiguration
         new List<IdentityResource>
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
         };
 
     public static IEnumerable<ApiResource> ApiResources =>
         new List<ApiResource>
         {
             new("webapi", "Main web api resource",
-                new[] { JwtClaimTypes.Name })
+                new[]
+                {
+                    JwtClaimTypes.Name, 
+                    JwtClaimTypes.Role, 
+                    JwtClaimTypes.Expiration,
+                    JwtClaimTypes.PhoneNumber,
+                    JwtClaimTypes.PhoneNumberVerified
+                })
             {
                 Scopes = new List<string>() { "webapi" }
             }
@@ -55,7 +62,7 @@ public static class IdentityConfiguration
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "webapi"
+                    "webapi",
                 },
                 AllowAccessTokensViaBrowser = true,
                 AllowOfflineAccess = true

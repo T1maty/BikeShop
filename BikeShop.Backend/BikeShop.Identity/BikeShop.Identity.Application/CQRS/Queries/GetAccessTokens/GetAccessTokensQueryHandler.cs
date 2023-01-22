@@ -25,7 +25,7 @@ public class GetAccessTokensQueryHandler : IRequestHandler<GetAccessTokensQuery,
             { "password", request.Password },
             { "grant_type", "password" },
             { "scope", "webapi offline_access" },
-            { "response_type", OidcConstants.ResponseTypes.CodeIdTokenToken }
+            { "response_type", OidcConstants.ResponseTypes.Token }
         };
 
         var response = await _tokenService.GetIdpToken(parameters);

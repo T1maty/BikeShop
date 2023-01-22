@@ -3,7 +3,7 @@ using BikeShop.Identity.Application.CQRS.Commands.CreateRefreshSession;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 using BikeShop.Identity.Application.CQRS.Queries.GetAccessTokens;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySigninData;
-using BikeShop.Identity.WebApi.Models;
+using BikeShop.Identity.WebApi.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
@@ -26,7 +26,7 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<AccessTokensModel>> SignIn([FromQuery] SignInModel model)
     {
         // Ищу пользователя в базе и возвращаю. Вылетит исключение если нет пользователя
-        var getUserQuery = _mapper.Map<GetUserBySigninDataQuery>(model);
+        var getUserQuery = _mapper.Map<GetUserByUsernameQuery>(model);
         var user = await _mediator.Send(getUserQuery);
 
         // Получаю токены
@@ -58,4 +58,10 @@ public class AuthController : ControllerBase
 
         return Ok();
     }
+
+    // [HttpPost]
+    // public async Task<ActionResult<AccessTokensModel>> Refresh([FromBody] RefreshModel model)
+    // {
+    //        
+    // }
 }

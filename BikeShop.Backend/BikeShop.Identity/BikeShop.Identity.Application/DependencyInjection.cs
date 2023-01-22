@@ -1,5 +1,6 @@
 using System.Reflection;
 using BikeShop.Identity.Application.Services;
+using IdentityServer4.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

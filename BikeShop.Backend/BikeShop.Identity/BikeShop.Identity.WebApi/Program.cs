@@ -1,6 +1,7 @@
 using System.Reflection;
 using BikeShop.Identity.Application;
 using BikeShop.Identity.Application.Common.Mappings;
+using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@ builder.Services.AddIdentity<BikeShopUser, IdentityRole>(config =>
         config.Password.RequireNonAlphanumeric = false;
     })
     .AddRoles<IdentityRole>()
+    //.AddClaimsPrincipalFactory<ClaimsFactory<BikeShopUser>>()
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddRoleManager<RoleManager<IdentityRole>>();

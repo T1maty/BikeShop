@@ -3,7 +3,7 @@ using AutoMapper;
 using BikeShop.Identity.Application.Common.Mappings;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 
-namespace BikeShop.Identity.WebApi.Models;
+namespace BikeShop.Identity.WebApi.Models.Auth;
 
 public class SignUpModel : IMappable
 {

@@ -5,7 +5,7 @@ using BikeShop.Identity.Application.CQRS.Queries.GetAccessTokens;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySigninData;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BikeShop.Identity.WebApi.Models;
+namespace BikeShop.Identity.WebApi.Models.Auth;
 
 public class SignInModel : IMappable
 {
@@ -29,6 +29,6 @@ public class SignInModel : IMappable
     public void Mapping(Profile profile)
     {
         profile.CreateMap<SignInModel, GetAccessTokensQuery>();
-        profile.CreateMap<SignInModel, GetUserBySigninDataQuery>();
+        profile.CreateMap<SignInModel, GetUserByUsernameQuery>();
     }
 }
