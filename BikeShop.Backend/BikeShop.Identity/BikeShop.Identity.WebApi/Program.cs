@@ -16,20 +16,20 @@ builder.Services.AddIdentity<BikeShopUser, IdentityRole>(config =>
     {
         config.Password.RequiredLength = 4;
         config.Password.RequireDigit = false;
-        config.Password.RequireNonAlphanumeric = false;
         config.Password.RequireUppercase = false;
+        config.Password.RequireNonAlphanumeric = false;
     })
     .AddRoles<IdentityRole>()
-    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders();
+    .AddRoleManager<RoleManager<IdentityRole>>();
 
 builder.Services.AddIdentityServer()
     .AddAspNetIdentity<BikeShopUser>()
+    .AddInMemoryClients(IdentityConfiguration.Clients)
+    .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
     .AddInMemoryApiResources(IdentityConfiguration.ApiResources)
     .AddInMemoryIdentityResources(IdentityConfiguration.IdentityResources)
-    .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
-    .AddInMemoryClients(IdentityConfiguration.Clients)
     .AddDeveloperSigningCredential();
 
 // builder.Services.ConfigureApplicationCookie(config =>

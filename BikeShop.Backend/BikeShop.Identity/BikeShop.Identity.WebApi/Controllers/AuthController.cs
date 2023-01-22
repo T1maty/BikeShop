@@ -61,8 +61,7 @@ public class AuthController : ControllerBase
     [HttpPost("[action]")]
     public async Task<IActionResult> Register([FromBody] SignUpModel model)
     {
-        Console.WriteLine("REGISTER");
-        Console.WriteLine(JsonSerializer.Serialize(model));
+        // Формирую нового пользователя из запроса 
         var user = new BikeShopUser
         {
             UserName = model.PhoneNumber.TrimStart('+'),
@@ -73,16 +72,14 @@ public class AuthController : ControllerBase
             ShopId = model.ShopId,
             PhoneNumber = model.PhoneNumber
         };
-        Console.WriteLine("BIKESHOPUSER");
-        Console.WriteLine(JsonSerializer.Serialize(user));
-
+        
+        // Пытаюсь создать пользователя в базе
         var result = await _userManager.CreateAsync(user, model.Password);
-        if (result.Succeeded)
-        {
-            await _signInManager.SignInAsync(user, false);
-            return Ok();
-        }
-
-        return BadRequest();
+        
+        // Если проблема - 400
+        if (!result.Succeeded) return BadRequest();
+        
+        // Если не проблема - ок
+        return Ok();
     }
 }
