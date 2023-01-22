@@ -1,8 +1,10 @@
 using System.Reflection;
 using BikeShop.Identity.Application;
 using BikeShop.Identity.Application.Common.Mappings;
+using BikeShop.Identity.Application.Interfaces;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence;
+using BikeShop.Identity.Persistence.CustomStores;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 
@@ -20,6 +22,9 @@ builder.Services.AddIdentity<BikeShopUser, IdentityRole>(config =>
         config.Password.RequireNonAlphanumeric = false;
         config.Password.RequireUppercase = false;
     })
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddUserStore<CustomUserStore>()
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
@@ -31,13 +36,14 @@ builder.Services.AddIdentityServer()
     .AddInMemoryClients(IdentityConfiguration.Clients)
     .AddDeveloperSigningCredential();
 
+builder.Services.AddScoped<ICustomUserStore, CustomUserStore>();
+
 // builder.Services.ConfigureApplicationCookie(config =>
 // {
 //     config.Cookie.Name = "Notes.Identity.Cookie";
 //     config.LoginPath = "/Auth/SignIn";
 //     config.LogoutPath = "/Auth/Logout";
 // });
-
 
 
 // Инжект конфигурации автомаппера
