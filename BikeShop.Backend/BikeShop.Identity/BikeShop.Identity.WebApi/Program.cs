@@ -1,11 +1,8 @@
 using System.Reflection;
 using BikeShop.Identity.Application;
 using BikeShop.Identity.Application.Common.Mappings;
-using BikeShop.Identity.Application.Interfaces;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence;
-using BikeShop.Identity.Persistence.CustomStores;
-using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +21,6 @@ builder.Services.AddIdentity<BikeShopUser, IdentityRole>(config =>
     })
     .AddRoles<IdentityRole>()
     .AddRoleManager<RoleManager<IdentityRole>>()
-    .AddUserStore<CustomUserStore>()
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
@@ -35,8 +31,6 @@ builder.Services.AddIdentityServer()
     .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
     .AddInMemoryClients(IdentityConfiguration.Clients)
     .AddDeveloperSigningCredential();
-
-builder.Services.AddScoped<ICustomUserStore, CustomUserStore>();
 
 // builder.Services.ConfigureApplicationCookie(config =>
 // {

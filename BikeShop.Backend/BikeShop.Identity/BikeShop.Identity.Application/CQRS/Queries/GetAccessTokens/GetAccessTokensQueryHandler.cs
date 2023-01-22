@@ -1,7 +1,6 @@
 using System.Collections.Specialized;
 using IdentityModel;
 using MediatR;
-using System.Text.Json;
 using BikeShop.Identity.Application.Services;
 using IdpTokenResponse = IdentityServer4.ResponseHandling.TokenResponse;
 
@@ -18,17 +17,14 @@ public class GetAccessTokensQueryHandler : IRequestHandler<GetAccessTokensQuery,
 
     public async Task<AccessTokensModel> Handle(GetAccessTokensQuery request, CancellationToken cancellationToken)
     {
-        Console.WriteLine("CQRS QUERY");
-        Console.WriteLine(JsonSerializer.Serialize(request));
-
         var parameters = new NameValueCollection
         {
             { "client_id", request.ClientId },
             // { "client_secret", request.ClientSecret },
-            { "username", request.Email.Split('@').First() },
+            { "username", request.PhoneNumber.TrimStart('+') },
             { "password", request.Password },
             { "grant_type", "password" },
-            { "scope", "webapi" },
+            { "scope", "webapi offline_access" },
             { "response_type", OidcConstants.ResponseTypes.CodeIdTokenToken }
         };
 

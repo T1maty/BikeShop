@@ -1,4 +1,5 @@
-﻿using BikeShop.Identity.Domain;
+﻿using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Domain;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence.EntityConfigurations;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.Persistence;
 
-public class AuthDbContext : IdentityDbContext<BikeShopUser>
+public class AuthDbContext : IdentityDbContext<BikeShopUser>, IAuthDbContext
 {
     public DbSet<RefreshSession> RefreshSessions { get; set; }
 

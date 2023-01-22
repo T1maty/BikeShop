@@ -1,4 +1,4 @@
-﻿using BikeShop.Identity.Persistence.CustomStores;
+﻿using BikeShop.Identity.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,9 +9,10 @@ public static class DependencyInjection
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
         services.AddDbContext<AuthDbContext>(options => { options.UseSqlite("Data source=identity.db"); });
-
-      
-
+        
+        // Связал интерфейс контекста с ранее созданным сервисом на классе 
+        services.AddScoped<IAuthDbContext>(provider =>
+            provider.GetService<AuthDbContext>());
         return services;
     }
 }

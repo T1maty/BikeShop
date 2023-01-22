@@ -1,11 +1,31 @@
+using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Domain.Entities;
 using MediatR;
 
 namespace BikeShop.Identity.Application.CQRS.Commands.CreateRefreshSession;
 
 public class CreateRefreshSessionCommandHandler : IRequestHandler<CreateRefreshSessionCommand>
 {
-    public Task<Unit> Handle(CreateRefreshSessionCommand request, CancellationToken cancellationToken)
+    private readonly IAuthDbContext _context;
+
+    public CreateRefreshSessionCommandHandler(IAuthDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
+    }
+
+    public async Task<Unit> Handle(CreateRefreshSessionCommand request, CancellationToken cancellationToken)
+    {
+        var refreshSession = new RefreshSession
+        {
+            RefreshToken = request.RefreshToken,
+            UserId = request.UserId,
+            Fingerprint = request.Fingerprint,
+            ExpiresIn = request.ExpiresIn
+        };
+
+        _context.RefreshSessions.Add(refreshSession);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return Unit.Value;
     }
 }

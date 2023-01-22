@@ -1,6 +1,8 @@
 using System.Text.Json;
 using AutoMapper;
+using BikeShop.Identity.Application.CQRS.Commands.CreateRefreshSession;
 using BikeShop.Identity.Application.CQRS.Queries.GetAccessTokens;
+using BikeShop.Identity.Application.CQRS.Queries.GetUserBySigninData;
 using BikeShop.Identity.WebApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,16 +33,29 @@ public class AuthController : ControllerBase
     [Consumes("application/x-www-form-urlencoded")]
     public async Task<ActionResult<AccessTokensModel>> SignIn([FromQuery] SignInModel model)
     {
-        // Из клиент id, почты и телефона формирую 
+        // Ищу пользователя в базе и возвращаю. Вылетит исключение если нет пользователя
+        var getUserQuery = _mapper.Map<GetUserBySigninDataQuery>(model);
+        var user = await _mediator.Send(getUserQuery);
+
+        // Получаю токены
         var getTokensQuery = _mapper.Map<GetAccessTokensQuery>(model);
-        var response = await _mediator.Send(getTokensQuery);
+        var tokens = await _mediator.Send(getTokensQuery);
 
-        if (!string.IsNullOrEmpty(response.Error))
-            return new BadRequestObjectResult(response);
-        
-        
+        // Если ошибка при получении токена - возвращаю badrequest
+        if (!string.IsNullOrEmpty(tokens.Error))
+            return new BadRequestObjectResult(tokens);
 
-        return Ok(response);
+        // Стартую сессию
+        var createSessionCommand = new CreateRefreshSessionCommand
+        {
+            Fingerprint = model.Fingerprint,
+            ExpiresIn = tokens.ExpiresIn,
+            RefreshToken = tokens.RefreshToken,
+            UserId = Guid.Parse(user.Id)
+        };
+        await _mediator.Send(createSessionCommand);
+
+        return Ok(tokens);
     }
 
     [HttpPost("[action]")]
