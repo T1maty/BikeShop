@@ -1,8 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using AutoMapper;
+using BikeShop.Identity.Application.Common.Mappings;
+using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 
 namespace BikeShop.Identity.WebApi.Models;
 
-public class SignUpModel
+public class SignUpModel : IMappable
 {
     [Required] [Phone] public string PhoneNumber { get; set; }
     [Required] public string Password { get; set; }
@@ -11,4 +14,8 @@ public class SignUpModel
     public string? LastName { get; set; }
     public string? Patronymic { get; set; }
     public string? Email { get; set; }
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<SignUpModel, CreateUserCommand>();
+    }
 }

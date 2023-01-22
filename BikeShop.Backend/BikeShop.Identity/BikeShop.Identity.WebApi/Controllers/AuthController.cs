@@ -1,12 +1,10 @@
-using System.Text.Json;
 using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateRefreshSession;
+using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 using BikeShop.Identity.Application.CQRS.Queries.GetAccessTokens;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySigninData;
 using BikeShop.Identity.WebApi.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BikeShop.Identity.Domain.Entities;
 using MediatR;
 
 namespace BikeShop.Identity.WebApi.Controllers;
@@ -14,17 +12,11 @@ namespace BikeShop.Identity.WebApi.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly SignInManager<BikeShopUser> _signInManager;
-    private readonly UserManager<BikeShopUser> _userManager;
-
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
-    public AuthController(SignInManager<BikeShopUser> signInManager, UserManager<BikeShopUser> userManager,
-        IMapper mapper, IMediator mediator)
+    public AuthController(IMapper mapper, IMediator mediator)
     {
-        _signInManager = signInManager;
-        _userManager = userManager;
         _mapper = mapper;
         _mediator = mediator;
     }
@@ -59,27 +51,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Register([FromBody] SignUpModel model)
+    public async Task<IActionResult> SignUp([FromBody] SignUpModel model)
     {
-        // Формирую нового пользователя из запроса 
-        var user = new BikeShopUser
-        {
-            UserName = model.PhoneNumber.TrimStart('+'),
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Patronymic = model.Patronymic,
-            Email = model.Email,
-            ShopId = model.ShopId,
-            PhoneNumber = model.PhoneNumber
-        };
-        
-        // Пытаюсь создать пользователя в базе
-        var result = await _userManager.CreateAsync(user, model.Password);
-        
-        // Если проблема - 400
-        if (!result.Succeeded) return BadRequest();
-        
-        // Если не проблема - ок
+        var createUserCommand = _mapper.Map<CreateUserCommand>(model);
+        await _mediator.Send(createUserCommand);
+
         return Ok();
     }
 }
