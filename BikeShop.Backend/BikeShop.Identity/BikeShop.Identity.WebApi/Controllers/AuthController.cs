@@ -1,6 +1,7 @@
 using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateRefreshSession;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
+using BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSessionByToken;
 using BikeShop.Identity.Application.CQRS.Queries.GetAccessTokens;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySigninData;
 using BikeShop.Identity.WebApi.Models.Auth;
@@ -59,9 +60,13 @@ public class AuthController : ControllerBase
         return Ok();
     }
 
-    // [HttpPost]
-    // public async Task<ActionResult<AccessTokensModel>> Refresh([FromBody] RefreshModel model)
-    // {
-    //        
-    // }
+    [HttpPost("[action]")]
+    [Consumes("application/x-www-form-urlencoded")]
+    public async Task<ActionResult<AccessTokensModel>> Refresh([FromQuery] RefreshModel model)
+    {
+        var updateSessionCommand = _mapper.Map<UpdateRefreshSessionByTokenCommand>(model);
+
+        var resultTokens = await _mediator.Send(updateSessionCommand);
+        return Ok(resultTokens);
+    }
 }
