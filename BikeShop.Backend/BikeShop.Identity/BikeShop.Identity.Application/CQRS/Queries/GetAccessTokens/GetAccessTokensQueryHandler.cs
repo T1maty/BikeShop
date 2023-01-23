@@ -17,10 +17,11 @@ public class GetAccessTokensQueryHandler : IRequestHandler<GetAccessTokensQuery,
 
     public async Task<AccessTokensModel> Handle(GetAccessTokensQuery request, CancellationToken cancellationToken)
     {
+        // Делаю запрос на стандартный сервис идентити сервера о получении токена
+        // аналог /connect/token
         var parameters = new NameValueCollection
         {
             { "client_id", request.ClientId },
-            // { "client_secret", request.ClientSecret },
             { "username", request.PhoneNumber.TrimStart('+') },
             { "password", request.Password },
             { "grant_type", "password" },

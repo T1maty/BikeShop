@@ -1,6 +1,6 @@
 namespace BikeShop.Identity.Application.Exceptions;
 
-public class RegistrationException : Exception, IException
+public class NotFoundException : Exception, IException
 {
     public string Error { get; set; }
     public string ErrorDescription { get; set; }

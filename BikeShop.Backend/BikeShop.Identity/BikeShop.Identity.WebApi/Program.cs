@@ -4,6 +4,7 @@ using BikeShop.Identity.Application.Common.Mappings;
 using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence;
+using BikeShop.Identity.WebApi.Middleware;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +65,8 @@ catch (Exception ex)
 }
 
 var app = builder.Build();
+
+app.UseCustomExceptionHandler();
 
 // Для маршрутизации эндпоинтов ООС и openId connect
 app.UseIdentityServer();

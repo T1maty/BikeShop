@@ -15,6 +15,7 @@ public class CreateRefreshSessionCommandHandler : IRequestHandler<CreateRefreshS
 
     public async Task<Unit> Handle(CreateRefreshSessionCommand request, CancellationToken cancellationToken)
     {
+        // Экземпляр сессии
         var refreshSession = new RefreshSession
         {
             RefreshToken = request.RefreshToken,
@@ -23,6 +24,7 @@ public class CreateRefreshSessionCommandHandler : IRequestHandler<CreateRefreshS
             ExpiresIn = request.ExpiresIn
         };
 
+        // Добавляю и сохраняю
         _context.RefreshSessions.Add(refreshSession);
         await _context.SaveChangesAsync(cancellationToken);
 

@@ -33,10 +33,10 @@ public class UpdateRefreshSessionByTokenCommandHandler
 
         // Если нет сессии с таким рефшер токеном - исключение
         if (existingSession is null)
-            throw new SessionNotFoundException()
+            throw new NotFoundException()
             {
                 Error = "session_not_found",
-                ErrorDescription = "Session with refresh token not found"
+                ErrorDescription = "Session with given refresh token not found"
             };
         
         // Кидаю дефолтный запрос на идентити для рефреша, получая новые токены
@@ -52,8 +52,12 @@ public class UpdateRefreshSessionByTokenCommandHandler
 
         // если не выдало рефреш токен - исключение
         if (resultTokens.RefreshToken is null)
-            throw new RefreshTokenAbsentException(JsonSerializer.Serialize(resultTokens));
+            throw new RefreshTokenNotGivenException(){
+                Error = "refreshToken_not_given",
+                ErrorDescription = "Refresh token not given by default identity server service"
+            };
 
+        // Обновляю запись о сессии
         existingSession.RefreshToken = resultTokens.RefreshToken;
         existingSession.ExpiresIn = resultTokens.ExpiresIn;
         existingSession.UpdatedAt = DateTime.Now;

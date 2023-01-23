@@ -27,7 +27,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
             throw new RegistrationException
             {
                 Error = "phone_exists",
-                ErrorDescription = $"User with phone {request.PhoneNumber} already exists"
+                ErrorDescription = $"User with given phone number already exists"
             };
 
         // Если нету еще такого телефона

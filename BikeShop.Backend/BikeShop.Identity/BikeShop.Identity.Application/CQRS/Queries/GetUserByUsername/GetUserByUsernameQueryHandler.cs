@@ -23,7 +23,10 @@ public class GetUserByUsernameQueryHandler : IRequestHandler<GetUserByUsernameQu
 
         // Если пользователь не найден - исключение
         if (user is null)
-            throw new UserNotFoundException(request.PhoneNumber);
+            throw new NotFoundException(){
+                Error = "user_not_found",
+                ErrorDescription = "User with given phone number not found"
+            };
 
         // Возвращаю найденого пользователя
         return user;

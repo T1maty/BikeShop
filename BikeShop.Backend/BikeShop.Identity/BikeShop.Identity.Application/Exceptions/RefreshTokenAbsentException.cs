@@ -1,9 +1,7 @@
 namespace BikeShop.Identity.Application.Exceptions;
 
-public class RefreshTokenAbsentException : Exception
+public class RefreshTokenNotGivenException : Exception, IException
 {
-    public RefreshTokenAbsentException(object key) 
-        : base($"Refresh token '{key}' not found at current sessions")
-    {
-    }
+    public string Error { get; set; }
+    public string ErrorDescription { get; set; }
 }

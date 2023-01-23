@@ -1,6 +1,6 @@
 namespace BikeShop.Identity.Application.Exceptions;
 
-public class SessionNotFoundException : Exception
+public interface IException
 {
     public string Error { get; set; }
     public string ErrorDescription { get; set; }
