@@ -9,6 +9,7 @@ namespace BikeShop.Identity.Persistence;
 
 public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
 {
+    public DbSet<RefreshSession> RefreshSessions { get; set; }
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
@@ -46,6 +47,13 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
             Patronymic = "Andreevich",
             ShopId = 1,
             RefreshToken = Guid.NewGuid()
+        });
+
+        builder.Entity<IdentityRole>().HasData(new IdentityRole()
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "user",
+            NormalizedName = "USER"
         });
     }
 }
