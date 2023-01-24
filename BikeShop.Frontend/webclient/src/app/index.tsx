@@ -11,9 +11,10 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import MainPage from "./components/pages/MainPage";
-import Header from "./components/Header/Header";
-import LoginForm from "./components/loginForm/LoginForm";
+import MainPage from "../components/pages/MainPage";
+import Header from "../components/Header/Header";
+import LoginForm from "../components/loginForm/LoginForm";
+import RegistrationPage from "pages/RegistrationPage/RegistrationPage";
 
 const darkTheme = createTheme({
   palette: {
@@ -30,9 +31,9 @@ const App: React.FC = () => {
           <Header />
           <Suspense>
             <Routes>
+              <Route path="/registration" element={<RegistrationPage />} />
               <Route path="/" element={<LoginForm />} />
               <Route path="/main" element={<MainPage />} />
-
               <Route path="*" element={<div>Not Found</div>} />
             </Routes>
           </Suspense>
