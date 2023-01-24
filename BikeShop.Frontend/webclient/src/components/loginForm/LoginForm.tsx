@@ -25,7 +25,7 @@ const LoginForm = () => {
         },
     });
 
-    const onSubmit: SubmitHandler<LoginData> = (data) => {
+    const onSubmit: SubmitHandler<LoginData> = (data: any) => {
         console.log(data)
     }
 
@@ -46,7 +46,7 @@ const LoginForm = () => {
                                 message: 'Phone number is invalid'
                             }
                         }}
-                        render={({ field }) => <TextField {...field}
+                        render={({ field }: any) => <TextField {...field}
                             error={!!errors.phoneNumber}
                             helperText={errors.phoneNumber ? errors.phoneNumber?.message : ''}
                             label="Phone number" variant='outlined'
@@ -56,7 +56,7 @@ const LoginForm = () => {
                         name="password"
                         control={control}
                         rules={{ required: 'Password is required' }}
-                        render={({ field }) => <TextField {...field}
+                        render={({ field }: any) => <TextField {...field}
                             type="password"
                             error={!!errors.password}
                             helperText={errors.password ? errors.password?.message : ''}
