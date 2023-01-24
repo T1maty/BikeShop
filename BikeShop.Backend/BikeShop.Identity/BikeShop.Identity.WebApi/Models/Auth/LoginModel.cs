@@ -6,7 +6,7 @@ namespace BikeShop.Identity.WebApi.Models.Auth;
 
 public class LoginModel : IMappable
 {
-    public string Username { get; set; }
+    public string Phone { get; set; }
     public string Password { get; set; }
 
     public void Mapping(Profile profile)

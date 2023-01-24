@@ -22,12 +22,16 @@ public class DeleteRefreshSessionByTokenCommandHandler : IRequestHandler<DeleteR
                 cancellationToken);
 
         if (existingSession is null)
-            throw new NotFoundException();
+            throw new NotFoundException($"Session with refresh token {request.RefreshToken} not found")
+            {
+                Error = "session_not_found",
+                ErrorDescription = $"Logout failed. Given refresh token does not belong to any session"
+            };
 
         // Удаляю сессию из базы
         _context.RefreshSessions.Remove(existingSession);
         await _context.SaveChangesAsync(cancellationToken);
-        
+
         return Unit.Value;
     }
 }

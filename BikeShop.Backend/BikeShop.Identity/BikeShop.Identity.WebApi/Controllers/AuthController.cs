@@ -6,6 +6,7 @@ using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
 using BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSession;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserById;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
+using BikeShop.Identity.Application.Exceptions;
 using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.WebApi.Models.Auth;
 using MediatR;
@@ -72,7 +73,11 @@ public class AuthController : ControllerBase
     {
         // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
         if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-            return BadRequest();
+            throw new RefreshTokenException("Cookie refresh token not found")
+            {
+                Error = "cookie_refresh_token_not_found",
+                ErrorDescription = "Expected refresh token in httponly cookie does not exists"
+            };
 
         // Обновляю рефреш сессию. Если пришедший рефреш токен невалидный - получим исключение
         // Если все ок - получу всю сессию, в том числе id пользователя
@@ -97,7 +102,11 @@ public class AuthController : ControllerBase
     {
         // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
         if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-            return BadRequest();
+            throw new RefreshTokenException("Cookie refresh token not found")
+            {
+                Error = "cookie_refresh_token_not_found",
+                ErrorDescription = "Expected refresh token in httponly cookie does not exists"
+            };
 
         // Удаляю сессию по рефреш токену из базы
         var deleteCommand = new DeleteRefreshSessionByTokenCommand() { RefreshToken = Guid.Parse(refreshToken) };

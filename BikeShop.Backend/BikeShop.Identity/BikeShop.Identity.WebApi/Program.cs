@@ -5,6 +5,7 @@ using BikeShop.Identity.Application.Common.Configurations;
 using BikeShop.Identity.Application.Common.Mappings;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence;
+using BikeShop.Identity.WebApi.Middleware;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
@@ -14,7 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<JwtConfiguration>>().Value);
-
 
 builder.Services.AddApplication();
 builder.Services.AddPersistence();
@@ -60,7 +60,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     // User settings.
     options.User.AllowedUserNameCharacters =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-    options.User.RequireUniqueEmail = true;
+    //options.User.RequireUniqueEmail = true;
 });
 
 // Инициализация базы, если её нет
@@ -78,9 +78,7 @@ catch (Exception ex)
 
 var app = builder.Build();
 
-// Для маршрутизации эндпоинтов ООС и openId connect
-//app.UseIdentityServer();
-
+app.UseCustomExceptionHandler();
 app.MapControllers();
 
 app.Run();

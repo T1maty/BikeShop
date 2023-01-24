@@ -19,7 +19,12 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUser
     {
         // Ищу пользователя по айди
         var user = await _userManager.FindByIdAsync(request.UserId.ToString());
-        if (user is null) throw new NotFoundException();
+        if (user is null)
+            throw new NotFoundException($"User with id '{request.UserId}' not found")
+            {
+                Error = "user_not_found",
+                ErrorDescription = $"User with given id not found"
+            };
 
         // Получаю роли пользователя
         var roles = await _userManager.GetRolesAsync(user);

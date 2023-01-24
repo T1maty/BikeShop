@@ -24,8 +24,12 @@ public class UpdateRefreshSessionCommandHandler : IRequestHandler<UpdateRefreshS
 
         // Если такой сессии нет - исключение
         if (existingSession is null)
-            throw new NotFoundException();
-        
+            throw new NotFoundException($"Session with refresh token {request.RefreshToken} not found")
+            {
+                Error = "session_not_found",
+                ErrorDescription = $"Refresh failed. Given refresh token does not belong to any session"
+            };
+
         // Если есть - обновляю рефреш сессию и возвращаю
         existingSession.RefreshToken = Guid.NewGuid();
         existingSession.UpdatedAt = DateTime.Now;

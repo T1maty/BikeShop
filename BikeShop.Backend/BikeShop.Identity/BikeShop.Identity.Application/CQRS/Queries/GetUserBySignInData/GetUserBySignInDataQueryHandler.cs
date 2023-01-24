@@ -20,12 +20,16 @@ public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDa
     public async Task<GetUserModel> Handle(GetUserBySignInDataQuery request, CancellationToken cancellationToken)
     {
         var signIn = await _signInManager
-            .PasswordSignInAsync(request.Username, request.Password, false, false);
+            .PasswordSignInAsync(request.Phone, request.Password, false, false);
 
         if (!signIn.Succeeded)
-            throw new NotFoundException();
+            throw new NotFoundException($"User with phone '{request.Phone}' and password '{request.Password}' not found")
+            {
+                Error = "error_login",
+                ErrorDescription = "Login failed. Incorrect login or password"
+            };
 
-        var user = await _userManager.FindByNameAsync(request.Username);
+        var user = await _userManager.FindByNameAsync(request.Phone);
         var roles = await _userManager.GetRolesAsync(user);
 
         return new GetUserModel
