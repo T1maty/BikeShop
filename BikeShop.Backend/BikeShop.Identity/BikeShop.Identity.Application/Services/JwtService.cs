@@ -17,20 +17,18 @@ public class JwtService
         _configuration = configuration;
     }
 
-    public string GenerateUserJwt(ApplicationUser user, IList<string> userRoles)
+    public string GenerateUserJwt(ApplicationUser user, IEnumerable<string> userRoles)
     {
+        // Добавляю клаймы в токен
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, "auth"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.MobilePhone, user.PhoneNumber),
         };
-
-        foreach (var role in userRoles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
+        // Добавляю роли юзера в клаймы токена
+        claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

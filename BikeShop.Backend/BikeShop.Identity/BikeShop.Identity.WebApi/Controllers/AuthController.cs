@@ -1,5 +1,7 @@
 using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
+using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
+using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.WebApi.Models.Auth;
@@ -15,62 +17,42 @@ namespace BikeShop.Identity.WebApi.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly JwtService _jwtService;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly CookieService _cookieService;
 
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
 
-    public AuthController(JwtService jwtService,
-        UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-        RoleManager<IdentityRole> roleManager, IMapper mapper, IMediator mediator)
+    public AuthController(JwtService jwtService, IMapper mapper, IMediator mediator, CookieService cookieService)
     {
         _jwtService = jwtService;
-        _userManager = userManager;
-        _signInManager = signInManager;
+        _cookieService = cookieService;
         _mapper = mapper;
         _mediator = mediator;
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> LoginApi([FromBody] LoginModel model)
+    public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        if (ModelState.IsValid)
-        {
-            var signIn = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
 
-            if (signIn.Succeeded)
-            {
-                var user = await _userManager.FindByEmailAsync(model.Username);
+        // Получаю пользователя по данным логина
+        var getUserQuery = _mapper.Map<GetUserBySignInDataQuery>(model);
+        var userData = await _mediator.Send(getUserQuery);
 
-                var roles = await _userManager.GetRolesAsync(user);
-                var token = _jwtService.GenerateUserJwt(user, roles);
+        // Создаю/обновляю рефреш сессию для пользователя и получаю рефреш токен
+        var setSessionCommand = new SetRefreshSessionCommand { UserId = Guid.Parse(userData.User.Id) };
+        var refreshToken = await _mediator.Send(setSessionCommand);
 
-                user.RefreshToken = Guid.NewGuid();
+        // Добавляю рефреш токен в httpOnly cookie
+        _cookieService.AddRefreshCookieToResponse(HttpContext.Response, refreshToken);
 
-                await _userManager.UpdateAsync(user);
+        // Генерирую access token для пользователя
+        var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
 
-                Response.Cookies.Append("X-Access-Token", token,
-                    new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-                Response.Cookies.Append("X-Username", user.UserName,
-                    new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-                Response.Cookies.Append("X-Refresh-Token", user.RefreshToken.ToString(),
-                    new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(new { signIn.IsLockedOut, signIn.IsNotAllowed, signIn.RequiresTwoFactor });
-            }
-        }
-        else
-            return BadRequest(ModelState);
+        return Ok(new { accessToken });
     }
 
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // [HttpGet("ping")]
-    // public string Ping() => "pong";
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterModel model)
@@ -84,35 +66,35 @@ public class AuthController : ControllerBase
     }
 
 
-    [HttpGet("refresh")]
-    public async Task<IActionResult> Refresh()
-    {
-        if (!(Request.Cookies.TryGetValue("X-Username", out var userName) &&
-              Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken)))
-            return BadRequest();
-
-        var user = await _userManager.Users
-            .FirstOrDefaultAsync(i => i.UserName == userName
-                                      && i.RefreshToken == Guid.Parse(refreshToken));
-
-        var roles = await _userManager.GetRolesAsync(user);
-
-        if (user is null)
-            return BadRequest();
-
-        var token = _jwtService.GenerateUserJwt(user, roles);
-
-        user.RefreshToken = Guid.NewGuid();
-
-        await _userManager.UpdateAsync(user);
-
-        Response.Cookies.Append("X-Access-Token", token,
-            new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-        Response.Cookies.Append("X-Username", user.UserName,
-            new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-        Response.Cookies.Append("X-Refresh-Token", user.RefreshToken.ToString(),
-            new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-
-        return Ok();
-    }
+    // [HttpGet("refresh")]
+    // public async Task<IActionResult> Refresh()
+    // {
+    //     if (!(Request.Cookies.TryGetValue("X-Username", out var userName) &&
+    //           Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken)))
+    //         return BadRequest();
+    //
+    //     var user = await _userManager.Users
+    //         .FirstOrDefaultAsync(i => i.UserName == userName
+    //                                   && i.RefreshToken == Guid.Parse(refreshToken));
+    //
+    //     var roles = await _userManager.GetRolesAsync(user);
+    //
+    //     if (user is null)
+    //         return BadRequest();
+    //
+    //     var token = _jwtService.GenerateUserJwt(user, roles);
+    //
+    //     user.RefreshToken = Guid.NewGuid();
+    //
+    //     await _userManager.UpdateAsync(user);
+    //
+    //     Response.Cookies.Append("X-Access-Token", token,
+    //         new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+    //     Response.Cookies.Append("X-Username", user.UserName,
+    //         new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+    //     Response.Cookies.Append("X-Refresh-Token", user.RefreshToken.ToString(),
+    //         new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+    //
+    //     return Ok();
+    // }
 }

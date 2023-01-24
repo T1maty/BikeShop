@@ -46,7 +46,6 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
             LastName = "Kalnitskiy",
             Patronymic = "Andreevich",
             ShopId = 1,
-            RefreshToken = Guid.NewGuid()
         });
 
         builder.Entity<IdentityRole>().HasData(new IdentityRole()
