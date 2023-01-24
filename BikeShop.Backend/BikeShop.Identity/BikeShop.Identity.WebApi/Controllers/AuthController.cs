@@ -1,5 +1,7 @@
+using System.Net;
 using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
+using BikeShop.Identity.Application.CQRS.Commands.DeleteRefreshSessionByToken;
 using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
 using BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSession;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserById;
@@ -88,5 +90,22 @@ public class AuthController : ControllerBase
         var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
 
         return Ok(new { accessToken });
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
+        if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
+            return BadRequest();
+
+        // Удаляю сессию по рефреш токену из базы
+        var deleteCommand = new DeleteRefreshSessionByTokenCommand() { RefreshToken = Guid.Parse(refreshToken) };
+        await _mediator.Send(deleteCommand);
+
+        // Удаляю кукас
+        Response.Cookies.Delete("X-Refresh-Token");
+
+        return Ok();
     }
 }
