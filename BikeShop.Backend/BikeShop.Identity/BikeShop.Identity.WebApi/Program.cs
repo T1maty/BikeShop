@@ -16,6 +16,11 @@ builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("J
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<JwtConfiguration>>().Value);
 
+// Register connection configuration
+builder.Services.Configure<ConnectionConfiguration>(builder.Configuration.GetSection("ConnectionStrings"));
+builder.Services.AddSingleton(resolver =>
+    resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
+
 builder.Services.AddApplication();
 builder.Services.AddPersistence();
 

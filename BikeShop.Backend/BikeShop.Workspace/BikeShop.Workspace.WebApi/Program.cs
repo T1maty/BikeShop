@@ -9,9 +9,6 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Подключение скрытого json файла со строкой подключения к постгрес серверу
-builder.Configuration.AddJsonFile("connectionStrings.json");
-
 // Инжект кастомных классов конфигураций. Должен стоять до инжектов слоев Application и Persistence
 
 // Привязка класса ConnectionConfiguration к разделу ConnectionString в appsettings
