@@ -1,14 +1,13 @@
 using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
+using BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSession;
+using BikeShop.Identity.Application.CQRS.Queries.GetUserById;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 using BikeShop.Identity.Application.Services;
-using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.WebApi.Models.Auth;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.WebApi.Controllers;
 
@@ -66,35 +65,28 @@ public class AuthController : ControllerBase
     }
 
 
-    // [HttpGet("refresh")]
-    // public async Task<IActionResult> Refresh()
-    // {
-    //     if (!(Request.Cookies.TryGetValue("X-Username", out var userName) &&
-    //           Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken)))
-    //         return BadRequest();
-    //
-    //     var user = await _userManager.Users
-    //         .FirstOrDefaultAsync(i => i.UserName == userName
-    //                                   && i.RefreshToken == Guid.Parse(refreshToken));
-    //
-    //     var roles = await _userManager.GetRolesAsync(user);
-    //
-    //     if (user is null)
-    //         return BadRequest();
-    //
-    //     var token = _jwtService.GenerateUserJwt(user, roles);
-    //
-    //     user.RefreshToken = Guid.NewGuid();
-    //
-    //     await _userManager.UpdateAsync(user);
-    //
-    //     Response.Cookies.Append("X-Access-Token", token,
-    //         new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-    //     Response.Cookies.Append("X-Username", user.UserName,
-    //         new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-    //     Response.Cookies.Append("X-Refresh-Token", user.RefreshToken.ToString(),
-    //         new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-    //
-    //     return Ok();
-    // }
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh()
+    {
+        // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
+        if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
+            return BadRequest();
+
+        // Обновляю рефреш сессию. Если пришедший рефреш токен невалидный - получим исключение
+        // Если все ок - получу всю сессию, в том числе id пользователя
+        var updateSessionCommand = new UpdateRefreshSessionCommand { RefreshToken = Guid.Parse(refreshToken) };
+        var refreshSession = await _mediator.Send(updateSessionCommand);
+
+        // Получаю пользователя этой сессии
+        var getUserQuery = new GetUserByIdQuery { UserId = refreshSession.UserId };
+        var userData = await _mediator.Send(getUserQuery);
+
+        // Добавляю рефреш токен в httpOnly cookie
+        _cookieService.AddRefreshCookieToResponse(HttpContext.Response, refreshSession.RefreshToken);
+
+        // Генерирую новый access токен и возвращаю его 
+        var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
+
+        return Ok(new { accessToken });
+    }
 }
