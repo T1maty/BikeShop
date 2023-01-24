@@ -1,5 +1,4 @@
 ﻿using BikeShop.Identity.Application.Interfaces;
-using BikeShop.Identity.Domain;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence.EntityConfigurations;
 using Microsoft.AspNetCore.Identity;
@@ -8,10 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.Persistence;
 
-public class AuthDbContext : IdentityDbContext<BikeShopUser>, IAuthDbContext
+public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
 {
-    public DbSet<RefreshSession> RefreshSessions { get; set; }
-
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
@@ -21,22 +18,34 @@ public class AuthDbContext : IdentityDbContext<BikeShopUser>, IAuthDbContext
     {
         base.OnModelCreating(builder);
 
-        builder.ApplyConfiguration(new BikeShopUserConfiguration());
+        builder.ApplyConfiguration(new ApplicationUserConfiguration());
 
-        builder.Entity<BikeShopUser>(entity => entity.ToTable(name: "Users"));
+        builder.Entity<ApplicationUser>(entity => entity.ToTable(name: "Users"));
         builder.Entity<IdentityRole>(entity => entity.ToTable(name: "Roles"));
-        builder.Entity<IdentityUserRole<string>>(entity =>
-            entity.ToTable(name: "UserRoles"));
-        builder.Entity<IdentityUserClaim<string>>(entity =>
-            entity.ToTable(name: "UserClaim"));
-        builder.Entity<IdentityUserLogin<string>>(entity =>
-            entity.ToTable("UserLogins"));
-        builder.Entity<IdentityUserToken<string>>(entity =>
-            entity.ToTable("UserTokens"));
-        builder.Entity<IdentityRoleClaim<string>>(entity =>
-            entity.ToTable("RoleClaims"));
-
-        builder.Entity<RefreshSession>(entity =>
-            entity.ToTable("Sessions"));
+        builder.Entity<IdentityUserRole<string>>(entity => entity.ToTable(name: "UserRoles"));
+        builder.Entity<IdentityUserClaim<string>>(entity => entity.ToTable(name: "UserClaim"));
+        builder.Entity<IdentityUserLogin<string>>(entity => entity.ToTable("UserLogins"));
+        builder.Entity<IdentityUserToken<string>>(entity => entity.ToTable("UserTokens"));
+        builder.Entity<IdentityRoleClaim<string>>(entity => entity.ToTable("RoleClaims"));
+        
+        
+        var hasher = new PasswordHasher<ApplicationUser>();
+        builder.Entity<ApplicationUser>().HasData(new ApplicationUser
+        {
+            Id = Guid.NewGuid().ToString(),
+            UserName = "test@test.com",
+            NormalizedUserName = "test@test.com".ToUpper(),
+            Email = "test@test.com",
+            NormalizedEmail = "test@test.com".ToUpper(),
+            EmailConfirmed = true,
+            PasswordHash = hasher.HashPassword(null, "admin"),
+            SecurityStamp = string.Empty,
+            
+            FirstName = "Nikita",
+            LastName = "Kalnitskiy",
+            Patronymic = "Andreevich",
+            ShopId = 1,
+            RefreshToken = Guid.NewGuid()
+        });
     }
 }

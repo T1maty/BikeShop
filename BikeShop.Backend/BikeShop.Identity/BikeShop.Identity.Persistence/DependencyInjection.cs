@@ -1,4 +1,5 @@
 ﻿using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,9 @@ public static class DependencyInjection
         // Связал интерфейс контекста с ранее созданным сервисом на классе 
         services.AddScoped<IAuthDbContext>(provider =>
             provider.GetService<AuthDbContext>());
+
+        services.AddScoped<JwtService>();
+        
         return services;
     }
 }
