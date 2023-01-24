@@ -10,9 +10,13 @@ namespace BikeShop.Identity.Persistence;
 public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
 {
     public DbSet<RefreshSession> RefreshSessions { get; set; }
+
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
+        // Позволяет не конвертировать время в UTC для postgresql
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -28,8 +32,8 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
         builder.Entity<IdentityUserLogin<string>>(entity => entity.ToTable("UserLogins"));
         builder.Entity<IdentityUserToken<string>>(entity => entity.ToTable("UserTokens"));
         builder.Entity<IdentityRoleClaim<string>>(entity => entity.ToTable("RoleClaims"));
-        
-        
+
+
         var hasher = new PasswordHasher<ApplicationUser>();
         builder.Entity<ApplicationUser>().HasData(new ApplicationUser
         {
@@ -41,7 +45,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
             EmailConfirmed = true,
             PasswordHash = hasher.HashPassword(null, "admin"),
             SecurityStamp = string.Empty,
-            
+
             FirstName = "Nikita",
             LastName = "Kalnitskiy",
             Patronymic = "Andreevich",

@@ -9,15 +9,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BikeShop.Identity.Application\BikeShop.Identity.Application.csproj"/>
-        <ProjectReference Include="..\BikeShop.Identity.Domain\BikeShop.Identity.Domain.csproj"/>
-        <ProjectReference Include="..\BikeShop.Identity.Persistence\BikeShop.Identity.Persistence.csproj"/>
+        <ProjectReference Include="..\BikeShop.Identity.Application\BikeShop.Identity.Application.csproj" />
+        <ProjectReference Include="..\BikeShop.Identity.Domain\BikeShop.Identity.Domain.csproj" />
+        <ProjectReference Include="..\BikeShop.Identity.Persistence\BikeShop.Identity.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="12.0.1"/>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2"/>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
 </Project>

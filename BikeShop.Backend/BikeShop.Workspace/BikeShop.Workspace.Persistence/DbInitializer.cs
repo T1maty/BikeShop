@@ -1,5 +1,6 @@
 ﻿using BikeShop.Workspace.Application.Common.Configurations;
 using BikeShop.Workspace.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Workspace.Persistence;
 
@@ -9,6 +10,7 @@ public static class DbInitializer
     {
         // Создает базу, если её не существует
         context.Database.EnsureCreated();
+        context.Database.Migrate();
 
         // Создание стандартного магазина
         if (!context.Shops.Any())
@@ -20,15 +22,16 @@ public static class DbInitializer
             {
                 Name = configuration.DefaultCurrency,
                 Coefficient = 1,
-                IsBaseCurrency = true
+                IsBaseCurrency = true,
+                Symbol = '$'
             });
 
-        // Создание стандартных ролей
-        if (!context.UserRoles.Any())
-        {
-            context.UserRoles.Add(new UserRole { Name = configuration.DefaultUserRole });
-            context.UserRoles.Add(new UserRole { Name = configuration.DefaultAdminRole });
-        }
+        // // Создание стандартных ролей
+        // if (!context.UserRoles.Any())
+        // {
+        //     context.UserRoles.Add(new UserRole { Name = configuration.DefaultUserRole });
+        //     context.UserRoles.Add(new UserRole { Name = configuration.DefaultAdminRole });
+        // }
         
         context.SaveChanges();
     }
