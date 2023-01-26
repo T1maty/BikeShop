@@ -15,13 +15,13 @@ public static class DependencyInjection
 
         services.AddDbContext<AuthDbContext>(options =>
         {
-            //options.UseSqlite("Data source=identity.db");
-            options.UseNpgsql(connectionConfiguration.Postgres, 
-                options =>
-                {
-                    options.SetPostgresVersion(new Version("9.6"));
-                    options.MigrationsAssembly("BikeShop.Identity.WebApi");
-                });
+            options.UseSqlite("Data source=identity.db");
+            // options.UseNpgsql(connectionConfiguration.Postgres, 
+            //     options =>
+            //     {
+            //         options.SetPostgresVersion(new Version("9.6"));
+            //         options.MigrationsAssembly("BikeShop.Identity.WebApi");
+            //     });
         });
 
         // Связал интерфейс контекста с ранее созданным сервисом на классе 
