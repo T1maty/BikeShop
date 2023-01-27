@@ -1,8 +1,7 @@
-using System.Net;
-using System.Text.Json;
-using BikeShop.Identity.Application.Exceptions;
+﻿using System.Net;
+using BikeShop.Workspace.Application.Common.Exceptions;
 
-namespace BikeShop.Identity.WebApi.Middleware;
+namespace BikeShop.Workspace.WebApi.Middleware;
 
 public class CustomExceptionHandlerMiddleware
 {
@@ -36,13 +35,9 @@ public class CustomExceptionHandlerMiddleware
                 statusCode = HttpStatusCode.NotFound;
                 result = notFoundException;
                 break;
-            case RegistrationException registrationException:
+            case AlreadyExistsException alreadyExistsException:
                 statusCode = HttpStatusCode.BadRequest;
-                result = registrationException;
-                break;
-            case RefreshTokenException refreshTokenException:
-                statusCode = HttpStatusCode.BadRequest;
-                result = refreshTokenException;
+                result = alreadyExistsException;
                 break;
             default:
                 Console.WriteLine(exception);
@@ -62,12 +57,10 @@ public class CustomExceptionHandlerMiddleware
     }
 }
 
-
 public static class CustomExceptionHandlerMiddlewareExtension
 {
     public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder builder)
     {
         return builder.UseMiddleware<CustomExceptionHandlerMiddleware>();
     }
-
 }

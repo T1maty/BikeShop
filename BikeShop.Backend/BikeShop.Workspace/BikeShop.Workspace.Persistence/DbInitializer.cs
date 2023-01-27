@@ -10,12 +10,15 @@ public static class DbInitializer
     {
         // Создает базу, если её не существует
         context.Database.EnsureCreated();
-        context.Database.Migrate();
+        // context.Database.Migrate();
 
         // Создание стандартного магазина
         if (!context.Shops.Any())
+        {
+            Console.WriteLine("======== No shops, creating...");
             context.Shops.Add(new Shop { Name = configuration.DefaultShopName });
-        
+        }
+
         // Создание стандартной валюты
         if (!context.Currencies.Any())
             context.Currencies.Add(new Currency
@@ -32,7 +35,7 @@ public static class DbInitializer
         //     context.UserRoles.Add(new UserRole { Name = configuration.DefaultUserRole });
         //     context.UserRoles.Add(new UserRole { Name = configuration.DefaultAdminRole });
         // }
-        
+
         context.SaveChanges();
     }
 }

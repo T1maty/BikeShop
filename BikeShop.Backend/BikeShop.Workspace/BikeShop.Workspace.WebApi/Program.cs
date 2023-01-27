@@ -5,6 +5,7 @@ using BikeShop.Workspace.Application.Common.Configurations;
 using BikeShop.Workspace.Application.Common.Mappings;
 using BikeShop.Workspace.Application.Interfaces;
 using BikeShop.Workspace.Persistence;
+using BikeShop.Workspace.WebApi.Middleware;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -83,6 +84,7 @@ catch (Exception ex)
 
 var app = builder.Build();
 
+app.UseCustomExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI(config =>
 {

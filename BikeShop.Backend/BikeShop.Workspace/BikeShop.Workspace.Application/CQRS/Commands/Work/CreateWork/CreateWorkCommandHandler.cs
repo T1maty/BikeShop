@@ -25,7 +25,11 @@ public class CreateWorkCommandHandler : IRequestHandler<CreateWorkCommand>
         
         // Если такой группы нет - исключение
         if (group is null)
-            throw new NotFoundException(nameof(WorkGroup), request.GroupId);
+            throw new NotFoundException($"Create work error. Work group with id {request.GroupId} not found")
+            {
+                Error = "group_not_found",
+                ErrorDescription = "Create work error. Work group with given id not found"
+            };
 
 
         // Получаю валюту за услугу по переданному айди
@@ -35,7 +39,11 @@ public class CreateWorkCommandHandler : IRequestHandler<CreateWorkCommand>
 
         // Если такой валюты нет - исключение
         if (currency is null)
-            throw new NotFoundException(nameof(Currency), request.CurrencyId);
+            throw new NotFoundException($"Create work error. Currency with id {request.CurrencyId} not found")
+            {
+                Error = "currency_not_found",
+                ErrorDescription = "Create work error. Currency with given id not found"
+            };
 
 
         // Создаю экземпляр новой услуги
