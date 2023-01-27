@@ -1,4 +1,6 @@
-﻿namespace BikeShop.Identity.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace BikeShop.Identity.Persistence;
 
 public class DbInitializer
 {

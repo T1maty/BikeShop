@@ -11,4 +11,7 @@ public class Currency : BaseEntity
 
     // Базовая ли валюта
     public bool IsBaseCurrency { get; set; }
+    
+    // Символ валюты ($ доллар например)
+    public char Symbol { get; set; }
 }
