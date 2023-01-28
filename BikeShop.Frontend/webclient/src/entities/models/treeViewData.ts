@@ -1,5 +1,5 @@
-export default interface TreeViewData{
-    id:number
-    parentId:number
-    name:string
+export default interface TreeViewData {
+  id: number;
+  parentId: number;
+  name: string;
 }
