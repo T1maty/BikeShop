@@ -1,15 +1,8 @@
-import { TextField } from "@mui/material"
-import { useState } from "react"
-import { IInput } from "./IInput"
+import { TextField } from '@mui/material';
+import { IInput } from './IInput';
 
-const InputUI = ({placeholder}: IInput) => {
+const InputUI = ({ placeholder }: IInput) => {
+  return <TextField placeholder={placeholder} />;
+};
 
-
-  return (
-    <TextField
-      placeholder={placeholder}
-    />
-  )
-}
-
-export default InputUI
+export default InputUI;
