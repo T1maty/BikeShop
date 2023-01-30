@@ -10,14 +10,14 @@ public static class DbInitializer
     {
         // Создает базу, если её не существует
         context.Database.EnsureCreated();
-        // context.Database.Migrate();
+        context.Database.Migrate();
 
         // Создание стандартного магазина
         if (!context.Shops.Any())
-        {
-            Console.WriteLine("======== No shops, creating...");
-            context.Shops.Add(new Shop { Name = configuration.DefaultShopName });
-        }
+            context.Shops.Add(new Shop
+            {
+                Name = configuration.DefaultShopName
+            });
 
         // Создание стандартной валюты
         if (!context.Currencies.Any())
@@ -28,6 +28,31 @@ public static class DbInitializer
                 IsBaseCurrency = true,
                 Symbol = '$'
             });
+
+        if (!context.Brands.Any())
+            context.Brands.Add(new Brand
+            {
+                Id = 1,
+                Name = "Default brand",
+                SortOrder = 0,
+                ImageSource =
+                    "https://api.delfi.ee/media-api-image-cropper/v1/07f235c0-7579-11ed-9cac-31655ba2167a.jpg?noup&w=1200&h=711"
+            });
+
+        if (!context.ProductTags.Any())
+            context.ProductTags.AddRange(
+                new ProductTag()
+                {
+                    Id = 1,
+                    Name = "test1"
+                },
+                new ProductTag()
+                {
+                    Id = 2,
+                    Name = "test2"
+                }
+            );
+
 
         // // Создание стандартных ролей
         // if (!context.UserRoles.Any())

@@ -22,7 +22,6 @@ builder.Services.Configure<DefaultValuesConfiguration>(builder.Configuration.Get
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<DefaultValuesConfiguration>>().Value);
 
-
 // Подключение контроллеров, так же настройка именования JSON данных
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -91,7 +90,7 @@ app.UseSwaggerUI(config =>
     // get to swagger UI using root uri
     config.RoutePrefix = string.Empty;
 
-    config.SwaggerEndpoint("swagger/v1/swagger.json", "Bikeshop.Workspace API");
+    config.SwaggerEndpoint("swagger/v1/swagger.json", "BikeShop.Workspace API");
 });
 
 app.UseHttpsRedirection();
