@@ -3,7 +3,7 @@ using BikeShop.Workspace.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BikeShop.Workspace.Application.CQRS.Queries.Product;
+namespace BikeShop.Workspace.Application.CQRS.Queries.Product.GetProductByBarcode;
 
 public class GetProductByBarcodeQueryHandler : IRequestHandler<GetProductByBarcodeQuery, Domain.Entities.Product>
 {

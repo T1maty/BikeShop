@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace BikeShop.Workspace.Application.CQRS.Queries.Product;
+namespace BikeShop.Workspace.Application.CQRS.Queries.Product.GetProductByBarcode;
 
 public class GetProductByBarcodeQuery : IRequest<Domain.Entities.Product>
 {

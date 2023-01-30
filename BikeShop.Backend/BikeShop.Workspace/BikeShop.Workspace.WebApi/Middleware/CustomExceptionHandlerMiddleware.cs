@@ -39,6 +39,10 @@ public class CustomExceptionHandlerMiddleware
                 statusCode = HttpStatusCode.BadRequest;
                 result = alreadyExistsException;
                 break;
+            case InvalidFormatException invalidFormatException:
+                statusCode = HttpStatusCode.BadRequest;
+                result = invalidFormatException;
+                break;
             default:
                 Console.WriteLine(exception);
                 break;

@@ -36,6 +36,15 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
                 };
         }
 
+        // Если нету бредна с указанным айди
+        var existingBrand = _context.Brands.FirstOrDefaultAsync(b => b.Id == request.BrandId, cancellationToken);
+        if (existingBrand is null)
+            throw new NotFoundException($"Create product error. Brand with id {request.BrandId} not found")
+            {
+                Error = "brand_not_found",
+                ErrorDescription = "Create product error. Brand with given id not found"
+            };
+
 
         // Если все ок - добавляю продукт
         var newProduct = new Domain.Entities.Product
