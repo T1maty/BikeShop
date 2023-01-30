@@ -39,8 +39,11 @@ public class AuthController : ControllerBase
     /// <code>
     /// POST /Auth/login
     /// {
-    /// Phone: +39012345678
-    /// password: kavo1234
+    /// 
+    /// email: kvadrofadro123@gmail.com,
+    /// или по номеру телефона:
+    /// Phone: +39012345678,
+    /// password: kavo1234,
     /// UserId: 1
     /// }
     /// </code>
@@ -152,18 +155,23 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
-    /// Logout Account User
+    /// Refresh Token Пользователя  
     /// </summary>
     /// <remarks>
     /// Пример Запроса:
     /// <code>
-    /// POST /auth/logout
+    /// POST /Auth/logout
     /// {
-    ///   phone: 3806612345678,
-    ///   password:shi123456789   
+    ///  phone: +38095234567,
+    ///  password: ziropoint@gmail.com
     /// }
-    /// <returns>Ничего</returns>
+    /// </code>
+    /// </remarks>
+    /// 
+    /// <param name="model">Logout User</param>
+    /// <returns> Ничего </returns>
     /// <response code="200">Successfully Logout</response>
+
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
