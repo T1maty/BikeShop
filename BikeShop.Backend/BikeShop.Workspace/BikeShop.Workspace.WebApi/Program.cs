@@ -5,6 +5,7 @@ using BikeShop.Workspace.Application.Common.Configurations;
 using BikeShop.Workspace.Application.Common.Mappings;
 using BikeShop.Workspace.Application.Interfaces;
 using BikeShop.Workspace.Persistence;
+using BikeShop.Workspace.WebApi.Middleware;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,6 @@ builder.Services.AddSingleton(resolver =>
 builder.Services.Configure<DefaultValuesConfiguration>(builder.Configuration.GetSection("DefaultValues"));
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<DefaultValuesConfiguration>>().Value);
-
 
 // Подключение контроллеров, так же настройка именования JSON данных
 builder.Services.AddControllers()
@@ -83,13 +83,14 @@ catch (Exception ex)
 
 var app = builder.Build();
 
+app.UseCustomExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI(config =>
 {
     // get to swagger UI using root uri
     config.RoutePrefix = string.Empty;
 
-    config.SwaggerEndpoint("swagger/v1/swagger.json", "Bikeshop.Workspace API");
+    config.SwaggerEndpoint("swagger/v1/swagger.json", "BikeShop.Workspace API");
 });
 
 app.UseHttpsRedirection();

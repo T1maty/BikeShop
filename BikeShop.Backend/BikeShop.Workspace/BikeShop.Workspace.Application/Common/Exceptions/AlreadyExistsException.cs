@@ -1,14 +1,11 @@
 ﻿namespace BikeShop.Workspace.Application.Common.Exceptions;
 
-public sealed class AlreadyExistsException : Exception
+public sealed class AlreadyExistsException : Exception, IException
 {
-    public string EntityName { get; }
-    public object ExistingValue { get; }
+    public string Error { get; set; }
+    public string ErrorDescription { get; set; }
 
-    public AlreadyExistsException(string name, object key)
-        : base($"Entity '{name}' with value '{key}' already exists.")
+    public AlreadyExistsException(string message) : base(message)
     {
-        EntityName = name;
-        ExistingValue = key;
     }
 }

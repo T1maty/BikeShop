@@ -1,11 +1,7 @@
 ﻿namespace BikeShop.Workspace.Application.Common.Exceptions;
 
-public sealed class NotFoundException : Exception, IException
+public interface IException
 {
     public string Error { get; set; }
     public string ErrorDescription { get; set; }
-
-    public NotFoundException(string message) : base(message)
-    {
-    }
 }
