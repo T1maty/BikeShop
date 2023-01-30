@@ -23,7 +23,7 @@ export default function ProductTreeView() {
     };
     const handleExpandClick = () => {
         setExpanded((oldExpanded) =>
-            oldExpanded.length === 0 ? ['1', '5', '6', '7'] : [],
+            oldExpanded.length === 0 ? ['1', '5', '6', '7', '8'] : [],
         );
     };
     const handleSelectClick = () => {
@@ -59,15 +59,7 @@ export default function ProductTreeView() {
     }
 
     return (
-        <Box sx={{ height: 270, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}>
-            <Box sx={{ mb: 1 }}>
-                <Button onClick={handleExpandClick}>
-                    {expanded.length === 0 ? 'Expand all' : 'Collapse all'}
-                </Button>
-                <Button onClick={handleSelectClick}>
-                    {selected.length === 0 ? 'Select all' : 'Unselect all'}
-                </Button>
-            </Box>
+        <Box sx={{ height: 270, flexGrow: 1, maxWidth: 400, overflowY: 'auto', borderRadius:5, backgroundColor: '#33373B', mt:1, ml:1  }}>
             <TreeView
                 aria-label="controlled"
                 defaultCollapseIcon={<ExpandMoreIcon />}

@@ -68,7 +68,8 @@ const LoginForm = () => {
                     <Button type='submit' variant='contained' sx={{ mt: 2 }}>Login</Button>
                 </Box>
                 <NavLink to='/registration'>Registration</NavLink><br />
-                <NavLink to='/main'>main page</NavLink>
+                <NavLink to='/main'>main page</NavLink><br/>
+                <NavLink to='/workcatalog'>workcatalog</NavLink>
             </Container>
         </Stack>
     )
