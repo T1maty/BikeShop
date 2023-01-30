@@ -41,8 +41,12 @@ public class CustomExceptionHandlerMiddleware
                 result = registrationException;
                 break;
             case RefreshTokenException refreshTokenException:
-                statusCode = HttpStatusCode.BadRequest;
+                statusCode = HttpStatusCode.NotAcceptable;
                 result = refreshTokenException;
+                break;
+            case SignInDataException signInDataException:
+                statusCode = HttpStatusCode.BadRequest;
+                result = signInDataException;
                 break;
             default:
                 Console.WriteLine(exception);

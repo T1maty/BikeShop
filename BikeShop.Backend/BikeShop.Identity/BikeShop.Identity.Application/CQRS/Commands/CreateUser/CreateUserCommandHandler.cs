@@ -16,6 +16,27 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
 
     public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
+        // Если есть пользователь с таким телефоном - ошибка
+        var existingUserByPhone = await _userManager.FindByNameAsync(request.Phone);
+        if (existingUserByPhone is not null)
+            throw new RegistrationException($"Registration error. User with phone {request.Phone} already exists")
+            {
+                Error = "phone_already_exists",
+                ErrorDescription = "Registration error. User with given phone already exists"
+            };
+
+        // Если есть пользователь с такой почтой - ошибка
+        if (request.Email is not null)
+        {
+            var existingUserByEmail = await _userManager.FindByEmailAsync(request.Email);
+            if(existingUserByEmail is not null)
+                throw new RegistrationException($"Registration error. User with email {request.Email} already exists")
+                {
+                    Error = "email_already_exists",
+                    ErrorDescription = "Registration error. User with given email already exists"
+                };
+        }
+
         // Создаю пользователя из запроса
         var user = new ApplicationUser
         {
