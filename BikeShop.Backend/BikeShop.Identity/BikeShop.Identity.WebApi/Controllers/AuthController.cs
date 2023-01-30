@@ -31,6 +31,24 @@ public class AuthController : ControllerBase
         _mapper = mapper;
         _mediator = mediator;
     }
+    /// <summary>
+    /// Пользователь логинится 
+    /// </summary>
+    /// <remarks>
+    /// Пример Запроса:
+    /// <code>
+    /// POST /Auth/login
+    /// {
+    /// Phone: +39012345678
+    /// password: kavo1234
+    /// UserId: 1
+    /// }
+    /// </code>
+    /// </remarks>
+    /// 
+    /// <param name="model">LoginUser( Вход в аккаунт Юзеру)</param>
+    /// <returns>Ничего</returns>
+    /// <response code="200">Успешный вход</response>
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -55,7 +73,28 @@ public class AuthController : ControllerBase
         return Ok(new { accessToken });
     }
 
-
+    /// <summary>
+    /// Пользователь Регистрируеться  
+    /// </summary>
+    /// <remarks>
+    /// Пример Запроса:
+    /// <code>
+    /// POST /Auth/register
+    /// {
+    /// phone: +3809812345678 ,
+    /// password: 12345670bike ,
+    /// email: malori@gmail.com  ,
+    /// firstName: Иван ,
+    /// lastName:  Шалушарий,
+    /// patronymic: Сергеевич,
+    /// shopId: 3
+    /// }
+    /// </code>
+    /// </remarks>
+    /// 
+    /// <param name="model">Register User( Регистрация Юзера)</param>
+    /// <returns> Ничего </returns>
+    /// <response code="200">Успешно Зарегистрирован</response>
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterModel model)
     {
@@ -67,7 +106,22 @@ public class AuthController : ControllerBase
         return Ok();
     }
 
-
+    /// <summary>
+    /// Refresh Token Пользователя  
+    /// </summary>
+    /// <remarks>
+    /// Пример Запроса:
+    /// <code>
+    /// POST /Auth/refresh
+    /// {
+    /// refresh token: random
+    /// }
+    /// </code>
+    /// </remarks>
+    /// 
+    /// <param name="model">Refresh Token</param>
+    /// <returns> Ничего </returns>
+    /// <response code="200">Successfully Refresh</response>
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh()
     {
@@ -97,6 +151,19 @@ public class AuthController : ControllerBase
         return Ok(new { accessToken });
     }
 
+    /// <summary>
+    /// Logout Account User
+    /// </summary>
+    /// <remarks>
+    /// Пример Запроса:
+    /// <code>
+    /// POST /auth/logout
+    /// {
+    ///   phone: 3806612345678,
+    ///   password:shi123456789   
+    /// }
+    /// <returns>Ничего</returns>
+    /// <response code="200">Successfully Logout</response>
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
