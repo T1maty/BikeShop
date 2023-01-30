@@ -15,7 +15,7 @@ public static class DependencyInjection
 
         services.AddDbContext<AuthDbContext>(options =>
         {
-            options.UseSqlite("Data source=identity.db");
+            options.UseSqlite(connectionConfiguration.Sqlite);
             // options.UseNpgsql(connectionConfiguration.Postgres, 
             //     options =>
             //     {
