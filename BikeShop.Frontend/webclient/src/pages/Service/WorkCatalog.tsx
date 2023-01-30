@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductTreeView from '../../widgets/TreeView/ProductTreeView';
+import ProductTreeView from 'widgets/productTreeView/ProductTreeView';
 
 const WorkCatalog = () => {
   return (
@@ -8,5 +8,4 @@ const WorkCatalog = () => {
     </div>
   );
 };
-
 export default WorkCatalog;

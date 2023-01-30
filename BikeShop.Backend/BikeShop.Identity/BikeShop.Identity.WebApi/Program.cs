@@ -26,6 +26,18 @@ builder.Services.AddPersistence();
 
 builder.Services.AddControllers();
 
+
+//Swagger
+builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    //включаю комментарии xml и путь к ним
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    config.IncludeXmlComments(xmlPath);
+});
+
+
 // Inject controllers, and configure JSON serialization to camelCase 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -82,6 +94,15 @@ catch (Exception ex)
 }
 
 var app = builder.Build();
+
+
+app.UseSwagger();
+app.UseSwaggerUI(config =>
+{
+    config.RoutePrefix = string.Empty;
+
+    config.SwaggerEndpoint("swagger/v1/swagger.json", "BikeShop.Workspace API");
+});
 
 app.UseCustomExceptionHandler();
 app.MapControllers();

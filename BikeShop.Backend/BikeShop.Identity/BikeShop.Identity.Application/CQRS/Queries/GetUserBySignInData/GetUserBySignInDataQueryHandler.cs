@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 
+// Поиск пользователя по телефону/почте и паролю. Типа логин
 public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDataQuery, GetUserModel>
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -19,19 +20,41 @@ public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDa
 
     public async Task<GetUserModel> Handle(GetUserBySignInDataQuery request, CancellationToken cancellationToken)
     {
-        var signIn = await _signInManager
-            .PasswordSignInAsync(request.Phone, request.Password, false, false);
-
-        if (!signIn.Succeeded)
-            throw new NotFoundException($"User with phone '{request.Phone}' and password '{request.Password}' not found")
+        // Если не указан ни телефон ни почта - ошибка
+        if (request.Phone is null && request.Email is null)
+            throw new SignInDataException("Get user by sign in error. Phone AND email is null")
             {
-                Error = "error_login",
-                ErrorDescription = "Login failed. Incorrect login or password"
+                Error = "phone_email_null",
+                ErrorDescription = "Get user error. Phone AND email are empty"
             };
 
-        var user = await _userManager.FindByNameAsync(request.Phone);
+        // Ищу пользователя в базе по телефону или почте, в зависимости от того что указали
+        var user = request.Phone is not null
+            ? await _userManager.FindByNameAsync(request.Phone)
+            : await _userManager.FindByEmailAsync(request.Email);
+
+        if (user is null)
+            throw new NotFoundException(
+                $"Get user by sign in error. User with phone/email {request.Phone ?? request.Email} not found")
+            {
+                Error = "user_not_found",
+                ErrorDescription = "Get user error. User with given phone/email not found"
+            };
+
+        // Сверяю пароль
+        var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
+        if (!result.Succeeded)
+            throw new SignInDataException($"Get user by sign in error. Incorrect password from user {user.PhoneNumber}")
+            {
+                Error = "incorrect_password",
+                ErrorDescription = "Get user error. Incorrect password"
+            };
+
+
+        // Подтягиваю его роли
         var roles = await _userManager.GetRolesAsync(user);
 
+        // Возвращаю юзера и его роли
         return new GetUserModel
         {
             User = user,

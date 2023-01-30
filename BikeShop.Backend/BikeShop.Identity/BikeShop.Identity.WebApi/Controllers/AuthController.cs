@@ -11,6 +11,7 @@ using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.WebApi.Models.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.WebApi.Controllers;
 
@@ -18,8 +19,8 @@ namespace BikeShop.Identity.WebApi.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly JwtService _jwtService;
-    private readonly CookieService _cookieService;
+    private readonly JwtService _jwtService; // для генерации JWT-токенов
+    private readonly CookieService _cookieService; // для вставки рефреш токена в куки
 
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
@@ -32,7 +33,26 @@ public class AuthController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Логин пользователя и создании сессии. Получение JWT-токенов доступа и рефреша.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// Указывается ИЛИ телефон, ИЛИ почта. Если и то и другое будет пустым - ответ 400
+    /// </remarks>
+    /// 
+    /// <param name="model">Модель входа в аккаунт</param>
+    /// <returns>JWT access token в теле, refresh token в http-only cookie (X-Refresh-Token) при успехе. Модель ошибки при неудаче</returns>
+    /// 
+    /// <response code="200">Успешный вход</response>
+    /// <response code="400">И телефон и почта не указаны</response>
+    /// <response code="404">Пользователь с такими учетными данными не найден.</response>
+    /// <response code="422">Невалидная модель (например не указаны обязательные поля)</response>
     [HttpPost("login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
         if (!ModelState.IsValid)
@@ -55,20 +75,53 @@ public class AuthController : ControllerBase
         return Ok(new { accessToken });
     }
 
-
+    /// <summary>
+    /// Регистрация нового пользователя
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// Создание нового пользователя в базе с указанными данными. Ничего не возвращает, для логина нужен будет отдельный запрос.
+    /// </remarks>
+    /// 
+    /// <param name="model">Модель регистрации пользователя</param>
+    /// <returns>Ничего. Модель ошибки при неудаче.</returns>
+    /// <response code="200">Успешно зарегистрирован</response>
+    /// <response code="400">Пользователь с указанным телефоном/паролем уже существует. Или пароль слишком простой.</response>
+    /// <response code="422">Невалидная модель (например не указаны обязательные поля)</response>
     [HttpPost("register")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Register(RegisterModel model)
     {
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+
         var command = _mapper.Map<CreateUserCommand>(model);
         var id = await _mediator.Send(command);
 
-        Console.WriteLine("Registered new user. ID: " + id);
+        //Console.WriteLine("Registered new user. ID: " + id);
 
         return Ok();
     }
 
-
+    /// <summary>
+    /// Обновление токенов для пользователя. Фактически обновлении сессии. 
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// Берёт с cookie X-Refresh-Token рефреш токен, и если есть сессия на этот токен - обновляет её и возвращает новые токены.
+    /// </remarks>
+    /// 
+    /// <param>Refresh token в cookie X-Refresh-Token</param>
+    /// <returns>JWT access token в теле, refresh token в http-only cookie (X-Refresh-Token) при успехе. Модель ошибки при неудаче.</returns>
+    /// <response code="200">Успешное обновлении сессии</response>
+    /// <response code="404">Не найдена сессия на переданный refresh токен / Не найден пользователь, который привязан к сессии.</response>
+    /// <response code="406">Не передан cookie X-Refresh-Token с рефреш токеном</response>
     [HttpPost("refresh")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
     public async Task<IActionResult> Refresh()
     {
         // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
@@ -97,7 +150,24 @@ public class AuthController : ControllerBase
         return Ok(new { accessToken });
     }
 
+    /// <summary>
+    /// Логаут. Удаление куки с рефреш токеном.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// Удаляет куки X-Refresh-Token с рефреш токеном. Удаляет сессию.
+    /// </remarks>
+    ///
+    /// <param>Refresh token в cookie X-Refresh-Token</param>
+    /// 
+    /// <returns>Ничего. Модель ошибки в случае неудачи</returns>
+    /// <response code="200">Успешный логаут. Куки удален.</response>
+    /// <response code="404">Не найдена сессия с переданным refresh токеном</response>
+    /// <response code="406">Не передан cookie X-Refresh-Token с рефреш токеном</response>
     [HttpPost("logout")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
     public async Task<IActionResult> Logout()
     {
         // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
