@@ -17,7 +17,7 @@ namespace BikeShop.Workspace.WebApi.Models.Product
         [Required] public decimal DealerPrice { get; set; }
         [Required] public decimal RetailPrice { get; set; }
 
-        public int BrandId { get; set; }
+        [Required] public int BrandId { get; set; }
 
         public string CheckStatus { get; set; } = string.Empty;
         public bool RetailVisibility { get; set; }

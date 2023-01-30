@@ -7,7 +7,7 @@ namespace BikeShop.Workspace.Application.CQRS.Queries.Product.GetProductsByTags
 {
     public class GetProductsByTagsQueryHandler : IRequestHandler<GetProductsByTagsQuery, ProductsListModel>
     {
-        public IApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
         public GetProductsByTagsQueryHandler(IApplicationDbContext context)
         {
@@ -18,8 +18,12 @@ namespace BikeShop.Workspace.Application.CQRS.Queries.Product.GetProductsByTags
         {
             var tags = GetTagListFromString(request.TagsArrayStr);
 
-            var productsIds = await _context.TagToProductBinds.Where(bind => tags.Contains(bind.ProductTagId)).Select(bind => bind.ProductId).ToListAsync();
-            var products = await _context.Products.Where(product => productsIds.Contains(product.Id)).ToListAsync();
+            // Получаю айди продуктов с указанными тэгами
+            var productsIds = await _context.TagToProductBinds.Where(bind => tags.Contains(bind.ProductTagId))
+                .Select(bind => bind.ProductId).ToListAsync(cancellationToken);
+            // Получаю продукты по айди продуктов
+            var products = await _context.Products.Where(product => productsIds.Contains(product.Id))
+                .ToListAsync(cancellationToken);
 
             return new ProductsListModel
             {
@@ -32,19 +36,18 @@ namespace BikeShop.Workspace.Application.CQRS.Queries.Product.GetProductsByTags
             // Список всех айди тэгов в виде чисел
             var tagList = new List<int>();
             // для перебора
-            int currentTag;
 
             // Тэги будут переданы через запятую, сплитю по запятой
             foreach (var tagStr in tagsArrayStr.Split("-"))
             {
                 // Пытаюсь спарсить строку тэга в число
-                bool isNumber = int.TryParse(tagStr, out currentTag);
+                var isNumber = int.TryParse(tagStr, out var currentTag);
                 // Если не число - 400
                 if (!isNumber)
                     throw new InvalidFormatException($"Get products by tags error. Given invalid tags ({tagsArrayStr})")
                     {
                         Error = "tags_invalid",
-                        ErrorDescription = "Invalid tags format. Correct example: getbytags/1,2,3,4,5"
+                        ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5"
                     };
 
                 // Если один из тэгов число - добавляю его в результативный лист
@@ -56,7 +59,7 @@ namespace BikeShop.Workspace.Application.CQRS.Queries.Product.GetProductsByTags
                 throw new InvalidFormatException($"Get products by tags error. Given invalid tags ({tagsArrayStr})")
                 {
                     Error = "tags_invalid",
-                    ErrorDescription = "Invalid tags format. Correct example: getbytags/1,2,3,4,5"
+                    ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5"
                 };
 
             // Если все ок - возвращаю лист
