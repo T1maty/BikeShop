@@ -24,7 +24,11 @@ public class UpdateWorkCommandHandler : IRequestHandler<UpdateWorkCommand>
         
         // Если такой услуги нет - исключение
         if (work is null)
-            throw new NotFoundException(nameof(Domain.Entities.Work), request.Id);
+            throw new NotFoundException($"Update work error. Work with id {request.Id} not found")
+            {
+                Error = "work_not_found",
+                ErrorDescription = "Update work error. Work with given id not found"
+            };
         
         // Переписываю поля услуги
         work.Name = request.Name;

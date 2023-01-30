@@ -14,6 +14,10 @@ public interface IApplicationDbContext
     DbSet<CurrencyHistory> CurrencyHistories { get; set; }
     DbSet<WorkGroup> WorkGroups { get; set; }
     DbSet<Work> Works { get; set; }
+    DbSet<Product> Products { get; set; }
+    DbSet<ProductTag> ProductTags { get; set; }
+    DbSet<Brand> Brands { get; set; }
+    DbSet<TagToProductBind> TagToProductBinds { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс

@@ -1,9 +1,7 @@
-import { Checkbox } from "@mui/material"
+import { Checkbox } from '@mui/material';
 
 const CheckboxUI = () => {
-  return (
-    <Checkbox />
-  )
-}
+  return <Checkbox />;
+};
 
-export default CheckboxUI
+export default CheckboxUI;

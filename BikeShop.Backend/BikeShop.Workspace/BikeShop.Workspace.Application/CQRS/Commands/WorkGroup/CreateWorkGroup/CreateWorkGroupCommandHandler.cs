@@ -28,19 +28,27 @@ public class CreateWorkGroupCommandHandler : IRequestHandler<CreateWorkGroupComm
                 .FindAsync(request.ParentId, cancellationToken);
 
             if (parentGroup is null)
-                throw new NotFoundException(nameof(Domain.Entities.WorkGroup),
-                    new { id = request.ParentId });
+                throw new NotFoundException(
+                    $"Create work group error. Parent group with id {request.ParentId} not found")
+                {
+                    Error = "work_group_not_found",
+                    ErrorDescription = "Create work grop error. Parent group with given id not found"
+                };
         }
 
         // Существует ли уже услуга с таким названием
         var existingGroup =
             await _workGroupService.GetShopWorkGroupByNameAsync(request.ShopId, request.Name,
                 cancellationToken);
-        
+
         // Если да - исключение
         if (existingGroup is not null)
-            throw new AlreadyExistsException(nameof(Domain.Entities.WorkGroup),
-                new { name = existingGroup.Name });
+            throw new AlreadyExistsException(
+                $"Create work group error. Work group with name {request.Name} at shop with id {request.ShopId} already exists")
+            {
+                Error = "work_group_already_exists",
+                ErrorDescription = "Create work group error. Work group with given name at given shop already exists"
+            };
 
 
         // Если все ок - создаю группу и сохраняю в базу

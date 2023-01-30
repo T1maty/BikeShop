@@ -1,3 +1,3 @@
-export interface UserResponse{
-    id:number
+export interface UserResponse {
+  id: number;
 }

@@ -44,6 +44,9 @@ public class CustomExceptionHandlerMiddleware
                 statusCode = HttpStatusCode.BadRequest;
                 result = refreshTokenException;
                 break;
+            default:
+                Console.WriteLine(exception);
+                break;
         }
 
         context.Response.ContentType = "application/json";

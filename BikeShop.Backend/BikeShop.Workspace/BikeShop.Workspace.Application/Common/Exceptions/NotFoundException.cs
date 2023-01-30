@@ -1,14 +1,11 @@
 ﻿namespace BikeShop.Workspace.Application.Common.Exceptions;
 
-public sealed class NotFoundException : Exception
+public sealed class NotFoundException : Exception, IException
 {
-    public string EntityName { get; }
-    public object NotFoundValue { get; }
+    public string Error { get; set; }
+    public string ErrorDescription { get; set; }
 
-    public NotFoundException(string name, object key)
-        : base($"Entity '{name}' with value '{key}' not found.")
+    public NotFoundException(string message) : base(message)
     {
-        EntityName = name;
-        NotFoundValue = key;
     }
 }
