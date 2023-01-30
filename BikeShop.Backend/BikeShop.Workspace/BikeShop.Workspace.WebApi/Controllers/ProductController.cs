@@ -1,11 +1,10 @@
 using AutoMapper;
-using BikeShop.Workspace.Application.Common.Mappings;
 using BikeShop.Workspace.Application.CQRS.Commands.Product.CreateProduct;
-using BikeShop.Workspace.Domain.Entities;
+using BikeShop.Workspace.Application.CQRS.Commands.Product.UpdateProduct;
+using BikeShop.Workspace.Application.CQRS.Queries.Product;
 using BikeShop.Workspace.WebApi.Models.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static BikeShop.Workspace.Domain.Entities.Product;
 
 namespace BikeShop.Workspace.WebApi.Controllers
 {
@@ -33,7 +32,28 @@ namespace BikeShop.Workspace.WebApi.Controllers
 
             return Ok();
         }
-        
-        
+
+
+        [HttpGet("getbybarcode/{barcode}")]
+        public async Task<IActionResult> GetProductByBarcode(string barcode)
+        {
+            var query = new GetProductByBarcodeQuery { Barcode = barcode };
+            var product = await _mediator.Send(query);
+
+            return Ok(product);
+        }
+
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductModel model)
+        {
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+            var command = _mapper.Map<UpdateProductCommand>(model);
+            await _mediator.Send(command);
+
+            return Ok();
+        }
     }
 }
