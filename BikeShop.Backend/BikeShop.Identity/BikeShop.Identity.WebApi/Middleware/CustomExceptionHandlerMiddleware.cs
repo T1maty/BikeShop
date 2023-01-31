@@ -48,6 +48,10 @@ public class CustomExceptionHandlerMiddleware
                 statusCode = HttpStatusCode.BadRequest;
                 result = signInDataException;
                 break;
+            case AlreadyExistsException alreadyExistsException:
+                statusCode = HttpStatusCode.BadRequest;
+                result = alreadyExistsException;
+                break;
             default:
                 Console.WriteLine(exception);
                 break;

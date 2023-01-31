@@ -1,4 +1,3 @@
-using System.Net;
 using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 using BikeShop.Identity.Application.CQRS.Commands.DeleteRefreshSessionByToken;
@@ -10,13 +9,14 @@ using BikeShop.Identity.Application.Exceptions;
 using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.WebApi.Models.Auth;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.WebApi.Controllers;
 
+[AllowAnonymous]
 [ApiController]
-[Route("[controller]")]
+[Route("auth")]
 public class AuthController : ControllerBase
 {
     private readonly JwtService _jwtService; // для генерации JWT-токенов
@@ -53,7 +53,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    public async Task<ActionResult<AccessTokenModel>> Login([FromBody] LoginModel model)
     {
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
@@ -72,7 +72,7 @@ public class AuthController : ControllerBase
         // Генерирую access token для пользователя
         var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
 
-        return Ok(new { accessToken });
+        return Ok(new AccessTokenModel { AccessToken = accessToken });
     }
 
     /// <summary>
@@ -122,7 +122,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
-    public async Task<IActionResult> Refresh()
+    public async Task<ActionResult<AccessTokenModel>> Refresh()
     {
         // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
         if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
@@ -147,7 +147,7 @@ public class AuthController : ControllerBase
         // Генерирую новый access токен и возвращаю его 
         var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
 
-        return Ok(new { accessToken });
+        return Ok(new AccessTokenModel { AccessToken = accessToken });
     }
 
     /// <summary>
