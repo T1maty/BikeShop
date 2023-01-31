@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 
-// Поиск пользователя по телефону/почте и паролю. Типа логин
+// Аутентифицировать и получить пользователя по логин данным (телефон/почта и пароль)
 public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDataQuery, GetUserModel>
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -33,6 +33,7 @@ public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDa
             ? await _userManager.FindByNameAsync(request.Phone)
             : await _userManager.FindByEmailAsync(request.Email);
 
+        // Если нет такого пользователя
         if (user is null)
             throw new NotFoundException(
                 $"Get user by sign in error. User with phone/email {request.Phone ?? request.Email} not found")

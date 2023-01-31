@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 
+// Создать пользователя / регистрация
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -25,27 +26,11 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
                 ErrorDescription = "Registration error. User with given phone already exists"
             };
 
-        // Если есть пользователь с такой почтой - ошибка
-        if (request.Email is not null)
-        {
-            var existingUserByEmail = await _userManager.FindByEmailAsync(request.Email);
-            if(existingUserByEmail is not null)
-                throw new RegistrationException($"Registration error. User with email {request.Email} already exists")
-                {
-                    Error = "email_already_exists",
-                    ErrorDescription = "Registration error. User with given email already exists"
-                };
-        }
 
         // Создаю пользователя из запроса
         var user = new ApplicationUser
         {
             UserName = request.Phone,
-            Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Patronymic = request.Patronymic,
-            ShopId = request.ShopId,
             PhoneNumber = request.Phone
         };
 

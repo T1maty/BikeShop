@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.Application.CQRS.Commands.DeleteRefreshSessionByToken;
 
+// Удалить сессию по рефреш токену
 public class DeleteRefreshSessionByTokenCommandHandler : IRequestHandler<DeleteRefreshSessionByTokenCommand>
 {
     private readonly IAuthDbContext _context;
@@ -21,6 +22,7 @@ public class DeleteRefreshSessionByTokenCommandHandler : IRequestHandler<DeleteR
             .FirstOrDefaultAsync(session => session.RefreshToken == request.RefreshToken,
                 cancellationToken);
 
+        // Если сессии с таким рефреш токеном не существует - ошибка
         if (existingSession is null)
             throw new NotFoundException($"Session with refresh token {request.RefreshToken} not found")
             {

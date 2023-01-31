@@ -2,6 +2,7 @@
 
 namespace BikeShop.Identity.Domain.Entities;
 
+// Пользователь
 public class ApplicationUser : IdentityUser
 {
     public string? FirstName { get; set; }
