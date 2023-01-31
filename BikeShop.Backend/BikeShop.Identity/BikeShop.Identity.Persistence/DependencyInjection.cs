@@ -6,13 +6,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BikeShop.Identity.Persistence;
 
+// Регистрация зависимостей слоя Persistence
 public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
+        // Подтягиваю конфигурацию со строками соединений
         var scope = services.BuildServiceProvider().CreateScope();
         var connectionConfiguration = scope.ServiceProvider.GetService<ConnectionConfiguration>();
 
+        // Регистрирую AuthDbContext
         services.AddDbContext<AuthDbContext>(options =>
         {
             options.UseSqlite(connectionConfiguration.Sqlite);
@@ -27,9 +30,6 @@ public static class DependencyInjection
         // Связал интерфейс контекста с ранее созданным сервисом на классе 
         services.AddScoped<IAuthDbContext>(provider =>
             provider.GetService<AuthDbContext>());
-
-        services.AddScoped<JwtService>();
-        services.AddScoped<CookieService>();
 
         return services;
     }

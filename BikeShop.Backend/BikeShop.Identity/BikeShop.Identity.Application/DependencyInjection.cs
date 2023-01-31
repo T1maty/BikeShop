@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BikeShop.Identity.Application;
 
+// Регистрация зависимостей из слоя Application
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
@@ -12,8 +13,9 @@ public static class DependencyInjection
         // Инжект библиотеки mediatr для CQRS
         services.AddMediatR(Assembly.GetExecutingAssembly());
 
-        services.AddTransient<CookieService>();
-        services.AddTransient<JwtService>();
+        // Регистрация кастомных сервисов
+        services.AddScoped<CookieService>();
+        services.AddScoped<JwtService>();
 
         return services;
     }
