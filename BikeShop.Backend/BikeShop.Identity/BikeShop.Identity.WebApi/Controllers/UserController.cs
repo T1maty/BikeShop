@@ -23,8 +23,29 @@ public class UserController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Обновление публичной даты пользователя (ФИО, почта)
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// В HTTP Headers необходимо передать Access Token (Authorization: Bearer ey...). По нему происходит идентификация пользователя
+    /// </remarks>
+    ///
+    /// <param name="model">Публичные данные о пользователе</param>
+    /// 
+    /// <returns>Ничего. Модель ошибки в случае неудачи</returns>
+    /// <response code="200">Успешное изменение</response>
+    /// <response code="400">В access токене не указан id пользователя</response>
+    /// <response code="401">Не передан access токен</response>
+    /// <response code="404">Пользователь с указанным id не найден</response>
+    /// <response code="409">Указанная почта уже зарегистрирована на какого-то пользователя</response>
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut("updatepublic")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
     public async Task<IActionResult> UpdateUserPublic([FromBody] UpdateUserPublicModel model)
     {
         // Console.WriteLine("start");
