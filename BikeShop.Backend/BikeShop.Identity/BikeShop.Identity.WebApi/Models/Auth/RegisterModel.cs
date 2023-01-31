@@ -5,6 +5,7 @@ using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 
 namespace BikeShop.Identity.WebApi.Models.Auth;
 
+// Входящая модель регистрации пользователя на endpoint /auth/register
 public class RegisterModel : IMappable
 {
     [Required] public string Phone { get; set; }

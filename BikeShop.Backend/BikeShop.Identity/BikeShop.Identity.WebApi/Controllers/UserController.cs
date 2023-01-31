@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Identity.WebApi.Controllers;
 
+// Все для работы с данными пользователей. Получение, редактирование, ...
 [ApiController]
 [Route("user")]
 [Produces("application/json")]

@@ -4,6 +4,7 @@ using BikeShop.Identity.Application.Exceptions;
 
 namespace BikeShop.Identity.WebApi.Middleware;
 
+// Обработчик исключений, возвращающий ответы клиенту с статус кодами и моделью ошибки
 public class CustomExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;

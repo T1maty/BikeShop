@@ -14,9 +14,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Identity.WebApi.Controllers;
 
+// Всё связанное с выдачей токенов и сессией
 [AllowAnonymous]
 [ApiController]
 [Route("auth")]
+[Produces("application/json")]
 public class AuthController : ControllerBase
 {
     private readonly JwtService _jwtService; // для генерации JWT-токенов
@@ -55,6 +57,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<AccessTokenModel>> Login([FromBody] LoginModel model)
     {
+        // Если невалидная модель
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
@@ -94,9 +97,11 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Register(RegisterModel model)
     {
+        // Если невалидная модель
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
+        // Создаю пользователя и получаю его айди
         var command = _mapper.Map<CreateUserCommand>(model);
         var id = await _mediator.Send(command);
 
@@ -125,12 +130,14 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<AccessTokenModel>> Refresh()
     {
         // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
-        if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-            throw new RefreshTokenException("Cookie refresh token not found")
-            {
-                Error = "cookie_refresh_token_not_found",
-                ErrorDescription = "Expected refresh token in httponly cookie does not exists"
-            };
+        // if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
+        //     throw new RefreshTokenException("Cookie refresh token not found")
+        //     {
+        //         Error = "cookie_refresh_token_not_found",
+        //         ErrorDescription = "Expected refresh token in httponly cookie does not exists"
+        //     };
+
+        string refreshToken = _cookieService.GetRefreshTokenFromCookie(Request);
 
         // Обновляю рефреш сессию. Если пришедший рефреш токен невалидный - получим исключение
         // Если все ок - получу всю сессию, в том числе id пользователя
@@ -171,12 +178,14 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
-        if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-            throw new RefreshTokenException("Cookie refresh token not found")
-            {
-                Error = "cookie_refresh_token_not_found",
-                ErrorDescription = "Expected refresh token in httponly cookie does not exists"
-            };
+        // if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
+        //     throw new RefreshTokenException("Cookie refresh token not found")
+        //     {
+        //         Error = "cookie_refresh_token_not_found",
+        //         ErrorDescription = "Expected refresh token in httponly cookie does not exists"
+        //     };
+
+        string refreshToken = _cookieService.GetRefreshTokenFromCookie(Request);
 
         // Удаляю сессию по рефреш токену из базы
         var deleteCommand = new DeleteRefreshSessionByTokenCommand() { RefreshToken = Guid.Parse(refreshToken) };

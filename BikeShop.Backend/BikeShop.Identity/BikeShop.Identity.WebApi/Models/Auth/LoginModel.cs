@@ -5,6 +5,7 @@ using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 
 namespace BikeShop.Identity.WebApi.Models.Auth;
 
+// Входящая модель логина пользователя на endpoint /auth/login
 public class LoginModel : IMappable
 {
     public string? Phone { get; set; } = null;

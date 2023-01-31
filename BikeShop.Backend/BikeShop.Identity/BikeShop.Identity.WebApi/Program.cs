@@ -11,7 +11,6 @@ using BikeShop.Identity.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -20,22 +19,21 @@ var builder = WebApplication.CreateBuilder(args);
 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 //IdentityModelEventSource.ShowPII = true;
 
-// Register Jwt configuration
+// Регистрация JWT конфигурации
 builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<JwtConfiguration>>().Value);
 
-// Register connection configuration
+// Регистрация конфигурации со строками подключений
 builder.Services.Configure<ConnectionConfiguration>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<ConnectionConfiguration>>().Value);
 
+// Подключение зависимостей из других слоев приложения
 builder.Services.AddApplication();
 builder.Services.AddPersistence();
 
-builder.Services.AddControllers();
-
-// CORS
+// Настройка CORS-политик для доступа из браузера
 builder.Services.AddCors(options =>
 {
     // Доступ ко всем клиентам
@@ -48,15 +46,16 @@ builder.Services.AddCors(options =>
 });
 
 
-//Swagger
+// Swagger для автодокументации API
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(config =>
 {
-    //включаю комментарии xml и путь к ним
+    // Включение XML-комментариев для автодокументации
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     config.IncludeXmlComments(xmlPath);
 
+    // Добавление возможности указывать JWT access token в сваггере для эндпоинтов, которые требуют bearer
     config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -66,6 +65,7 @@ builder.Services.AddSwaggerGen(config =>
         In = ParameterLocation.Header,
         Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
     });
+    // Сваггер будет добавлять указанный JWT access token в заголовки
     config.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {
             new OpenApiSecurityScheme {
@@ -80,28 +80,28 @@ builder.Services.AddSwaggerGen(config =>
 
 });
 
-
-// Inject controllers, and configure JSON serialization to camelCase 
+// Регистрация контроллеров и настройка JSON ответов
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // for JsonSerialize
+        // Все JSON-ключи будут с маленькой буквы
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        // for auto generated json answers such as UnprocessableEntity(ModelState)
         options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
     });
 
-// Инжект конфигурации автомаппера
+// Регистрация конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
     config.AddProfile(new AssemblyMappingProfile(typeof(AssemblyMappingProfile).Assembly));
 });
 
+// Регистрация identity системы
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
+// Настройки identity, в этом случае настройка паролей
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
@@ -123,6 +123,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     //options.User.RequireUniqueEmail = true;
 });
 
+// Добавлении схемы аутентификации по JWT токену
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -135,7 +136,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])) //Configuration["JwtToken:SecretKey"]
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
 
@@ -149,15 +150,19 @@ try
 }
 catch (Exception ex)
 {
+    // временно
     Console.WriteLine(ex);
 }
 
+
+
 var app = builder.Build();
 
-
+// Авторизация + аутентификация
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Сваггер
 app.UseSwagger();
 app.UseSwaggerUI(config =>
 {
@@ -166,9 +171,12 @@ app.UseSwaggerUI(config =>
     config.SwaggerEndpoint("swagger/v1/swagger.json", "BikeShop.Workspace API");
 });
 
+// Пользовательская обработка исключений, возвращающая ответом статус коды и модель ошибки
 app.UseCustomExceptionHandler();
+
 app.MapControllers();
 
+// Корс политика, позволяющая работать с апи любым клиентам
 app.UseCors("AllowAll");
 
 app.Run();
