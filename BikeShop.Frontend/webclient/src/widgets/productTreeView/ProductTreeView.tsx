@@ -6,6 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import TreeViewData from '../../entities/models/treeViewData';
+import useTreeViewState from "./state";
 
 export declare interface Props {
   treeViewData: TreeViewData[];
@@ -15,6 +16,12 @@ export declare interface Props {
 export default function ProductTreeView() {
   const [expanded, setExpanded] = React.useState<string[]>([]);
   const [selected, setSelected] = React.useState<string[]>([]);
+
+  const fetchData = useTreeViewState(s => s.fetchData)
+
+  React.useEffect(()=>{
+    fetchData();
+  },[])
 
   const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
     setExpanded(nodeIds);
