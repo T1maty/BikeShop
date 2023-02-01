@@ -1,0 +1,35 @@
+version: '3'
+services:
+  
+  bikeshop.identity:
+    container_name: bikeshop-identity
+    image: kpssnik/bikeshop.identity
+    hostname: bikeshop.identity
+    ports: 
+      - 5001:80
+    restart: on-failure
+
+  bikeshop.workspace:
+    container_name: bikeshop-workspace
+    image: kpssnik/bikeshop.workspace
+    hostname: bikeshop.workspace
+    ports: 
+      - 5002:80
+    restart: on-failure
+
+  bikeshop.gateway:
+    container_name: bikeshop-gateway
+    image: kpssnik/bikeshop.gateway
+    hostname: bikeshop.gateway
+    ports:
+      - 5000:80
+    restart: on-failure 
+    links:
+      - bikeshop.identity
+    depends_on:
+      - bikeshop.identity
+
+
+  
+    
+    
