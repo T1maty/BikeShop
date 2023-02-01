@@ -15,9 +15,28 @@ builder.Configuration.AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}
 builder.Services.AddOcelot(builder.Configuration);
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
+// Настройка CORS-политик для доступа из браузера
+builder.Services.AddCors(options =>
+{
+    // Доступ ко всем клиентам
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowAnyOrigin();
+    });
+});
+
 
 
 var app = builder.Build();
+
+// global cors policy
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials()); // allow credentials
 
 app.MapControllers();
 

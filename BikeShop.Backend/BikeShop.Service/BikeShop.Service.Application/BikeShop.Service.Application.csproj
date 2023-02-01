@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BikeShop.Service.Domain\BikeShop.Service.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\Configurations" />
+      <Folder Include="Common\Exceptions" />
+      <Folder Include="Common\Mappings" />
+      <Folder Include="CQRS" />
+      <Folder Include="Interfaces" />
+    </ItemGroup>
+
+</Project>

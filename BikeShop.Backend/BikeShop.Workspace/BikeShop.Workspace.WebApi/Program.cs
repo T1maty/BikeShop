@@ -83,6 +83,8 @@ catch (Exception ex)
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
+
 app.UseCustomExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI(config =>
@@ -94,7 +96,6 @@ app.UseSwaggerUI(config =>
 });
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
 app.MapControllers();
 
 app.Run();
