@@ -6,13 +6,6 @@ namespace BikeShop.Workspace.Persistence;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    // public DbSet<User> Users { get; set; }
-    // public DbSet<UserRole> UserRoles { get; set; }
-    public DbSet<Shop> Shops { get; set; }
-    public DbSet<Currency> Currencies { get; set; }
-    public DbSet<CurrencyHistory> CurrencyHistories { get; set; }
-    public DbSet<WorkGroup> WorkGroups { get; set; }
-    public DbSet<Work> Works { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductTag> ProductTags { get; set; }
     public DbSet<TagToProductBind> TagToProductBinds { get; set; }

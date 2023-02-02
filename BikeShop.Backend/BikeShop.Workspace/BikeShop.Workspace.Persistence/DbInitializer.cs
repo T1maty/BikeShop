@@ -12,23 +12,7 @@ public static class DbInitializer
         context.Database.EnsureCreated();
         context.Database.Migrate();
 
-        // Создание стандартного магазина
-        if (!context.Shops.Any())
-            context.Shops.Add(new Shop
-            {
-                Name = configuration.DefaultShopName
-            });
-
-        // Создание стандартной валюты
-        if (!context.Currencies.Any())
-            context.Currencies.Add(new Currency
-            {
-                Name = configuration.DefaultCurrency,
-                Coefficient = 1,
-                IsBaseCurrency = true,
-                Symbol = '$'
-            });
-
+        
         if (!context.Brands.Any())
             context.Brands.Add(new Brand
             {
@@ -52,14 +36,6 @@ public static class DbInitializer
                     Name = "test2"
                 }
             );
-
-
-        // // Создание стандартных ролей
-        // if (!context.UserRoles.Any())
-        // {
-        //     context.UserRoles.Add(new UserRole { Name = configuration.DefaultUserRole });
-        //     context.UserRoles.Add(new UserRole { Name = configuration.DefaultAdminRole });
-        // }
 
         context.SaveChanges();
     }

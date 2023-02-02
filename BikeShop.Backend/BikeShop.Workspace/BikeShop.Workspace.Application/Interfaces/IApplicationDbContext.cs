@@ -7,13 +7,6 @@ namespace BikeShop.Workspace.Application.Interfaces;
 // Интерфейс для единственного dbContext'а программы
 public interface IApplicationDbContext
 {
-    // DbSet<User> Users { get; set; }
-    // DbSet<UserRole> UserRoles { get; set; }
-    DbSet<Shop> Shops { get; set; }
-    DbSet<Currency> Currencies { get; set; }
-    DbSet<CurrencyHistory> CurrencyHistories { get; set; }
-    DbSet<WorkGroup> WorkGroups { get; set; }
-    DbSet<Work> Works { get; set; }
     DbSet<Product> Products { get; set; }
     DbSet<ProductTag> ProductTags { get; set; }
     DbSet<Brand> Brands { get; set; }

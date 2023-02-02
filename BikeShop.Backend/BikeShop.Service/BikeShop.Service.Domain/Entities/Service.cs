@@ -13,6 +13,7 @@ public class Service : BaseEntity
     public decimal PriceWork { get; set; } // цены
     public decimal DiscountWork { get; set; } 
     public decimal TotalWork { get; set; } 
+    
     public decimal PriceService { get; set; } 
     public decimal DiscountService { get; set; } 
     public decimal TotalService { get; set; }

@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using BikeShop.Workspace.Application.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,11 +10,7 @@ public static class DependencyInjection
     {
         // Инжект библиотеки mediatr для CQRS
         services.AddMediatR(Assembly.GetExecutingAssembly());
-
-        // Инжект кастомных сервисов
-        services.AddScoped<WorkGroupService>();
-
-
+        
         return services;
     }
 }
