@@ -9,10 +9,10 @@ services:
       - 5001:80
     restart: on-failure
 
-  bikeshop.workspace:
-    container_name: bikeshop-workspace
-    image: kpssnik/bikeshop.workspace
-    hostname: bikeshop.workspace
+  bikeshop.products:
+    container_name: bikeshop-products
+    image: kpssnik/bikeshop.products
+    hostname: bikeshop.products
     ports: 
       - 5002:80
     restart: on-failure
@@ -34,11 +34,11 @@ services:
     restart: on-failure 
     links:
       - bikeshop.identity
-      - bikeshop.workspace
+      - bikeshop.products
       - bikeshop.service
     depends_on:
       - bikeshop.identity
-      - bikeshop.workspace
+      - bikeshop.products
       - bikeshop.service
 
 

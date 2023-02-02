@@ -12,11 +12,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.products",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "products"
     },
     {
       "UpstreamPathTemplate": "/api/product/getbybarcode/{barcode}",
@@ -27,11 +27,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.products",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "products"
     },
     {
       "UpstreamPathTemplate": "/api/product/create",
@@ -42,11 +42,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.products",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "products"
     },
     {
       "UpstreamPathTemplate": "/api/product/update",
@@ -57,11 +57,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.products",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "products"
     },
 
     {
@@ -237,12 +237,12 @@
 
   "SwaggerEndPoints": [
     {
-      "Key": "workspace",
+      "Key": "products",
       "Config": [
         {
-          "Name": "Workspace API",
+          "Name": "Products API",
           "Version": "v1",
-          "Url": "http://bikeshop.workspace:80/swagger/v1/swagger.json"
+          "Url": "http://bikeshop.products:80/swagger/v1/swagger.json"
         }
       ]
     },
