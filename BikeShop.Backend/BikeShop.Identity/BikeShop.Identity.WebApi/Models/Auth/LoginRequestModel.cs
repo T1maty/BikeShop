@@ -6,7 +6,7 @@ using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 namespace BikeShop.Identity.WebApi.Models.Auth;
 
 // Входящая модель логина пользователя на endpoint /auth/login
-public class LoginModel : IMappable
+public class LoginRequestModel : IMappable
 {
     public string? Phone { get; set; } = null;
     public string? Email { get; set; } = null;
@@ -14,6 +14,6 @@ public class LoginModel : IMappable
 
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<LoginModel, GetUserBySignInDataQuery>();
+        profile.CreateMap<LoginRequestModel, GetUserBySignInDataQuery>();
     }
 }
