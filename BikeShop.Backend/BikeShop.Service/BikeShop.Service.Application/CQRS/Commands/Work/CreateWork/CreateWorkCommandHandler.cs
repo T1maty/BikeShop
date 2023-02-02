@@ -36,7 +36,6 @@ public class CreateWorkCommandHandler : IRequestHandler<CreateWorkCommand>
             Name = request.Name,
             Description = request.Description,
             Price = request.Price,
-            CurrencyId = request.CurrencyId,
             WorkGroupId = group.Id
         };
 

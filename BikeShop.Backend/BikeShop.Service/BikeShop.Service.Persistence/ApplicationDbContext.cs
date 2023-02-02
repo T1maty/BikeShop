@@ -59,7 +59,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     Id = 1,
                     Name = "Work 1",
                     Description = "Work description 1",
-                    CurrencyId = 1,
                     WorkGroupId = 1,
                     Price = 228
                 },
@@ -68,7 +67,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     Id = 2,
                     Name = "Work 2",
                     Description = "Work description 2",
-                    CurrencyId = 1,
                     WorkGroupId = 1,
                     Price = 300
                 },
@@ -77,7 +75,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     Id = 3,
                     Name = "Work 3",
                     Description = "Work description 3",
-                    CurrencyId = 1,
                     WorkGroupId = 2,
                     Price = 500
                 }

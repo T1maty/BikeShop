@@ -35,7 +35,6 @@ public class UpdateWorkCommandHandler : IRequestHandler<UpdateWorkCommand>
         work.Description = request.Description;
         work.Price = request.Price;
         work.WorkGroupId = request.GroupId;
-        work.CurrencyId = request.CurrencyId;
         work.UpdatedAt = DateTime.Now;
 
         // Сохраняю
