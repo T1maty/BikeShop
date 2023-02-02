@@ -17,6 +17,14 @@ services:
       - 5002:80
     restart: on-failure
 
+  bikeshop.service:
+    container_name: bikeshop-service
+    image: kpssnik/bikeshop.service
+    hostname: bikeshop.service
+    ports: 
+      - 5003:80
+    restart: on-failure
+
   bikeshop.gateway:
     container_name: bikeshop-gateway
     image: kpssnik/bikeshop.gateway
@@ -26,8 +34,12 @@ services:
     restart: on-failure 
     links:
       - bikeshop.identity
+      - bikeshop.workspace
+      - bikeshop.service
     depends_on:
       - bikeshop.identity
+      - bikeshop.workspace
+      - bikeshop.service
 
 
   

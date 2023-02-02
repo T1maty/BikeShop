@@ -3,6 +3,7 @@ using BikeShop.Service.Application;
 using BikeShop.Service.Application.Common.Configurations;
 using BikeShop.Service.Application.Common.Mappings;
 using BikeShop.Service.Persistence;
+using BikeShop.Service.WebApi.Middleware;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,16 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile(new AssemblyMappingProfile(typeof(AssemblyMappingProfile).Assembly));
 });
 
+// Swagger
+builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    // Включаю хml комментарии и путь к ним
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    config.IncludeXmlComments(xmlPath);
+});
+
 // Инициализация базы, если её нет
 try
 {
@@ -39,6 +50,17 @@ catch (Exception ex)
 }
 
 var app = builder.Build();
+
+app.UseCustomExceptionHandler();
+
+app.UseSwagger();
+app.UseSwaggerUI(config =>
+{
+    // get to swagger UI using root uri
+    config.RoutePrefix = string.Empty;
+
+    config.SwaggerEndpoint("swagger/v1/swagger.json", "BikeShop.Service API");
+});
 
 app.MapControllers();
 

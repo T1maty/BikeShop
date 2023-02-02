@@ -73,11 +73,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.service",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "service"
     },
     {
       "UpstreamPathTemplate": "/api/group/create",
@@ -88,11 +88,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.service",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "service"
     },
     {
       "UpstreamPathTemplate": "/api/group/update",
@@ -103,11 +103,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.service",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "service"
     },
 
     {
@@ -119,11 +119,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.service",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "service"
     },
     {
       "UpstreamPathTemplate": "/api/work/create",
@@ -134,11 +134,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.service",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "service"
     },
     {
       "UpstreamPathTemplate": "/api/work/update",
@@ -149,11 +149,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "bikeshop.workspace",
+          "Host": "bikeshop.service",
           "Port": 80
         }
       ],
-      "SwaggerKey": "workspace"
+      "SwaggerKey": "service"
     },
     
     
@@ -253,6 +253,16 @@
           "Name": "Identity API",
           "Version": "v1",
           "Url": "http://bikeshop.identity:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "service",
+      "Config": [
+        {
+          "Name": "Service API",
+          "Version": "v1",
+          "Url": "http://bikeshop.service:80/swagger/v1/swagger.json"
         }
       ]
     }
