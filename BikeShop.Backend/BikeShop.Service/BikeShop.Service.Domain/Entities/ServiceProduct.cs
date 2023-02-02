@@ -1,10 +1,10 @@
-﻿namespace BikeShop.Service.Domain.Entities;
+﻿using System.Text.Json.Serialization;
 
+namespace BikeShop.Service.Domain.Entities;
+
+// Продукты, которые использовались при ремонте
 public class ServiceProduct : BaseEntity
 {
-    public int WorkId { get; set; }
-    public Work Work { get; set; }
-    
     public string CatalogKey { get; set; } = string.Empty;
     public string SerialNumber { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
@@ -14,7 +14,10 @@ public class ServiceProduct : BaseEntity
     public decimal Discount { get; set; }
     public decimal Total { get; set; }
     public Guid UserId { get; set; }
-    
+
     public int ServiceId { get; set; }
-    public Service Service { get; set; }
+    [JsonIgnore] public Service Service { get; set; }
+
+    public int WorkId { get; set; }
+    [JsonIgnore] public Work Work { get; set; }
 }
