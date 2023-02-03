@@ -1,5 +1,6 @@
 ﻿using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Domain.Entities;
+using BikeShop.Service.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Service.Persistence;
@@ -77,6 +78,33 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     Description = "Work description 3",
                     WorkGroupId = 2,
                     Price = 500
+                }
+            );
+
+        modelBuilder.Entity<Domain.Entities.Service>()
+            .HasData(
+                new Domain.Entities.Service
+                {
+                    Id = 1,
+                    Name = "First",
+                    Price = 500,
+                    Discount = 500,
+                    Status = Status.Waiting,
+                    Total = 500,
+                    ClientDescription = "desc",
+                    ClientId = Guid.NewGuid(),
+                    DiscountService = 500,
+                    DiscountWork = 500,
+                    PriceService = 500,
+                    PriceWork = 500,
+                    TotalService = 500,
+                    TotalWork = 500,
+                    UserCreatedId = Guid.NewGuid(),
+                    UserDeleted = Guid.NewGuid(),
+                    UserMasterId = Guid.NewGuid(),
+                    UserCreatedDescription = "desc",
+                    UserMasterDescription = "desc",
+                    ShopId = 1
                 }
             );
     }
