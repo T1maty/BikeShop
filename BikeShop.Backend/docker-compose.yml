@@ -3,6 +3,9 @@ services:
   
   bikeshop.identity:
     container_name: bikeshop-identity
+    build: 
+      context: BikeShop.Identity
+      dockerfile: Dockerfile
     image: kpssnik/bikeshop.identity
     hostname: bikeshop.identity
     ports: 
@@ -11,6 +14,9 @@ services:
 
   bikeshop.products:
     container_name: bikeshop-products
+    build:
+      context: BikeShop.Products
+      dockerfile: Dockerfile
     image: kpssnik/bikeshop.products
     hostname: bikeshop.products
     ports: 
@@ -19,6 +25,9 @@ services:
 
   bikeshop.service:
     container_name: bikeshop-service
+    build:
+      context: BikeShop.Service
+      dockerfile: Dockerfile
     image: kpssnik/bikeshop.service
     hostname: bikeshop.service
     ports: 
@@ -27,6 +36,9 @@ services:
 
   bikeshop.gateway:
     container_name: bikeshop-gateway
+    build:
+      context: BikeShop.Gateway
+      dockerfile: Dockerfile
     image: kpssnik/bikeshop.gateway
     hostname: bikeshop.gateway
     ports:

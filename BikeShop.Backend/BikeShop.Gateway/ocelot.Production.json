@@ -155,8 +155,70 @@
       ],
       "SwaggerKey": "service"
     },
-    
-    
+
+    {
+      "UpstreamPathTemplate": "/api/service/getbyshopid/{shopid}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/service/getbyshopid/{shopid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
+    {
+      "UpstreamPathTemplate": "/api/service/getserviceinfo/{serviceid}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/service/getserviceinfo/{serviceid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
+    {
+      "UpstreamPathTemplate": "/api/service/updateservice",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/service/updateservice",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
+    {
+      "UpstreamPathTemplate": "/api/service/updateservicestatus",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/service/updateservicestatus",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
+
+
+
     {
       "UpstreamPathTemplate": "/api/auth/login",
       "UpstreamHttpMethod": [
