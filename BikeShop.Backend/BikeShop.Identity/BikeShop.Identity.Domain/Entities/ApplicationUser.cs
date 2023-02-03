@@ -9,4 +9,8 @@ public class ApplicationUser : IdentityUser
     public string? LastName { get; set; }
     public string? Patronymic { get; set; }
     public int ShopId { get; set; }
+    
+    public decimal Balance { get; set; }
+    public int BalanceCurrencyId { get; set; }
+    public decimal CreditLimit { get; set; }
 }
