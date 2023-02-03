@@ -25,11 +25,6 @@ public class WorkController : ControllerBase
     /// <summary>
     /// Получение списка всех услуг по id группы услуг
     /// </summary>
-    ///
-    /// <remarks>
-    /// Пример запроса:
-    /// GET /work/getbygroupid/1
-    /// </remarks>
     /// 
     /// <param name="id">ID группы услуг (WorkGroup)</param>
     /// <returns>Возвращает модель, хранящую массив со всеми услугами касающихся указанной группы услуг</returns>
@@ -48,27 +43,17 @@ public class WorkController : ControllerBase
     /// <summary>
     /// Создание услуги в группе услуг
     /// </summary>
-    ///
-    /// <remarks>
-    /// Пример запроса:
-    /// <code>
-    /// POST /work/create
-    /// {
-    ///     name : "Замена подшипников",
-    ///     description : "Покупка и замена подшипников руля" (не обязательное поле),
-    ///     price : 265,
-    ///     currencyId : 1,
-    ///     groupId : 3
-    /// }
-    /// </code>
-    /// </remarks>
     /// 
-    /// <param name="model">CreateWorkModel (модель создания услуги)</param>
-    /// <returns>Ничего</returns>
+    /// <param name="model">Модель создания услуги</param>
+    /// <returns>Ничего / Модель ошибки</returns>
     ///
     /// <response code="200">Успех</response>
+    /// <response code="404">Не найдена группа услуг с таким id</response>
+    /// <response code="422">Невалидная модель</response>
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> CreateWork([FromBody] CreateWorkModel model)
     {
         // Если модель невалидная - возвращаю ошибку о невалидности
@@ -88,28 +73,17 @@ public class WorkController : ControllerBase
     /// <summary>
     /// Обновление услуги в группе услуг
     /// </summary>
-    ///
-    /// <remarks>
-    /// Пример запроса:
-    /// <code>
-    /// PUT /work/create
-    /// {
-    ///     id: 2,
-    ///     name : "Замена подшипников",
-    ///     description : "Покупка и замена подшипников руля" (не обязательное поле),
-    ///     price : 265,
-    ///     currencyId : 1,
-    ///     groupId : 3
-    /// }
-    /// </code>
-    /// </remarks>
     /// 
-    /// <param name="model">UpdateWorkModel (модель обновления услуги)</param>
-    /// <returns>Ничего</returns>
+    /// <param name="model">Модель обновления услуги</param>
+    /// <returns>Ничего / Модель ошибки</returns>
     ///
     /// <response code="200">Успех</response>
+    /// <response code="404">Услуга с указанным id не найдена</response>
+    /// <response code="422">Невалидная модель</response>
     [HttpPut("update")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> UpdateWork([FromBody] UpdateWorkModel model)
     {
         // Если модель невалидная - возвращаю ошибку о невалидности

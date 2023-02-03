@@ -1,5 +1,6 @@
 using BikeShop.Service.Application.Common.Exceptions;
 using BikeShop.Service.Application.Interfaces;
+using BikeShop.Service.Domain.Enums;
 using MediatR;
 
 namespace BikeShop.Service.Application.CQRS.Commands.Service.UpdateServiceStatus;

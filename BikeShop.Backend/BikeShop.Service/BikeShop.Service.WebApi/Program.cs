@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json;
 using BikeShop.Service.Application;
 using BikeShop.Service.Application.Common.Configurations;
 using BikeShop.Service.Application.Common.Mappings;
@@ -16,7 +17,13 @@ builder.Services.AddSingleton(resolver =>
 // Подключение внутренних слоев приложения
 builder.Services.AddApplication().AddPersistence();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    // Чтобы выходные JSON-ключи были с маленькой буквы
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+});
+;
 
 // Регистрация конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>

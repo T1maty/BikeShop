@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BikeShop.Service.Application.Common.Exceptions;
 using BikeShop.Service.Application.CQRS.Commands.WorkGroup.CreateWorkGroup;
 using BikeShop.Service.Application.CQRS.Commands.WorkGroup.UpdateWorkGroup;
 using BikeShop.Service.Application.CQRS.Queries.WorkGroup.GetWorkGroupByShopId;
@@ -22,14 +23,9 @@ public class GroupController : ControllerBase
     }
 
     /// <summary>
-    /// Получение всех групп услуг у указанного магазина
+    /// Получение всех групп услуг по айди магазина
     /// </summary>
     ///
-    /// <remarks>
-    /// Пример запроса:
-    /// GET /group/getbyshopid/1
-    /// </remarks>
-    /// 
     /// <param name="id">ID магазина</param>
     /// <returns>Возвращает модель, хранящую массив со всеми группами услуг в магазине</returns>
     ///
@@ -51,25 +47,18 @@ public class GroupController : ControllerBase
     /// Создание группы услуг в магазине
     /// </summary>
     ///
-    /// <remarks>
-    /// Пример запроса:
-    /// <code>
-    /// POST /group/create
-    /// {
-    ///     name : "Замена частей",
-    ///     parentId : 0,
-    ///     shopId: 3
-    ///     isCollapsed: false
-    /// }
-    /// </code>
-    /// </remarks>
-    /// 
-    /// <param name="model">CreateWorkGroupModel (модель создания группы услуг)</param>
+    /// <param name="model">Модель создания группы услуг</param>
     /// <returns>Ничего</returns>
     ///
     /// <response code="200">Успех</response>
+    /// <response code="400">Группа услуг с таким названием уже есть в магазине</response>
+    /// <response code="404">Не найдена родительская группа с указанным parentId</response>
+    /// <response code="422">Невалидная модель</response>
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IException),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> CreateWorkGroup([FromBody] CreateWorkGroupModel model)
     {
         // Если не валидная модель
@@ -86,29 +75,21 @@ public class GroupController : ControllerBase
     }
 
     /// <summary>
-    /// Создание группы услуг в магазине
+    /// Обновление группы услуг в магазине
     /// </summary>
-    ///
-    /// <remarks>
-    /// Пример запроса:
-    /// <code>
-    /// PUT /group/update
-    /// {
-    ///     id: 3
-    ///     name : "Замена частей",
-    ///     parentId : 0,
-    ///     shopId: 3
-    ///     isCollapsed: false
-    /// }
-    /// </code>
-    /// </remarks>
     /// 
-    /// <param name="model">UpdateWorkGroupModel (модель обновления группы услуг)</param>
-    /// <returns>Ничего</returns>
+    /// <param name="model">Модель обновления группы услуг</param>
+    /// <returns>Ничего / Модель ошибки</returns>
     ///
     /// <response code="200">Успех</response>
+    /// <response code="400">Группа услуг с таким названием уже есть в магазине</response>
+    /// <response code="404">Не найдена группа с указанным id / Не найдена родительская группа с указанным parentId</response>
+    /// <response code="422">Невалидная модель</response>
     [HttpPut("update")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> UpdateWorkGroup([FromBody] UpdateWorkGroupModel model)
     {
         // Проверяю модель на валидность

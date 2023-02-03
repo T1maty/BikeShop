@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BikeShop.Service.Application.Common.Exceptions;
 using BikeShop.Service.Application.CQRS.Commands.Service.UpdateService;
+using BikeShop.Service.Application.CQRS.Commands.Service.UpdateServiceStatus;
 using BikeShop.Service.Application.CQRS.Queries.Service.GetOngoingServicesByShopId;
 using BikeShop.Service.Application.CQRS.Queries.Service.GetServiceById;
 using BikeShop.Service.WebApi.Models.Service;
@@ -87,6 +88,35 @@ public class ServiceController : ControllerBase
             return UnprocessableEntity(ModelState);
 
         var command = _mapper.Map<UpdateServiceCommand>(model);
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// Обновление статуса сервиса/ремонта
+    /// </summary>
+    ///
+    /// <remarks>Статус - enum, для фронта - число от 0 до 6</remarks>
+    /// 
+    /// <param name="model">Модель обновления статуса сервиса/ремонта</param>
+    /// <returns>Ничего / Модель ошибки</returns>
+    ///
+    /// <response code="200">Статус успешно обновлен</response>
+    /// <response code="400">Некорректный статус</response>
+    /// <response code="404">Не найден сервис/ремонт с указанным id</response>
+    /// <response code="422">Невалидная модель обновления</response>
+    [HttpPut("updateservicestatus")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> UpdateServiceStatus([FromBody] UpdateServiceStatusModel model)
+    {
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+
+        var command = _mapper.Map<UpdateServiceStatusCommand>(model);
         await _mediator.Send(command);
 
         return Ok();
