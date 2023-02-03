@@ -5,7 +5,6 @@ using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
 using BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSession;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserById;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
-using BikeShop.Identity.Application.Exceptions;
 using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.WebApi.Models.Auth;
 using MediatR;
@@ -43,7 +42,7 @@ public class AuthController : ControllerBase
     /// Указывается ИЛИ телефон, ИЛИ почта. Если и то и другое будет пустым - ответ 400
     /// </remarks>
     /// 
-    /// <param name="model">Модель входа в аккаунт</param>
+    /// <param name="requestModel">Модель входа в аккаунт</param>
     /// <returns>JWT access token в теле, refresh token в http-only cookie (X-Refresh-Token) при успехе. Модель ошибки при неудаче</returns>
     /// 
     /// <response code="200">Успешный вход</response>
@@ -55,14 +54,14 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<AccessTokenModel>> Login([FromBody] LoginModel model)
+    public async Task<ActionResult<LoginResponseUserModel>> Login([FromBody] LoginRequestModel requestModel)
     {
         // Если невалидная модель
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
         // Получаю пользователя по данным логина
-        var getUserQuery = _mapper.Map<GetUserBySignInDataQuery>(model);
+        var getUserQuery = _mapper.Map<GetUserBySignInDataQuery>(requestModel);
         var userData = await _mediator.Send(getUserQuery);
 
         // Создаю/обновляю рефреш сессию для пользователя и получаю рефреш токен
@@ -75,7 +74,14 @@ public class AuthController : ControllerBase
         // Генерирую access token для пользователя
         var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
 
-        return Ok(new AccessTokenModel { AccessToken = accessToken });
+        var userResponseModel = _mapper.Map<LoginResponseUserModel>(userData.User);
+        userResponseModel.Roles = userData.UserRoles;
+        
+        return Ok(new LoginResponseModel
+        {
+            AccessToken = accessToken,
+            User = userResponseModel
+        });
     }
 
     /// <summary>

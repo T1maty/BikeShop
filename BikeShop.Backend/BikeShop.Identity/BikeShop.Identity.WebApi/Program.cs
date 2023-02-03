@@ -158,6 +158,9 @@ catch (Exception ex)
 
 var app = builder.Build();
 
+// Корс политика, позволяющая работать с апи любым клиентам
+app.UseCors("AllowAll");
+
 // Авторизация + аутентификация
 app.UseAuthentication();
 app.UseAuthorization();
@@ -175,8 +178,5 @@ app.UseSwaggerUI(config =>
 app.UseCustomExceptionHandler();
 
 app.MapControllers();
-
-// Корс политика, позволяющая работать с апи любым клиентам
-app.UseCors("AllowAll");
 
 app.Run();
