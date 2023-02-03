@@ -30,6 +30,7 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand>
         service.UserCreatedDescription = request.UserCreatedDescription;
         service.UserMasterDescription = request.UserMasterDescription;
         service.UserMasterId = request.UserMasterId;
+        service.ShopId = request.ShopId;
 
         await _context.SaveChangesAsync(cancellationToken);
 

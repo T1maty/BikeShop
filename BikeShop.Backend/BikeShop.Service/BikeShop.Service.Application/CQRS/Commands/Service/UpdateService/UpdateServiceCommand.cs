@@ -7,13 +7,16 @@ public class UpdateServiceCommand : IRequest
     public int Id { get; set; }
 
     public string Name { get; set; }
-    
+
     public string ClientDescription { get; set; }
     public string UserMasterDescription { get; set; }
+
+    public int ShopId { get; set; }
+
     public string UserCreatedDescription { get; set; }
 
     public Guid UserMasterId { get; set; }
-    
+
     // public decimal PriceWork { get; set; }
     // public decimal DiscountWork { get; set; }
     //
