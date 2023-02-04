@@ -1,13 +1,26 @@
 import React from "react";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {NavLink} from "react-router-dom";
-import RegistrationData from "../../../entities/models/RegistrationData";
-import useRegistrationForm from "./store";
+import {NavLink, useNavigate} from "react-router-dom";
+import LoginData from "../../../entities/models/LoginData";
+import useUserData from "../../../entities/globalStores/userStore";
+import useAuth from "../../../entities/globalStores/authStore";
 
-const RegistrationForm = () => {
+const LoginForm = () => {
+    const navigate = useNavigate();
 
-    const fetchRegistration = useRegistrationForm(s => s.registrationFetch);
+    const login = useAuth(s => s.login);
+    const checkTokens = useAuth(s => s.checkTokens);
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    const setUser = useUserData(s => s.setUser);
+    const user = useUserData(s => s.user);
+
+
+    React.useEffect(() => {
+        checkTokens();
+    }, [])
 
     const {
         control,
@@ -15,24 +28,27 @@ const RegistrationForm = () => {
             errors
         },
         handleSubmit
-    } = useForm<RegistrationData>({
+    } = useForm<LoginData>({
         defaultValues: {
             phone: "",
             password: ""
         }
     });
 
-    const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
-        fetchRegistration(data).then(r => {
-            console.log(r)
-        })
+    const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
+        login(data).then(r => {
+            setUser(r.data.user);
+            //navigate("/main", {replace: true});
+        }).catch((r) => {
+            console.log(r);
+        });
     };
 
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={{height: "100vh"}}>
             <Container maxWidth="sm">
-                <Typography variant="h4">Registration</Typography>
+                <Typography variant="h4">Login</Typography>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <Controller
                         name="phone"
@@ -51,7 +67,6 @@ const RegistrationForm = () => {
                                                              label="Phone number" variant="outlined"
                                                              fullWidth margin="dense"/>}
                     />
-
                     <Controller
                         name="password"
                         control={control}
@@ -65,13 +80,17 @@ const RegistrationForm = () => {
                                                              margin="dense"/>}
                     />
 
-                    <Button type="submit" variant="contained" sx={{mt: 2}}>Register</Button>
+                    <Button type="submit" variant="contained" sx={{mt: 2}}>Login</Button>
                 </Box>
-                <br/>
-                <NavLink to="/login">Login</NavLink><br/>
+                <NavLink to="/registration">Registration</NavLink><br/>
+                <NavLink to="/main">main page</NavLink><br/>
+                <NavLink to="/workcatalog">workcatalog</NavLink><br/>
+                <Button onClick={() => {
+                    console.log(accessToken);
+                    console.log(user);
+                }}>Проверить токен</Button>
             </Container>
         </Stack>
     );
 };
-
-export default RegistrationForm;
+export default LoginForm;

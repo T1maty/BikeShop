@@ -1,11 +1,11 @@
 import React from 'react';
 import ProductTreeView from 'widgets/productTreeView/ProductTreeView';
 
-const WorkCatalog = () => {
+const Service = () => {
   return (
     <div>
       <ProductTreeView />
     </div>
   );
 };
-export default WorkCatalog;
+export default Service;

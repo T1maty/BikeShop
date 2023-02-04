@@ -1,48 +1,45 @@
-import React, {
-  // lazy,
-  Suspense,
-} from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+import React, {Suspense} from "react";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-
-import MainPage from "../pages/main/MainPage";
+import CssBaseline from "@mui/material/CssBaseline";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Header from "../widgets/Header/Header";
-import LoginForm from "../pages/loginForm/LoginForm";
-import RegistrationPage from "pages/RegistrationPage/RegistrationPage";
+import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
 import WorkCatalog from "../pages/workCatalog/workCatalog";
+import LoginPage from "../pages/loginPage/loginPage";
+import MainPage from "../pages/main/MainPage";
 
 const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
+    palette: {
+        mode: "dark"
+    }
 });
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <Router>
-          <Header />
-          <Suspense>
-            <Routes>
-              <Route path="/registration" element={<RegistrationPage />} />
-              <Route path="/workcatalog" element={<WorkCatalog/>} />
-              <Route path="/" element={<LoginForm />} />
-              <Route path="/main" element={<MainPage />} />
-              <Route path="*" element={<div>Not Found</div>} />
-            </Routes>
-          </Suspense>
-        </Router>
-      </ThemeProvider>
-    </div>
-  );
+    return (
+        <div className="App">
+            <ThemeProvider theme={darkTheme}>
+                <CssBaseline/>
+                <Router>
+                    <Header/>
+                    <Suspense>
+                        <Routes>
+                            <Route path="/registration" element={<RegistrationPage/>}/>
+                            <Route path="/workcatalog" element={<WorkCatalog/>}/>
+                            <Route path="/" element={<LoginPage/>}/>
+                            <Route path="/login" element={<LoginPage/>}/>
+                            <Route path="/main" element={<MainPage/>}/>
+                            <Route path="*" element={<div>Not Found</div>}/>
+                        </Routes>
+                    </Suspense>
+                </Router>
+            </ThemeProvider>
+        </div>
+    );
 };
 
 export default App;
