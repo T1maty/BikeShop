@@ -43,11 +43,11 @@ const columns: readonly Column[] = [
 ];
 
 interface Data {
-    name: string;
-    code: string;
-    population: number;
-    size: number;
-    density: number;
+    name: string
+    code: string
+    population: number
+    size: number
+    density: number
 }
 
 function createData(

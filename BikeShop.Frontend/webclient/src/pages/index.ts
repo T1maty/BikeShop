@@ -1,0 +1,5 @@
+export {default as LoginPage} from './loginPage/loginPage'
+export {default as MainPage} from './main/MainPage'
+export {default as RegistrationPage} from './RegistrationPage/RegistrationPage'
+export {default as Service} from './Service/Service'
+export {default as WorkCatalog} from './workCatalog/workCatalog'

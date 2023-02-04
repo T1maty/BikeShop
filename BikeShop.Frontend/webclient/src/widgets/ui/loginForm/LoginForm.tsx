@@ -2,12 +2,16 @@ import React from "react";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {NavLink} from "react-router-dom";
-import {IRegistrationData, useAuth} from "../../../entities";
+import {ILoginData, useAuth, useUser} from "../../../entities";
 
-const RegistrationForm = () => {
 
-    const fetchRegistration = useAuth(s => s.registration);
+const LoginForm = () => {
+    const login = useAuth(s => s.login);
     const checkTokens = useAuth(s => s.checkTokens);
+
+    const accessToken = localStorage.getItem('accessToken');
+    const user = useUser(s => s.user);
+
 
     React.useEffect(() => {
         checkTokens();
@@ -19,21 +23,21 @@ const RegistrationForm = () => {
             errors
         },
         handleSubmit
-    } = useForm<IRegistrationData>({
+    } = useForm<ILoginData>({
         defaultValues: {
             phone: "",
             password: ""
         }
     });
 
-    const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
-        fetchRegistration(data);
+    const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
+        login(data);
     };
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={{height: "100vh"}}>
             <Container maxWidth="sm">
-                <Typography variant="h4">Registration</Typography>
+                <Typography variant="h4">Login</Typography>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <Controller
                         name="phone"
@@ -52,7 +56,6 @@ const RegistrationForm = () => {
                                                              label="Phone number" variant="outlined"
                                                              fullWidth margin="dense"/>}
                     />
-
                     <Controller
                         name="password"
                         control={control}
@@ -66,13 +69,17 @@ const RegistrationForm = () => {
                                                              margin="dense"/>}
                     />
 
-                    <Button type="submit" variant="contained" sx={{mt: 2}}>Register</Button>
+                    <Button type="submit" variant="contained" sx={{mt: 2}}>Login</Button>
                 </Box>
-                <br/>
-                <NavLink to="/login">Login</NavLink><br/>
+                <NavLink to="/registration">Registration</NavLink><br/>
+                <NavLink to="/main">main page</NavLink><br/>
+                <NavLink to="/workcatalog">workcatalog</NavLink><br/>
+                <Button onClick={() => {
+                    console.log(accessToken);
+                    console.log(user);
+                }}>Проверить токен</Button>
             </Container>
         </Stack>
     );
 };
-
-export default RegistrationForm;
+export default LoginForm;

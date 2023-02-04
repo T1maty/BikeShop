@@ -1,3 +1,3 @@
-export interface UserResponse {
-  id: number;
+export default interface UserResponse {
+    id: number;
 }

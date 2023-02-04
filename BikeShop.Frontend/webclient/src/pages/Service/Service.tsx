@@ -1,13 +1,11 @@
 import React from 'react';
-import stl from './workCatalog.module.css';
 import {ProductTreeView} from "../../widgets";
 
-const WorkCatalog = () => {
+const Service = () => {
     return (
-        <div className={stl.container}>
+        <div>
             <ProductTreeView/>
         </div>
     );
 };
-
-export default WorkCatalog;
+export default Service;
