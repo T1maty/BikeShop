@@ -1,21 +1,16 @@
 import React from "react";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {NavLink, useNavigate} from "react-router-dom";
-import LoginData from "../../../entities/models/LoginData";
-import useUserData from "../../../entities/globalStores/userStore";
-import useAuth from "../../../entities/globalStores/authStore";
+import {NavLink} from "react-router-dom";
+import {ILoginData, useAuth, useUser} from "../../../entities";
+
 
 const LoginForm = () => {
-    const navigate = useNavigate();
-
     const login = useAuth(s => s.login);
     const checkTokens = useAuth(s => s.checkTokens);
 
     const accessToken = localStorage.getItem('accessToken');
-
-    const setUser = useUserData(s => s.setUser);
-    const user = useUserData(s => s.user);
+    const user = useUser(s => s.user);
 
 
     React.useEffect(() => {
@@ -28,22 +23,16 @@ const LoginForm = () => {
             errors
         },
         handleSubmit
-    } = useForm<LoginData>({
+    } = useForm<ILoginData>({
         defaultValues: {
             phone: "",
             password: ""
         }
     });
 
-    const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
-        login(data).then(r => {
-            setUser(r.data.user);
-            //navigate("/main", {replace: true});
-        }).catch((r) => {
-            console.log(r);
-        });
+    const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
+        login(data);
     };
-
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={{height: "100vh"}}>

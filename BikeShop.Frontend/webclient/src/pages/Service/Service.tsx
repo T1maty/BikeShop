@@ -1,11 +1,11 @@
 import React from 'react';
-import ProductTreeView from 'widgets/productTreeView/ProductTreeView';
+import {ProductTreeView} from "../../widgets";
 
 const Service = () => {
-  return (
-    <div>
-      <ProductTreeView />
-    </div>
-  );
+    return (
+        <div>
+            <ProductTreeView/>
+        </div>
+    );
 };
 export default Service;

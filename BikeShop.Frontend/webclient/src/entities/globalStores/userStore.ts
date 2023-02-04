@@ -1,21 +1,19 @@
 import {create} from "zustand";
 import {immer} from "zustand/middleware/immer";
 import {devtools, persist} from "zustand/middleware";
-import User from "../models/User";
+import {IUser} from "../index";
+
 
 interface UserDataState {
-    user?: User,
+    user?: IUser,
 
-
-    setUser: (user: User) => void
-    updateUser: () => void
-
+    setUser: (user: IUser) => void
+    updateUserFetch: () => void
 }
 
 const useUserData = create<UserDataState>()(persist(devtools(immer((set, get) => ({
-
-    setUser: (user1: User) => set({user: user1}),
-    updateUser: () => {
+    setUser: (user1: IUser) => set({user: user1}),
+    updateUserFetch: () => {
     },
 
 }))), {name: "userStore", version: 1}));

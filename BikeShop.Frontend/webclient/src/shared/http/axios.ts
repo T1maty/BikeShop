@@ -14,6 +14,7 @@ const $api = axios.create({
 
 $api.interceptors.request.use(function (config) {
     config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+    
     return config;
 }, function (error) {
     // Do something with request error

@@ -7,11 +7,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Header from "../widgets/Header/Header";
-import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
-import WorkCatalog from "../pages/workCatalog/workCatalog";
-import LoginPage from "../pages/loginPage/loginPage";
-import MainPage from "../pages/main/MainPage";
+import {Header} from "../widgets";
+import {LoginPage, MainPage, RegistrationPage, WorkCatalog} from "../pages";
 
 const darkTheme = createTheme({
     palette: {

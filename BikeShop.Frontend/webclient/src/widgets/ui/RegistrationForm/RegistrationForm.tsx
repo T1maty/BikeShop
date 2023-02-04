@@ -2,12 +2,16 @@ import React from "react";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {NavLink} from "react-router-dom";
-import RegistrationData from "../../../entities/models/RegistrationData";
-import useRegistrationForm from "./store";
+import {IRegistrationData, useAuth} from "../../../entities";
 
 const RegistrationForm = () => {
 
-    const fetchRegistration = useRegistrationForm(s => s.registrationFetch);
+    const fetchRegistration = useAuth(s => s.registration);
+    const checkTokens = useAuth(s => s.checkTokens);
+
+    React.useEffect(() => {
+        checkTokens();
+    }, [])
 
     const {
         control,
@@ -15,19 +19,16 @@ const RegistrationForm = () => {
             errors
         },
         handleSubmit
-    } = useForm<RegistrationData>({
+    } = useForm<IRegistrationData>({
         defaultValues: {
             phone: "",
             password: ""
         }
     });
 
-    const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
-        fetchRegistration(data).then(r => {
-            console.log(r)
-        })
+    const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
+        fetchRegistration(data);
     };
-
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={{height: "100vh"}}>

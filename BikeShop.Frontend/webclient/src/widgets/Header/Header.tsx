@@ -4,11 +4,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import {AppBar, Grid, Typography} from '@mui/material';
-import useUserData from "../../entities/globalStores/userStore";
+import {useUser} from "../../entities";
 
 const Header: React.FC = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
-    const user = useUserData(s => s.user);
+    const user = useUser(s => s.user);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -55,7 +55,7 @@ const Header: React.FC = () => {
                     <Typography variant="subtitle1" noWrap sx={{mr: '20px'}} onClick={() => {
                         console.log("logout")
                     }}>
-                        {user?.lastName} {user?.firstName}
+                        {user?.lastName == undefined ? 'Фамилия' : user?.lastName} {user?.firstName == undefined ? 'Имя' : user?.firstName}
                     </Typography>
 
                     <IconButton edge="start" color="inherit" aria-label="menu">
