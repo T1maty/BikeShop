@@ -5,7 +5,7 @@ import {IUser} from "../index";
 
 
 interface UserDataState {
-    user?: IUser,
+    user?: IUser
 
     setUser: (user: IUser) => void
     updateUserFetch: () => void

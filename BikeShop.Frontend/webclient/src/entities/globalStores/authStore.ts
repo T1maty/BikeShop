@@ -2,75 +2,58 @@ import {create} from "zustand";
 import {immer} from "zustand/middleware/immer";
 import {devtools, persist} from "zustand/middleware";
 
-import {useNavigate} from "react-router-dom";
-
-import {ILoginData, ILoginResponse, IRefreshResponse, IRegistrationData} from "../index";
+import {ILoginData, ILoginResponse, IRefreshResponse, IRegistrationData, IUser} from "../index";
 import {$api} from "../../shared";
-import useUserData from "./userStore";
 
 
 interface authState {
-    logout: (redirect?: string) => void
-    checkTokens: (redirect?: string) => void;
-    login: (loginData: ILoginData, redirect?: string) => void;
-    registration: (data: IRegistrationData, redirect?: string) => void;
+    logout: (setUser: (user: IUser) => void, success?: () => void) => void,
+    checkTokens: (success?: () => void, fail?: () => void) => void;
+    login: (loginData: ILoginData, setUser: (user: IUser) => void, success?: () => void) => void;
+    registration: (data: IRegistrationData, success?: () => void) => void;
 }
 
 const useAuth = create<authState>()(persist(devtools(immer((set, get) => ({
 
-    login: (loginData, redirect = '') => {
+    login: (loginData, setUser, success) => set(state => {
         $api.post<ILoginResponse>("/auth/login", loginData).then((r) => {
 
             localStorage.setItem('accessToken', r.data.accessToken)
-            const setUser = useUserData(s => s.setUser);
-            setUser(r.data.user);
-
-            if (redirect.length > 0) {
-                const navigate = useNavigate();
-                navigate(redirect, {replace: true})
-            }
-
+            success ? success() : true;
 
         }).catch((r) => {
             console.log(r)
         })
-    },
+    }),
 
-    checkTokens: (redirect = '') => {
+    checkTokens: (success, fail) => {
         $api.post<IRefreshResponse>('/auth/refresh').then(r => {
 
             localStorage.setItem('accessToken', r.data.accessToken)
-
-            if (redirect.length > 0) {
-                const navigate = useNavigate();
-                navigate(redirect, {replace: true})
-            }
+            success ? success() : true;
 
         }).catch((r) => {
-            console.log(r)
-        })
-    },
-
-    logout: (redirect = '') => {
-        $api.post('auth/logout').then(() => {
             localStorage.removeItem('accessToken')
+            fail ? fail() : true;
+            console.log(r)
+        })
+    },
 
-            if (redirect.length > 0) {
-                const navigate = useNavigate();
-                navigate(redirect, {replace: true})
-            }
+    logout: (setUser, success) => {
+        $api.post('auth/logout').then(() => {
+
+            localStorage.removeItem('accessToken')
+            setUser({} as IUser);
+            success ? success() : true;
 
         }).catch((r) => {
             console.log(r)
         })
     },
 
-    registration: (data, redirect = '') => {
+    registration: (data, success) => {
         $api.post('auth/register', data).then((r) => {
-            if (redirect.length > 0) {
-                const navigate = useNavigate();
-                navigate("/main", {replace: true});
-            }
+            success ? success() : true;
         }).catch((r) => {
             console.log(r)
         })

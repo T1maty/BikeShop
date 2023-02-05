@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "http://185.47.172.78/api";
+export const API_URL = "https://bikeshop59.store/api";
 
 const $api = axios.create({
 
@@ -14,7 +14,7 @@ const $api = axios.create({
 
 $api.interceptors.request.use(function (config) {
     config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
-    
+
     return config;
 }, function (error) {
     // Do something with request error
