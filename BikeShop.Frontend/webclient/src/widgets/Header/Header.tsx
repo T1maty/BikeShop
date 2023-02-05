@@ -5,6 +5,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import {AppBar, Grid, Typography} from '@mui/material';
 import {useUser} from "../../entities";
+import {HeaderUserMenu} from "../../features";
 
 const Header: React.FC = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -52,10 +53,8 @@ const Header: React.FC = () => {
 
                 <Grid item xs={4} alignItems="center" justifyContent="center" sx={{display: 'flex'}}>
 
-                    <Typography variant="subtitle1" noWrap sx={{mr: '20px'}} onClick={() => {
-                        console.log("logout")
-                    }}>
-                        {user?.lastName == undefined ? 'Фамилия' : user?.lastName} {user?.firstName == undefined ? 'Имя' : user?.firstName}
+                    <Typography variant="subtitle1" noWrap sx={{mr: '20px'}}>
+                        <HeaderUserMenu firstName={user?.firstName} lastName={user?.lastName}/>
                     </Typography>
 
                     <IconButton edge="start" color="inherit" aria-label="menu">

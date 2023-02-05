@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {IRegistrationData, useAuth} from "../../../entities";
 
 const RegistrationForm = () => {
@@ -9,8 +9,14 @@ const RegistrationForm = () => {
     const fetchRegistration = useAuth(s => s.registration);
     const checkTokens = useAuth(s => s.checkTokens);
 
+    const navigate = useNavigate();
+
     React.useEffect(() => {
-        checkTokens();
+        checkTokens(() => {
+            navigate('/main');
+        }, () => {
+            navigate('/login')
+        });
     }, [])
 
     const {
@@ -27,7 +33,9 @@ const RegistrationForm = () => {
     });
 
     const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
-        fetchRegistration(data);
+        fetchRegistration(data, () => {
+            navigate('/main')
+        });
     };
 
     return (

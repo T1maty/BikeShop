@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {ILoginData, useAuth, useUser} from "../../../entities";
 
 
@@ -10,11 +10,17 @@ const LoginForm = () => {
     const checkTokens = useAuth(s => s.checkTokens);
 
     const accessToken = localStorage.getItem('accessToken');
+    const setUser = useUser(s => s.setUser);
     const user = useUser(s => s.user);
 
+    const navigate = useNavigate();
 
     React.useEffect(() => {
-        checkTokens();
+        checkTokens(() => {
+            navigate('/main');
+        }, () => {
+            navigate('/login')
+        });
     }, [])
 
     const {
@@ -31,7 +37,9 @@ const LoginForm = () => {
     });
 
     const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
-        login(data);
+        login(data, setUser, () => {
+            navigate('/main');
+        })
     };
 
     return (
@@ -76,7 +84,7 @@ const LoginForm = () => {
                 <NavLink to="/workcatalog">workcatalog</NavLink><br/>
                 <Button onClick={() => {
                     console.log(accessToken);
-                    console.log(user);
+                    console.log(user)
                 }}>Проверить токен</Button>
             </Container>
         </Stack>
