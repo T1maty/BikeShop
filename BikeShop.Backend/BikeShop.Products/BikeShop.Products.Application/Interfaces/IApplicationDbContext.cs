@@ -11,7 +11,8 @@ public interface IApplicationDbContext
     DbSet<ProductTag> ProductTags { get; set; }
     DbSet<Brand> Brands { get; set; }
     DbSet<TagToProductBind> TagToProductBinds { get; set; }
-
+    DbSet<ProductBind> ProductBinds { get; set; }
+    DbSet<ProductImg> productImgs { get; set; }
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
