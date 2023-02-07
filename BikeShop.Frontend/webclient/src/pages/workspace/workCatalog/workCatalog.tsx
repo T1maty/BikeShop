@@ -1,6 +1,6 @@
 import React from 'react';
 import stl from './workCatalog.module.css';
-import {ProductTreeView} from "../../widgets";
+import {ProductTreeView} from "../../../widgets";
 
 const WorkCatalog = () => {
     return (
