@@ -13,6 +13,10 @@ public interface IApplicationDbContext
     DbSet<TagToProductBind> TagToProductBinds { get; set; }
     DbSet<ProductBind> ProductBinds { get; set; }
     DbSet<ProductImg> productImgs { get; set; }
+    DbSet<ProductCard> productsCards { get; set; }
+    DbSet<StorageProduct> storageProducts { get; set; }
+    DbSet<Storage> Storages { get; set; }
+    DbSet<ProductStorageMove> productStorageMoves { get; set; }
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
