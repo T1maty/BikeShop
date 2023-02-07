@@ -2,22 +2,16 @@ import React from "react";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {NavLink, useNavigate} from "react-router-dom";
-import {IRegistrationData, useAuth} from "../../../entities";
+import {ILoginData, useAuthUser} from "../../../entities";
 
-const RegistrationForm = () => {
 
-    const fetchRegistration = useAuth(s => s.registration);
-    const checkTokens = useAuth(s => s.checkTokens);
+const LoginForm = () => {
+
+    const login = useAuthUser(s => s.login);
+    const setUser = useAuthUser(s => s.setUser);
+    const user = useAuthUser(s => s.user);
 
     const navigate = useNavigate();
-
-    React.useEffect(() => {
-        checkTokens(() => {
-            navigate('/main');
-        }, () => {
-            navigate('/login')
-        });
-    }, [])
 
     const {
         control,
@@ -25,23 +19,27 @@ const RegistrationForm = () => {
             errors
         },
         handleSubmit
-    } = useForm<IRegistrationData>({
+    } = useForm<ILoginData>({
         defaultValues: {
             phone: "",
             password: ""
         }
     });
 
-    const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
-        fetchRegistration(data, () => {
-            navigate('/main')
+    const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
+        login(data).then((r) => {
+
+            localStorage.setItem('accessToken', r.data.accessToken)
+            setUser(r.data.user)
+            navigate('/mainpage')
+
         });
     };
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={{height: "100vh"}}>
             <Container maxWidth="sm">
-                <Typography variant="h4">Registration</Typography>
+                <Typography variant="h4">Login</Typography>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <Controller
                         name="phone"
@@ -60,7 +58,6 @@ const RegistrationForm = () => {
                                                              label="Phone number" variant="outlined"
                                                              fullWidth margin="dense"/>}
                     />
-
                     <Controller
                         name="password"
                         control={control}
@@ -74,13 +71,17 @@ const RegistrationForm = () => {
                                                              margin="dense"/>}
                     />
 
-                    <Button type="submit" variant="contained" sx={{mt: 2}}>Register</Button>
+                    <Button type="submit" variant="contained" sx={{mt: 2}}>Login</Button>
                 </Box>
-                <br/>
-                <NavLink to="/login">Login</NavLink><br/>
+                <NavLink to="/registration">Registration</NavLink><br/>
+                <NavLink to="/main">main page</NavLink><br/>
+                <NavLink to="/workcatalog">workcatalog</NavLink><br/>
+                <Button onClick={() => {
+                    console.log(localStorage.getItem('accessToken'));
+                    console.log(user)
+                }}>Проверить токен</Button>
             </Container>
         </Stack>
     );
 };
-
-export default RegistrationForm;
+export default LoginForm;

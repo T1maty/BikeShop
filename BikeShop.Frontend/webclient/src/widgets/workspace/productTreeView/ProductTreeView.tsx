@@ -6,7 +6,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem from "@mui/lab/TreeItem";
 import useTreeViewState from "./state";
-import {IGroup} from "../../entities";
+import {IGroup} from "../../../entities";
 
 export default function ProductTreeView() {
     const [expanded, setExpanded] = React.useState<string[]>([]);
