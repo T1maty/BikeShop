@@ -1,7 +1,7 @@
 import {OnlyWithoutAuthRout, WorkspaceHeaderProvider} from "../entities/index";
 import {createBrowserRouter} from "react-router-dom";
-import {Home, LoginPage, MainPage, RegistrationPage} from "../pages";
-import {CheckAuthRout} from "../entities";
+import {Home, LoginPage, MainPage, ProductCatalogPage, RegistrationPage} from "../pages";
+import {CheckAuthRout, PublicHeaderProvider} from "../entities";
 
 
 // @ts-ignore
@@ -30,11 +30,15 @@ export const Routs = createBrowserRouter([
 
     {
         path: '/',
-        element: <Home/>
+        element: <PublicHeaderProvider>
+            <Home/>
+        </PublicHeaderProvider>
     },
     {
         path: '/home',
-        element: <Home/>
+        element: <PublicHeaderProvider>
+            <Home/>
+        </PublicHeaderProvider>
     },
 
     ////                                        ////
@@ -46,6 +50,14 @@ export const Routs = createBrowserRouter([
         element: <CheckAuthRout>
             <WorkspaceHeaderProvider>
                 <MainPage/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthRout>
+    },
+    {
+        path: '/productcatalog',
+        element: <CheckAuthRout>
+            <WorkspaceHeaderProvider>
+                <ProductCatalogPage/>
             </WorkspaceHeaderProvider>
         </CheckAuthRout>
     },

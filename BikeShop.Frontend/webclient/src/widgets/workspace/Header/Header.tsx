@@ -6,9 +6,11 @@ import Badge from '@mui/material/Badge';
 import {AppBar, Grid, Typography} from '@mui/material';
 import {useAuthUser} from "../../../entities";
 import {HeaderUserMenu} from "../../../features";
+import {useNavigate} from "react-router-dom";
 
 const Header: React.FC = () => {
 
+    const navigate = useNavigate();
     const [currentTime, setCurrentTime] = useState(new Date());
     const user = useAuthUser(s => s.user);
 
@@ -38,7 +40,9 @@ const Header: React.FC = () => {
                         <MenuIcon/>
                     </IconButton>
 
-                    <Typography variant="subtitle1" noWrap>
+                    <Typography variant="subtitle1" noWrap onClick={() => {
+                        navigate('/mainpage')
+                    }}>
                         Shop
                     </Typography>
 
