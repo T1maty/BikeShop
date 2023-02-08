@@ -1,5 +1,5 @@
 import React from 'react';
-import {ProductTreeView} from "../../widgets";
+import {ProductTreeView} from "../../../widgets";
 
 const Service = () => {
     return (

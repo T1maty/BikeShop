@@ -4,12 +4,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import {AppBar, Grid, Typography} from '@mui/material';
-import {useUser} from "../../entities";
-import {HeaderUserMenu} from "../../features";
+import {useAuthUser} from "../../../entities";
+import {HeaderUserMenu} from "../../../features";
 
 const Header: React.FC = () => {
+
     const [currentTime, setCurrentTime] = useState(new Date());
-    const user = useUser(s => s.user);
+    const user = useAuthUser(s => s.user);
 
     useEffect(() => {
         const timer = setInterval(() => {
