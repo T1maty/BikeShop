@@ -31,6 +31,7 @@ const LoginForm = () => {
 
             localStorage.setItem('accessToken', r.data.accessToken)
             setUser(r.data.user)
+
             navigate('/mainpage')
 
         });

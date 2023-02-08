@@ -2,24 +2,27 @@ import {create} from "zustand";
 import {immer} from "zustand/middleware/immer";
 import {devtools, persist} from "zustand/middleware";
 
-import {ILoginData, ILoginResponse, IRegistrationData, IUser} from "../index";
+import {ILoginData, ILoginResponse, IRegistrationData, IShop, IUser} from "../index";
 import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
 
 
 interface authState {
     user?: IUser
+    shop?: IShop
     setUser: (user: IUser) => void
+    setShop: (shop: IShop) => void
 
     login: (loginData: ILoginData) => Promise<AxiosResponse<ILoginResponse>>
     register: (data: IRegistrationData) => Promise<AxiosResponse>
 
-    logout: () => Promise<AxiosResponse>
+    logout: () => void
 }
 
-const useAuth = create<authState>()(persist(devtools(immer((set, get) => ({
+const useAuth = create<authState>()(persist(devtools(immer((set) => ({
 
     setUser: (user) => set({user: user}),
+    setShop: (shop) => set({shop: shop}),
 
     login: (loginData) => {
         return $api.post<ILoginResponse>("/auth/login", loginData)
@@ -29,9 +32,12 @@ const useAuth = create<authState>()(persist(devtools(immer((set, get) => ({
         return $api.post('auth/register', data)
     },
 
-    logout: () => {
-        return $api.post('auth/logout')
-    },
+    logout: () => set(state => {
+        state.user = {} as IUser
+        state.shop = {} as IShop
+        $api.post('auth/logout')
+        localStorage.removeItem('accessToken')
+    }),
 
 }))), {name: "useAuthUser", version: 1}));
 
