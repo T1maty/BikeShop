@@ -1,5 +1,5 @@
 import {Container} from "@mui/material";
-import {RegistrationForm} from "../../widgets/ui";
+import {RegistrationForm} from "../../../widgets/index";
 
 
 const RegistrationPage = () => {

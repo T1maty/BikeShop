@@ -1,6 +1,5 @@
 import React from "react";
-import {LoginForm} from "../../widgets/ui";
-
+import {LoginForm} from "../../../widgets";
 
 const LoginPage = () => {
     return (
