@@ -2,7 +2,7 @@ import {OnlyWithoutAuthRout, WorkspaceHeaderProvider} from "../entities/index";
 import {createBrowserRouter} from "react-router-dom";
 import {Home, LoginPage, MainPage, ProductCatalogPage, RegistrationPage} from "../pages";
 import {CheckAuthRout, PublicHeaderProvider} from "../entities";
-import {Cashbox} from '../pages/workspace/Cashbox/Cashbox';
+import Cashbox from '../pages/workspace/Cashbox/Cashbox';
 
 
 // @ts-ignore

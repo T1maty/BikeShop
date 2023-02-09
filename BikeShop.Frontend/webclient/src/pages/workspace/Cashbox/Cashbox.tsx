@@ -1,10 +1,14 @@
 import React from 'react';
-import {Box, Container, Grid, Paper, Stack, TextField} from "@mui/material";
+import {Box, Container, Paper, Stack} from "@mui/material";
 import Button from "../../../shared/ui/Button/Button";
 import s from "./Cashbox.module.css"
 import Input from 'shared/ui/Input/Input';
+import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
+import ChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModal';
 
-export const Cashbox = () => {
+const Cashbox = () => {
+
+    const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
 
     return (
         <Container>
@@ -34,10 +38,10 @@ export const Cashbox = () => {
                             }}
                             className={s.tableBlock_buttons}
                         >
-                            <Button text={'Стол 1'}/>
-                            <Button text={'Стол 2'}/>
-                            <Button text={'Стол 3'}/>
-                            <Button text={'Стол 4'}/>
+                            <Button text={'Стол 1'} onClick={() => {}}/>
+                            <Button text={'Стол 2'} onClick={() => {}}/>
+                            <Button text={'Стол 3'} onClick={() => {}}/>
+                            <Button text={'Стол 4'} onClick={() => {}}/>
                         </Box>
                     </Box>
                     <Box
@@ -50,10 +54,11 @@ export const Cashbox = () => {
                             borderRadius: 2,
                         }}
                     >
+                        <ChooseClientModal/>
                         <Paper>
                             <div className={s.clientBox}>
                                 <h3 style={{textAlign: 'center', marginTop: '0px'}}>Клиент</h3>
-                                <p>Панкратов Егвений Владимирович</p>
+                                <p>Панкратов Евгений Владимирович</p>
                                 <p>Номер телефона</p>
                                 <p>Почта</p>
                                 <p>Баланс: 0</p>
@@ -61,10 +66,11 @@ export const Cashbox = () => {
                         </Paper>
                         <div className={s.clientBox_buttons}>
                             <div className={s.clientBox_buttons_chooseBtn}>
-                                <Button text={'Выбрать клиента'}/>
+                                <Button text={'Выбрать клиента'} onClick={() => setChooseClientModal(true)}/>
+                                {/*<Button onClick={() => setChooseClientModal(true)}>Выбрать клиента</Button>*/}
                             </div>
                             <div className={s.clientBox_buttons_cancelBtn}>
-                                <Button text={'X'}/>
+                                <Button text={'X'} onClick={() => {}}/>
                             </div>
                         </div>
                     </Box>
@@ -81,7 +87,7 @@ export const Cashbox = () => {
                     <div className={s.cashbox_rightBlock}>
                         <div className={s.cashbox_rightBlock_header}>
                             <div className={s.cashbox_header_chooseBtn}>
-                                <Button text={'Выбрать товары'}/>
+                                <Button text={'Выбрать товары'} onClick={() => {}}/>
                             </div>
                             <div className={s.cashbox_header_searchInput}>
                                 <Input placeholder={'Поиск...'}/>
@@ -94,7 +100,7 @@ export const Cashbox = () => {
                     <div className={s.cashbox_rightBlock_bottom}>
                         <div className={s.cashbox_rightBlock_bottom_buttonsLeft}>
                             <div className={s.cashbox_rightBlock_bottom_cancelBtn}>
-                                <Button text={'X'}/>
+                                <Button text={'X'} onClick={() => {}}/>
                             </div>
                             <div className={s.cashbox_rightBlock_bottom_sumNoDiscount}>
                                 Без скидки
@@ -108,11 +114,14 @@ export const Cashbox = () => {
                         </div>
                     </div>
                     <div className={s.cashbox_rightBlock_bottom_buttonResult}>
-                        <Button text={'К оплате'}/>
+                        <Button text={'К оплате'} onClick={() => {}}/>
                     </div>
                 </Box>
 
             </Stack>
         </Container>
+
     );
 };
+
+export default Cashbox;
