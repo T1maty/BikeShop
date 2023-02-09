@@ -17,6 +17,7 @@
 }
 .tableBlock_buttons button {
     margin: 10px;
+    padding: 16px 40px;
 }
 /*клиент*/
 .clientBox {
@@ -26,12 +27,14 @@
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    max-width: 400px;
 }
 .clientBox_buttons_chooseBtn {
     margin-right: 20px;
 }
 .clientBox_buttons_chooseBtn button {
-    width: 350px;
+    min-width: 250px;
+    padding: 16px 20px;
 }
 .clientBox_buttons_cancelBtn {
 
