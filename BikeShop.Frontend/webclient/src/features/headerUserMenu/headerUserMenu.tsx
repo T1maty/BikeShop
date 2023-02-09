@@ -6,7 +6,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import React from 'react';
-import {useAuth, useUser} from "../../entities";
+import {useAuthUser} from "../../entities";
 import {useNavigate} from "react-router-dom";
 
 interface iProps {
@@ -19,8 +19,8 @@ const HeaderUserMenu = (props: iProps) => {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
 
-    const setUser = useUser(s => s.setUser);
-    const logout = useAuth(s => s.logout);
+    const logout = useAuthUser(s => s.logout);
+    const setUser = useAuthUser(s => s.setUser)
     const navigate = useNavigate();
 
     const handleToggle = () => {
@@ -49,9 +49,8 @@ const HeaderUserMenu = (props: iProps) => {
 
     function handleLogOut(event: Event | React.SyntheticEvent) {
         handleClose(event)
-        logout(setUser, () => {
-            navigate('/login')
-        })
+        logout()
+        navigate('/login')
     }
 
     // return focus to the button when we transitioned from !open -> open

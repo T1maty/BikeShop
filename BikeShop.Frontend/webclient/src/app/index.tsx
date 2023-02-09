@@ -6,9 +6,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import {Header} from "../widgets";
-import {LoginPage, MainPage, RegistrationPage, WorkCatalog} from "../pages";
+import {RouterProvider} from "react-router-dom";
+import {Routs} from "./allRouts";
 
 const darkTheme = createTheme({
     palette: {
@@ -21,19 +20,9 @@ const App: React.FC = () => {
         <div className="App">
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline/>
-                <Router>
-                    <Header/>
-                    <Suspense>
-                        <Routes>
-                            <Route path="/registration" element={<RegistrationPage/>}/>
-                            <Route path="/workcatalog" element={<WorkCatalog/>}/>
-                            <Route path="/" element={<LoginPage/>}/>
-                            <Route path="/login" element={<LoginPage/>}/>
-                            <Route path="/main" element={<MainPage/>}/>
-                            <Route path="*" element={<div>Not Found</div>}/>
-                        </Routes>
-                    </Suspense>
-                </Router>
+                <Suspense>
+                    <RouterProvider router={Routs}/>
+                </Suspense>
             </ThemeProvider>
         </div>
     );
