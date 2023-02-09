@@ -4,3 +4,24 @@
 .buttonsTableBlock button {
     margin: 10px;
 }
+
+.clientBox {
+    padding: 20px;
+}
+.clientBox_funcBlock {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.clientBox_funcBlock_chooseBtn button {
+    width: 350px;
+}
+.clientBox_funcBlock_cancelBtn button {
+    width: 30px;
+    height: 56px;
+    padding: 0;
+    font-size: 20px;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}

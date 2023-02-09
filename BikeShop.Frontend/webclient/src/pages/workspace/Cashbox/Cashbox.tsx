@@ -55,8 +55,23 @@ export const Cashbox = () => {
                         }}
                     >
                         <Paper>
-                            <Container sx={{width: '100%', height: '75vh'}}/>
+                            {/*<Container sx={{width: '100%', height: '75vh'}}/>*/}
+                            <div className={s.clientBox}>
+                                <h3 style={{textAlign: 'center'}}>Клиент</h3>
+                                <p>Панкратов Егвений Владимирович</p>
+                                <p>Номер телефона</p>
+                                <p>Почта</p>
+                                <p>Баланс: 0</p>
+                            </div>
                         </Paper>
+                        <div className={s.clientBox_funcBlock}>
+                            <div className={s.clientBox_funcBlock_chooseBtn}>
+                                <Button text={'Выбрать клиента'}/>
+                            </div>
+                            <div className={s.clientBox_funcBlock_cancelBtn}>
+                                <Button text={'X'}/>
+                            </div>
+                        </div>
                     </Box>
                 </Stack>
 
