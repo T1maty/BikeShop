@@ -44,7 +44,9 @@ export const Routs = createBrowserRouter([
     // для проверки Cashbox
     {
         path: '/cashbox',
-        element: <Cashbox/>
+        element: <WorkspaceHeaderProvider>
+            <Cashbox/>
+        </WorkspaceHeaderProvider>
     },
 
     ////                                        ////
@@ -53,11 +55,11 @@ export const Routs = createBrowserRouter([
 
     {
         path: '/mainpage',
-        element: <CheckAuthRout>
+        element: /*<CheckAuthRout>*/
             <WorkspaceHeaderProvider>
                 <MainPage/>
             </WorkspaceHeaderProvider>
-        </CheckAuthRout>
+        /*</CheckAuthRout>*/
     },
     {
         path: '/productcatalog',
