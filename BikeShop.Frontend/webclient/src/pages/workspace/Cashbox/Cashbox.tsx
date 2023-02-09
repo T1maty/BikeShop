@@ -1,5 +1,7 @@
 import React from 'react';
-import {Box, Container, Grid, Paper, Stack, Typography} from "@mui/material";
+import {Box, Container, Grid, Paper, Stack} from "@mui/material";
+import Button from "../../../shared/ui/Button/Button";
+import s from "./Cashbox.module.css"
 
 export const Cashbox = () => {
 
@@ -21,7 +23,26 @@ export const Cashbox = () => {
                         }}
                     >
                         <Paper>
-                            <Container sx={{width: '100%', height: '20vh'}}/>
+                            <Container sx={{width: '100%', height: '100%'}}/>
+
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    height: 'fit-content',
+                                    p: 2,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    flexWrap: 'wrap'
+                                }}
+                            >
+                                <div className={s.buttonsTableBlock}>
+                                    <Button text={'Стол 1'}/>
+                                    <Button text={'Стол 2'}/>
+                                    <Button text={'Стол 3'}/>
+                                    <Button text={'Стол 4'}/>
+                                </div>
+                            </Box>
+
                         </Paper>
                     </Box>
                     <Box
