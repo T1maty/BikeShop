@@ -1,27 +1,115 @@
-.buttonsTableBlock {
-    text-align: center;
-}
-.buttonsTableBlock button {
-    margin: 10px;
+/*общие стили*/
+
+.commonFieldStyle {
+    max-width: 250px;
+    border: 2px solid #C0C0C0;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/*левый блок*/
+/*столы*/
+.tableBlock_buttons {
+    text-align: center;
+}
+.tableBlock_buttons button {
+    margin: 10px;
+}
+/*клиент*/
 .clientBox {
     padding: 20px;
 }
-.clientBox_funcBlock {
+.clientBox_buttons {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
 }
-.clientBox_funcBlock_chooseBtn button {
+.clientBox_buttons_chooseBtn {
+    margin-right: 20px;
+}
+.clientBox_buttons_chooseBtn button {
     width: 350px;
 }
-.clientBox_funcBlock_cancelBtn button {
+.clientBox_buttons_cancelBtn {
+
+}
+.clientBox_buttons_cancelBtn button {
     width: 30px;
     height: 56px;
     padding: 0;
     font-size: 20px;
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
+}
+
+/*правый блок*/
+/*хеадер*/
+.cashbox_rightBlock {
+    padding: 20px;
+}
+.cashbox_rightBlock_header {
+    display: flex;
+    justify-content: space-between;
+}
+.cashbox_header_chooseBtn {
+
+}
+.cashbox_header_chooseBtn button {
+    width: 200px;
+    padding: 16px 0;
+}
+.cashbox_header_searchInput {
+    margin-left: 20px;
+}
+.cashbox_header_searchInput input {
+    width: 450px;
+}
+/*середина*/
+/*пока пусто*/
+
+/*футер*/
+.cashbox_rightBlock_bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.cashbox_rightBlock_bottom button {
+
+}
+.cashbox_rightBlock_bottom_buttonsLeft {
+    display: flex;
+}
+.cashbox_rightBlock_bottom_buttonsLeft > div {
+    margin-right: 20px;
+}
+.cashbox_rightBlock_bottom_buttonsLeft button {
+
+}
+.cashbox_rightBlock_bottom_cancelBtn {
+
+}
+.cashbox_rightBlock_bottom_cancelBtn button {
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.cashbox_rightBlock_bottom_sumNoDiscount {
+    composes: commonFieldStyle;
+}
+.cashbox_rightBlock_bottom_discount {
+    composes: commonFieldStyle;
+}
+.cashbox_rightBlock_bottom_Sum {
+    composes: commonFieldStyle;
+}
+.cashbox_rightBlock_bottom_buttonResult {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+.cashbox_rightBlock_bottom_buttonResult button {
+    width: 350px;
 }
