@@ -54,7 +54,7 @@ const Cashbox = () => {
                             borderRadius: 2,
                         }}
                     >
-                        <Paper>
+                        <Paper style={{borderRadius: '10px'}}>
                             <div className={s.clientBox}>
                                 <h3 style={{textAlign: 'center', marginTop: '0px'}}>Клиент</h3>
                                 <p>Панкратов Евгений Владимирович</p>
@@ -93,7 +93,7 @@ const Cashbox = () => {
                             </div>
                         </div>
                     </div>
-                    <Paper>
+                    <Paper style={{borderRadius: '10px'}}>
                         <Container sx={{width: '100%', height: '100vh'}}/>
                     </Paper>
                     <div className={s.cashbox_rightBlock_bottom}>
