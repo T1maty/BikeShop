@@ -1,6 +1,10 @@
 import React from 'react';
-import {Box, Button, Modal, TextField} from "@mui/material";
+import {Box, Modal, TextField} from "@mui/material";
 import useChooseClientModal from './ChooseClientModalStore';
+import Button from '../../shared/ui/Button/Button';
+import s from './ChooseClientModal.module.css'
+// import {openSelector, setOpenSelector} from './ChooseClientModal-selectors';
+import Input from '../../shared/ui/Input/Input';
 
 const ChooseClientModal = () => {
     const open = useChooseClientModal(s => s.chooseClientModal)
@@ -11,12 +15,12 @@ const ChooseClientModal = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
+        width: 480,
+        bgcolor: '#33373B',
 
         boxShadow: 24,
         p: 4,
-        borderRadius: 10,
+        borderRadius: 5,
     };
 
     return (
@@ -27,14 +31,34 @@ const ChooseClientModal = () => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <TextField id="outlined-basic"
-                           label="Назва группи"
-                           variant="outlined"
-                           value={'groupName'}
-                           onChange={() => {}}
-                />
-                <Button>Выбрать клиента</Button>
-                <Button>Отмена</Button>
+                <div className={s.clientModal_searchBlock}>
+                    <div className={s.clientModal_searchBlock_input}>
+                        <Input placeholder={'Введите номер телефона'}/>
+                    </div>
+                    <div>
+                        <TextField id="outlined-basic"
+                                   variant="outlined"
+                                   value={'Search result'}
+                                   style={{backgroundColor: '#5C636A'}}
+                                   onChange={() => {}}
+                        />
+                    </div>
+                </div>
+                <div className={s.clientModal_textFields}>
+                    <div>
+                        <Input placeholder={'Имя'}/>
+                    </div>
+                    <div>
+                        <Input placeholder={'Фамилия'}/>
+                    </div>
+                    <div>
+                        <Input placeholder={'Отчество'}/>
+                    </div>
+                </div>
+                <div className={s.clientModal_buttonsBlock}>
+                    <Button text={'Выбрать клиента'} onClick={() => {}}/>
+                    <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
+                </div>
             </Box>
         </Modal>
     );

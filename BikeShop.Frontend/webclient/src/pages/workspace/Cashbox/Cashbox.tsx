@@ -54,7 +54,6 @@ const Cashbox = () => {
                             borderRadius: 2,
                         }}
                     >
-                        <ChooseClientModal/>
                         <Paper>
                             <div className={s.clientBox}>
                                 <h3 style={{textAlign: 'center', marginTop: '0px'}}>Клиент</h3>
@@ -64,10 +63,10 @@ const Cashbox = () => {
                                 <p>Баланс: 0</p>
                             </div>
                         </Paper>
+                        <ChooseClientModal/>
                         <div className={s.clientBox_buttons}>
                             <div className={s.clientBox_buttons_chooseBtn}>
                                 <Button text={'Выбрать клиента'} onClick={() => setChooseClientModal(true)}/>
-                                {/*<Button onClick={() => setChooseClientModal(true)}>Выбрать клиента</Button>*/}
                             </div>
                             <div className={s.clientBox_buttons_cancelBtn}>
                                 <Button text={'X'} onClick={() => {}}/>

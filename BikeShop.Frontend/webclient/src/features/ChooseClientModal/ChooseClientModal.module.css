@@ -1,0 +1,32 @@
+.clientModal_textFields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clientModal_searchBlock {
+    margin-bottom: 50px;
+    composes: clientModal_textFields;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+}
+.clientModal_searchBlock_input {
+    margin-bottom: 10px;
+}
+
+.clientModal_textFields > div {
+    margin-bottom: 20px;
+}
+.clientModal_textFields > div input {
+    width: 390px;
+}
+
+.clientModal_buttonsBlock {
+    display: flex;
+    justify-content: space-between;
+}
+.clientModal_buttonsBlock button {
+    width: 200px;
+    padding: 10px 20px;
+}
