@@ -10,6 +10,12 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ProductTag> ProductTags { get; set; }
     public DbSet<TagToProductBind> TagToProductBinds { get; set; }
     public DbSet<Brand> Brands { get; set; }
+    public DbSet<ProductBind> ProductBinds { get; set; }
+    public DbSet<ProductImg> productImgs { get; set; }
+    public DbSet<ProductCard> productsCards { get; set; }
+    public DbSet<StorageProduct> storageProducts { get; set; }
+    public DbSet<Storage> Storages { get; set; }
+    public DbSet<ProductStorageMove> productStorageMoves { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
