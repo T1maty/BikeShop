@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Modal, TextField} from "@mui/material";
+import {Modal, TextField} from "@mui/material";
 import useChooseClientModal from './ChooseClientModalStore';
 import Button from '../../shared/ui/Button/Button';
 import s from './ChooseClientModal.module.scss'
