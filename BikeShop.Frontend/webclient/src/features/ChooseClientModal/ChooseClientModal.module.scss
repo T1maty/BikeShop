@@ -1,0 +1,56 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+$clientModalInputWidth: 390px;
+
+.clientModal_mainBox {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    background-color: $themeColorDark;
+    //box-shadow: 24;
+    padding: 16px;
+    border-radius: $defaultBorderRadius;
+
+    .clientModal_searchBlock {
+        @include flexColumn();
+        margin-bottom: 50px;
+
+        .clientModal_searchBlock_input {
+            margin-bottom: 10px;
+
+            input {
+                width: $clientModalInputWidth;
+            }
+        }
+
+        .clientModal_searchBlock_textField {
+            input {
+                width: $clientModalInputWidth;
+            }
+        }
+    }
+
+    .clientModal_textFields > div {
+        @include flexColumn();
+        margin-bottom: 20px;
+
+        input {
+            width: 390px;
+        }
+    }
+
+    .clientModal_buttonsBlock {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            width: 200px;
+            padding: 10px 20px;
+        }
+    }
+
+}
