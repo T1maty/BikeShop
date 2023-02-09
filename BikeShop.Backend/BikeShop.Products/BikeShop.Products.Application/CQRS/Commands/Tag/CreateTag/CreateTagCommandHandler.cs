@@ -17,17 +17,32 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
 
         public async Task<Unit> Handle(CreateTagCommand request, CancellationToken cancellationToken)
         {
+            // Ищу существующий тег с таким названием
             var existingTag = await _context.ProductTags
-                .FirstOrDefaultAsync(c => c.Name.ToLower() == request.Name.ToLower(),
-                cancellationToken);
+                .FirstOrDefaultAsync(
+                    c => c.Name.ToLower() == request.Name.ToLower(),
+                    cancellationToken);
 
+            // Если есть - ошибка
             if (existingTag is not null)
                 throw new AlreadyExistsException($"Create tag error. Tag with name {request.Name} not found")
                 {
                     Error = "tag_already_exists",
-                    ErrorDescription = $"Create tag error. Tag with given name already exists"
+                    ErrorDescription = "Create tag error. Tag with given name already exists"
                 };
 
+            // Ищу родительский тег с указанным parent id, если такого нет - ошибка
+            if (request.ParentId != 0)
+            {
+                var parentTag = await _context.ProductTags.FindAsync(request.ParentId, cancellationToken);
+                if (parentTag is null)
+                    throw new NotFoundException($"Create tag error. Parent tag with id {request.ParentId} not found")
+                    {
+                        Error = "tag_not_found",
+                        ErrorDescription = "Create tag error. Parent tag with given parent id not found"
+                    };
+            }
+            
             var newTag = new ProductTag
             {
                 IsB2BVisible = request.IsB2BVisible,

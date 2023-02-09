@@ -2,7 +2,7 @@ using AutoMapper;
 using BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
-using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTags;
+using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.WebApi.Models.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

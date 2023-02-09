@@ -12,11 +12,11 @@ public interface IApplicationDbContext
     DbSet<Brand> Brands { get; set; }
     DbSet<TagToProductBind> TagToProductBinds { get; set; }
     DbSet<ProductBind> ProductBinds { get; set; }
-    DbSet<ProductImg> productImgs { get; set; }
-    DbSet<ProductCard> productsCards { get; set; }
-    DbSet<StorageProduct> storageProducts { get; set; }
+    DbSet<ProductImg> ProductImgs { get; set; }
+    DbSet<ProductCard> ProductsCards { get; set; }
+    DbSet<StorageProduct> StorageProducts { get; set; }
     DbSet<Storage> Storages { get; set; }
-    DbSet<ProductStorageMove> productStorageMoves { get; set; }
+    DbSet<ProductStorageMove> ProductStorageMoves { get; set; }
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

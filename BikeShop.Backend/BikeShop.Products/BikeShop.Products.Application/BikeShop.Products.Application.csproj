@@ -17,9 +17,4 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="CQRS\Queries\Work" />
-      <Folder Include="Services" />
-    </ItemGroup>
-
 </Project>

@@ -3,7 +3,7 @@ using BikeShop.Products.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTags;
+namespace BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 
 public class GetProductsByTagsQueryHandler : IRequestHandler<GetProductsByTagsQuery, ProductsListModel>
 {
@@ -14,7 +14,7 @@ public class GetProductsByTagsQueryHandler : IRequestHandler<GetProductsByTagsQu
         _context = context;
     }
 
-    public async Task<ProductsListModel> Handle(GetProductsByTagsQuery request, CancellationToken cancellationToken)
+    public async Task<ProductsListModel> Handle(Product.GetProductsByTagsQuery.GetProductsByTagsQuery request, CancellationToken cancellationToken)
     {
         var tags = GetTagListFromString(request.TagsArrayStr);
 

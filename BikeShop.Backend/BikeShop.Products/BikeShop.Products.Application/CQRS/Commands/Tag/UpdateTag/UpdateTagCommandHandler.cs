@@ -24,7 +24,18 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.UpdateTag
                     Error = "tag_not_found",
                     ErrorDescription = $"Update tag error. Tag with given id not found"
                 };
-
+            
+            // Ищу родительский тег с указанным parent id, если такого нет - ошибка
+            if (request.ParentId != 0)
+            {
+                var parentTag = await _context.ProductTags.FindAsync(request.ParentId, cancellationToken);
+                if (parentTag is null)
+                    throw new NotFoundException($"Update tag error. Parent tag with id {request.ParentId} not found")
+                    {
+                        Error = "tag_not_found",
+                        ErrorDescription = "Update tag error. Parent tag with given parent id not found"
+                    };
+            }
 
             existingTag.IsB2BVisible = request.IsB2BVisible;
             existingTag.IsCollapsed = request.IsCollapsed;
