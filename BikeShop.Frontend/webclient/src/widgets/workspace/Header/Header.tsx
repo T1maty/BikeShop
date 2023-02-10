@@ -34,7 +34,7 @@ const Header: React.FC = () => {
         <AppBar position="static" color="primary" sx={{p: '12px 25px'}}>
 
             <Grid container direction="row" alignItems="center">
-                <Grid item alignItems="center" container direction="row" xs={4} sx={{display: 'flex'}}>
+                <Grid item alignItems="center" container direction="row" xs={4} sx={{display: 'flex', paddingLeft: '60px'}}>
 
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: '20px'}}>
                         <MenuIcon/>
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
 
                 </Grid>
 
-                <Grid item xs={4} alignItems="center" justifyContent="center" sx={{display: 'flex'}}>
+                <Grid item xs={4} alignItems="center" justifyContent="flex-end" sx={{display: 'flex', paddingRight: '60px'}}>
 
                     <Typography variant="subtitle1" noWrap sx={{mr: '20px'}}>
                         <HeaderUserMenu firstName={user?.firstName} lastName={user?.lastName}/>
