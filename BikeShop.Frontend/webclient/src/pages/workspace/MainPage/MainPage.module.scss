@@ -1,0 +1,92 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.mainPageWrapper {
+    @include defaultContainer();
+
+    .mainPageMainBlock {
+        @include wrapperMainBlock();
+        border: 1px solid white;
+
+        .mainPage_header {
+            display: flex;
+            border: 1px solid white;
+            //min-height: 30%;
+            margin-bottom: $defaultLargeMargin;
+
+            .mainPage_header_leftSide {
+                display: flex;
+                flex-direction: column;
+                //justify-content: stretch;
+                border: 1px solid white;
+                width: 70%;
+
+                .mainPage_header_leftSide_deal {
+                    border-radius: $defaultBorderRadius;
+                    background-color: $themeColorDark;
+                    margin-bottom: $defaultLargeMargin;
+                    padding: $defaultLargeMargin;
+                    display: flex;
+                    justify-content: space-between;
+
+                    button {
+                        padding: 5px 10px;
+                    }
+                }
+                .mainPage_header_leftSide_info {
+                    border-radius: $defaultBorderRadius;
+                    background-color: $themeColorDark;
+                    padding: $defaultLargeMargin;
+                    display: flex;
+                    justify-content: space-between;
+
+                    button {
+                        padding: 5px 10px;
+                    }
+                }
+            }
+
+            .mainPage_header_rightSide {
+                border: 1px solid white;
+                width: 30%;
+                background-color: $themeColorDark;
+                border-radius: $defaultBorderRadius;
+                margin-left: $defaultLargeMargin;
+            }
+        }
+
+        .mainPage_main {
+            border: 1px solid white;
+            //min-height: 70%;
+            display: flex;
+
+            .mainPage_main_leftSide {
+                border: 1px solid white;
+                width: 50%;
+                background-color: $themeColorDark;
+                border-radius: $defaultBorderRadius;
+                margin-right: $defaultSmallMargin;
+
+                .mainPage_main_leftSide_title {
+                    text-align: center;
+                }
+                .mainPage_main_leftSide_tasks {
+                    background-color: $themeColorGray;
+                }
+            }
+
+            .mainPage_main_rightSide {
+                border: 1px solid white;
+                width: 50%;
+                margin-left: $defaultSmallMargin;
+
+                .mainPage_main_rightSide_top {
+
+                }
+                .mainPage_main_rightSide_bottom {
+
+                }
+            }
+        }
+    }
+}

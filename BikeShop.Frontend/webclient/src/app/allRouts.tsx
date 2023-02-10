@@ -1,8 +1,8 @@
 import {OnlyWithoutAuthRout, WorkspaceHeaderProvider} from "../entities/index";
 import {createBrowserRouter} from "react-router-dom";
-import {Home, LoginPage, MainPage, ProductCatalogPage, RegistrationPage} from "../pages";
+import {Home, LoginPage, MainPage, ProductCatalog, RegistrationPage} from "../pages";
 import {CheckAuthRout, PublicHeaderProvider} from "../entities";
-import Cashbox from '../pages/workspace/Cashbox/Cashbox';
+import {Cashbox} from "../pages";
 
 
 // @ts-ignore
@@ -65,7 +65,7 @@ export const Routs = createBrowserRouter([
         path: '/productcatalog',
         element: <CheckAuthRout>
             <WorkspaceHeaderProvider>
-                <ProductCatalogPage/>
+                <ProductCatalog/>
             </WorkspaceHeaderProvider>
         </CheckAuthRout>
     },

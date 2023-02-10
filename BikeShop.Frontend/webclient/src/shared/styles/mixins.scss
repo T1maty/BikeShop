@@ -11,7 +11,12 @@
 @mixin defaultContainer() {
     max-width: 1400px;
     margin: 0 auto;
-    //border: 1px solid white;
+    border: 1px solid white;
+}
+
+@mixin wrapperMainBlock() {
+    min-height: calc(100vh - var(--navbar-height));
+    margin: $defaultLargeMargin;
 }
 
 // cashbox mixins
