@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Box, Container, Divider, Paper, Stack, Typography} from '@mui/material';
 import {useNavigate} from "react-router-dom";
 import s from "./MainPage.module.scss";
 import Button from "../../../shared/ui/Button/Button";

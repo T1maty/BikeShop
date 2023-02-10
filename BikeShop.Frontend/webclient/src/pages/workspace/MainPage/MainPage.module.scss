@@ -118,7 +118,7 @@
                         display: flex;
                         justify-content: space-between;
                         //margin-bottom: $defaultLargeMargin;
-                        height: 20%;
+                        //height: 20%;
                         width: 100%;
 
                         .mainPage_main_rightSide_searchButton {
@@ -143,7 +143,7 @@
                     .mainPage_main_rightSide_top_result {
                         @include flexCenter();
                         justify-content: space-between;
-                        height: 20%;
+                        //height: 20%;
                         width: 100%;
 
                         .mainPage_main_rightSide_result_closeBtn {
