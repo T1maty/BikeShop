@@ -27,13 +27,16 @@
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
-    max-width: 400px;
+    /*max-width: 400px;*/
+    width: 100%;
 }
 .clientBox_buttons_chooseBtn {
     margin-right: 20px;
 }
 .clientBox_buttons_chooseBtn button {
-    min-width: 250px;
+    /*min-width: 250px;*/
+    max-width: 250px;
+    /*width: 250px;*/
     padding: 16px 20px;
 }
 .clientBox_buttons_cancelBtn {
@@ -54,6 +57,7 @@
 .cashbox_rightBlock_header {
     display: flex;
     justify-content: space-between;
+    /*flex-wrap: wrap;*/
 }
 .cashbox_header_chooseBtn {
 

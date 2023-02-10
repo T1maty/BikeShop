@@ -1,16 +1,44 @@
-body {
-  margin: 0;
-  height: 100%;
+/*Обнуление стилей*/
+html,body {
   width: 100%;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  height: 100%;
+  margin: 0;
+  line-height: 1;
+  font-size: 16px;
+  overflow-x: hidden; /*чтобы не было белой полосы сбоку на мобилках*/
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
 }
+
+/*body {*/
+/*  margin: 0;*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*  box-sizing: border-box;*/
+/*  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',*/
+/*    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',*/
+/*    sans-serif;*/
+/*  -webkit-font-smoothing: antialiased;*/
+/*  -moz-osx-font-smoothing: grayscale;*/
+/*}*/
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*wrapper for app*/
+/*.app {*/
+/*  min-height: 100%;*/
+/*  overflow: hidden;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  background-color: white;*/
+/*}*/

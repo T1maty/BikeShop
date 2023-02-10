@@ -1,7 +1,6 @@
 import React from 'react';
-import {Box, Container, Paper, Stack} from '@mui/material';
 import Button from '../../../shared/ui/Button/Button';
-import s from './Cashbox.module.css'
+import s from './Cashbox.module.scss'
 import Input from 'shared/ui/Input/Input';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import ChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModal';
@@ -11,126 +10,75 @@ const Cashbox = () => {
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
 
     return (
-        // <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-            <Container>
-                <Stack sx={{mt: 2, mb: 2}} direction={{xs: 'column', sm: 'row'}} spacing={2}>
-
-                    <Stack
-                        sx={{width: {xs: '100%', sm: '50%'}, height: '30%'}}
-                        direction={{xs: 'column', sm: 'column'}}
-                        spacing={2}>
-                        <Box
-                            sx={{
-                                width: '100%',
-                                height: 'fit-content',
-                                p: 2,
-                                backgroundColor: 'grey.800',
-                                borderRadius: 2,
-                            }}
-                        >
-                            <Box
-                                sx={{
-                                    width: '100%',
-                                    height: 'fit-content',
-                                    p: 2,
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    flexWrap: 'wrap'
-                                }}
-                                className={s.tableBlock_buttons}
-                            >
-                                <Button text={'Стол 1'} onClick={() => {
-                                }}/>
-                                <Button text={'Стол 2'} onClick={() => {
-                                }}/>
-                                <Button text={'Стол 3'} onClick={() => {
-                                }}/>
-                                <Button text={'Стол 4'} onClick={() => {
-                                }}/>
-                            </Box>
-                        </Box>
-
-                        <Box
-                            sx={{
-                                width: '100%',
-                                // height: 'fit-content',
-                                // height: '100vh',
-                                height: '980px',
-                                p: 2,
-                                backgroundColor: 'grey.800',
-                                borderRadius: 2,
-                            }}
-                        >
-                            <Paper style={{borderRadius: '10px'}}>
-                                <div className={s.clientBox}>
-                                    <h3 style={{textAlign: 'center', marginTop: '0px'}}>Клиент</h3>
-                                    <p>Панкратов Евгений Владимирович</p>
-                                    <p>Номер телефона</p>
-                                    <p>Почта</p>
-                                    <p>Баланс: 0</p>
-                                </div>
-                            </Paper>
-                            <ChooseClientModal/>
-                            <div className={s.clientBox_buttons}>
-                                <div className={s.clientBox_buttons_chooseBtn}>
-                                    <Button text={'Выбрать клиента'} onClick={() => setChooseClientModal(true)}/>
-                                </div>
-                                <div className={s.clientBox_buttons_cancelBtn}>
-                                    <Button text={'X'} onClick={() => {
-                                    }}/>
-                                </div>
+        <div className={s.cashboxWrapper}>
+            <div className={s.cashboxMainBlock}>
+                <div className={s.cashboxMainBlock_leftSideWrapper}>
+                    <div className={s.leftSide_tables}>
+                        <Button text={'Стол 1'} onClick={() => {}}/>
+                        <Button text={'Стол 2'} onClick={() => {}}/>
+                        <Button text={'Стол 3'} onClick={() => {}}/>
+                        <Button text={'Стол 4'} onClick={() => {}}/>
+                    </div>
+                    <div className={s.leftSide_client}>
+                        <div className={s.leftSide_client_background}>
+                            <h3 style={{textAlign: 'center', marginTop: '0px'}}>Клиент</h3>
+                            <p>Панкратов Евгений Владимирович</p>
+                            <p>Номер телефона</p>
+                            <p>Почта</p>
+                            <p>Баланс: 0</p>
+                        </div>
+                        <ChooseClientModal/>
+                        <div className={s.leftSide_client_buttons}>
+                            <div className={s.leftSide_client_buttons_choose}>
+                                <Button text={'Выбрать клиента'}
+                                        onClick={() => setChooseClientModal(true)}
+                                />
                             </div>
-                        </Box>
-                    </Stack>
-
-                    <Box
-                        sx={{
-                            width: {xs: '100%', sm: '100%'},
-                            p: 2,
-                            backgroundColor: 'grey.800',
-                            borderRadius: 2,
-                        }}
-                    >
-                        <div className={s.cashbox_rightBlock}>
-                            <div className={s.cashbox_rightBlock_header}>
-                                <div className={s.cashbox_header_chooseBtn}>
-                                    <Button text={'Выбрать товары'} onClick={() => {
-                                    }}/>
-                                </div>
-                                <div className={s.cashbox_header_searchInput}>
-                                    <Input placeholder={'Поиск...'}/>
-                                </div>
+                            <div className={s.leftSide_client_buttons_cancel}>
+                                <Button text={'X'} onClick={() => {
+                                }}/>
                             </div>
                         </div>
-                        <Paper style={{borderRadius: '10px'}}>
-                            <Container sx={{width: '100%', height: '100vh'}}/>
-                        </Paper>
-                        <div className={s.cashbox_rightBlock_bottom}>
-                            <div className={s.cashbox_rightBlock_bottom_buttonsLeft}>
-                                <div className={s.cashbox_rightBlock_bottom_cancelBtn}>
-                                    <Button text={'X'} onClick={() => {
-                                    }}/>
+                    </div>
+                </div>
+
+                <div className={s.cashboxMainBlock_rightSideWrapper}>
+                    <div className={s.cashboxMainBlock_rightSideHeader}>
+                        <div className={s.cashbox_header_chooseBtn}>
+                            <Button text={'Выбрать товары'} onClick={() => {
+                            }}/>
+                        </div>
+                        <div className={s.cashbox_header_searchInput}>
+                            <Input placeholder={'Поиск...'}/>
+                        </div>
+                    </div>
+                    <div className={s.cashboxMainBlock_rightSideMiddle}>
+                        Info
+                    </div>
+                    <div className={s.cashboxMainBlock_rightSideBottom}>
+                        <div className={s.cashboxMainBlock_rightSideBottom_buttonsBlock}>
+                            <div className={s.cashboxMainBlock_rightSideBottom_buttonsBlock_one}>
+                                <div className={s.cashboxMainBlock_rightSideBottom_cancelBtn}>
+                                    <Button text={'X'} onClick={() => {}}/>
                                 </div>
-                                <div className={s.cashbox_rightBlock_bottom_sumNoDiscount}>
+                                <div className={s.cashboxMainBlock_rightSideBottom_noDiscount}>
                                     Без скидки
                                 </div>
-                                <div className={s.cashbox_rightBlock_bottom_discount}>
+                                <div className={s.cashboxMainBlock_rightSideBottom_discount}>
                                     Скидка
                                 </div>
                             </div>
-                            <div className={s.cashbox_rightBlock_bottom_Sum}>
+                            <div className={s.cashboxMainBlock_rightSideBottom_buttonsBlock_two}>
                                 Итоговая сумма
                             </div>
                         </div>
-                        <div className={s.cashbox_rightBlock_bottom_buttonResult}>
-                            <Button text={'К оплате'} onClick={() => {
-                            }}/>
+                        <div className={s.cashboxMainBlock_rightSideBottom_payBlock}>
+                            <Button text={'К оплате'} onClick={() => {}}/>
                         </div>
-                    </Box>
-
-                </Stack>
-            </Container>
-        // </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 

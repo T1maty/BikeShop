@@ -6,7 +6,7 @@ import Input from 'shared/ui/Input/Input';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import ChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModal';
 
-const Cashbox = () => {
+const _Cashbox = () => {
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
 
@@ -134,4 +134,4 @@ const Cashbox = () => {
     );
 };
 
-export default Cashbox;
+export default _Cashbox;
