@@ -8,10 +8,16 @@
     align-items: center;
 }
 
+@mixin flexCenter() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @mixin defaultContainer() {
     max-width: 1400px;
     margin: 0 auto;
-    border: 1px solid white;
+    //border: 1px solid white;
 }
 
 @mixin wrapperMainBlock() {

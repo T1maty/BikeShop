@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Box, Container, Divider, Paper, Stack, Typography} from '@mui/material';
 import {useNavigate} from "react-router-dom";
 import s from "./MainPage.module.scss";
 import Button from "../../../shared/ui/Button/Button";
+import Input from '../../../shared/ui/Input/Input';
 
 const navLinks = [
     'Create repairing',
@@ -16,6 +17,19 @@ const navLinks = [
 
 const MainPage = () => {
     const navigate = useNavigate();
+
+    const [tasks, setTasks] = useState([
+        {id: 1, task: 'task 01'},
+        {id: 2, task: 'task 02'},
+        {id: 3, task: 'task 03'},
+        {id: 4, task: 'task 04'},
+        {id: 5, task: 'task 05'},
+        {id: 6, task: 'task 06'},
+        {id: 7, task: 'task 07'},
+        {id: 8, task: 'task 08'},
+        {id: 9, task: 'task 09'},
+        {id: 10, task: 'task 10'},
+    ])
 
     return (
         <div className={s.mainPageWrapper}>
@@ -40,6 +54,9 @@ const MainPage = () => {
                             </div>
                         </div>
                         <div className={s.mainPage_header_leftSide_info}>
+                            <div>
+                                <Button text={'Каталог'} onClick={() => {}}/>
+                            </div>
                             <div>
                                 <Button text={'Ремонты'} onClick={() => {}}/>
                             </div>
@@ -70,18 +87,64 @@ const MainPage = () => {
                             Персональные задания
                         </div>
                         <div className={s.mainPage_main_leftSide_tasks}>
-                            <div>Задания</div>
-                            <div>Задания</div>
-                            <div>Задания</div>
-                            <div>Задания</div>
-                            <div>Задания</div>
-                            <div>Задания</div>
-                            <div>Задания</div>
+                            {
+                                tasks.map(t => {
+                                    return (
+                                        <div key={t.id} className={s.mainPage_main_leftSide_taskItem}>{t.task}</div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                     <div className={s.mainPage_main_rightSide}>
-                        <div className={s.mainPage_main_rightSide_top}>5</div>
-                        <div className={s.mainPage_main_rightSide_bottom}>6</div>
+                        <div className={s.mainPage_main_rightSide_top}>
+                            <div className={s.mainPage_main_rightSide_top_search}>
+                                <div className={s.mainPage_main_rightSide_searchButton}>
+                                    <Button text={'Найти клиента'} onClick={() => {}}/>
+                                </div>
+                                <div className={s.mainPage_main_rightSide_searchInput}>
+                                    <Input placeholder={'Поиск...'}/>
+                                </div>
+                            </div>
+                            <div className={s.mainPage_main_rightSide_top_info}>
+                                555
+                            </div>
+                            <div className={s.mainPage_main_rightSide_top_result}>
+                                <div className={s.mainPage_main_rightSide_result_closeBtn}>
+                                    <Button text={'Закрыть кассу'} onClick={() => {}}/>
+                                </div>
+                                <div className={s.mainPage_main_rightSide_result_cancelBtn}>
+                                    <Button text={'X'} onClick={() => {}}/>
+                                </div>
+                                <div className={s.mainPage_main_rightSide_result_span}>
+                                    Цена
+                                </div>
+                                <div className={s.mainPage_main_rightSide_result_payBtn}>
+                                    <Button text={'К оплате'} onClick={() => {}}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={s.mainPage_main_rightSide_bottom}>
+                            <div className={s.mainPage_main_rightSide_bottom_left}>
+                                <div>Сумма</div>
+                                <div>Сумма</div>
+                                <div>Сумма</div>
+                            </div>
+                            <div className={s.mainPage_main_rightSide_bottom_right}>
+                                <div className={s.mainPage_main_rightSide_bottom_right_one}>
+                                    <div>Сумма</div>
+                                    <div>120:47:32</div>
+                                </div>
+                                <div className={s.mainPage_main_rightSide_bottom_right_two}>
+                                    <div className={s.right_two_button}>
+                                        <Button text={'Закончить смену'} onClick={() => {}}/>
+                                    </div>
+                                    <div className={s.right_two_span}>
+                                        Закончить смену
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
