@@ -54,7 +54,7 @@ const MainPage = () => {
                         </div>
                         <div className={s.mainPage_header_leftSide_info}>
                             <div>
-                                <Button text={'Каталог'} onClick={() => {}}/>
+                                <Button text={'Каталог товаров'} onClick={() => {navigate('/productcatalog')}}/>
                             </div>
                             <div>
                                 <Button text={'Ремонты'} onClick={() => {}}/>

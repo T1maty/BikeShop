@@ -6,7 +6,7 @@ import {Cashbox} from "../pages";
 
 
 // @ts-ignore
-export const Routs = createBrowserRouter([
+export const Routes = createBrowserRouter([
 
     ////                    ////
     ////    Авторизация     ////
@@ -36,7 +36,7 @@ export const Routs = createBrowserRouter([
         </PublicHeaderProvider>
     },
     {
-        path: '/home',
+        path: '/Home',
         element: <PublicHeaderProvider>
             <Home/>
         </PublicHeaderProvider>

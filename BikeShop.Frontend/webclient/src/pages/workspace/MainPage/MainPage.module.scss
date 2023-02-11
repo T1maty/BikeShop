@@ -79,7 +79,7 @@
                 }
                 .mainPage_main_leftSide_tasks {
                     background-color: $themeColorGray;
-                    margin: $defaultSmallMargin;
+                    margin: $defaultLargeMargin;
                     padding: $defaultSmallMargin;
                     border-radius: $defaultBorderRadius;
                     display: flex;
@@ -107,7 +107,7 @@
                 .mainPage_main_rightSide_top {
                     background-color: $themeColorDark;
                     border-radius: $defaultBorderRadius;
-                    padding: $defaultSmallMargin;
+                    padding: $defaultLargeMargin;
                     height: 60%;
                     width: 100%;
                     margin-bottom: 10px;
@@ -129,7 +129,7 @@
                         }
                         .mainPage_main_rightSide_searchInput {
                             input {
-                                min-width: 400px;
+                                min-width: 370px;
                             }
                         }
                     }
@@ -176,7 +176,7 @@
                 .mainPage_main_rightSide_bottom {
                     background-color: $themeColorDark;
                     border-radius: $defaultBorderRadius;
-                    padding: $defaultSmallMargin;
+                    padding: $defaultLargeMargin;
                     width: 100%;
                     height: 40%;
                     margin-top: 10px;

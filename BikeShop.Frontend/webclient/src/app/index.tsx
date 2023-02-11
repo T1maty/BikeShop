@@ -7,7 +7,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import {RouterProvider} from "react-router-dom";
-import {Routs} from "./allRouts";
+import {Routes} from "./allRoutes";
 
 const darkTheme = createTheme({
     palette: {
@@ -21,7 +21,7 @@ const App: React.FC = () => {
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline/>
                 <Suspense>
-                    <RouterProvider router={Routs}/>
+                    <RouterProvider router={Routes}/>
                 </Suspense>
             </ThemeProvider>
         </div>

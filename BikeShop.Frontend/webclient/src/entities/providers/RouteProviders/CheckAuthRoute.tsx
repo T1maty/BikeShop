@@ -5,15 +5,14 @@ interface props {
     children: any
 }
 
-const OnlyWithoutAuthRout = (props: props) => {
+const CheckAuthRoute = (props: props) => {
     const navigate = useNavigate();
-
+    
     React.useEffect(() => {
-        if (localStorage.getItem('accessToken') != null) {
-            navigate('/home')
+        if (localStorage.getItem('accessToken') == null) {
+            navigate('/login', {replace: true})
         }
     }, [])
-
 
     return (
         <div>
@@ -22,4 +21,4 @@ const OnlyWithoutAuthRout = (props: props) => {
     );
 };
 
-export default OnlyWithoutAuthRout;
+export default CheckAuthRoute;
