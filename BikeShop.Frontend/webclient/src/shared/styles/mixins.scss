@@ -1,5 +1,18 @@
 @import './src/shared/styles/variables';
 
+// default mixins
+
+@mixin defaultContainer() {
+    max-width: 1400px;
+    margin: 0 auto;
+    //border: 1px solid white;
+}
+
+@mixin wrapperMainBlock() {
+    min-height: calc(100vh - var(--navbar-height));
+    margin: $defaultLargeMargin;
+}
+
 // common mixins
 
 @mixin flexColumn() {
@@ -18,17 +31,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-@mixin defaultContainer() {
-    max-width: 1400px;
-    margin: 0 auto;
-    //border: 1px solid white;
-}
-
-@mixin wrapperMainBlock() {
-    min-height: calc(100vh - var(--navbar-height));
-    margin: $defaultLargeMargin;
 }
 
 // mixins for UI
