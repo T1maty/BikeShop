@@ -18,6 +18,8 @@ export type {default as IProductTagResponse} from './responses/ProductTagRespons
 
 export {default as OnlyWithoutAuthRout} from './providers/RouteProviders/OnlyWithoutAuthRoute'
 export {default as CheckAuthRout} from './providers/RouteProviders/CheckAuthRoute'
-export {default as WorkspaceHeaderProvider} from './providers/HeaderProviders/WorkspaceHeaderProvider'
-export {default as PublicHeaderProvider} from './providers/HeaderProviders/PublicHeaderProvider'
+
+export {PublicHeaderProvider} from './providers/headerProviders/PublicHeaderProvider'
+export {WorkspaceHeaderProvider} from './providers/headerProviders/WorkspaceHeaderProvider'
+
 
