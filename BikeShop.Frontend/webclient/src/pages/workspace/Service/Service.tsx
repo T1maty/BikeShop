@@ -3,6 +3,7 @@ import s from './Service.module.scss'
 import Button from "../../../shared/ui/Button/Button";
 import Input from "../../../shared/ui/Input/Input";
 import ProductItem from "./ProductItem";
+import CustomButton from '../../../shared/ui/Button/CustomButton';
 
 const Service = () => {
 
@@ -70,7 +71,6 @@ const Service = () => {
                     <div className={s.service_rightSide_stuffInput}>
                         <Input placeholder={'Техника'}/>
                         {/*<input placeholder={'Техника'}/>*/}
-                        666
                     </div>
                     <div className={s.service_rightSide_infoFields}>
                         <div className={s.infoFields_content}>
