@@ -28,7 +28,7 @@ interface tagTreeViewStore {
 
 }
 
-const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) => ({
+export const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) => ({
     treeViewTags: [],
     contextMenuVisible: false,
     contextMenuXY: {X: 0, Y: 0},
@@ -75,5 +75,3 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) =
     name: "tagTreeViewStore",
     version: 1
 }));
-
-export default useTagTreeView

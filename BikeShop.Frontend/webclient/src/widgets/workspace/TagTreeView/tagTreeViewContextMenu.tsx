@@ -2,10 +2,11 @@ import React from 'react';
 import MenuItem from "@mui/material/MenuItem";
 import {IProductTag} from "../../../entities";
 import {Menu} from "@mui/material";
-import useTagTreeView from "./tagTreeViewStore";
 import {useCreateTagModal} from "../../../features";
+import {useTagTreeView} from "./TagTreeViewStore";
 
-const TagTreeViewContextMenu = () => {
+
+export const TagTreeViewContextMenu = () => {
     const contextMenuVisible = useTagTreeView(s => s.contextMenuVisible)
     const contextXY = useTagTreeView(s => s.contextMenuXY)
     const setCreateTagModal = useCreateTagModal(s => s.setCreateTagModal)
@@ -49,5 +50,3 @@ const TagTreeViewContextMenu = () => {
         </Menu>
     );
 };
-
-export default TagTreeViewContextMenu;
