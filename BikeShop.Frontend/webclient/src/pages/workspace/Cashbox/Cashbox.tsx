@@ -35,8 +35,7 @@ const Cashbox = () => {
                                 />
                             </div>
                             <div className={s.leftSide_client_buttons_cancel}>
-                                <Button text={'X'} onClick={() => {
-                                }}/>
+                                <Button text={'X'} onClick={() => {}}/>
                             </div>
                         </div>
                     </div>

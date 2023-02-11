@@ -1,0 +1,198 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.serviceWrapper {
+    @include defaultContainer();
+    //border: 1px solid white;
+
+    .serviceBlock {
+        @include wrapperMainBlock();
+        //border: 1px solid white;
+        display: flex;
+
+        .service_leftSide {
+            //border: 1px solid white;
+            width: 30%;
+            @include flexColumn();
+
+            .service_leftSide_buttons {
+                margin-bottom: $defaultSmallMargin;
+
+                .buttons_create {
+                    @include flexCenter();
+                    margin-bottom: $defaultLargeMargin;
+
+                    button {
+                        padding: 0;
+                    }
+
+                }
+                .buttons_info {
+                    @include flexBetween();
+
+                    button {
+                        padding: 0;
+                        margin: $defaultSmallMargin;
+                    }
+                }
+
+            }
+            .service_leftSide_content {
+                border-radius: $defaultBorderRadius;
+                background-color: $themeColorDark;
+                padding: $defaultLargeMargin;
+                @include widthHeightFull();
+
+                .content_title {
+                    font-size: 26px;
+                    font-weight: bold;
+                    text-align: center;
+                    margin-bottom: $defaultSmallMargin;
+                }
+                .content_info {
+                    @include flexColumn();
+                }
+            }
+        }
+
+        .service_rightSide {
+            //border: 1px solid white;
+            width: 70%;
+            @include flexColumn();
+            margin-left: $defaultLargeMargin;
+            border-radius: $defaultBorderRadius;
+            background-color: $themeColorDark;
+            padding: $defaultLargeMargin;
+
+            .service_rightSide_stuffInput {
+                @include flexCenter();
+                margin-bottom: $defaultLargeMargin;
+                width: 100%;
+
+                input {
+                    //min-width: 100%;
+                }
+            }
+            .service_rightSide_infoFields {
+                margin-bottom: $defaultLargeMargin;
+                @include flexBetween();
+                width: 100%;
+
+                .infoFields_content {
+                    border: 1px solid white;
+                    width: 60%;
+
+                    .content_detailsInput {
+                        margin-bottom: $defaultLargeMargin;
+
+                    }
+                    .content_masterInput {
+                        margin-bottom: $defaultLargeMargin;
+
+                    }
+                    .content_buttons {
+                        @include flexBetween();
+
+                        .content_saveBtn {
+                            button {
+                                width: 150px;
+                                height: 50px;
+                                //padding: 5px;
+                                font-size: 20px;
+                            }
+
+                        }
+                        .content_cancelBtn {
+                            button {
+                                width: 150px;
+                                height: 50px;
+                                //padding: 5px;
+                                font-size: 20px;
+                            }
+
+                        }
+                        .content_sumField {
+                            @include defaultFiledStyle();
+                        }
+                    }
+
+                }
+                .infoFields_clientCard {
+                    border: 1px solid white;
+                    width: 40%;
+                    height: 100%;
+                }
+
+            }
+            .service_rightSide_tables {
+                border: 1px solid white;
+                @include flexBetween();
+                width: 100%;
+                height: 100%;
+
+                .tables_left {
+                    @include widthHeightFull();
+                    border: 1px solid white;
+                    margin-right: 5px;
+
+                    .tables_left_buttons {
+                        @include flexBetween();
+                        margin-bottom: $defaultSmallMargin;
+
+                        .buttons_editBtn {
+
+                        }
+                        .buttons_discountField {
+                            @include defaultFiledStyle();
+                        }
+                        .buttons_resultField {
+                            @include defaultFiledStyle();
+                        }
+                    }
+
+                    .tables_left_table {
+                        background-color: $themeColorGray;
+                        border-radius: $defaultBorderRadius;
+                        padding: $defaultLargeMargin;
+                        @include flexColumn();
+                        height: 85%; // надо исправить
+                    }
+                }
+                .tables_right {
+                    @include widthHeightFull();
+                    border: 1px solid white;
+                    margin-left: 5px;
+
+                    .tables_right_buttons {
+                        @include flexBetween();
+                        margin-bottom: $defaultSmallMargin;
+
+                        .buttons_editBtn {
+
+                        }
+                        .buttons_noDiscountField {
+                            @include defaultFiledStyle();
+                        }
+                        .buttons_discountField {
+                            @include defaultFiledStyle();
+                        }
+                        .buttons_resultField {
+                            @include defaultFiledStyle();
+                        }
+                    }
+
+                    .tables_right_table {
+                        background-color: $themeColorGray;
+                        border-radius: $defaultBorderRadius;
+                        padding: $defaultLargeMargin;
+                        @include flexColumn();
+                        height: 85%; // надо исправить
+
+                    }
+                }
+            }
+        }
+
+    }
+
+}

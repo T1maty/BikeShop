@@ -20,7 +20,7 @@ const HeaderUserMenu = (props: iProps) => {
     const anchorRef = React.useRef<HTMLButtonElement>(null);
 
     const logout = useAuthUser(s => s.logout);
-    const setUser = useAuthUser(s => s.setUser)
+    const setUser = useAuthUser(s => s.setUser);
     const navigate = useNavigate();
 
     const handleToggle = () => {

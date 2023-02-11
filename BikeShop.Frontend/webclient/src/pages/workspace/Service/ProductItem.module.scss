@@ -1,0 +1,37 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.tableItem_box {
+    @include flexBetween();
+    width: 100%;
+    border: 2px solid $themeColorWhite;
+    border-radius: $smallBorderRadius;
+    margin: $defaultSmallMargin;
+    padding: $defaultSmallMargin;
+
+    .tableItem_title {
+
+    }
+
+    .tableItem_numbers {
+        display: flex;
+        //@include flexBetween();
+        //width: 150px;
+
+        .tableItem_price {
+            color: black;
+            background-color: $themeColorWhite;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
+            margin-right: $defaultSmallMargin;
+            //height: 100%;
+        }
+        .tableItem_sum {
+            color: black;
+            background-color: $themeColorWhite;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
+            //height: 100%;
+        }
+    }
+}

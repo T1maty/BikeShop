@@ -14,14 +14,14 @@ const Header: React.FC = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
     const user = useAuthUser(s => s.user);
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 60 * 10);
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
+    // useEffect(() => {
+    //     const timer = setInterval(() => {
+    //         setCurrentTime(new Date());
+    //     }, 60 * 10);
+    //     return () => {
+    //         clearInterval(timer);
+    //     };
+    // }, []);
 
     const time = useMemo(() => {
         const hours = currentTime.getHours();
@@ -51,7 +51,8 @@ const Header: React.FC = () => {
                 <Grid item xs={4} alignItems="center" justifyContent="center" sx={{display: 'flex'}}>
 
                     <Typography variant="subtitle1" noWrap>
-                        {time}
+                        {/*{time}*/}
+                        12:00
                     </Typography>
 
                 </Grid>

@@ -12,7 +12,7 @@ const navLinks = [
     'All Orders',
 ];
 
-const MainPage = () => {
+const _MainPage = () => {
     const navigate = useNavigate();
     return (
         <Container>
@@ -88,4 +88,4 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default _MainPage;

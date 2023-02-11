@@ -42,3 +42,7 @@ code {
 /*  flex-direction: column;*/
 /*  background-color: white;*/
 /*}*/
+
+:root {
+  --navbar-height: 100px;
+}

@@ -5,10 +5,12 @@
     @include defaultContainer();
 
     .cashboxMainBlock {
+        @include wrapperMainBlock();
+        //min-height: 100vh;
+        //min-height: calc(100vh - var(--navbar-height));
+        //margin: $defaultLargeMargin;
         display: flex;
         justify-content: space-between;
-        min-height: 100vh;
-        margin: $defaultLargeMargin;
 
         .cashboxMainBlock_leftSideWrapper {
             width: 30%;
@@ -136,15 +138,15 @@
                             }
                         }
                         .cashboxMainBlock_rightSideBottom_noDiscount {
-                            @include CashboxFiledStyles();
+                            @include defaultFiledStyle();
                         }
                         .cashboxMainBlock_rightSideBottom_discount {
-                            @include CashboxFiledStyles();
+                            @include defaultFiledStyle();
                         }
                     }
 
                     .cashboxMainBlock_rightSideBottom_buttonsBlock_two {
-                        @include CashboxFiledStyles();
+                        @include defaultFiledStyle();
                     }
                 }
 

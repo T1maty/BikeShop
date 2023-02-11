@@ -1,4 +1,4 @@
-export {default as HeaderUserMenu} from './headerUserMenu/headerUserMenu';
-export {default as CreateTagModal} from './createTagModal/createTagModal';
+export {default as HeaderUserMenu} from './HeaderUserMenu/HeaderUserMenu';
+export {default as CreateTagModal} from './CreateTagModal/CreateTagModal';
 
-export {default as useCreateTagModal} from './createTagModal/createTagModalStore';
+export {default as useCreateTagModal} from './CreateTagModal/CreateTagModalStore';

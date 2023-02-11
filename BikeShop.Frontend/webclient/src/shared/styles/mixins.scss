@@ -8,15 +8,32 @@
     align-items: center;
 }
 
+@mixin flexCenter() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flexBetween() {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 @mixin defaultContainer() {
     max-width: 1400px;
     margin: 0 auto;
     //border: 1px solid white;
 }
 
-// cashbox mixins
+@mixin wrapperMainBlock() {
+    min-height: calc(100vh - var(--navbar-height));
+    margin: $defaultLargeMargin;
+}
 
-@mixin CashboxFiledStyles() {
+// mixins for UI
+
+@mixin defaultFiledStyle() {
     max-width: 250px;
     border: 2px solid #C0C0C0;
     border-radius: 10px;
@@ -24,4 +41,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@mixin widthHeightFull() {
+    width: 100%;
+    height: 100%;
 }

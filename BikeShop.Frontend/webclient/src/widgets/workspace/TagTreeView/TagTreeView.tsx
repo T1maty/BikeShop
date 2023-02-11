@@ -5,7 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {IProductTag} from "../../../entities";
 import TreeItem from "@mui/lab/TreeItem";
-import useTagTreeView from "./tagTreeViewStore";
+import useTagTreeView from "./TagTreeViewStore";
 import {Menu} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import {CreateTagModal, useCreateTagModal} from "../../../features";
