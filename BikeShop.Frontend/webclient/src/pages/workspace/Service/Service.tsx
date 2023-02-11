@@ -70,6 +70,7 @@ const Service = () => {
                     <div className={s.service_rightSide_stuffInput}>
                         <Input placeholder={'Техника'}/>
                         {/*<input placeholder={'Техника'}/>*/}
+                        666
                     </div>
                     <div className={s.service_rightSide_infoFields}>
                         <div className={s.infoFields_content}>
