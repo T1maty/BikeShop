@@ -1,6 +1,6 @@
 export interface ICreateTag {
     name: string,
-    parentId: number,
+    parentId: string,
     isCollapsed: boolean,
     isRetailVisible: boolean,
     isB2BVisible: boolean,

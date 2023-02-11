@@ -34,8 +34,8 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) =
     contextMenuXY: {X: 0, Y: 0},
 
     setContextMenuVisible: (value, x, y) => set({
+        contextMenuVisible: value,
         contextMenuXY: {X: x, Y: y},
-        contextMenuVisible: value
     }),
 
     setTreeViewTags: (tags) => set({

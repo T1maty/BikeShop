@@ -8,6 +8,7 @@ const TagTreeViewNodes = () => {
     const treeViewData = useTagTreeView(s => s.treeViewTags)
     const setSelected = useTagTreeView(s => s.setSelectedTag)
     const setContextVisible = useTagTreeView(s => s.setContextMenuVisible)
+    const visibility = useTagTreeView(s => s.contextMenuVisible)
 
     function createTree(parentId: string = '0') {
         const nodesToAdd: IProductTag[] = [];
@@ -23,8 +24,13 @@ const TagTreeViewNodes = () => {
                 return (
                     <TreeItem
                         onContextMenu={(event) => {
-                            setSelected(n.id.toString())
+
+                            console.log(visibility)
                             setContextVisible(true, event.clientX, event.clientY)
+                            console.log(visibility)
+
+                            //setSelected(n.id.toString())
+
                         }}
                         nodeId={n.id.toString()}
                         label={n.name} key={n.id}>

@@ -1,11 +1,12 @@
 import React from 'react';
 import TableRow from "@mui/material/TableRow";
-import {columns, Data} from "./ProductCatalogTableConfig";
+import {columns} from "./ProductCatalogTableConfig";
 import TableCell from "@mui/material/TableCell";
 import useProductCatalogTableStore from "./ProductCatalogTableStore";
+import {IProduct} from "../../../entities";
 
 interface props {
-    row: Data
+    row: IProduct
 }
 
 const ProductCatalogTableRow = (props: props) => {

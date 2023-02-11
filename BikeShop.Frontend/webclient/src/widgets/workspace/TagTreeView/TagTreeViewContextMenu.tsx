@@ -45,7 +45,9 @@ const TagTreeViewContextMenu = () => {
                 setCreateTagModal(true)
             }}>Создать потомка</MenuItem>
             <MenuItem>Переместить</MenuItem>
-            <MenuItem>Удалить</MenuItem>
+            <MenuItem onClick={() => {
+                console.log(contextMenuVisible)
+            }}>Удалить</MenuItem>
         </Menu>
     );
 };

@@ -13,7 +13,10 @@ const CreateTagModal = () => {
     const {control, formState: {errors}, handleSubmit} = useForm<ICreateTag>({
         defaultValues: {
             name: "",
-            sortOrder: 0
+            sortOrder: 0,
+            isRetailVisible: false,
+            isB2BVisible: false,
+            isUniversal: false
         }
     });
 
@@ -32,7 +35,10 @@ const CreateTagModal = () => {
 
 
     const onSubmit: SubmitHandler<ICreateTag> = (data: ICreateTag) => {
-        console.log(data)
+        data.parentId = parentNode.id
+        createTag(data).then(r => {
+            setOpen(false)
+        })
     };
 
     return (
@@ -54,7 +60,7 @@ const CreateTagModal = () => {
                 <Controller
                     name="name"
                     control={control}
-                    rules={{required: "Password is required"}}
+                    rules={{required: "Введите название нового тега"}}
                     render={({field}: any) =>
 
                         <TextField {...field} sx={{pb: 3}}
@@ -67,7 +73,7 @@ const CreateTagModal = () => {
                 <Controller
                     name="sortOrder"
                     control={control}
-                    rules={{required: "Password is required"}}
+                    rules={{required: "Порядок сортировки необходимо ввести"}}
                     render={({field}: any) =>
 
                         <TextField {...field} sx={{pb: 3}}
@@ -77,12 +83,55 @@ const CreateTagModal = () => {
                                    error={!!errors.sortOrder}/>
                     }/>
 
-                <br/>
-                <FormControlLabel sx={{pb: 3}} control={<Checkbox/>} label="Видим в интернет-магазине"/>
-                <br/>
-                <FormControlLabel sx={{pb: 3}} control={<Checkbox/>} label="Виден в B2B"/>
-                <br/>
-                <FormControlLabel sx={{pb: 3}} control={<Checkbox/>} label="Универсальный тег"/>
+
+                <Controller
+                    name="isRetailVisible"
+                    control={control}
+                    render={({field}) => (
+                        <FormControlLabel
+                            label={'Видим в интернет-магазине'}
+                            value={field.value}
+                            control={
+                                <Checkbox
+                                    value={field.value}
+                                    onChange={(event, value) => {
+                                        field.onChange(value);
+                                    }}/>
+                            }/>
+                    )}/>
+
+                <Controller
+                    name="isB2BVisible"
+                    control={control}
+                    render={({field}) => (
+                        <FormControlLabel
+                            label={'Виден в B2B'}
+                            value={field.value}
+                            control={
+                                <Checkbox
+                                    value={field.value}
+                                    onChange={(event, value) => {
+                                        field.onChange(value);
+                                    }}/>
+                            }/>
+                    )}/>
+
+                <Controller
+                    name="isUniversal"
+                    control={control}
+                    render={({field}) => (
+                        <FormControlLabel
+                            label={'Универсальный тег'}
+                            value={field.value}
+                            control={
+                                <Checkbox
+                                    value={field.value}
+                                    onChange={(event, value) => {
+                                        field.onChange(value);
+                                        console.log(field.value)
+                                    }}/>
+                            }/>
+                    )}/>
                 <br/>
                 <Button color='primary' type="submit">Создать тег</Button>
             </Box>

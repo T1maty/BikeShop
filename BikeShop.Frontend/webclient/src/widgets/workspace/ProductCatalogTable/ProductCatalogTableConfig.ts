@@ -1,5 +1,5 @@
 export interface Column {
-    id: 'id' | 'name' | 'store' | 'unit' | 'priceIncome' | 'priceB2B' | 'priceRetail' | 'tags' | 'catalogKey' | 'status';
+    id: 'id' | 'name' | 'incomePrice' | 'dealerPrice' | 'retailPrice' | 'catalogKey' | 'checkStatus';
     label: string;
     minWidth?: number;
     align?: 'right';
@@ -18,7 +18,7 @@ export const columns: readonly Column[] = [
         minWidth: 70,
         align: 'right',
     },
-    {
+    /*{
         id: 'store',
         label: 'На складе',
         minWidth: 70,
@@ -29,31 +29,31 @@ export const columns: readonly Column[] = [
         label: 'Ед.изм.',
         minWidth: 70,
         align: 'right',
-    },
+    },*/
     {
-        id: 'priceIncome',
+        id: 'incomePrice',
         label: 'Средний приход',
         minWidth: 70,
         align: 'right',
     },
     {
-        id: 'priceB2B',
+        id: 'dealerPrice',
         label: 'Цена оптовая',
         minWidth: 70,
         align: 'right',
     },
     {
-        id: 'priceRetail',
+        id: 'retailPrice',
         label: 'Цена розничная',
         minWidth: 70,
         align: 'right',
     },
-    {
+    /*{
         id: 'tags',
         label: 'Теги',
         minWidth: 70,
         align: 'right',
-    },
+    },*/
     {
         id: 'catalogKey',
         label: 'Каталожный номер',
@@ -61,7 +61,7 @@ export const columns: readonly Column[] = [
         align: 'right',
     },
     {
-        id: 'status',
+        id: 'checkStatus',
         label: 'Статус заполения',
         minWidth: 70,
         align: 'right',

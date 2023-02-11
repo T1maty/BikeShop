@@ -8,11 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import {Box} from "@mui/material";
 import {CreateProductModal} from "../../../features";
 import ProductCatalogTableContextMenu from "./ProductCatalogTableContextMenu";
-import {columns, testRows} from "./ProductCatalogTableConfig";
+import {columns} from "./ProductCatalogTableConfig";
 import useProductCatalogTableStore from './ProductCatalogTableStore';
-// @ts-ignore
+
 import ProductCatalogTablePagination from './ProductCatalogTablePagination';
-// @ts-ignore
+
 import ProductCatalogTableRow from './ProductCatalogTableRow';
 
 const ProductCatalogTable = () => {
@@ -21,9 +21,12 @@ const ProductCatalogTable = () => {
     const rowsPerPage = useProductCatalogTableStore(s => s.rowsPerPage)
     const rows = useProductCatalogTableStore(s => s.rows)
     const setRows = useProductCatalogTableStore(s => s.setRows)
+    const getProducts = useProductCatalogTableStore(s => s.getProducts)
 
     React.useEffect(() => {
-        setRows(testRows)
+        getProducts().then((r) => {
+            setRows(r.data.products)
+        })
     }, [])
 
     return (
