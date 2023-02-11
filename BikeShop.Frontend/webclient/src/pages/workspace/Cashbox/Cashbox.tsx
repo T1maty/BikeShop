@@ -39,7 +39,34 @@ const Cashbox = () => {
                             </div>
                         </div>
                     </div>
+                    <div className={s.leftSide_discount}>
+                        <div className={s.leftSide_discount_background}>
+                            <div className={s.leftSide_discount_info}>
+                                <div className={s.discount_info_header}>
+                                    Скидка
+                                </div>
+                                <div className={s.discount_info_title}>
+                                    Название скидки
+                                </div>
+                                <div className={s.discount_info_types}>
+                                    <div className={s.info_type}>Тип</div>
+                                    <div className={s.info_value}>Размер</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={s.leftSide_discount_buttons}>
+                            <div className={s.discount_buttons_choose}>
+                                <Button text={'Выбрать скидку для клиента'}
+                                        onClick={() => setChooseClientModal(true)}
+                                />
+                            </div>
+                            <div className={s.discount_buttons_cancel}>
+                                <Button text={'X'} onClick={() => {}}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
 
                 <div className={s.cashboxMainBlock_rightSideWrapper}>
                     <div className={s.cashboxMainBlock_rightSideHeader}>

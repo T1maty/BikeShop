@@ -6,9 +6,6 @@
 
     .cashboxMainBlock {
         @include wrapperMainBlock();
-        //min-height: 100vh;
-        //min-height: calc(100vh - var(--navbar-height));
-        //margin: $defaultLargeMargin;
         display: flex;
         justify-content: space-between;
 
@@ -18,10 +15,10 @@
             @include flexColumn();
 
             .leftSide_tables {
-                background-color: $themeColorGray;
+                background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
                 min-width: 100%;
-                //height: 30%;
+                height: 20%;
                 display: flex;
                 justify-content: space-evenly;
                 flex-wrap: wrap;
@@ -33,20 +30,23 @@
                 }
             }
             .leftSide_client {
-                background-color: $themeColorGray;
+                background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
-                //max-width: 100%;
                 width: 100%;
-                height: 100%;
-                margin-top: $defaultLargeMargin;
+                height: 40%;
+                margin: $defaultLargeMargin 0;
                 display: flex;
                 flex-direction: column;
 
                 .leftSide_client_background {
-                    background-color: $themeColorDark;
+                    background-color: $themeColorGray;
                     border-radius: $defaultBorderRadius;
                     margin: $defaultLargeMargin;
                     padding: $defaultLargeMargin;
+
+                    p {
+                        margin: 5px 0;
+                    }
                 }
 
                 .leftSide_client_buttons {
@@ -71,9 +71,84 @@
                     }
                 }
             }
+
+            .leftSide_discount {
+                @include flexColumn();
+                justify-content: space-between;
+                background-color: $themeColorDark;
+                border-radius: $defaultBorderRadius;
+                padding: $bigButtonPadding;
+                width: 100%;
+                height: 40%;
+
+                .leftSide_discount_background {
+                    background-color: $themeColorGray;
+                    border-radius: $defaultBorderRadius;
+                    margin-bottom: $defaultLargeMargin;
+                    padding: $defaultLargeMargin;
+                    width: 100%;
+                    height: 100%;
+
+                    .leftSide_discount_info {
+                        @include flexColumn();
+
+                        .discount_info_header {
+                            margin-bottom: $defaultSmallMargin;
+                            font-weight: bold;
+                        }
+                        .discount_info_title {
+                            border: 2px solid #C0C0C0;
+                            border-radius: 10px;
+                            padding: 10px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            //@include defaultFiledStyle();
+                            margin-bottom: $defaultLargeMargin;
+                            width: 100%;
+                        }
+
+                        .discount_info_types {
+                            @include flexBetween();
+                            width: 100%;
+
+                            .info_type {
+                                @include defaultFiledStyle();
+                                width: 30%;
+                            }
+                            .info_value {
+                                @include defaultFiledStyle();
+                                width: 65%;
+                            }
+                        }
+                    }
+                }
+                .leftSide_discount_buttons {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    margin: 0 $defaultLargeMargin;
+                    width: 100%;
+
+                    .discount_buttons_choose {
+                        button {
+                            max-width: 300px;
+                            padding: $bigButtonPadding;
+
+                        }
+                    }
+                    .discount_buttons_cancel {
+                        button {
+                            width: 30px;
+                            height: 56px;
+                            padding: 0;
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
         }
         .cashboxMainBlock_rightSideWrapper {
-            //border: 1px solid white;
             width: 70%;
             display: flex;
             flex-direction: column;
