@@ -7,24 +7,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.Persistence;
 
+// Главный DbContext программы
 public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
 {
+    // Сессии, основанные на рефреш токенах
     public DbSet<RefreshSession> RefreshSessions { get; set; }
 
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
         // Позволяет не конвертировать время в UTC для postgresql
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+        // AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        // AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
+        // Конфигурация сущности юзера
         builder.ApplyConfiguration(new ApplicationUserConfiguration());
 
+        // Переименовывание стандартных identity таблиц
         builder.Entity<ApplicationUser>(entity => entity.ToTable(name: "Users"));
         builder.Entity<IdentityRole>(entity => entity.ToTable(name: "Roles"));
         builder.Entity<IdentityUserRole<string>>(entity => entity.ToTable(name: "UserRoles"));
@@ -33,7 +37,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
         builder.Entity<IdentityUserToken<string>>(entity => entity.ToTable("UserTokens"));
         builder.Entity<IdentityRoleClaim<string>>(entity => entity.ToTable("RoleClaims"));
 
-
+        // Создание первого стандартного пользователя и роли user
         var hasher = new PasswordHasher<ApplicationUser>();
         builder.Entity<ApplicationUser>().HasData(new ApplicationUser
         {

@@ -19,6 +19,7 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUser
     {
         // Ищу пользователя по айди
         var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+        // Если не найден - ошибка
         if (user is null)
             throw new NotFoundException($"User with id '{request.UserId}' not found")
             {

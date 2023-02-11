@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BikeShop.Identity.Application.Services;
 
+// Для генерации JWT-токенов
 public class JwtService
 {
     private readonly JwtConfiguration _configuration;
@@ -25,14 +26,16 @@ public class JwtService
             new Claim(JwtRegisteredClaimNames.Sub, "auth"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
-            new Claim(ClaimTypes.MobilePhone, user.PhoneNumber),
+            new Claim("id", user.Id),
         };
         // Добавляю роли юзера в клаймы токена
         claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
+        // Ключ подписи
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+        // Формирую токен и возвращаю его
         var token = new JwtSecurityToken(
             _configuration.Issuer,
             _configuration.Audience,

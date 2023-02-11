@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSession;
 
+// Обновить сессию по рефреш токену - получить новый аксесс и рефреш токен
 public class UpdateRefreshSessionCommandHandler : IRequestHandler<UpdateRefreshSessionCommand, RefreshSession>
 {
     private readonly IAuthDbContext _context;

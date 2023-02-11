@@ -4,6 +4,7 @@ using BikeShop.Identity.Application.Exceptions;
 
 namespace BikeShop.Identity.WebApi.Middleware;
 
+// Обработчик исключений, возвращающий ответы клиенту с статус кодами и моделью ошибки
 public class CustomExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;
@@ -41,8 +42,16 @@ public class CustomExceptionHandlerMiddleware
                 result = registrationException;
                 break;
             case RefreshTokenException refreshTokenException:
-                statusCode = HttpStatusCode.BadRequest;
+                statusCode = HttpStatusCode.NotAcceptable;
                 result = refreshTokenException;
+                break;
+            case SignInDataException signInDataException:
+                statusCode = HttpStatusCode.BadRequest;
+                result = signInDataException;
+                break;
+            case AlreadyExistsException alreadyExistsException:
+                statusCode = HttpStatusCode.Conflict;
+                result = alreadyExistsException;
                 break;
             default:
                 Console.WriteLine(exception);

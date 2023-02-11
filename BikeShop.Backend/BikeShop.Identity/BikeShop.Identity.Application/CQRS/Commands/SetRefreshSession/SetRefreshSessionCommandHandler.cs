@@ -22,6 +22,7 @@ public class SetRefreshSessionCommandHandler : IRequestHandler<SetRefreshSession
             .FirstOrDefaultAsync(session => session.UserId == request.UserId,
                 cancellationToken);
 
+        // Генерирую новый рефреш токен
         var newToken = Guid.NewGuid();
 
         // Если сессия есть - обновить токен
