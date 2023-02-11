@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Button, Checkbox, FormControlLabel, Modal, TextField, Typography} from "@mui/material";
-import {useCreateTagModal} from "../index";
+import useCreateTagModal from "./CreateTagModalStore";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {ICreateTag} from "../../entities";
 

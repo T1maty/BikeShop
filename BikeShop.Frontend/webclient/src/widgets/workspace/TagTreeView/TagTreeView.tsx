@@ -4,11 +4,10 @@ import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {IProductTag} from "../../../entities";
-import TagTreeViewContextMenu from "./tagTreeViewContextMenu";
+import TagTreeViewContextMenu from "./TagTreeViewContextMenu";
 import TagTreeViewNodes from "./TagTreeViewNodes";
-
 import {CreateTagModal} from "../../../features";
-import useTagTreeView from "./TagTreeViewStore";
+import useTagTreeView from './TagTreeViewStore';
 
 const TagTreeView = () => {
 

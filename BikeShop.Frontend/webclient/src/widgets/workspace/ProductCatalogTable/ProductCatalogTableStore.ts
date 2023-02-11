@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {Data, testRows} from "./productCatalogTableConfig";
+import {Data, testRows} from "./ProductCatalogTableConfig";
 
 interface productCatalogTableStore {
     contextMenuXY: { X: number, Y: number }
@@ -57,4 +57,4 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     version: 1
 }));
 
-export default useProductCatalogTableStore
+export default useProductCatalogTableStore;

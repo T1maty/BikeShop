@@ -1,7 +1,7 @@
 import React from 'react';
 import {IProductTag} from "../../../entities";
 import TreeItem from "@mui/lab/TreeItem";
-import useTagTreeView from "./tagTreeViewStore";
+import useTagTreeView from "./TagTreeViewStore";
 
 const TagTreeViewNodes = () => {
 

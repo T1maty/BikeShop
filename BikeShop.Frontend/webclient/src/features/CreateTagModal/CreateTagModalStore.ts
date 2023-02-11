@@ -2,7 +2,7 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {ICreateTag, IProductTag} from "../../entities";
-import {AxiosResponse} from "axios/index";
+import {AxiosResponse} from 'axios';
 import {$api} from "../../shared";
 
 interface createTagModalStore {

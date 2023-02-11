@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,14 +7,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Box} from "@mui/material";
 import {CreateProductModal} from "../../../features";
-import useProductCatalogTableStore from "./productCatalogTableStore";
-import ProductCatalogTableContextMenu from "./productCatalogTableContextMenu";
-import {columns, testRows} from "./productCatalogTableConfig";
-import {ProductCatalogTableRow} from "./productCatalogTableRow";
-import ProductCatalogTablePagination from "./productCatalogTablePagination";
+import ProductCatalogTableContextMenu from "./ProductCatalogTableContextMenu";
+import {columns, testRows} from "./ProductCatalogTableConfig";
+import useProductCatalogTableStore from './ProductCatalogTableStore';
+// @ts-ignore
+import ProductCatalogTablePagination from './ProductCatalogTablePagination';
+// @ts-ignore
+import ProductCatalogTableRow from './ProductCatalogTableRow';
 
-
-export default function ProductCatalogTable() {
+const ProductCatalogTable = () => {
 
     const page = useProductCatalogTableStore(s => s.page)
     const rowsPerPage = useProductCatalogTableStore(s => s.rowsPerPage)
@@ -75,3 +76,5 @@ export default function ProductCatalogTable() {
         </Box>
     );
 }
+
+export default ProductCatalogTable;

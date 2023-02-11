@@ -1,8 +1,8 @@
+import React from "react";
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {IProductTag, IProductTagResponse} from "../../../entities";
-import * as React from "react";
 import {AxiosResponse} from "axios";
 import {$api} from "../../../shared";
 
@@ -76,4 +76,4 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) =
     version: 1
 }));
 
-export default useTagTreeView
+export default useTagTreeView;

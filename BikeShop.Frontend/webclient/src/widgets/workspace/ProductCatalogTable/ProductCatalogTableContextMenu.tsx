@@ -1,14 +1,14 @@
 import React from 'react';
 import MenuItem from "@mui/material/MenuItem";
 import {Menu} from "@mui/material";
-import useProductCatalogTableStore from "./productCatalogTableStore";
-import {useCreateProductModalStore} from "../../../features";
+import useProductCatalogTableStore from "./ProductCatalogTableStore";
+import useCreateProductModal from '../../../features/CreateProductModal/CreateProductModalStore';
 
 const ProductCatalogTableContextMenu = () => {
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
     const contextMenuVisible = useProductCatalogTableStore(s => s.open)
     const contextXY = useProductCatalogTableStore(s => s.contextMenuXY)
-    const setOpenCreateProductModal = useCreateProductModalStore(s => s.setOpen)
+    const setOpenCreateProductModal = useCreateProductModal(s => s.setOpen)
 
     return (
         <Menu

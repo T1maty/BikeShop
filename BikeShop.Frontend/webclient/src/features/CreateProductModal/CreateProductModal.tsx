@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Button, Checkbox, FormControlLabel, Modal, TextField} from "@mui/material";
-import useCreateProductModal from "./createProductModalStore";
+import useCreateProductModal from "./CreateProductModalStore";
 
 const CreateProductModal = () => {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import TablePagination from "@mui/material/TablePagination";
-import useProductCatalogTableStore from "./productCatalogTableStore";
+import useProductCatalogTableStore from "./ProductCatalogTableStore";
 
 const ProductCatalogTablePagination = () => {
 

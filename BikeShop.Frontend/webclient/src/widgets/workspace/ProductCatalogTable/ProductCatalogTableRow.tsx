@@ -1,14 +1,14 @@
 import React from 'react';
 import TableRow from "@mui/material/TableRow";
-import {columns, Data} from "./productCatalogTableConfig";
+import {columns, Data} from "./ProductCatalogTableConfig";
 import TableCell from "@mui/material/TableCell";
-import useProductCatalogTableStore from "./productCatalogTableStore";
+import useProductCatalogTableStore from "./ProductCatalogTableStore";
 
 interface props {
     row: Data
 }
 
-export const ProductCatalogTableRow = (props: props) => {
+const ProductCatalogTableRow = (props: props) => {
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
     const selected = useProductCatalogTableStore(s => s.selectedRows)
@@ -44,3 +44,5 @@ export const ProductCatalogTableRow = (props: props) => {
         </TableRow>
     );
 };
+
+export default ProductCatalogTableRow;
