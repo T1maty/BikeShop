@@ -1,0 +1,13 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.serviceWrapper {
+    @include defaultContainer();
+
+    .serviceBlock {
+        @include wrapperMainBlock();
+
+
+    }
+
+}

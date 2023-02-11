@@ -3,6 +3,7 @@ import {createBrowserRouter} from "react-router-dom";
 import {Home, LoginPage, MainPage, ProductCatalog, RegistrationPage} from "../pages";
 import {CheckAuthRout, PublicHeaderProvider} from "../entities";
 import {Cashbox} from "../pages";
+import {Service} from "../pages";
 
 
 // @ts-ignore
@@ -41,11 +42,18 @@ export const Routes = createBrowserRouter([
             <Home/>
         </PublicHeaderProvider>
     },
-    // для проверки Cashbox
+    // для Cashbox
     {
         path: '/cashbox',
         element: <WorkspaceHeaderProvider>
             <Cashbox/>
+        </WorkspaceHeaderProvider>
+    },
+    // для Service
+    {
+        path: '/service',
+        element: <WorkspaceHeaderProvider>
+            <Service/>
         </WorkspaceHeaderProvider>
     },
 

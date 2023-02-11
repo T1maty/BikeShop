@@ -10,6 +10,18 @@ const ChooseClientModal = () => {
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
 
+    // const [open, setOpen] = React.useState(false);
+    // const handleOpen = () => {
+    //     setOpen(true);
+    // };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
+
+    // const clonedChildren = cloneElement(children, {
+    //     onClick: handleOpen,
+    // })
+
     // const style = {
     //     position: 'absolute',
     //     top: '50%',
@@ -24,6 +36,7 @@ const ChooseClientModal = () => {
     // };
 
     return (
+        // {clonedChildren}
         <Modal
             open={open}
             onClose={() => {setOpen(false)}}
