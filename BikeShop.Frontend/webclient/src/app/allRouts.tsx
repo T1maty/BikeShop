@@ -1,7 +1,6 @@
-import {OnlyWithoutAuthRout, WorkspaceHeaderProvider} from "../entities/index";
+import {CheckAuthRout, OnlyWithoutAuthRout, PublicHeaderProvider, WorkspaceHeaderProvider} from "../entities";
 import {createBrowserRouter} from "react-router-dom";
 import {Home, LoginPage, MainPage, ProductCatalogPage, RegistrationPage} from "../pages";
-import {CheckAuthRout, PublicHeaderProvider} from "../entities";
 
 
 // @ts-ignore
