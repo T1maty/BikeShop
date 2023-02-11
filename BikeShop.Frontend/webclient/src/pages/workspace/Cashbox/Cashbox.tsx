@@ -12,6 +12,7 @@ const Cashbox = () => {
     return (
         <div className={s.cashboxWrapper}>
             <div className={s.cashboxMainBlock}>
+
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
                         <Button text={'Стол 1'} onClick={() => {}}/>
@@ -103,6 +104,7 @@ const Cashbox = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     );
