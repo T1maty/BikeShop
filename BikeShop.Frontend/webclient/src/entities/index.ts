@@ -7,6 +7,8 @@ export type {default as ITreeViewData} from './models/TreeViewData'
 export type {default as IUser} from './models/User'
 export type {default as IProductTag} from './models/ProductTag'
 export type {default as IShop} from './models/Shop'
+export type {ICreateTag} from './requests/CreateTag'
+export type {ICreateProduct} from './requests/CreateProduct'
 
 export type {default as IGroupResponse} from './responses/GroupResponse'
 export type {default as ILoginResponse} from './responses/LoginResponse'

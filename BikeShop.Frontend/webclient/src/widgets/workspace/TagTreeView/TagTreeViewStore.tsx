@@ -25,6 +25,7 @@ interface tagTreeViewStore {
     handleExpand: (event: React.SyntheticEvent, nodeIds: string[]) => void
 
     fetchTags: () => Promise<AxiosResponse<IProductTagResponse>>
+
 }
 
 const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) => ({
@@ -66,8 +67,8 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) =
     }),
 
     fetchTags: () => {
-        return $api.get<IProductTagResponse>('/group/getbyshopid/1');
-    }
+        return $api.get<IProductTagResponse>('/tag/getall');
+    },
 
 
 }))), {

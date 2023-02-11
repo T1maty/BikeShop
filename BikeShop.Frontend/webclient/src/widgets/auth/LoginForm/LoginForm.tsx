@@ -56,7 +56,8 @@ const LoginForm = () => {
                         render={({field}: any) => <TextField {...field}
                                                              error={!!errors.phone}
                                                              helperText={errors.phone ? errors.phone?.message : ""}
-                                                             label="Phone number" variant="outlined"
+                                                             label="Phone number"
+                                                             variant="outlined"
                                                              fullWidth margin="dense"/>}
                     />
                     <Controller
