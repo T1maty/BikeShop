@@ -5,7 +5,7 @@ interface props {
     children: any
 }
 
-export const PublicHeaderProvider = (props: props) => {
+const PublicHeaderProvider = (props: props) => {
     return (
         <div>
             <PublicHeader/>
@@ -13,4 +13,6 @@ export const PublicHeaderProvider = (props: props) => {
         </div>
     );
 };
+
+export default PublicHeaderProvider;
 

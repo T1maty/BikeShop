@@ -16,10 +16,10 @@ export type {default as IRefreshResponse} from './responses/RefreshResponse'
 export type {default as IUserResponse} from './responses/UserResponse'
 export type {default as IProductTagResponse} from './responses/ProductTagResponse'
 
-export {default as OnlyWithoutAuthRout} from './providers/RouteProviders/OnlyWithoutAuthRoute'
-export {default as CheckAuthRout} from './providers/RouteProviders/CheckAuthRoute'
+export {default as OnlyWithoutAuthRoute} from './providers/RouteProviders/OnlyWithoutAuthRoute'
+export {default as CheckAuthRoute} from './providers/RouteProviders/CheckAuthRoute'
 
-export {PublicHeaderProvider} from './providers/headerProviders/PublicHeaderProvider'
-export {WorkspaceHeaderProvider} from './providers/headerProviders/WorkspaceHeaderProvider'
+export {default as PublicHeaderProvider} from './providers/HeaderProviders/PublicHeaderProvider'
+export {default as WorkspaceHeaderProvider} from './providers/HeaderProviders/WorkspaceHeaderProvider'
 
 

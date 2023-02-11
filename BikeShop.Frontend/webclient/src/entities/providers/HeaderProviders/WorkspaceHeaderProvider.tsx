@@ -5,7 +5,7 @@ interface props {
     children: any
 }
 
-export const WorkspaceHeaderProvider = (props: props) => {
+const WorkspaceHeaderProvider = (props: props) => {
 
     return (
         <div>
@@ -14,3 +14,5 @@ export const WorkspaceHeaderProvider = (props: props) => {
         </div>
     );
 };
+
+export default WorkspaceHeaderProvider;
