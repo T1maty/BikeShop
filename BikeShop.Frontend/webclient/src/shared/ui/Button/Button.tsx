@@ -1,16 +1,19 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import {ButtonProps} from '@mui/material/Button/Button';
 
-type ButtonUIPropsType = {
+type DefaultMUIButtonType = ButtonProps
+
+type ButtonUIPropsType = DefaultMUIButtonType & {
     text: string
-    onClick: () => void
+    // onClick: () => void
 }
 
-const ButtonUI: React.FC<ButtonUIPropsType> = ({text, onClick}) => {
+const ButtonUI: React.FC<ButtonUIPropsType> = ({text, ...restProps}) => {
 
-    const buttonClickHandler = () => {
-        onClick();
-    }
+    // const buttonClickHandler = () => {
+    //     onClick();
+    // }
 
     return (
         <Button
@@ -19,7 +22,8 @@ const ButtonUI: React.FC<ButtonUIPropsType> = ({text, onClick}) => {
                 padding: '16px 60px',
                 borderRadius: '10px',
             }}
-            onClick={buttonClickHandler}
+            // onClick={buttonClickHandler}
+            {...restProps}
         >
             {text}
         </Button>

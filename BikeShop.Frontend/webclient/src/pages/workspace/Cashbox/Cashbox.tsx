@@ -8,16 +8,18 @@ const Cashbox = () => {
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
 
+    const isActiveTable = true;
+
     return (
         <div className={s.cashboxWrapper}>
             <div className={s.cashboxMainBlock}>
 
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
-                        <Button text={'Стол 1'} onClick={() => {}}/>
-                        <Button text={'Стол 2'} onClick={() => {}}/>
-                        <Button text={'Стол 3'} onClick={() => {}}/>
-                        <Button text={'Стол 4'} onClick={() => {}}/>
+                        <Button text={'Стол 1'} onClick={() => {}} disabled={!isActiveTable}/>
+                        <Button text={'Стол 2'} onClick={() => {}} disabled={isActiveTable}/>
+                        <Button text={'Стол 3'} onClick={() => {}} disabled={isActiveTable}/>
+                        <Button text={'Стол 4'} onClick={() => {}} disabled={isActiveTable}/>
                     </div>
 
                     <div className={s.leftSide_client}>
