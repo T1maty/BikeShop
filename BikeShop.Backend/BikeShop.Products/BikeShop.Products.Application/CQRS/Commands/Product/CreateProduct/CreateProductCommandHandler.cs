@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Domain.Entities.Product>
 {
     private readonly IApplicationDbContext _context;
 
@@ -15,7 +15,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
         _context = context;
     }
 
-    public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Domain.Entities.Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         // Если был передан баркод производителя - то проверка есть ли уже такой баркод
         if (request.ManufacturerBarcode is not null)
@@ -83,7 +83,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return newProduct;
     }
 
     private static string GenerateUniqueBarcode(int productId, string[] existBarcodes)

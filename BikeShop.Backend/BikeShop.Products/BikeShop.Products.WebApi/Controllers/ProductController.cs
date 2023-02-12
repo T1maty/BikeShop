@@ -3,6 +3,7 @@ using BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
+using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.WebApi.Models.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -45,15 +46,15 @@ namespace BikeShop.Products.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductModel model)
+        public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductModel model)
         {
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
             var command = _mapper.Map<CreateProductCommand>(model);
-            await _mediator.Send(command);
+            var product = await _mediator.Send(command);
 
-            return Ok();
+            return Ok(product);
         }
 
 
