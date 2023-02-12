@@ -15,21 +15,26 @@
 
 // common mixins
 
-@mixin flexColumn() {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 @mixin flexCenter() {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+@mixin flexOnlyBetween() {
+    display: flex;
+    justify-content: space-between;
+}
+
 @mixin flexBetween() {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flexColumn() {
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 

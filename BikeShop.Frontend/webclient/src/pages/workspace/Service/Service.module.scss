@@ -3,17 +3,14 @@
 
 .serviceWrapper {
     @include defaultContainer();
-    //border: 1px solid white;
 
     .serviceBlock {
         @include wrapperMainBlock();
-        //border: 1px solid white;
         display: flex;
 
         .service_leftSide {
-            //border: 1px solid white;
-            width: 25%;
             @include flexColumn();
+            width: 25%;
 
             .leftSide_buttons {
                 margin-bottom: $defaultSmallMargin;
@@ -56,13 +53,12 @@
         }
 
         .service_rightSide {
-            //border: 1px solid white;
-            width: 75%;
             @include flexColumn();
             margin-left: $defaultLargeMargin;
             border-radius: $defaultBorderRadius;
             background-color: $themeColorDark;
             padding: $defaultLargeMargin;
+            width: 75%;
 
             .rightSide_stuffInput {
                 @include flexCenter();
@@ -71,12 +67,11 @@
 
             }
             .rightSide_infoFields {
-                margin-bottom: $defaultLargeMargin;
                 @include flexBetween();
+                margin-bottom: $defaultLargeMargin;
                 width: 100%;
 
                 .infoFields_content {
-                    border: 1px solid white;
                     width: 60%;
                     margin-right: $defaultLargeMargin;
 
@@ -99,7 +94,6 @@
                             button {
                                 width: 150px;
                                 height: 50px;
-                                //padding: 5px;
                                 font-size: 20px;
                             }
 
@@ -108,7 +102,6 @@
                             button {
                                 width: 150px;
                                 height: 50px;
-                                //padding: 5px;
                                 font-size: 20px;
                             }
 
@@ -120,21 +113,18 @@
 
                 }
                 .infoFields_clientCard {
-                    border: 1px solid white;
                     width: 40%;
                     height: 100%;
                 }
 
             }
             .rightSide_tables {
-                border: 1px solid white;
                 @include flexBetween();
-                width: 100%;
-                height: 100%;
+                @include widthHeightFull();
 
                 .tables_left {
-                    @include widthHeightFull();
                     border: 1px solid white;
+                    @include widthHeightFull();
                     margin-right: $defaultLargeMargin;
 
                     .tables_left_buttons {
@@ -204,17 +194,15 @@
                     }
 
                     .tables_right_table {
+                        @include flexColumn();
                         background-color: $themeColorGray;
                         border-radius: $defaultBorderRadius;
                         padding: $defaultLargeMargin;
-                        @include flexColumn();
                         height: 85%; // надо исправить
 
                     }
                 }
             }
         }
-
     }
-
 }
