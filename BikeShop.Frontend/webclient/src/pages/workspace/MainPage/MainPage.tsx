@@ -33,9 +33,10 @@ const MainPage = () => {
     return (
         <div className={s.mainPageWrapper}>
             <div className={s.mainPageMainBlock}>
+
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
-                        <div className={s.mainPage_header_leftSide_deal}>
+                        <div className={s.header_leftSide_deal}>
                             <div>
                                 <Button text={'Создать ремонт'} onClick={() => {}}/>
                             </div>
@@ -52,9 +53,11 @@ const MainPage = () => {
                                 <Button text={'Внести на счёт'} onClick={() => {}}/>
                             </div>
                         </div>
-                        <div className={s.mainPage_header_leftSide_info}>
+                        <div className={s.header_leftSide_info}>
                             <div>
-                                <Button text={'Каталог товаров'} onClick={() => {navigate('/productcatalog')}}/>
+                                <Button text={'Каталог товаров'}
+                                        onClick={() => {navigate('/productcatalog')}}
+                                />
                             </div>
                             <div>
                                 <Button text={'Ремонты'} onClick={() => {}}/>
@@ -76,16 +79,19 @@ const MainPage = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className={s.mainPage_header_rightSide}>
                         3
                     </div>
                 </div>
-                <div className={s.mainPage_main}>
-                    <div className={s.mainPage_main_leftSide}>
-                        <div className={s.mainPage_main_leftSide_title}>
+
+
+                <div className={s.mainPage_content}>
+                    <div className={s.content_leftSide}>
+                        <div className={s.leftSide_title}>
                             Персональные задания
                         </div>
-                        <div className={s.mainPage_main_leftSide_tasks}>
+                        <div className={s.leftSide_tasks}>
                             {
                                 tasks.map(t => {
                                     return (
@@ -95,46 +101,51 @@ const MainPage = () => {
                             }
                         </div>
                     </div>
-                    <div className={s.mainPage_main_rightSide}>
-                        <div className={s.mainPage_main_rightSide_top}>
-                            <div className={s.mainPage_main_rightSide_top_search}>
-                                <div className={s.mainPage_main_rightSide_searchButton}>
+
+                    <div className={s.content_rightSide}>
+                        <div className={s.rightSide_top}>
+                            <div className={s.rightSide_top_search}>
+                                <div className={s.search_searchButton}>
                                     <Button text={'Найти клиента'} onClick={() => {}}/>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_searchInput}>
+                                <div className={s.search_searchInput}>
                                     <Input placeholder={'Поиск...'}/>
                                 </div>
                             </div>
-                            <div className={s.mainPage_main_rightSide_top_info}>
+
+                            <div className={s.rightSide_top_info}>
                                 555
                             </div>
-                            <div className={s.mainPage_main_rightSide_top_result}>
-                                <div className={s.mainPage_main_rightSide_result_closeBtn}>
+
+                            <div className={s.rightSide_top_result}>
+                                <div className={s.result_closeBtn}>
                                     <Button text={'Закрыть кассу'} onClick={() => {}}/>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_result_cancelBtn}>
+                                <div className={s.result_cancelBtn}>
                                     <Button text={'X'} onClick={() => {}}/>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_result_span}>
+                                <div className={s.result_span}>
                                     Цена
                                 </div>
-                                <div className={s.mainPage_main_rightSide_result_payBtn}>
+                                <div className={s.result_payBtn}>
                                     <Button text={'К оплате'} onClick={() => {}}/>
                                 </div>
                             </div>
                         </div>
-                        <div className={s.mainPage_main_rightSide_bottom}>
-                            <div className={s.mainPage_main_rightSide_bottom_left}>
+
+                        <div className={s.rightSide_bottom}>
+                            <div className={s.bottom_left}>
                                 <div>Сумма</div>
                                 <div>Сумма</div>
                                 <div>Сумма</div>
                             </div>
-                            <div className={s.mainPage_main_rightSide_bottom_right}>
-                                <div className={s.mainPage_main_rightSide_bottom_right_one}>
+
+                            <div className={s.bottom_right}>
+                                <div className={s.bottom_right_one}>
                                     <div>Сумма</div>
                                     <div>120:47:32</div>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_bottom_right_two}>
+                                <div className={s.bottom_right_two}>
                                     <div className={s.right_two_button}>
                                         <Button text={'Закончить смену'} onClick={() => {}}/>
                                     </div>
@@ -146,6 +157,7 @@ const MainPage = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     );
