@@ -10,12 +10,12 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
     public class CreateTagCommand : IRequest
     {
         public string Name { get; set; } = string.Empty;
-        public int parentId { get; set; }
-        public bool isCollapsed { get; set; } 
-        public bool isRetailVisible { get; set; } = false;
-        public bool isB2BVisible { get; set; } = false;
-        public bool isUniversal { get; set; } = false;
-        public int sortOrder { get; set; }
+        public int ParentId { get; set; } = 0;
+        public bool IsCollapsed { get; set; } = false;
+        public bool IsRetailVisible { get; set; } = false;
+        public bool IsB2BVisible { get; set; } = false;
+        public bool IsUniversal { get; set; } = false;
+        public int SortOrder { get; set; } = 0;
 
     }
 }

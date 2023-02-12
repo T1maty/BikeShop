@@ -1,11 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using BikeShop.Products.Application.Common.Mappings;
+using BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag;
 
 namespace BikeShop.Products.WebApi.Models.ProductTag
 {
     public class CreateProductTagModel : IMappable
     {
-        public string Name { get; set; } = string.Empty;
+        [Required] public string Name { get; set; } = string.Empty;
         public int ParentId { get; set; } = 0;
         public bool IsCollapsed { get; set; } = false;
         public bool IsRetailVisible { get; set; } = false;
@@ -15,7 +17,7 @@ namespace BikeShop.Products.WebApi.Models.ProductTag
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateProductTagModel, Products.Domain.Entities.ProductTag>();
+            profile.CreateMap<CreateProductTagModel, CreateTagCommand>();
         }
     }
 }

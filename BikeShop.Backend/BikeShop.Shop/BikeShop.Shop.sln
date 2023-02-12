@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{62E085B2-7E5A-4B84-8CD0-59334B3B20BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{277FB773-8B90-4AA4-90E3-E7D6988BE4AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{854407F2-EACA-4A27-9865-1D11E1D69448}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShop.Shop.Domain", "BikeShop.Shop.Domain\BikeShop.Shop.Domain.csproj", "{486162B5-AF6F-4957-8113-5796D0F1A58B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShop.Shop.Application", "BikeShop.Shop.Application\BikeShop.Shop.Application.csproj", "{4EAB2EA3-B003-47E9-9BCB-98C9FC80F2F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bikeshop.Shop.Persistence", "Bikeshop.Shop.Persistence\Bikeshop.Shop.Persistence.csproj", "{5BC8037C-9DA3-4EA6-94B7-699E4405671B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShop.Shop.WebApi", "BikeShop.Shop.WebApi\BikeShop.Shop.WebApi.csproj", "{C9C1715B-4014-4FA0-949B-C91EF87AA9D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{486162B5-AF6F-4957-8113-5796D0F1A58B} = {62E085B2-7E5A-4B84-8CD0-59334B3B20BD}
+		{4EAB2EA3-B003-47E9-9BCB-98C9FC80F2F5} = {62E085B2-7E5A-4B84-8CD0-59334B3B20BD}
+		{5BC8037C-9DA3-4EA6-94B7-699E4405671B} = {277FB773-8B90-4AA4-90E3-E7D6988BE4AC}
+		{C9C1715B-4014-4FA0-949B-C91EF87AA9D4} = {854407F2-EACA-4A27-9865-1D11E1D69448}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{486162B5-AF6F-4957-8113-5796D0F1A58B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486162B5-AF6F-4957-8113-5796D0F1A58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486162B5-AF6F-4957-8113-5796D0F1A58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486162B5-AF6F-4957-8113-5796D0F1A58B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EAB2EA3-B003-47E9-9BCB-98C9FC80F2F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EAB2EA3-B003-47E9-9BCB-98C9FC80F2F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EAB2EA3-B003-47E9-9BCB-98C9FC80F2F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EAB2EA3-B003-47E9-9BCB-98C9FC80F2F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC8037C-9DA3-4EA6-94B7-699E4405671B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC8037C-9DA3-4EA6-94B7-699E4405671B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC8037C-9DA3-4EA6-94B7-699E4405671B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC8037C-9DA3-4EA6-94B7-699E4405671B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9C1715B-4014-4FA0-949B-C91EF87AA9D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9C1715B-4014-4FA0-949B-C91EF87AA9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9C1715B-4014-4FA0-949B-C91EF87AA9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9C1715B-4014-4FA0-949B-C91EF87AA9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

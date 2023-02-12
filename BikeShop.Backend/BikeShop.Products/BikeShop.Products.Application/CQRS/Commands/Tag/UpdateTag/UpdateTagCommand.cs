@@ -11,11 +11,11 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.UpdateTag
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public int parentId { get; set; }
-        public bool isCollapsed { get; set; } = true;
-        public bool isRetailVisible { get; set; } = false;
-        public bool isB2BVisible { get; set; } = false;
-        public bool isUniversal { get; set; } = true;
-        public int sorOrder { get; set; } 
+        public int ParentId { get; set; } = 0;
+        public bool IsCollapsed { get; set; }
+        public bool IsRetailVisible { get; set; }
+        public bool IsB2BVisible { get; set; }
+        public bool IsUniversal { get; set; }
+        public int SortOrder { get; set; } = 0;
     }
 }

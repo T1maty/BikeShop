@@ -33,6 +33,17 @@ services:
     ports: 
       - 5003:80
     restart: on-failure
+    
+  bikeshop.shop:
+    container_name: bikeshop-shop
+    build:
+      context: BikeShop.Shop
+      dockerfile: Dockerfile
+    image: kpssnik/bikeshop.shop
+    hostname: bikeshop.shop
+    ports:
+      - 5004:80
+    restart: on-failure  
 
   bikeshop.gateway:
     container_name: bikeshop-gateway
@@ -48,10 +59,12 @@ services:
       - bikeshop.identity
       - bikeshop.products
       - bikeshop.service
+      - bikeshop.shop
     depends_on:
       - bikeshop.identity
       - bikeshop.products
       - bikeshop.service
+      - bikeshop.shop
 
 
   

@@ -1,4 +1,4 @@
-namespace BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTags;
+namespace BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 
 public class ProductsListModel
 {
