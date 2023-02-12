@@ -3,7 +3,6 @@ import {Modal, TextField} from "@mui/material";
 import useChooseClientModal from './ChooseClientModalStore';
 import Button from '../../shared/ui/Button/Button';
 import s from './ChooseClientModal.module.scss'
-// import {openSelector, setOpenSelector} from './ChooseClientModal-selectors';
 import Input from '../../shared/ui/Input/Input';
 
 const ChooseClientModal = () => {
@@ -22,19 +21,6 @@ const ChooseClientModal = () => {
     //     onClick: handleOpen,
     // })
 
-    // const style = {
-    //     position: 'absolute',
-    //     top: '50%',
-    //     left: '50%',
-    //     transform: 'translate(-50%, -50%)',
-    //     width: 480,
-    //     bgcolor: '#33373B',
-    //
-    //     boxShadow: 24,
-    //     p: 4,
-    //     borderRadius: 5,
-    // };
-
     return (
         // {clonedChildren}
         <Modal
@@ -43,30 +29,51 @@ const ChooseClientModal = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            {/*<Box sx={style}>*/}
             <div className={s.clientModal_mainBox}>
                 <div className={s.clientModal_searchBlock}>
+                    <div className={s.clientModal_searchBlock_input}>
+                        <Input placeholder={'Введите фамилию'}/>
+                    </div>
                     <div className={s.clientModal_searchBlock_input}>
                         <Input placeholder={'Введите номер телефона'}/>
                     </div>
                     <div className={s.clientModal_searchBlock_textField}>
                         <TextField id="outlined-basic"
                                    variant="outlined"
-                                   value={'Search result'}
+                                   value={'Результат поиска?'}
                                    style={{backgroundColor: '#5C636A'}}
                                    onChange={() => {}}
+                                   fullWidth={true}
                         />
                     </div>
                 </div>
                 <div className={s.clientModal_textFields}>
                     <div>
-                        <Input placeholder={'Имя'}/>
+                        <TextField id="outlined-basic"
+                                   variant="outlined"
+                                   value={'Фамилия'}
+                                   style={{backgroundColor: '#5C636A'}}
+                                   onChange={() => {}}
+                                   fullWidth={true}
+                        />
                     </div>
                     <div>
-                        <Input placeholder={'Фамилия'}/>
+                        <TextField id="outlined-basic"
+                                   variant="outlined"
+                                   value={'Имя'}
+                                   style={{backgroundColor: '#5C636A'}}
+                                   onChange={() => {}}
+                                   fullWidth={true}
+                        />
                     </div>
                     <div>
-                        <Input placeholder={'Отчество'}/>
+                        <TextField id="outlined-basic"
+                                   variant="outlined"
+                                   value={'Отчество'}
+                                   style={{backgroundColor: '#5C636A'}}
+                                   onChange={() => {}}
+                                   fullWidth={true}
+                        />
                     </div>
                 </div>
                 <div className={s.clientModal_buttonsBlock}>
@@ -74,7 +81,6 @@ const ChooseClientModal = () => {
                     <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
                 </div>
             </div>
-            {/*</Box>*/}
         </Modal>
     );
 };
