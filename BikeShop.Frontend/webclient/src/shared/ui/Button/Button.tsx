@@ -1,7 +1,12 @@
+import React from 'react';
 import Button from '@mui/material/Button';
-import {IButton} from './IButton';
 
-const ButtonUI = ({text, onClick}: IButton) => {
+type ButtonUIPropsType = {
+    text: string;
+    onClick: () => void
+}
+
+const ButtonUI: React.FC<ButtonUIPropsType> = ({text, onClick}) => {
 
     const buttonClickHandler = () => {
         onClick();
