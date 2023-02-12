@@ -23,6 +23,10 @@ const ProductCatalogTableRow = (props: props) => {
                 setOpenContext(true, event.clientX, event.clientY)
             }}
 
+            onDoubleClick={() => {
+                console.log(selected[0])
+            }}
+
             selected={isSelected(props.row.id)}
 
             onClick={() => {

@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {$api} from "shared";
-import {IProduct, IProductResponse} from "../../../entities";
+import {IProduct, IProductResponse, IUpdateProduct} from "../../../entities";
 
 interface productCatalogTableStore {
     contextMenuXY: { X: number, Y: number }
@@ -14,6 +14,8 @@ interface productCatalogTableStore {
     rows: IProduct[]
 
     setOpen: (value: boolean, X: number, Y: number) => void
+    addNewProduct: (product: IProduct) => void
+    updateRow: (rowData: IUpdateProduct) => void
     setSelectedRows: (ids: number[]) => void
     setRowsPerPage: (value: number) => void
     isRowSelected: (id: number) => boolean
@@ -57,6 +59,23 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     },
     getProducts: () => {
         return $api.get<IProductResponse>('/product/getbytags/1')
+    },
+    updateRow: (rowData) => {
+        set(state => {
+            let row = state.rows.filter((n) => {
+                if (n.id == rowData.id) return n
+            })[0]
+            row.name = rowData.name
+            row.manufacturerBarcode = rowData.manufacturerBarcode
+            row.b2BVisibility = rowData.b2BVisibility
+            row.retailVisibility = rowData.retailVisibility
+        })
+    },
+    addNewProduct: (product) => {
+        set(state => {
+            state.rows.push(product)
+            state.selectedRows = [product]
+        })
     }
 }))), {
     name: "creatProductModalStore",

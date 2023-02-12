@@ -3,12 +3,15 @@ import MenuItem from "@mui/material/MenuItem";
 import {Menu} from "@mui/material";
 import useProductCatalogTableStore from "./ProductCatalogTableStore";
 import useCreateProductModal from '../../../features/CreateProductModal/CreateProductModalStore';
+import {useUpdateProductModal} from "../../../features";
 
 const ProductCatalogTableContextMenu = () => {
+    const selected = useProductCatalogTableStore(s => s.selectedRows)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
     const contextMenuVisible = useProductCatalogTableStore(s => s.open)
     const contextXY = useProductCatalogTableStore(s => s.contextMenuXY)
     const setOpenCreateProductModal = useCreateProductModal(s => s.setOpen)
+    const setOpenUpdateProductModal = useUpdateProductModal(s => s.setOpen)
 
     return (
         <Menu
@@ -28,7 +31,7 @@ const ProductCatalogTableContextMenu = () => {
             }
         >
             <MenuItem onClick={() => {
-                setOpenCreateProductModal(true)
+                setOpenUpdateProductModal(true, selected[0])
                 setContextVisible(false, 0, 0)
             }}
             >Редактировать

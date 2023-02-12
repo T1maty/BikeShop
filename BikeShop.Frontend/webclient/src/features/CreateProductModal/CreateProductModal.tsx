@@ -2,9 +2,13 @@ import React from 'react';
 import {Box, Button, Checkbox, FormControlLabel, Modal, TextField} from "@mui/material";
 import useCreateProductModal from "./CreateProductModalStore";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {EnumProductCheckStatus, ICreateProduct} from "../../entities";
+import {EnumProductCheckStatus, ICreateProduct, IProduct} from "../../entities";
 
-const CreateProductModal = () => {
+interface props {
+    onSuccess?: (data: IProduct) => void
+}
+
+const CreateProductModal = (props: props) => {
 
     const open = useCreateProductModal(s => s.open)
     const setOpen = useCreateProductModal(s => s.setOpen)
@@ -40,10 +44,11 @@ const CreateProductModal = () => {
     };
 
     const onSubmit: SubmitHandler<ICreateProduct> = (data: ICreateProduct) => {
-        console.log(data)
         create(data).then((r) => {
             setOpen(false)
+            props.onSuccess ? props.onSuccess(r.data) : true
         })
+
     };
 
     return (

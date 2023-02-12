@@ -9,6 +9,7 @@ export type {default as IProductTag} from './models/ProductTag'
 export type {default as IShop} from './models/Shop'
 export type {ICreateTag} from './requests/CreateTag'
 export type {ICreateProduct} from './requests/CreateProduct'
+export type {IUpdateProduct} from './requests/UpdateProduct'
 export type {IProduct} from './models/Product'
 
 export type {default as IGroupResponse} from './responses/GroupResponse'

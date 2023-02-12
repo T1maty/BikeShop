@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Box} from "@mui/material";
-import {CreateProductModal} from "../../../features";
+import {CreateProductModal, UpdateProductModal} from "../../../features";
 import ProductCatalogTableContextMenu from "./ProductCatalogTableContextMenu";
 import {columns} from "./ProductCatalogTableConfig";
 import useProductCatalogTableStore from './ProductCatalogTableStore';
@@ -22,6 +22,8 @@ const ProductCatalogTable = () => {
     const rows = useProductCatalogTableStore(s => s.rows)
     const setRows = useProductCatalogTableStore(s => s.setRows)
     const getProducts = useProductCatalogTableStore(s => s.getProducts)
+    const updateRow = useProductCatalogTableStore(s => s.updateRow)
+    const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
 
     React.useEffect(() => {
         getProducts().then((r) => {
@@ -42,8 +44,11 @@ const ProductCatalogTable = () => {
                  event.preventDefault()
              }}
         >
+            
             <ProductCatalogTableContextMenu/>
-            <CreateProductModal/>
+            <CreateProductModal onSuccess={addNewProduct}/>
+            <UpdateProductModal onSuccess={updateRow}/>
+
             <TableContainer sx={{maxHeight: 440}}>
                 <Table
                     stickyHeader
