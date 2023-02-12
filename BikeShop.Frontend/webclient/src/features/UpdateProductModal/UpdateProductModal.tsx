@@ -66,7 +66,9 @@ export const UpdateProductModal = (props: props) => {
         update(data).then((r) => {
             setOpen(false, {} as IProduct)
             props.onSuccess ? props.onSuccess(data) : true
-        })
+        }).catch((r => {
+
+        }))
     };
 
     return (

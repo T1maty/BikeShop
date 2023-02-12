@@ -13,7 +13,7 @@ const CreateProductModal = (props: props) => {
     const open = useCreateProductModal(s => s.open)
     const setOpen = useCreateProductModal(s => s.setOpen)
     const create = useCreateProductModal(s => s.create)
-    const {control, formState: {errors}, handleSubmit} = useForm<ICreateProduct>({
+    const {control, formState: {errors}, handleSubmit, setValue, setError} = useForm<ICreateProduct>({
         defaultValues: {
             name: "",
             catalogKey: "",
@@ -47,6 +47,18 @@ const CreateProductModal = (props: props) => {
         create(data).then((r) => {
             setOpen(false)
             props.onSuccess ? props.onSuccess(r.data) : true
+
+            setValue('name', '')
+            setValue('catalogKey', '')
+            setValue('manufacturerBarcode', '')
+            setValue('incomePrice', 0)
+            setValue('dealerPrice', 0)
+            setValue('retailPrice', 0)
+            setValue('retailVisibility', false)
+            setValue('b2BVisibility', false)
+        }).catch(r => {
+            setError('name', {type: 'serverError', message: r.response.data.errorDescription.toString()})
+            console.error(r.response.data)
         })
 
     };
@@ -73,7 +85,8 @@ const CreateProductModal = (props: props) => {
 
                         <TextField {...field} sx={{pb: 3}}
                                    fullWidth={true}
-                                   error={!!errors.name}
+                                   error={!!errors.name?.type}
+                                   helperText={errors.name?.message}
                                    label="Название товара"
                                    variant="outlined"/>
                     }/>
@@ -104,7 +117,7 @@ const CreateProductModal = (props: props) => {
                 <Controller
                     name="incomePrice"
                     control={control}
-                    rules={{required: "Обязательное поле"}}
+                    rules={{required: "Обязательное поле", validate: (value) => value > 0}}
                     render={({field}: any) =>
 
                         <TextField {...field} sx={{pb: 3}}
@@ -116,7 +129,7 @@ const CreateProductModal = (props: props) => {
                 <Controller
                     name="dealerPrice"
                     control={control}
-                    rules={{required: "Обязательное поле"}}
+                    rules={{required: "Обязательное поле", validate: (value) => value > 0}}
                     render={({field}: any) =>
 
                         <TextField {...field} sx={{pb: 3}}
@@ -129,7 +142,7 @@ const CreateProductModal = (props: props) => {
                 <Controller
                     name="retailPrice"
                     control={control}
-                    rules={{required: "Обязательное поле"}}
+                    rules={{required: "Обязательное поле", validate: (value) => value > 0}}
                     render={({field}: any) =>
 
                         <TextField {...field} sx={{pb: 3}}
