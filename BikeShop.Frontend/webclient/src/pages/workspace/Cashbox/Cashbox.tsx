@@ -4,6 +4,7 @@ import s from './Cashbox.module.scss'
 import Input from 'shared/ui/Input/Input';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import ChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModal';
+import ClientCard from '../Service/ClientCard';
 
 const Cashbox = () => {
 
@@ -20,14 +21,9 @@ const Cashbox = () => {
                         <Button text={'Стол 3'} onClick={() => {}}/>
                         <Button text={'Стол 4'} onClick={() => {}}/>
                     </div>
+
                     <div className={s.leftSide_client}>
-                        <div className={s.leftSide_client_background}>
-                            <h3 style={{textAlign: 'center', marginTop: '0px'}}>Клиент</h3>
-                            <p>Панкратов Евгений Владимирович</p>
-                            <p>Номер телефона</p>
-                            <p>Почта</p>
-                            <p>Баланс: 0</p>
-                        </div>
+                        <ClientCard/>
                         <ChooseClientModal/>
                         <div className={s.leftSide_client_buttons}>
                             <div className={s.client_buttons_choose}>
@@ -40,13 +36,14 @@ const Cashbox = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className={s.leftSide_discount}>
                         <div className={s.discount_background}>
                             <div className={s.discount_info}>
-                                <div className={s.info_value}>
+                                <div className={s.info_title}>
                                     Скидка
                                 </div>
-                                <div className={s.info_title}>
+                                <div className={s.info_name}>
                                     Название скидки
                                 </div>
                                 <div className={s.info_types}>

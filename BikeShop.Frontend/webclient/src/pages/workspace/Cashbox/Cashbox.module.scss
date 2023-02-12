@@ -32,22 +32,11 @@
             .leftSide_client {
                 background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
+                margin: $defaultLargeMargin 0;
+                padding: $defaultLargeMargin;
+                @include flexColumn();
                 width: 100%;
                 height: 40%;
-                margin: $defaultLargeMargin 0;
-                display: flex;
-                flex-direction: column;
-
-                .leftSide_client_background {
-                    background-color: $themeColorGray;
-                    border-radius: $defaultBorderRadius;
-                    margin: $defaultLargeMargin;
-                    padding: $defaultLargeMargin;
-
-                    p {
-                        margin: 5px 0;
-                    }
-                }
 
                 .leftSide_client_buttons {
                     display: flex;
@@ -94,11 +83,11 @@
                     .discount_info {
                         @include flexColumn();
 
-                        .info_value {
+                        .info_title {
                             margin-bottom: $defaultSmallMargin;
                             font-weight: bold;
                         }
-                        .info_title {
+                        .info_name {
                             border: 2px solid #C0C0C0;
                             border-radius: 10px;
                             padding: 10px;
