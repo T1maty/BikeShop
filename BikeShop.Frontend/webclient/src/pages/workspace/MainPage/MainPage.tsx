@@ -33,9 +33,10 @@ const MainPage = () => {
     return (
         <div className={s.mainPageWrapper}>
             <div className={s.mainPageMainBlock}>
+
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
-                        <div className={s.mainPage_header_leftSide_deal}>
+                        <div className={s.header_leftSide_deal}>
                             <div>
                                 <Button text={'Создать ремонт'} onClick={() => {}}/>
                             </div>
@@ -52,9 +53,11 @@ const MainPage = () => {
                                 <Button text={'Внести на счёт'} onClick={() => {}}/>
                             </div>
                         </div>
-                        <div className={s.mainPage_header_leftSide_info}>
+                        <div className={s.header_leftSide_info}>
                             <div>
-                                <Button text={'Каталог товаров'} onClick={() => {navigate('/productcatalog')}}/>
+                                <Button text={'Каталог товаров'}
+                                        onClick={() => {navigate('/productcatalog')}}
+                                />
                             </div>
                             <div>
                                 <Button text={'Ремонты'} onClick={() => {}}/>
@@ -76,65 +79,73 @@ const MainPage = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className={s.mainPage_header_rightSide}>
                         3
                     </div>
                 </div>
-                <div className={s.mainPage_main}>
-                    <div className={s.mainPage_main_leftSide}>
-                        <div className={s.mainPage_main_leftSide_title}>
+
+
+                <div className={s.mainPage_content}>
+                    <div className={s.content_leftSide}>
+                        <div className={s.leftSide_title}>
                             Персональные задания
                         </div>
-                        <div className={s.mainPage_main_leftSide_tasks}>
+                        <div className={s.leftSide_tasks}>
                             {
                                 tasks.map(t => {
                                     return (
-                                        <div key={t.id} className={s.mainPage_main_leftSide_taskItem}>{t.task}</div>
+                                        <div key={t.id} className={s.tasks_taskItem}>{t.task}</div>
                                     )
                                 })
                             }
                         </div>
                     </div>
-                    <div className={s.mainPage_main_rightSide}>
-                        <div className={s.mainPage_main_rightSide_top}>
-                            <div className={s.mainPage_main_rightSide_top_search}>
-                                <div className={s.mainPage_main_rightSide_searchButton}>
+
+                    <div className={s.content_rightSide}>
+                        <div className={s.rightSide_top}>
+                            <div className={s.rightSide_top_search}>
+                                <div className={s.search_searchButton}>
                                     <Button text={'Найти клиента'} onClick={() => {}}/>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_searchInput}>
+                                <div className={s.search_searchInput}>
                                     <Input placeholder={'Поиск...'}/>
                                 </div>
                             </div>
-                            <div className={s.mainPage_main_rightSide_top_info}>
+
+                            <div className={s.rightSide_top_info}>
                                 555
                             </div>
-                            <div className={s.mainPage_main_rightSide_top_result}>
-                                <div className={s.mainPage_main_rightSide_result_closeBtn}>
+
+                            <div className={s.rightSide_top_result}>
+                                <div className={s.result_closeBtn}>
                                     <Button text={'Закрыть кассу'} onClick={() => {}}/>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_result_cancelBtn}>
+                                <div className={s.result_cancelBtn}>
                                     <Button text={'X'} onClick={() => {}}/>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_result_span}>
+                                <div className={s.result_span}>
                                     Цена
                                 </div>
-                                <div className={s.mainPage_main_rightSide_result_payBtn}>
+                                <div className={s.result_payBtn}>
                                     <Button text={'К оплате'} onClick={() => {}}/>
                                 </div>
                             </div>
                         </div>
-                        <div className={s.mainPage_main_rightSide_bottom}>
-                            <div className={s.mainPage_main_rightSide_bottom_left}>
+
+                        <div className={s.rightSide_bottom}>
+                            <div className={s.bottom_left}>
                                 <div>Сумма</div>
                                 <div>Сумма</div>
                                 <div>Сумма</div>
                             </div>
-                            <div className={s.mainPage_main_rightSide_bottom_right}>
-                                <div className={s.mainPage_main_rightSide_bottom_right_one}>
+
+                            <div className={s.bottom_right}>
+                                <div className={s.bottom_right_one}>
                                     <div>Сумма</div>
                                     <div>120:47:32</div>
                                 </div>
-                                <div className={s.mainPage_main_rightSide_bottom_right_two}>
+                                <div className={s.bottom_right_two}>
                                     <div className={s.right_two_button}>
                                         <Button text={'Закончить смену'} onClick={() => {}}/>
                                     </div>
@@ -146,80 +157,10 @@ const MainPage = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     );
 };
 
 export default MainPage;
-
-// <Container>
-//     <Stack
-//         sx={{mb: 2}}
-//         direction="row"
-//         alignItems="center"
-//         justifyContent="space-around"
-//         flexWrap="wrap"
-//         divider={<Divider orientation="vertical" flexItem sx={{mt: '21px', mb: '5px'}}/>}
-//     >
-//         <Button sx={{mt: 2, mx: 1}} variant="contained" color="secondary" onClick={() => {
-//             navigate('/productcatalog')
-//         }}>
-//             Каталог товаров
-//         </Button>
-//     </Stack>
-//     <Stack sx={{mt: 2}} direction={{xs: 'column', sm: 'row'}} spacing={2}>
-//         <Box
-//             sx={{
-//                 width: {xs: '100%', sm: '50%'},
-//                 p: 2,
-//                 backgroundColor: 'grey.800',
-//                 borderRadius: 2,
-//             }}
-//         >
-//             <Typography variant="h6" component="p">
-//                 Task manager
-//             </Typography>
-//             <Paper>
-//                 <Container sx={{width: '100%', height: '70vh'}}/>
-//             </Paper>
-//         </Box>
-//         <Stack
-//             sx={{width: {xs: '100%', sm: '50%'}, height: '70vh'}}
-//             direction="column"
-//             spacing={2}
-//         >
-//             <Box
-//                 sx={{
-//                     width: '100%',
-//                     height: 'fit-content',
-//                     p: 2,
-//                     backgroundColor: 'grey.800',
-//                     borderRadius: 2,
-//                 }}
-//             >
-//                 <Typography variant="h6" component="p">
-//                     Cashbox
-//                 </Typography>
-//                 <Paper>
-//                     {/* {высота будет зависить от контента внутри, так что потом её надо будет убрать} */}
-//                     <Container sx={{width: '100%', height: 389 + 32}}/>
-//                 </Paper>
-//             </Box>
-//             <Box
-//                 sx={{
-//                     width: '100%',
-//                     height: 'fit-content',
-//                     p: 2,
-//                     backgroundColor: 'grey.800',
-//                     borderRadius: 2,
-//                 }}
-//             >
-//                 <Paper sx={{width: '60%'}}>
-//                     {/* {высота будет зависить от контента внутри, так что потом её надо будет убрать} */}
-//                     <Container sx={{width: '100%', height: 200}}/>
-//                 </Paper>
-//             </Box>
-//         </Stack>
-//     </Stack>
-// </Container>

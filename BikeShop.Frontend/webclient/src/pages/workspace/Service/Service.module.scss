@@ -12,10 +12,10 @@
 
         .service_leftSide {
             //border: 1px solid white;
-            width: 30%;
+            width: 25%;
             @include flexColumn();
 
-            .service_leftSide_buttons {
+            .leftSide_buttons {
                 margin-bottom: $defaultSmallMargin;
 
                 .buttons_create {
@@ -37,7 +37,7 @@
                 }
 
             }
-            .service_leftSide_content {
+            .leftSide_content {
                 border-radius: $defaultBorderRadius;
                 background-color: $themeColorDark;
                 padding: $defaultLargeMargin;
@@ -57,23 +57,20 @@
 
         .service_rightSide {
             //border: 1px solid white;
-            width: 70%;
+            width: 75%;
             @include flexColumn();
             margin-left: $defaultLargeMargin;
             border-radius: $defaultBorderRadius;
             background-color: $themeColorDark;
             padding: $defaultLargeMargin;
 
-            .service_rightSide_stuffInput {
+            .rightSide_stuffInput {
                 @include flexCenter();
                 margin-bottom: $defaultLargeMargin;
                 width: 100%;
 
-                input {
-                    width: 100%;
-                }
             }
-            .service_rightSide_infoFields {
+            .rightSide_infoFields {
                 margin-bottom: $defaultLargeMargin;
                 @include flexBetween();
                 width: 100%;
@@ -81,9 +78,14 @@
                 .infoFields_content {
                     border: 1px solid white;
                     width: 60%;
+                    margin-right: $defaultLargeMargin;
 
                     .content_detailsInput {
                         margin-bottom: $defaultLargeMargin;
+
+                        input {
+                            height: 100px;
+                        }
 
                     }
                     .content_masterInput {
@@ -124,7 +126,7 @@
                 }
 
             }
-            .service_rightSide_tables {
+            .rightSide_tables {
                 border: 1px solid white;
                 @include flexBetween();
                 width: 100%;
@@ -133,7 +135,7 @@
                 .tables_left {
                     @include widthHeightFull();
                     border: 1px solid white;
-                    margin-right: 5px;
+                    margin-right: $defaultLargeMargin;
 
                     .tables_left_buttons {
                         @include flexBetween();
@@ -143,10 +145,20 @@
 
                         }
                         .buttons_discountField {
-                            @include defaultFiledStyle();
+                            @include flexColumn();
+
+                            .discountField_title {
+
+                            }
+                            .discountField_value {
+                                @include defaultFiledStyle();
+                                height: 30px;
+                            }
                         }
                         .buttons_resultField {
                             @include defaultFiledStyle();
+                            width: 20%;
+                            height: 55px;
                         }
                     }
 
@@ -163,7 +175,7 @@
                     border: 1px solid white;
                     margin-left: 5px;
 
-                    .tables_right_buttons {
+                    .right_buttons {
                         @include flexBetween();
                         margin-bottom: $defaultSmallMargin;
 
@@ -172,12 +184,22 @@
                         }
                         .buttons_noDiscountField {
                             @include defaultFiledStyle();
+                            height: 55px;
                         }
                         .buttons_discountField {
-                            @include defaultFiledStyle();
+                            @include flexColumn();
+
+                            .discountField_title {
+
+                            }
+                            .discountField_value {
+                                @include defaultFiledStyle();
+                                height: 30px;
+                            }
                         }
                         .buttons_resultField {
                             @include defaultFiledStyle();
+                            height: 55px;
                         }
                     }
 

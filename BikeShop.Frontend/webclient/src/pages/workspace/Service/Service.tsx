@@ -37,8 +37,9 @@ const Service = () => {
     return (
         <div className={s.serviceWrapper}>
             <div className={s.serviceBlock}>
+
                 <div className={s.service_leftSide}>
-                    <div className={s.service_leftSide_buttons}>
+                    <div className={s.leftSide_buttons}>
                         <div className={s.buttons_create}>
                             <Button text={'Создать ремонт'} onClick={() => {}}/>
                         </div>
@@ -54,8 +55,11 @@ const Service = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={s.service_leftSide_content}>
-                        <div className={s.content_title}>Таблица ремонтов</div>
+
+                    <div className={s.leftSide_content}>
+                        <div className={s.content_title}>
+                            Таблица ремонтов
+                        </div>
                         <div className={s.content_info}>
                             {
                                 repair.map(r => {
@@ -67,12 +71,15 @@ const Service = () => {
                         </div>
                     </div>
                 </div>
+
+
                 <div className={s.service_rightSide}>
-                    <div className={s.service_rightSide_stuffInput}>
+                    <div className={s.rightSide_stuffInput}>
                         <Input placeholder={'Техника'}/>
                         {/*<input placeholder={'Техника'}/>*/}
                     </div>
-                    <div className={s.service_rightSide_infoFields}>
+
+                    <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
                                 <Input placeholder={'Детальное описание'}/>
@@ -96,14 +103,20 @@ const Service = () => {
                             Карточка клиента
                         </div>
                     </div>
-                    <div className={s.service_rightSide_tables}>
+
+                    <div className={s.rightSide_tables}>
                         <div className={s.tables_left}>
                             <div className={s.tables_left_buttons}>
                                 <div className={s.buttons_editBtn}>
                                     <Button text={'Редактор'} onClick={() => {}}/>
                                 </div>
                                 <div className={s.buttons_discountField}>
-                                    2
+                                    <div className={s.discountField_title}>
+                                        Скидка
+                                    </div>
+                                    <div className={s.discountField_value}>
+                                        30%
+                                    </div>
                                 </div>
                                 <div className={s.buttons_resultField}>
                                     3
@@ -124,18 +137,23 @@ const Service = () => {
                             </div>
                         </div>
                         <div className={s.tables_right}>
-                            <div className={s.tables_right_buttons}>
+                            <div className={s.right_buttons}>
                                 <div className={s.buttons_editBtn}>
                                     <Button text={'Редактор'} onClick={() => {}}/>
                                 </div>
                                 <div className={s.buttons_noDiscountField}>
-                                    2
+                                    222
                                 </div>
                                 <div className={s.buttons_discountField}>
-                                    3
+                                    <div className={s.discountField_title}>
+                                        Скидка
+                                    </div>
+                                    <div className={s.discountField_value}>
+                                        30%
+                                    </div>
                                 </div>
                                 <div className={s.buttons_resultField}>
-                                    4
+                                    444
                                 </div>
                             </div>
                             <div className={s.tables_right_table}>
@@ -154,6 +172,7 @@ const Service = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     );
