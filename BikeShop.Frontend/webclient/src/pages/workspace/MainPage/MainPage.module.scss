@@ -1,0 +1,201 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.mainPageWrapper {
+    @include defaultContainer();
+
+    .mainPageMainBlock {
+        @include wrapperMainBlock();
+
+        .mainPage_header {
+            display: flex;
+            margin-bottom: $defaultLargeMargin;
+
+            .mainPage_header_leftSide {
+                display: flex;
+                flex-direction: column;
+                width: 70%;
+
+                .header_leftSide_deal {
+                    @include flexOnlyBetween();
+                    flex-wrap: wrap;
+                    border-radius: $defaultBorderRadius;
+                    background-color: $themeColorDark;
+                    margin-bottom: $defaultLargeMargin;
+                    padding: $defaultLargeMargin;
+
+                    button {
+                        padding: 5px 10px;
+                    }
+                }
+                .header_leftSide_info {
+                    @include flexOnlyBetween();
+                    flex-wrap: wrap;
+                    border-radius: $defaultBorderRadius;
+                    background-color: $themeColorDark;
+                    padding: $defaultLargeMargin;
+
+                    button {
+                        @include flexCenter();
+                        padding: 5px 10px;
+                    }
+                }
+            }
+
+            .mainPage_header_rightSide {
+                @include flexCenter();
+                background-color: $themeColorDark;
+                border-radius: $defaultBorderRadius;
+                margin-left: $defaultLargeMargin;
+                width: 30%;
+            }
+        }
+
+        .mainPage_content {
+            display: flex;
+
+            .content_leftSide {
+                background-color: $themeColorDark;
+                border-radius: $defaultBorderRadius;
+                margin-right: $defaultSmallMargin;
+                width: 50%;
+
+                .leftSide_title {
+                    @include flexCenter();
+                    margin-top: $defaultSmallMargin;
+                }
+                .leftSide_tasks {
+                    display: flex;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    background-color: $themeColorGray;
+                    margin: $defaultLargeMargin;
+                    padding: $defaultSmallMargin;
+                    border-radius: $defaultBorderRadius;
+
+                    .tasks_taskItem {
+                        background-color: $themeColorWhite;
+                        border-radius: $smallBorderRadius;
+                        padding: $defaultSmallMargin;
+                        margin: $defaultSmallMargin;
+                        color: black;
+                        width: 250px;
+                        height: 100px;
+                    }
+                }
+            }
+
+            .content_rightSide {
+                width: 50%;
+                margin-left: $defaultSmallMargin;
+                @include flexColumn();
+
+                .rightSide_top {
+                    @include flexColumn();
+                    justify-content: space-between;
+                    background-color: $themeColorDark;
+                    border-radius: $defaultBorderRadius;
+                    padding: $defaultLargeMargin;
+                    margin-bottom: 10px;
+                    height: 60%;
+                    width: 100%;
+
+                    .rightSide_top_search {
+                        @include flexOnlyBetween();
+                        width: 100%;
+
+                        .search_searchButton {
+                            button {
+                                width: 200px;
+                                padding: 16px 0;
+                            }
+                        }
+                        .search_searchInput {
+                            width: 100%;
+                            padding-left: $defaultLargeMargin;
+                        }
+                    }
+                    .rightSide_top_info {
+                        @include flexCenter();
+                        height: 60%;
+                        width: 100%;
+                        background-color: $themeColorGray;
+                        border-radius: $defaultBorderRadius;
+                    }
+                    .rightSide_top_result {
+                        @include flexCenter();
+                        justify-content: space-between;
+                        width: 100%;
+
+                        .result_closeBtn {
+                            button {
+                                height: 50px;
+                            }
+                        }
+                        .result_cancelBtn {
+                            button {
+                                width: 50px;
+                                height: 50px;
+                                padding: 5px;
+                                font-size: 20px;
+                            }
+                        }
+                        .result_span {
+                            @include flexCenter();
+                            background-color: $themeColorGray;
+                            border-radius: $smallBorderRadius;
+                            padding: $bigButtonPadding;
+                            height: 50px;
+                        }
+                        .result_payBtn {
+                            button {
+                                height: 50px;
+                            }
+                        }
+                    }
+                }
+                .rightSide_bottom {
+                    @include flexOnlyBetween();
+                    background-color: $themeColorDark;
+                    border-radius: $defaultBorderRadius;
+                    padding: $defaultLargeMargin;
+                    width: 100%;
+                    height: 40%;
+                    margin-top: 10px;
+
+                    .bottom_left {
+                        @include flexColumn();
+                        justify-content: center;
+                        background-color: $themeColorGray;
+                        border-radius: $smallBorderRadius;
+                        margin-right: $defaultSmallMargin;
+                        font-size: 20px;
+                        width: 70%;
+                    }
+                    .bottom_right {
+                        @include flexColumn();
+                        justify-content: space-evenly;
+                        width: 30%;
+
+                        .bottom_right_one {
+                            text-align: center;
+                        }
+                        .bottom_right_two {
+                            @include flexColumn();
+
+                            .right_two_button {
+                                margin-bottom: $defaultLargeMargin;
+                                button {
+                                    padding: $smallButtonPadding;
+                                }
+                            }
+                            .right_two_span {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,68 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*Обнуление стилей*/
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    overflow-x: hidden; /*чтобы не было белой полосы сбоку на мобилках*/
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*,*:before,*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
 }
+:focus,:active {outline: none;}
+a:focus,a:active {outline: none;}
+
+nav,footer,header,aside {display: block;}
+
+input,button,textarea {font-family:inherit;}
+
+input::-ms-clear {display: none;}
+button {cursor: pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+
+ul li {list-style: none;}
+img {vertical-align: top;}
+
+/*h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}*/
+
+/*переменные величины*/
+
+:root {
+    --navbar-height: 100px;
+}
+
+/*app default styles*/
+/*.app {
+  width: 1400px;
+  min-height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}*/
+
+/*подключаем шрифты и добавляем его (в строчке html,body)*/
+/*
+@font-face {
+    font-family: 'Mulish';
+    src: url('./assets/fonts/Mulish-ExtraLight.woff2') format('woff2'),
+    url('./assets/fonts/Mulish-ExtraLight.woff') format('woff'),
+    url('./assets/fonts/Mulish-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}*/

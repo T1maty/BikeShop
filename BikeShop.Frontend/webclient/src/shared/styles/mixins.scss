@@ -1,0 +1,56 @@
+@import './src/shared/styles/variables';
+
+// default mixins
+
+@mixin defaultContainer() {
+    max-width: 1400px;
+    margin: 0 auto;
+    //border: 1px solid white;
+}
+
+@mixin wrapperMainBlock() {
+    min-height: calc(100vh - var(--navbar-height));
+    margin: $defaultLargeMargin;
+}
+
+// common mixins
+
+@mixin flexCenter() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flexOnlyBetween() {
+    display: flex;
+    justify-content: space-between;
+}
+
+@mixin flexBetween() {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flexColumn() {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+// mixins for UI
+
+@mixin defaultFiledStyle() {
+    max-width: 250px;
+    border: 2px solid #C0C0C0;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin widthHeightFull() {
+    width: 100%;
+    height: 100%;
+}
