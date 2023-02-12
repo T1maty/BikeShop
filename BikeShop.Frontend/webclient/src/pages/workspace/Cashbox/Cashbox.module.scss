@@ -55,13 +55,15 @@
                     flex-wrap: wrap;
                     margin: 0 $defaultLargeMargin;
 
-                    .leftSide_client_buttons_choose {
+                    .client_buttons_choose {
+                        margin-bottom: $defaultLargeMargin;
+
                         button {
                             width: 250px;
                             padding: $bigButtonPadding;
                         }
                     }
-                    .leftSide_client_buttons_cancel {
+                    .client_buttons_cancel {
                         button {
                             width: 30px;
                             height: 56px;
@@ -81,7 +83,7 @@
                 width: 100%;
                 height: 40%;
 
-                .leftSide_discount_background {
+                .discount_background {
                     background-color: $themeColorGray;
                     border-radius: $defaultBorderRadius;
                     margin-bottom: $defaultLargeMargin;
@@ -89,26 +91,25 @@
                     width: 100%;
                     height: 100%;
 
-                    .leftSide_discount_info {
+                    .discount_info {
                         @include flexColumn();
 
-                        .discount_info_header {
+                        .info_value {
                             margin-bottom: $defaultSmallMargin;
                             font-weight: bold;
                         }
-                        .discount_info_title {
+                        .info_title {
                             border: 2px solid #C0C0C0;
                             border-radius: 10px;
                             padding: 10px;
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            //@include defaultFiledStyle();
                             margin-bottom: $defaultLargeMargin;
                             width: 100%;
                         }
 
-                        .discount_info_types {
+                        .info_types {
                             @include flexBetween();
                             width: 100%;
 
@@ -123,21 +124,21 @@
                         }
                     }
                 }
-                .leftSide_discount_buttons {
+                .discount_buttons {
                     display: flex;
                     justify-content: space-between;
                     flex-wrap: wrap;
                     margin: 0 $defaultLargeMargin;
                     width: 100%;
 
-                    .discount_buttons_choose {
+                    .buttons_choose {
                         button {
                             max-width: 300px;
                             padding: $bigButtonPadding;
 
                         }
                     }
-                    .discount_buttons_cancel {
+                    .buttons_cancel {
                         button {
                             width: 30px;
                             height: 56px;
@@ -163,14 +164,13 @@
                 justify-content: space-between;
                 margin-bottom: $defaultLargeMargin;
 
-                .cashbox_header_chooseBtn {
+                .header_chooseBtn {
                     button {
                         width: 200px;
                         padding: 16px 0;
                     }
                 }
-                .cashbox_header_searchInput {
-
+                .header_searchInput {
                     input {
                         min-width: 580px;
                     }
@@ -190,12 +190,12 @@
 
             .cashboxMainBlock_rightSideBottom {
 
-                .cashboxMainBlock_rightSideBottom_buttonsBlock {
+                .rightSideBottom_buttonsBlock {
                     display: flex;
                     justify-content: space-between;
                     margin-bottom: $defaultLargeMargin;
 
-                    .cashboxMainBlock_rightSideBottom_buttonsBlock_one {
+                    .buttonsBlock_one {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
@@ -204,7 +204,7 @@
                             margin-right: $defaultLargeMargin;
                         }
 
-                        .cashboxMainBlock_rightSideBottom_cancelBtn {
+                        .one_cancelBtn {
                             button {
                                 width: 50px;
                                 height: 50px;
@@ -212,20 +212,20 @@
                                 font-size: 20px;
                             }
                         }
-                        .cashboxMainBlock_rightSideBottom_noDiscount {
+                        .one_noDiscount {
                             @include defaultFiledStyle();
                         }
-                        .cashboxMainBlock_rightSideBottom_discount {
+                        .one_discount {
                             @include defaultFiledStyle();
                         }
                     }
 
-                    .cashboxMainBlock_rightSideBottom_buttonsBlock_two {
+                    .buttonsBlock_two {
                         @include defaultFiledStyle();
                     }
                 }
 
-                .cashboxMainBlock_rightSideBottom_payBlock {
+                .rightSideBottom_payBlock {
                     display: flex;
                     justify-content: flex-end;
                 }
