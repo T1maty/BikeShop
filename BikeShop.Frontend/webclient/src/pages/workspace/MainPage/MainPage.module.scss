@@ -77,7 +77,7 @@
                     flex-wrap: wrap;
                     justify-content: center;
 
-                    .mainPage_main_leftSide_taskItem {
+                    .tasks_taskItem {
                         background-color: $themeColorWhite;
                         border-radius: $smallBorderRadius;
                         padding: $defaultSmallMargin;
@@ -153,7 +153,7 @@
                             height: 50px;
                             @include flexCenter();
                         }
-                        .mainPage_main_rightSide_result_payBtn {
+                        .result_payBtn {
                             button {
                                 height: 50px;
                             }

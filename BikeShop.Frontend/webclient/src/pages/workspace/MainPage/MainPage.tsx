@@ -95,7 +95,7 @@ const MainPage = () => {
                             {
                                 tasks.map(t => {
                                     return (
-                                        <div key={t.id} className={s.mainPage_main_leftSide_taskItem}>{t.task}</div>
+                                        <div key={t.id} className={s.tasks_taskItem}>{t.task}</div>
                                     )
                                 })
                             }
