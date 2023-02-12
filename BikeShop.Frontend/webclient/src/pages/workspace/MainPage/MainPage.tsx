@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import s from "./MainPage.module.scss";
-import Button from "../../../shared/ui/Button/Button";
-import Input from '../../../shared/ui/Input/Input';
+import {Button, InputUI} from '../../../shared/ui';
 
 const navLinks = [
     'Create repairing',
@@ -109,7 +108,7 @@ const MainPage = () => {
                                     <Button text={'Найти клиента'} onClick={() => {}}/>
                                 </div>
                                 <div className={s.search_searchInput}>
-                                    <Input placeholder={'Поиск...'}/>
+                                    <InputUI placeholder={'Поиск...'}/>
                                 </div>
                             </div>
 

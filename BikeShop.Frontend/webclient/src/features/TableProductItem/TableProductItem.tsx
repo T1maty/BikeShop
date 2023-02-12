@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './ProductItem.module.scss'
+import s from './TableProductItem.module.scss'
 
 type TableItemProps = {
     title: string
@@ -7,7 +7,7 @@ type TableItemProps = {
     count: number
 }
 
-const TableItem: React.FC<TableItemProps> = ({title, price, count}) => {
+const TableProductItem: React.FC<TableItemProps> = ({title, price, count}) => {
 
     return (
         <div className={s.tableItem_box}>
@@ -20,4 +20,4 @@ const TableItem: React.FC<TableItemProps> = ({title, price, count}) => {
     )
 }
 
-export default TableItem;
+export default TableProductItem;

@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import s from './Service.module.scss'
-import Button from "../../../shared/ui/Button/Button";
-import Input from "../../../shared/ui/Input/Input";
-import ProductItem from "./ProductItem";
-import CustomButton from '../../../shared/ui/Button/CustomButton';
-import ClientCard from "./ClientCard";
+import {ClientCard, TableProductItem} from '../../../features';
+import {Button, InputUI} from '../../../shared/ui';
 
 const Service = () => {
 
@@ -76,17 +73,16 @@ const Service = () => {
 
                 <div className={s.service_rightSide}>
                     <div className={s.rightSide_stuffInput}>
-                        <Input placeholder={'Техника'}/>
-                        {/*<input placeholder={'Техника'}/>*/}
+                        <InputUI placeholder={'Техника'}/>
                     </div>
 
                     <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
-                                <Input placeholder={'Детальное описание'}/>
+                                <InputUI placeholder={'Детальное описание'}/>
                             </div>
                             <div className={s.content_masterInput}>
-                                <Input placeholder={'Мастер не выбран'}/>
+                                <InputUI placeholder={'Мастер не выбран'}/>
                             </div>
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>
@@ -127,10 +123,10 @@ const Service = () => {
                                 {
                                     items.map(item => {
                                         return (
-                                            <ProductItem key={item.id}
-                                                         title={item.title}
-                                                         price={item.price}
-                                                         count={item.count}
+                                            <TableProductItem key={item.id}
+                                                              title={item.title}
+                                                              price={item.price}
+                                                              count={item.count}
                                             />
                                         )
                                     })
@@ -161,10 +157,10 @@ const Service = () => {
                                 {
                                     repairItems.map(item => {
                                         return (
-                                            <ProductItem key={item.id}
-                                                         title={item.title}
-                                                         price={item.price}
-                                                         count={item.count}
+                                            <TableProductItem key={item.id}
+                                                              title={item.title}
+                                                              price={item.price}
+                                                              count={item.count}
                                             />
                                         )
                                     })

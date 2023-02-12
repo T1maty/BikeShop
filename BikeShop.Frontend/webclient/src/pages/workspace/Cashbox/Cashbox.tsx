@@ -1,10 +1,8 @@
 import React from 'react';
-import Button from '../../../shared/ui/Button/Button';
 import s from './Cashbox.module.scss'
-import Input from 'shared/ui/Input/Input';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
-import ChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModal';
-import ClientCard from '../Service/ClientCard';
+import {ChooseClientModal, ClientCard} from '../../../features';
+import {Button, InputUI} from '../../../shared/ui';
 
 const Cashbox = () => {
 
@@ -73,7 +71,7 @@ const Cashbox = () => {
                             }}/>
                         </div>
                         <div className={s.header_searchInput}>
-                            <Input placeholder={'Поиск...'}/>
+                            <InputUI placeholder={'Поиск...'}/>
                         </div>
                     </div>
 
