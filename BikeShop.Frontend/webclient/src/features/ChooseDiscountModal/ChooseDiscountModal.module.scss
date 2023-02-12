@@ -1,0 +1,18 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.discountModal_mainBox {
+    @include defaultModalStyle();
+
+    .discountModal_selectBlock {
+
+    }
+    .discountModal_buttonsBlock {
+        @include flexOnlyBetween();
+
+        button {
+            width: 200px;
+            padding: $smallButtonPadding;
+        }
+    }
+}

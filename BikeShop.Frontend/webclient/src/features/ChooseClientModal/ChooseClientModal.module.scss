@@ -1,19 +1,8 @@
 @import './src/shared/styles/mixins';
 @import './src/shared/styles/variables';
 
-//$clientModalInputWidth: 390px;
-
 .clientModal_mainBox {
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 450px;
-    padding: $defaultLargeMargin;
-    transform: translate(-50%, -50%);
-    background-color: $themeColorDark;
-    border-radius: $defaultBorderRadius;
-    //box-shadow: 24;
+    @include defaultModalStyle();
 
     .clientModal_searchBlock {
         @include flexColumn();

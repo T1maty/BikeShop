@@ -1,12 +1,17 @@
 import React from 'react';
 import s from './Cashbox.module.scss'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
+import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore';
 import {ChooseClientModal, ClientCard} from '../../../features';
 import {Button, InputUI} from '../../../shared/ui';
+import ChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModal';
 
 const Cashbox = () => {
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
+    const setChooseDiscountModal = useChooseDiscountModal(s => s.setChooseDiscountModal)
+
+    const isActiveTable = true;
 
     return (
         <div className={s.cashboxWrapper}>
@@ -14,10 +19,10 @@ const Cashbox = () => {
 
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
-                        <Button text={'Стол 1'} onClick={() => {}}/>
-                        <Button text={'Стол 2'} onClick={() => {}}/>
-                        <Button text={'Стол 3'} onClick={() => {}}/>
-                        <Button text={'Стол 4'} onClick={() => {}}/>
+                        <Button text={'Стол 1'} onClick={() => {}} disabled={!isActiveTable}/>
+                        <Button text={'Стол 2'} onClick={() => {}} disabled={isActiveTable}/>
+                        <Button text={'Стол 3'} onClick={() => {}} disabled={isActiveTable}/>
+                        <Button text={'Стол 4'} onClick={() => {}} disabled={isActiveTable}/>
                     </div>
 
                     <div className={s.leftSide_client}>
@@ -51,9 +56,10 @@ const Cashbox = () => {
                             </div>
                         </div>
                         <div className={s.discount_buttons}>
+                            <ChooseDiscountModal/>
                             <div className={s.buttons_choose}>
                                 <Button text={'Выбрать скидку для клиента'}
-                                        onClick={() => setChooseClientModal(true)}
+                                        onClick={() => setChooseDiscountModal(true)}
                                 />
                             </div>
                             <div className={s.buttons_cancel}>
