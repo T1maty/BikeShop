@@ -20,16 +20,16 @@
                     margin-bottom: $defaultLargeMargin;
 
                     button {
-                        padding: 0;
+                        width: 95%;
                     }
-
                 }
                 .buttons_info {
                     @include flexBetween();
+                    width: 100%;
 
                     button {
-                        padding: 0;
-                        margin: $defaultSmallMargin;
+                        padding: 5px 7px;
+                        margin: 0 5px;
                     }
                 }
 
@@ -94,7 +94,6 @@
                             button {
                                 width: 150px;
                                 height: 50px;
-                                font-size: 20px;
                             }
 
                         }
@@ -102,7 +101,6 @@
                             button {
                                 width: 150px;
                                 height: 50px;
-                                font-size: 20px;
                             }
 
                         }
