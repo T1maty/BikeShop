@@ -1,0 +1,19 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.clientCard_background {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $themeColorGray;
+    border-radius: $defaultBorderRadius;
+    padding: $defaultLargeMargin;
+
+    h3 {
+        text-align: center;
+        margin-top: 0;
+    }
+    p {
+        margin: 5px 0;
+    }
+}

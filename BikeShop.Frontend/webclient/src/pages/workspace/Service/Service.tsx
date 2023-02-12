@@ -4,6 +4,7 @@ import Button from "../../../shared/ui/Button/Button";
 import Input from "../../../shared/ui/Input/Input";
 import ProductItem from "./ProductItem";
 import CustomButton from '../../../shared/ui/Button/CustomButton';
+import ClientCard from "./ClientCard";
 
 const Service = () => {
 
@@ -100,7 +101,7 @@ const Service = () => {
                             </div>
                         </div>
                         <div className={s.infoFields_clientCard}>
-                            Карточка клиента
+                            <ClientCard/>
                         </div>
                     </div>
 
