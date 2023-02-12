@@ -2,6 +2,7 @@
 @import './src/shared/styles/variables';
 
 .clientCard_background {
+    width: 100%;
     display: flex;
     flex-direction: column;
     background-color: $themeColorGray;

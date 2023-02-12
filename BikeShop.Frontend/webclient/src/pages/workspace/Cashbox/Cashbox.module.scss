@@ -42,10 +42,10 @@
                     display: flex;
                     justify-content: space-between;
                     flex-wrap: wrap;
-                    margin: 0 $defaultLargeMargin;
+                    margin: $defaultLargeMargin 0 0 0;
+                    width: 100%;
 
                     .client_buttons_choose {
-                        margin-bottom: $defaultLargeMargin;
 
                         button {
                             width: 250px;
