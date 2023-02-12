@@ -116,9 +116,8 @@
                             }
                         }
                         .search_searchInput {
-                            input {
-                                min-width: 370px;
-                            }
+                            width: 100%;
+                            padding-left: $defaultLargeMargin;
                         }
                     }
                     .rightSide_top_info {

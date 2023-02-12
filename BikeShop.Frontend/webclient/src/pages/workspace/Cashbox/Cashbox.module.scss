@@ -171,9 +171,8 @@
                     }
                 }
                 .header_searchInput {
-                    input {
-                        min-width: 580px;
-                    }
+                    width: 100%;
+                    padding-left: $defaultLargeMargin;
                 }
             }
 
