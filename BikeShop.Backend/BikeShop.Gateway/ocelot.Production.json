@@ -340,6 +340,37 @@
         }
       ],
       "SwaggerKey": "identity"
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/shop/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/shop/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+    {
+      "UpstreamPathTemplate": "/api/shop/update",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/shop/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
     }
   ],
 
@@ -371,6 +402,16 @@
           "Name": "Service API",
           "Version": "v1",
           "Url": "http://bikeshop.service:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "shop",
+      "Config": [
+        {
+          "Name": "Shop API",
+          "Version": "v1",
+          "Url": "http://bikeshop.shop:80/swagger/v1/swagger.json"
         }
       ]
     }
