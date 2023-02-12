@@ -1,12 +1,15 @@
 import React from 'react';
 import s from './Cashbox.module.scss'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
+import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore';
 import {ChooseClientModal, ClientCard} from '../../../features';
 import {Button, InputUI} from '../../../shared/ui';
+import ChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModal';
 
 const Cashbox = () => {
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
+    const setChooseDiscountModal = useChooseDiscountModal(s => s.setChooseDiscountModal)
 
     const isActiveTable = true;
 
@@ -53,9 +56,10 @@ const Cashbox = () => {
                             </div>
                         </div>
                         <div className={s.discount_buttons}>
+                            <ChooseDiscountModal/>
                             <div className={s.buttons_choose}>
                                 <Button text={'Выбрать скидку для клиента'}
-                                        onClick={() => setChooseClientModal(true)}
+                                        onClick={() => setChooseDiscountModal(true)}
                                 />
                             </div>
                             <div className={s.buttons_cancel}>

@@ -18,4 +18,4 @@ const useChooseClientModal = create<ChooseClientModalStore>()(persist(devtools(i
     version: 1
 }));
 
-export default useChooseClientModal
+export default useChooseClientModal;

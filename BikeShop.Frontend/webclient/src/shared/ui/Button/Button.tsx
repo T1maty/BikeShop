@@ -6,14 +6,9 @@ type DefaultMUIButtonType = ButtonProps
 
 type ButtonUIPropsType = DefaultMUIButtonType & {
     text: string
-    // onClick: () => void
 }
 
 const ButtonUI: React.FC<ButtonUIPropsType> = ({text, ...restProps}) => {
-
-    // const buttonClickHandler = () => {
-    //     onClick();
-    // }
 
     return (
         <Button
@@ -22,7 +17,6 @@ const ButtonUI: React.FC<ButtonUIPropsType> = ({text, ...restProps}) => {
                 padding: '16px 60px',
                 borderRadius: '10px',
             }}
-            // onClick={buttonClickHandler}
             {...restProps}
         >
             {text}
