@@ -1,5 +1,5 @@
-@import './src/shared/styles/mixins';
-@import './src/shared/styles/variables';
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
 
 .serviceWrapper {
     @include defaultContainer();

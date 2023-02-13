@@ -20,10 +20,18 @@ const Cashbox = () => {
 
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
-                        <Button text={'Касса 1'} onClick={() => {}} disabled={!isActiveTable}/>
-                        <Button text={'Касса 2'} onClick={() => {}} disabled={isActiveTable}/>
-                        <Button text={'Касса 3'} onClick={() => {}} disabled={isActiveTable}/>
-                        <Button text={'Касса 4'} onClick={() => {}} disabled={isActiveTable}/>
+                        <Button onClick={() => {}} disabled={!isActiveTable}>
+                            Касса 1
+                        </Button>
+                        <Button onClick={() => {}} disabled={isActiveTable}>
+                            Касса 2
+                        </Button>
+                        <Button onClick={() => {}} disabled={isActiveTable}>
+                            Касса 3
+                        </Button>
+                        <Button onClick={() => {}} disabled={isActiveTable}>
+                            Касса 4
+                        </Button>
                     </div>
 
                     <div className={s.leftSide_client}>
@@ -31,12 +39,15 @@ const Cashbox = () => {
                         <ChooseClientModal/>
                         <div className={s.leftSide_client_buttons}>
                             <div className={s.client_buttons_choose}>
-                                <Button text={'Выбрать клиента'}
-                                        onClick={() => setChooseClientModal(true)}
-                                />
+                                <Button
+                                        onClick={() => setChooseClientModal(true)}>
+                                    Выбрать клиента
+                                </Button>
                             </div>
                             <div className={s.client_buttons_cancel}>
-                                <Button text={'X'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    X
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -59,12 +70,14 @@ const Cashbox = () => {
                         <div className={s.discount_buttons}>
                             <ChooseDiscountModal/>
                             <div className={s.buttons_choose}>
-                                <Button text={'Выбрать скидку для клиента'}
-                                        onClick={() => setChooseDiscountModal(true)}
-                                />
+                                <Button onClick={() => setChooseDiscountModal(true)}>
+                                    Выбрать скидку для клиента
+                                </Button>
                             </div>
                             <div className={s.buttons_cancel}>
-                                <Button text={'X'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    X
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -74,8 +87,10 @@ const Cashbox = () => {
                 <div className={s.cashboxMainBlock_rightSideWrapper}>
                     <div className={s.cashboxMainBlock_rightSideHeader}>
                         <div className={s.header_chooseBtn}>
-                            <Button text={'Выбрать товары'} onClick={() => {
-                            }}/>
+                            <Button onClick={() => {
+                            }}>
+                                Выбрать товары
+                            </Button>
                         </div>
                         <div className={s.header_searchInput}>
                             <InputUI placeholder={'Поиск...'}/>
@@ -90,7 +105,9 @@ const Cashbox = () => {
                         <div className={s.rightSideBottom_buttonsBlock}>
                             <div className={s.buttonsBlock_one}>
                                 <div className={s.one_cancelBtn}>
-                                    <Button text={'X'} onClick={() => {}}/>
+                                    <Button onClick={() => {}}>
+                                        X
+                                    </Button>
                                 </div>
                                 <div className={s.one_noDiscount}>
                                     Без скидки
@@ -106,7 +123,9 @@ const Cashbox = () => {
 
                         <div className={s.rightSideBottom_payBlock}>
                             <PayModal/>
-                            <Button text={'К оплате'} onClick={() => {setPayModal(true)}}/>
+                            <Button onClick={() => {setPayModal(true)}}>
+                                К оплате
+                            </Button>
                         </div>
                     </div>
                 </div>

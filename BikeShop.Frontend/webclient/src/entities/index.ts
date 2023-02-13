@@ -19,11 +19,11 @@ export type {default as IUserResponse} from './responses/UserResponse'
 export type {default as IProductTagResponse} from './responses/ProductTagResponse'
 export type {IProductResponse} from './responses/ProductResponse'
 
-export {default as OnlyWithoutAuthRoute} from './providers/RouteProviders/OnlyWithoutAuthRoute'
-export {default as CheckAuthRoute} from './providers/RouteProviders/CheckAuthRoute'
+export {default as OnlyWithoutAuthRoute} from '../app/providers/RouteProviders/OnlyWithoutAuthRoute'
+export {default as CheckAuthRoute} from '../app/providers/RouteProviders/CheckAuthRoute'
 
-export {default as PublicHeaderProvider} from './providers/HeaderProviders/PublicHeaderProvider'
-export {default as WorkspaceHeaderProvider} from './providers/HeaderProviders/WorkspaceHeaderProvider'
+export {default as PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeaderProvider'
+export {default as WorkspaceHeaderProvider} from '../app/providers/HeaderProviders/WorkspaceHeaderProvider'
 
 export {EnumProductCheckStatus} from './enumerables/EnumProductCheckStatus'
 

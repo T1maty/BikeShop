@@ -1,27 +1,98 @@
-import React from 'react';
-import Button from '@mui/material/Button';
-import {ButtonProps} from '@mui/material/Button/Button';
+import React, {type ButtonHTMLAttributes, Children, cloneElement, type FC, MouseEvent} from 'react'
+import cls from './Button.module.css'
 
-type DefaultMUIButtonType = ButtonProps
+type RGB = `rgb(${number}, ${number}, ${number})`;
+type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
+type HEX = `#${string}`;
 
-type ButtonUIPropsType = DefaultMUIButtonType & {
-    text: string
+
+type defaultColor = 'white' | 'black'
+type Color = RGB | RGBA | HEX | defaultColor
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    className?: string
+    variant?: string
+    colorText?: Color
 }
 
-const ButtonUI: React.FC<ButtonUIPropsType> = ({text, ...restProps}) => {
+/**
+ * @param props is default PropsButton
+ * @param colorText white or black, or custom RGB, RGBA, HEX
+ * @return customButton jsx
+ */
 
+export const Button: FC<ButtonProps> = (
+    {
+        className = '',
+        children,
+        variant = '',
+        colorText = '',
+        onClick,
+        ...otherProps
+    }
+) => {
     return (
-        <Button
-            variant="contained"
-            sx={{
-                padding: '16px 60px',
-                borderRadius: '10px',
-            }}
-            {...restProps}
-        >
-            {text}
-        </Button>
-    );
+        <ProviderButtonRipple>
+            <button
+                type='button'
+                style={{color: colorText}}
+                onClick={onClick}
+                className={cls.btn}
+                {...otherProps}
+            >
+                {children}
+            </button>
+        </ProviderButtonRipple>
+    )
+}
+
+
+type ProviderButtonProps = {
+    children: React.ReactElement
+}
+
+const ProviderButtonRipple = (props: ProviderButtonProps) => {
+
+    const {children} = props
+
+    const createRipple = (event: MouseEvent<HTMLButtonElement>): void => {
+        const button = event.currentTarget;
+        const circle = document.createElement("span");
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+        circle.style.top = `${(event.clientY + document.body.scrollTop) - button.offsetTop - radius}px`;
+
+        circle.classList.add(cls.ripple);
+        const ripple = button.getElementsByClassName(cls.ripple);
+
+        if (ripple.length > 3) {
+            ripple[0].remove()
+        }
+
+        button.appendChild(circle);
+    }
+
+    return cloneElement(Children.only(children), {
+        onClick: (e: MouseEvent<HTMLButtonElement>) => {
+            Children.only(children).props.onClick(e)
+            createRipple(e)
+        }
+    })
+
 };
 
-export default ButtonUI;
+// -------------------ProviderButton------------------------
+// <>
+//     {React.Children.map(children, child => {
+//         console.log(child.props)
+//         return React.cloneElement(child, {
+//             onClick: (e: MouseEvent<HTMLButtonElement>) => {
+//                 child.props.onClick()
+//                 createRipple(e)
+//             }
+//         })
+//     })}
+// </>
+// 2 вариант

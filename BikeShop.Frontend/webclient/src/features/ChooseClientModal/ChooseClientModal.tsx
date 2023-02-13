@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, TextField} from "@mui/material";
 import useChooseClientModal from './ChooseClientModalStore';
-import Button from '../../shared/ui/Button/Button';
+import {Button} from '../../shared/ui/Button/Button';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {useNavigate} from 'react-router-dom';
@@ -83,18 +83,15 @@ const ChooseClientModal = () => {
                     </div>
                     <div>
                         <Input placeholder={'Отчество'}/>
-                        {/*<TextField id="outlined-basic"*/}
-                        {/*           variant="outlined"*/}
-                        {/*           value={'Отчество'}*/}
-                        {/*           style={{backgroundColor: '#5C636A'}}*/}
-                        {/*           onChange={() => {}}*/}
-                        {/*           fullWidth={true}*/}
-                        {/*/>*/}
                     </div>
                 </div>
                 <div className={s.clientModal_buttonsBlock}>
-                    <Button text={'Создать клиента'} onClick={chooseButtonHandler}/>
-                    <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
+                    <Button onClick={chooseButtonHandler}>
+                        Выбрать клиента
+                    </Button>
+                    <Button onClick={() => {setOpen(false)}}>
+                        Отмена
+                    </Button>
                 </div>
             </div>
         </Modal>

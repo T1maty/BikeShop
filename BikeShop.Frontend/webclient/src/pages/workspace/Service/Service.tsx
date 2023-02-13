@@ -40,17 +40,25 @@ const Service = () => {
                 <div className={s.service_leftSide}>
                     <div className={s.leftSide_buttons}>
                         <div className={s.buttons_create}>
-                            <Button text={'Создать ремонт'} onClick={() => {}}/>
+                            <Button onClick={() => {}}>
+                                Создать ремонт
+                            </Button>
                         </div>
                         <div className={s.buttons_info}>
                             <div>
-                                <Button text={'Ожидают'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Ожидают
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'В ремонте'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    В ремонте
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Готово'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Готово
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -87,10 +95,14 @@ const Service = () => {
                             </div>
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>
-                                    <Button text={'Сохранить'} onClick={() => {}}/>
+                                    <Button onClick={() => {}}>
+                                        Сохранить
+                                    </Button>
                                 </div>
                                 <div className={s.content_cancelBtn}>
-                                    <Button text={'Отмена'} onClick={() => {}}/>
+                                    <Button onClick={() => {}}>
+                                        Отмена
+                                    </Button>
                                 </div>
                                 <div className={s.content_sumField}>
                                     Сумма
@@ -100,7 +112,9 @@ const Service = () => {
                         <div className={s.infoFields_clientCard}>
                             <ClientCard/>
                             <div className={s.clientCard_changeClientBtn}>
-                                <Button text={'Изменить клиента'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Изменить клиента
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -178,5 +192,4 @@ const Service = () => {
         </div>
     );
 };
-
 export default Service;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent} from '@mui/material';
-import Button from '../../shared/ui/Button/Button';
+import {Button} from '../../shared/ui';
 import s from './ChooseDiscountModal.module.scss'
 import useChooseDiscountModal from './ChooseDiscountModalStore';
 
@@ -60,8 +60,12 @@ const ChooseDiscountModal = () => {
                 </div>
 
                 <div className={s.discountModal_buttonsBlock}>
-                    <Button text={'Выбрать скидку'} onClick={chooseButtonHandler}/>
-                    <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
+                    <Button onClick={chooseButtonHandler}>
+                        Выбрать скидку
+                    </Button>
+                    <Button onClick={() => {setOpen(false)}}>
+                        Отмена
+                    </Button>
                 </div>
             </div>
         </Modal>
