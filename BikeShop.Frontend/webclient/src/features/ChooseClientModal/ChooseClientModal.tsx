@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, TextField} from "@mui/material";
 import useChooseClientModal from './ChooseClientModalStore';
-import {Button} from '../../shared/ui/Button/Button';
+import {Button} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {useNavigate} from 'react-router-dom';

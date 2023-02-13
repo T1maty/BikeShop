@@ -1,6 +1,5 @@
-@import './src/shared/styles/mixins';
-@import './src/shared/styles/variables';
-
+@import './src/app/styles/variables/mixins';
+@import './src/app/styles/variables/variables';
 .tableBox {
     border: 1px solid white;
     @include widthHeightFull();

@@ -20,8 +20,10 @@ const ServiceTable: React.FC<ServiceTableProps> = ({data}) => {
         <div className={s.tableBox}>
             <div className={s.tableBox_buttons}>
                 <div className={s.buttons_editBtn}>
-                    <Button text={'Редактор'} onClick={() => {
-                    }}/>
+                    <Button onClick={() => {
+                    }}>
+                        Редактор
+                    </Button>
                 </div>
                 <div className={s.buttons_discountField}>
                     <div className={s.discountField_title}>
