@@ -10,7 +10,7 @@
 
 @mixin wrapperMainBlock() {
     min-height: calc(100vh - var(--navbar-height));
-    margin: $defaultLargeMargin;
+    padding: $defaultLargeMargin;
 }
 
 // common mixins

@@ -44,21 +44,27 @@
 
                 button {
                     width: 100%;
-                    padding: $bigButtonPadding;
+                    //padding: $bigButtonPadding;
                 }
 
                 .searchRow_chooseBtn {
 
                 }
                 .searchRow_searchInput {
-                    //width: 100%;
-                    //padding: 0 20px;
+                    width: 100%;
+                    padding: 0 20px;
                 }
                 .searchRow_allProductsBtn {
-
+                    width: 100%;
+                    button {
+                        padding: $bigButtonPadding;
+                    }
                 }
                 .header_notSortedBtn {
-
+                    width: 100%;
+                    button {
+                        padding: $bigButtonPadding;
+                    }
                 }
             }
             .rightSide_table {
