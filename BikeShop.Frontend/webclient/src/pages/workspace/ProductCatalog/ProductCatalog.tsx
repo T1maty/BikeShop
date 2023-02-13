@@ -20,19 +20,22 @@ const ProductCatalog = () => {
                 <div className={s.productCatalogTable_rightSide}>
                     <div className={s.rightSide_searchRow}>
                         <div className={s.searchRow_chooseBtn}>
-                            <Button text={'Отображение'} onClick={() => {
-                            }}/>
+                            <Button onClick={() => {}}>
+                                Отображение
+                            </Button>
                         </div>
                         <div className={s.searchRow_searchInput}>
                             <InputUI placeholder={'Поиск...'}/>
                         </div>
                         <div className={s.searchRow_allProductsBtn}>
-                            <Button text={'Все товары'} onClick={() => {
-                            }}/>
+                            <Button onClick={() => {}}>
+                                Все товары
+                            </Button>
                         </div>
                         <div className={s.header_notSortedBtn}>
-                            <Button text={'Неотсортированные'} onClick={() => {
-                            }}/>
+                            <Button onClick={() => {}}>
+                                Неотсортированные
+                            </Button>
                         </div>
                     </div>
 

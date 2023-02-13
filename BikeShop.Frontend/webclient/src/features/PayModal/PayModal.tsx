@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal} from "@mui/material";
-import Button from '../../shared/ui/Button/Button';
+import Button from '../../shared/ui/Button/Button'
 import s from './PayModal.module.scss'
 import usePayModal from './PayModalStore';
 import {ClientCard} from '../index';
@@ -34,8 +34,12 @@ const PayModal = () => {
                     <ClientCard/>
                 </div>
                 <div className={s.payModal_payType}>
-                    <Button text={'Использовать терминал'} onClick={() => {}}/>
-                    <Button text={'Оплата с баланса'} onClick={() => {}}/>
+                    <Button onClick={() => {}}>
+                        Использовать терминал
+                    </Button>
+                    <Button onClick={() => {}}>
+                        Оплата с баланса
+                    </Button>
                 </div>
                 <div className={s.payModal_cashValue}>
                     Полученная сумма наличными
@@ -44,8 +48,12 @@ const PayModal = () => {
                     <div className={s.cashbackBlock_text}>Сдача:</div>
                     <div className={s.cashbackBlock_value}>410</div>
                     <div className={s.cashbackBlock_buttons}>
-                        <Button text={'Оплатить'} onClick={chooseButtonHandler}/>
-                        <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
+                        <Button onClick={chooseButtonHandler}>
+                            Оплатить
+                        </Button>
+                        <Button onClick={() => {setOpen(false)}}>
+                            Отмена
+                        </Button>
                     </div>
                 </div>
             </div>

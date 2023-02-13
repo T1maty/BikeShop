@@ -39,44 +39,67 @@ const MainPage = () => {
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
                             <div>
-                                <Button text={'Создать ремонт'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Создать ремонт
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Создать заказ'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Создать заказ
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Добавить горячего клиента'} onClick={() => {}}/>
+                                <Button  onClick={() => {}}>
+                                    Добавить горячего клиента
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Прокат'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Прокат
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Внести на счёт'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Внести на счёт
+                                </Button>
                             </div>
                         </div>
                         <div className={s.header_leftSide_info}>
                             <div>
-                                <Button text={'Каталог товаров'}
-                                        onClick={() => {navigate('/productcatalog')}}
-                                />
+                                <Button onClick={() => navigate('/productcatalog')}
+                                >
+                                    Каталог товаров
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Ремонты'} onClick={() => {navigate('/service')}}/>
+                                <Button onClick={() => {navigate('/service')}}>
+                                    Ремонты
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Чеки'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Чеки
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Заказы'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Заказы
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Прокаты'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Прокаты
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Счета клиентов'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Счета клиентов
+                                </Button>
                             </div>
                             <div>
-                                <Button text={'Перемещение'} onClick={() => {}}/>
+                                <Button onClick={() => {}}>
+                                    Перемещение
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -107,7 +130,9 @@ const MainPage = () => {
                         <div className={s.rightSide_top}>
                             <div className={s.rightSide_top_search}>
                                 <div className={s.search_searchButton}>
-                                    <Button text={'Найти клиента'} onClick={() => {}}/>
+                                    <Button onClick={() => {}}>
+                                        Найти клиента
+                                    </Button>
                                 </div>
                                 <div className={s.search_searchInput}>
                                     <InputUI placeholder={'Поиск...'}/>
@@ -120,17 +145,23 @@ const MainPage = () => {
 
                             <div className={s.rightSide_top_result}>
                                 <div className={s.result_closeBtn}>
-                                    <Button text={'Закрыть кассу'} onClick={() => {}}/>
+                                    <Button onClick={() => {}}>
+                                        Закрыть кассу
+                                    </Button>
                                 </div>
                                 <div className={s.result_cancelBtn}>
-                                    <Button text={'X'} onClick={() => {}}/>
+                                    <Button onClick={() => {}}>
+                                        X
+                                    </Button>
                                 </div>
                                 <div className={s.result_span}>
                                     Цена
                                 </div>
                                 <PayModal/>
                                 <div className={s.result_payBtn}>
-                                    <Button text={'К оплате'} onClick={() => {setPayModal(true)}}/>
+                                    <Button onClick={() => {setPayModal(true)}}>
+                                        К оплате
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +180,9 @@ const MainPage = () => {
                                 </div>
                                 <div className={s.bottom_right_two}>
                                     <div className={s.right_two_button}>
-                                        <Button text={'Закончить смену'} onClick={() => {}}/>
+                                        <Button onClick={() => {}}>
+                                            Закончить смену
+                                        </Button>
                                     </div>
                                     <div className={s.right_two_span}>
                                         Закончить смену

@@ -60,8 +60,12 @@ const ChooseDiscountModal = () => {
                 </div>
 
                 <div className={s.discountModal_buttonsBlock}>
-                    <Button text={'Выбрать скидку'} onClick={chooseButtonHandler}/>
-                    <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
+                    <Button onClick={chooseButtonHandler}>
+                        Выбрать скидку
+                    </Button>
+                    <Button onClick={() => {setOpen(false)}}>
+                        Отмена
+                    </Button>
                 </div>
             </div>
         </Modal>

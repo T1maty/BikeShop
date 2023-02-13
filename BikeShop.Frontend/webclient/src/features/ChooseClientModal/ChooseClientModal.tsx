@@ -82,8 +82,12 @@ const ChooseClientModal = () => {
                     </div>
                 </div>
                 <div className={s.clientModal_buttonsBlock}>
-                    <Button text={'Выбрать клиента'} onClick={chooseButtonHandler}/>
-                    <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
+                    <Button onClick={chooseButtonHandler}>
+                        Выбрать клиента
+                    </Button>
+                    <Button onClick={() => {setOpen(false)}}>
+                        Отмена
+                    </Button>
                 </div>
             </div>
         </Modal>
