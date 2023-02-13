@@ -62,7 +62,7 @@ const MainPage = () => {
                                 />
                             </div>
                             <div>
-                                <Button text={'Ремонты'} onClick={() => {}}/>
+                                <Button text={'Ремонты'} onClick={() => {navigate('/service')}}/>
                             </div>
                             <div>
                                 <Button text={'Чеки'} onClick={() => {}}/>
