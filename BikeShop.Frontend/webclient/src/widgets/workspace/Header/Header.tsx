@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -7,12 +7,15 @@ import {AppBar, Grid, Typography} from '@mui/material';
 import {useAuthUser} from "../../../entities";
 import {HeaderUserMenu} from "../../../features";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import cls from './Header.module.scss'
 
 const Header: React.FC = () => {
 
     const navigate = useNavigate();
     const [currentTime, setCurrentTime] = useState(new Date());
     const user = useAuthUser(s => s.user);
+    const {t} = useTranslation()
 
     // useEffect(() => {
     //     const timer = setInterval(() => {
@@ -26,12 +29,11 @@ const Header: React.FC = () => {
     const time = useMemo(() => {
         const hours = currentTime.getHours();
         const minutes = currentTime.getMinutes();
-
         return `${hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
     }, [currentTime]);
 
     return (
-        <AppBar position="static" color="primary" sx={{p: '12px 25px'}}>
+        <AppBar className={cls.appBar} position="static" color="primary" sx={{p: '12px 25px'}}>
 
             <Grid container direction="row" alignItems="center">
                 <Grid item alignItems="center" container direction="row" xs={4} sx={{display: 'flex', paddingLeft: '60px'}}>
@@ -43,7 +45,7 @@ const Header: React.FC = () => {
                     <Typography variant="subtitle1" noWrap onClick={() => {
                         navigate('/mainpage')
                     }}>
-                        Shop
+                        {t('Shop')}
                     </Typography>
 
                 </Grid>
@@ -68,7 +70,6 @@ const Header: React.FC = () => {
                             <NotificationsIcon/>
                         </Badge>
                     </IconButton>
-
                 </Grid>
             </Grid>
 
