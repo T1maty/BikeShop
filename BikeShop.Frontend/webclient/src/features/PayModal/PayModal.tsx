@@ -35,7 +35,7 @@ const PayModal = () => {
                 </div>
                 <div className={s.payModal_payType}>
                     <Button text={'Использовать терминал'} onClick={() => {}}/>
-                    <Button text={'Оплата баланса'} onClick={() => {}}/>
+                    <Button text={'Оплата с баланса'} onClick={() => {}}/>
                 </div>
                 <div className={s.payModal_cashValue}>
                     Полученная сумма наличными
