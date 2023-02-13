@@ -98,6 +98,9 @@ const Service = () => {
                         </div>
                         <div className={s.infoFields_clientCard}>
                             <ClientCard/>
+                            <div className={s.clientCard_changeClientBtn}>
+                                <Button text={'Изменить клиента'} onClick={() => {}}/>
+                            </div>
                         </div>
                     </div>
 

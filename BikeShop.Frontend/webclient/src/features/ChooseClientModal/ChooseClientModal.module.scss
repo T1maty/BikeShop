@@ -8,6 +8,10 @@
         @include flexColumn();
         margin-bottom: 50px;
 
+        .clientModal_searchBlock_title {
+            @include titleCenter;
+        }
+
         .clientModal_searchBlock_input {
             margin-bottom: $defaultSmallMargin;
             width: 100%;
@@ -22,6 +26,10 @@
         @include flexColumn();
         margin-bottom: $defaultLargeMargin;
         width: 100%;
+
+        .textFields_title {
+            @include titleCenter;
+        }
     }
 
     .clientModal_buttonsBlock {

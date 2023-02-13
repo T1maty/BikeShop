@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import s from "./MainPage.module.scss";
 import {Button, InputUI} from '../../../shared/ui';
-import {PayModal} from '../../../features';
+import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
+import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 
 const navLinks = [
     'Create repairing',
@@ -17,7 +18,9 @@ const navLinks = [
 
 const MainPage = () => {
     const navigate = useNavigate();
+    const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
+
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
         {id: 2, task: 'task 02'},
@@ -39,7 +42,10 @@ const MainPage = () => {
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
                             <div>
-                                <Button text={'Создать ремонт'} onClick={() => {}}/>
+                                <ChooseClientModal/>
+                                <Button text={'Создать ремонт'}
+                                        onClick={() => {setChooseClientModal(true)}}
+                                />
                             </div>
                             <div>
                                 <Button text={'Создать заказ'} onClick={() => {}}/>

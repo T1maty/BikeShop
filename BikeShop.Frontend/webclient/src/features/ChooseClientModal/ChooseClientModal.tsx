@@ -4,8 +4,10 @@ import useChooseClientModal from './ChooseClientModalStore';
 import Button from '../../shared/ui/Button/Button';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
+import {useNavigate} from 'react-router-dom';
 
 const ChooseClientModal = () => {
+    const navigate = useNavigate()
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
 
@@ -22,8 +24,8 @@ const ChooseClientModal = () => {
     })*/
 
     const chooseButtonHandler = () => {
-        // code here
-        setOpen(false);
+        // setOpen(false);
+        navigate('/service');
     }
 
     return (
@@ -36,6 +38,9 @@ const ChooseClientModal = () => {
         >
             <div className={s.clientModal_mainBox}>
                 <div className={s.clientModal_searchBlock}>
+                    <div className={s.clientModal_searchBlock_title}>
+                        Найти клиента:
+                    </div>
                     <div className={s.clientModal_searchBlock_input}>
                         <Input placeholder={'Введите фамилию'}/>
                     </div>
@@ -53,36 +58,42 @@ const ChooseClientModal = () => {
                     </div>
                 </div>
                 <div className={s.clientModal_textFields}>
-                    <div>
-                        <TextField id="outlined-basic"
-                                   variant="outlined"
-                                   value={'Фамилия'}
-                                   style={{backgroundColor: '#5C636A'}}
-                                   onChange={() => {}}
-                                   fullWidth={true}
-                        />
+                    <div className={s.textFields_title}>
+                        Создать клиента:
                     </div>
                     <div>
-                        <TextField id="outlined-basic"
-                                   variant="outlined"
-                                   value={'Имя'}
-                                   style={{backgroundColor: '#5C636A'}}
-                                   onChange={() => {}}
-                                   fullWidth={true}
-                        />
+                        <Input placeholder={'Фамилия'}/>
+                        {/*<TextField id="outlined-basic"*/}
+                        {/*           variant="outlined"*/}
+                        {/*           value={'Фамилия'}*/}
+                        {/*           style={{backgroundColor: '#5C636A'}}*/}
+                        {/*           onChange={() => {}}*/}
+                        {/*           fullWidth={true}*/}
+                        {/*/>*/}
                     </div>
                     <div>
-                        <TextField id="outlined-basic"
-                                   variant="outlined"
-                                   value={'Отчество'}
-                                   style={{backgroundColor: '#5C636A'}}
-                                   onChange={() => {}}
-                                   fullWidth={true}
-                        />
+                        <Input placeholder={'Имя'}/>
+                        {/*<TextField id="outlined-basic"*/}
+                        {/*           variant="outlined"*/}
+                        {/*           value={'Имя'}*/}
+                        {/*           style={{backgroundColor: '#5C636A'}}*/}
+                        {/*           onChange={() => {}}*/}
+                        {/*           fullWidth={true}*/}
+                        {/*/>*/}
+                    </div>
+                    <div>
+                        <Input placeholder={'Отчество'}/>
+                        {/*<TextField id="outlined-basic"*/}
+                        {/*           variant="outlined"*/}
+                        {/*           value={'Отчество'}*/}
+                        {/*           style={{backgroundColor: '#5C636A'}}*/}
+                        {/*           onChange={() => {}}*/}
+                        {/*           fullWidth={true}*/}
+                        {/*/>*/}
                     </div>
                 </div>
                 <div className={s.clientModal_buttonsBlock}>
-                    <Button text={'Выбрать клиента'} onClick={chooseButtonHandler}/>
+                    <Button text={'Создать клиента'} onClick={chooseButtonHandler}/>
                     <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
                 </div>
             </div>

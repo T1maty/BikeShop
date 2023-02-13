@@ -71,3 +71,8 @@
     font-size: 40px;
     font-weight: bold;
 }
+
+@mixin titleCenter() {
+    text-align: center;
+    margin-bottom: $defaultSmallMargin;
+}
