@@ -1,4 +1,3 @@
-/*Обнуление стилей*/
 html, body {
     width: 100%;
     height: 100%;
@@ -35,34 +34,3 @@ button::-moz-focus-inner {padding:0;border:0;}
 
 ul li {list-style: none;}
 img {vertical-align: top;}
-
-/*h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}*/
-
-/*переменные величины*/
-
-:root {
-    --navbar-height: 64px;
-}
-
-/*app default styles*/
-/*.app {
-  width: 1400px;
-  min-height: 100%;
-  margin: 0 auto;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-}*/
-
-/*подключаем шрифты и добавляем его (в строчке html,body)*/
-/*
-@font-face {
-    font-family: 'Mulish';
-    src: url('./assets/fonts/Mulish-ExtraLight.woff2') format('woff2'),
-    url('./assets/fonts/Mulish-ExtraLight.woff') format('woff'),
-    url('./assets/fonts/Mulish-ExtraLight.ttf') format('truetype');
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-}*/

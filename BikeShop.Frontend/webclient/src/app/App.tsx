@@ -1,14 +1,14 @@
 import React, {Suspense} from "react";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-
-// import "@fontsource/roboto/300.css";
-// import "@fontsource/roboto/400.css";
-// import "@fontsource/roboto/500.css";
-// import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import {RouterProvider} from "react-router-dom";
 import {Routes} from "./allRoutes";
 import {LangSwitcher} from "../widgets/workspace/LangSwitcher/LangSwitcher";
+import './styles/index.scss'
+import {useTheme} from "./providers/ThemeProvider";
+import {ThemeSwitcher} from "../shared/ui/ThemeSwitcher/ThemeSwitcher";
+
+
 const darkTheme = createTheme({
     palette: {
         mode: "dark"
@@ -16,16 +16,20 @@ const darkTheme = createTheme({
 });
 
 const App: React.FC = () => {
+
+    const {theme} = useTheme()
+
     return (
-        <div className="App">
+        <div className={`app ${theme}`}>
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline/>
                 <Suspense>
                     <RouterProvider router={Routes}/>
                 </Suspense>
             </ThemeProvider>
-            <div style={{position: "absolute", right: 20, top: 0}}>
+            <div style={{position: "absolute", right: 500, top: 0}}>
                 <LangSwitcher/>
+                <ThemeSwitcher/>
             </div>
         </div>
     );

@@ -27,6 +27,8 @@ export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
     return (
         <>
             <Button
+                sx={{backgroundColor: '#7c7c7c'}}
+                variant="contained"
                 id="basic-button"
                 onClick={handleClick}
             >
@@ -52,8 +54,3 @@ export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
         </>
     )
 }
-// <Button
-//     variant={"contained"}
-//     onClick={toggleLanguage}>
-//   {t('Language')}
-// </Button>

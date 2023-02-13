@@ -7,14 +7,14 @@ interface props {
 
 const CheckAuthRoute = (props: props) => {
     const navigate = useNavigate();
-    
+
     React.useEffect(() => {
         if (localStorage.getItem('accessToken') == null) {
             navigate('/login', {replace: true})
         }
     }, [])
 
-    return (
+    return ( 
         <div>
             {props.children}
         </div>
