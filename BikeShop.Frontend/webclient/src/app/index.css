@@ -41,7 +41,7 @@ img {vertical-align: top;}
 /*переменные величины*/
 
 :root {
-    --navbar-height: 100px;
+    --navbar-height: 64px;
 }
 
 /*app default styles*/

@@ -8,7 +8,7 @@ import {createTheme, ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import {RouterProvider} from "react-router-dom";
 import {Routes} from "./allRoutes";
-
+import {LangSwitcher} from "../widgets/workspace/LangSwitcher/LangSwitcher";
 const darkTheme = createTheme({
     palette: {
         mode: "dark"
@@ -24,6 +24,9 @@ const App: React.FC = () => {
                     <RouterProvider router={Routes}/>
                 </Suspense>
             </ThemeProvider>
+            <div style={{position: "absolute", right: 20, top: 0}}>
+                <LangSwitcher/>
+            </div>
         </div>
     );
 };

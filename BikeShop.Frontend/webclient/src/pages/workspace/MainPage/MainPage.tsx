@@ -18,7 +18,6 @@ const navLinks = [
 const MainPage = () => {
     const navigate = useNavigate();
     const setPayModal = usePayModal(s => s.setPayModal)
-
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
         {id: 2, task: 'task 02'},
