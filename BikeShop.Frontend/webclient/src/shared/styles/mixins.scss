@@ -66,3 +66,8 @@
     border-radius: $defaultBorderRadius;
     //box-shadow: 24;
 }
+
+@mixin largeFontSize() {
+    font-size: 40px;
+    font-weight: bold;
+}

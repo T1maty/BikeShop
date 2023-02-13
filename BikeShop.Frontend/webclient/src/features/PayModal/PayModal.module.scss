@@ -1,0 +1,61 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.payModal_mainBox {
+    @include defaultModalStyle();
+
+    > div:not(:last-child) {
+        margin-bottom: $defaultLargeMargin;
+    }
+
+    .payModal_header {
+        @include flexColumn();
+
+        .header_text {
+
+        }
+        .header_sum {
+            @include largeFontSize();
+        }
+    }
+
+    .payModal_clientCard {
+    }
+
+    .payModal_payType {
+        :first-child {
+            margin-bottom: $defaultSmallMargin;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .payModal_cashValue {
+        @include defaultFiledStyle();
+        min-width: 100%;
+    }
+
+    .payModal_cashbackBlock {
+        @include flexColumn();
+
+        .cashbackBlock_text {
+
+        }
+        .cashbackBlock_value {
+            @include largeFontSize();
+        }
+        .cashbackBlock_buttons {
+            width: 100%;
+
+            :first-child {
+                margin-bottom: $defaultSmallMargin;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import s from "./MainPage.module.scss";
 import {Button, InputUI} from '../../../shared/ui';
+import {PayModal} from '../../../features';
+import usePayModal from '../../../features/PayModal/PayModalStore';
 
 const navLinks = [
     'Create repairing',
@@ -15,6 +17,7 @@ const navLinks = [
 
 const MainPage = () => {
     const navigate = useNavigate();
+    const setPayModal = usePayModal(s => s.setPayModal)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -126,8 +129,9 @@ const MainPage = () => {
                                 <div className={s.result_span}>
                                     Цена
                                 </div>
+                                <PayModal/>
                                 <div className={s.result_payBtn}>
-                                    <Button text={'К оплате'} onClick={() => {}}/>
+                                    <Button text={'К оплате'} onClick={() => {setPayModal(true)}}/>
                                 </div>
                             </div>
                         </div>

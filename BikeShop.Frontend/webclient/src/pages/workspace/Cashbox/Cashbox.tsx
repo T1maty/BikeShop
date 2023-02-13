@@ -1,15 +1,16 @@
 import React from 'react';
 import s from './Cashbox.module.scss'
+import {ChooseClientModal, ChooseDiscountModal, ClientCard, PayModal} from '../../../features';
+import {Button, InputUI} from '../../../shared/ui';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore';
-import {ChooseClientModal, ClientCard} from '../../../features';
-import {Button, InputUI} from '../../../shared/ui';
-import ChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModal';
+import usePayModal from '../../../features/PayModal/PayModalStore';
 
 const Cashbox = () => {
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setChooseDiscountModal = useChooseDiscountModal(s => s.setChooseDiscountModal)
+    const setPayModal = usePayModal(s => s.setPayModal)
 
     const isActiveTable = true;
 
@@ -104,7 +105,8 @@ const Cashbox = () => {
                         </div>
 
                         <div className={s.rightSideBottom_payBlock}>
-                            <Button text={'К оплате'} onClick={() => {}}/>
+                            <PayModal/>
+                            <Button text={'К оплате'} onClick={() => {setPayModal(true)}}/>
                         </div>
                     </div>
                 </div>
