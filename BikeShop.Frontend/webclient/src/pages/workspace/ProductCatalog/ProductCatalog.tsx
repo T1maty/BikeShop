@@ -36,7 +36,9 @@ const ProductCatalog = () => {
                         </div>
                     </div>
 
-                    <div className={s.rightSide_table}>
+                    <div className={s.rightSide_table}
+                         onContextMenu={(event) => {event.preventDefault()}}
+                    >
                         <ProductCatalogTable/>
                     </div>
                 </div>
