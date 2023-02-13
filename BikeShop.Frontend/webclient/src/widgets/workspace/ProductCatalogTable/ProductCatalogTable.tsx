@@ -29,12 +29,12 @@ const ProductCatalogTable = () => {
     }, [])
 
     return (
-        <>
+        <div>
             <ProductCatalogTableContextMenu/>
             <CreateProductModal onSuccess={addNewProduct}/>
             <UpdateProductModal onSuccess={updateRow}/>
 
-            <TableContainer sx={{maxHeight: 440}}>
+            <TableContainer>
                 <Table
                     stickyHeader
                     aria-label="sticky table"
@@ -66,7 +66,7 @@ const ProductCatalogTable = () => {
                 </Table>
             </TableContainer>
             <ProductCatalogTablePagination/>
-        </>
+        </div>
     );
 }
 

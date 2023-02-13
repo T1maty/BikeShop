@@ -27,7 +27,7 @@ interface productCatalogTableStore {
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
     contextMenuXY: {X: 0, Y: 0},
     selectedRows: [],
-    rowsPerPage: 10,
+    rowsPerPage: 50,
     rows: [],
     open: false,
     page: 0,

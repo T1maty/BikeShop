@@ -12,7 +12,7 @@ const ProductCatalogTablePagination = () => {
 
     return (
         <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[50, 200, 500]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
