@@ -1,0 +1,41 @@
+@import './src/shared/styles/mixins';
+@import './src/shared/styles/variables';
+
+.tableBox {
+    border: 1px solid white;
+    @include widthHeightFull();
+    margin-right: $defaultLargeMargin;
+
+    .tableBox_buttons {
+        @include flexBetween();
+        margin-bottom: $defaultSmallMargin;
+
+        .buttons_editBtn {
+
+        }
+        .buttons_discountField {
+            @include flexColumn();
+
+            .discountField_title {
+
+            }
+            .discountField_value {
+                @include defaultFiledStyle();
+                height: 30px;
+            }
+        }
+        .buttons_resultField {
+            @include defaultFiledStyle();
+            width: 20%;
+            height: 55px;
+        }
+    }
+
+    .tableBox_table {
+        background-color: $themeColorGray;
+        border-radius: $defaultBorderRadius;
+        padding: $defaultLargeMargin;
+        @include flexColumn();
+        height: 85%; // надо исправить
+    }
+}

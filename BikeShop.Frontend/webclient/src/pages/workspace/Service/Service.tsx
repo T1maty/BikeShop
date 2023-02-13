@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import s from './Service.module.scss'
-import {ClientCard, TableProductItem} from '../../../features';
+import {ClientCard} from '../../../features';
 import {Button, InputUI} from '../../../shared/ui';
+import {ServiceTable} from '../../index';
 
 const Service = () => {
 
@@ -18,7 +19,7 @@ const Service = () => {
         {id: 10, repair: 'repair 10'}
     ])
 
-    const [items, setItems] = useState([
+    const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
         {id: 2, title: 'Велосипед', price: 2500, count: 1},
         {id: 3, title: 'Руль', price: 250, count: 2},
@@ -105,71 +106,71 @@ const Service = () => {
                     </div>
 
                     <div className={s.rightSide_tables}>
-                        <div className={s.tables_left}>
-                            <div className={s.tables_left_buttons}>
-                                <div className={s.buttons_editBtn}>
-                                    <Button text={'Редактор'} onClick={() => {}}/>
-                                </div>
-                                <div className={s.buttons_discountField}>
-                                    <div className={s.discountField_title}>
-                                        Скидка
-                                    </div>
-                                    <div className={s.discountField_value}>
-                                        30%
-                                    </div>
-                                </div>
-                                <div className={s.buttons_resultField}>
-                                    3
-                                </div>
-                            </div>
-                            <div className={s.tables_left_table}>
-                                {
-                                    items.map(item => {
-                                        return (
-                                            <TableProductItem key={item.id}
-                                                              title={item.title}
-                                                              price={item.price}
-                                                              count={item.count}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
-                        <div className={s.tables_right}>
-                            <div className={s.right_buttons}>
-                                <div className={s.buttons_editBtn}>
-                                    <Button text={'Редактор'} onClick={() => {}}/>
-                                </div>
-                                <div className={s.buttons_noDiscountField}>
-                                    222
-                                </div>
-                                <div className={s.buttons_discountField}>
-                                    <div className={s.discountField_title}>
-                                        Скидка
-                                    </div>
-                                    <div className={s.discountField_value}>
-                                        30%
-                                    </div>
-                                </div>
-                                <div className={s.buttons_resultField}>
-                                    444
-                                </div>
-                            </div>
-                            <div className={s.tables_right_table}>
-                                {
-                                    repairItems.map(item => {
-                                        return (
-                                            <TableProductItem key={item.id}
-                                                              title={item.title}
-                                                              price={item.price}
-                                                              count={item.count}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
+                        <ServiceTable data={productsItem}/>
+                        {/*<div className={s.tables_left}>*/}
+                        {/*    <div className={s.tables_left_buttons}>*/}
+                        {/*        <div className={s.buttons_editBtn}>*/}
+                        {/*            <Button text={'Редактор'} onClick={() => {}}/>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={s.buttons_discountField}>*/}
+                        {/*            <div className={s.discountField_title}>*/}
+                        {/*                Скидка*/}
+                        {/*            </div>*/}
+                        {/*            <div className={s.discountField_value}>*/}
+                        {/*                30%*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={s.buttons_resultField}>*/}
+                        {/*            3*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*    <div className={s.tables_left_table}>*/}
+                        {/*        {*/}
+                        {/*            items.map(item => {*/}
+                        {/*                return (*/}
+                        {/*                    <TableProductItem key={item.id}*/}
+                        {/*                                      title={item.title}*/}
+                        {/*                                      price={item.price}*/}
+                        {/*                                      count={item.count}*/}
+                        {/*                    />*/}
+                        {/*                )*/}
+                        {/*            })*/}
+                        {/*        }*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+
+                        <ServiceTable data={repairItems}/>
+                        {/*<div className={s.tables_right}>*/}
+                        {/*    <div className={s.right_buttons}>*/}
+                        {/*        <div className={s.buttons_editBtn}>*/}
+                        {/*            <Button text={'Редактор'} onClick={() => {}}/>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={s.buttons_discountField}>*/}
+                        {/*            <div className={s.discountField_title}>*/}
+                        {/*                Скидка*/}
+                        {/*            </div>*/}
+                        {/*            <div className={s.discountField_value}>*/}
+                        {/*                30%*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={s.buttons_resultField}>*/}
+                        {/*            444*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*    <div className={s.tables_right_table}>*/}
+                        {/*        {*/}
+                        {/*            repairItems.map(item => {*/}
+                        {/*                return (*/}
+                        {/*                    <TableProductItem key={item.id}*/}
+                        {/*                                      title={item.title}*/}
+                        {/*                                      price={item.price}*/}
+                        {/*                                      count={item.count}*/}
+                        {/*                    />*/}
+                        {/*                )*/}
+                        {/*            })*/}
+                        {/*        }*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
 
@@ -177,4 +178,5 @@ const Service = () => {
         </div>
     );
 };
+
 export default Service;

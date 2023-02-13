@@ -129,86 +129,83 @@
                 @include flexBetween();
                 @include widthHeightFull();
 
-                .tables_left {
-                    border: 1px solid white;
-                    @include widthHeightFull();
-                    margin-right: $defaultLargeMargin;
+                //.tables_left {
+                //    border: 1px solid white;
+                //    @include widthHeightFull();
+                //    margin-right: $defaultLargeMargin;
+                //
+                //    .tables_left_buttons {
+                //        @include flexBetween();
+                //        margin-bottom: $defaultSmallMargin;
+                //
+                //        .buttons_editBtn {
+                //
+                //        }
+                //        .buttons_discountField {
+                //            @include flexColumn();
+                //
+                //            .discountField_title {
+                //
+                //            }
+                //            .discountField_value {
+                //                @include defaultFiledStyle();
+                //                height: 30px;
+                //            }
+                //        }
+                //        .buttons_resultField {
+                //            @include defaultFiledStyle();
+                //            width: 20%;
+                //            height: 55px;
+                //        }
+                //    }
+                //
+                //    .tables_left_table {
+                //        background-color: $themeColorGray;
+                //        border-radius: $defaultBorderRadius;
+                //        padding: $defaultLargeMargin;
+                //        @include flexColumn();
+                //        height: 85%; // надо исправить
+                //    }
+                //}
 
-                    .tables_left_buttons {
-                        @include flexBetween();
-                        margin-bottom: $defaultSmallMargin;
-
-                        .buttons_editBtn {
-
-                        }
-                        .buttons_discountField {
-                            @include flexColumn();
-
-                            .discountField_title {
-
-                            }
-                            .discountField_value {
-                                @include defaultFiledStyle();
-                                height: 30px;
-                            }
-                        }
-                        .buttons_resultField {
-                            @include defaultFiledStyle();
-                            width: 20%;
-                            height: 55px;
-                        }
-                    }
-
-                    .tables_left_table {
-                        background-color: $themeColorGray;
-                        border-radius: $defaultBorderRadius;
-                        padding: $defaultLargeMargin;
-                        @include flexColumn();
-                        height: 85%; // надо исправить
-                    }
-                }
-                .tables_right {
-                    @include widthHeightFull();
-                    border: 1px solid white;
-                    margin-left: 5px;
-
-                    .right_buttons {
-                        @include flexBetween();
-                        margin-bottom: $defaultSmallMargin;
-
-                        .buttons_editBtn {
-
-                        }
-                        .buttons_noDiscountField {
-                            @include defaultFiledStyle();
-                            height: 55px;
-                        }
-                        .buttons_discountField {
-                            @include flexColumn();
-
-                            .discountField_title {
-
-                            }
-                            .discountField_value {
-                                @include defaultFiledStyle();
-                                height: 30px;
-                            }
-                        }
-                        .buttons_resultField {
-                            @include defaultFiledStyle();
-                            height: 55px;
-                        }
-                    }
-
-                    .tables_right_table {
-                        @include flexColumn();
-                        background-color: $themeColorGray;
-                        border-radius: $defaultBorderRadius;
-                        padding: $defaultLargeMargin;
-                        height: 85%; // надо исправить
-
-                    }
-                }
+                //.tables_right {
+                //    @include widthHeightFull();
+                //    border: 1px solid white;
+                //    margin-left: 5px;
+                //
+                //    .right_buttons {
+                //        @include flexBetween();
+                //        margin-bottom: $defaultSmallMargin;
+                //
+                //        .buttons_editBtn {
+                //
+                //        }
+                //        .buttons_discountField {
+                //            @include flexColumn();
+                //
+                //            .discountField_title {
+                //
+                //            }
+                //            .discountField_value {
+                //                @include defaultFiledStyle();
+                //                height: 30px;
+                //            }
+                //        }
+                //        .buttons_resultField {
+                //            @include defaultFiledStyle();
+                //            height: 55px;
+                //        }
+                //    }
+                //
+                //    .tables_right_table {
+                //        @include flexColumn();
+                //        background-color: $themeColorGray;
+                //        border-radius: $defaultBorderRadius;
+                //        padding: $defaultLargeMargin;
+                //        height: 85%; // надо исправить
+                //
+                //    }
+                //}
             }
         }
     }
