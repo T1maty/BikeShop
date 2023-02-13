@@ -68,10 +68,10 @@ export const Routes = createBrowserRouter([
     },
     {
         path: '/productcatalog',
-        element: <CheckAuthRoute>
+        element: /*<CheckAuthRoute>*/
             <WorkspaceHeaderProvider>
                 <ProductCatalog/>
             </WorkspaceHeaderProvider>
-        </CheckAuthRoute>
+        // </CheckAuthRoute>
     },
 ])

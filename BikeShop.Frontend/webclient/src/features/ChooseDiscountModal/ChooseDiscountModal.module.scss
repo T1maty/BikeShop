@@ -3,16 +3,22 @@
 
 .discountModal_mainBox {
     @include defaultModalStyle();
+    width: 250px; // замена ширины из миксина
 
     .discountModal_selectBlock {
-
+        margin-bottom: $defaultLargeMargin;
     }
     .discountModal_buttonsBlock {
-        @include flexOnlyBetween();
+        //@include flexOnlyBetween();
+        @include flexColumn();
 
         button {
-            width: 200px;
+            width: 170px;
             padding: $smallButtonPadding;
+
+            &:first-child {
+                margin-bottom: $defaultSmallMargin;
+            }
         }
     }
 }

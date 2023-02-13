@@ -9,17 +9,22 @@ const ChooseClientModal = () => {
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
 
-    // const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => {
-    //     setOpen(true);
-    // };
-    // const handleClose = () => {
-    //     setOpen(false);
-    // };
+    /*const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-    // const clonedChildren = cloneElement(children, {
-    //     onClick: handleOpen,
-    // })
+    const clonedChildren = cloneElement(children, {
+        onClick: handleOpen,
+    })*/
+
+    const chooseButtonHandler = () => {
+        // code here
+        setOpen(false);
+    }
 
     return (
         // {clonedChildren}
@@ -77,7 +82,7 @@ const ChooseClientModal = () => {
                     </div>
                 </div>
                 <div className={s.clientModal_buttonsBlock}>
-                    <Button text={'Выбрать клиента'} onClick={() => {}}/>
+                    <Button text={'Выбрать клиента'} onClick={chooseButtonHandler}/>
                     <Button text={'Отмена'} onClick={() => {setOpen(false)}}/>
                 </div>
             </div>
