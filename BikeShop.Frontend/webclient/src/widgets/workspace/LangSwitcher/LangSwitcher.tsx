@@ -1,8 +1,8 @@
 import React, {type FC} from 'react'
 import {useTranslation} from 'react-i18next'
-import Button from "@mui/material/Button";
 import {MenuItem} from "@mui/material";
 import Menu from "@mui/material/Menu";
+import {Button} from "../../../shared/ui";
 
 
 interface LangSwitcherProps {
@@ -14,6 +14,7 @@ export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
+        console.log('test')
     };
     const handleClose = () => {
         setAnchorEl(null);
@@ -27,9 +28,10 @@ export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
     return (
         <>
             <Button
-                sx={{backgroundColor: '#7c7c7c'}}
-                variant="contained"
                 id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
                 {t('Language')}
@@ -40,6 +42,9 @@ export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
             >
                 <MenuItem onClick={() => toggleLanguage('en')}>
                     EN

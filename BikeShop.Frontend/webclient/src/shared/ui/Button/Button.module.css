@@ -4,9 +4,7 @@
     transition: background 400ms;
     color: var(--primary-color);
     background-color: var(--inverted-primary-color);
-    /*padding: 1rem 1rem; */
-    margin: 5px 5px;
-    /*font-family: 'Roboto', sans-serif;*/
+    padding: 5px 10px;
     font-size: 1rem;
     outline: 0;
     border: 0;

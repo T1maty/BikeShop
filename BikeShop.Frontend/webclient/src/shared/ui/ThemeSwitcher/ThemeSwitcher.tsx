@@ -1,6 +1,7 @@
 import React, { type FC } from 'react'
 import { Theme, useTheme } from 'app/providers/ThemeProvider'
-import Button from "@mui/material/Button";
+import {Button} from "../index";
+
 
 interface ThemeSwitcherProps {
   className?: string

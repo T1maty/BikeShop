@@ -27,9 +27,13 @@ const App: React.FC = () => {
                     <RouterProvider router={Routes}/>
                 </Suspense>
             </ThemeProvider>
-            <div style={{position: "absolute", right: 500, top: 0}}>
-                <LangSwitcher/>
-                <ThemeSwitcher/>
+            <div style={{position: "absolute", left: 0, top: 0}}>
+                <div style={{marginBottom: 10}}>
+                    <ThemeSwitcher/>
+                </div>
+                <div>
+                    <LangSwitcher/>
+                </div>
             </div>
         </div>
     );

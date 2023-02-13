@@ -76,7 +76,7 @@ const ProviderButtonRipple = (props: ProviderButtonProps) => {
 
     return cloneElement(Children.only(children), {
         onClick: (e: MouseEvent<HTMLButtonElement>) => {
-            Children.only(children).props.onClick()
+            Children.only(children).props.onClick(e)
             createRipple(e)
         }
     })
