@@ -21,7 +21,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * @return customButton jsx
  */
 
-const Button: FC<ButtonProps> = (
+export const Button: FC<ButtonProps> = (
     {
         className = '',
         children,
@@ -83,7 +83,6 @@ const ProviderButtonRipple = (props: ProviderButtonProps) => {
 
 };
 
-export default Button
 // -------------------ProviderButton------------------------
 // <>
 //     {React.Children.map(children, child => {

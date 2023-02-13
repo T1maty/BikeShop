@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent} from '@mui/material';
-import Button from '../../shared/ui/Button/Button';
+import {Button} from '../../shared/ui';
 import s from './ChooseDiscountModal.module.scss'
 import useChooseDiscountModal from './ChooseDiscountModalStore';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal} from "@mui/material";
-import Button from '../../shared/ui/Button/Button'
+import {Button} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import usePayModal from './PayModalStore';
 import {ClientCard} from '../index';
