@@ -11,10 +11,14 @@
 
     h3 {
         text-align: center;
-        text-decoration: underline;
+        //text-decoration: underline;
         margin: 0 0 5px 0;
     }
     p {
         margin: 3px 0;
+
+        span {
+            text-decoration: underline;
+        }
     }
 }
