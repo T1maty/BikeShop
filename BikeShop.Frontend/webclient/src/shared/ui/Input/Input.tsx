@@ -7,8 +7,8 @@ type InputUIPropsType = TextFieldProps & {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const InputUI: React.FC<InputUIPropsType> = ({placeholder, onChange}) => {
-    return <TextField placeholder={placeholder} onChange={onChange} fullWidth={true}/>;
+const InputUI: React.FC<InputUIPropsType> = ({placeholder, onChange, ...restProps}) => {
+    return <TextField placeholder={placeholder} onChange={onChange} fullWidth={true} {...restProps}/>;
 };
 
 export default InputUI;

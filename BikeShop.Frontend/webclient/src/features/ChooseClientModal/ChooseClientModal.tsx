@@ -49,6 +49,11 @@ const ChooseClientModal = () => {
         // navigate('/service');
     }
 
+    /*const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = (data: any) => console.log(data);
+
+    console.log(watch("example")); // watch input value by passing the name of it*/
+
     return (
         // {clonedChildren}
         <Modal
@@ -57,6 +62,19 @@ const ChooseClientModal = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
+
+            {/*<form onSubmit={handleSubmit(onSubmit)}>*/}
+            {/*    /!* register your input into the hook by invoking the "register" function *!/*/}
+            {/*    <input defaultValue="test" {...register("example")} />*/}
+
+            {/*    /!* include validation with required or other standard HTML validation rules *!/*/}
+            {/*    <input {...register("exampleRequired", { required: true })} />*/}
+            {/*    /!* errors will return when field validation fails  *!/*/}
+            {/*    {errors.exampleRequired && <span>This field is required</span>}*/}
+
+            {/*    <input type="submit" />*/}
+            {/*</form>*/}
+
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={s.clientModal_mainBox}>
                     <div className={s.clientModal_searchBlock}>
@@ -105,7 +123,7 @@ const ChooseClientModal = () => {
                         </div>
                     </div>
                     <div className={s.clientModal_buttonsBlock}>
-                        <Button type={'submit'}>
+                        <Button>
                             Добавить клиента
                         </Button>
                         <Button onClick={() => {setOpen(false)}}>
