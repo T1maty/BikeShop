@@ -29,7 +29,7 @@ const TagTreeViewNodes = () => {
                             setContextVisible(true, event.clientX, event.clientY)
                             console.log(visibility)
 
-                            //setSelected(n.id.toString())
+                            setSelected(n.id.toString())
 
                         }}
                         nodeId={n.id.toString()}

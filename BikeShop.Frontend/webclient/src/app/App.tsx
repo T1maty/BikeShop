@@ -7,6 +7,7 @@ import {LangSwitcher} from "../widgets/workspace/LangSwitcher/LangSwitcher";
 import {useTheme} from "./providers/ThemeProvider";
 import {ThemeSwitcher} from "../shared/ui/ThemeSwitcher/ThemeSwitcher";
 import './styles/index.scss'
+import {SnackbarProvider} from "notistack";
 
 const darkTheme = createTheme({
     palette: {
@@ -20,11 +21,14 @@ const App: React.FC = () => {
 
     return (
         <div className={`app ${theme}`}>
+
             <ThemeProvider theme={darkTheme}>
-                <CssBaseline/>
-                <Suspense>
-                    <RouterProvider router={Routes}/>
-                </Suspense>
+                <SnackbarProvider maxSnack={3}>
+                    <CssBaseline/>
+                    <Suspense>
+                        <RouterProvider router={Routes}/>
+                    </Suspense>
+                </SnackbarProvider>
             </ThemeProvider>
             <div style={{position: "absolute", left: 0, top: 0}}>
                 <div style={{marginBottom: 10}}>

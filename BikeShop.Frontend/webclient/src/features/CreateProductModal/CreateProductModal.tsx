@@ -1,19 +1,24 @@
 import React from 'react';
-import {Box, Button, Checkbox, FormControlLabel, Modal, TextField} from "@mui/material";
+import {Box, Button, Modal} from "@mui/material";
 import useCreateProductModal from "./CreateProductModalStore";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
+import {SubmitHandler, useForm} from "react-hook-form";
 import {EnumProductCheckStatus, ICreateProduct, IProduct} from "../../entities";
+import {useSnackbar} from "notistack";
+import {useTranslation} from "react-i18next";
+import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
 
 interface props {
     onSuccess?: (data: IProduct) => void
 }
 
 const CreateProductModal = (props: props) => {
+    const error = useTranslation('errors').t
 
+    const {enqueueSnackbar} = useSnackbar();
     const open = useCreateProductModal(s => s.open)
     const setOpen = useCreateProductModal(s => s.setOpen)
     const create = useCreateProductModal(s => s.create)
-    const {control, formState: {errors}, handleSubmit, setValue, setError} = useForm<ICreateProduct>({
+    const formControl = useForm<ICreateProduct>({
         defaultValues: {
             name: "",
             catalogKey: "",
@@ -48,16 +53,20 @@ const CreateProductModal = (props: props) => {
             setOpen(false)
             props.onSuccess ? props.onSuccess(r.data) : true
 
-            setValue('name', '')
-            setValue('catalogKey', '')
-            setValue('manufacturerBarcode', '')
-            setValue('incomePrice', 0)
-            setValue('dealerPrice', 0)
-            setValue('retailPrice', 0)
-            setValue('retailVisibility', false)
-            setValue('b2BVisibility', false)
+            formControl.setValue('name', '')
+            formControl.setValue('catalogKey', '')
+            formControl.setValue('manufacturerBarcode', '')
+            formControl.setValue('incomePrice', 0)
+            formControl.setValue('dealerPrice', 0)
+            formControl.setValue('retailPrice', 0)
+            formControl.setValue('retailVisibility', false)
+            formControl.setValue('b2BVisibility', false)
+
+            enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 10000})
         }).catch(r => {
-            setError('name', {type: 'serverError', message: r.response.data.errorDescription.toString()})
+            let message = error(r.response.data.errorDescription).toString()
+            formControl.setError('manufacturerBarcode', {type: 'serverError', message: message})
+            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 10000})
             console.error(r.response.data)
         })
 
@@ -75,112 +84,30 @@ const CreateProductModal = (props: props) => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={style} component="form" onSubmit={handleSubmit(onSubmit)}>
+            <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
 
-                <Controller
-                    name="name"
-                    control={control}
-                    rules={{required: "Обязательное поле"}}
-                    render={({field}: any) =>
+                <ControlledInput name={"name"} lable={"Название товара"} control={formControl}
+                                 rules={{required: "Обязательное поле"}}/>
 
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   error={!!errors.name?.type}
-                                   helperText={errors.name?.message}
-                                   label="Название товара"
-                                   variant="outlined"/>
-                    }/>
-                <Controller
-                    name="catalogKey"
-                    control={control}
-                    rules={{required: "Обязательное поле"}}
-                    render={({field}: any) =>
+                <ControlledInput name={"catalogKey"} lable={"Каталожный номер"} control={formControl}
+                                 rules={{required: "Обязательное поле"}}/>
 
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   error={!!errors.catalogKey}
-                                   label="Каталожный номер"
-                                   variant="outlined"/>
-                    }/>
-                <Controller
-                    name="manufacturerBarcode"
-                    control={control}
-                    rules={{required: "Обязательное поле"}}
-                    render={({field}: any) =>
+                <ControlledInput name={"manufacturerBarcode"} lable={"Штрихкод производителя"} control={formControl}
+                                 rules={{required: "Обязательное поле"}}/>
 
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   error={!!errors.manufacturerBarcode}
-                                   label="Штрихкод производителя"
-                                   variant="outlined"/>
-                    }/>
-                <Controller
-                    name="incomePrice"
-                    control={control}
-                    rules={{required: "Обязательное поле", validate: (value) => value > 0}}
-                    render={({field}: any) =>
+                <ControlledInput name={"incomePrice"} lable={"Цена возможной закупки"} control={formControl}
+                                 rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   error={!!errors.incomePrice}
-                                   label="Цена возможной закупки"
-                                   variant="outlined"/>
-                    }/>
-                <Controller
-                    name="dealerPrice"
-                    control={control}
-                    rules={{required: "Обязательное поле", validate: (value) => value > 0}}
-                    render={({field}: any) =>
+                <ControlledInput name={"dealerPrice"} lable={"Оптовая цена"} control={formControl}
+                                 rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   error={!!errors.dealerPrice}
-                                   label="Оптовая цена"
-                                   variant="outlined"/>
-                    }/>
+                <ControlledInput name={"retailPrice"} lable={"Розничная цена"} control={formControl}
+                                 rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
-                <Controller
-                    name="retailPrice"
-                    control={control}
-                    rules={{required: "Обязательное поле", validate: (value) => value > 0}}
-                    render={({field}: any) =>
+                <ControlledCheckbox name={"b2BVisibility"} lable={'Видим в B2B'} control={formControl}/>
+                <ControlledCheckbox name={"retailVisibility"} lable={'Видим в интернет-магазине'}
+                                    control={formControl}/>
 
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   error={!!errors.retailPrice}
-                                   label="Розничная цена"
-                                   variant="outlined"/>
-                    }/>
-                <Controller
-                    name="b2BVisibility"
-                    control={control}
-                    render={({field}) => (
-                        <FormControlLabel
-                            label={'Видим в B2B'}
-                            value={field.value}
-                            control={
-                                <Checkbox
-                                    value={field.value}
-                                    onChange={(event, value) => {
-                                        field.onChange(value);
-                                    }}/>
-                            }/>
-                    )}/>
-                <Controller
-                    name="retailVisibility"
-                    control={control}
-                    render={({field}) => (
-                        <FormControlLabel
-                            label={'Видим в интернет-магазине'}
-                            value={field.value}
-                            control={
-                                <Checkbox
-                                    value={field.value}
-                                    onChange={(event, value) => {
-                                        field.onChange(value);
-                                    }}/>
-                            }/>
-                    )}/>
                 <br/>
                 <Button color={'primary'} type={'submit'}>Создать товар</Button>
                 <Button color={'primary'} onClick={() => {

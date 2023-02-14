@@ -11,6 +11,7 @@ const LoginForm = () => {
     const setUser = useAuthUser(s => s.setUser);
     const user = useAuthUser(s => s.user);
 
+
     const navigate = useNavigate();
 
     const {
@@ -78,10 +79,6 @@ const LoginForm = () => {
                 <NavLink to="/registration">Registration</NavLink><br/>
                 <NavLink to="/main">main page</NavLink><br/>
                 <NavLink to="/workcatalog">workcatalog</NavLink><br/>
-                <Button onClick={() => {
-                    console.log(localStorage.getItem('accessToken'));
-                    console.log(user)
-                }}>Проверить токен</Button>
             </Container>
         </Stack>
     );
