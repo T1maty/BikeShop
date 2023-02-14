@@ -1,0 +1,9 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.chooseProductModal_mainBox {
+    @include defaultModalStyle();
+    width: 1400px;
+    background-color: $themeColorGray;
+    padding: 0;
+}

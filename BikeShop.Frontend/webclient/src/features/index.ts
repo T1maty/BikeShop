@@ -7,6 +7,7 @@ export {useUpdateProductModal} from './UpdateProductModal/UpdateProductModalStor
 export {UpdateProductModal} from './UpdateProductModal/UpdateProductModal'
 export {default as ChooseClientModal} from './ChooseClientModal/ChooseClientModal';
 export {default as ChooseDiscountModal} from './ChooseDiscountModal/ChooseDiscountModal';
+export {default as ChooseProductModal} from './ChooseProductModal/ChooseProductModal';
 export {default as PayModal} from './PayModal/PayModal';
 export {default as ClientCard} from './ClientCard/ClientCard';
 export {default as TableProductItem} from './TableProductItem/TableProductItem';

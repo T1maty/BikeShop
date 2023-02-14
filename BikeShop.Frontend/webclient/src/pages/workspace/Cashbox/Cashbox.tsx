@@ -1,15 +1,17 @@
 import React from 'react';
 import s from './Cashbox.module.scss'
-import {ChooseClientModal, ChooseDiscountModal, ClientCard, PayModal} from '../../../features';
+import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, ClientCard, PayModal} from '../../../features';
 import {Button, InputUI} from '../../../shared/ui';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore';
 import usePayModal from '../../../features/PayModal/PayModalStore';
+import useChooseProductModal from '../../../features/ChooseProductModal/ChooseProductModalStore';
 
 const Cashbox = () => {
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setChooseDiscountModal = useChooseDiscountModal(s => s.setChooseDiscountModal)
+    const setChooseProductModal = useChooseProductModal(s => s.setChooseProductModal)
     const setPayModal = usePayModal(s => s.setPayModal)
 
     const isActiveTable = true;
@@ -86,9 +88,9 @@ const Cashbox = () => {
 
                 <div className={s.cashboxMainBlock_rightSideWrapper}>
                     <div className={s.cashboxMainBlock_rightSideHeader}>
+                        <ChooseProductModal/>
                         <div className={s.header_chooseBtn}>
-                            <Button onClick={() => {
-                            }}>
+                            <Button onClick={() => {setChooseProductModal(true)}}>
                                 Выбрать товары
                             </Button>
                         </div>
