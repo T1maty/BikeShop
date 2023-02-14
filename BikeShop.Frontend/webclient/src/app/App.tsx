@@ -4,10 +4,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import {RouterProvider} from "react-router-dom";
 import {Routes} from "./allRoutes";
 import {LangSwitcher} from "../widgets/workspace/LangSwitcher/LangSwitcher";
-import './styles/index.scss'
 import {useTheme} from "./providers/ThemeProvider";
 import {ThemeSwitcher} from "../shared/ui/ThemeSwitcher/ThemeSwitcher";
-
+import './styles/index.scss'
 
 const darkTheme = createTheme({
     palette: {

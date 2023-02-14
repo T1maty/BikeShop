@@ -1,8 +1,8 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-.cashboxWrapper {
-    @include defaultContainer();
+//.cashboxWrapper {
+//    @include defaultContainer();
 
     .cashboxMainBlock {
         @include wrapperMainBlock();
@@ -207,4 +207,4 @@
             }
         }
     }
-}
+//}

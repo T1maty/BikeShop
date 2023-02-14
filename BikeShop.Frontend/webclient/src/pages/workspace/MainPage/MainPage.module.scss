@@ -1,8 +1,8 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-.mainPageWrapper {
-    @include defaultContainer();
+//.mainPageWrapper {
+//    @include defaultContainer();
 
     .mainPageMainBlock {
         @include wrapperMainBlock();
@@ -198,4 +198,4 @@
             }
         }
     }
-}
+//}

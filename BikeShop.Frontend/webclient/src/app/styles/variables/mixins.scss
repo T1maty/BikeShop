@@ -3,9 +3,9 @@
 // default mixins
 
 @mixin defaultContainer() {
+    //border: 1px solid white;
     max-width: 1400px;
     margin: 0 auto;
-    //border: 1px solid white;
 }
 
 @mixin wrapperMainBlock() {

@@ -5,7 +5,7 @@ import s from './ProductCatalog.module.scss';
 
 const ProductCatalog = () => {
     return (
-        <div className={s.productCatalogTableWrapper}>
+        // <div className={s.productCatalogTableWrapper}>
             <div className={s.productCatalogTable_mainBlock}>
 
                 <div className={s.productCatalogTable_leftSide}>
@@ -49,7 +49,7 @@ const ProductCatalog = () => {
                 </div>
 
             </div>
-        </div>
+        // </div>
     );
 };
 

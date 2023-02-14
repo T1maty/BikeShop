@@ -15,7 +15,7 @@ const Cashbox = () => {
     const isActiveTable = true;
 
     return (
-        <div className={s.cashboxWrapper}>
+        // <div className={s.cashboxWrapper}>
             <div className={s.cashboxMainBlock}>
 
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
@@ -131,7 +131,7 @@ const Cashbox = () => {
                 </div>
 
             </div>
-        </div>
+        // </div>
     );
 };
 

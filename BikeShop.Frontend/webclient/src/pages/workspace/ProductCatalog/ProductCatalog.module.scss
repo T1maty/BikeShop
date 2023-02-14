@@ -1,8 +1,8 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-.productCatalogTableWrapper {
-    @include defaultContainer();
+//.productCatalogTableWrapper {
+//    @include defaultContainer();
 
     .productCatalogTable_mainBlock {
         @include wrapperMainBlock();
@@ -72,4 +72,4 @@
             }
         }
     }
-}
+//}

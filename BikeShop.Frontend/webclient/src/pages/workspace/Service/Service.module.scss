@@ -1,8 +1,8 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-.serviceWrapper {
-    @include defaultContainer();
+//.serviceWrapper {
+//    @include defaultContainer();
 
     .serviceBlock {
         @include wrapperMainBlock();
@@ -209,4 +209,4 @@
             }
         }
     }
-}
+//}

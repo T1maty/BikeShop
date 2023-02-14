@@ -35,7 +35,7 @@ const MainPage = () => {
     ])
 
     return (
-        <div className={s.mainPageWrapper}>
+        // <div className={s.mainPageWrapper}>
             <div className={s.mainPageMainBlock}>
 
                 <div className={s.mainPage_header}>
@@ -198,7 +198,7 @@ const MainPage = () => {
                 </div>
 
             </div>
-        </div>
+        // </div>
     );
 };
 

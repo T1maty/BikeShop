@@ -10,7 +10,9 @@ const WorkspaceHeaderProvider = (props: props) => {
     return (
         <div>
             <Header/>
-            {props.children}
+            <div className='App'>
+                {props.children}
+            </div>
         </div>
     );
 };

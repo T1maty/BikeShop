@@ -34,7 +34,7 @@ const Service = () => {
     ])
 
     return (
-        <div className={s.serviceWrapper}>
+        // <div className={s.serviceWrapper}>
             <div className={s.serviceBlock}>
 
                 <div className={s.service_leftSide}>
@@ -189,7 +189,7 @@ const Service = () => {
                 </div>
 
             </div>
-        </div>
+        // </div>
     );
 };
 export default Service;
