@@ -1,16 +1,14 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Modal, TextField} from "@mui/material";
 import useChooseClientModal from './ChooseClientModalStore';
 import {Button} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {useNavigate} from 'react-router-dom';
+import {SubmitHandler, useForm} from "react-hook-form";
+import {CreateUser} from "../../entities";
 
 const ChooseClientModal = () => {
-    const navigate = useNavigate()
-    const open = useChooseClientModal(s => s.chooseClientModal)
-    const setOpen = useChooseClientModal(s => s.setChooseClientModal)
-
     /*const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -23,9 +21,32 @@ const ChooseClientModal = () => {
         onClick: handleOpen,
     })*/
 
-    const chooseButtonHandler = () => {
+    const navigate = useNavigate()
+    const open = useChooseClientModal(s => s.chooseClientModal)
+    const setOpen = useChooseClientModal(s => s.setChooseClientModal)
+    const addNewUser = useChooseClientModal(s => s.addNewUser)
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            patronymic: '',
+            phone: ''
+        }
+    });
+    const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
+        // event: React.MouseEvent<HTMLButtonElement>
+        // event.preventDefault();
+        console.log(data)
+        // addNewUser({firstName, lastName, patronymic, phone});
         // setOpen(false);
-        navigate('/service');
+        // navigate('/service');
+    }
+
+    const addNewUserHandler = () => {
+        // addNewUser({firstName, lastName, patronymic, phone});
+        setOpen(false);
+        // navigate('/service');
     }
 
     return (
@@ -36,52 +57,63 @@ const ChooseClientModal = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <div className={s.clientModal_mainBox}>
-                <div className={s.clientModal_searchBlock}>
-                    <div className={s.clientModal_searchBlock_title}>
-                        Найти клиента:
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className={s.clientModal_mainBox}>
+                    <div className={s.clientModal_searchBlock}>
+                        <div className={s.clientModal_searchBlock_title}>
+                            Найти клиента:
+                        </div>
+                        <div className={s.clientModal_searchBlock_input}>
+                            <Input placeholder={'Введите фамилию'}/>
+                        </div>
+                        <div className={s.clientModal_searchBlock_input}>
+                            <Input placeholder={'Введите номер телефона'}/>
+                        </div>
+                        <div className={s.clientModal_searchBlock_textField}>
+                            <TextField id="outlined-basic"
+                                       variant="outlined"
+                                       value={'Результат поиска'}
+                                       style={{backgroundColor: '#5C636A'}}
+                                       onChange={() => {}}
+                                       fullWidth={true}
+                            />
+                        </div>
                     </div>
-                    <div className={s.clientModal_searchBlock_input}>
-                        <Input placeholder={'Введите фамилию'}/>
+                    <div className={s.clientModal_textFields}>
+                        <div className={s.textFields_title}>
+                            Создать клиента:
+                        </div>
+                        <div>
+                            <Input placeholder={'Фамилия'}
+                                   {...register('firstName', {required: true})}
+                            />
+                        </div>
+                        <div>
+                            <Input placeholder={'Имя'}
+                                   {...register('lastName', {required: true})}
+                            />
+                        </div>
+                        <div>
+                            <Input placeholder={'Отчество'}
+                                   {...register('patronymic', {required: true})}
+                            />
+                        </div>
+                        <div>
+                            <Input placeholder={'Номер телефона'}
+                                   {...register('phone', {required: true})}
+                            />
+                        </div>
                     </div>
-                    <div className={s.clientModal_searchBlock_input}>
-                        <Input placeholder={'Введите номер телефона'}/>
-                    </div>
-                    <div className={s.clientModal_searchBlock_textField}>
-                        <TextField id="outlined-basic"
-                                   variant="outlined"
-                                   value={'Результат поиска?'}
-                                   style={{backgroundColor: '#5C636A'}}
-                                   onChange={() => {}}
-                                   fullWidth={true}
-                        />
+                    <div className={s.clientModal_buttonsBlock}>
+                        <Button type={'submit'}>
+                            Добавить клиента
+                        </Button>
+                        <Button onClick={() => {setOpen(false)}}>
+                            Отмена
+                        </Button>
                     </div>
                 </div>
-                <div className={s.clientModal_textFields}>
-                    <div className={s.textFields_title}>
-                        Создать клиента:
-                    </div>
-                    <div>
-                        <Input placeholder={'Фамилия'}/>
-                    </div>
-                    <div>
-                        <Input placeholder={'Имя'}/>
-                    </div>
-                    <div>
-                        <Input placeholder={'Отчество'}/>
-                    </div><div>
-                    <Input placeholder={'Номер телефона'}/>
-                </div>
-                </div>
-                <div className={s.clientModal_buttonsBlock}>
-                    <Button onClick={chooseButtonHandler}>
-                        Добавить клиента
-                    </Button>
-                    <Button onClick={() => {setOpen(false)}}>
-                        Отмена
-                    </Button>
-                </div>
-            </div>
+            </form>
         </Modal>
     );
 };
