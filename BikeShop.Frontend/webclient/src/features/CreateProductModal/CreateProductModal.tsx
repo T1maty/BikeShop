@@ -7,17 +7,18 @@ import {useSnackbar} from "notistack";
 import {useTranslation} from "react-i18next";
 import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
 
-interface props {
+interface CreateProductModalProps {
     onSuccess?: (data: IProduct) => void
 }
 
-const CreateProductModal = (props: props) => {
+const CreateProductModal = (props: CreateProductModalProps) => {
     const error = useTranslation('errors').t
 
-    const {enqueueSnackbar} = useSnackbar();
+    const {enqueueSnackbar} = useSnackbar()
     const open = useCreateProductModal(s => s.open)
     const setOpen = useCreateProductModal(s => s.setOpen)
     const create = useCreateProductModal(s => s.create)
+
     const formControl = useForm<ICreateProduct>({
         defaultValues: {
             name: "",
@@ -86,22 +87,22 @@ const CreateProductModal = (props: props) => {
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
 
-                <ControlledInput name={"name"} lable={"Название товара"} control={formControl}
+                <ControlledInput name={"name"} label={"Название товара"} control={formControl}
                                  rules={{required: "Обязательное поле"}}/>
 
-                <ControlledInput name={"catalogKey"} lable={"Каталожный номер"} control={formControl}
+                <ControlledInput name={"catalogKey"} label={"Каталожный номер"} control={formControl}
                                  rules={{required: "Обязательное поле"}}/>
 
-                <ControlledInput name={"manufacturerBarcode"} lable={"Штрихкод производителя"} control={formControl}
+                <ControlledInput name={"manufacturerBarcode"} label={"Штрихкод производителя"} control={formControl}
                                  rules={{required: "Обязательное поле"}}/>
 
-                <ControlledInput name={"incomePrice"} lable={"Цена возможной закупки"} control={formControl}
+                <ControlledInput name={"incomePrice"} label={"Цена возможной закупки"} control={formControl}
                                  rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
-                <ControlledInput name={"dealerPrice"} lable={"Оптовая цена"} control={formControl}
+                <ControlledInput name={"dealerPrice"} label={"Оптовая цена"} control={formControl}
                                  rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
-                <ControlledInput name={"retailPrice"} lable={"Розничная цена"} control={formControl}
+                <ControlledInput name={"retailPrice"} label={"Розничная цена"} control={formControl}
                                  rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
                 <ControlledCheckbox name={"b2BVisibility"} lable={'Видим в B2B'} control={formControl}/>

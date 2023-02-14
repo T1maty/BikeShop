@@ -1,12 +1,13 @@
-import React, {ChangeEvent, useState} from 'react';
+import React from 'react';
 import {Modal, TextField} from "@mui/material";
 import useChooseClientModal from './ChooseClientModalStore';
-import {Button} from '../../shared/ui';
+import {Button, ControlledInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {useNavigate} from 'react-router-dom';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {CreateUser} from "../../entities";
+import {useSnackbar} from 'notistack';
 
 const ChooseClientModal = () => {
     /*const [open, setOpen] = React.useState(false);
@@ -21,12 +22,26 @@ const ChooseClientModal = () => {
         onClick: handleOpen,
     })*/
 
+    const errorMessages = {
+        required: 'Поле обязательно для заполнения'
+    }
+
     const navigate = useNavigate()
+    const {enqueueSnackbar} = useSnackbar()
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    /*const { register, handleSubmit, watch, formState: { errors } } = useForm({
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            patronymic: '',
+            phone: ''
+        }
+    });*/
+
+    const formControl = useForm({
         defaultValues: {
             firstName: '',
             lastName: '',
@@ -35,24 +50,29 @@ const ChooseClientModal = () => {
         }
     });
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
+        // console.log(data)
         // event: React.MouseEvent<HTMLButtonElement>
         // event.preventDefault();
-        console.log(data)
-        // addNewUser({firstName, lastName, patronymic, phone});
-        // setOpen(false);
-        // navigate('/service');
+
+        addNewUser(data).then((response) => {
+            setOpen(false);
+
+            formControl.setValue('firstName', '')
+            formControl.setValue('lastName', '')
+            formControl.setValue('patronymic', '')
+            formControl.setValue('phone', '')
+
+            navigate('/service')
+
+            enqueueSnackbar('Клиент добавлен', {variant: 'success', autoHideDuration: 3000})
+        }).catch((error) => {
+            let message = error(error.response.data.errorDescription).toString()
+            formControl.setError('firstName', {type: 'serverError', message: message})
+            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+            console.error(error.response.data)
+        })
+
     }
-
-    const addNewUserHandler = () => {
-        // addNewUser({firstName, lastName, patronymic, phone});
-        setOpen(false);
-        // navigate('/service');
-    }
-
-    /*const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = (data: any) => console.log(data);
-
-    console.log(watch("example")); // watch input value by passing the name of it*/
 
     return (
         // {clonedChildren}
@@ -62,20 +82,7 @@ const ChooseClientModal = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-
-            {/*<form onSubmit={handleSubmit(onSubmit)}>*/}
-            {/*    /!* register your input into the hook by invoking the "register" function *!/*/}
-            {/*    <input defaultValue="test" {...register("example")} />*/}
-
-            {/*    /!* include validation with required or other standard HTML validation rules *!/*/}
-            {/*    <input {...register("exampleRequired", { required: true })} />*/}
-            {/*    /!* errors will return when field validation fails  *!/*/}
-            {/*    {errors.exampleRequired && <span>This field is required</span>}*/}
-
-            {/*    <input type="submit" />*/}
-            {/*</form>*/}
-
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <div className={s.clientModal_mainBox}>
                     <div className={s.clientModal_searchBlock}>
                         <div className={s.clientModal_searchBlock_title}>
@@ -102,28 +109,28 @@ const ChooseClientModal = () => {
                             Создать клиента:
                         </div>
                         <div>
-                            <Input placeholder={'Фамилия'}
-                                   {...register('firstName', {required: true})}
+                            <ControlledInput name={'firstName'} label={'Фамилия'} control={formControl}
+                                             rules={{required: errorMessages.required}}
                             />
                         </div>
                         <div>
-                            <Input placeholder={'Имя'}
-                                   {...register('lastName', {required: true})}
+                            <ControlledInput name={'lastName'} label={'Имя'} control={formControl}
+                                             rules={{required: errorMessages.required}}
                             />
                         </div>
                         <div>
-                            <Input placeholder={'Отчество'}
-                                   {...register('patronymic', {required: true})}
+                            <ControlledInput name={'patronymic'} label={'Отчество'} control={formControl}
+                                             rules={{required: errorMessages.required}}
                             />
                         </div>
                         <div>
-                            <Input placeholder={'Номер телефона'}
-                                   {...register('phone', {required: true})}
+                            <ControlledInput name={'phone'} label={'Номер телефона'} control={formControl}
+                                             rules={{required: errorMessages.required}}
                             />
                         </div>
                     </div>
                     <div className={s.clientModal_buttonsBlock}>
-                        <Button>
+                        <Button type={'submit'}>
                             Добавить клиента
                         </Button>
                         <Button onClick={() => {setOpen(false)}}>

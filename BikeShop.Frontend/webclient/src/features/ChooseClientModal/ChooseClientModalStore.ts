@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
-import {CreateUser} from "../../entities";
+import {CreateUser, IProduct} from '../../entities';
 
 interface ChooseClientModalStore {
     chooseClientModal: boolean
@@ -16,7 +16,7 @@ interface ChooseClientModalStore {
     setPatronymic: (patronymic: string) => void
     phone: string
     setPhone: (phone: string) => void
-    addNewUser: (data: CreateUser) => void
+    addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
 
 const useChooseClientModal = create<ChooseClientModalStore>()(persist(devtools(immer((set) => ({
@@ -43,7 +43,7 @@ const useChooseClientModal = create<ChooseClientModalStore>()(persist(devtools(i
     }),
 
     addNewUser: (data) => {
-        return $api.post('/user/create', data)
+        return $api.post<CreateUser>('/user/create', data)
     }
 }))), {
     name: "chooseClientModalStore",

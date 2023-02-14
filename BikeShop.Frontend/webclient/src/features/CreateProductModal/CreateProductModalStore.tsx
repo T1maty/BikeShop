@@ -23,4 +23,4 @@ const useCreateProductModal = create<createProductModalStore>()(persist(devtools
     version: 1
 }));
 
-export default useCreateProductModal
+export default useCreateProductModal;
