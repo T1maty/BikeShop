@@ -69,6 +69,13 @@
             }
             .rightSide_table {
                 border: 1px solid white;
+
+                .table_content {
+                    overflow-y: auto;
+                    height: 500px;
+                }
+                .table_pagination {
+                }
             }
         }
     }

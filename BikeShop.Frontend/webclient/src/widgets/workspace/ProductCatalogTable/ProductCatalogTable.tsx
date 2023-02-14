@@ -11,6 +11,7 @@ import {columns} from './ProductCatalogTableConfig';
 import useProductCatalogTableStore from './ProductCatalogTableStore';
 import ProductCatalogTablePagination from './ProductCatalogTablePagination';
 import ProductCatalogTableRow from './ProductCatalogTableRow';
+import s from "../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss";
 
 const ProductCatalogTable = () => {
 
@@ -29,44 +30,47 @@ const ProductCatalogTable = () => {
     }, [])
 
     return (
-        <div>
+        <>
             <ProductCatalogTableContextMenu/>
             <CreateProductModal onSuccess={addNewProduct}/>
             <UpdateProductModal onSuccess={updateRow}/>
+            <div className={s.table_content}>
+                <TableContainer>
+                    <Table
+                        stickyHeader
+                        aria-label="sticky table"
+                        size={'small'}
 
-            <TableContainer>
-                <Table
-                    stickyHeader
-                    aria-label="sticky table"
-                    size={'small'}
-
-                >
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{minWidth: column.minWidth}}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => {
-                                return (
-                                    <ProductCatalogTableRow key={row.id} row={row}/>
-                                );
-                            })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <ProductCatalogTablePagination/>
-        </div>
+                    >
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{minWidth: column.minWidth}}
+                                    >
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row) => {
+                                    return (
+                                        <ProductCatalogTableRow key={row.id} row={row}/>
+                                    );
+                                })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+            <div className={s.table_pagination}>
+                <ProductCatalogTablePagination/>
+            </div>
+        </>
     );
 }
 
