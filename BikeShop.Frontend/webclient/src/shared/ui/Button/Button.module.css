@@ -12,6 +12,9 @@
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
+.btn:disabled {
+    background-color: var(--button-disabled-color);
+}
 
 span.ripple {
     position: absolute;

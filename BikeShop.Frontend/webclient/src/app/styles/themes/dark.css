@@ -1,4 +1,5 @@
 .app.dark {
     --primary-color: #1876D1;
     --inverted-primary-color: #ffffff;
+    --button-disabled-color: #5C636A;
 }
