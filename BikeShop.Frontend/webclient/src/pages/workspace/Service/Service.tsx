@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import s from './Service.module.scss'
-import {ClientCard} from '../../../features';
+import {ChooseClientModal, ClientCard} from '../../../features';
 import {Button, InputUI} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
+import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 
 const Service = () => {
+
+    const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
 
     const [repair, setRepair] = useState([
         {id: 1, repair: 'repair 01'},
@@ -41,8 +44,9 @@ const Service = () => {
 
                 <div className={s.service_leftSide}>
                     <div className={s.leftSide_buttons}>
+                        <ChooseClientModal/>
                         <div className={s.buttons_create}>
-                            <Button onClick={() => {}}>
+                            <Button onClick={() => {setChooseClientModal(true)}}>
                                 Создать ремонт
                             </Button>
                         </div>

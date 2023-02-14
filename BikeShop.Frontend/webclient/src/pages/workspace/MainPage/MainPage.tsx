@@ -4,7 +4,7 @@ import s from "./MainPage.module.scss";
 import {Button, InputUI} from '../../../shared/ui';
 import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
-import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
+import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 
 const navLinks = [
     'Create repairing',
@@ -43,7 +43,7 @@ const MainPage = () => {
                         <div className={s.header_leftSide_deal}>
                             <div>
                                 <ChooseClientModal/>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {setChooseClientModal(true)}}>
                                     Создать ремонт
                                 </Button>
                             </div>
