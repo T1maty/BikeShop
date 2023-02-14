@@ -76,12 +76,8 @@ const CreateProductModal = (props: CreateProductModalProps) => {
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
+            onClose={() => {setOpen(false)}}
+            onContextMenu={(event) => {event.preventDefault()}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -105,15 +101,14 @@ const CreateProductModal = (props: CreateProductModalProps) => {
                 <ControlledInput name={"retailPrice"} label={"Розничная цена"} control={formControl}
                                  rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
-                <ControlledCheckbox name={"b2BVisibility"} lable={'Видим в B2B'} control={formControl}/>
+                <ControlledCheckbox name={"b2BVisibility"} lable={'Видим в B2B'}
+                                    control={formControl}/>
                 <ControlledCheckbox name={"retailVisibility"} lable={'Видим в интернет-магазине'}
                                     control={formControl}/>
 
                 <br/>
                 <Button color={'primary'} type={'submit'}>Создать товар</Button>
-                <Button color={'primary'} onClick={() => {
-                    setOpen(false)
-                }}>Отмена</Button>
+                <Button color={'primary'} onClick={() => {setOpen(false)}}>Отмена</Button>
             </Box>
         </Modal>
     );

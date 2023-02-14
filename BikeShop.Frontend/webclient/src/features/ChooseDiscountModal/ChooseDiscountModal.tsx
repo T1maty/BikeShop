@@ -8,18 +8,6 @@ const ChooseDiscountModal = () => {
     const open = useChooseDiscountModal(s => s.chooseDiscountModal)
     const setOpen = useChooseDiscountModal(s => s.setChooseDiscountModal)
 
-    /*const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const clonedChildren = cloneElement(children, {
-        onClick: handleOpen,
-    })*/
-
     const [age, setAge] = React.useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -32,7 +20,6 @@ const ChooseDiscountModal = () => {
     }
 
     return (
-        // {clonedChildren}
         <Modal
             open={open}
             onClose={() => {setOpen(false)}}

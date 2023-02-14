@@ -26,8 +26,8 @@ const ChooseClientModal = () => {
         required: 'Поле обязательно для заполнения'
     }
 
-    const navigate = useNavigate()
     const {enqueueSnackbar} = useSnackbar()
+    const navigate = useNavigate()
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
@@ -50,10 +50,6 @@ const ChooseClientModal = () => {
         }
     });
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
-        // console.log(data)
-        // event: React.MouseEvent<HTMLButtonElement>
-        // event.preventDefault();
-
         addNewUser(data).then((response) => {
             setOpen(false);
 
@@ -109,22 +105,26 @@ const ChooseClientModal = () => {
                             Создать клиента:
                         </div>
                         <div>
-                            <ControlledInput name={'firstName'} label={'Фамилия'} control={formControl}
+                            <ControlledInput name={'firstName'} label={'Фамилия'}
+                                             control={formControl}
                                              rules={{required: errorMessages.required}}
                             />
                         </div>
                         <div>
-                            <ControlledInput name={'lastName'} label={'Имя'} control={formControl}
+                            <ControlledInput name={'lastName'} label={'Имя'}
+                                             control={formControl}
                                              rules={{required: errorMessages.required}}
                             />
                         </div>
                         <div>
-                            <ControlledInput name={'patronymic'} label={'Отчество'} control={formControl}
+                            <ControlledInput name={'patronymic'} label={'Отчество'}
+                                             control={formControl}
                                              rules={{required: errorMessages.required}}
                             />
                         </div>
                         <div>
-                            <ControlledInput name={'phone'} label={'Номер телефона'} control={formControl}
+                            <ControlledInput name={'phone'} label={'Номер телефона'}
+                                             control={formControl}
                                              rules={{required: errorMessages.required}}
                             />
                         </div>
