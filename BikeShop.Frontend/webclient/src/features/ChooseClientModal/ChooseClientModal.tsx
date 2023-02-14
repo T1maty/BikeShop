@@ -63,31 +63,19 @@ const ChooseClientModal = () => {
                     </div>
                     <div>
                         <Input placeholder={'Фамилия'}/>
-                        {/*<TextField id="outlined-basic"*/}
-                        {/*           variant="outlined"*/}
-                        {/*           value={'Фамилия'}*/}
-                        {/*           style={{backgroundColor: '#5C636A'}}*/}
-                        {/*           onChange={() => {}}*/}
-                        {/*           fullWidth={true}*/}
-                        {/*/>*/}
                     </div>
                     <div>
                         <Input placeholder={'Имя'}/>
-                        {/*<TextField id="outlined-basic"*/}
-                        {/*           variant="outlined"*/}
-                        {/*           value={'Имя'}*/}
-                        {/*           style={{backgroundColor: '#5C636A'}}*/}
-                        {/*           onChange={() => {}}*/}
-                        {/*           fullWidth={true}*/}
-                        {/*/>*/}
                     </div>
                     <div>
                         <Input placeholder={'Отчество'}/>
-                    </div>
+                    </div><div>
+                    <Input placeholder={'Номер телефона'}/>
+                </div>
                 </div>
                 <div className={s.clientModal_buttonsBlock}>
                     <Button onClick={chooseButtonHandler}>
-                        Выбрать клиента
+                        Добавить клиента
                     </Button>
                     <Button onClick={() => {setOpen(false)}}>
                         Отмена
