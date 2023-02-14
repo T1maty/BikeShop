@@ -1,9 +1,10 @@
 @import './src/app/styles/variables/mixins';
 @import './src/app/styles/variables/variables';
+
 .tableBox {
     border: 1px solid white;
     @include widthHeightFull();
-    margin-right: $defaultLargeMargin;
+    height: 100%;
 
     .tableBox_buttons {
         @include flexBetween();
@@ -35,6 +36,7 @@
         border-radius: $defaultBorderRadius;
         padding: $defaultLargeMargin;
         @include flexColumn();
-        height: 85%; // надо исправить
+        height: 500px;
+        overflow-y: scroll;
     }
 }

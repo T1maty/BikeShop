@@ -21,10 +21,12 @@ const Service = () => {
 
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
-        {id: 2, title: 'Велосипед', price: 2500, count: 1},
+        {id: 2, title: 'Велосипед', price: 25000000, count: 1},
         {id: 3, title: 'Руль', price: 250, count: 2},
         {id: 4, title: 'Рама', price: 500, count: 1},
-        {id: 5, title: 'Вилка', price: 1000, count: 1}
+        {id: 5, title: 'Вилка', price: 1000, count: 1},
+        {id: 6, title: 'Втулка', price: 2000, count: 1},
+        {id: 7, title: 'Вынос', price: 1500, count: 1},
     ])
 
     const [repairItems, setRepairItems] = useState([
@@ -121,70 +123,7 @@ const Service = () => {
 
                     <div className={s.rightSide_tables}>
                         <ServiceTable data={productsItem}/>
-                        {/*<div className={s.tables_left}>*/}
-                        {/*    <div className={s.tables_left_buttons}>*/}
-                        {/*        <div className={s.buttons_editBtn}>*/}
-                        {/*            <Button text={'Редактор'} onClick={() => {}}/>*/}
-                        {/*        </div>*/}
-                        {/*        <div className={s.buttons_discountField}>*/}
-                        {/*            <div className={s.discountField_title}>*/}
-                        {/*                Скидка*/}
-                        {/*            </div>*/}
-                        {/*            <div className={s.discountField_value}>*/}
-                        {/*                30%*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*        <div className={s.buttons_resultField}>*/}
-                        {/*            3*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*    <div className={s.tables_left_table}>*/}
-                        {/*        {*/}
-                        {/*            items.map(item => {*/}
-                        {/*                return (*/}
-                        {/*                    <TableProductItem key={item.id}*/}
-                        {/*                                      title={item.title}*/}
-                        {/*                                      price={item.price}*/}
-                        {/*                                      count={item.count}*/}
-                        {/*                    />*/}
-                        {/*                )*/}
-                        {/*            })*/}
-                        {/*        }*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
                         <ServiceTable data={repairItems}/>
-                        {/*<div className={s.tables_right}>*/}
-                        {/*    <div className={s.right_buttons}>*/}
-                        {/*        <div className={s.buttons_editBtn}>*/}
-                        {/*            <Button text={'Редактор'} onClick={() => {}}/>*/}
-                        {/*        </div>*/}
-                        {/*        <div className={s.buttons_discountField}>*/}
-                        {/*            <div className={s.discountField_title}>*/}
-                        {/*                Скидка*/}
-                        {/*            </div>*/}
-                        {/*            <div className={s.discountField_value}>*/}
-                        {/*                30%*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*        <div className={s.buttons_resultField}>*/}
-                        {/*            444*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*    <div className={s.tables_right_table}>*/}
-                        {/*        {*/}
-                        {/*            repairItems.map(item => {*/}
-                        {/*                return (*/}
-                        {/*                    <TableProductItem key={item.id}*/}
-                        {/*                                      title={item.title}*/}
-                        {/*                                      price={item.price}*/}
-                        {/*                                      count={item.count}*/}
-                        {/*                    />*/}
-                        {/*                )*/}
-                        {/*            })*/}
-                        {/*        }*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
 

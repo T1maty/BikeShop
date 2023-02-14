@@ -3,20 +3,19 @@
 
 .tableItem_box {
     @include flexBetween();
-    width: 100%;
+    width: 95%; // ?
     border: 2px solid $themeColorWhite;
     border-radius: $smallBorderRadius;
     margin: $defaultSmallMargin;
     padding: $defaultSmallMargin;
 
     .tableItem_title {
-
+        word-break: break-word;
+        margin-right: $defaultSmallMargin;
     }
 
     .tableItem_numbers {
-        display: flex;
-        //@include flexBetween();
-        //width: 150px;
+        @include flexCenter();
 
         .tableItem_price {
             color: black;
@@ -24,14 +23,16 @@
             border-radius: $smallBorderRadius;
             padding: $defaultSmallMargin;
             margin-right: $defaultSmallMargin;
-            //height: 100%;
+            min-width: 80px;
+            @include flexCenter();
         }
         .tableItem_sum {
             color: black;
             background-color: $themeColorWhite;
             border-radius: $smallBorderRadius;
             padding: $defaultSmallMargin;
-            //height: 100%;
+            min-width: 80px;
+            @include flexCenter();
         }
     }
 }

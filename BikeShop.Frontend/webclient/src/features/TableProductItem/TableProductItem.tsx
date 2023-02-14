@@ -13,7 +13,11 @@ const TableProductItem: React.FC<TableItemProps> = ({title, price, count}) => {
         <div className={s.tableItem_box}>
             <div className={s.tableItem_title}>{title}</div>
             <div className={s.tableItem_numbers}>
-                <div className={s.tableItem_price}>{price} x {count}</div>
+                <div className={s.tableItem_price}>
+                    <div>{price}</div>
+                    <div>x</div>
+                    <div>{count}</div>
+                </div>
                 <div className={s.tableItem_sum}>{price*count}</div>
             </div>
         </div>
