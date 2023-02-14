@@ -1,10 +1,12 @@
 using AutoMapper;
+using BikeShop.Products.Application.Common.Exceptions;
 using BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.WebApi.Models.Product;
+using BikeShop.Products.WebApi.Models.Validation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,16 +38,16 @@ namespace BikeShop.Products.WebApi.Controllers
         /// <returns>Ничего</returns>
         ///
         /// <response code="200">Успех. Продукт создан</response>
-        /// <response code="400">Товар с указанным manufacturerBarcode уже существует</response>
-        /// <response code="404">Бренд с указанным id не найден</response>
+        /// <response code="404">Бренд с указанным id не найден (brand_not_found)</response>
+        /// <response code="409">Товар с указанным manufacturerBarcode уже существует (product_already_exists)</response>
         /// <response code="500">Скорее всего, одного из тэгов из tagsIds не существует</response>
         /// <response code="422">Невалидная модель</response>
         [HttpPost("create")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(IException), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(IException), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ValidationResultModel), StatusCodes.Status422UnprocessableEntity)]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductModel model)
         {
             if (!ModelState.IsValid)
@@ -66,11 +68,11 @@ namespace BikeShop.Products.WebApi.Controllers
         /// <returns>Возвращает продукт с указанным штрихкодом</returns>
         ///
         /// <response code="200">Успех. Возвращает товар по указанному штрихкоду</response>
-        /// <response code="404">Продукт с указанным штрихкодом не найден</response>
+        /// <response code="404">Продукт с указанным штрихкодом не найден (product_not_found)</response>
         [HttpGet("getbybarcode/{barcode}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetProductByBarcode(string barcode)
+        [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Product>> GetProductByBarcode(string barcode)
         {
             var query = new GetProductByBarcodeQuery { Barcode = barcode };
             var product = await _mediator.Send(query);
@@ -91,12 +93,12 @@ namespace BikeShop.Products.WebApi.Controllers
         /// <returns>Ничего</returns>
         ///
         /// <response code="200">Успех. Продукт обновлен</response>
-        /// <response code="404">Не найден продукт с таким id / Не найден бренд с таким id.</response>
+        /// <response code="404">Не найден продукт с таким id (product_not_found) / Не найден бренд с таким id (brand_not_found)</response>
         /// <response code="422">Невалидная модель</response>
         [HttpPut("update")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(void),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ValidationResultModel),StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductModel model)
         {
             if (!ModelState.IsValid)
@@ -121,11 +123,11 @@ namespace BikeShop.Products.WebApi.Controllers
         /// <returns>Возвращает продукты по указанным тэгам</returns>
         ///
         /// <response code="200">Успех. Возвращает массив товаров по указанным тэгам</response>
-        /// <response code="400">Некорректно указанные тэги. Правильный формат: 1-3-8</response>
+        /// <response code="400">Некорректно указанные тэги. Правильный формат: 1-3-8 (tags_invalid)</response>
         [HttpGet("getbytags/{tagsIds}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetProductsByTags(string tagsIds)
+        [ProducesResponseType(typeof(ProductsListModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ProductsListModel>> GetProductsByTags(string tagsIds)
         {
             var query = new GetProductsByTagsQuery { TagsArrayStr = tagsIds };
             var productsModel = await _mediator.Send(query);

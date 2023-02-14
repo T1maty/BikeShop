@@ -32,7 +32,8 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
                     $"Product with manufacturer barcode {request.ManufacturerBarcode} already exists")
                 {
                     Error = "product_already_exists",
-                    ErrorDescription = "Product with given manufacturer barcode already exists"
+                    ErrorDescription = "Product with given manufacturer barcode already exists",
+                    ReasonField = "manufacturerBarcode"
                 };
         }
 
@@ -42,7 +43,8 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             throw new NotFoundException($"Create product error. Brand with id {request.BrandId} not found")
             {
                 Error = "brand_not_found",
-                ErrorDescription = "Create product error. Brand with given id not found"
+                ErrorDescription = "Create product error. Brand with given id not found",
+                ReasonField = "brandId"
             };
 
 
