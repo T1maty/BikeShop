@@ -1,16 +1,21 @@
 import React from 'react';
-import {Box, Button, Checkbox, FormControlLabel, Modal, TextField, Typography} from "@mui/material";
+import {Box, Button, Modal, Typography} from "@mui/material";
 import useCreateTagModal from "./CreateTagModalStore";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {ICreateTag} from "../../entities";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {ICreateTag, IProductTag} from "../../entities";
+import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
 
-const CreateTagModal = () => {
+interface props {
+    onSeccuss?: (tag: IProductTag) => void
+}
+
+const CreateTagModal = (props: props) => {
     const open = useCreateTagModal(s => s.createTagModal)
     const setOpen = useCreateTagModal(s => s.setCreateTagModal)
     const parentNode = useCreateTagModal(s => s.parentNode)
     const createTag = useCreateTagModal(s => s.createTag)
 
-    const {control, formState: {errors}, handleSubmit} = useForm<ICreateTag>({
+    const control = useForm<ICreateTag>({
         defaultValues: {
             name: "",
             sortOrder: 0,
@@ -38,6 +43,13 @@ const CreateTagModal = () => {
         data.parentId = parentNode.id
         createTag(data).then(r => {
             setOpen(false)
+            props.onSeccuss ? props.onSeccuss(r.data) : true
+            
+            control.setValue('name', '')
+            control.setValue('sortOrder', 0)
+            control.setValue('isRetailVisible', false)
+            control.setValue('isB2BVisible', false)
+            control.setValue('isUniversal', false)
         })
     };
 
@@ -53,87 +65,27 @@ const CreateTagModal = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={style} component="form" onSubmit={handleSubmit(onSubmit)}>
+            <Box sx={style} component="form" onSubmit={control.handleSubmit(onSubmit)}>
+
                 <Typography sx={{pb: 3}}>Добавить
-                    в: {parentNode.id === '0' ? 'КОРЕНЬ ДЕРЕВА' : parentNode.name}</Typography>
+                    в: {parentNode.id === undefined ? 'КОРЕНЬ ДЕРЕВА' : parentNode.name}</Typography>
 
-                <Controller
-                    name="name"
-                    control={control}
-                    rules={{required: "Введите название нового тега"}}
-                    render={({field}: any) =>
+                <ControlledInput name={"name"} label={"Название тега"} control={control}
+                                 rules={{required: "Введите название нового тега"}}/>
+                <br/>
+                <br/>
+                <ControlledInput name={"sortOrder"} label={"Порядок сортировки"} control={control}
+                                 rules={{
+                                     required: "Порядок сортировки необходимо ввести",
+                                     validate: (value: number) => value > -1
+                                 }}/>
 
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   error={!!errors.name}
-                                   label="Название тега"
-                                   variant="outlined"/>
-                    }/>
-
-                <Controller
-                    name="sortOrder"
-                    control={control}
-                    rules={{required: "Порядок сортировки необходимо ввести"}}
-                    render={({field}: any) =>
-
-                        <TextField {...field} sx={{pb: 3}}
-                                   fullWidth={true}
-                                   label="Порядок сортировки"
-                                   variant="outlined"
-                                   error={!!errors.sortOrder}/>
-                    }/>
-
-
-                <Controller
-                    name="isRetailVisible"
-                    control={control}
-                    render={({field}) => (
-                        <FormControlLabel
-                            label={'Видим в интернет-магазине'}
-                            value={field.value}
-                            control={
-                                <Checkbox
-                                    value={field.value}
-                                    onChange={(event, value) => {
-                                        field.onChange(value);
-                                    }}/>
-                            }/>
-                    )}/>
-
-                <Controller
-                    name="isB2BVisible"
-                    control={control}
-                    render={({field}) => (
-                        <FormControlLabel
-                            label={'Виден в B2B'}
-                            value={field.value}
-                            control={
-                                <Checkbox
-                                    value={field.value}
-                                    onChange={(event, value) => {
-                                        field.onChange(value);
-                                    }}/>
-                            }/>
-                    )}/>
-
-                <Controller
-                    name="isUniversal"
-                    control={control}
-                    render={({field}) => (
-                        <FormControlLabel
-                            label={'Универсальный тег'}
-                            value={field.value}
-                            control={
-                                <Checkbox
-                                    value={field.value}
-                                    onChange={(event, value) => {
-                                        field.onChange(value);
-                                        console.log(field.value)
-                                    }}/>
-                            }/>
-                    )}/>
+                <ControlledCheckbox name={"isRetailVisible"} lable={'Видим в интернет-магазине'} control={control}/>
+                <ControlledCheckbox name={"isB2BVisible"} lable={'Виден в B2B'} control={control}/>
+                <ControlledCheckbox name={"isUniversal"} lable={'Универсальный тег'} control={control}/>
                 <br/>
                 <Button color='primary' type="submit">Создать тег</Button>
+
             </Box>
         </Modal>
     );

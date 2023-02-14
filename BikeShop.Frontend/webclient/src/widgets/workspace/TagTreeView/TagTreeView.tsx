@@ -13,12 +13,12 @@ const TagTreeView = () => {
 
     const setTreeViewData = useTagTreeView(s => s.setTreeViewTags)
     const expanded = useTagTreeView(s => s.expandedTags)
+    const handleExpanded = useTagTreeView(s => s.handleExpand)
     const selected = useTagTreeView(s => s.selectedTag)
     const setSelected = useTagTreeView(s => s.setSelectedTag)
-
-    const hExpanden = useTagTreeView(s => s.handleExpand)
-    const hSelected = useTagTreeView(s => s.handleSelect)
     const fetchTags = useTagTreeView(s => s.fetchTags)
+    const setContextVisible = useTagTreeView(s => s.setContextMenuVisible)
+    const addTag = useTagTreeView(s => s.addNewTag)
 
 
     React.useEffect(() => {
@@ -43,7 +43,7 @@ const TagTreeView = () => {
                  event.preventDefault()
              }}
         >
-            <CreateTagModal/>
+            <CreateTagModal onSeccuss={addTag}/>
             <TagTreeViewContextMenu/>
             <TreeView
                 aria-label="controlled"
@@ -51,9 +51,18 @@ const TagTreeView = () => {
                 defaultExpandIcon={<ChevronRightIcon/>}
                 expanded={expanded}
                 selected={[selected]}
-                onNodeToggle={hExpanden}
+                onContextMenu={(event) => {
+                    setContextVisible(true, event.clientX, event.clientY)
+                }}
+                onDoubleClickCapture={() => {
+                    handleExpanded()
+                }}
                 onNodeSelect={(event: any, nodeId: string[]) => {
                     setSelected(nodeId[0])
+
+                }}
+                onNodeFocus={(event, nodeId) => {
+                    setSelected(nodeId)
                 }}
             >
                 <TagTreeViewNodes/>

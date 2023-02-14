@@ -37,12 +37,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
         // Добавляю пользователя в бд
         var result = await _userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
-            var users = await _userManager.Users
-                .Where(user => user.PhoneNumber.Contains(request.Phone) &&
-                               request.FIO==string.Empty?true:
-                                       (user.LastName + user.FirstName + user.Patronymic).ToUpper()
-                                   .Contains(request.FIO.ToUpper()))
-                .ToListAsync(cancellationToken);
+
             throw new RegistrationException($"Error while user '{request.Phone}' registration")
             {
                 

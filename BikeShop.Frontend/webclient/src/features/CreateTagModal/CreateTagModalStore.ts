@@ -27,7 +27,7 @@ const useCreateTagModal = create<createTagModalStore>()(persist(devtools(immer((
         parentNode: node
     }),
     createTag: (tag) => {
-        return $api.post<ICreateTag>('/tag/create', tag)
+        return $api.post<IProductTag>('/tag/create', tag)
     }
 }))), {
     name: "createTagModalStore",

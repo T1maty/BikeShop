@@ -4,16 +4,16 @@
 @import "./themes/dark";
 
 .App {
-    //font: var(--font-m);
-    //background: var(--bg-color);
-    //color: var(--primary-color);
+  //font: var(--font-m);
+  //background: var(--bg-color);
+  //color: var(--primary-color);
 
-    //border: 1px solid white;
-    max-width: 1400px;
-    margin: 0 auto;
-    //min-height: 100vh;
-    min-height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+  //border: 1px solid white;
+  max-width: 1400px;
+  margin: 0 auto;
+  //min-height: 100vh;
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

@@ -37,7 +37,7 @@ const ProductCatalogTable = () => {
             <div className={s.table_content}>
                 <TableContainer>
                     <Table
-                        stickyHeader
+                        stickyHeader={true}
                         aria-label="sticky table"
                         size={'small'}
 

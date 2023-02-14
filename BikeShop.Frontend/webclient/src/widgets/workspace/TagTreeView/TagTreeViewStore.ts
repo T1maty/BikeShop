@@ -1,4 +1,3 @@
-import React from "react";
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
@@ -16,19 +15,20 @@ interface tagTreeViewStore {
     setTreeViewTags: (tags: IProductTag[]) => void,
     addTreeViewTag: (tag: IProductTag) => void,
     removeTreeViewTag: (tagId: string) => void,
+    addNewTag: (tag: IProductTag) => void
 
     expandedTags: string[]
     selectedTag: string
     setSelectedTag: (id: string) => void
     setExpandedTags: (id: string[]) => void
-    handleSelect: (event: React.SyntheticEvent, nodeIds: string[]) => void
-    handleExpand: (event: React.SyntheticEvent, nodeIds: string[]) => void
+
+    handleExpand: () => void
 
     fetchTags: () => Promise<AxiosResponse<IProductTagResponse>>
 
 }
 
-const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) => ({
+const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, get) => ({
     treeViewTags: [],
     contextMenuVisible: false,
     contextMenuXY: {X: 0, Y: 0},
@@ -59,17 +59,32 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set) =
     setExpandedTags: (id) => set({
         expandedTags: id
     }),
-    handleSelect: (event, nodeIds) => set({
-        selectedTag: nodeIds[0]
-    }),
-    handleExpand: (event, nodeIds) => set({
-        expandedTags: nodeIds
-    }),
+
+    handleExpand: () => {
+        if (get().expandedTags.includes(get().selectedTag)) {
+            set({
+                expandedTags: get().expandedTags.filter(n => {
+                    if (n != get().selectedTag) return n
+                })
+            })
+        } else {
+            set(state => {
+                state.expandedTags.push(state.selectedTag)
+            })
+        }
+
+    },
 
     fetchTags: () => {
         return $api.get<IProductTagResponse>('/tag/getall');
     },
 
+    addNewTag: (tag) => {
+        set(state => {
+            state.treeViewTags.push(tag)
+            state.expandedTags.push(tag.id.toString())
+        })
+    },
 
 }))), {
     name: "tagTreeViewStore",
