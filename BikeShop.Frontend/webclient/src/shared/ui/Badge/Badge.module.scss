@@ -1,0 +1,23 @@
+.wrapper{
+  position: relative;
+}
+
+.badge{
+  color: #000000;
+  position: absolute;
+  font-size: 12px;
+  top: -3px;
+  right: 0;
+  border-radius: 50px;
+  background-color: #CE93D8;
+  padding: 10px;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  z-index: 1;
+}

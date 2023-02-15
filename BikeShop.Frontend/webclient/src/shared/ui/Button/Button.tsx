@@ -1,5 +1,5 @@
 import React, {type ButtonHTMLAttributes, type FC, MouseEvent} from 'react'
-import cls from './Button.module.css'
+import cls from './Button.module.scss'
 import {createRipple} from "./lib/ripple";
 
 type RGB = `rgb(${number}, ${number}, ${number})`;

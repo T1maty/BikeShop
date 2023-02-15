@@ -1,14 +1,13 @@
 import React, {FC} from 'react';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import {useAuthUser} from "../../../../entities";
 import {HeaderUserMenu} from "../../../../features";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import cls from './Header.module.scss'
-import {Clock} from "../../Clock";
-import iconLight from '../../../../shared/assets/icon/notification-light.svg'
-import burgerLight from '../../../../shared/assets/icon/burger-light.svg'
+import {Clock} from "../../../../shared/ui/Clock/Clock";
+import {MenuIcon} from "../../../../shared/ui/IconButtons/MenuIcon";
+import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon";
+import {Badge} from "../../../../shared/ui/Badge/Badge";
 
 export const Header: FC = () => {
 
@@ -20,9 +19,7 @@ export const Header: FC = () => {
         <div className={cls.appBar}>
             <div className={cls.content}>
                 <div className={cls.leftSide}>
-                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: '20px'}}>
-                            <img alt='notification' src={burgerLight} width={23}/>
-                    </IconButton>
+                    <MenuIcon/>
                     <div onClick={() => {
                         navigate('/mainpage')
                     }}>
@@ -34,11 +31,9 @@ export const Header: FC = () => {
                 </div>
                 <div className={cls.rightSide}>
                     <HeaderUserMenu firstName={user?.firstName} lastName={user?.lastName}/>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <Badge badgeContent={3} color="secondary">
-                                <img alt='notification' src={iconLight} width={25}/>
-                        </Badge>
-                    </IconButton>
+                    <Badge badgeContent={3}>
+                        <NotificationIcon />
+                    </Badge>
                 </div>
             </div>
         </div>

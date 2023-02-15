@@ -18,7 +18,5 @@ export const Clock = () => {
         const seconds = currentTime.getSeconds();
         return`${hours}:${minutes < 10 ?`0${minutes}`:minutes}:${seconds < 10 ?`0${seconds}`:seconds}`;
     }, [currentTime]);
-    return (
-        <>{time}</>
-    );
+    return <>{time}</>
 };

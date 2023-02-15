@@ -1,0 +1,31 @@
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: background 400ms;
+    background: none;
+    padding: 5px 10px;
+    font-size: 1rem;
+    outline: 0;
+    border: 0;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.btn:disabled {
+    background-color: var(--button-disabled-color);
+}
+
+span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    opacity: 0.2;
+    background-color: var(--primary-color);
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
