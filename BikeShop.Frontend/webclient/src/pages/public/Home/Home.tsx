@@ -1,10 +1,10 @@
 import React from 'react';
-import {useTranslation} from "react-i18next";
+import {PageLoader} from "../../../shared/ui/PageLoader/PageLoader";
 
 const Home = () => {
     return (
         <div>
-            Домашняя страница
+            <PageLoader variant={'ellipsis'}/>
         </div>
     );
 };

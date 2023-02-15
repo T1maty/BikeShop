@@ -6,7 +6,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     return (
-        <AppBar position="static" color="primary" sx={{p: '25px 45px'}}>
+        <AppBar position="static" color="primary" style={{height: 'var(--navbar-height)', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
             <Button onClick={() => {
                 navigate('/login')
             }}>Вход</Button>
