@@ -19,8 +19,23 @@
 
         .clientModal_searchBlock_textField {
             @include defaultFiledStyle();
+            border-radius: 0;
             min-width: 100%;
             height: 100px;
+            overflow: auto;
+
+            .searchBlock_textField_content {
+                @include flexColumn();
+                //padding-top: 40px;
+
+                .textField_contentItem {
+                    padding: 5px 0;
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $themeColorGray;
+                    }
+                }
+            }
         }
     }
 

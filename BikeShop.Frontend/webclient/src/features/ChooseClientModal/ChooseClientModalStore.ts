@@ -6,80 +6,75 @@ import {AxiosResponse} from "axios";
 import {CreateUser} from '../../entities';
 import User from "../../entities/models/User";
 
-export type UserDefault = {
-    id: number
-    fio: string
-}
-
 interface ChooseClientModalStore {
     chooseClientModal: boolean
     setChooseClientModal: (value: boolean) => void
-
-    addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
-
-    usersD: any[]
-    findUser: (fio: string) => Promise<AxiosResponse>
-    getUsers: () => any
-    addTestUser: (name: string) => void
+    isLoading: boolean
+    setIsLoading: (value: boolean) => void
+    users: User[]
     fio: string
     phone: string
-    setFirstName: (value: string) => void
+    getUsers: () => any // надо исправить тип
     setUsers: (users: any) => void
+    setFIO: (value: string) => void
+    setPhone: (value: string) => void
+    findUser: (fio: string) => any // надо исправить тип
+    // addTestUser: (name: string) => void
+    addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
 
-const useChooseClientModal = create<ChooseClientModalStore>()(persist(devtools(immer((set) => ({
+const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtools(immer((set) => ({
     // модалка
     chooseClientModal: false,
     setChooseClientModal: (value: boolean) => set({
         chooseClientModal: value
     }),
-
     // поиск клиента
-    // users: [
-    //     {id: 1, firstName: 'Иванов'}
-    //     // {id: 2, firstName: 'Petrov', phone: 25010}
-    // ],
-    usersD: [],
-
+    isLoading: false,
+    setIsLoading: (value: boolean) => set({
+       isLoading: value
+    }),
+    users: [],
     fio: '',
     phone: '',
-
-    addTestUser: (fio: string) => set( state => {
-        state.usersD.push({id: Date.now(), fio: fio})
-    }),
-
     getUsers: () => {
+        set({isLoading: true});
         return $api.get('/user/find').then(res => {
             set(state => {
                 // state.usersD.push(...res.data.users)
-                state.usersD = [...res.data.users]
+                state.users = [...res.data.users]
             })
+            set({isLoading: false});
         })
-
-
-
-
-        // set({usersD: response.data})
     },
     setUsers: (users: any) => set({
-        usersD: [...users]
+        users: [...users]
     }),
-
-    setFirstName: (value: string) => set({
+    setFIO: (value: string) => set({
         fio: value
     }),
-
+    setPhone: (value: string) => set({
+        phone: value
+    }),
     findUser: (fio: string) => {
-        return $api.get(`/user/find?fio=${fio}`)
+        set({isLoading: true});
+        return $api.get(`/user/find?fio=${fio}`).then(res => {
+            set(state => {
+                state.users = [...res.data.users]
+            })
+            set({isLoading: false});
+        })
     },
-
-    // добавить клиента
+    // добавление клиента
+    // addTestUser: (fio: string) => set( state => {
+    //     state.users.push({id: Date.now(), fio: fio})
+    // }),
     addNewUser: (data) => {
         return $api.post<CreateUser>('/user/create', data)
     }
-}))), {
+})))/*, {
     name: "chooseClientModalStore",
     version: 1
-}));
+})*/);
 
 export default useChooseClientModal;
