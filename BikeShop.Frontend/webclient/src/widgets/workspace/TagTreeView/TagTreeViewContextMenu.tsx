@@ -45,6 +45,7 @@ const TagTreeViewContextMenu = () => {
                 openCreateProduct(tag)
             }}>Добавить товар с выбранным тегом</MenuItem>
             <MenuItem onClick={() => {
+                setContextVisible(false, 0, 0)
                 let tag = treeViewData.filter((n) => {
                     return n.id == selected
                 })[0]
@@ -64,7 +65,7 @@ const TagTreeViewContextMenu = () => {
             }}>Создать потомка</MenuItem>
             <MenuItem>Переместить</MenuItem>
             <MenuItem onClick={() => {
-                console.log(contextMenuVisible)
+
             }}>Удалить</MenuItem>
         </Menu>
     );

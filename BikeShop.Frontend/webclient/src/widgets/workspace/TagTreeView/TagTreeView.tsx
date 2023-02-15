@@ -16,6 +16,7 @@ const TagTreeView = () => {
     const selected = useTagTreeView(s => s.selectedTag)
     const fetchTags = useTagTreeView(s => s.fetchTags)
     const addTag = useTagTreeView(s => s.addNewTag)
+    const updateTag = useTagTreeView(s => s.updateTag)
 
 
     React.useEffect(() => {
@@ -40,8 +41,7 @@ const TagTreeView = () => {
                  event.preventDefault()
              }}
         >
-            <UpdateTagModal onSeccuss={() => {
-            }}/>
+            <UpdateTagModal onSeccuss={updateTag}/>
             <CreateTagModal onSeccuss={addTag}/>
             <TagTreeViewContextMenu/>
             <TreeView

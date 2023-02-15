@@ -1,30 +1,43 @@
 import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ICreateTag, IProductTag} from "../../entities";
+import {IUpdateTag} from "../../entities";
 import {Box, Button, Modal, Typography} from "@mui/material";
 import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
 import {useUpdateTagModal} from "./UpdateTagModalStore";
+import {useSnackbar} from "notistack";
 
 interface props {
-    onSeccuss?: (tag: IProductTag) => void
+    onSeccuss?: (tag: IUpdateTag) => void
 }
 
 const UpdateTagModal = (props: props) => {
     const open = useUpdateTagModal(s => s.open)
-    const setOpen = useUpdateTagModal(s => s.openTagModal)
     const tag = useUpdateTagModal(s => s.targetTag)
     const setClose = useUpdateTagModal(s => s.closeTagModal)
-
-
-    const control = useForm<ICreateTag>({
+    const update = useUpdateTagModal(s => s.updateTag)
+    const {enqueueSnackbar} = useSnackbar()
+    const control = useForm<IUpdateTag>({
         defaultValues: {
             name: "",
             sortOrder: 0,
             isRetailVisible: false,
             isB2BVisible: false,
-            isUniversal: false
+            isUniversal: false,
+            id: '0'
         }
     });
+
+    React.useEffect(() => {
+        control.setValue('id', tag.id)
+        control.setValue('name', tag.name)
+        control.setValue('sortOrder', tag.sortOrder)
+        control.setValue('isRetailVisible', tag.isRetailVisible)
+        control.setValue('isB2BVisible', tag.isB2BVisible)
+        control.setValue('isUniversal', tag.isUniversal)
+
+        console.log(tag)
+    }, [tag])
+
 
     const style = {
         position: 'absolute',
@@ -40,9 +53,15 @@ const UpdateTagModal = (props: props) => {
     };
 
 
-    const onSubmit: SubmitHandler<ICreateTag> = (data: ICreateTag) => {
-        setClose()
-        //props.onSeccuss ? props.onSeccuss(r.data) : true
+    const onSubmit: SubmitHandler<IUpdateTag> = (data: IUpdateTag) => {
+        update(data).then((r) => {
+            setClose()
+            props.onSeccuss ? props.onSeccuss(data) : true
+            enqueueSnackbar('Тег изменен', {variant: 'success', autoHideDuration: 10000})
+        }).catch((r) => {
+            enqueueSnackbar(r.response.data.errorDescription, {variant: 'error', autoHideDuration: 10000})
+            console.error(r)
+        })
 
         control.setValue('name', '')
         control.setValue('sortOrder', 0)
@@ -82,7 +101,7 @@ const UpdateTagModal = (props: props) => {
                 <ControlledCheckbox name={"isB2BVisible"} lable={'Виден в B2B'} control={control}/>
                 <ControlledCheckbox name={"isUniversal"} lable={'Универсальный тег'} control={control}/>
                 <br/>
-                <Button color='primary' type="submit">Создать тег</Button>
+                <Button color='primary' type="submit">Редактировать тег</Button>
 
             </Box>
         </Modal>

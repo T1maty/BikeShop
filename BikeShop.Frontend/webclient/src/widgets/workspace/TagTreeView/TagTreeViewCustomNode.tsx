@@ -57,12 +57,13 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
             </div>
             <Typography
                 onClick={() => {
-                    setProductsToTableHandler()
                     setSelect(props.nodeId)
+                    setProductsToTableHandler()
                 }}
                 onContextMenu={(event) => {
                     setSelect(props.nodeId)
                     setContext(true, event.clientX, event.clientY)
+                    setProductsToTableHandler()
                 }}
                 component="div"
                 className={classes.label}

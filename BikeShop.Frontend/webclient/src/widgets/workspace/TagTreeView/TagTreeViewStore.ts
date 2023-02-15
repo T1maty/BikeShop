@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {IProductTag, IProductTagResponse} from "../../../entities";
+import {IProductTag, IProductTagResponse, IUpdateTag} from "../../../entities";
 import {AxiosResponse} from "axios";
 import {$api} from "../../../shared";
 
@@ -16,6 +16,7 @@ interface tagTreeViewStore {
     addTreeViewTag: (tag: IProductTag) => void,
     removeTreeViewTag: (tagId: string) => void,
     addNewTag: (tag: IProductTag) => void
+    updateTag: (tag: IUpdateTag) => void
 
     expandedTags: string[]
     selectedTag: string
@@ -36,6 +37,18 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
     setContextMenuVisible: (value, x, y) => set({
         contextMenuVisible: value,
         contextMenuXY: {X: x, Y: y},
+    }),
+
+    updateTag: (tag) => set(state => {
+        let EditTag = state.treeViewTags.filter((n) => {
+            if (n.id == tag.id) return n
+        })[0]
+        EditTag.name = tag.name
+        EditTag.isB2BVisible = tag.isB2BVisible
+        EditTag.isRetailVisible = tag.isRetailVisible
+        EditTag.isUniversal = tag.isUniversal
+        EditTag.sortOrder = tag.sortOrder
+        EditTag.updatedAt = Date.toString()
     }),
 
     setTreeViewTags: (tags) => set({

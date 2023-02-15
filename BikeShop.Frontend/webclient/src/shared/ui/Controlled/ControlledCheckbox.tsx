@@ -20,7 +20,7 @@ export const ControlledCheckbox = (props: Iprops) => {
                     value={field.value}
                     control={
                         <Checkbox
-                            value={field.value}
+                            checked={field.value}
                             onChange={(event, value) => {
                                 field.onChange(value);
                             }}/>
