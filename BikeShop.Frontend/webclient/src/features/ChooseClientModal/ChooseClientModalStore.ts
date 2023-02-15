@@ -8,55 +8,72 @@ import User from "../../entities/models/User";
 
 export type UserDefault = {
     id: number
-    firstName: string
+    fio: string
 }
 
 interface ChooseClientModalStore {
     chooseClientModal: boolean
     setChooseClientModal: (value: boolean) => void
 
-    usersD: UserDefault[]
-    findUser: (fio: string) => Promise<AxiosResponse>
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
+
+    usersD: any[]
+    findUser: (fio: string) => Promise<AxiosResponse>
     getUsers: () => any
-
     addTestUser: (name: string) => void
-
-    firstName: string
+    fio: string
     phone: string
     setFirstName: (value: string) => void
+    setUsers: (users: any) => void
 }
 
 const useChooseClientModal = create<ChooseClientModalStore>()(persist(devtools(immer((set) => ({
+    // модалка
     chooseClientModal: false,
     setChooseClientModal: (value: boolean) => set({
         chooseClientModal: value
     }),
 
+    // поиск клиента
     // users: [
     //     {id: 1, firstName: 'Иванов'}
     //     // {id: 2, firstName: 'Petrov', phone: 25010}
     // ],
     usersD: [],
-    firstName: '',
+
+    fio: '',
     phone: '',
 
-    addTestUser: (firstName: string) => set( s => {
-        s.usersD.push({id: Date.now(), firstName: firstName})
+    addTestUser: (fio: string) => set( state => {
+        state.usersD.push({id: Date.now(), fio: fio})
     }),
 
     getUsers: () => {
-        // return $api.get('/user/find').then(res => {
-        //     set({users: res})
-        // })
+        return $api.get('/user/find').then(res => {
+            set(state => {
+                // state.usersD.push(...res.data.users)
+                state.usersD = [...res.data.users]
+            })
+        })
+
+
+
+
+        // set({usersD: response.data})
     },
+    setUsers: (users: any) => set({
+        usersD: [...users]
+    }),
+
     setFirstName: (value: string) => set({
-        firstName: value
+        fio: value
     }),
 
     findUser: (fio: string) => {
         return $api.get(`/user/find?fio=${fio}`)
     },
+
+    // добавить клиента
     addNewUser: (data) => {
         return $api.post<CreateUser>('/user/create', data)
     }
