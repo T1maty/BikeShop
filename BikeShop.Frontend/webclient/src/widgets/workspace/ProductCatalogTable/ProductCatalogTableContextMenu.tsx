@@ -4,14 +4,17 @@ import {Menu} from "@mui/material";
 import useProductCatalogTableStore from "./ProductCatalogTableStore";
 import useCreateProductModal from '../../../features/CreateProductModal/CreateProductModalStore';
 import {useUpdateProductModal} from "../../../features";
+import useTagTreeView from "../TagTreeView/TagTreeViewStore";
 
 const ProductCatalogTableContextMenu = () => {
     const selected = useProductCatalogTableStore(s => s.selectedRows)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
     const contextMenuVisible = useProductCatalogTableStore(s => s.open)
     const contextXY = useProductCatalogTableStore(s => s.contextMenuXY)
-    const setOpenCreateProductModal = useCreateProductModal(s => s.setOpen)
+    const setOpenCreateProductModal = useCreateProductModal(s => s.setTagAndOpen)
     const setOpenUpdateProductModal = useUpdateProductModal(s => s.setOpen)
+    const tagSelected = useTagTreeView(s => s.selectedTag)
+    const treeViewData = useTagTreeView(s => s.treeViewTags)
 
     return (
         <Menu
@@ -40,7 +43,10 @@ const ProductCatalogTableContextMenu = () => {
             <MenuItem>Изменить цену</MenuItem>
 
             <MenuItem onClick={() => {
-                setOpenCreateProductModal(true)
+                let tag = treeViewData.filter((n) => {
+                    return n.id == tagSelected
+                })[0]
+                setOpenCreateProductModal(tag)
                 setContextVisible(false, 0, 0)
             }}
             >Создать

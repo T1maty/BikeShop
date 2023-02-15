@@ -6,18 +6,15 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {IProductTag} from "../../../entities";
 import TagTreeViewContextMenu from "./TagTreeViewContextMenu";
 import TagTreeViewNodes from "./TagTreeViewNodes";
-import {CreateTagModal} from "../../../features";
+import {CreateTagModal, UpdateTagModal} from "../../../features";
 import useTagTreeView from './TagTreeViewStore';
 
 const TagTreeView = () => {
 
     const setTreeViewData = useTagTreeView(s => s.setTreeViewTags)
     const expanded = useTagTreeView(s => s.expandedTags)
-    const handleExpanded = useTagTreeView(s => s.handleExpand)
     const selected = useTagTreeView(s => s.selectedTag)
-    const setSelected = useTagTreeView(s => s.setSelectedTag)
     const fetchTags = useTagTreeView(s => s.fetchTags)
-    const setContextVisible = useTagTreeView(s => s.setContextMenuVisible)
     const addTag = useTagTreeView(s => s.addNewTag)
 
 
@@ -43,6 +40,8 @@ const TagTreeView = () => {
                  event.preventDefault()
              }}
         >
+            <UpdateTagModal onSeccuss={() => {
+            }}/>
             <CreateTagModal onSeccuss={addTag}/>
             <TagTreeViewContextMenu/>
             <TreeView
@@ -51,19 +50,6 @@ const TagTreeView = () => {
                 defaultExpandIcon={<ChevronRightIcon/>}
                 expanded={expanded}
                 selected={[selected]}
-                onContextMenu={(event) => {
-                    setContextVisible(true, event.clientX, event.clientY)
-                }}
-                onDoubleClickCapture={() => {
-                    handleExpanded()
-                }}
-                onNodeSelect={(event: any, nodeId: string[]) => {
-                    setSelected(nodeId[0])
-
-                }}
-                onNodeFocus={(event, nodeId) => {
-                    setSelected(nodeId)
-                }}
             >
                 <TagTreeViewNodes/>
             </TreeView>

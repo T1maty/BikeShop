@@ -21,7 +21,7 @@ interface productCatalogTableStore {
     isRowSelected: (id: number) => boolean
     setPage: (value: number) => void
     setRows: (data: IProduct[]) => void
-    getProducts: () => Promise<AxiosResponse<IProductResponse>>
+    getProducts: (tags: string[]) => Promise<AxiosResponse<IProductResponse>>
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
@@ -34,6 +34,9 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
 
     setRows: (data) => {
         set({rows: data})
+        if (data.length < 1) {
+            set({selectedRows: []})
+        }
     },
     setOpen: (value, x, y) => set({
         contextMenuXY: {X: x, Y: y},
@@ -57,8 +60,13 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     setRowsPerPage: (value) => {
         set({rowsPerPage: value})
     },
-    getProducts: () => {
-        return $api.get<IProductResponse>('/product/getbytags/1')
+    getProducts: (tags) => {
+        let value = ""
+        tags.forEach((n) => {
+            value = value.concat(n + '-')
+        })
+        value = value.slice(0, -1)
+        return $api.get<IProductResponse>('/product/getbytags/' + value)
     },
     updateRow: (rowData) => {
         set(state => {

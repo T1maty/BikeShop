@@ -1,5 +1,6 @@
 export {default as HeaderUserMenu} from './HeaderUserMenu/HeaderUserMenu';
 export {default as CreateTagModal} from './CreateTagModal/CreateTagModal';
+export {default as UpdateTagModal} from './UpdateTagModal/UpdateTagModal';
 export {default as CreateProductModal} from './CreateProductModal/CreateProductModal';
 
 export {useUpdateProductModal} from './UpdateProductModal/UpdateProductModalStore'
@@ -11,3 +12,5 @@ export {default as ChooseProductModal} from './ChooseProductModal/ChooseProductM
 export {default as PayModal} from './PayModal/PayModal';
 export {default as ClientCard} from './ClientCard/ClientCard';
 export {default as TableProductItem} from './TableProductItem/TableProductItem';
+
+export {useUpdateTagModal} from './UpdateTagModal/UpdateTagModalStore'

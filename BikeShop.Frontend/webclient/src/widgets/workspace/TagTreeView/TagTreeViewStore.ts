@@ -22,7 +22,7 @@ interface tagTreeViewStore {
     setSelectedTag: (id: string) => void
     setExpandedTags: (id: string[]) => void
 
-    handleExpand: () => void
+    handleExpand: (id: string) => void
 
     fetchTags: () => Promise<AxiosResponse<IProductTagResponse>>
 
@@ -60,16 +60,16 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
         expandedTags: id
     }),
 
-    handleExpand: () => {
-        if (get().expandedTags.includes(get().selectedTag)) {
+    handleExpand: (id) => {
+        if (get().expandedTags.includes(id)) {
             set({
                 expandedTags: get().expandedTags.filter(n => {
-                    if (n != get().selectedTag) return n
+                    if (n != id) return n
                 })
             })
         } else {
             set(state => {
-                state.expandedTags.push(state.selectedTag)
+                state.expandedTags.push(id)
             })
         }
 

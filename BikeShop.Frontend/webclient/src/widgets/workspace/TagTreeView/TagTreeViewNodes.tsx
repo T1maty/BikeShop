@@ -2,8 +2,11 @@ import React from 'react';
 import {IProductTag} from "../../../entities";
 import TreeItem from "@mui/lab/TreeItem";
 import useTagTreeView from "./TagTreeViewStore";
+import {TagTreeViewCustomNode} from "./TagTreeViewCustomNode";
+
 
 const TagTreeViewNodes = () => {
+
 
     const treeViewData = useTagTreeView(s => s.treeViewTags)
 
@@ -20,6 +23,7 @@ const TagTreeViewNodes = () => {
             return nodesToAdd?.map((n) => {
                 return (
                     <TreeItem
+                        ContentComponent={TagTreeViewCustomNode}
                         nodeId={n.id.toString()}
                         label={n.name} key={n.id}>
                         {createTree(n.id)}

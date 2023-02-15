@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Button, Modal} from "@mui/material";
+import {Box, Button, Modal, Typography} from "@mui/material";
 import useCreateProductModal from "./CreateProductModalStore";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {EnumProductCheckStatus, ICreateProduct, IProduct} from "../../entities";
@@ -18,6 +18,7 @@ const CreateProductModal = (props: CreateProductModalProps) => {
     const open = useCreateProductModal(s => s.open)
     const setOpen = useCreateProductModal(s => s.setOpen)
     const create = useCreateProductModal(s => s.create)
+    const tags = useCreateProductModal(s => s.tags)
 
     const formControl = useForm<ICreateProduct>({
         defaultValues: {
@@ -32,7 +33,7 @@ const CreateProductModal = (props: CreateProductModalProps) => {
             checkStatus: EnumProductCheckStatus.justCreatedByUser,
             retailVisibility: false,
             b2BVisibility: false,
-            tagsIds: [1]
+            tagsIds: ['0']
         }
     });
 
@@ -41,7 +42,7 @@ const CreateProductModal = (props: CreateProductModalProps) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: 800,
         bgcolor: '#33373B',
 
         boxShadow: 24,
@@ -50,6 +51,12 @@ const CreateProductModal = (props: CreateProductModalProps) => {
     };
 
     const onSubmit: SubmitHandler<ICreateProduct> = (data: ICreateProduct) => {
+        if (tags.length > 0) {
+            data.tagsIds = tags.map((n) => {
+                return n.id
+            })
+        }
+
         create(data).then((r) => {
             setOpen(false)
             props.onSuccess ? props.onSuccess(r.data) : true
@@ -76,12 +83,19 @@ const CreateProductModal = (props: CreateProductModalProps) => {
     return (
         <Modal
             open={open}
-            onClose={() => {setOpen(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                setOpen(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
+                <Typography>{tags.map((n) => {
+                    return n.id + ' '
+                })}</Typography>
 
                 <ControlledInput name={"name"} label={"Название товара"} control={formControl}
                                  rules={{required: "Обязательное поле"}}/>
@@ -108,7 +122,9 @@ const CreateProductModal = (props: CreateProductModalProps) => {
 
                 <br/>
                 <Button color={'primary'} type={'submit'}>Создать товар</Button>
-                <Button color={'primary'} onClick={() => {setOpen(false)}}>Отмена</Button>
+                <Button color={'primary'} onClick={() => {
+                    setOpen(false)
+                }}>Отмена</Button>
             </Box>
         </Modal>
     );

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,16 +18,8 @@ const ProductCatalogTable = () => {
     const page = useProductCatalogTableStore(s => s.page)
     const rowsPerPage = useProductCatalogTableStore(s => s.rowsPerPage)
     const rows = useProductCatalogTableStore(s => s.rows)
-    const setRows = useProductCatalogTableStore(s => s.setRows)
-    const getProducts = useProductCatalogTableStore(s => s.getProducts)
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
-
-    useEffect(() => {
-        getProducts().then((r) => {
-            setRows(r.data.products)
-        })
-    }, [])
 
     return (
         <>
@@ -55,7 +47,9 @@ const ProductCatalogTable = () => {
                                 ))}
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        <TableBody
+
+                        >
                             {rows
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => {

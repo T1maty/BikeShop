@@ -10,5 +10,5 @@ export interface ICreateProduct {
     checkStatus: string,
     retailVisibility: boolean,
     b2BVisibility: boolean,
-    tagsIds: number[]
+    tagsIds: string[]
 }

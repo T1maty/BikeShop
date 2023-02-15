@@ -4,6 +4,8 @@ import {IProductTag} from "../../../entities";
 import {Menu} from "@mui/material";
 import useCreateTagModal from '../../../features/CreateTagModal/CreateTagModalStore';
 import useTagTreeView from './TagTreeViewStore';
+import {useUpdateTagModal} from "../../../features";
+import useCreateProductModal from "../../../features/CreateProductModal/CreateProductModalStore";
 
 const TagTreeViewContextMenu = () => {
     const contextMenuVisible = useTagTreeView(s => s.contextMenuVisible)
@@ -13,6 +15,10 @@ const TagTreeViewContextMenu = () => {
     const setContextVisible = useTagTreeView(s => s.setContextMenuVisible)
     const treeViewData = useTagTreeView(s => s.treeViewTags)
     const selected = useTagTreeView(s => s.selectedTag)
+    const openUpdateTag = useUpdateTagModal(s => s.openTagModal)
+    const selectedTag = useTagTreeView(s => s.selectedTag)
+    const allTags = useTagTreeView(s => s.treeViewTags)
+    const openCreateProduct = useCreateProductModal(s => s.setTagAndOpen)
 
     return (
         <Menu
@@ -31,7 +37,19 @@ const TagTreeViewContextMenu = () => {
                     : undefined
             }
         >
-            <MenuItem>Редактировать</MenuItem>
+            <MenuItem onClick={() => {
+                setContextVisible(false, 0, 0)
+                let tag = treeViewData.filter((n) => {
+                    return n.id == selected
+                })[0]
+                openCreateProduct(tag)
+            }}>Добавить товар с выбранным тегом</MenuItem>
+            <MenuItem onClick={() => {
+                let tag = treeViewData.filter((n) => {
+                    return n.id == selected
+                })[0]
+                openUpdateTag(tag)
+            }}>Редактировать</MenuItem>
             <MenuItem onClick={() => {
                 setContextVisible(false, 0, 0)
                 setParentNode({} as IProductTag)
