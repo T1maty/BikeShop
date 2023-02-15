@@ -6,7 +6,7 @@ import {Routes} from "./allRoutes";
 import {useTheme} from "./providers/ThemeProvider";
 import './styles/index.scss'
 import {SnackbarProvider} from "notistack";
-import Buttons from "../widgets/workspace/_Buttons/Buttons";
+import Buttons from "../widgets/workspace/AdminMenu/ui/Buttons";
 
 const darkTheme = createTheme({
     palette: {

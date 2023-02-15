@@ -1,6 +1,6 @@
 import React from 'react';
-import {ThemeSwitcher} from "../../../shared/ui/ThemeSwitcher/ThemeSwitcher";
-import {LangSwitcher} from "../LangSwitcher/LangSwitcher";
+import {ThemeSwitcher} from "../../../../shared/ui/ThemeSwitcher/ThemeSwitcher";
+import {LangSwitcher} from "../../LangSwitcher";
 
 const Buttons = ({off} : any) => {
     if (off) return null

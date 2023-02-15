@@ -2,7 +2,7 @@ import React, {type FC} from 'react'
 import {useTranslation} from 'react-i18next'
 import {MenuItem} from "@mui/material";
 import Menu from "@mui/material/Menu";
-import {Button} from "../../../shared/ui";
+import {Button} from "../../../../shared/ui";
 
 
 interface LangSwitcherProps {
