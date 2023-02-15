@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 
-import {Header} from "../../../widgets/workspace/HeaderCustom";
+import {Header} from "../../../widgets/workspace/Header";
 
 interface WorkspaceHeaderProviderType {
     children: ReactElement
