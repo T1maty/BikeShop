@@ -15,7 +15,7 @@ const ClientCard = () => {
     return (
         <div className={s.clientCard_background}>
             <h3>Клиент</h3>
-            <p><span>ФИО:</span> {firstName} {} {}</p>
+            <p><span>ФИО:</span> {firstName} {lastName} {patronymic}</p>
             <p><span>Номер телефона:</span> {phone}</p>
             <p><span>Почта:</span> {email}</p>
             <p><span>Баланс:</span> {balance}</p>

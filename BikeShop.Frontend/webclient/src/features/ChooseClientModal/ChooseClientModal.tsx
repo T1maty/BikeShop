@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect, ChangeEvent, ChangeEventHandler} from 'react';
 import {Modal, TextField} from "@mui/material";
-import useChooseClientModal from './ChooseClientModalStore';
+import useChooseClientModal, {UserDefault} from './ChooseClientModalStore';
 import {Button, ControlledInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
@@ -28,9 +28,17 @@ const ChooseClientModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
+
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
+
+    const usersD = useChooseClientModal(s => s.usersD)
+    const firstName = useChooseClientModal(s => s.firstName)
+    const setFirstName = useChooseClientModal(s => s.setFirstName)
+    const getUsers = useChooseClientModal(s => s.getUsers)
+    const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
+    const addTestUser = useChooseClientModal(s => s.addTestUser)
 
     /*const { register, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -40,6 +48,13 @@ const ChooseClientModal = () => {
             phone: ''
         }
     });*/
+
+    // const usersTwo = [
+    //     {id: 1, firstName1: 'Иванов'}
+    //     // {id: 2, firstName: 'Petrov', phone: 25010}
+    // ]
+
+    console.log(usersD)
 
     const formControl = useForm({
         defaultValues: {
@@ -70,6 +85,16 @@ const ChooseClientModal = () => {
 
     }
 
+    const findUserHandler = () => {
+        // findUser(firstName).then((response) => {
+        // })
+        addTestUser(firstName)
+    }
+
+    // useEffect(() => {
+    //     getUsers()
+    // })
+
     return (
         // {clonedChildren}
         <Modal
@@ -85,19 +110,42 @@ const ChooseClientModal = () => {
                             Найти клиента:
                         </div>
                         <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите фамилию'}/>
+                            {/*<Input placeholder={'Введите фамилию'}/>*/}
+                            {/*<ControlledInput name={'searchFirstName'} label={'Введите фамилию'}*/}
+                            {/*                 control={formControl}*/}
+                            {/*/>*/}
+                            <input type="text"
+                                   placeholder={'Введите фамилию'}
+                                   value={firstName}
+                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {setFirstName(e.currentTarget.value)}}
+                            />
                         </div>
                         <div className={s.clientModal_searchBlock_input}>
                             <Input placeholder={'Введите номер телефона'}/>
                         </div>
+                        <div>
+                            <Button onClick={findUserHandler}>
+                                НАЙТИ (тест кнопка)
+                            </Button>
+                        </div>
                         <div className={s.clientModal_searchBlock_textField}>
-                            <TextField id="outlined-basic"
-                                       variant="outlined"
-                                       value={'Результат поиска'}
-                                       style={{backgroundColor: '#5C636A'}}
-                                       onChange={() => {}}
-                                       fullWidth={true}
-                            />
+                            {/*Результат поиска?*/}
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                            {
+                                usersD.map((u: UserDefault) => {
+                                    return (
+                                        <div key={u.id}>{u.firstName}</div>
+                                    )
+                                })
+                            }
+                            </div>
+                            {/*<TextField id="outlined-basic"*/}
+                            {/*           variant="outlined"*/}
+                            {/*           value={'Результат поиска'}*/}
+                            {/*           style={{backgroundColor: '#5C636A'}}*/}
+                            {/*           onChange={() => {}}*/}
+                            {/*           fullWidth={true}*/}
+                            {/*/>*/}
                         </div>
                     </div>
                     <div className={s.clientModal_textFields}>

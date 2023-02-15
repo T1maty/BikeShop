@@ -6,7 +6,7 @@
 
     .clientModal_searchBlock {
         @include flexColumn();
-        margin-bottom: 50px;
+        margin-bottom: 30px;
 
         .clientModal_searchBlock_title {
             @include titleCenter;
@@ -18,7 +18,9 @@
         }
 
         .clientModal_searchBlock_textField {
-            width: 100%;
+            @include defaultFiledStyle();
+            min-width: 100%;
+            height: 100px;
         }
     }
 

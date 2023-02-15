@@ -16,9 +16,9 @@ interface ClientCardStore {
 }
 
 const useClientCard = create<ClientCardStore>()(persist(devtools(immer((set) => ({
-    firstName: 'Клиент не выбран',
-    lastName: '',
-    patronymic: '',
+    firstName: 'Клиент555',
+    lastName: 'не',
+    patronymic: 'выбран',
     phone: 'Клиент не выбран',
     email: 'Клиент не выбран',
     balance: 0,
