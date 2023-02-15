@@ -1,4 +1,4 @@
-import React, {type ButtonHTMLAttributes, Children, cloneElement, type FC, MouseEvent} from 'react'
+import React, {type ButtonHTMLAttributes, type FC, MouseEvent} from 'react'
 import cls from './Button.module.css'
 
 type RGB = `rgb(${number}, ${number}, ${number})`;
@@ -18,83 +18,56 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 /**
  * @param props is default PropsButton
  * @param colorText white or black, or custom RGB, RGBA, HEX
+ * @param className NOT USE, NOT WORK
  * @return customButton jsx
  */
 
 export const Button: FC<ButtonProps> = (
     {
-        className = '',
         children,
-        variant = '',
+        style,
+        variant,
+        className ,
         colorText = '',
         onClick,
         ...otherProps
     }
 ) => {
+
+
+    const onClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
+        onClick && onClick(e)
+        createRipple(e)
+    }
+
     return (
-        <ProviderButtonRipple>
-            <button
-                type='button'
-                style={{color: colorText}}
-                onClick={onClick}
-                className={cls.btn}
-                {...otherProps}
-            >
-                {children}
-            </button>
-        </ProviderButtonRipple>
+        <button
+            type='button'
+            style={{color: colorText, ...style}}
+            onClick={onClickHandler}
+            className={cls.btn + ' ' + className}
+            {...otherProps}
+        >
+            {children}
+        </button>
     )
 }
 
+const createRipple = (event: MouseEvent<HTMLButtonElement>): void => {
+    const button = event.currentTarget;
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+    circle.style.top = `${(event.clientY + document.body.scrollTop) - button.offsetTop - radius}px`;
 
-type ProviderButtonProps = {
-    children: React.ReactElement
-}
+    circle.classList.add(cls.ripple);
+    const ripple = button.getElementsByClassName(cls.ripple);
 
-const ProviderButtonRipple = (props: ProviderButtonProps) => {
-
-    const {children} = props
-
-    const createRipple = (event: MouseEvent<HTMLButtonElement>): void => {
-        const button = event.currentTarget;
-        const circle = document.createElement("span");
-        const diameter = Math.max(button.clientWidth, button.clientHeight);
-        const radius = diameter / 2;
-        circle.style.width = circle.style.height = `${diameter}px`;
-        circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-        circle.style.top = `${(event.clientY + document.body.scrollTop) - button.offsetTop - radius}px`;
-
-        circle.classList.add(cls.ripple);
-        const ripple = button.getElementsByClassName(cls.ripple);
-
-        if (ripple.length > 3) {
-            ripple[0].remove()
-        }
-
-        button.appendChild(circle);
+    if (ripple.length > 3) {
+        ripple[0].remove()
     }
 
-    return cloneElement(Children.only(children), {
-        onClick: (e: MouseEvent<HTMLButtonElement>) => {
-            if (Children.only(children).props.onClick) {
-                Children.only(children).props.onClick(e)
-            }
-            createRipple(e)
-        }
-    })
-
-};
-
-// -------------------ProviderButton------------------------
-// <>
-//     {React.Children.map(children, child => {
-//         console.log(child.props)
-//         return React.cloneElement(child, {
-//             onClick: (e: MouseEvent<HTMLButtonElement>) => {
-//                 child.props.onClick()
-//                 createRipple(e)
-//             }
-//         })
-//     })}
-// </>
-// 2 вариант
+    button.appendChild(circle);
+}
