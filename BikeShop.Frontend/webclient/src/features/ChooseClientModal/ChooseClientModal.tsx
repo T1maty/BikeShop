@@ -1,12 +1,12 @@
-import React from 'react';
-import {Modal, TextField} from "@mui/material";
+import React, {useEffect, ChangeEvent, ChangeEventHandler} from 'react';
+import {Modal, TextField} from '@mui/material';
 import useChooseClientModal from './ChooseClientModalStore';
 import {Button, ControlledInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {useNavigate} from 'react-router-dom';
-import {SubmitHandler, useForm} from "react-hook-form";
-import {CreateUser} from "../../entities";
+import {SubmitHandler, useForm} from 'react-hook-form';
+import {CreateUser} from '../../entities';
 import {useSnackbar} from 'notistack';
 
 const ChooseClientModal = () => {
@@ -28,9 +28,21 @@ const ChooseClientModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
+
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
+    const isLoading = useChooseClientModal(s => s.isLoading)
+    const users = useChooseClientModal(s => s.users)
+    const fio = useChooseClientModal(s => s.fio)
+    const setFIO = useChooseClientModal(s => s.setFIO)
+    const phone = useChooseClientModal(s => s.phone)
+    const setPhone = useChooseClientModal(s => s.setPhone)
+    const getUsers = useChooseClientModal(s => s.getUsers)
+    const setUsers = useChooseClientModal(s => s.setUsers)
+    const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
+
+    // const chooseClientModal = useChooseClientModal(s => s.chooseClientModal)
 
     /*const { register, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -70,77 +82,134 @@ const ChooseClientModal = () => {
 
     }
 
-    return (
-        // {clonedChildren}
-        <Modal
-            open={open}
-            onClose={() => {setOpen(false)}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                <div className={s.clientModal_mainBox}>
-                    <div className={s.clientModal_searchBlock}>
-                        <div className={s.clientModal_searchBlock_title}>
-                            Найти клиента:
+    const findUserHandler = () => {
+        // getUsers();
+        findUser(fio);
+        setFIO('');
+    }
+
+    // console.log(fio)
+
+    // useEffect(() => {
+    //     if (chooseClientModal) {
+    //         getUsers()
+    //         //     .then((res: any) => {
+    //         //     setUsers(res.data.users)
+    //         // })
+    //         console.log('getUsers request in IF')
+    //     }
+    //     console.log('getUsers request without IF')
+    // }, [chooseClientModal])
+
+    // if (usersD.length === 0) {
+    //     return <div>No users found</div>
+    // } else {
+        return (
+            // {clonedChildren}
+            <Modal
+                open={open}
+                onClose={() => {
+                    setOpen(false)
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                    <div className={s.clientModal_mainBox}>
+                        <div className={s.clientModal_searchBlock}>
+                            <div className={s.clientModal_searchBlock_title}>
+                                Найти клиента:
+                            </div>
+                            <div className={s.clientModal_searchBlock_input}>
+                                <Input placeholder={'Введите фамилию'} value={fio}
+                                       onChange={(e: ChangeEvent<HTMLInputElement>) => {setFIO(e.currentTarget.value)}}
+                                />
+
+                                {/*<input type="text"*/}
+                                {/*       placeholder={'Введите фамилию'}*/}
+                                {/*       value={fio}*/}
+                                {/*       onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
+                                {/*           setFIO(e.currentTarget.value)*/}
+                                {/*       }}*/}
+                                {/*/>*/}
+                            </div>
+                            <div className={s.clientModal_searchBlock_input}>
+                                <Input placeholder={'Введите номер телефона'} value={phone}
+                                       onChange={(e: ChangeEvent<HTMLInputElement>) => {setPhone(e.currentTarget.value)}}
+                                />
+                            </div>
+                            <div>
+                                <Button onClick={findUserHandler}>
+                                    Найти клиента
+                                </Button>
+                            </div>
+                            <div className={s.clientModal_searchBlock_textField}>
+                                <div className={s.searchBlock_textField_content}>
+                                    {
+                                        isLoading
+                                            ? <div>Загрузка...</div> :
+                                        users.map((u: any) => {
+                                            return (
+                                                <div className={s.textField_contentItem} key={u.user.id}>
+                                                    {u.user.lastName} {u.user.firstName} {u.user.patronymic}
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                {/*<TextField id="outlined-basic"*/}
+                                {/*           variant="outlined"*/}
+                                {/*           value={'Результат поиска'}*/}
+                                {/*           style={{backgroundColor: '#5C636A'}}*/}
+                                {/*           onChange={() => {}}*/}
+                                {/*           fullWidth={true}*/}
+                                {/*/>*/}
+                            </div>
                         </div>
-                        <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите фамилию'}/>
+                        <div className={s.clientModal_textFields}>
+                            <div className={s.textFields_title}>
+                                Создать клиента:
+                            </div>
+                            <div>
+                                <ControlledInput name={'firstName'} label={'Фамилия'}
+                                                 control={formControl}
+                                                 rules={{required: errorMessages.required}}
+                                />
+                            </div>
+                            <div>
+                                <ControlledInput name={'lastName'} label={'Имя'}
+                                                 control={formControl}
+                                                 rules={{required: errorMessages.required}}
+                                />
+                            </div>
+                            <div>
+                                <ControlledInput name={'patronymic'} label={'Отчество'}
+                                                 control={formControl}
+                                                 rules={{required: errorMessages.required}}
+                                />
+                            </div>
+                            <div>
+                                <ControlledInput name={'phone'} label={'Номер телефона'}
+                                                 control={formControl}
+                                                 rules={{required: errorMessages.required}}
+                                />
+                            </div>
                         </div>
-                        <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите номер телефона'}/>
-                        </div>
-                        <div className={s.clientModal_searchBlock_textField}>
-                            <TextField id="outlined-basic"
-                                       variant="outlined"
-                                       value={'Результат поиска'}
-                                       style={{backgroundColor: '#5C636A'}}
-                                       onChange={() => {}}
-                                       fullWidth={true}
-                            />
+                        <div className={s.clientModal_buttonsBlock}>
+                            <Button type={'submit'}>
+                                Добавить клиента
+                            </Button>
+                            <Button onClick={() => {
+                                setOpen(false)
+                            }}>
+                                Отмена
+                            </Button>
                         </div>
                     </div>
-                    <div className={s.clientModal_textFields}>
-                        <div className={s.textFields_title}>
-                            Создать клиента:
-                        </div>
-                        <div>
-                            <ControlledInput name={'firstName'} label={'Фамилия'}
-                                             control={formControl}
-                                             rules={{required: errorMessages.required}}
-                            />
-                        </div>
-                        <div>
-                            <ControlledInput name={'lastName'} label={'Имя'}
-                                             control={formControl}
-                                             rules={{required: errorMessages.required}}
-                            />
-                        </div>
-                        <div>
-                            <ControlledInput name={'patronymic'} label={'Отчество'}
-                                             control={formControl}
-                                             rules={{required: errorMessages.required}}
-                            />
-                        </div>
-                        <div>
-                            <ControlledInput name={'phone'} label={'Номер телефона'}
-                                             control={formControl}
-                                             rules={{required: errorMessages.required}}
-                            />
-                        </div>
-                    </div>
-                    <div className={s.clientModal_buttonsBlock}>
-                        <Button type={'submit'}>
-                            Добавить клиента
-                        </Button>
-                        <Button onClick={() => {setOpen(false)}}>
-                            Отмена
-                        </Button>
-                    </div>
-                </div>
-            </form>
-        </Modal>
-    );
+                </form>
+            </Modal>
+        );
+    // }
 };
 
 export default ChooseClientModal;
