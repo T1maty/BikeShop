@@ -1,0 +1,28 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.container {
+  @include wrapperMainBlock;
+  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  grid-template-areas: "categories tableBox";
+
+  .categories, .tableBox {
+    padding: $defaultLargeMargin;
+    background-color: $themeColorDark;
+    border-radius: $defaultBorderRadius;
+  }
+
+  .categories {
+    grid-area: categories;
+  }
+
+  .tableBox {
+    grid-area: tableBox;
+  }
+
+}
+
+
+
