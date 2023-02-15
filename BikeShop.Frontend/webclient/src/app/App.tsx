@@ -3,11 +3,10 @@ import {createTheme, ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import {RouterProvider} from "react-router-dom";
 import {Routes} from "./allRoutes";
-import {LangSwitcher} from "../widgets/workspace/LangSwitcher/LangSwitcher";
 import {useTheme} from "./providers/ThemeProvider";
-import {ThemeSwitcher} from "../shared/ui/ThemeSwitcher/ThemeSwitcher";
 import './styles/index.scss'
 import {SnackbarProvider} from "notistack";
+import Buttons from "../widgets/workspace/_Buttons/Buttons";
 
 const darkTheme = createTheme({
     palette: {
@@ -21,7 +20,6 @@ const App: React.FC = () => {
 
     return (
         <div className={`app ${theme}`}>
-
             <ThemeProvider theme={darkTheme}>
                 <SnackbarProvider maxSnack={3}>
                     <CssBaseline/>
@@ -30,14 +28,7 @@ const App: React.FC = () => {
                     </Suspense>
                 </SnackbarProvider>
             </ThemeProvider>
-            <div style={{position: "absolute", left: 0, top: 0}}>
-                <div style={{marginBottom: 10}}>
-                    <ThemeSwitcher/>
-                </div>
-                <div>
-                    <LangSwitcher/>
-                </div>
-            </div>
+            <Buttons off={false}/>
         </div>
     );
 };
