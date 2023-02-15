@@ -7,10 +7,10 @@ interface props {
 
 const PublicHeaderProvider = (props: props) => {
     return (
-        <div>
+        <>
             <PublicHeader/>
             {props.children}
-        </div>
+        </>
     );
 };
 

@@ -8,12 +8,12 @@ interface props {
 const WorkspaceHeaderProvider = (props: props) => {
 
     return (
-        <div>
+        <>
             <Header/>
-            <div className='App'>
+            <div className='content'>
                 {props.children}
             </div>
-        </div>
+        </>
     );
 };
 
