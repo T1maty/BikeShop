@@ -41,13 +41,11 @@
 // mixins for UI
 
 @mixin defaultFiledStyle() {
+    @include flexCenter();
     max-width: 250px;
-    border: 2px solid #C0C0C0;
-    border-radius: 10px;
     padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 2px solid $themeColorMilk;
+    border-radius: 10px;
 }
 
 @mixin widthHeightFull() {

@@ -18,23 +18,23 @@
         }
 
         .clientModal_searchBlock_textField {
-            @include defaultFiledStyle();
-            border-radius: 0;
+           @include flexColumn();
             min-width: 100%;
             height: 100px;
             overflow: auto;
+            border: 2px solid $themeColorMilk;
+            padding: 10px;
 
-            .searchBlock_textField_content {
-                @include flexColumn();
-                //padding-top: 40px;
+            .textField_contentItem {
+                padding: 5px 0;
 
-                .textField_contentItem {
-                    padding: 5px 0;
-                    &:hover {
-                        cursor: pointer;
-                        background-color: $themeColorGray;
-                    }
+                &:hover {
+                    cursor: pointer;
+                    background-color: $themeColorGray;
                 }
+            }
+            .textField_loader {
+                // надо сделать по центру
             }
         }
     }

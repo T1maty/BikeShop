@@ -8,6 +8,8 @@ import {useNavigate} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {CreateUser} from '../../entities';
 import {useSnackbar} from 'notistack';
+import {Loader} from "../../shared/ui/Loader/Loader";
+import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 
 const ChooseClientModal = () => {
     /*const [open, setOpen] = React.useState(false);
@@ -144,10 +146,10 @@ const ChooseClientModal = () => {
                                 </Button>
                             </div>
                             <div className={s.clientModal_searchBlock_textField}>
-                                <div className={s.searchBlock_textField_content}>
                                     {
                                         isLoading
-                                            ? <div>Загрузка...</div> :
+                                            ? <div>Поиск...</div> :
+                                            // ? <div className={s.textField_loader}><Loader/></div> :
                                         users.map((u: any) => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}>
@@ -156,7 +158,7 @@ const ChooseClientModal = () => {
                                             )
                                         })
                                     }
-                                </div>
+
                                 {/*<TextField id="outlined-basic"*/}
                                 {/*           variant="outlined"*/}
                                 {/*           value={'Результат поиска'}*/}
