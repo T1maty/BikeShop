@@ -17,7 +17,7 @@ const ClientCard = () => {
             <h3>Клиент</h3>
             <p><span>ФИО:</span> {lastName} {firstName} {patronymic}</p>
             <p><span>Номер телефона:</span> {phoneNumber}</p>
-            <p><span>Почта:</span> {email}</p>
+            {/*<p><span>Почта:</span> {email}</p>*/}
             <p><span>Баланс:</span> {balance}</p>
             <p><span>Кредитный лимит:</span> {creditLimit}</p>
         </div>

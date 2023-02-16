@@ -1,6 +1,5 @@
 import React, {useEffect, ChangeEvent, ChangeEventHandler} from 'react';
 import {Modal, TextField} from '@mui/material';
-import useChooseClientModal from './ChooseClientModalStore';
 import {Button, ControlledInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
@@ -11,6 +10,7 @@ import {useSnackbar} from 'notistack';
 import {Loader} from "../../shared/ui/Loader/Loader";
 import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
+import useChooseClientModal from './ChooseClientModalStore';
 import useClientCard from "../ClientCard/ClientCardStore";
 
 const ChooseClientModal = () => {
@@ -90,12 +90,11 @@ const ChooseClientModal = () => {
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
             console.error(error.response.data)
         })
-
     }
 
     const setInfoToClientCard = (clientCard: {/*userId: string, lastName: string,
         firstName: string, patronymic: string, */phoneNumber: string}) => {
-        setCardPhoneNumber(phoneNumber)
+        // setCardPhoneNumber(phoneNumber)
         console.log(clientCard)
     }
 
