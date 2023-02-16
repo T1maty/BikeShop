@@ -25,7 +25,7 @@ const ProductCatalog = () => {
                             </Button>
                         </div>
                         <div className={s.searchRow_searchInput}>
-                            <InputUI placeholder={'Поиск...'}/>
+                            <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
                         </div>
                         <div className={s.searchRow_allProductsBtn}>
                             <Button onClick={() => {}}>

@@ -88,16 +88,16 @@ const Service = () => {
 
                 <div className={s.service_rightSide}>
                     <div className={s.rightSide_stuffInput}>
-                        <InputUI placeholder={'Техника'}/>
+                        <InputUI placeholder={'Техника'} clearInputValue={() => {}}/>
                     </div>
 
                     <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
-                                <InputUI placeholder={'Детальное описание'}/>
+                                <InputUI placeholder={'Детальное описание'} clearInputValue={() => {}}/>
                             </div>
                             <div className={s.content_masterInput}>
-                                <InputUI placeholder={'Мастер не выбран'}/>
+                                <InputUI placeholder={'Мастер не выбран'} clearInputValue={() => {}}/>
                             </div>
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>

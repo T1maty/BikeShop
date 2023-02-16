@@ -139,7 +139,7 @@ const MainPage = () => {
                                     </Button>
                                 </div>
                                 <div className={s.search_searchInput}>
-                                    <InputUI placeholder={'Поиск...'}/>
+                                    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
                                 </div>
                             </div>
 
