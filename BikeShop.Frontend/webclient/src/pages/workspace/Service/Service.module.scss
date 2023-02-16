@@ -70,10 +70,10 @@
                 @include flexBetween();
                 margin-bottom: $defaultLargeMargin;
                 width: 100%;
+                gap: $defaultLargeMargin;
 
                 .infoFields_content {
                     width: 60%;
-                    margin-right: $defaultLargeMargin;
 
                     .content_detailsInput {
                         margin-bottom: $defaultLargeMargin;

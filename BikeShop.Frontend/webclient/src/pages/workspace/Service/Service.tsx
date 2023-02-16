@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Service.module.scss'
 import {ChooseClientModal, ClientCard} from '../../../features';
 import {Button, InputUI} from '../../../shared/ui';
@@ -37,6 +37,10 @@ const Service = () => {
         {id: 2, title: 'Сезонное ТО', price: 2500, count: 1},
         {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
     ])
+
+    useEffect(() => {
+
+    }, [])
 
     return (
         // <div className={s.serviceWrapper}>

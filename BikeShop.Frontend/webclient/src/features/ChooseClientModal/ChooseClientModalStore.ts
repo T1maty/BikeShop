@@ -8,8 +8,12 @@ import User from "../../entities/models/User";
 
 interface SearchClient {
     fio: string
-    phone: string
+    phoneNumber: string
 }
+
+// export interface APIUser {
+//     user: User
+// }
 
 interface ChooseClientModalStore {
     chooseClientModal: boolean
@@ -17,13 +21,13 @@ interface ChooseClientModalStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     users: User[]
+    userId: string
     fio: string
-    phone: string
+    phoneNumber: string
     getUsers: () => any // надо исправить тип
-    setUsers: (users: any) => void
+    setUsers: (users: User[]) => void
     setFIO: (value: string) => void
-    setPhone: (value: string) => void
-    // findUser: (fio: string) => any // надо исправить тип
+    setPhoneNumber: (value: string) => void
     findUser: (request: SearchClient) => any // надо исправить тип
     // addTestUser: (name: string) => void
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
@@ -41,8 +45,9 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
        isLoading: value
     }),
     users: [],
+    userId: '',
     fio: '',
-    phone: '',
+    phoneNumber: '',
     getUsers: () => {
         set({isLoading: true});
         return $api.get('/user/find').then(res => {
@@ -53,18 +58,18 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
             set({isLoading: false});
         })
     },
-    setUsers: (users: any) => set({
+    setUsers: (users: User[]) => set({
         users: [...users]
     }),
     setFIO: (value: string) => set({
         fio: value
     }),
-    setPhone: (value: string) => set({
-        phone: value
+    setPhoneNumber: (value: string) => set({
+        phoneNumber: value
     }),
     findUser: (request: SearchClient) => {
         set({isLoading: true});
-        return $api.get(`/user/find?fio=${request.fio}&phone=${request.phone}`).then(res => {
+        return $api.get(`/user/find?fio=${request.fio}&phone=${request.phoneNumber}`).then(res => {
             set(state => {
                 state.users = [...res.data.users]
             })

@@ -11,6 +11,7 @@ import {useSnackbar} from 'notistack';
 import {Loader} from "../../shared/ui/Loader/Loader";
 import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
+import useClientCard from "../ClientCard/ClientCardStore";
 
 const ChooseClientModal = () => {
     /*const [open, setOpen] = React.useState(false);
@@ -38,15 +39,17 @@ const ChooseClientModal = () => {
     const users = useChooseClientModal(s => s.users)
     const fio = useChooseClientModal(s => s.fio)
     const setFIO = useChooseClientModal(s => s.setFIO)
-    const phone = useChooseClientModal(s => s.phone)
-    const setPhone = useChooseClientModal(s => s.setPhone)
+    const phoneNumber = useChooseClientModal(s => s.phoneNumber)
+    const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
     const getUsers = useChooseClientModal(s => s.getUsers)
     const setUsers = useChooseClientModal(s => s.setUsers)
     const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 
+    const setCardPhoneNumber = useClientCard(s => s.setPhoneNumber)
+
     const searchClientByFIO = useDebounce<string>(fio, 1000)
-    const searchClientByPhone = useDebounce<string>(phone, 1000)
+    const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
 
     // const chooseClientModal = useChooseClientModal(s => s.chooseClientModal)
 
@@ -69,14 +72,16 @@ const ChooseClientModal = () => {
     });
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
         addNewUser(data).then((response) => {
-            setOpen(false);
+            // setInfoToClientCard({phoneNumber: phone})
+            setCardPhoneNumber(phoneNumber)
+
+            setOpen(false)
+            navigate('/service')
 
             formControl.setValue('firstName', '')
             formControl.setValue('lastName', '')
             formControl.setValue('patronymic', '')
             formControl.setValue('phone', '')
-
-            navigate('/service')
 
             enqueueSnackbar('Клиент добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error) => {
@@ -88,14 +93,20 @@ const ChooseClientModal = () => {
 
     }
 
-    const findUserHandler = () => {
-        // getUsers();
-        findUser({fio, phone});
+    const setInfoToClientCard = (clientCard: {/*userId: string, lastName: string,
+        firstName: string, patronymic: string, */phoneNumber: string}) => {
+        setCardPhoneNumber(phoneNumber)
+        console.log(clientCard)
     }
 
+    /*const findUserHandler = () => {
+        // getUsers();
+        findUser({fio, phone});
+    }*/
+
     useEffect(() => {
-        if (fio.length > 0 || phone.length > 0) {
-            findUser({fio, phone});
+        if (fio.length > 0 || phoneNumber.length > 0) {
+            findUser({fio, phoneNumber});
         }
     }, [searchClientByFIO, searchClientByPhone])
 
@@ -135,11 +146,11 @@ const ChooseClientModal = () => {
                             />
                         </div>
                         <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите номер телефона'} value={phone}
+                            <Input placeholder={'Введите номер телефона'} value={phoneNumber}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setPhone(e.currentTarget.value)
+                                       setPhoneNumber(e.currentTarget.value)
                                    }}
-                                   clearInputValue={() => {setPhone('')}}
+                                   clearInputValue={() => {setPhoneNumber('')}}
                             />
                         </div>
                         {/*<div>*/}
@@ -148,8 +159,6 @@ const ChooseClientModal = () => {
                         {/*    </Button>*/}
                         {/*</div>*/}
                         <div className={s.clientModal_searchBlock_textField}>
-                            {/*Результат поиска*/}
-
                             {
                                 users.length === 0
                                     ?
@@ -160,7 +169,14 @@ const ChooseClientModal = () => {
                                         // ? <div className={s.textField_loader}><Loader/></div> :
                                         users.map((u: any) => {
                                             return (
-                                                <div className={s.textField_contentItem} key={u.user.id}>
+                                                <div className={s.textField_contentItem} key={u.user.id}
+                                                     onClick={() => {
+                                                         setInfoToClientCard({/*userId: u.user.id,
+                                                             firstName: u.user.firstName, lastName: u.user.lastName,
+                                                             patronymic: u.user.patronymic, */phoneNumber: u.user.phoneNumber
+                                                         })
+                                                     }}
+                                                >
                                                     {u.user.lastName} {u.user.firstName} {u.user.patronymic}
                                                 </div>
                                             )
