@@ -1,5 +1,5 @@
 import React, {ButtonHTMLAttributes, FC} from 'react';
-import menuBurger from '../../assets/icon/burger-light.svg'
+import menuBurger from '../../assets/burger-light.svg'
 import {IconButton} from "./IconProvider";
 
 export const MenuIcon: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
