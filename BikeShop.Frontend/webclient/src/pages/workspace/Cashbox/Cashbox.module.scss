@@ -7,10 +7,10 @@
     .cashboxMainBlock {
         @include wrapperMainBlock();
         @include flexOnlyBetween();
+        gap: $defaultLargeMargin;
 
         .cashboxMainBlock_leftSideWrapper {
             width: 30%;
-            margin: $defaultSmallMargin;
             @include flexColumn();
 
             .leftSide_tables {
@@ -132,10 +132,10 @@
                 }
             }
         }
+
         .cashboxMainBlock_rightSideWrapper {
             @include flexOnlyBetween();
             flex-direction: column;
-            margin: $defaultSmallMargin;
             background-color: $themeColorGray;
             border-radius: $defaultBorderRadius;
             padding: $defaultLargeMargin;

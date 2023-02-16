@@ -28,10 +28,9 @@ const TagTreeView = () => {
 
     return (
         <Box sx={{
-
             flexGrow: 1,
             maxWidth: 400,
-            overflowY: "auto",
+            maxHeight: 100,
             backgroundColor: '#33373B',
             borderRadius: 5,
             p: 2,

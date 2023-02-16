@@ -10,6 +10,7 @@
         .mainPage_header {
             display: flex;
             margin-bottom: $defaultLargeMargin;
+            gap: $defaultLargeMargin;
 
             .mainPage_header_leftSide {
                 display: flex;
@@ -46,18 +47,17 @@
                 @include flexCenter();
                 background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
-                margin-left: $defaultLargeMargin;
                 width: 30%;
             }
         }
 
         .mainPage_content {
             display: flex;
+            gap: $defaultLargeMargin;
 
             .content_leftSide {
                 background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
-                margin-right: $defaultSmallMargin;
                 width: 50%;
 
                 .leftSide_title {
@@ -87,7 +87,6 @@
 
             .content_rightSide {
                 width: 50%;
-                margin-left: $defaultSmallMargin;
                 @include flexColumn();
 
                 .rightSide_top {
