@@ -1,5 +1,8 @@
 .app.dark {
-    --primary-color: #1876D1;
-    --inverted-primary-color: #ffffff;
+    --primary-color: #ffffff;
+    --inverted-primary-color: #505050;
     --button-disabled-color: #5C636A;
+
+    --bg-color: #000000;
+    --header-color:#272727;
 }

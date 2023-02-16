@@ -25,7 +25,7 @@ export {default as OnlyWithoutAuthRoute} from '../app/providers/RouteProviders/O
 export {default as CheckAuthRoute} from '../app/providers/RouteProviders/CheckAuthRoute'
 
 export {default as PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeaderProvider'
-export {default as WorkspaceHeaderProvider} from '../app/providers/HeaderProviders/WorkspaceHeaderProvider'
+export {WorkspaceHeaderProvider} from '../app/providers/HeaderProviders/WorkspaceHeaderProvider'
 
 export {EnumProductCheckStatus} from './enumerables/EnumProductCheckStatus'
 
