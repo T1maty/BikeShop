@@ -181,13 +181,13 @@ const ChooseClientModal = () => {
                             Создать клиента:
                         </div>
                         <div>
-                            <ControlledInput name={'firstName'} label={'Фамилия'}
+                            <ControlledInput name={'lastName'} label={'Фамилия'}
                                              control={formControl}
                                              rules={{required: errorMessages.required}}
                             />
                         </div>
                         <div>
-                            <ControlledInput name={'lastName'} label={'Имя'}
+                            <ControlledInput name={'firstName'} label={'Имя'}
                                              control={formControl}
                                              rules={{required: errorMessages.required}}
                             />
