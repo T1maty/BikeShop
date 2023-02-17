@@ -1,3 +1,4 @@
+import { BikeShopPaths } from 'app/routes/paths';
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 
@@ -10,10 +11,9 @@ const OnlyWithoutAuthRoute = (props: props) => {
 
     React.useEffect(() => {
         if (localStorage.getItem('accessToken') != null) {
-            navigate('/Home')
+            navigate(BikeShopPaths.WORKSPACE.HOME)
         }
     }, [])
-
 
     return (
         <div>

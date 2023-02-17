@@ -8,6 +8,7 @@ import {Clock} from "../../../../shared/ui/Clock/Clock";
 import {MenuIcon} from "../../../../shared/ui/IconButtons/MenuIcon";
 import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon";
 import {Badge} from "../../../../shared/ui/Badge/Badge";
+import {BikeShopPaths} from "../../../../app/routes/paths";
 
 export const Header: FC = () => {
 
@@ -21,7 +22,7 @@ export const Header: FC = () => {
                 <div className={cls.leftSide}>
                     <MenuIcon/>
                     <div onClick={() => {
-                        navigate('/mainpage')
+                        navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
                     }}>
                         {t('Shop')}
                     </div>

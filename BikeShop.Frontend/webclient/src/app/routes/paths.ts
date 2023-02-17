@@ -1,12 +1,13 @@
 export const BikeShopPaths = {
     WORKSPACE: {
-        HOME: '/',
+        HOME_NULL: '/',
+        HOME: '/home',
         LOGIN: '/login',
         REGISTRATION: '/registration',
 
-        MAIN_PAGE: '/mainPage',
-        PRODUCT_CATALOG: '/productCatalog',
-        WORK_CATALOG: '/workCatalog',
+        MAIN_PAGE: '/main-page',
+        PRODUCT_CATALOG: '/product-catalog',
+        WORK_CATALOG: '/work-catalog',
         SERVICE: '/service',
         CASHBOX: '/cashbox',
     },

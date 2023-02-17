@@ -71,7 +71,7 @@ const MainPage = () => {
                         </div>
                         <div className={s.header_leftSide_info}>
                             <div>
-                                <Button onClick={() => navigate('/productcatalog')}
+                                <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}
                                 >
                                     Каталог товаров
                                 </Button>

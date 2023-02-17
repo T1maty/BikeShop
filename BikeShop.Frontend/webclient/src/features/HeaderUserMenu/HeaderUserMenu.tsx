@@ -8,6 +8,7 @@ import MenuList from '@mui/material/MenuList';
 import React from 'react';
 import {useAuthUser} from "../../entities";
 import {useNavigate} from "react-router-dom";
+import {BikeShopPaths} from "../../app/routes/paths";
 
 interface iProps {
     firstName?: string,
@@ -50,7 +51,7 @@ const HeaderUserMenu = (props: iProps) => {
     function handleLogOut(event: Event | React.SyntheticEvent) {
         handleClose(event)
         logout()
-        navigate('/login')
+        navigate(BikeShopPaths.WORKSPACE.LOGIN)
     }
 
     // return focus to the button when we transitioned from !open -> open

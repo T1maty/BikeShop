@@ -3,6 +3,7 @@ import {Box, Button, Container, Stack, TextField, Typography} from "@mui/materia
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {NavLink, useNavigate} from "react-router-dom";
 import {IRegistrationData, useAuthUser} from "../../../entities";
+import {BikeShopPaths} from "../../../app/routes/paths";
 
 const RegistrationForm = () => {
 
@@ -24,7 +25,7 @@ const RegistrationForm = () => {
 
     const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
         register(data).then(() => {
-            navigate('login')
+            navigate(BikeShopPaths.WORKSPACE.LOGIN)
         })
     };
 

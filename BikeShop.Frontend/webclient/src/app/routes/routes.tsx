@@ -1,7 +1,8 @@
 import {createBrowserRouter} from "react-router-dom";
-import {Cashbox, Home, LoginPage, MainPage, ProductCatalog, RegistrationPage, Service} from "../pages";
-import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} from "../entities";
-import {WorkCatalog} from "../pages/workspace/WorkCatalog";
+import {Cashbox, Home, LoginPage, MainPage, ProductCatalog, RegistrationPage, Service} from "../../pages";
+import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} from "../../entities";
+import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
+import { BikeShopPaths } from "./paths";
 
 
 // @ts-ignore
@@ -12,13 +13,13 @@ export const Routes = createBrowserRouter([
     ////                    ////
 
     {
-        path: '/login',
+        path: BikeShopPaths.WORKSPACE.LOGIN,
         element: <OnlyWithoutAuthRoute>
             <LoginPage/>
         </OnlyWithoutAuthRoute>
     },
     {
-        path: '/registration',
+        path: BikeShopPaths.WORKSPACE.REGISTRATION,
         element: <OnlyWithoutAuthRoute>
             <RegistrationPage/>
         </OnlyWithoutAuthRoute>
@@ -29,27 +30,27 @@ export const Routes = createBrowserRouter([
     ////                                        ////
 
     {
-        path: '/',
+        path: BikeShopPaths.WORKSPACE.HOME_NULL,
         element: <PublicHeaderProvider>
             <Home/>
         </PublicHeaderProvider>
     },
     {
-        path: '/Home',
+        path: BikeShopPaths.WORKSPACE.HOME,
         element: <PublicHeaderProvider>
             <Home/>
         </PublicHeaderProvider>
     },
     // для Cashbox
     {
-        path: '/cashbox',
+        path: BikeShopPaths.WORKSPACE.CASHBOX,
         element: <WorkspaceHeaderProvider>
             <Cashbox/>
         </WorkspaceHeaderProvider>
     },
     // для Service
     {
-        path: '/service',
+        path: BikeShopPaths.WORKSPACE.SERVICE,
         element: <WorkspaceHeaderProvider>
             <Service/>
         </WorkspaceHeaderProvider>
@@ -60,7 +61,7 @@ export const Routes = createBrowserRouter([
     ////                                        ////
 
     {
-        path: '/mainpage',
+        path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
         element: /*<CheckAuthRout>*/
             <WorkspaceHeaderProvider>
                 <MainPage/>
@@ -68,7 +69,7 @@ export const Routes = createBrowserRouter([
         /*</CheckAuthRout>*/
     },
     {
-        path: '/productcatalog',
+        path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
         element: /*<CheckAuthRoute>*/
             <WorkspaceHeaderProvider>
                 <ProductCatalog/>
@@ -76,7 +77,7 @@ export const Routes = createBrowserRouter([
         // </CheckAuthRoute>
     },
     {
-        path: '/workcatalog',
+        path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
         element: /*<CheckAuthRoute>*/
             <WorkspaceHeaderProvider>
                 <WorkCatalog/>

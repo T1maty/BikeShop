@@ -2,7 +2,7 @@ import React, {Suspense} from "react";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import {RouterProvider} from "react-router-dom";
-import {Routes} from "./allRoutes";
+import {Routes} from "./routes/routes";
 import {useTheme} from "./providers/ThemeProvider";
 import './styles/index.scss'
 import {SnackbarProvider} from "notistack";

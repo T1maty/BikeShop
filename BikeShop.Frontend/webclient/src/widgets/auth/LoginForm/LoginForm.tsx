@@ -3,6 +3,7 @@ import {Box, Button, Container, Stack, TextField, Typography} from "@mui/materia
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {NavLink, useNavigate} from "react-router-dom";
 import {ILoginData, useAuthUser} from "../../../entities";
+import {BikeShopPaths} from "../../../app/routes/paths";
 
 
 const LoginForm = () => {
@@ -33,7 +34,7 @@ const LoginForm = () => {
             localStorage.setItem('accessToken', r.data.accessToken)
             setUser(r.data.user)
 
-            navigate('/mainpage')
+            navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
 
         });
     };
