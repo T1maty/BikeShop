@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BikeShop.Shop.Application.CQRS.Commands.CreateShop;
 using BikeShop.Shop.Application.CQRS.Commands.UpdateShop;
+using BikeShop.Shop.Application.DTO;
+using BikeShop.Shop.Application.Interfaces;
 using BikeShop.Shop.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +16,13 @@ public class ShopController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly IGetAllServices _getAllServices;
 
-    public ShopController(IMediator mediator, IMapper mapper)
+    public ShopController(IMediator mediator, IMapper mapper, IGetAllServices getAllServices)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _getAllServices = getAllServices;
     }
 
     /// <summary>
@@ -78,5 +82,11 @@ public class ShopController : ControllerBase
         await _mediator.Send(command);
 
         return Ok();
+    }
+
+    [HttpGet("getall")]
+    public async Task<List<Domain.Entities.Shop>> GetAll()
+    {
+        return await _getAllServices.GetAllShops();
     }
 }
