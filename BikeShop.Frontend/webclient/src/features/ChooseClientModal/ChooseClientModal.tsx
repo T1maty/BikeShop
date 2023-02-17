@@ -44,7 +44,10 @@ const ChooseClientModal = () => {
     const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 
-    const setCardPhoneNumber = useClientCard(s => s.setPhoneNumber)
+    const setCardLastName = useClientCard(s => s.setCardLastName)
+    const setCardFirstName = useClientCard(s => s.setCardFirstName)
+    const setCardPatronymic = useClientCard(s => s.setCardPatronymic)
+    const setCardPhoneNumber = useClientCard(s => s.setCardPhoneNumber)
 
     const searchClientByFIO = useDebounce<string>(fio, 1000)
     const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
@@ -90,10 +93,16 @@ const ChooseClientModal = () => {
         })
     }
 
-    const setInfoToClientCard = (clientCard: {/*userId: string, lastName: string,
-        firstName: string, patronymic: string, */phoneNumber: string}) => {
-        // setCardPhoneNumber(phoneNumber)
+    const setInfoToClientCard = (clientCard: {userId: string, lastName: string,
+        firstName: string, patronymic: string, phoneNumber: string}) => {
+
+        setCardLastName(clientCard.lastName)
+        setCardFirstName(clientCard.firstName)
+        setCardPatronymic(clientCard.patronymic)
+        setCardPhoneNumber(clientCard.phoneNumber)
+
         console.log(clientCard)
+        setOpen(false)
     }
 
     /*const findUserHandler = () => {
@@ -168,9 +177,9 @@ const ChooseClientModal = () => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}
                                                      onClick={() => {
-                                                         setInfoToClientCard({/*userId: u.user.id,
+                                                         setInfoToClientCard({userId: u.user.id,
                                                              firstName: u.user.firstName, lastName: u.user.lastName,
-                                                             patronymic: u.user.patronymic, */phoneNumber: u.user.phoneNumber
+                                                             patronymic: u.user.patronymic, phoneNumber: u.user.phoneNumber
                                                          })
                                                      }}
                                                 >

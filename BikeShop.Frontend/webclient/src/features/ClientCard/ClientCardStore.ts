@@ -10,15 +10,15 @@ interface ClientCardStore {
     firstName: string
     patronymic: string
     phoneNumber: string
-    email: string
+    // email: string
     balance: number
     creditLimit: number
     setUserId: (value: string) => void
-    setLastName: (value: string) => void
-    setFirstName: (value: string) => void
-    setPatronymic: (value: string) => void
-    setPhoneNumber: (value: string) => void
-    setEmail: (value: string) => void
+    setCardLastName: (value: string) => void
+    setCardFirstName: (value: string) => void
+    setCardPatronymic: (value: string) => void
+    setCardPhoneNumber: (value: string) => void
+    // setCardEmail: (value: string) => void
     setBalance: (value: number) => void
     setCreditLimit: (value: number) => void
 }
@@ -29,28 +29,28 @@ const useClientCard = create<ClientCardStore>()(/*persist(*/devtools(immer((set,
     firstName: 'не',
     patronymic: 'выбран',
     phoneNumber: 'Клиент не выбран',
-    email: 'Клиент не выбран',
+    // email: 'Клиент не выбран',
     balance: 0,
     creditLimit: 0,
 
     setUserId: (value: string) => set({
         userId: value
     }),
-    setLastName: (value: string) => set({
+    setCardLastName: (value: string) => set({
         lastName: value
     }),
-    setFirstName: (value: string) => set({
+    setCardFirstName: (value: string) => set({
         firstName: value
     }),
-    setPatronymic: (value: string) => set({
+    setCardPatronymic: (value: string) => set({
         patronymic: value
     }),
-    setPhoneNumber: (value: string) => set({
+    setCardPhoneNumber: (value: string) => set({
         phoneNumber: value
     }),
-    setEmail: (value: string) => set({
-        email: value
-    }),
+    // setCardEmail: (value: string) => set({
+    //     email: value
+    // }),
     setBalance: (value: number) => set({
         balance: value
     }),
