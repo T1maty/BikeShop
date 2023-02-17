@@ -12,6 +12,7 @@ import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
 import useChooseClientModal from './ChooseClientModalStore';
 import useClientCard from "../ClientCard/ClientCardStore";
+import {BikeShopPaths} from "../../app/routes/paths";
 
 const ChooseClientModal = () => {
     /*const [open, setOpen] = React.useState(false);
@@ -76,7 +77,7 @@ const ChooseClientModal = () => {
             setCardPhoneNumber(phoneNumber)
 
             setOpen(false)
-            navigate('/service')
+            navigate(BikeShopPaths.WORKSPACE.SERVICE)
 
             formControl.setValue('firstName', '')
             formControl.setValue('lastName', '')

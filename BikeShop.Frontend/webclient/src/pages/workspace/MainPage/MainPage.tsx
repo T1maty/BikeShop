@@ -5,6 +5,7 @@ import {Button, InputUI} from '../../../shared/ui';
 import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
+import {BikeShopPaths} from "../../../app/routes/paths";
 
 const navLinks = [
     'Create repairing',
@@ -76,7 +77,7 @@ const MainPage = () => {
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {navigate('/service')}}>
+                                <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
                                     Ремонты
                                 </Button>
                             </div>
