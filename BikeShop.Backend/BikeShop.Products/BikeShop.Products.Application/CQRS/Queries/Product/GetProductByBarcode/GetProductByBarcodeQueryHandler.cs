@@ -28,7 +28,8 @@ public class GetProductByBarcodeQueryHandler : IRequestHandler<GetProductByBarco
             throw new NotFoundException($"Get product by barcode error. Product with barcode {request.Barcode} not found")
             {
                 Error = "product_not_found",
-                ErrorDescription = "Get product by barcode error. Product with given barcode not found"
+                ErrorDescription = "Get product by barcode error. Product with given barcode not found",
+                ReasonField = "barcode"
             };
 
         // Если есть - возвращаю

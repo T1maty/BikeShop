@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Domain.Entities.Product>
 {
     private readonly IApplicationDbContext _context;
 
@@ -15,7 +15,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
         _context = context;
     }
 
-    public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Domain.Entities.Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         // Если был передан баркод производителя - то проверка есть ли уже такой баркод
         if (request.ManufacturerBarcode is not null)
@@ -32,7 +32,8 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
                     $"Product with manufacturer barcode {request.ManufacturerBarcode} already exists")
                 {
                     Error = "product_already_exists",
-                    ErrorDescription = "Product with given manufacturer barcode already exists"
+                    ErrorDescription = "Product with given manufacturer barcode already exists",
+                    ReasonField = "manufacturerBarcode"
                 };
         }
 
@@ -42,7 +43,8 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
             throw new NotFoundException($"Create product error. Brand with id {request.BrandId} not found")
             {
                 Error = "brand_not_found",
-                ErrorDescription = "Create product error. Brand with given id not found"
+                ErrorDescription = "Create product error. Brand with given id not found",
+                ReasonField = "brandId"
             };
 
 
@@ -83,7 +85,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return newProduct;
     }
 
     private static string GenerateUniqueBarcode(int productId, string[] existBarcodes)

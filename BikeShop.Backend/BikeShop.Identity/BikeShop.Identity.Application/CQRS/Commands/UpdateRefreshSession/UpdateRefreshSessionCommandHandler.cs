@@ -28,7 +28,8 @@ public class UpdateRefreshSessionCommandHandler : IRequestHandler<UpdateRefreshS
             throw new NotFoundException($"Session with refresh token {request.RefreshToken} not found")
             {
                 Error = "session_not_found",
-                ErrorDescription = $"Refresh failed. Given refresh token does not belong to any session"
+                ErrorDescription = $"Refresh failed. Given refresh token does not belong to any session",
+                ReasonField = "refreshToken"
             };
 
         // Если есть - обновляю рефреш сессию и возвращаю

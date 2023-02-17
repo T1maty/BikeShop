@@ -53,6 +53,10 @@ public class CustomExceptionHandlerMiddleware
                 statusCode = HttpStatusCode.Conflict;
                 result = alreadyExistsException;
                 break;
+            case GetUsersException getUsersException:
+                statusCode = HttpStatusCode.BadRequest;
+                result = getUsersException;
+                break;
             default:
                 Console.WriteLine(exception);
                 break;

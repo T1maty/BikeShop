@@ -1,0 +1,69 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.shopStoreModal_mainBlock {
+    @include defaultModalStyle();
+    @include flexOnlyBetween();
+    gap: $defaultLargeMargin;
+    min-width: 800px;
+
+    .shopStoreModal_infoBlock {
+        background-color: $themeColorMilk;
+        padding: $defaultLargeMargin;
+        border-radius: $smallBorderRadius;
+        width: 50%;
+    }
+
+    .shopStoreModal_createBlock {
+        width: 50%;
+
+        form {
+            > div:not(:last-child) {
+                margin-bottom: $defaultLargeMargin;
+            }
+
+            .shopStoreModal_inputFields {
+                background-color: $themeColorGray;
+                padding: $defaultLargeMargin;
+                border-radius: $smallBorderRadius;
+
+                > div:not(:last-child) {
+                    margin-bottom: $defaultLargeMargin;
+                }
+
+                .infoBlock_checkbox {
+                    @include flexColumn();
+                    width: 100%;
+                    padding: $defaultSmallMargin;
+                    border: 2px solid $themeColorMilk;
+                    border-radius: $smallBorderRadius;
+
+                    .infoBlock_checkboxItem {
+                        @include flexCenter();
+                    }
+                }
+
+                .infoBlock_updateBtn {
+                    display: flex;
+                    gap: $defaultLargeMargin;
+
+                    button {
+                        @include defaultMediumButton();
+                    }
+                }
+            }
+
+            .shopStoreModal_createBtn {
+                button {
+                    @include defaultLargeButton();
+                }
+            }
+
+            .shopStoreModal_exitBtn {
+                button {
+                    @include defaultLargeButton();
+                }
+            }
+        }
+    }
+}

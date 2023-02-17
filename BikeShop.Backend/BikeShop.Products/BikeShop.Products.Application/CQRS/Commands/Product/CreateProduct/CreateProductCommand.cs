@@ -2,7 +2,7 @@ using MediatR;
 
 namespace BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 
-public class CreateProductCommand : IRequest
+public class CreateProductCommand : IRequest<Domain.Entities.Product>
 {
     public string Name { get; set; } = string.Empty;
     public string CatalogKey { get; set; } = string.Empty;

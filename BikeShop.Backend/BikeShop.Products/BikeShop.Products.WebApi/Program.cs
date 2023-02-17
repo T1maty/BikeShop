@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Reflection;
 using System.Text.Json;
 using BikeShop.Products.Application;
@@ -6,6 +7,7 @@ using BikeShop.Products.Application.Common.Mappings;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Persistence;
 using BikeShop.Products.WebApi.Middleware;
+using BikeShop.Products.WebApi.Models.Validation;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,17 @@ builder.Services.AddControllers()
         // Чтобы выходные JSON-ключи были с маленькой буквы
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+        
+    }).ConfigureApiBehaviorOptions(options =>
+    {
+        // кастомная модель валидации
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var result = new ValidationFailedResult(context.ModelState);
+            result.ContentTypes.Add(MediaTypeNames.Application.Json);
+
+            return result;
+        };
     });
 
 

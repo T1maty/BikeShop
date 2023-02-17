@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BikeShop.Products.Domain.Entities;
 
 namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
 {
-    public class CreateTagCommand : IRequest
+    public class CreateTagCommand : IRequest<ProductTag>
     {
         public string Name { get; set; } = string.Empty;
         public int ParentId { get; set; } = 0;

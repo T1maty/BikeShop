@@ -47,7 +47,8 @@ public class GetProductsByTagsQueryHandler : IRequestHandler<GetProductsByTagsQu
                 throw new InvalidFormatException($"Get products by tags error. Given invalid tags ({tagsArrayStr})")
                 {
                     Error = "tags_invalid",
-                    ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5"
+                    ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5",
+                    ReasonField = "tagsIds"
                 };
 
             // Если один из тэгов число - добавляю его в результативный лист
@@ -59,7 +60,8 @@ public class GetProductsByTagsQueryHandler : IRequestHandler<GetProductsByTagsQu
             throw new InvalidFormatException($"Get products by tags error. Given invalid tags ({tagsArrayStr})")
             {
                 Error = "tags_invalid",
-                ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5"
+                ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5",
+                ReasonField = "tagsIds"
             };
 
         // Если все ок - возвращаю лист
