@@ -27,7 +27,8 @@ public class DeleteRefreshSessionByTokenCommandHandler : IRequestHandler<DeleteR
             throw new NotFoundException($"Session with refresh token {request.RefreshToken} not found")
             {
                 Error = "session_not_found",
-                ErrorDescription = $"Logout failed. Given refresh token does not belong to any session"
+                ErrorDescription = $"Logout failed. Given refresh token does not belong to any session",
+                ReasonField = "refreshToken"
             };
 
         // Удаляю сессию из базы

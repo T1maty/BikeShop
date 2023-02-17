@@ -36,7 +36,7 @@ public class CustomExceptionHandlerMiddleware
                 result = notFoundException;
                 break;
             case AlreadyExistsException alreadyExistsException:
-                statusCode = HttpStatusCode.BadRequest;
+                statusCode = HttpStatusCode.Conflict;
                 result = alreadyExistsException;
                 break;
             case InvalidFormatException invalidFormatException:

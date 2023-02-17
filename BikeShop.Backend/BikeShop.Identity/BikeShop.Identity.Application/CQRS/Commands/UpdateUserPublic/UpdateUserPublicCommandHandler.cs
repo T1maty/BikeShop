@@ -26,7 +26,8 @@ public class UpdateUserPublicCommandHandler : IRequestHandler<UpdateUserPublicCo
             throw new NotFoundException($"Update user public error. User with id {request.UserId} not found")
             {
                 Error = "user_not_found",
-                ErrorDescription = "Update user public error. User with given id not found"
+                ErrorDescription = "Update user public error. User with given id not found",
+                ReasonField = "userId"
             };
 
         // Если есть юзер с такой почтой - ошибка
@@ -38,7 +39,8 @@ public class UpdateUserPublicCommandHandler : IRequestHandler<UpdateUserPublicCo
                     $"Update user public error. User with email {request.Email} already exists")
                 {
                     Error = "email_already_exists",
-                    ErrorDescription = "Update user public error. User with given email already exists"
+                    ErrorDescription = "Update user public error. User with given email already exists",
+                    ReasonField = "email"
                 };
         }
 

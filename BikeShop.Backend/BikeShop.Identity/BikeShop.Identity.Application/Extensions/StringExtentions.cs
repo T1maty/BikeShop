@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace BikeShop.Products.Application.Extensions;
+namespace BikeShop.Identity.Application.Extensions;
 
 public static class StringExtentions
 {

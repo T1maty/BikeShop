@@ -22,7 +22,8 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.UpdateTag
                 throw new NotFoundException($"Update tag error. Tag with id {request.Id} not found")
                 {
                     Error = "tag_not_found",
-                    ErrorDescription = $"Update tag error. Tag with given id not found"
+                    ErrorDescription = $"Update tag error. Tag with given id not found",
+                    ReasonField = "id"
                 };
             
             // Ищу родительский тег с указанным parent id, если такого нет - ошибка
@@ -33,7 +34,8 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.UpdateTag
                     throw new NotFoundException($"Update tag error. Parent tag with id {request.ParentId} not found")
                     {
                         Error = "tag_not_found",
-                        ErrorDescription = "Update tag error. Parent tag with given parent id not found"
+                        ErrorDescription = "Update tag error. Parent tag with given parent id not found",
+                        ReasonField = "parentId"
                     };
             }
 

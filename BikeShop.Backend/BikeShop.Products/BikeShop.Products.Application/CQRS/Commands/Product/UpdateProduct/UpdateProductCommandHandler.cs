@@ -26,7 +26,8 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
             throw new NotFoundException($"Update product error. Product with id {request.Id} not found")
             {
                 Error = "product_not_found",
-                ErrorDescription = "Update product error. Product with given id not found"
+                ErrorDescription = "Update product error. Product with given id not found",
+                ReasonField = "id"
             };
 
         // Проверяю есть ли бренд с таким айди  
@@ -36,7 +37,8 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
             throw new NotFoundException($"Update product error. Brand with id {request.Id} not found")
             {
                 Error = "brand_not_found",
-                ErrorDescription = "Update product error. Brand with given id not found"
+                ErrorDescription = "Update product error. Brand with given id not found",
+                ReasonField = "id"
             };
 
         // Если все ок - обновляю

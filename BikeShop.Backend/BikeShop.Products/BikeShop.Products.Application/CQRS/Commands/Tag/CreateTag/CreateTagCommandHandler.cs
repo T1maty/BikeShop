@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
 {
-    public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand>
+    public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, ProductTag>
     {
         private readonly IApplicationDbContext _context;
 
@@ -15,7 +15,7 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateTagCommand request, CancellationToken cancellationToken)
+        public async Task<ProductTag> Handle(CreateTagCommand request, CancellationToken cancellationToken)
         {
             // Ищу существующий тег с таким названием
             var existingTag = await _context.ProductTags
@@ -25,10 +25,11 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
 
             // Если есть - ошибка
             if (existingTag is not null)
-                throw new AlreadyExistsException($"Create tag error. Tag with name {request.Name} not found")
+                throw new AlreadyExistsException($"Create tag error. Tag with name {request.Name} already exists")
                 {
                     Error = "tag_already_exists",
-                    ErrorDescription = "Create tag error. Tag with given name already exists"
+                    ErrorDescription = "Create tag error. Tag with given name already exists",
+                    ReasonField = "name"
                 };
 
             // Ищу родительский тег с указанным parent id, если такого нет - ошибка
@@ -39,7 +40,8 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
                     throw new NotFoundException($"Create tag error. Parent tag with id {request.ParentId} not found")
                     {
                         Error = "tag_not_found",
-                        ErrorDescription = "Create tag error. Parent tag with given parent id not found"
+                        ErrorDescription = "Create tag error. Parent tag with given parent id not found",
+                        ReasonField = "parentId"
                     };
             }
             
@@ -57,7 +59,7 @@ namespace BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag
             _context.ProductTags.Add(newTag);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return newTag;
         }
     }
 }

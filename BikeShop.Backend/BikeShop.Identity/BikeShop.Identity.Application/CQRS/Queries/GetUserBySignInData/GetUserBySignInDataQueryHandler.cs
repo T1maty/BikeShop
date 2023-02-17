@@ -25,7 +25,8 @@ public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDa
             throw new SignInDataException("Get user by sign in error. Phone AND email is null")
             {
                 Error = "phone_email_null",
-                ErrorDescription = "Get user error. Phone AND email are empty"
+                ErrorDescription = "Get user error. Phone AND email are empty",
+                ReasonField = "phone_email"
             };
 
         // Ищу пользователя в базе по телефону или почте, в зависимости от того что указали
@@ -39,7 +40,8 @@ public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDa
                 $"Get user by sign in error. User with phone/email {request.Phone ?? request.Email} not found")
             {
                 Error = "user_not_found",
-                ErrorDescription = "Get user error. User with given phone/email not found"
+                ErrorDescription = "Get user error. User with given phone/email not found",
+                ReasonField = request.Phone is null ? "email" : "phone"
             };
 
         // Сверяю пароль
@@ -48,7 +50,8 @@ public class GetUserBySignInDataQueryHandler : IRequestHandler<GetUserBySignInDa
             throw new SignInDataException($"Get user by sign in error. Incorrect password from user {user.PhoneNumber}")
             {
                 Error = "incorrect_password",
-                ErrorDescription = "Get user error. Incorrect password"
+                ErrorDescription = "Get user error. Incorrect password",
+                ReasonField = "password"
             };
 
 

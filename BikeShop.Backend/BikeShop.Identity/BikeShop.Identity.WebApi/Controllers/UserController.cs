@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 using BikeShop.Identity.Application.CQRS.Commands.UpdateUserPublic;
+using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
 using BikeShop.Identity.WebApi.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -82,5 +84,64 @@ public class UserController : ControllerBase
         await _mediator.Send(command);
 
         return Ok();
+    }
+
+    /// <summary>
+    /// Создание нового пользователя
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// Создание нового пользователя в базе с указанными данными с автогенерацией пароля. Ничего не возвращает.
+    /// </remarks>
+    /// 
+    /// <param name="model">Модель создания пользователя</param>
+    /// <returns>Ничего. Модель ошибки при неудаче.</returns>
+    /// <response code="200">Успешно создан</response>
+    /// <response code="400">Пользователь с указанным телефоном/паролем уже существует</response>
+    /// <response code="422">Невалидная модель (например не указаны обязательные поля)</response>
+    [HttpPost("create")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserModel model)
+    {
+        // Если невалидная модель
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+
+        var command = _mapper.Map<CreateUserCommand>(model);
+        await _mediator.Send(command);
+        
+        return Ok();
+    }
+
+    /// <summary>
+    /// Поиск всех пользователей по части ФИО/номера
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// При указании одного из полей - ищет только по нему. При указании и того и другого
+    /// - ищет пользователя у которого И совпал кусок ФИО И телефона
+    /// </remarks>
+    /// 
+    /// <param name="model">Модель с полями для поиска пользователя</param>
+    /// <returns>Список найденных пользователей</returns>
+    /// 
+    /// <response code="200">Успех. Возвращает найденных пользователей</response>
+    /// <response code="400">Не указано ни ФИО, ни телефон</response>
+    /// <response code="422">Невалидная модель</response>
+    [HttpGet("find")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<UserModelListModel>> GetUsersByPhoneOrFio([FromQuery] GetUserByPhoneOrFioModel model)
+    {
+        if (!ModelState.IsValid)
+            return UnprocessableEntity(ModelState);
+
+        var query = _mapper.Map<GetUsersByPhoneOrFIOQuery>(model);
+        var usersModel = await _mediator.Send(query);
+
+        return Ok(usersModel);
     }
 }
