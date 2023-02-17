@@ -121,9 +121,7 @@ const ChooseClientModal = () => {
         // {clonedChildren}
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >

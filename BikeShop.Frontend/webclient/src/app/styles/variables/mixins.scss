@@ -74,3 +74,13 @@
     text-align: center;
     margin-bottom: $defaultSmallMargin;
 }
+
+@mixin defaultMediumButton() {
+    width: 100%;
+    padding: $defaultSmallMargin 0;
+}
+
+@mixin defaultLargeButton() {
+    width: 100%;
+    padding: $defaultLargeMargin 0;
+}

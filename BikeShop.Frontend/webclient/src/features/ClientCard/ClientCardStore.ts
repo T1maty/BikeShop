@@ -5,7 +5,6 @@ import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
 
 interface ClientCardStore {
-    userId: string
     lastName: string
     firstName: string
     patronymic: string
@@ -13,7 +12,6 @@ interface ClientCardStore {
     // email: string
     balance: number
     creditLimit: number
-    setUserId: (value: string) => void
     setCardLastName: (value: string) => void
     setCardFirstName: (value: string) => void
     setCardPatronymic: (value: string) => void
@@ -24,7 +22,6 @@ interface ClientCardStore {
 }
 
 const useClientCard = create<ClientCardStore>()(/*persist(*/devtools(immer((set, get) => ({
-    userId: '',
     lastName: 'Клиент',
     firstName: 'не',
     patronymic: 'выбран',
@@ -33,9 +30,6 @@ const useClientCard = create<ClientCardStore>()(/*persist(*/devtools(immer((set,
     balance: 0,
     creditLimit: 0,
 
-    setUserId: (value: string) => set({
-        userId: value
-    }),
     setCardLastName: (value: string) => set({
         lastName: value
     }),
