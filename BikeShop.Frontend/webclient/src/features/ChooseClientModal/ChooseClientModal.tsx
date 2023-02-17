@@ -13,6 +13,7 @@ import {useDebounce} from "../../shared/hooks/useDebounce";
 import useChooseClientModal from './ChooseClientModalStore';
 import useClientCard from "../ClientCard/ClientCardStore";
 import {BikeShopPaths} from "../../app/routes/paths";
+import {Errors} from "../../entities/errors/workspaceErrors";
 
 const ChooseClientModal = () => {
     /*const [open, setOpen] = React.useState(false);
@@ -26,10 +27,6 @@ const ChooseClientModal = () => {
     const clonedChildren = cloneElement(children, {
         onClick: handleOpen,
     })*/
-
-    const errorMessages = {
-        required: 'Поле обязательно для заполнения'
-    }
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -182,14 +179,6 @@ const ChooseClientModal = () => {
                                             )
                                         })
                             }
-
-                            {/*<TextField id="outlined-basic"*/}
-                            {/*           variant="outlined"*/}
-                            {/*           value={'Результат поиска'}*/}
-                            {/*           style={{backgroundColor: '#5C636A'}}*/}
-                            {/*           onChange={() => {}}*/}
-                            {/*           fullWidth={true}*/}
-                            {/*/>*/}
                         </div>
                     </div>
                     <div className={s.clientModal_textFields}>
@@ -199,25 +188,25 @@ const ChooseClientModal = () => {
                         <div>
                             <ControlledInput name={'lastName'} label={'Фамилия'}
                                              control={formControl}
-                                             rules={{required: errorMessages.required}}
+                                             rules={{required: Errors[0].name}}
                             />
                         </div>
                         <div>
                             <ControlledInput name={'firstName'} label={'Имя'}
                                              control={formControl}
-                                             rules={{required: errorMessages.required}}
+                                             rules={{required: Errors[0].name}}
                             />
                         </div>
                         <div>
                             <ControlledInput name={'patronymic'} label={'Отчество'}
                                              control={formControl}
-                                             rules={{required: errorMessages.required}}
+                                             rules={{required: Errors[0].name}}
                             />
                         </div>
                         <div>
                             <ControlledInput name={'phone'} label={'Номер телефона'}
                                              control={formControl}
-                                             rules={{required: errorMessages.required}}
+                                             rules={{required: Errors[0].name}}
                             />
                         </div>
                     </div>

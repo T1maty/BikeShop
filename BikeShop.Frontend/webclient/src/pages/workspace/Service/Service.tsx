@@ -1,13 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import s from './Service.module.scss'
 import {ChooseClientModal, ClientCard} from '../../../features';
-import {Button, InputUI} from '../../../shared/ui';
+import {Button, ControlledInput, InputUI} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {CreateRepair} from "../../../entities/requests/CreateRepair";
+import {useSnackbar} from "notistack";
+import useService from "./ServiceStore";
+import {Errors} from "../../../entities/errors/workspaceErrors";
 
 const Service = () => {
 
+    const {enqueueSnackbar} = useSnackbar()
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
+    const addNewRepair = useService(s => s.addNewRepair)
 
     const [repair, setRepair] = useState([
         {id: 1, repair: 'repair 01'},
@@ -38,35 +45,69 @@ const Service = () => {
         {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
     ])
 
-    useEffect(() => {
+    const formControl = useForm({
+        defaultValues: {
+            stuff: '',
+            description: '',
+            master: '',
+        }
+    });
+    const onSubmit: SubmitHandler<CreateRepair> = (data: CreateRepair) => {
+        console.log(data)
 
-    }, [])
+        formControl.setValue('stuff', '')
+        formControl.setValue('description', '')
+        formControl.setValue('master', '')
+
+        // addNewRepair(data).then((response: any) => {
+        //     formControl.setValue('stuff', '')
+        //     formControl.setValue('description', '')
+        //     formControl.setValue('master', '')
+        //
+        //     enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+        // }).catch((error: any) => {
+        //     let message = error(error.response.data.errorDescription).toString()
+        //     formControl.setError('stuff', {type: 'serverError', message: message})
+        //     enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+        //     console.error(error.response.data)
+        // })
+    }
+
+    // useEffect(() => {
+    //
+    // }, [])
 
     return (
         // <div className={s.serviceWrapper}>
+        <form onSubmit={formControl.handleSubmit(onSubmit)}>
             <div className={s.serviceBlock}>
 
                 <div className={s.service_leftSide}>
                     <div className={s.leftSide_buttons}>
                         <ChooseClientModal/>
                         <div className={s.buttons_create}>
-                            <Button onClick={() => {setChooseClientModal(true)}}>
+                            <Button onClick={() => {
+                                setChooseClientModal(true)
+                            }}>
                                 Создать ремонт
                             </Button>
                         </div>
                         <div className={s.buttons_info}>
                             <div>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                }}>
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                }}>
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                }}>
                                     Готово
                                 </Button>
                             </div>
@@ -92,25 +133,38 @@ const Service = () => {
 
                 <div className={s.service_rightSide}>
                     <div className={s.rightSide_stuffInput}>
-                        <InputUI placeholder={'Техника'} clearInputValue={() => {}}/>
+                        {/*<InputUI placeholder={'Техника'} clearInputValue={() => {}}/>*/}
+                        <ControlledInput name={'stuff'} label={'Техника'}
+                                         control={formControl}
+                                         rules={{required: Errors[0].name}}
+                        />
                     </div>
 
                     <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
-                                <InputUI placeholder={'Детальное описание'} clearInputValue={() => {}}/>
+                                {/*<InputUI placeholder={'Детальное описание'} clearInputValue={() => {}}/>*/}
+                                <ControlledInput name={'description'} label={'Детальное описание'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
                             </div>
                             <div className={s.content_masterInput}>
-                                <InputUI placeholder={'Мастер не выбран'} clearInputValue={() => {}}/>
+                                {/*<InputUI placeholder={'Мастер'} clearInputValue={() => {}}/>*/}
+                                <ControlledInput name={'master'} label={'Мастер'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
                             </div>
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>
-                                    <Button onClick={() => {}}>
+                                    <Button type={'submit'}>
                                         Сохранить
                                     </Button>
                                 </div>
                                 <div className={s.content_cancelBtn}>
-                                    <Button onClick={() => {}}>
+                                    <Button onClick={() => {
+                                    }}>
                                         Отмена
                                     </Button>
                                 </div>
@@ -122,7 +176,9 @@ const Service = () => {
                         <div className={s.infoFields_clientCard}>
                             <ClientCard/>
                             <div className={s.clientCard_changeClientBtn}>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                    setChooseClientModal(true)
+                                }}>
                                     Изменить клиента
                                 </Button>
                             </div>
@@ -136,6 +192,7 @@ const Service = () => {
                 </div>
 
             </div>
+        </form>
         // </div>
     );
 };
