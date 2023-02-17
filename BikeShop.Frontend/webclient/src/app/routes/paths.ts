@@ -5,9 +5,9 @@ export const BikeShopPaths = {
         LOGIN: '/login',
         REGISTRATION: '/registration',
 
-        MAIN_PAGE: '/main-page',
-        PRODUCT_CATALOG: '/product-catalog',
-        WORK_CATALOG: '/work-catalog',
+        MAIN_PAGE: '/mainPage',
+        PRODUCT_CATALOG: '/productCatalog',
+        WORK_CATALOG: '/workCatalog',
         SERVICE: '/service',
         CASHBOX: '/cashbox',
     },

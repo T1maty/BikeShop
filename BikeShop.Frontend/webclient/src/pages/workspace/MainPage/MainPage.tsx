@@ -43,7 +43,6 @@ const MainPage = () => {
     return (
         // <div className={s.mainPageWrapper}>
             <div className={s.mainPageMainBlock}>
-
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
@@ -79,8 +78,7 @@ const MainPage = () => {
                         </div>
                         <div className={s.header_leftSide_info}>
                             <div>
-                                <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}
-                                >
+                                <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                                     Каталог товаров
                                 </Button>
                             </div>
