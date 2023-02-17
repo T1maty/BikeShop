@@ -22,11 +22,6 @@ const Service = () => {
         {id: 3, repair: 'repair 03'},
         {id: 4, repair: 'repair 04'},
         {id: 5, repair: 'repair 05'},
-        {id: 6, repair: 'repair 06'},
-        {id: 7, repair: 'repair 07'},
-        {id: 8, repair: 'repair 08'},
-        {id: 9, repair: 'repair 09'},
-        {id: 10, repair: 'repair 10'}
     ])
 
     const [productsItem, setProductsItem] = useState([

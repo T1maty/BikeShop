@@ -9,7 +9,6 @@ interface PayModalStore {
 
 const usePayModal = create<PayModalStore>()(persist(devtools(immer((set) => ({
     payModal: false,
-
     setPayModal: (value) => set({
         payModal: value
     }),

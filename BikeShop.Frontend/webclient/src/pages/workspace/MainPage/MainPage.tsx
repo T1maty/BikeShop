@@ -6,6 +6,7 @@ import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
+import useClientCard from "../../../features/ClientCard/ClientCardStore";
 
 const navLinks = [
     'Create repairing',
@@ -21,6 +22,10 @@ const MainPage = () => {
     const navigate = useNavigate();
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
+
+    const lastName = useClientCard(s => s.lastName)
+    const firstName = useClientCard(s => s.firstName)
+    const patronymic = useClientCard(s => s.patronymic)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -110,7 +115,7 @@ const MainPage = () => {
                     </div>
 
                     <div className={s.mainPage_header_rightSide}>
-                        3
+                        Здесь будет что-то интересное
                     </div>
                 </div>
 
@@ -135,23 +140,24 @@ const MainPage = () => {
                         <div className={s.rightSide_top}>
                             <div className={s.rightSide_top_search}>
                                 <div className={s.search_searchButton}>
-                                    <Button onClick={() => {}}>
-                                        Найти клиента
+                                    <Button onClick={() => {setChooseClientModal(true)}}>
+                                        Выбрать клиента
                                     </Button>
                                 </div>
                                 <div className={s.search_searchInput}>
-                                    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
+                                    {/*<InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
+                                    {lastName} {firstName} {patronymic}
                                 </div>
                             </div>
 
                             <div className={s.rightSide_top_info}>
-                                555
+                                Выбранные товары
                             </div>
 
                             <div className={s.rightSide_top_result}>
                                 <div className={s.result_closeBtn}>
-                                    <Button onClick={() => {}}>
-                                        Закрыть кассу
+                                    <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
+                                        Открыть кассу
                                     </Button>
                                 </div>
                                 <div className={s.result_cancelBtn}>

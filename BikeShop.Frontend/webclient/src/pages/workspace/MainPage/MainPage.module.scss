@@ -110,8 +110,12 @@
                             }
                         }
                         .search_searchInput {
+                            @include flexCenter();
                             width: 100%;
-                            padding-left: $defaultLargeMargin;
+                            padding: $defaultSmallMargin;
+                            margin-left: $defaultLargeMargin;
+                            border: 2px solid $themeColorMilk;
+                            border-radius: $smallBorderRadius;
                         }
                     }
                     .rightSide_top_info {
