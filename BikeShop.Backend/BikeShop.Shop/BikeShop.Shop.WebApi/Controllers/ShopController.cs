@@ -85,7 +85,7 @@ public class ShopController : ControllerBase
     }
 
     [HttpGet("getall")]
-    public async Task<List<Domain.Entities.Shop>> GetAll()
+    public async Task<List<ShopDTO>> GetAll()
     {
         return await _getAllServices.GetAllShops();
     }

@@ -12,9 +12,7 @@ public class CreateShopModel : IMappable
     [Required] public string Phone { get; set; }
     [Required] public string Secret { get; set; }
     [Required] public int StorageId { get; set; }
-    [Required] public decimal CashboxCash { get; set; }
-    [Required] public decimal CashboxTerminal { get; set; }
-
+    
     public void Mapping(Profile profile)
     {
         profile.CreateMap<CreateShopModel, CreateShopCommand>();

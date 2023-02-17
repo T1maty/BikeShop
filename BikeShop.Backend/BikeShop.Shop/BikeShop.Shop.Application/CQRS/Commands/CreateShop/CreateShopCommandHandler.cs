@@ -29,11 +29,9 @@ public class CreateShopCommandHandler : IRequestHandler<CreateShopCommand>
         var shop = new Domain.Entities.Shop()
         {
             Name = request.Name,
-            CashboxTerminal = request.CashboxTerminal,
             Address = request.Address,
             Phone = request.Phone,
             Secret = request.Secret,
-            CashboxCash = request.CashboxCash,
             StorageId = request.StorageId
         };
 
