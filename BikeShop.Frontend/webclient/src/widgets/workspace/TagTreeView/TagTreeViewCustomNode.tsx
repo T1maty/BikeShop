@@ -4,6 +4,7 @@ import {Typography} from "@mui/material";
 import clsx from 'clsx';
 import useTagTreeView from "./TagTreeViewStore";
 import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore";
+import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore";
 
 export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
     props: TreeItemContentProps,
@@ -33,9 +34,21 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
     const setContext = useTagTreeView(s => s.setContextMenuVisible)
     const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
     const setRows = useProductCatalogTableStore(s => s.setRows)
+    const addTagToCloud = useProductTagCloudStore(s => s.addTag)
+    const treeData = useTagTreeView(s => s.treeViewTags)
+    const tagsCloud = useProductTagCloudStore(s => s.tags)
+
+    React.useEffect(() => {
+        setProductsToTableHandler()
+        console.log('effect')
+    }, [tagsCloud])
 
     function setProductsToTableHandler() {
-        setProductsToTable([props.nodeId]).then((r) => {
+        let tags = tagsCloud.map((n) => {
+            return n.id
+        })
+        tags.push(props.nodeId)
+        setProductsToTable(tags).then((r) => {
             setRows(r.data.products)
         })
     }
@@ -56,6 +69,11 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
                 {icon}
             </div>
             <Typography
+                onDoubleClick={() => {
+                    addTagToCloud(treeData.filter((n) => {
+                        if (n.id == props.nodeId) return n
+                    })[0])
+                }}
                 onClick={() => {
                     setSelect(props.nodeId)
                     setProductsToTableHandler()
