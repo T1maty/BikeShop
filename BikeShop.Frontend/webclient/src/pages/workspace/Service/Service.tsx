@@ -68,10 +68,6 @@ const Service = () => {
         // })
     }
 
-    // useEffect(() => {
-    //
-    // }, [])
-
     return (
         // <div className={s.serviceWrapper}>
         <form onSubmit={formControl.handleSubmit(onSubmit)}>

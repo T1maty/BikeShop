@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import s from "./MainPage.module.scss";
-import {Button, InputUI} from '../../../shared/ui';
+import {Button} from '../../../shared/ui';
 import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
@@ -49,7 +49,10 @@ const MainPage = () => {
                         <div className={s.header_leftSide_deal}>
                             <div>
                                 <ChooseClientModal/>
-                                <Button onClick={() => {setChooseClientModal(true)}}>
+                                <Button onClick={() => {
+                                    navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                                    setChooseClientModal(true)
+                                }}>
                                     Создать ремонт
                                 </Button>
                             </div>

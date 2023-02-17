@@ -52,8 +52,6 @@ const ChooseClientModal = () => {
     const searchClientByFIO = useDebounce<string>(fio, 1000)
     const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
 
-    // const chooseClientModal = useChooseClientModal(s => s.chooseClientModal)
-
     /*const { register, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
             firstName: '',
@@ -73,11 +71,8 @@ const ChooseClientModal = () => {
     });
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
         addNewUser(data).then((response) => {
-            // setInfoToClientCard({phoneNumber: phone})
-            setCardPhoneNumber(phoneNumber)
-
             setOpen(false)
-            navigate(BikeShopPaths.WORKSPACE.SERVICE)
+            // navigate(BikeShopPaths.WORKSPACE.SERVICE)
 
             formControl.setValue('firstName', '')
             formControl.setValue('lastName', '')
@@ -104,11 +99,6 @@ const ChooseClientModal = () => {
         console.log(clientCard)
         setOpen(false)
     }
-
-    /*const findUserHandler = () => {
-        // getUsers();
-        findUser({fio, phone});
-    }*/
 
     useEffect(() => {
         if (fio.length > 0 || phoneNumber.length > 0) {
@@ -159,11 +149,6 @@ const ChooseClientModal = () => {
                                    clearInputValue={() => {setPhoneNumber('')}}
                             />
                         </div>
-                        {/*<div>*/}
-                        {/*    <Button onClick={findUserHandler}>*/}
-                        {/*        Найти клиента*/}
-                        {/*    </Button>*/}
-                        {/*</div>*/}
                         <div className={s.clientModal_searchBlock_textField}>
                             {
                                 users.length === 0
