@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BikeShop.Shop.Application.DTO;
 using BikeShop.Shop.Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Shop.Application.Services;
 
@@ -15,11 +17,10 @@ public class GetAllService : IGetAllServices
         _mapper = mapper;
     }
 
-    public async Task<List<Domain.Entities.Shop>> GetAllShops()
+    public async Task<List<ShopDTO>> GetAllShops()
     {
-        var dto = _context.Shops.ToList();
-
-
+        var dto = await _context.Shops.ProjectTo<ShopDTO>(_mapper.ConfigurationProvider).ToListAsync();
+        
         return dto;
     }
 }
