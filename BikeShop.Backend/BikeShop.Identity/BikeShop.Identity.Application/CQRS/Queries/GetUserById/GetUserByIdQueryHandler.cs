@@ -24,7 +24,8 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUser
             throw new NotFoundException($"User with id '{request.UserId}' not found")
             {
                 Error = "user_not_found",
-                ErrorDescription = $"User with given id not found"
+                ErrorDescription = $"User with given id not found",
+                ReasonField = "id"
             };
 
         // Получаю роли пользователя

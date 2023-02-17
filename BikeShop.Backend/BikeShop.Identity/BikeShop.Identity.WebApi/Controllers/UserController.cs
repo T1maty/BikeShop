@@ -115,7 +115,25 @@ public class UserController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Поиск всех пользователей по части ФИО/номера
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// При указании одного из полей - ищет только по нему. При указании и того и другого
+    /// - ищет пользователя у которого И совпал кусок ФИО И телефона
+    /// </remarks>
+    /// 
+    /// <param name="model">Модель с полями для поиска пользователя</param>
+    /// <returns>Список найденных пользователей</returns>
+    /// 
+    /// <response code="200">Успех. Возвращает найденных пользователей</response>
+    /// <response code="400">Не указано ни ФИО, ни телефон</response>
+    /// <response code="422">Невалидная модель</response>
     [HttpGet("find")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<UserModelListModel>> GetUsersByPhoneOrFio([FromQuery] GetUserByPhoneOrFioModel model)
     {
         if (!ModelState.IsValid)

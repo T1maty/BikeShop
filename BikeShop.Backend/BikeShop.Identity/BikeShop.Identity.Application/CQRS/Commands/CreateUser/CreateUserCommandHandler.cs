@@ -21,10 +21,11 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
         // Если есть пользователь с таким телефоном - ошибка
         var existingUserByPhone = await _userManager.FindByNameAsync(request.Phone);
         if (existingUserByPhone is not null)
-            throw new RegistrationException($"Create user error. User with phone {request.Phone} already exists")
+            throw new AlreadyExistsException($"Create user error. User with phone {request.Phone} already exists")
             {
                 Error = "phone_already_exists",
-                ErrorDescription = "Create user error. User with given phone already exists"
+                ErrorDescription = "Create user error. User with given phone already exists",
+                ReasonField = "phone"
             };
 
 
@@ -47,7 +48,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
             throw new RegistrationException($"Error while user '{request.Phone}' registration")
             {
                 Error = "error_registration",
-                ErrorDescription = "Registration error. Perhaps the password does not match the requirements"
+                ErrorDescription = "Registration error. Perhaps the password does not match the requirements",
+                ReasonField = "password"
             };
 
         // Даю стандартную роль пользователю
