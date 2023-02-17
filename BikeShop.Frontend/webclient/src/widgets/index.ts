@@ -4,3 +4,4 @@ export {default as TagTreeView} from './workspace/TagTreeView/TagTreeView'
 
 export {default as RegistrationForm} from './auth/RegistrationForm/RegistrationForm'
 export {default as LoginForm} from './auth/LoginForm/LoginForm'
+export {ProductTagCloud} from './workspace/ProductTagCloud/ProductTagCloud'
