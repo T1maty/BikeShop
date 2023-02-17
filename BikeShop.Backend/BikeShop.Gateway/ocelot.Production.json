@@ -401,6 +401,21 @@
         }
       ],
       "SwaggerKey": "shop"
+    },
+    {
+      "UpstreamPathTemplate": "/api/shop/getall",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/shop/getall",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
     }
   ],
 
