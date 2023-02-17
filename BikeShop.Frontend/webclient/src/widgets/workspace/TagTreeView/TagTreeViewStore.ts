@@ -26,6 +26,7 @@ interface tagTreeViewStore {
     handleExpand: (id: string) => void
 
     fetchTags: () => Promise<AxiosResponse<IProductTagResponse>>
+    deleteTag: (tagId: string) => Promise<AxiosResponse>
 
 }
 
@@ -34,6 +35,9 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
     contextMenuVisible: false,
     contextMenuXY: {X: 0, Y: 0},
 
+    deleteTag: (tagId) => {
+        return $api.put('')
+    },
     setContextMenuVisible: (value, x, y) => set({
         contextMenuVisible: value,
         contextMenuXY: {X: x, Y: y},
