@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './TableProductItem.module.scss'
 
-type TableItemProps = {
+interface TableItemProps {
     title: string
     price: number
     count: number

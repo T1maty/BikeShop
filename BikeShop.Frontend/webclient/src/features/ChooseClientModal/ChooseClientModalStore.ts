@@ -21,33 +21,41 @@ interface ChooseClientModalStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     users: User[]
-    userId: string
+    setUsers: (users: User[]) => void
     fio: string
     phoneNumber: string
-    getUsers: () => any // надо исправить тип
-    setUsers: (users: User[]) => void
     setFIO: (value: string) => void
     setPhoneNumber: (value: string) => void
+    getUsers: () => any // надо исправить тип
     findUser: (request: SearchClient) => any // надо исправить тип
     // addTestUser: (name: string) => void
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
 
 const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtools(immer((set) => ({
-    // модалка
     chooseClientModal: false,
     setChooseClientModal: (value: boolean) => set({
         chooseClientModal: value
     }),
-    // поиск клиента
+
     isLoading: false,
     setIsLoading: (value: boolean) => set({
        isLoading: value
     }),
+
     users: [],
-    userId: '',
+    setUsers: (users: User[]) => set({
+        users: [...users]
+    }),
     fio: '',
+    setFIO: (value: string) => set({
+        fio: value
+    }),
     phoneNumber: '',
+    setPhoneNumber: (value: string) => set({
+        phoneNumber: value
+    }),
+
     getUsers: () => {
         set({isLoading: true});
         return $api.get('/user/find').then(res => {
@@ -58,25 +66,15 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
             set({isLoading: false});
         })
     },
-    setUsers: (users: User[]) => set({
-        users: [...users]
-    }),
-    setFIO: (value: string) => set({
-        fio: value
-    }),
-    setPhoneNumber: (value: string) => set({
-        phoneNumber: value
-    }),
     findUser: (request: SearchClient) => {
         set({isLoading: true});
-        return $api.get(`/user/find?fio=${request.fio}&phone=${request.phoneNumber}`).then(res => {
-            set(state => {
-                state.users = [...res.data.users]
-            })
-            set({isLoading: false});
+        return $api.get(`/user/find?fio=${request.fio}&phone=${request.phoneNumber}`)
+            .then(res => {
+            set(state => {state.users = [...res.data.users]})
+            set({isLoading: false})
         })
     },
-    // добавление клиента
+
     // addTestUser: (fio: string) => set( state => {
     //     state.users.push({id: Date.now(), fio: fio})
     // }),
