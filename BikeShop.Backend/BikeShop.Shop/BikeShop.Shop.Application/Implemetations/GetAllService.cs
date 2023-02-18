@@ -23,4 +23,18 @@ public class GetAllService : IGetAllServices
         
         return dto;
     }
+
+    public async Task<bool> Login(LoginDTO dto)
+    {
+        var shop = await _context.Shops.FindAsync(dto.ShopId);
+        if (shop.Secret == dto.Secret)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
 }

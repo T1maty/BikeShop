@@ -12,4 +12,6 @@ public class UpdateShopCommand : IRequest
     public int StorageId { get; set; }
     public decimal CashboxCash { get; set; }
     public decimal CashboxTerminal { get; set; }
+    
+    public bool Enabled { get; set; }
 }

@@ -89,4 +89,18 @@ public class ShopController : ControllerBase
     {
         return await _getAllServices.GetAllShops();
     }
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDTO model)
+    {
+        if (await _getAllServices.Login(model))
+        {
+            return Ok();
+        }
+        else
+        {
+            throw new Exception();
+        }
+        
+    }
 }

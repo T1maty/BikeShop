@@ -42,6 +42,7 @@ public class UpdateShopCommandHandler : IRequestHandler<UpdateShopCommand>
         existingShop.StorageId = request.StorageId;
         existingShop.CashboxCash = request.CashboxCash;
         existingShop.CashboxTerminal = request.CashboxTerminal;
+        existingShop.Enabled = request.Enabled;
         
         await _context.SaveChangesAsync(cancellationToken);
         
