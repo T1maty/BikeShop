@@ -8,6 +8,7 @@ import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClie
 import {BikeShopPaths} from "../../../app/routes/paths";
 import useClientCard from "../../../widgets/workspace/ClientCard/_ClientCardStore";
 import useCashboxGlobal from "../Cashbox/CashboxGlobalStore";
+import CreateShopModal from "../../../features/CreateShopStoreModal/CreateShopModal";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -35,6 +36,7 @@ const MainPage = () => {
     return (
         // <div className={s.mainPageWrapper}>
             <div className={s.mainPageMainBlock}>
+                <CreateShopModal/>
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>

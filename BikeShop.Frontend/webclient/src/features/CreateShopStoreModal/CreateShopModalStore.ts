@@ -3,22 +3,25 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
-import {CreateShop} from '../../entities/requests/CreateShop';
+import {CreateShop, CreateShopSubmit} from '../../entities/requests/CreateShop';
 
 interface CreateShopModalStore {
     createShopModal: boolean
     setCreateShopModal: (value: boolean) => void
-    shopName: string
-    shopAddress: string
-    shopPhoneNumber: string
-    shopStock: string
-    isShopWorking: boolean
-    setShopName: (value: string) => void
-    setShopAddress: (value: string) => void
-    setShopPhoneNumber: (value: string) => void
-    setShopStock: (value: string) => void
-    setIsShopWorking: (value: boolean) => void
-    addNewShop: () => any
+    isLoading: boolean
+    setIsLoading: (value: boolean) => void
+
+    name: string
+    address: string
+    phone: string
+    storageId: number | null
+    // isShopWorking: boolean
+    setName: (value: string) => void
+    setAddress: (value: string) => void
+    setPhone: (value: string) => void
+    setStorageId: (value: number | null) => void
+    // setIsShopWorking: (value: boolean) => void
+    addNewShop: (data: CreateShopSubmit) => Promise<AxiosResponse<CreateShopSubmit>>
 }
 
 const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -26,37 +29,35 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
     setCreateShopModal: (value: boolean) => set({
         createShopModal: value
     }),
-
-    shopName: '',
-    shopAddress: '',
-    shopPhoneNumber: '',
-    shopStock: '',
-    isShopWorking: true,
-
-    setShopName: (value: string) => set({
-        shopName: value
-    }),
-    setShopAddress: (value: string) => set({
-        shopAddress: value
-    }),
-    setShopPhoneNumber: (value: string) => set({
-        shopPhoneNumber: value
-    }),
-    setShopStock: (value: string) => set({
-        shopStock: value
-    }),
-    setIsShopWorking: (value: boolean) => set({
-        isShopWorking: value
+    isLoading: false,
+    setIsLoading: (value: boolean) => set({
+        isLoading: value
     }),
 
-    addNewShop: () => {
-        // set({isLoading: true});
-        // return $api.get('/user/find', data).then(res => {
-        //     set(state => {
-        //         state.users = [...res.data.users]
-        //     })
-        //     set({isLoading: false});
-        // })
+    name: '',
+    address: '',
+    phone: '',
+    storageId: 0,
+    // isShopWorking: true,
+
+    setName: (value: string) => set({
+        name: value
+    }),
+    setAddress: (value: string) => set({
+        address: value
+    }),
+    setPhone: (value: string) => set({
+        phone: value
+    }),
+    setStorageId: (value: number | null) => set({
+        storageId: value
+    }),
+    // setIsShopWorking: (value: boolean) => set({
+    //     isShopWorking: value
+    // }),
+
+    addNewShop: (data) => {
+        return $api.post<CreateShopSubmit>('/shop/create', data)
     },
 })))/*, {
     name: "createShopModal",

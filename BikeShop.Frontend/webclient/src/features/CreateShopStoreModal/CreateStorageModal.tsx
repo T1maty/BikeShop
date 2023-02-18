@@ -3,28 +3,28 @@ import {useNavigate} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import React, {ChangeEvent, useEffect} from 'react';
 import {Modal, Checkbox} from '@mui/material';
-import s from './CreateShopStoreModal.module.scss';
+import s from './CreateShopStorageModal.module.scss';
 import {Button, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
-import useCreateStoreModal from './CreateStoreModalStore';
+import useCreateStorageModal from "./CreateStorageModalStore";
 
-const CreateStoreModal = () => {
+const CreateStorageModal = () => {
 
     const label = {inputProps: {'aria-label': 'Checkbox demo'}}
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
 
-    const open = useCreateStoreModal(s => s.createStoreModal)
-    const setOpen = useCreateStoreModal(s => s.setCreateStoreModal)
-    const storeName = useCreateStoreModal(s => s.storeName)
-    const storeWaiting = useCreateStoreModal(s => s.storeWaiting)
-    const addNewStore = useCreateStoreModal(s => s.addNewStore)
+    const open = useCreateStorageModal(s => s.createStorageModal)
+    const setOpen = useCreateStorageModal(s => s.setCreateStorageModal)
+    const storageName = useCreateStorageModal(s => s.storageName)
+    const storageWaiting = useCreateStorageModal(s => s.storageWaiting)
+    const addNewStorage = useCreateStorageModal(s => s.addNewStorage)
 
     const formControl = useForm({
         defaultValues: {
-            storeName: '',
-            storeWaiting: '',
+            storageName: '',
+            storageWaiting: '',
         }
     });
     const onSubmit: SubmitHandler<any> = () => {
@@ -49,15 +49,13 @@ const CreateStoreModal = () => {
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <div className={s.shopStoreModal_mainBlock}>
                 <div className={s.shopStoreModal_infoBlock}>
-                    Store
+                    Storage
                 </div>
 
                 <div className={s.shopStoreModal_createBlock}>
@@ -65,13 +63,13 @@ const CreateStoreModal = () => {
 
                         <div className={s.shopStoreModal_inputFields}>
                             <div>
-                                <ControlledInput name={'storeName'} label={'Название склада'}
+                                <ControlledInput name={'storageName'} label={'Название склада'}
                                                  control={formControl}
                                     // rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'storeWaiting'} label={'Задержка поставки'}
+                                <ControlledInput name={'storageWaiting'} label={'Задержка поставки'}
                                                  control={formControl}
                                     // rules={{required: Errors[0].name}}
                                 />
@@ -89,9 +87,6 @@ const CreateStoreModal = () => {
                                 </div>
                             </div>
                             <div className={s.infoBlock_updateBtn}>
-                                {/*<Button onClick={() => {setOpen(false)}}>*/}
-                                {/*    Отмена*/}
-                                {/*</Button>*/}
                                 <Button>
                                     Сохранить
                                 </Button>
@@ -103,9 +98,7 @@ const CreateStoreModal = () => {
                             </Button>
                         </div>
                         <div className={s.shopStoreModal_exitBtn}>
-                            <Button onClick={() => {
-                                setOpen(false)
-                            }}>
+                            <Button onClick={() => {setOpen(false)}}>
                                 Выйти
                             </Button>
                         </div>
@@ -116,4 +109,4 @@ const CreateStoreModal = () => {
     );
 };
 
-export default CreateStoreModal;
+export default CreateStorageModal;

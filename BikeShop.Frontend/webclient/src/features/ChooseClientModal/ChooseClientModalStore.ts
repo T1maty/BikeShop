@@ -37,7 +37,6 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
     setChooseClientModal: (value: boolean) => set({
         chooseClientModal: value
     }),
-
     isLoading: false,
     setIsLoading: (value: boolean) => set({
        isLoading: value

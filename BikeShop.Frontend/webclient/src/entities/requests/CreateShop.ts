@@ -11,3 +11,10 @@ export interface CreateShop {
 export interface UpdateShop extends CreateShop {
     id: number
 }
+
+export interface CreateShopSubmit {
+    name: string
+    address: string
+    phone: string
+    // storageId: number | null
+}
