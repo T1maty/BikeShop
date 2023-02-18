@@ -4,6 +4,7 @@ using BikeShop.Service.Application.CQRS.Commands.Service.UpdateService;
 using BikeShop.Service.Application.CQRS.Commands.Service.UpdateServiceStatus;
 using BikeShop.Service.Application.CQRS.Queries.Service.GetOngoingServicesByShopId;
 using BikeShop.Service.Application.CQRS.Queries.Service.GetServiceById;
+using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.WebApi.Models.Service;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,13 @@ public class ServiceController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
+    private readonly IServiceService _serviceService;
 
-    public ServiceController(IMapper mapper, IMediator mediator)
+    public ServiceController(IMapper mapper, IMediator mediator, IServiceService serviceService)
     {
         _mapper = mapper;
         _mediator = mediator;
+        _serviceService = serviceService;
     }
 
     /// <summary>
@@ -120,5 +123,12 @@ public class ServiceController : ControllerBase
         await _mediator.Send(command);
 
         return Ok();
+    }
+    
+    [HttpPost("create")]
+    public async Task<CreateServiceDTO> Create([FromBody] CreateServiceModel model)
+    {
+
+        return await _serviceService.CreateService(model, new CancellationTokenSource().Token);
     }
 }

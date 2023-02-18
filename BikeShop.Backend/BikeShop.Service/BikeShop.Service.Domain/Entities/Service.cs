@@ -12,12 +12,17 @@ public class Service : BaseEntity
     public string ClientDescription { get; set; } = string.Empty; // Описание клиента
     
     public Guid UserCreatedId { get; set; } // Id пользователья который создал запись
-    public string UserCreatedDescription { get; set; } // описание описание того кто создал
+    public string UserCreatedDescription { get; set; } = String.Empty;// описание описание того кто создал
 
-    public Guid UserMasterId { get; set; } // Id ремонтника
-    public string UserMasterDescription { get; set; }
+    public Guid UserMasterId { get; set; }// Id ремонтника
+    public string UserMasterDescription { get; set; } = String.Empty;
+
+    public Guid UserDeleted { get; set; }// Id юзера который удалил
     
-    public Guid UserDeleted { get; set; } // Id юзера который удалил
+    
+    public int WorkDiscountId { get; set; } = 0;
+    public int ProductDiscountId { get; set; } = 0;
+    
     
     public decimal PriceWork { get; set; } // цены
     public decimal DiscountWork { get; set; } 
