@@ -1,9 +1,8 @@
-import React, {useEffect, ChangeEvent, ChangeEventHandler} from 'react';
+import React, {useEffect, ChangeEvent} from 'react';
 import {Modal, TextField} from '@mui/material';
 import {Button, ControlledInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
-import {useNavigate} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {CreateUser} from '../../entities';
 import {useSnackbar} from 'notistack';
@@ -11,8 +10,7 @@ import {Loader} from "../../shared/ui/Loader/Loader";
 import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
 import useChooseClientModal from './ChooseClientModalStore';
-import useClientCard from "../../widgets/workspace/ClientCard/ClientCardStore";
-import {BikeShopPaths} from "../../app/routes/paths";
+import useClientCard from "../../widgets/workspace/ClientCard/_ClientCardStore";
 import {Errors} from "../../entities/errors/workspaceErrors";
 import useCashboxGlobal from "../../pages/workspace/Cashbox/CashboxGlobalStore";
 
@@ -25,23 +23,25 @@ const ChooseClientModal = () => {
     const isLoading = useChooseClientModal(s => s.isLoading)
 
     const users = useChooseClientModal(s => s.users)
-    // const fio = useChooseClientModal(s => s.fio)
-    // const setFIO = useChooseClientModal(s => s.setFIO)
-    // const phoneNumber = useChooseClientModal(s => s.phoneNumber)
-    // const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
-    const fio = useCashboxGlobal(s => s.fio)
-    const setFIO = useCashboxGlobal(s => s.setFIO)
-    const phoneNumber = useCashboxGlobal(s => s.phoneNumber)
-    const setPhoneNumber = useCashboxGlobal(s => s.setPhoneNumber)
+    const fio = useChooseClientModal(s => s.fio)
+    const setFIO = useChooseClientModal(s => s.setFIO)
+    const phoneNumber = useChooseClientModal(s => s.phoneNumber)
+    const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
     // const getUsers = useChooseClientModal(s => s.getUsers)
     // const setUsers = useChooseClientModal(s => s.setUsers)
     const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 
-    const setCardLastName = useClientCard(s => s.setCardLastName)
+    /*const setCardLastName = useClientCard(s => s.setCardLastName)
     const setCardFirstName = useClientCard(s => s.setCardFirstName)
     const setCardPatronymic = useClientCard(s => s.setCardPatronymic)
-    const setCardPhoneNumber = useClientCard(s => s.setCardPhoneNumber)
+    const setCardPhoneNumber = useClientCard(s => s.setCardPhoneNumber)*/
+
+    const setUserId = useCashboxGlobal(s => s.setUserId)
+    const setCardLastName = useCashboxGlobal(s => s.setCardLastName)
+    const setCardFirstName = useCashboxGlobal(s => s.setCardFirstName)
+    const setCardPatronymic = useCashboxGlobal(s => s.setCardPatronymic)
+    const setCardPhoneNumber = useCashboxGlobal(s => s.setCardPhoneNumber)
 
     const searchClientByFIO = useDebounce<string>(fio, 1000)
     const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
@@ -76,6 +76,7 @@ const ChooseClientModal = () => {
         firstName: string, patronymic: string, phoneNumber: string}) => {
         console.log(clientCard)
 
+        setUserId(clientCard.userId)
         setCardLastName(clientCard.lastName)
         setCardFirstName(clientCard.firstName)
         setCardPatronymic(clientCard.patronymic)
