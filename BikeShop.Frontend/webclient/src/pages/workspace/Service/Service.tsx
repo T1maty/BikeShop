@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import s from './Service.module.scss'
-import {ChooseClientModal, ClientCard} from '../../../features';
-import {Button, ControlledInput, InputUI} from '../../../shared/ui';
+import {ChooseClientModal} from '../../../features';
+import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {SubmitHandler, useForm} from "react-hook-form";
@@ -9,6 +9,7 @@ import {CreateRepair} from "../../../entities/requests/CreateRepair";
 import {useSnackbar} from "notistack";
 import useService from "./ServiceStore";
 import {Errors} from "../../../entities/errors/workspaceErrors";
+import {ClientCard} from "../../../widgets";
 
 const Service = () => {
 
@@ -124,7 +125,6 @@ const Service = () => {
 
                 <div className={s.service_rightSide}>
                     <div className={s.rightSide_stuffInput}>
-                        {/*<InputUI placeholder={'Техника'} clearInputValue={() => {}}/>*/}
                         <ControlledInput name={'stuff'} label={'Техника'}
                                          control={formControl}
                                          rules={{required: Errors[0].name}}
@@ -134,14 +134,12 @@ const Service = () => {
                     <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
-                                {/*<InputUI placeholder={'Детальное описание'} clearInputValue={() => {}}/>*/}
                                 <ControlledInput name={'description'} label={'Детальное описание'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                {/*<InputUI placeholder={'Мастер'} clearInputValue={() => {}}/>*/}
                                 <ControlledInput name={'master'} label={'Мастер'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}

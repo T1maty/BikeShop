@@ -3,7 +3,7 @@ import {Modal} from "@mui/material";
 import {Button} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import usePayModal from './PayModalStore';
-import {ClientCard} from '../index';
+import {ClientCard} from "../../widgets";
 
 const PayModal = () => {
     const open = usePayModal(s => s.payModal)

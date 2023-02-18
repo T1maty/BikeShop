@@ -1,20 +1,21 @@
 import React from 'react';
 import s from './Cashbox.module.scss'
-import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, ClientCard, PayModal} from '../../../features';
+import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal} from '../../../features';
 import {Button, InputUI} from '../../../shared/ui';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseProductModal from '../../../features/ChooseProductModal/ChooseProductModalStore';
+import {ClientCard} from "../../../widgets";
 
 const Cashbox = () => {
+
+    const isActiveTable = true
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setChooseDiscountModal = useChooseDiscountModal(s => s.setChooseDiscountModal)
     const setChooseProductModal = useChooseProductModal(s => s.setChooseProductModal)
     const setPayModal = usePayModal(s => s.setPayModal)
-
-    const isActiveTable = true;
 
     return (
         // <div className={s.cashboxWrapper}>
