@@ -6,20 +6,11 @@ import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
-import useClientCard from "../../../features/ClientCard/ClientCardStore";
-
-const navLinks = [
-    'Create repairing',
-    'Create order',
-    'Add hot client',
-    'Rent',
-    'Repair',
-    'Check',
-    'All Orders',
-];
+import useClientCard from "../../../widgets/workspace/ClientCard/ClientCardStore";
 
 const MainPage = () => {
     const navigate = useNavigate();
+
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
 
@@ -146,7 +137,6 @@ const MainPage = () => {
                                     </Button>
                                 </div>
                                 <div className={s.search_searchInput}>
-                                    {/*<InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
                                     {lastName} {firstName} {patronymic}
                                 </div>
                             </div>
@@ -158,7 +148,7 @@ const MainPage = () => {
                             <div className={s.rightSide_top_result}>
                                 <div className={s.result_closeBtn}>
                                     <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
-                                        Открыть кассу
+                                        Выбрать кассу
                                     </Button>
                                 </div>
                                 <div className={s.result_cancelBtn}>

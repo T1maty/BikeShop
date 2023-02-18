@@ -11,36 +11,30 @@ import {Loader} from "../../shared/ui/Loader/Loader";
 import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
 import useChooseClientModal from './ChooseClientModalStore';
-import useClientCard from "../ClientCard/ClientCardStore";
+import useClientCard from "../../widgets/workspace/ClientCard/ClientCardStore";
 import {BikeShopPaths} from "../../app/routes/paths";
 import {Errors} from "../../entities/errors/workspaceErrors";
+import useCashboxGlobal from "../../pages/workspace/Cashbox/CashboxGlobalStore";
 
 const ChooseClientModal = () => {
-    /*const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const clonedChildren = cloneElement(children, {
-        onClick: handleOpen,
-    })*/
 
     const {enqueueSnackbar} = useSnackbar()
-    const navigate = useNavigate()
 
     const open = useChooseClientModal(s => s.chooseClientModal)
     const setOpen = useChooseClientModal(s => s.setChooseClientModal)
     const isLoading = useChooseClientModal(s => s.isLoading)
+
     const users = useChooseClientModal(s => s.users)
-    const fio = useChooseClientModal(s => s.fio)
-    const setFIO = useChooseClientModal(s => s.setFIO)
-    const phoneNumber = useChooseClientModal(s => s.phoneNumber)
-    const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
-    const getUsers = useChooseClientModal(s => s.getUsers)
-    const setUsers = useChooseClientModal(s => s.setUsers)
+    // const fio = useChooseClientModal(s => s.fio)
+    // const setFIO = useChooseClientModal(s => s.setFIO)
+    // const phoneNumber = useChooseClientModal(s => s.phoneNumber)
+    // const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
+    const fio = useCashboxGlobal(s => s.fio)
+    const setFIO = useCashboxGlobal(s => s.setFIO)
+    const phoneNumber = useCashboxGlobal(s => s.phoneNumber)
+    const setPhoneNumber = useCashboxGlobal(s => s.setPhoneNumber)
+    // const getUsers = useChooseClientModal(s => s.getUsers)
+    // const setUsers = useChooseClientModal(s => s.setUsers)
     const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 
@@ -51,15 +45,6 @@ const ChooseClientModal = () => {
 
     const searchClientByFIO = useDebounce<string>(fio, 1000)
     const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
-
-    /*const { register, handleSubmit, watch, formState: { errors } } = useForm({
-        defaultValues: {
-            firstName: '',
-            lastName: '',
-            patronymic: '',
-            phone: ''
-        }
-    });*/
 
     const formControl = useForm({
         defaultValues: {
@@ -72,7 +57,6 @@ const ChooseClientModal = () => {
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
         addNewUser(data).then((response) => {
             setOpen(false)
-            // navigate(BikeShopPaths.WORKSPACE.SERVICE)
 
             formControl.setValue('firstName', '')
             formControl.setValue('lastName', '')
@@ -90,15 +74,24 @@ const ChooseClientModal = () => {
 
     const setInfoToClientCard = (clientCard: {userId: string, lastName: string,
         firstName: string, patronymic: string, phoneNumber: string}) => {
+        console.log(clientCard)
 
         setCardLastName(clientCard.lastName)
         setCardFirstName(clientCard.firstName)
         setCardPatronymic(clientCard.patronymic)
         setCardPhoneNumber(clientCard.phoneNumber)
 
-        console.log(clientCard)
         setOpen(false)
     }
+
+    /*const clearFioInput = () => {
+        setFIO('')
+        setUsers([])
+    }
+    const clearPhoneInput = () => {
+        setPhoneNumber('')
+        setUsers([])
+    }*/
 
     useEffect(() => {
         if (fio.length > 0 || phoneNumber.length > 0) {
@@ -118,7 +111,6 @@ const ChooseClientModal = () => {
     // }, [chooseClientModal])
 
     return (
-        // {clonedChildren}
         <Modal
             open={open}
             onClose={() => {setOpen(false)}}
@@ -134,16 +126,14 @@ const ChooseClientModal = () => {
                         <div className={s.clientModal_searchBlock_input}>
                             <Input placeholder={'Введите фамилию'} value={fio}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setFIO(e.currentTarget.value)
-                                   }}
+                                       setFIO(e.currentTarget.value)}}
                                    clearInputValue={() => {setFIO('')}}
                             />
                         </div>
                         <div className={s.clientModal_searchBlock_input}>
                             <Input placeholder={'Введите номер телефона'} value={phoneNumber}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setPhoneNumber(e.currentTarget.value)
-                                   }}
+                                       setPhoneNumber(e.currentTarget.value)}}
                                    clearInputValue={() => {setPhoneNumber('')}}
                             />
                         </div>
@@ -206,9 +196,7 @@ const ChooseClientModal = () => {
                         <Button type={'submit'}>
                             Добавить клиента
                         </Button>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
+                        <Button onClick={() => {setOpen(false)}}>
                             Отмена
                         </Button>
                     </div>
