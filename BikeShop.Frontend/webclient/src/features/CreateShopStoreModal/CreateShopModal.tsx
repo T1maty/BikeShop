@@ -3,10 +3,10 @@ import {useNavigate} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import React, {ChangeEvent, useEffect} from 'react';
 import {Modal, Checkbox} from '@mui/material';
-import s from './CreateShopStoreModal.module.scss';
+import s from './CreateShopStorageModal.module.scss';
 import {Button, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
-import {CreateShop} from '../../entities/requests/CreateShop';
+import {CreateShop, CreateShopSubmit} from '../../entities/requests/CreateShop';
 import useCreateShopModal from './CreateShopModalStore';
 
 const CreateShopModal = () => {
@@ -22,33 +22,34 @@ const CreateShopModal = () => {
 
     const formControl = useForm({
         defaultValues: {
-            shopName: '',
-            shopAddress: '',
-            shopPhoneNumber: '',
-            shopStock: '',
+            name: '',
+            address: '',
+            phone: '',
+            // storageId: '',
             // isShopWorking: '',
         }
     });
-    const onSubmit: SubmitHandler<any> = () => {
-        alert('Магазин создан')
+    const onSubmit: SubmitHandler<CreateShopSubmit> = (data: CreateShopSubmit) => {
+        // alert('Магазин создан')
 
-        // addNewShop().then((response: any) => {
-        //     // setOpen(false)
-        //     // navigate(BikeShopPaths.WORKSPACE.SERVICE)
-        //
-        //     formControl.setValue('shopName', '')
-        //     formControl.setValue('shopAddress', '')
-        //     formControl.setValue('shopPhoneNumber', '')
-        //     formControl.setValue('shopStock', '')
-        //     // formControl.setValue('isShopWorking', '')
-        //
-        //     enqueueSnackbar('Магазин добавлен', {variant: 'success', autoHideDuration: 3000})
-        // }).catch((error: any) => {
-        //     let message = error(error.response.data.errorDescription).toString()
-        //     formControl.setError('shopName', {type: 'serverError', message: message})
-        //     enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //     console.error(error.response.data)
-        // })
+        addNewShop(data).then((response) => {
+            console.log(data)
+            // setOpen(false)
+            // navigate(BikeShopPaths.WORKSPACE.SERVICE)
+
+            formControl.setValue('name', '')
+            formControl.setValue('address', '')
+            formControl.setValue('phone', '')
+            // formControl.setValue('storageId', '')
+            // formControl.setValue('isShopWorking', '')
+
+            enqueueSnackbar('Магазин добавлен', {variant: 'success', autoHideDuration: 3000})
+        }).catch((error: any) => {
+            let message = error(error.response.data.errorDescription).toString()
+            formControl.setError('name', {type: 'serverError', message: message})
+            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+            console.error(error.response.data)
+        })
     }
 
     return (
@@ -68,25 +69,25 @@ const CreateShopModal = () => {
 
                         <div className={s.shopStoreModal_inputFields}>
                             <div>
-                                <ControlledInput name={'shopName'} label={'Название магазина'}
+                                <ControlledInput name={'name'} label={'Название магазина'}
                                                  control={formControl}
                                     // rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'shopAddress'} label={'Адрес магазина'}
+                                <ControlledInput name={'address'} label={'Адрес магазина'}
                                                  control={formControl}
                                     // rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'shopPhoneNumber'} label={'Телефон магазина'}
+                                <ControlledInput name={'phone'} label={'Телефон магазина'}
                                                  control={formControl}
                                     // rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'shopStock'} label={'Склад'}
+                                <ControlledInput name={'storageId'} label={'Склад'}
                                                  control={formControl}
                                     // rules={{required: Errors[0].name}}
                                 />
@@ -98,9 +99,6 @@ const CreateShopModal = () => {
                                 </div>
                             </div>
                             <div className={s.infoBlock_updateBtn}>
-                                {/*<Button onClick={() => {setOpen(false)}}>*/}
-                                {/*    Отмена*/}
-                                {/*</Button>*/}
                                 <Button>
                                     Сохранить
                                 </Button>
