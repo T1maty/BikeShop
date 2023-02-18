@@ -262,7 +262,21 @@
       ],
       "SwaggerKey": "service"
     },
-
+    {
+      "UpstreamPathTemplate": "/api/service/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/service/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
 
 
     {
@@ -408,6 +422,21 @@
         "Get"
       ],
       "DownstreamPathTemplate": "/shop/getall",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+    {
+      "UpstreamPathTemplate": "/api/shop/login",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/shop/login",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
