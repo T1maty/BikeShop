@@ -49,6 +49,10 @@
                 }
                 .content_info {
                     @include flexColumn();
+
+                    .service_item {
+                        @include hoverItem();
+                    }
                 }
             }
         }

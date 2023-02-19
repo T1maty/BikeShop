@@ -9,22 +9,22 @@ export interface ServiceItem {
     name: string // название техники (по макету)
     status: number // статус заказа
     clientId: string
-    clientDescription: string // ???
+    clientDescription: string // описание заказа
     userCreatedId: string
-    userCreatedDescription: string // описание заказа
+    userCreatedDescription: string // тот, кто создал заказ
     userMasterId: string
     userMasterDescription: string // имя мастера
-    userDeleted: string
+    userDeleted: string // тот, кто удалил заказ из архива
 
-    priceWork: number
+    priceWork: number // стоимость услуги
     discountWork: number
     totalWork: number
 
-    priceService: number
+    priceService: number // ?! стоимость продукта
     discountService: number
     totalService: number
 
-    price: number
+    price: number // общая стоимость сервиса
     discount: number
     total: number
 
