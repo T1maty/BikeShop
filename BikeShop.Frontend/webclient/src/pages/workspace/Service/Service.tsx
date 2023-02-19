@@ -21,15 +21,14 @@ const Service = () => {
     const isLoading = useService(s => s.isLoading)
     const services = useService(s => s.services)
     const addNewService = useService(s => s.addNewService)
+    const updateService = useService(s => s.updateService)
     const getAllServices = useService(s => s.getAllServices)
 
-    const [repair, setRepair] = useState([
-        {id: 1, repair: 'repair 01'},
-        {id: 2, repair: 'repair 02'},
-        {id: 3, repair: 'repair 03'},
-        {id: 4, repair: 'repair 04'},
-        {id: 5, repair: 'repair 05'},
-    ])
+    const setUserId = useCashboxGlobal(s => s.setUserId)
+    const setCardLastName = useCashboxGlobal(s => s.setCardLastName)
+    const setCardFirstName = useCashboxGlobal(s => s.setCardFirstName)
+    const setCardPatronymic = useCashboxGlobal(s => s.setCardPatronymic)
+    const setCardPhoneNumber = useCashboxGlobal(s => s.setCardPhoneNumber)
 
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
@@ -73,6 +72,22 @@ const Service = () => {
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
             console.error(error.response.data)
         })
+    }
+
+    const chooseServiceItem = (data: {clientId: string, name: string,
+        clientDescription: string, userMasterDescription: string}) => {
+
+        console.log(data)
+
+        setUserId(data.clientId)
+        setCardLastName('Выбранный') // заглушка
+        setCardFirstName('клиент') // заглушка
+        setCardPatronymic('') // заглушка
+        setCardPhoneNumber('8-9033-00-00-00') // заглушка
+
+        formControl.setValue('name', data.name)
+        formControl.setValue('clientDescription', data.clientDescription)
+        formControl.setValue('userMasterDescription', data.userMasterDescription)
     }
 
     useEffect(() => {
@@ -124,9 +139,19 @@ const Service = () => {
                             {
                                 isLoading ? <div>Загрузка...</div> :
 
-                                services.map(s => {
+                                services.map(service => {
                                     return (
-                                        <div key={s.id}>{s.name}</div>
+                                        <div className={s.service_item} key={service.id}
+                                             onClick={() => {
+                                                 chooseServiceItem({
+                                                     clientId: service.clientId, name: service.name,
+                                                     clientDescription: service.clientDescription,
+                                                     userMasterDescription: service.userMasterDescription
+                                                 })
+                                             }}
+                                        >
+                                            {service.name}
+                                        </div>
                                     )
                                 })
                             }
@@ -160,13 +185,13 @@ const Service = () => {
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>
                                     <Button type={'submit'}>
-                                        Сохранить
+                                        Создать
                                     </Button>
                                 </div>
                                 <div className={s.content_cancelBtn}>
                                     <Button onClick={() => {
                                     }}>
-                                        Отмена
+                                        Обновить
                                     </Button>
                                 </div>
                                 <div className={s.content_sumField}>

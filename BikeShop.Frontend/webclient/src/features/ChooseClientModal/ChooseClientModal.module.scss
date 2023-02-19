@@ -26,12 +26,8 @@
             padding: 10px;
 
             .textField_contentItem {
-                padding: 5px 0;
-
-                &:hover {
-                    cursor: pointer;
-                    background-color: $themeColorGray;
-                }
+                //padding: 5px 0;
+                @include hoverItem();
             }
             .textField_loader {
                 // надо сделать по центру

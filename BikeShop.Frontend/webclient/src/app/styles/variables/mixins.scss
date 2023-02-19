@@ -84,3 +84,11 @@
     width: 100%;
     padding: $defaultLargeMargin 0;
 }
+
+@mixin hoverItem() {
+    padding: 5px 0;
+    &:hover {
+        cursor: pointer;
+        background-color: $themeColorGray;
+    }
+}

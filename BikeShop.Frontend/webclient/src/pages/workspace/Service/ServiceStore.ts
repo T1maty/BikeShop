@@ -16,6 +16,7 @@ interface ServiceStore {
     clientDescription: string
     userMasterDescription: string
     addNewService: (data: any) => any // надо исправить тип
+    updateService: (data: any) => any // надо исправить тип
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
@@ -43,6 +44,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     userMasterDescription: '',
     addNewService: (data: CreateService) => {
         return $api.post('/service/create', data)
+    },
+    updateService: (data: CreateService) => {
+        return $api.put('/service/updateservice', data)
     },
 })))/*, {
     name: "ServiceStore",
