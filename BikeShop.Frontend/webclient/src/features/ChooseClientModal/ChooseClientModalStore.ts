@@ -11,10 +11,6 @@ interface SearchClient {
     phoneNumber: string
 }
 
-// export interface APIUser {
-//     user: User
-// }
-
 interface ChooseClientModalStore {
     chooseClientModal: boolean
     setChooseClientModal: (value: boolean) => void
@@ -28,7 +24,6 @@ interface ChooseClientModalStore {
     setPhoneNumber: (value: string) => void
     getUsers: () => any // надо исправить тип
     findUser: (request: SearchClient) => any // надо исправить тип
-    // addTestUser: (name: string) => void
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
 
@@ -59,7 +54,7 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
         set({isLoading: true});
         return $api.get('/user/find').then(res => {
             set(state => {
-                // state.usersD.push(...res.data.users)
+                // state.users.push(...res.data.users)
                 state.users = [...res.data.users]
             })
             set({isLoading: false});
@@ -73,10 +68,6 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
             set({isLoading: false})
         })
     },
-
-    // addTestUser: (fio: string) => set( state => {
-    //     state.users.push({id: Date.now(), fio: fio})
-    // }),
     addNewUser: (data) => {
         return $api.post<CreateUser>('/user/create', data)
     }

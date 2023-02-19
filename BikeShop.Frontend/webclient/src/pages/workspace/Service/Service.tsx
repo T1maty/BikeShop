@@ -5,17 +5,23 @@ import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {CreateRepair} from "../../../entities/requests/CreateRepair";
+import {CreateService} from "../../../entities/requests/CreateService";
 import {useSnackbar} from "notistack";
 import useService from "./ServiceStore";
 import {Errors} from "../../../entities/errors/workspaceErrors";
 import {ClientCard} from "../../../widgets";
+import useCashboxGlobal from "../Cashbox/CashboxGlobalStore";
+import {ServiceItem} from "../../../entities/responses/ServiceItem";
 
 const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
-    const addNewRepair = useService(s => s.addNewRepair)
+    const userId = useCashboxGlobal(s => s.userId)
+    const isLoading = useService(s => s.isLoading)
+    const services = useService(s => s.services)
+    const addNewService = useService(s => s.addNewService)
+    const getAllServices = useService(s => s.getAllServices)
 
     const [repair, setRepair] = useState([
         {id: 1, repair: 'repair 01'},
@@ -43,31 +49,35 @@ const Service = () => {
 
     const formControl = useForm({
         defaultValues: {
-            stuff: '',
-            description: '',
-            master: '',
+            name: '',
+            clientDescription: '',
+            userMasterDescription: '',
         }
     });
-    const onSubmit: SubmitHandler<CreateRepair> = (data: CreateRepair) => {
+    const onSubmit: SubmitHandler<any> = (data: CreateService) => {
         console.log(data)
 
-        formControl.setValue('stuff', '')
-        formControl.setValue('description', '')
-        formControl.setValue('master', '')
+        data.shopId = 1
+        data.clientId = userId
 
-        // addNewRepair(data).then((response: any) => {
-        //     formControl.setValue('stuff', '')
-        //     formControl.setValue('description', '')
-        //     formControl.setValue('master', '')
-        //
-        //     enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-        // }).catch((error: any) => {
-        //     let message = error(error.response.data.errorDescription).toString()
-        //     formControl.setError('stuff', {type: 'serverError', message: message})
-        //     enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //     console.error(error.response.data)
-        // })
+        addNewService(data).then((response: ServiceItem) => {
+            formControl.setValue('name', '')
+            formControl.setValue('clientDescription', '')
+            formControl.setValue('userMasterDescription', '')
+
+            enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+            getAllServices()
+        }).catch((error: any) => {
+            let message = error(error.response.data.errorDescription).toString()
+            formControl.setError('name', {type: 'serverError', message: message})
+            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+            console.error(error.response.data)
+        })
     }
+
+    useEffect(() => {
+        getAllServices()
+    }, [])
 
     return (
         // <div className={s.serviceWrapper}>
@@ -112,9 +122,11 @@ const Service = () => {
                         </div>
                         <div className={s.content_info}>
                             {
-                                repair.map(r => {
+                                isLoading ? <div>Загрузка...</div> :
+
+                                services.map(s => {
                                     return (
-                                        <div key={r.id}>{r.repair}</div>
+                                        <div key={s.id}>{s.name}</div>
                                     )
                                 })
                             }
@@ -125,7 +137,7 @@ const Service = () => {
 
                 <div className={s.service_rightSide}>
                     <div className={s.rightSide_stuffInput}>
-                        <ControlledInput name={'stuff'} label={'Техника'}
+                        <ControlledInput name={'name'} label={'Техника'}
                                          control={formControl}
                                          rules={{required: Errors[0].name}}
                         />
@@ -134,13 +146,13 @@ const Service = () => {
                     <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
-                                <ControlledInput name={'description'} label={'Детальное описание'}
+                                <ControlledInput name={'clientDescription'} label={'Детальное описание'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                <ControlledInput name={'master'} label={'Мастер'}
+                                <ControlledInput name={'userMasterDescription'} label={'Мастер'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />
@@ -168,7 +180,7 @@ const Service = () => {
                                 <Button onClick={() => {
                                     setChooseClientModal(true)
                                 }}>
-                                    Изменить клиента
+                                    Выбрать клиента
                                 </Button>
                             </div>
                         </div>
