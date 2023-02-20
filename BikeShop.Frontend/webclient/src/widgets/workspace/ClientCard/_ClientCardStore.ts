@@ -2,15 +2,8 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
-import {$api} from "../../shared";
 
-interface GlobalDataStore {
-    isLoading: boolean
-    setIsLoading: (value: boolean) => void
-
-    users: any[] // надо исправить тип
-    getUsers: () => any // надо исправить тип
-
+interface _ClientCardStore {
     userId: string
     lastName: string
     firstName: string
@@ -30,14 +23,7 @@ interface GlobalDataStore {
     setCreditLimit: (value: number) => void
 }
 
-const useGlobalDataStore = create<GlobalDataStore>()(/*persist(*/devtools(immer((set) => ({
-    isLoading: false,
-    setIsLoading: (value: boolean) => set({
-        isLoading: value
-    }),
-
-    users: [],
-
+const useClientCardStore = create<_ClientCardStore>()(/*persist(*/devtools(immer((set) => ({
     userId: '',
     lastName: 'Клиент',
     firstName: 'не',
@@ -71,20 +57,9 @@ const useGlobalDataStore = create<GlobalDataStore>()(/*persist(*/devtools(immer(
     setCreditLimit: (value: number) => set({
         creditLimit: value
     }),
-
-    getUsers: () => {
-        set({isLoading: true});
-        return $api.get('/user/find').then(res => {
-            set(state => {
-                // state.users.push(...res.data.users)
-                state.users = [...res.data.users]
-            })
-            set({isLoading: false});
-        })
-    },
 })))/*, {
-    name: globalDataStore",
+    name: "clientCardStore",
     version: 1
 })*/);
 
-export default useGlobalDataStore;
+export default useClientCardStore;

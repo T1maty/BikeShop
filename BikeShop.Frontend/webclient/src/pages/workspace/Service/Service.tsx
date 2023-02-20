@@ -286,7 +286,7 @@ const Service = () => {
                             </div>
                         </div>
                         <div className={s.infoFields_clientCard}>
-                            <ClientCard/>
+                            {/*<ClientCard/>*/}
                             <div className={s.clientCard_changeClientBtn}>
                                 <Button onClick={() => {
                                     setChooseClientModal(true)

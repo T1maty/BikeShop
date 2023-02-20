@@ -3,8 +3,7 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
-import {CreateUser} from '../../entities';
-import User from "../../entities/models/User";
+import {CreateUser, IUser} from '../../entities';
 
 interface SearchClient {
     fio: string
@@ -16,7 +15,7 @@ interface ChooseClientModalStore {
     setChooseClientModal: (value: boolean) => void
     isLoading: boolean
     setIsLoading: (value: boolean) => void
-    users: User[]
+    users: any[]
     // setUsers: (users: User[]) => void
     fio: string
     phoneNumber: string

@@ -6,19 +6,21 @@ import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
-import useGlobalDataStore from '../GlobalDataStore';
-import useConfirmModal from '../../../features/ConfirmModal/ConfirmModalStore';
+import useClientCardStore from '../../../widgets/workspace/ClientCard/_ClientCardStore';
 
 const MainPage = () => {
     const navigate = useNavigate();
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
-    const setConfirmModal = useConfirmModal(s => s.setConfirmModal)
 
-    const lastName = useGlobalDataStore(s => s.lastName)
-    const firstName = useGlobalDataStore(s => s.firstName)
-    const patronymic = useGlobalDataStore(s => s.patronymic)
+    const lastName = useClientCardStore(s => s.lastName)
+    const firstName = useClientCardStore(s => s.firstName)
+    const patronymic = useClientCardStore(s => s.patronymic)
+    const setUserId = useClientCardStore(s => s.setUserId)
+    const setCardLastName = useClientCardStore(s => s.setCardLastName)
+    const setCardFirstName = useClientCardStore(s => s.setCardFirstName)
+    const setCardPatronymic = useClientCardStore(s => s.setCardPatronymic)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -33,8 +35,12 @@ const MainPage = () => {
         {id: 10, task: 'task 10'},
     ])
 
-    const chooseClient = () => {
-
+    const chooseClientHandler = (user: any) => {
+        setUserId(user.id)
+        setCardLastName(user.lastName)
+        setCardFirstName(user.firstName)
+        setCardPatronymic(user.patronymic)
+        setChooseClientModal(false)
     }
 
     return (
@@ -44,7 +50,7 @@ const MainPage = () => {
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
                             <div>
-                                <ChooseClientModal extraCallback={chooseClient}/>
+                                <ChooseClientModal extraCallback={(user: any) => {chooseClientHandler(user)}}/>
                                 <Button onClick={() => {
                                     navigate(BikeShopPaths.WORKSPACE.SERVICE)
                                     setChooseClientModal(true)
@@ -85,7 +91,7 @@ const MainPage = () => {
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {setConfirmModal(true)}}>
+                                <Button onClick={() => {}}>
                                     Чеки
                                 </Button>
                             </div>

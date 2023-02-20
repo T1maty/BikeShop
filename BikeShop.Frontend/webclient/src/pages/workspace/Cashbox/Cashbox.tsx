@@ -7,6 +7,7 @@ import useChooseDiscountModal from '../../../features/ChooseDiscountModal/Choose
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseProductModal from '../../../features/ChooseProductModal/ChooseProductModalStore';
 import {ClientCard} from "../../../widgets";
+import useCashboxStore from './CashboxStore';
 
 const Cashbox = () => {
 
@@ -17,16 +18,28 @@ const Cashbox = () => {
     const setChooseProductModal = useChooseProductModal(s => s.setChooseProductModal)
     const setPayModal = usePayModal(s => s.setPayModal)
 
-    const chooseClient = () => {
-        // setUserId(clientCard.userId)
-        // setCardLastName(clientCard.lastName)
-        // setCardFirstName(clientCard.firstName)
-        // setCardPatronymic(clientCard.patronymic)
-        // setCardPhoneNumber(clientCard.phoneNumber)
-        //
-        // setOpen(false)
+    const userId = useCashboxStore(s => s.userId)
+    const lastName = useCashboxStore(s => s.lastName)
+    const firstName = useCashboxStore(s => s.firstName)
+    const patronymic = useCashboxStore(s => s.patronymic)
+    const phoneNumber = useCashboxStore(s => s.phoneNumber)
+    const balance = useCashboxStore(s => s.balance)
+    const creditLimit = useCashboxStore(s => s.creditLimit)
 
-        alert('ok')
+    const setUserId = useCashboxStore(s => s.setUserId)
+    const setCardLastName = useCashboxStore(s => s.setCardLastName)
+    const setCardFirstName = useCashboxStore(s => s.setCardFirstName)
+    const setCardPatronymic = useCashboxStore(s => s.setCardPatronymic)
+    const setCardPhoneNumber = useCashboxStore(s => s.setCardPhoneNumber)
+
+    const chooseClientHandler = (user: any) => {
+        setUserId(user.id)
+        setCardLastName(user.lastName)
+        setCardFirstName(user.firstName)
+        setCardPatronymic(user.patronymic)
+        setCardPhoneNumber(user.phoneNumber)
+        setChooseClientModal(false)
+        console.log(user)
     }
 
     return (
@@ -50,12 +63,18 @@ const Cashbox = () => {
                     </div>
 
                     <div className={s.leftSide_client}>
-                        <ClientCard/>
-                        <ChooseClientModal extraCallback={chooseClient}/>
+                        <ClientCard userId={userId}
+                                    lastName={lastName}
+                                    firstName={firstName}
+                                    patronymic={patronymic}
+                                    phoneNumber={phoneNumber}
+                                    balance={balance}
+                                    creditLimit={creditLimit}
+                        />
+                        <ChooseClientModal extraCallback={(user: any) => {chooseClientHandler(user)}}/>
                         <div className={s.leftSide_client_buttons}>
                             <div className={s.client_buttons_choose}>
-                                <Button
-                                        onClick={() => setChooseClientModal(true)}>
+                                <Button onClick={() => setChooseClientModal(true)}>
                                     Выбрать клиента
                                 </Button>
                             </div>
