@@ -17,13 +17,13 @@ interface ChooseClientModalStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     users: User[]
-    setUsers: (users: User[]) => void
+    // setUsers: (users: User[]) => void
     fio: string
     phoneNumber: string
     setFIO: (value: string) => void
     setPhoneNumber: (value: string) => void
-    getUsers: () => any // надо исправить тип
-    findUser: (request: SearchClient) => any // надо исправить тип
+    // getUsers: () => any // надо исправить тип
+    findUser: (data: SearchClient) => any // надо исправить тип
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
 
@@ -38,9 +38,9 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
     }),
 
     users: [],
-    setUsers: (users: User[]) => set({
-        users: [...users]
-    }),
+    // setUsers: (users: User[]) => set({
+    //     users: [...users]
+    // }),
     fio: '',
     setFIO: (value: string) => set({
         fio: value
@@ -50,19 +50,19 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
         phoneNumber: value
     }),
 
-    getUsers: () => {
+    // getUsers: () => {
+    //     set({isLoading: true});
+    //     return $api.get('/user/find').then(res => {
+    //         set(state => {
+    //             // state.users.push(...res.data.users)
+    //             state.users = [...res.data.users]
+    //         })
+    //         set({isLoading: false});
+    //     })
+    // },
+    findUser: (data: SearchClient) => {
         set({isLoading: true});
-        return $api.get('/user/find').then(res => {
-            set(state => {
-                // state.users.push(...res.data.users)
-                state.users = [...res.data.users]
-            })
-            set({isLoading: false});
-        })
-    },
-    findUser: (request: SearchClient) => {
-        set({isLoading: true});
-        return $api.get(`/user/find?fio=${request.fio}&phone=${request.phoneNumber}`)
+        return $api.get(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
             .then(res => {
             set(state => {state.users = [...res.data.users]})
             set({isLoading: false})

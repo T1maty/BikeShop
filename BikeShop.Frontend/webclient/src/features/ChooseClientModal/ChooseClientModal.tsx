@@ -1,5 +1,5 @@
 import React, {useEffect, ChangeEvent} from 'react';
-import {Modal, TextField} from '@mui/material';
+import {Modal} from '@mui/material';
 import {Button, ControlledInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
@@ -10,9 +10,8 @@ import {Loader} from "../../shared/ui/Loader/Loader";
 import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
 import useChooseClientModal from './ChooseClientModalStore';
-import useClientCard from "../../widgets/workspace/ClientCard/_ClientCardStore";
 import {Errors} from "../../entities/errors/workspaceErrors";
-import useCashboxGlobal from "../../pages/workspace/Cashbox/CashboxGlobalStore";
+import useGlobalDataStore from '../../pages/workspace/GlobalDataStore';
 
 const ChooseClientModal = () => {
 
@@ -37,11 +36,11 @@ const ChooseClientModal = () => {
     const setCardPatronymic = useClientCard(s => s.setCardPatronymic)
     const setCardPhoneNumber = useClientCard(s => s.setCardPhoneNumber)*/
 
-    const setUserId = useCashboxGlobal(s => s.setUserId)
-    const setCardLastName = useCashboxGlobal(s => s.setCardLastName)
-    const setCardFirstName = useCashboxGlobal(s => s.setCardFirstName)
-    const setCardPatronymic = useCashboxGlobal(s => s.setCardPatronymic)
-    const setCardPhoneNumber = useCashboxGlobal(s => s.setCardPhoneNumber)
+    const setUserId = useGlobalDataStore(s => s.setUserId)
+    const setCardLastName = useGlobalDataStore(s => s.setCardLastName)
+    const setCardFirstName = useGlobalDataStore(s => s.setCardFirstName)
+    const setCardPatronymic = useGlobalDataStore(s => s.setCardPatronymic)
+    const setCardPhoneNumber = useGlobalDataStore(s => s.setCardPhoneNumber)
 
     const searchClientByFIO = useDebounce<string>(fio, 1000)
     const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
