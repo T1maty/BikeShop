@@ -24,6 +24,7 @@ export const ControlledInput = (props: ControlledInputProps) => {
                            error={!!props.control.formState.errors[props.name]}
                            helperText={props.control.formState.errors[props.name]?.message}
                 />
-            }/>
+            }
+        />
     );
 };

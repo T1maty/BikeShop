@@ -4,7 +4,7 @@ import {ChooseClientModal} from '../../../features';
 import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {CreateService} from "../../../entities/requests/CreateService";
 import {useSnackbar} from "notistack";
 import useService from "./ServiceStore";
@@ -12,7 +12,7 @@ import {Errors} from "../../../entities/errors/workspaceErrors";
 import {ClientCard} from "../../../widgets";
 import useCashboxGlobal from "../GlobalDataStore";
 import {ServiceItem} from "../../../entities/responses/ServiceItem";
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
 import useGlobalDataStore from '../GlobalDataStore';
 
 const Service = () => {
@@ -31,12 +31,12 @@ const Service = () => {
 
     const users = useGlobalDataStore(s => s.users)
     const getUsers = useGlobalDataStore(s => s.getUsers)
+    const setUserId = useGlobalDataStore(s => s.setUserId)
 
-    const setUserId = useCashboxGlobal(s => s.setUserId)
-    const setCardLastName = useCashboxGlobal(s => s.setCardLastName)
-    const setCardFirstName = useCashboxGlobal(s => s.setCardFirstName)
-    const setCardPatronymic = useCashboxGlobal(s => s.setCardPatronymic)
-    const setCardPhoneNumber = useCashboxGlobal(s => s.setCardPhoneNumber)
+    const setCardLastName = useGlobalDataStore(s => s.setCardLastName)
+    const setCardFirstName = useGlobalDataStore(s => s.setCardFirstName)
+    const setCardPatronymic = useGlobalDataStore(s => s.setCardPatronymic)
+    const setCardPhoneNumber = useGlobalDataStore(s => s.setCardPhoneNumber)
 
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
@@ -55,35 +55,37 @@ const Service = () => {
     ])
 
     // const handleChangeSelect = (event: SelectChangeEvent) => {
-    //     setUserMasterDescription(event.target.value as string)
+    //     setUserMasterId(event.target.value as string)
     //     console.log(event.target.value)
     // };
     const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
         setUserMasterId(event.target.value as string)
-        console.log(event.target.value)
+        console.log('клик по селекту', event.target.value)
     };
 
     const formControl = useForm({
         defaultValues: {
             name: '',
             clientDescription: '',
-            userMasterDescription: '',
+            // userMasterDescription: '',
+            userMasterId: '',
         }
     });
     const onSubmit: SubmitHandler<any> = (data: CreateService) => {
-        console.log(data)
+        console.log('сабмит данные', data)
 
         data.shopId = 1
         data.clientId = userId
-        data.userMasterId = userMasterId
+        // data.userMasterId = userMasterId
 
         addNewService(data).then((response: ServiceItem) => {
             formControl.setValue('name', '')
             formControl.setValue('clientDescription', '')
             // formControl.setValue('userMasterDescription', '')
+            formControl.setValue('userMasterId', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-            getAllServices()
+            getAllServices() // запрос, чтобы добавился новый сервис
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
             formControl.setError('name', {type: 'serverError', message: message})
@@ -93,11 +95,13 @@ const Service = () => {
     }
 
     const chooseServiceItem = (data: {clientId: string, name: string,
-        clientDescription: string, userMasterDescription: string}) => {
+        clientDescription: string, /*userMasterDescription: string,*/ userMasterId: string}) => {
 
-        console.log(data)
+        console.log('клик по ремонту', data)
 
         setUserId(data.clientId)
+        // setUserMasterId(data.userMasterId)
+
         setCardLastName('Выбранный') // заглушка
         setCardFirstName('клиент') // заглушка
         setCardPatronymic('') // заглушка
@@ -105,7 +109,8 @@ const Service = () => {
 
         formControl.setValue('name', data.name)
         formControl.setValue('clientDescription', data.clientDescription)
-        formControl.setValue('userMasterDescription', data.userMasterDescription)
+        // formControl.setValue('userMasterDescription', data.userMasterDescription)
+        formControl.setValue('userMasterId', data.userMasterId)
     }
 
     console.log(users)
@@ -167,7 +172,8 @@ const Service = () => {
                                                  chooseServiceItem({
                                                      clientId: service.clientId, name: service.name,
                                                      clientDescription: service.clientDescription,
-                                                     userMasterDescription: service.userMasterDescription
+                                                     // userMasterDescription: service.userMasterDescription
+                                                     userMasterId: service.userMasterId
                                                  })
                                              }}
                                         >
@@ -198,6 +204,7 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
+
                                 {/*<ControlledInput name={'userMasterDescription'} label={'Мастер'}*/}
                                 {/*                 control={formControl}*/}
                                 {/*                 rules={{required: Errors[0].name}}*/}
