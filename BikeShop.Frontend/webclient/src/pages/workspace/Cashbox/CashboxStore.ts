@@ -2,12 +2,14 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
+import {IUser} from '../../../entities';
 
 interface CashboxStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
 
     users: any[] // надо исправить тип
+    user: any
     // getUsers: () => any // надо исправить тип
 
     userId: string
@@ -19,6 +21,7 @@ interface CashboxStore {
     balance: number
     creditLimit: number
 
+    setUser: (user: any) => void
     setUserId: (value: string) => void
     setCardLastName: (value: string) => void
     setCardFirstName: (value: string) => void
@@ -36,7 +39,16 @@ const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set) 
     }),
 
     users: [],
-
+    user: {
+        id: '',
+        shopId: 0,
+        lastName: '',
+        firstName: '',
+        patronymic: '',
+        phoneNumber: '',
+        balance: 0,
+        creditLimit: 0,
+    },
     userId: '',
     lastName: 'Клиент',
     firstName: 'не',
@@ -46,6 +58,9 @@ const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set) 
     balance: 0,
     creditLimit: 0,
 
+    setUser: (user: any) => set({
+        user: user
+    }),
     setUserId: (value: string) => set({
         userId: value
     }),
