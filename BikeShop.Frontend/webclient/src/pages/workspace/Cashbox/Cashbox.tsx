@@ -8,6 +8,7 @@ import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseProductModal from '../../../features/ChooseProductModal/ChooseProductModalStore';
 import {ClientCard} from "../../../widgets";
 import useCashboxStore from './CashboxStore';
+import {IUser} from '../../../entities';
 
 const Cashbox = () => {
 
@@ -18,6 +19,7 @@ const Cashbox = () => {
     const setChooseProductModal = useChooseProductModal(s => s.setChooseProductModal)
     const setPayModal = usePayModal(s => s.setPayModal)
 
+    const user = useCashboxStore(s => s.user)
     const userId = useCashboxStore(s => s.userId)
     const lastName = useCashboxStore(s => s.lastName)
     const firstName = useCashboxStore(s => s.firstName)
@@ -26,18 +28,21 @@ const Cashbox = () => {
     const balance = useCashboxStore(s => s.balance)
     const creditLimit = useCashboxStore(s => s.creditLimit)
 
+    const setUser = useCashboxStore(s => s.setUser)
     const setUserId = useCashboxStore(s => s.setUserId)
     const setCardLastName = useCashboxStore(s => s.setCardLastName)
     const setCardFirstName = useCashboxStore(s => s.setCardFirstName)
     const setCardPatronymic = useCashboxStore(s => s.setCardPatronymic)
     const setCardPhoneNumber = useCashboxStore(s => s.setCardPhoneNumber)
 
-    const chooseClientHandler = (user: any) => {
-        setUserId(user.id)
-        setCardLastName(user.lastName)
-        setCardFirstName(user.firstName)
-        setCardPatronymic(user.patronymic)
-        setCardPhoneNumber(user.phoneNumber)
+    const chooseClientHandler = (user: IUser) => {
+        // setUserId(user.id)
+        // setCardLastName(user.lastName)
+        // setCardFirstName(user.firstName)
+        // setCardPatronymic(user.patronymic)
+        // setCardPhoneNumber(user.phoneNumber)
+
+        setUser(user)
         setChooseClientModal(false)
         console.log(user)
     }
@@ -63,13 +68,14 @@ const Cashbox = () => {
                     </div>
 
                     <div className={s.leftSide_client}>
-                        <ClientCard userId={userId}
-                                    lastName={lastName}
-                                    firstName={firstName}
-                                    patronymic={patronymic}
-                                    phoneNumber={phoneNumber}
-                                    balance={balance}
-                                    creditLimit={creditLimit}
+                        <ClientCard user={user}
+                                    // userId={userId}
+                                    // lastName={lastName}
+                                    // firstName={firstName}
+                                    // patronymic={patronymic}
+                                    // phoneNumber={phoneNumber}
+                                    // balance={balance}
+                                    // creditLimit={creditLimit}
                         />
                         <ChooseClientModal extraCallback={(user: any) => {chooseClientHandler(user)}}/>
                         <div className={s.leftSide_client_buttons}>

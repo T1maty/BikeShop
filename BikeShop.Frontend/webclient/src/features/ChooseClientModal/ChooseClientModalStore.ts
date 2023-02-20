@@ -15,7 +15,7 @@ interface ChooseClientModalStore {
     setChooseClientModal: (value: boolean) => void
     isLoading: boolean
     setIsLoading: (value: boolean) => void
-    users: any[]
+    users: IUser[]
     // setUsers: (users: User[]) => void
     fio: string
     phoneNumber: string
