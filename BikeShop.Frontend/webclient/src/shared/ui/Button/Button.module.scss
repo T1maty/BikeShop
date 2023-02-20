@@ -15,6 +15,9 @@
 .btn:disabled {
     background-color: var(--button-disabled-color);
 }
+.btn:hover {
+    background-color: var(--button-hover-color);
+}
 
 span.ripple {
     position: absolute;

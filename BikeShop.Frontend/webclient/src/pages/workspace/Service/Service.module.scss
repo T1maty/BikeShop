@@ -14,6 +14,9 @@
             width: 25%;
 
             .leftSide_buttons {
+                border-radius: $defaultBorderRadius;
+                background-color: $themeColorDark;
+                padding: $defaultLargeMargin;
                 margin-bottom: $defaultSmallMargin;
 
                 .buttons_create {
@@ -42,10 +45,37 @@
                 @include widthHeightFull();
 
                 .content_title {
-                    font-size: 26px;
-                    font-weight: bold;
-                    text-align: center;
-                    margin-bottom: $defaultSmallMargin;
+                    //font-size: 26px;
+                    //font-weight: bold;
+                    //text-align: center;
+                    //margin-bottom: $defaultSmallMargin;
+
+                    border-radius: $defaultBorderRadius;
+                    background-color: $themeColorGray;
+                    padding: $defaultLargeMargin;
+                    //margin-bottom: $defaultSmallMargin;
+
+                    @include flexColumn();
+                    > div:not(:last-child) {
+                        margin-bottom: $defaultSmallMargin;
+                    }
+
+                    .content_startBtn {
+                        width: 100%;
+                        @include flexCenter();
+
+                        button {
+                            width: 100%;
+                        }
+                    }
+                    .content_inProcessButtons {
+                        @include flexOnlyBetween();
+                        gap: $defaultSmallMargin;
+                    }
+                    .content_doneButtons {
+                        @include flexOnlyBetween();
+                        gap: $defaultSmallMargin;
+                    }
                 }
                 .content_info {
                     @include flexColumn();

@@ -30,6 +30,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     setIsLoading: (value: boolean) => set({
         isLoading: value
     }),
+
     services: [],
     setService: () => set({
         // code here
@@ -47,8 +48,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
 
     name: '',
     clientDescription: '',
-    userMasterDescription: '',
+
     userMasterId: '',
+    userMasterDescription: '',
     setUserMasterId: (value: string) => set({
         userMasterId: value
     }),
