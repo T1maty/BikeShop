@@ -114,6 +114,10 @@ const Service = () => {
     }
 
     console.log(users)
+
+    const chooseClient = () => {
+
+    }
     
     useEffect(() => {
         getAllServices()
@@ -127,7 +131,7 @@ const Service = () => {
 
                 <div className={s.service_leftSide}>
                     <div className={s.leftSide_buttons}>
-                        <ChooseClientModal/>
+                        <ChooseClientModal extraCallback={chooseClient}/>
                         <div className={s.buttons_create}>
                             <Button onClick={() => {setChooseClientModal(true)}}>
                                 Создать ремонт
