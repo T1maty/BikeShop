@@ -31,7 +31,7 @@ const PayModal = () => {
                     </div>
                 </div>
                 <div className={s.payModal_clientCard}>
-                    <ClientCard/>
+                    {/*<ClientCard/>*/}
                 </div>
                 <div className={s.payModal_payType}>
                     <Button onClick={() => {}}>

@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 
-interface ClientCardStore {
+interface _ClientCardStore {
     userId: string
     lastName: string
     firstName: string
@@ -23,7 +23,7 @@ interface ClientCardStore {
     setCreditLimit: (value: number) => void
 }
 
-const useClientCardStore = create<ClientCardStore>()(/*persist(*/devtools(immer((set) => ({
+const useClientCardStore = create<_ClientCardStore>()(/*persist(*/devtools(immer((set) => ({
     userId: '',
     lastName: 'Клиент',
     firstName: 'не',

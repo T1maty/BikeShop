@@ -6,7 +6,7 @@ import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
-import useClientCardStore from '../../../widgets/workspace/ClientCard/ClientCardStore';
+import useClientCardStore from '../../../widgets/workspace/ClientCard/_ClientCardStore';
 
 const MainPage = () => {
     const navigate = useNavigate();

@@ -3,7 +3,6 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {$api} from "../../shared";
-import User from '../../entities/models/User';
 
 interface GlobalDataStore {
     isLoading: boolean

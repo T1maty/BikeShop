@@ -1,6 +1,6 @@
-import User from "../models/User";
+import {IUser} from '../models/IUser'
 
 export default interface LoginResponse {
     accessToken: string,
-    user: User
+    user: IUser
 }

@@ -4,7 +4,7 @@ import {Button, ControlledInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {CreateUser} from '../../entities';
+import {CreateUser, IUser} from '../../entities';
 import {useSnackbar} from 'notistack';
 import {Loader} from "../../shared/ui/Loader/Loader";
 import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
@@ -14,7 +14,7 @@ import {Errors} from "../../entities/errors/workspaceErrors";
 import useGlobalDataStore from '../../pages/workspace/GlobalDataStore';
 
 interface ChooseClientModalProps {
-    extraCallback: (user: any) => void
+    extraCallback: (user: IUser) => void
 }
 
 const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) => {
@@ -77,7 +77,7 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
         setUsers([])
     }*/
 
-    const itemClickHandler = (user: any) => {
+    const itemClickHandler = (user: IUser) => {
         extraCallback(user)
     }
 
@@ -137,7 +137,7 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
                                         users.map((u: any) => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}
-                                                    onClick={() => {itemClickHandler({...u.user})}}
+                                                    onClick={() => {itemClickHandler(u.user)}}
                                                 >
                                                     {u.user.lastName} {u.user.firstName} {u.user.patronymic}
                                                 </div>
