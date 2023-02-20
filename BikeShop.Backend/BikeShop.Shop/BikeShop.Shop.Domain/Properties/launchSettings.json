@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Профиль 1": {
+      "commandName": "Project",
+      "workingDirectory": "A:\\Projects\\BikeShop\\BikeShop.Backend\\BikeShop.Shop\\BikeShop.Shop.WebApi"
+    }
+  }
+}

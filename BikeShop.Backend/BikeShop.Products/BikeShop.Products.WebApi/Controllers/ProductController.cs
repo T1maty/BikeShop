@@ -4,6 +4,7 @@ using BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
+using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.WebApi.Models.Product;
 using BikeShop.Products.WebApi.Models.Validation;
@@ -19,12 +20,15 @@ namespace BikeShop.Products.WebApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
+        private readonly IProductService _productService;
 
-        public ProductController(IMapper mapper, IMediator mediator)
+        public ProductController(IMapper mapper, IMediator mediator, IProductService productService)
         {
             _mapper = mapper;
             _mediator = mediator;
+            _productService = productService;
         }
+
 
         /// <summary>
         /// Создание нового товара
@@ -133,6 +137,12 @@ namespace BikeShop.Products.WebApi.Controllers
             var productsModel = await _mediator.Send(query);
 
             return Ok(productsModel);
+        }
+
+        [HttpPost("getbyIds")]
+        public async Task<ActionResult<List<Product>>> GetProductsByIdsArray([FromBody] List<int> Ids)
+        {
+            return Ok(_productService.GetProductsByIdsArray(Ids));
         }
     }
 }

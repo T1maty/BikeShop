@@ -3,9 +3,11 @@ using System.Text.Json;
 using BikeShop.Service.Application;
 using BikeShop.Service.Application.Common.Configurations;
 using BikeShop.Service.Application.Common.Mappings;
+using BikeShop.Service.Application.RefitClients;
 using BikeShop.Service.Persistence;
 using BikeShop.Service.WebApi.Middleware;
 using Microsoft.Extensions.Options;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
 });
 ;
+
+// Register refit
+builder.Services.AddRefitClient<IProductsClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
+
 
 // Регистрация конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>

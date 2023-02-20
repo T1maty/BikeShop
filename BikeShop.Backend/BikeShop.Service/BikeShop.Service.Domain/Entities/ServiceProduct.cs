@@ -8,16 +8,15 @@ public class ServiceProduct : BaseEntity
     public string CatalogKey { get; set; } = string.Empty;
     public string SerialNumber { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
-    public int Quantity { get; set; }
-    public int QuantityUnitId { get; set; }
-    public decimal Price { get; set; }
-    public decimal Discount { get; set; }
-    public decimal Total { get; set; }
-    public Guid UserId { get; set; }
+    public int Quantity { get; set; } = 0;
+    public int QuantityUnitId { get; set; } = 0;
+    public decimal Price { get; set; } = 0;
+    public decimal Discount { get; set; } = 0;
+    public decimal Total { get; set; } = 0;
+    public Guid? UserId { get; set; } 
 
-    public int ServiceId { get; set; }
+    public int ServiceId { get; set; } = 0;
     [JsonIgnore] public Service Service { get; set; }
 
-    public int WorkId { get; set; }
     [JsonIgnore] public Work Work { get; set; }
 }

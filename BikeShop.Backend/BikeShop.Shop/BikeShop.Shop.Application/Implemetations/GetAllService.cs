@@ -29,6 +29,7 @@ public class GetAllService : IGetAllServices
         var shop = await _context.Shops.FindAsync(dto.ShopId);
         if (shop.Secret == dto.Secret)
         {
+
             return true;
         }
         else

@@ -28,7 +28,7 @@ public class UpdateServiceStatusCommandHandler : IRequestHandler<UpdateServiceSt
             };
 
         // Обновляю ему статус и время последнего обновления
-        service.Status = request.NewStatus;
+        service.Status = request.NewStatus.ToString();
         service.UpdatedAt = DateTime.Now;
 
         // Сохраняю в бд

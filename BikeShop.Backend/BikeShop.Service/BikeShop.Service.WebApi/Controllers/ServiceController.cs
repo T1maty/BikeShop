@@ -3,7 +3,7 @@ using BikeShop.Service.Application.Common.Exceptions;
 using BikeShop.Service.Application.CQRS.Commands.Service.UpdateService;
 using BikeShop.Service.Application.CQRS.Commands.Service.UpdateServiceStatus;
 using BikeShop.Service.Application.CQRS.Queries.Service.GetOngoingServicesByShopId;
-using BikeShop.Service.Application.CQRS.Queries.Service.GetServiceById;
+using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.WebApi.Models.Service;
 using MediatR;
@@ -37,35 +37,14 @@ public class ServiceController : ControllerBase
     /// <response code="200">Успех. Возвращает массив сервисов/ремонтов</response>
     [HttpGet("getbyshopid/{shopid:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<OngoingServicesModel>> GetOngoingServicesByShopId(int shopid)
+    public async Task<ActionResult<List<GetServiceDTO>>> GetOngoingServicesByShopId(int shopid)
     {
-        var query = new GetOngoingServicesByShopIdQuery { ShopId = shopid };
-        var model = await _mediator.Send(query);
+        var model = await _serviceService.GetServiceByShopId(shopid);
 
         return Ok(model);
     }
 
 
-    /// <summary>
-    /// Получение полной информации о cервисе/ремонте по айди
-    /// </summary>
-    ///
-    /// <param name="serviceid">ID сервиса/ремонта</param>
-    /// <returns>Возвращает полную информацию о сервисе/ремонте с указанным id</returns>
-    ///
-    /// <response code="200">Успех. Возвращает сервис/ремонт с указанным id</response>
-    /// <response code="404">Cервис с указанным id не найден</response>
-    [HttpGet("getserviceinfo/{serviceid}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Domain.Entities.Service>> GetService(int serviceid)
-    {
-        var query = new GetServiceByIdQuery { ServiceId = serviceid };
-
-        var service = await _mediator.Send(query);
-
-        return Ok(service);
-    }
 
     /// <summary>
     /// Обновление информации о сервисе/ремонте
@@ -85,13 +64,12 @@ public class ServiceController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateService([FromBody] UpdateServiceModel model)
+    public async Task<IActionResult> UpdateService([FromBody] UpdateServiceDTO model)
     {
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
-        var command = _mapper.Map<UpdateServiceCommand>(model);
-        await _mediator.Send(command);
+        await _serviceService.Update(model);
 
         return Ok();
     }

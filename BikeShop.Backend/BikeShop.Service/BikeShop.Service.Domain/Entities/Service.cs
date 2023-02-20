@@ -6,7 +6,7 @@ namespace BikeShop.Service.Domain.Entities;
 public class Service : BaseEntity
 {
     public string Name { get; set; } = string.Empty; // Название ремонта
-    public Status Status { get; set; } = Status.Waiting; // Статус ремонта
+    public string Status { get; set; } = "Waiting"; // Статус ремонта
     
     public Guid ClientId { get; set; } // Id клиента, чей байк ремонтируют
     public string ClientDescription { get; set; } = string.Empty; // Описание клиента
@@ -17,7 +17,7 @@ public class Service : BaseEntity
     public Guid UserMasterId { get; set; }// Id ремонтника
     public string UserMasterDescription { get; set; } = String.Empty;
 
-    public Guid UserDeleted { get; set; }// Id юзера который удалил
+    public Guid UserDeletedId { get; set; }// Id юзера который удалил
     
     
     public int WorkDiscountId { get; set; } = 0;
@@ -28,9 +28,9 @@ public class Service : BaseEntity
     public decimal DiscountWork { get; set; } 
     public decimal TotalWork { get; set; } 
     
-    public decimal PriceService { get; set; } 
-    public decimal DiscountService { get; set; } 
-    public decimal TotalService { get; set; }
+    public decimal PriceProduct { get; set; } 
+    public decimal DiscountProduct { get; set; } 
+    public decimal TotalProduct { get; set; }
 
     public decimal Price { get; set; }
     public decimal Discount { get; set; }
