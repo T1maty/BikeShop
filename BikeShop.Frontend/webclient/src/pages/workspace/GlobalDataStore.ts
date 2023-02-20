@@ -2,11 +2,15 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
-import {$api} from "../../../shared";
+import {$api} from "../../shared";
+import User from '../../entities/models/User';
 
-interface CashboxGlobalStore {
+interface GlobalDataStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+
+    users: any[] // надо исправить тип
+    getUsers: () => any // надо исправить тип
 
     userId: string
     lastName: string
@@ -25,14 +29,15 @@ interface CashboxGlobalStore {
     // setCardEmail: (value: string) => void
     setBalance: (value: number) => void
     setCreditLimit: (value: number) => void
-
 }
 
-const useCashboxGlobal = create<CashboxGlobalStore>()(/*persist(*/devtools(immer((set) => ({
+const useGlobalDataStore = create<GlobalDataStore>()(/*persist(*/devtools(immer((set) => ({
     isLoading: false,
     setIsLoading: (value: boolean) => set({
         isLoading: value
     }),
+
+    users: [],
 
     userId: '',
     lastName: 'Клиент',
@@ -68,9 +73,19 @@ const useCashboxGlobal = create<CashboxGlobalStore>()(/*persist(*/devtools(immer
         creditLimit: value
     }),
 
+    getUsers: () => {
+        set({isLoading: true});
+        return $api.get('/user/find').then(res => {
+            set(state => {
+                // state.users.push(...res.data.users)
+                state.users = [...res.data.users]
+            })
+            set({isLoading: false});
+        })
+    },
 })))/*, {
     name: "cashboxGlobalStore",
     version: 1
 })*/);
 
-export default useCashboxGlobal;
+export default useGlobalDataStore;

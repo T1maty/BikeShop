@@ -1,7 +1,6 @@
 import React from 'react'
 import s from "./ClientCard.module.scss";
-import useClientCard from './_ClientCardStore';
-import useCashboxGlobal from "../../../pages/workspace/Cashbox/CashboxGlobalStore";
+import useGlobalDataStore from '../../../pages/workspace/GlobalDataStore';
 
 const ClientCard = () => {
 
@@ -15,13 +14,13 @@ const ClientCard = () => {
     const creditLimit = useClientCard(s => s.creditLimit)
     */
 
-    const firstName = useCashboxGlobal(s => s.firstName)
-    const lastName = useCashboxGlobal(s => s.lastName)
-    const patronymic = useCashboxGlobal(s => s.patronymic)
-    const phoneNumber = useCashboxGlobal(s => s.phoneNumber)
-    // const email = useCashboxGlobal(s => s.email)
-    const balance = useCashboxGlobal(s => s.balance)
-    const creditLimit = useCashboxGlobal(s => s.creditLimit)
+    const firstName = useGlobalDataStore(s => s.firstName)
+    const lastName = useGlobalDataStore(s => s.lastName)
+    const patronymic = useGlobalDataStore(s => s.patronymic)
+    const phoneNumber = useGlobalDataStore(s => s.phoneNumber)
+    // const email = useGlobalDataStore(s => s.email)
+    const balance = useGlobalDataStore(s => s.balance)
+    const creditLimit = useGlobalDataStore(s => s.creditLimit)
 
     return (
         <div className={s.clientCard_background}>

@@ -6,9 +6,7 @@ import {ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
-import useClientCard from "../../../widgets/workspace/ClientCard/_ClientCardStore";
-import useCashboxGlobal from "../Cashbox/CashboxGlobalStore";
-import CreateShopModal from "../../../features/CreateShopStoreModal/CreateShopModal";
+import useGlobalDataStore from '../GlobalDataStore';
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -16,9 +14,9 @@ const MainPage = () => {
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
 
-    const lastName = useCashboxGlobal(s => s.lastName)
-    const firstName = useCashboxGlobal(s => s.firstName)
-    const patronymic = useCashboxGlobal(s => s.patronymic)
+    const lastName = useGlobalDataStore(s => s.lastName)
+    const firstName = useGlobalDataStore(s => s.firstName)
+    const patronymic = useGlobalDataStore(s => s.patronymic)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},

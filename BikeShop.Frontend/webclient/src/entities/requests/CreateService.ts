@@ -3,5 +3,6 @@ export interface CreateService {
     clientId: string
     name: string
     clientDescription: string
-    userMasterDescription: string
+    userMasterId: string
+    // userMasterDescription: string
 }

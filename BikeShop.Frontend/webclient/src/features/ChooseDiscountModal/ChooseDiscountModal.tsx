@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Box, FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent} from '@mui/material';
 import {Button} from '../../shared/ui';
 import s from './ChooseDiscountModal.module.scss'
@@ -8,7 +8,7 @@ const ChooseDiscountModal = () => {
     const open = useChooseDiscountModal(s => s.chooseDiscountModal)
     const setOpen = useChooseDiscountModal(s => s.setChooseDiscountModal)
 
-    const [age, setAge] = React.useState('');
+    const [age, setAge] = useState<string>('')
 
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value as string);

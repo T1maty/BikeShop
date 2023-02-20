@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, ChangeEvent} from 'react';
 import s from './Service.module.scss'
 import {ChooseClientModal} from '../../../features';
 import {Button, ControlledInput} from '../../../shared/ui';
@@ -10,8 +10,10 @@ import {useSnackbar} from "notistack";
 import useService from "./ServiceStore";
 import {Errors} from "../../../entities/errors/workspaceErrors";
 import {ClientCard} from "../../../widgets";
-import useCashboxGlobal from "../Cashbox/CashboxGlobalStore";
+import useCashboxGlobal from "../GlobalDataStore";
 import {ServiceItem} from "../../../entities/responses/ServiceItem";
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
+import useGlobalDataStore from '../GlobalDataStore';
 
 const Service = () => {
 
@@ -23,6 +25,12 @@ const Service = () => {
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const getAllServices = useService(s => s.getAllServices)
+
+    const userMasterId = useService(s => s.userMasterId)
+    const setUserMasterId = useService(s => s.setUserMasterId)
+
+    const users = useGlobalDataStore(s => s.users)
+    const getUsers = useGlobalDataStore(s => s.getUsers)
 
     const setUserId = useCashboxGlobal(s => s.setUserId)
     const setCardLastName = useCashboxGlobal(s => s.setCardLastName)
@@ -46,6 +54,15 @@ const Service = () => {
         {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
     ])
 
+    // const handleChangeSelect = (event: SelectChangeEvent) => {
+    //     setUserMasterDescription(event.target.value as string)
+    //     console.log(event.target.value)
+    // };
+    const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+        setUserMasterId(event.target.value as string)
+        console.log(event.target.value)
+    };
+
     const formControl = useForm({
         defaultValues: {
             name: '',
@@ -58,11 +75,12 @@ const Service = () => {
 
         data.shopId = 1
         data.clientId = userId
+        data.userMasterId = userMasterId
 
         addNewService(data).then((response: ServiceItem) => {
             formControl.setValue('name', '')
             formControl.setValue('clientDescription', '')
-            formControl.setValue('userMasterDescription', '')
+            // formControl.setValue('userMasterDescription', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
             getAllServices()
@@ -90,8 +108,11 @@ const Service = () => {
         formControl.setValue('userMasterDescription', data.userMasterDescription)
     }
 
+    console.log(users)
+    
     useEffect(() => {
         getAllServices()
+        getUsers() // надо убрать перерисовку при выборе селекта
     }, [])
 
     return (
@@ -177,10 +198,48 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                <ControlledInput name={'userMasterDescription'} label={'Мастер'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
+                                {/*<ControlledInput name={'userMasterDescription'} label={'Мастер'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*/>*/}
+
+                                {/*<FormControl fullWidth>*/}
+                                {/*    <InputLabel id="master-select-label">Мастер</InputLabel>*/}
+                                {/*    <Select*/}
+                                {/*        labelId="master-select-label"*/}
+                                {/*        id="master-select"*/}
+                                {/*        name={'userMasterDescription'}*/}
+                                {/*        value={userMasterDescription}*/}
+                                {/*        label="userMasterDescription"*/}
+                                {/*        onChange={handleChangeSelect}*/}
+                                {/*    >*/}
+                                {/*        /!*<MenuItem value={10}>10%</MenuItem>*!/*/}
+                                {/*        /!*<MenuItem value={20}>20%</MenuItem>*!/*/}
+                                {/*        */}
+                                {/*        {*/}
+                                {/*            users.map(u => {*/}
+                                {/*                return (*/}
+                                {/*                    <MenuItem key={u.user.id} value={u.user.id}>*/}
+                                {/*                        {u.user.lastName} {u.user.firstName} {u.user.patronymic}*/}
+                                {/*                    </MenuItem>*/}
+                                {/*                )*/}
+                                {/*            })*/}
+                                {/*        }*/}
+                                {/*    </Select>*/}
+                                {/*</FormControl>*/}
+
+                                <select name="userMasterId" value={userMasterId} onChange={handleChangeSelect}>
+                                    {
+                                        users.map(u => {
+                                            return (
+                                                <option key={u.user.id} value={u.user.id}>
+                                                    {u.user.lastName} {u.user.firstName} {u.user.patronymic}
+                                                </option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
                             </div>
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>
