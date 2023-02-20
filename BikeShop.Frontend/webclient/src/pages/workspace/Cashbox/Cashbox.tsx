@@ -17,6 +17,18 @@ const Cashbox = () => {
     const setChooseProductModal = useChooseProductModal(s => s.setChooseProductModal)
     const setPayModal = usePayModal(s => s.setPayModal)
 
+    const chooseClient = () => {
+        // setUserId(clientCard.userId)
+        // setCardLastName(clientCard.lastName)
+        // setCardFirstName(clientCard.firstName)
+        // setCardPatronymic(clientCard.patronymic)
+        // setCardPhoneNumber(clientCard.phoneNumber)
+        //
+        // setOpen(false)
+
+        alert('ok')
+    }
+
     return (
         // <div className={s.cashboxWrapper}>
             <div className={s.cashboxMainBlock}>
@@ -39,7 +51,7 @@ const Cashbox = () => {
 
                     <div className={s.leftSide_client}>
                         <ClientCard/>
-                        <ChooseClientModal/>
+                        <ChooseClientModal extraCallback={chooseClient}/>
                         <div className={s.leftSide_client_buttons}>
                             <div className={s.client_buttons_choose}>
                                 <Button

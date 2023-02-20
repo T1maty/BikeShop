@@ -8,6 +8,7 @@ export {default as ChooseClientModal} from './ChooseClientModal/ChooseClientModa
 export {default as ChooseDiscountModal} from './ChooseDiscountModal/ChooseDiscountModal';
 export {default as ChooseProductModal} from './ChooseProductModal/ChooseProductModal';
 export {default as PayModal} from './PayModal/PayModal';
+export {default as ConfirmModal} from './ConfirmModal/ConfirmModal';
 export {default as TableProductItem} from './TableProductItem/TableProductItem';
 
 export {useUpdateTagModal} from './UpdateTagModal/UpdateTagModalStore'

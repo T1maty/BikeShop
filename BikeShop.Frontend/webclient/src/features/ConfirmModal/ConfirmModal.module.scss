@@ -1,0 +1,20 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.confirmModal_mainBox {
+    @include defaultModalStyle();
+    @include flexColumn();
+
+    .confirmModal_title {
+        margin-bottom: $defaultLargeMargin;
+    }
+    .confirmModal_buttons {
+        display: flex;
+        gap: 40px;
+
+        button {
+            padding: $defaultSmallMargin;
+        }
+    }
+
+}

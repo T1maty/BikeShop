@@ -7,12 +7,14 @@ import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
 import useGlobalDataStore from '../GlobalDataStore';
+import useConfirmModal from '../../../features/ConfirmModal/ConfirmModalStore';
 
 const MainPage = () => {
     const navigate = useNavigate();
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
+    const setConfirmModal = useConfirmModal(s => s.setConfirmModal)
 
     const lastName = useGlobalDataStore(s => s.lastName)
     const firstName = useGlobalDataStore(s => s.firstName)
@@ -31,15 +33,18 @@ const MainPage = () => {
         {id: 10, task: 'task 10'},
     ])
 
+    const chooseClient = () => {
+
+    }
+
     return (
         // <div className={s.mainPageWrapper}>
             <div className={s.mainPageMainBlock}>
-                {/*<CreateShopModal/>*/}
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
                             <div>
-                                <ChooseClientModal/>
+                                <ChooseClientModal extraCallback={chooseClient}/>
                                 <Button onClick={() => {
                                     navigate(BikeShopPaths.WORKSPACE.SERVICE)
                                     setChooseClientModal(true)
@@ -80,7 +85,7 @@ const MainPage = () => {
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {setConfirmModal(true)}}>
                                     Чеки
                                 </Button>
                             </div>

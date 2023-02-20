@@ -13,7 +13,11 @@ import useChooseClientModal from './ChooseClientModalStore';
 import {Errors} from "../../entities/errors/workspaceErrors";
 import useGlobalDataStore from '../../pages/workspace/GlobalDataStore';
 
-const ChooseClientModal = () => {
+interface ChooseClientModalProps {
+    extraCallback: () => void
+}
+
+const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -93,6 +97,10 @@ const ChooseClientModal = () => {
         setUsers([])
     }*/
 
+    const itemClick = () => {
+        extraCallback()
+    }
+
     useEffect(() => {
         if (fio.length > 0 || phoneNumber.length > 0) {
             findUser({fio, phoneNumber});
@@ -149,12 +157,13 @@ const ChooseClientModal = () => {
                                         users.map((u: any) => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}
-                                                     onClick={() => {
-                                                         setInfoToClientCard({userId: u.user.id,
-                                                             firstName: u.user.firstName, lastName: u.user.lastName,
-                                                             patronymic: u.user.patronymic, phoneNumber: u.user.phoneNumber
-                                                         })
-                                                     }}
+                                                     // onClick={() => {
+                                                     //     setInfoToClientCard({userId: u.user.id,
+                                                     //         firstName: u.user.firstName, lastName: u.user.lastName,
+                                                     //         patronymic: u.user.patronymic, phoneNumber: u.user.phoneNumber
+                                                     //     })
+                                                     // }}
+                                                     onClick={itemClick}
                                                 >
                                                     {u.user.lastName} {u.user.firstName} {u.user.patronymic}
                                                 </div>
