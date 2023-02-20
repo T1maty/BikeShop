@@ -14,7 +14,7 @@ import {Errors} from "../../entities/errors/workspaceErrors";
 import useGlobalDataStore from '../../pages/workspace/GlobalDataStore';
 
 interface ChooseClientModalProps {
-    extraCallback: () => void
+    extraCallback: (user: any) => void
 }
 
 const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) => {
@@ -30,21 +30,14 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
     const setFIO = useChooseClientModal(s => s.setFIO)
     const phoneNumber = useChooseClientModal(s => s.phoneNumber)
     const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
-    // const getUsers = useChooseClientModal(s => s.getUsers)
-    // const setUsers = useChooseClientModal(s => s.setUsers)
     const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 
-    /*const setCardLastName = useClientCard(s => s.setCardLastName)
-    const setCardFirstName = useClientCard(s => s.setCardFirstName)
-    const setCardPatronymic = useClientCard(s => s.setCardPatronymic)
-    const setCardPhoneNumber = useClientCard(s => s.setCardPhoneNumber)*/
-
-    const setUserId = useGlobalDataStore(s => s.setUserId)
-    const setCardLastName = useGlobalDataStore(s => s.setCardLastName)
-    const setCardFirstName = useGlobalDataStore(s => s.setCardFirstName)
-    const setCardPatronymic = useGlobalDataStore(s => s.setCardPatronymic)
-    const setCardPhoneNumber = useGlobalDataStore(s => s.setCardPhoneNumber)
+    // const setUserId = useGlobalDataStore(s => s.setUserId)
+    // const setCardLastName = useGlobalDataStore(s => s.setCardLastName)
+    // const setCardFirstName = useGlobalDataStore(s => s.setCardFirstName)
+    // const setCardPatronymic = useGlobalDataStore(s => s.setCardPatronymic)
+    // const setCardPhoneNumber = useGlobalDataStore(s => s.setCardPhoneNumber)
 
     const searchClientByFIO = useDebounce<string>(fio, 1000)
     const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
@@ -75,19 +68,6 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
         })
     }
 
-    const setInfoToClientCard = (clientCard: {userId: string, lastName: string,
-        firstName: string, patronymic: string, phoneNumber: string}) => {
-        console.log(clientCard)
-
-        setUserId(clientCard.userId)
-        setCardLastName(clientCard.lastName)
-        setCardFirstName(clientCard.firstName)
-        setCardPatronymic(clientCard.patronymic)
-        setCardPhoneNumber(clientCard.phoneNumber)
-
-        setOpen(false)
-    }
-
     /*const clearFioInput = () => {
         setFIO('')
         setUsers([])
@@ -97,8 +77,8 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
         setUsers([])
     }*/
 
-    const itemClick = () => {
-        extraCallback()
+    const itemClickHandler = (user: any) => {
+        extraCallback(user)
     }
 
     useEffect(() => {
@@ -157,13 +137,7 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
                                         users.map((u: any) => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}
-                                                     // onClick={() => {
-                                                     //     setInfoToClientCard({userId: u.user.id,
-                                                     //         firstName: u.user.firstName, lastName: u.user.lastName,
-                                                     //         patronymic: u.user.patronymic, phoneNumber: u.user.phoneNumber
-                                                     //     })
-                                                     // }}
-                                                     onClick={itemClick}
+                                                    onClick={() => {itemClickHandler({...u.user})}}
                                                 >
                                                     {u.user.lastName} {u.user.firstName} {u.user.patronymic}
                                                 </div>

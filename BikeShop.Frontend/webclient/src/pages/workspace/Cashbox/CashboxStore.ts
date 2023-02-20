@@ -2,15 +2,13 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
-import {$api} from "../../shared";
-import User from '../../entities/models/User';
 
-interface GlobalDataStore {
+interface CashboxStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
 
     users: any[] // надо исправить тип
-    getUsers: () => any // надо исправить тип
+    // getUsers: () => any // надо исправить тип
 
     userId: string
     lastName: string
@@ -31,7 +29,7 @@ interface GlobalDataStore {
     setCreditLimit: (value: number) => void
 }
 
-const useGlobalDataStore = create<GlobalDataStore>()(/*persist(*/devtools(immer((set) => ({
+const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set) => ({
     isLoading: false,
     setIsLoading: (value: boolean) => set({
         isLoading: value
@@ -73,19 +71,19 @@ const useGlobalDataStore = create<GlobalDataStore>()(/*persist(*/devtools(immer(
         creditLimit: value
     }),
 
-    getUsers: () => {
-        set({isLoading: true});
-        return $api.get('/user/find').then(res => {
-            set(state => {
-                // state.users.push(...res.data.users)
-                state.users = [...res.data.users]
-            })
-            set({isLoading: false});
-        })
-    },
+    // getUsers: () => {
+    //     set({isLoading: true});
+    //     return $api.get('/user/find').then(res => {
+    //         set(state => {
+    //             // state.users.push(...res.data.users)
+    //             state.users = [...res.data.users]
+    //         })
+    //         set({isLoading: false});
+    //     })
+    // },
 })))/*, {
-    name: globalDataStore",
+    name: "cashboxStore",
     version: 1
 })*/);
 
-export default useGlobalDataStore;
+export default useCashboxStore;

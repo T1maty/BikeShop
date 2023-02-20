@@ -1,26 +1,16 @@
 import React from 'react'
 import s from "./ClientCard.module.scss";
-import useGlobalDataStore from '../../../pages/workspace/GlobalDataStore';
+import useClientCardStore from './ClientCardStore';
 
 const ClientCard = () => {
 
-    /*
-    const firstName = useClientCard(s => s.firstName)
-    const lastName = useClientCard(s => s.lastName)
-    const patronymic = useClientCard(s => s.patronymic)
-    const phoneNumber = useClientCard(s => s.phoneNumber)
-    // const email = useClientCard(s => s.email)
-    const balance = useClientCard(s => s.balance)
-    const creditLimit = useClientCard(s => s.creditLimit)
-    */
-
-    const firstName = useGlobalDataStore(s => s.firstName)
-    const lastName = useGlobalDataStore(s => s.lastName)
-    const patronymic = useGlobalDataStore(s => s.patronymic)
-    const phoneNumber = useGlobalDataStore(s => s.phoneNumber)
+    const lastName = useClientCardStore(s => s.lastName)
+    const firstName = useClientCardStore(s => s.firstName)
+    const patronymic = useClientCardStore(s => s.patronymic)
+    const phoneNumber = useClientCardStore(s => s.phoneNumber)
     // const email = useGlobalDataStore(s => s.email)
-    const balance = useGlobalDataStore(s => s.balance)
-    const creditLimit = useGlobalDataStore(s => s.creditLimit)
+    const balance = useClientCardStore(s => s.balance)
+    const creditLimit = useClientCardStore(s => s.creditLimit)
 
     return (
         <div className={s.clientCard_background}>
