@@ -42,9 +42,10 @@
                 @include widthHeightFull();
 
                 .content_title {
-                    font-size: 26px;
-                    font-weight: bold;
-                    text-align: center;
+                    //font-size: 26px;
+                    //font-weight: bold;
+                    //text-align: center;
+                    //margin-bottom: $defaultSmallMargin;
                     margin-bottom: $defaultSmallMargin;
                 }
                 .content_info {

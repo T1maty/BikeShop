@@ -129,28 +129,23 @@ const Service = () => {
                     <div className={s.leftSide_buttons}>
                         <ChooseClientModal/>
                         <div className={s.buttons_create}>
-                            <Button onClick={() => {
-                                setChooseClientModal(true)
-                            }}>
+                            <Button onClick={() => {setChooseClientModal(true)}}>
                                 Создать ремонт
                             </Button>
                         </div>
                         <div className={s.buttons_info}>
                             <div>
-                                <Button onClick={() => {
-                                }}>
+                                <Button onClick={() => {}}>
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {
-                                }}>
+                                <Button onClick={() => {}}>
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {
-                                }}>
+                                <Button onClick={() => {}}>
                                     Готово
                                 </Button>
                             </div>
@@ -159,7 +154,10 @@ const Service = () => {
 
                     <div className={s.leftSide_content}>
                         <div className={s.content_title}>
-                            Таблица ремонтов
+                            {/*Таблица ремонтов*/}
+                            <div></div>
+                            <div></div>
+                            <div></div>
                         </div>
                         <div className={s.content_info}>
                             {
