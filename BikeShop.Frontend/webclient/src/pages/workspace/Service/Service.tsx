@@ -155,9 +155,27 @@ const Service = () => {
                     <div className={s.leftSide_content}>
                         <div className={s.content_title}>
                             {/*Таблица ремонтов*/}
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                            <div className={s.content_startBtn}>
+                                <Button onClick={() => {}}>
+                                    Начать ремонт
+                                </Button>
+                            </div>
+                            <div className={s.content_inProcessButtons}>
+                                <Button onClick={() => {}}>
+                                    Остановить ремонт
+                                </Button>
+                                <Button onClick={() => {}}>
+                                    Закончить ремонт
+                                </Button>
+                            </div>
+                            <div className={s.content_doneButtons}>
+                                <Button onClick={() => {}}>
+                                    Продолжить ремонт
+                                </Button>
+                                <Button onClick={() => {}}>
+                                    Выдать велосипед
+                                </Button>
+                            </div>
                         </div>
                         <div className={s.content_info}>
                             {
