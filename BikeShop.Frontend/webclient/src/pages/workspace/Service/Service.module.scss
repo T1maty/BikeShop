@@ -79,6 +79,7 @@
                 }
                 .content_info {
                     @include flexColumn();
+                    margin-top: $defaultSmallMargin;
 
                     .service_item {
                         @include hoverItem();

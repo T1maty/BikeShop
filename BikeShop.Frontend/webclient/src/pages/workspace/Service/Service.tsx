@@ -45,6 +45,7 @@ const Service = () => {
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
+    const getFilteredServices = useService(s => s.getFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     // const updateService = useService(s => s.updateService)
@@ -131,6 +132,7 @@ const Service = () => {
 
     useEffect(() => {
         getAllServices()
+        getFilteredServices()
     }, [])
 
     return (
@@ -149,26 +151,17 @@ const Service = () => {
                         </div>
                         <div className={s.buttons_info}>
                             <div>
-                                <Button onClick={() => {
-                                    setFilteredServices(waitingServicesArray)
-                                    // console.log(waitingServices)
-                                }}>
+                                <Button onClick={() => {setFilteredServices(waitingServicesArray)}}>
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {
-                                    setFilteredServices(inProcessServicesArray)
-                                    // console.log(inProcessServices)
-                                }}>
+                                <Button onClick={() => {setFilteredServices(inProcessServicesArray)}}>
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {
-                                    setFilteredServices(endedServicesArray)
-                                    // console.log(endedServices)
-                                }}>
+                                <Button onClick={() => {setFilteredServices(endedServicesArray)}}>
                                     Готово
                                 </Button>
                             </div>
