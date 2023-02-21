@@ -33,12 +33,6 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
     const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 
-    // const setUserId = useGlobalDataStore(s => s.setUserId)
-    // const setCardLastName = useGlobalDataStore(s => s.setCardLastName)
-    // const setCardFirstName = useGlobalDataStore(s => s.setCardFirstName)
-    // const setCardPatronymic = useGlobalDataStore(s => s.setCardPatronymic)
-    // const setCardPhoneNumber = useGlobalDataStore(s => s.setCardPhoneNumber)
-
     const searchClientByFIO = useDebounce<string>(fio, 1000)
     const searchClientByPhone = useDebounce<string>(phoneNumber, 1000)
 

@@ -36,20 +36,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     setIsLoading: (value: boolean) => set({
         isLoading: value
     }),
-    user: {
-        id: '',
-        shopId: 0,
-        lastName: 'Клиент',
-        firstName: 'не',
-        patronymic: 'выбран',
-        balance: 0,
-        balanceCurrencyId: 0,
-        creditLimit: 0,
-        phoneNumber: '',
-        phoneNumberConfirmed: false,
-        email: '',
-        emailConfirmed: false
-    },
+    user: {} as IUser,
     setUser: (user: IUser) => set({
         user: user
     }),
@@ -63,7 +50,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
                 // state.services.unshift(...res.data.users)
-                state.services = [...res.data.services]
+                state.services = [...res.data]
             })
             set({isLoading: false});
         })

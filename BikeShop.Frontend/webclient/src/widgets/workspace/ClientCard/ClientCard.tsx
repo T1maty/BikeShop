@@ -12,7 +12,7 @@ const ClientCard: React.FC<ClientCardProps> = ({user}) => {
         <div className={s.clientCard_background}>
             <h3>Клиент</h3>
             <p><span>ФИО:</span> {user.lastName} {user.firstName} {user.patronymic}</p>
-            <p><span>Номер телефона:</span> {user.phoneNumber ? user.phoneNumber : 'Нет данных'}</p>
+            <p><span>Номер телефона:</span> {user.phoneNumber}</p>
             {/*<p><span>Почта:</span> {email}</p>*/}
             <p><span>Баланс:</span> {user.balance}</p>
             <p><span>Кредитный лимит:</span> {user.creditLimit}</p>

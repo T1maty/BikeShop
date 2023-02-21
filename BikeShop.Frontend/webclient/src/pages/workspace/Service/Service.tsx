@@ -20,32 +20,20 @@ const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
+    const isLoading = useService(s => s.isLoading)
 
     const user = useService(s => s.user)
     const setUser = useService(s => s.setUser)
 
-
-
-    const userId = useCashboxGlobal(s => s.userId)
-    const isLoading = useService(s => s.isLoading)
     const services = useService(s => s.services)
+    const getAllServices = useService(s => s.getAllServices)
     // const addNewService = useService(s => s.addNewService)
     // const updateService = useService(s => s.updateService)
-    const getAllServices = useService(s => s.getAllServices)
 
-
-
+    // const userId = useCashboxGlobal(s => s.userId)
     // const userMasterId = useService(s => s.userMasterId)
     // const setUserMasterId = useService(s => s.setUserMasterId)
 
-    const users = useGlobalDataStore(s => s.users)
-    const getUsers = useGlobalDataStore(s => s.getUsers)
-    const setUserId = useGlobalDataStore(s => s.setUserId)
-
-    const setCardLastName = useGlobalDataStore(s => s.setCardLastName)
-    const setCardFirstName = useGlobalDataStore(s => s.setCardFirstName)
-    const setCardPatronymic = useGlobalDataStore(s => s.setCardPatronymic)
-    const setCardPhoneNumber = useGlobalDataStore(s => s.setCardPhoneNumber)
 
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
@@ -67,10 +55,10 @@ const Service = () => {
     //     setUserMasterId(event.target.value as string)
     //     console.log(event.target.value)
     // };
-    const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-        // setUserMasterId(event.target.value as string)
-        console.log('клик по селекту', event.target.value)
-    };
+    // const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    //     // setUserMasterId(event.target.value as string)
+    //     console.log('клик по селекту', event.target.value)
+    // };
 
     const formControl = useForm({
         defaultValues: {
@@ -84,7 +72,7 @@ const Service = () => {
         console.log('сабмит данные', data)
 
         data.shopId = 1
-        data.clientId = userId
+        // data.clientId = userId
         // data.userMasterId = userMasterId
 
         // addNewService(data).then((response: ServiceItem) => {
@@ -103,23 +91,22 @@ const Service = () => {
         // })
     }
 
-    const chooseServiceItem = (data: {clientId: string, name: string,
-        clientDescription: string, /*userMasterDescription: string,*/ userMasterId: string}) => {
+    const chooseServiceItem = (service: ServiceItem) => {
 
-        console.log('клик по ремонту', data)
+        console.log('клик по ремонту', service)
 
-        setUserId(data.clientId)
-        // setUserMasterId(data.userMasterId)
+        // setUserId(data.clientId)
+        // // setUserMasterId(data.userMasterId)
+        //
+        // setCardLastName('Выбранный') // заглушка
+        // setCardFirstName('клиент') // заглушка
+        // setCardPatronymic('') // заглушка
+        // setCardPhoneNumber('8-9033-00-00-00') // заглушка
 
-        setCardLastName('Выбранный') // заглушка
-        setCardFirstName('клиент') // заглушка
-        setCardPatronymic('') // заглушка
-        setCardPhoneNumber('8-9033-00-00-00') // заглушка
-
-        formControl.setValue('name', data.name)
-        formControl.setValue('clientDescription', data.clientDescription)
+        formControl.setValue('name', service.name)
+        formControl.setValue('clientDescription', service.clientDescription)
         // formControl.setValue('userMasterDescription', data.userMasterDescription)
-        formControl.setValue('userMasterId', data.userMasterId)
+        formControl.setValue('userMasterId', service.userMasterId)
     }
 
     // console.log(users)
@@ -196,17 +183,12 @@ const Service = () => {
                             {
                                 isLoading ? <div>Загрузка...</div> :
 
+                                    services.length === 0 ? <div>Список пуст</div> :
+
                                 services.map(service => {
                                     return (
                                         <div className={s.service_item} key={service.id}
-                                             onClick={() => {
-                                                 chooseServiceItem({
-                                                     clientId: service.clientId, name: service.name,
-                                                     clientDescription: service.clientDescription,
-                                                     // userMasterDescription: service.userMasterDescription
-                                                     userMasterId: service.userMasterId
-                                                 })
-                                             }}
+                                             onClick={() => {chooseServiceItem(service)}}
                                         >
                                             {service.name}
                                         </div>
