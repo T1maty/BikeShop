@@ -25,7 +25,7 @@ const Service = () => {
 
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
-    // const addNewService = useService(s => s.addNewService)
+    const addNewService = useService(s => s.addNewService)
     // const updateService = useService(s => s.updateService)
 
     const [productsItem, setProductsItem] = useState([
@@ -48,32 +48,35 @@ const Service = () => {
         defaultValues: {
             name: '',
             clientDescription: '',
-            userMasterDescription: '',
-            // userMasterId: '',
-            // createdAt: '', // заглушка
+            userMaster: '',
         }
     });
     const onSubmit: SubmitHandler<any> = (data: CreateService) => {
         console.log('сабмит данные', data)
 
         data.shopId = 1
-        // data.clientId = userId
+        data.clientId = user.id
         // data.userMasterId = userMasterId
 
-        // addNewService(data).then((response: ServiceItem) => {
-        //     formControl.setValue('name', '')
-        //     formControl.setValue('clientDescription', '')
-        //     // formControl.setValue('userMasterDescription', '')
-        //     formControl.setValue('userMasterId', '')
+        // if (!data.clientId) {
+        //     console.log('выберите клиента')
+        // } else {
         //
-        //     enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-        //     getAllServices() // запрос, чтобы добавился новый сервис
-        // }).catch((error: any) => {
-        //     let message = error(error.response.data.errorDescription).toString()
-        //     formControl.setError('name', {type: 'serverError', message: message})
-        //     enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //     console.error(error.response.data)
-        // })
+        // }
+
+            addNewService(data).then((response: ServiceItem) => {
+                formControl.setValue('name', '')
+                formControl.setValue('clientDescription', '')
+                formControl.setValue('userMaster', '')
+
+                enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+                getAllServices() // запрос, чтобы добавился новый сервис
+            }).catch((error: any) => {
+                let message = error(error.response.data.errorDescription).toString()
+                formControl.setError('name', {type: 'serverError', message: message})
+                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+                console.error(error.response.data)
+            })
     }
 
     // const handleChangeSelect = (event: SelectChangeEvent) => {
@@ -89,18 +92,9 @@ const Service = () => {
 
         console.log('Клик по ремонту', service)
 
-        // setUserId(data.clientId)
-        // // setUserMasterId(data.userMasterId)
-        //
-        // setCardLastName('Выбранный') // заглушка
-        // setCardFirstName('клиент') // заглушка
-        // setCardPatronymic('') // заглушка
-        // setCardPhoneNumber('8-9033-00-00-00') // заглушка
-
         formControl.setValue('name', service.name)
         formControl.setValue('clientDescription', service.clientDescription)
-        formControl.setValue('userMasterDescription', service.userMasterDescription)
-        // formControl.setValue('createdAt', service.createdAt)
+        formControl.setValue('userMaster', service.userMaster)
     }
 
     const chooseClientHandler = (user: IUser) => {
@@ -108,7 +102,7 @@ const Service = () => {
         setChooseClientModal(false)
         console.log('Service click user', user)
     }
-    
+
     useEffect(() => {
         getAllServices()
         // getUsers() // надо убрать перерисовку при выборе селекта
@@ -209,7 +203,7 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                <ControlledInput name={'userMasterDescription'} label={'Мастер'}
+                                <ControlledInput name={'userMaster'} label={'Мастер'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />

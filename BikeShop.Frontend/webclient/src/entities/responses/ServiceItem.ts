@@ -12,7 +12,8 @@ export interface ServiceItem {
     clientDescription: string // описание заказа
     userCreatedId: string
     userCreatedDescription: string // тот, кто создал заказ
-    userMasterId: string
+    // userMasterId: string
+    userMaster: string // ?
     userMasterDescription: string // имя мастера
     userDeleted: string // тот, кто удалил заказ из архива
 

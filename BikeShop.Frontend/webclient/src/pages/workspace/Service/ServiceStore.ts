@@ -5,6 +5,7 @@ import {AxiosResponse} from "axios";
 import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {$api} from "../../../shared";
 import {IUser} from "../../../entities";
+import {CreateService} from "../../../entities/requests/CreateService";
 
 interface ServiceStore {
     isLoading: boolean
@@ -16,7 +17,7 @@ interface ServiceStore {
     setService: (value: string) => void
     getAllServices: () => any // надо исправить тип
 
-    // addNewService: (data: any) => any // надо исправить тип
+    addNewService: (data: any) => any // надо исправить тип
     // updateService: (data: any) => any // надо исправить тип
 }
 
@@ -45,9 +46,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         })
     },
 
-    // addNewService: (data: CreateService) => {
-    //     return $api.post('/service/create', data)
-    // },
+    addNewService: (data: CreateService) => {
+        return $api.post('/service/create', data)
+    },
     // updateService: (data: CreateService) => {
     //     return $api.put('/service/updateservice', data)
     // },
