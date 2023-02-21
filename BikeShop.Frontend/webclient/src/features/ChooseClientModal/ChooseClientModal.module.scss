@@ -37,7 +37,7 @@
 
     .clientModal_textFields > div {
         @include flexColumn();
-        margin-bottom: $defaultLargeMargin;
+        //margin-bottom: $defaultSmallMargin;
         width: 100%;
 
         .textFields_title {
@@ -51,6 +51,7 @@
         button {
             width: 200px;
             padding: $smallButtonPadding;
+            margin-top: $defaultSmallMargin;
         }
     }
 

@@ -96,9 +96,8 @@
 
             .rightSide_stuffInput {
                 @include flexCenter();
-                margin-bottom: $defaultLargeMargin;
+                //margin-bottom: $defaultSmallMargin;
                 width: 100%;
-
             }
             .rightSide_infoFields {
                 @include flexBetween();
@@ -111,14 +110,15 @@
 
                     .content_detailsInput {
                         margin-bottom: $defaultLargeMargin;
+                        height: 120px;
 
                         input {
-                            height: 100px;
+                            min-height: 80px;
                         }
 
                     }
                     .content_masterInput {
-                        margin-bottom: $defaultLargeMargin;
+                        //margin-bottom: $defaultLargeMargin;
 
                     }
                     .content_buttons {

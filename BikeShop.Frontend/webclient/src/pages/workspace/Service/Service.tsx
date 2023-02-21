@@ -48,9 +48,9 @@ const Service = () => {
         defaultValues: {
             name: '',
             clientDescription: '',
-            // userMasterDescription: '',
+            userMasterDescription: '',
             // userMasterId: '',
-            createdAt: '', // заглушка
+            // createdAt: '', // заглушка
         }
     });
     const onSubmit: SubmitHandler<any> = (data: CreateService) => {
@@ -99,8 +99,8 @@ const Service = () => {
 
         formControl.setValue('name', service.name)
         formControl.setValue('clientDescription', service.clientDescription)
-        // formControl.setValue('userMasterDescription', data.userMasterDescription)
-        formControl.setValue('createdAt', service.createdAt)
+        formControl.setValue('userMasterDescription', service.userMasterDescription)
+        // formControl.setValue('createdAt', service.createdAt)
     }
 
     const chooseClientHandler = (user: IUser) => {
@@ -209,7 +209,7 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                <ControlledInput name={'createdAt'} label={'Мастер'}
+                                <ControlledInput name={'userMasterDescription'} label={'Мастер'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />
@@ -265,7 +265,7 @@ const Service = () => {
                                 </div>*/}
 
                                 <div className={s.content_saveBtn}>
-                                    <Button onClick={() => {}}>
+                                    <Button type={'submit'}>
                                         Сохранить
                                     </Button>
                                 </div>

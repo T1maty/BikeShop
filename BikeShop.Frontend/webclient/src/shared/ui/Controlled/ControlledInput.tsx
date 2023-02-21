@@ -23,6 +23,7 @@ export const ControlledInput = (props: ControlledInputProps) => {
                            label={props.label}
                            error={!!props.control.formState.errors[props.name]}
                            helperText={props.control.formState.errors[props.name]?.message}
+                           sx={{height: '80px'}}
                 />
             }
         />
