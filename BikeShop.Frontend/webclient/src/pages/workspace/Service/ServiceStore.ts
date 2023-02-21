@@ -15,8 +15,9 @@ interface ServiceStore {
     setUser: (user: IUser) => void
 
     services: ServiceItem[]
-    filterServices: (filteredServices: ServiceItem[]) => void
     getAllServices: () => any // надо исправить тип
+    filteredServices: ServiceItem[]
+    setFilteredServices: (filteredServices: ServiceItem[]) => void
 
     addNewService: (data: any) => any // надо исправить тип
     // updateService: (data: any) => any // надо исправить тип
@@ -38,19 +39,19 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     }),
 
     services: [],
-    filterServices: (filteredServices: ServiceItem[]) => set({
-        services: filteredServices
-    }),
     getAllServices: () => {
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
-                // state.services.unshift(...res.data.users)
-                state.services = [...res.data]
+                state.services = [...res.data] // рабочий вариант
             })
             set({isLoading: false});
         })
     },
+    filteredServices: [],
+    setFilteredServices: (filteredServices: ServiceItem[]) => set({
+        filteredServices: filteredServices
+    }),
 
     addNewService: (data: CreateService) => {
         return $api.post('/service/create', data)

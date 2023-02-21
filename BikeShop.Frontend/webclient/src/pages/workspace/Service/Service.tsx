@@ -18,6 +18,7 @@ export type ServiceStatusType =
     'Waiting' |
     'InProcess' |
     'WaitingSupply' |
+    'Ready' |
     'Ended' |
     'Canceled' |
     'Deleted';
@@ -26,9 +27,10 @@ enum ServiceStatus {
     Waiting = 0, // ожидают
     InProcess = 1, // в ремонте
     WaitingSupply = 2, // ждёт поставки
-    Ended = 3, // готово
-    Canceled = 4, // отменен
-    Deleted = 5 // удален
+    Ready = 3, // готово
+    Ended = 4, // готово
+    Canceled = 5, // отменен
+    Deleted = 6 // удален
 }
 
 const Service = () => {
@@ -43,7 +45,8 @@ const Service = () => {
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
-    const filterServices = useService(s => s.filterServices)
+    const filteredServices = useService(s => s.filteredServices)
+    const setFilteredServices = useService(s => s.setFilteredServices)
     // const updateService = useService(s => s.updateService)
     // const updateServiceStatus = useService(s => s.updateServiceStatus)
 
@@ -122,13 +125,13 @@ const Service = () => {
         console.log('Service click user', user)
     }
 
-    const waitingServices = services.filter(s => s.status === 'Waiting')
-    const inProcessServices = services.filter(s => s.status === 'InProcess')
-    const endedServices = services.filter(s => s.status === 'Ended')
+    const waitingServicesArray = services.filter(s => s.status === 'Waiting')
+    const inProcessServicesArray = services.filter(s => s.status === 'InProcess')
+    const endedServicesArray = services.filter(s => s.status === 'Ended')
 
     useEffect(() => {
         getAllServices()
-        // getUsers() // надо убрать перерисовку при выборе селекта
+        setFilteredServices(waitingServicesArray)
     }, [])
 
     return (
@@ -147,24 +150,24 @@ const Service = () => {
                         <div className={s.buttons_info}>
                             <div>
                                 <Button onClick={() => {
-                                    filterServices(waitingServices)
-                                    console.log(waitingServices)
+                                    setFilteredServices(waitingServicesArray)
+                                    // console.log(waitingServices)
                                 }}>
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
                                 <Button onClick={() => {
-                                    filterServices(inProcessServices)
-                                    console.log(inProcessServices)
+                                    setFilteredServices(inProcessServicesArray)
+                                    // console.log(inProcessServices)
                                 }}>
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
                                 <Button onClick={() => {
-                                    filterServices(endedServices)
-                                    console.log(endedServices)
+                                    setFilteredServices(endedServicesArray)
+                                    // console.log(endedServices)
                                 }}>
                                     Готово
                                 </Button>
@@ -201,9 +204,9 @@ const Service = () => {
                             {
                                 isLoading ? <div>Загрузка...</div> :
 
-                                    services.length === 0 ? <div>Список пуст</div> :
+                                    filteredServices.length === 0 ? <div>Список пуст</div> :
 
-                                services.map(service => {
+                                filteredServices.map(service => {
                                     return (
                                         <div className={s.service_item} key={service.id}
                                              onClick={() => {chooseServiceItem(service)}}
