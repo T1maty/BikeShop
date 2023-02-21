@@ -16,7 +16,4 @@ public class ServiceProduct : BaseEntity
     public Guid? UserId { get; set; } 
 
     public int ServiceId { get; set; } = 0;
-    [JsonIgnore] public Service Service { get; set; }
-
-    [JsonIgnore] public Work Work { get; set; }
 }

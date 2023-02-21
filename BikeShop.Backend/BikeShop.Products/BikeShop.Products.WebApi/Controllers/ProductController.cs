@@ -139,10 +139,10 @@ namespace BikeShop.Products.WebApi.Controllers
             return Ok(productsModel);
         }
 
-        [HttpPost("getbyIds")]
-        public async Task<ActionResult<List<Product>>> GetProductsByIdsArray([FromBody] List<int> Ids)
+        [HttpPost("getbyids")]
+        public async Task<List<Product>> GetProductsByIdsArray([FromBody] List<int> Ids)
         {
-            return Ok(_productService.GetProductsByIdsArray(Ids));
+            return await _productService.GetProductsByIdsArray(Ids);
         }
     }
 }

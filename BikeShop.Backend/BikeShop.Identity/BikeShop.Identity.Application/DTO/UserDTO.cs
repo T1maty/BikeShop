@@ -1,13 +1,15 @@
-﻿using System;
+﻿using AutoMapper;
+using BikeShop.Identity.Application.Common.Mappings;
+using BikeShop.Identity.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace BikeShop.Service.Application.DTO
+namespace BikeShop.Identity.Application.DTO
 {
-    public class UserDTO
+    public class UserDTO : IMappable
     {
         public string firstName { get; set; }
         public string lastName { get; set; }
@@ -21,5 +23,10 @@ namespace BikeShop.Service.Application.DTO
         public bool emailConfirmed { get; set; }
         public string phoneNumber { get; set; }
         public bool phoneNumberConfirmed { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<ApplicationUser, UserDTO>();
+        }
     }
 }

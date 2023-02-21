@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BikeShop.Service.Application.Common.Mappings;
 using BikeShop.Service.Application.CQRS.Commands.Service.UpdateService;
+using BikeShop.Service.Application.DTO;
 
 namespace BikeShop.Service.WebApi.Models.Service;
 
@@ -14,5 +15,9 @@ public class CreateServiceModel
     public Guid UserMasterId { get; set; }
     public int WorkDiscountId { get; set; } = 0;
     public int ProductDiscountId { get; set; } = 0;
-    
+
+    public List<ServiceProductDTO>? ServiceProducts { get; set; }
+    public List<ServiceWorkDTO>? ServiceWorks { get; set; }
+
+ 
 }

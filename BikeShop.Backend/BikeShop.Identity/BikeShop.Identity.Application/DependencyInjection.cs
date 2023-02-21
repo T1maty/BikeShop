@@ -1,4 +1,5 @@
 using System.Reflection;
+using BikeShop.Identity.Application.Interfaces;
 using BikeShop.Identity.Application.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,9 @@ public static class DependencyInjection
         // Регистрация кастомных сервисов
         services.AddScoped<CookieService>();
         services.AddScoped<JwtService>();
+
+
+        services.AddScoped<IUserService,UserService>();
 
         return services;
     }

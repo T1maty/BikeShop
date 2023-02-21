@@ -6,6 +6,7 @@ using BikeShop.Service.Application.RefitClients;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.Service;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BikeShop.Service.Application.Services;
 
@@ -14,17 +15,32 @@ public class ServiceService : IServiceService
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IProductsClient _productClient;
+    private readonly IIdentityClient _identityClient;
 
-    public ServiceService(IApplicationDbContext context, IMapper mapper)
+    public ServiceService(IApplicationDbContext context, IMapper mapper, IProductsClient productClient, IIdentityClient identityClient)
     {
         _context = context;
         _mapper = mapper;
+        _productClient = productClient;
+        _identityClient = identityClient;
     }
 
     public async Task<CreateServiceDTO> CreateService(CreateServiceModel model, CancellationToken cancellationToken)
     {
         var service = _mapper.Map<CreateServiceDTO>(model);
-        _context.Services.Add(service);
+
+        var serviceWorks = _mapper.ProjectTo<ServiceWorkModel>(model.ServiceWorks.AsQueryable()).ToList();
+        var serviceProducts = _mapper.ProjectTo<ServiceProductModel>(model.ServiceProducts.AsQueryable()).ToList();
+
+        await _context.Services.AddAsync(service);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        serviceWorks.ForEach(n => n.ServiceId = service.Id);
+        serviceProducts.ForEach(n => n.ServiceId = service.Id);
+
+        await _context.ServiceWorks.AddRangeAsync(serviceWorks);
+        await _context.ServiceProducts.AddRangeAsync(serviceProducts);
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return service;
@@ -46,7 +62,25 @@ public class ServiceService : IServiceService
             service.Products = await _context.ServiceProducts.Where(n => n.Id == service.Id).ToListAsync();
         });
 
+        servicesModel.ForEach(async service =>{
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().ClientId);
+            service.Client = user;
+        });
 
+        servicesModel.ForEach(async service => {
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserCreatedId);
+            service.UserCreated = user;
+        });
+
+        servicesModel.ForEach(async service => {
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserMasterId);
+            service.UserMaster = user;
+        });
+
+        servicesModel.ForEach(async service => {
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserDeletedId);
+            service.UserDeleted = user;
+        });
 
         return servicesModel;
     }
@@ -63,17 +97,17 @@ public class ServiceService : IServiceService
         serviceCont.ProductDiscountId = dto.ProductDiscountId;
         serviceCont.WorkDiscountId = dto.WorkDiscountId;
 
-        var serviceWorks = _mapper.ProjectTo<ServiceWorkModel>(dto.ServiceWorks.AsQueryable());
-        var serviceProducts = _mapper.ProjectTo<ServiceProductModel>(dto.ServiceProducts.AsQueryable());
+        var serviceWorks = _mapper.ProjectTo<ServiceWorkModel>(dto.ServiceWorks.AsQueryable()).ToList();
+        var serviceProducts = _mapper.ProjectTo<ServiceProductModel>(dto.ServiceProducts.AsQueryable()).ToList();
 
         _context.ServiceWorks.RemoveRange(_context.ServiceWorks.Where(n => n.ServiceId == dto.Id));
         _context.ServiceProducts.RemoveRange(_context.ServiceProducts.Where(n => n.ServiceId == dto.Id));
 
-        foreach(var item in serviceWorks) { item.ServiceId = serviceCont.Id; }
-        foreach(var item in serviceProducts) { item.ServiceId = serviceCont.Id; }
+        serviceWorks.ForEach(n => n.ServiceId = serviceCont.Id);
+        serviceProducts.ForEach(n => n.ServiceId = serviceCont.Id);
 
-        //await _context.ServiceWorks.AddRange(serviceWorks);
-        //await _context.ServiceProducts.AddRangeAsync(serviceProducts);
+        await _context.ServiceWorks.AddRangeAsync(serviceWorks);
+        await _context.ServiceProducts.AddRangeAsync(serviceProducts);
 
         await _context.SaveChangesAsync(new CancellationToken());
     }

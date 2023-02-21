@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Service.Application.DTO
 {
-    public class ServiceWorkDTO
+    public class ServiceWorkDTO : IMappable
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
@@ -19,6 +19,10 @@ namespace BikeShop.Service.Application.DTO
         public decimal Discount { get; set; }
         public decimal Total { get; set; }
         public Guid UserId { get; set; }
-        
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<ServiceWorkDTO, ServiceWork>();
+        }
     }
 }

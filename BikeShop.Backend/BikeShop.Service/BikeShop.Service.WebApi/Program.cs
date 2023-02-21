@@ -29,7 +29,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 // Register refit
 builder.Services.AddRefitClient<IProductsClient>()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5002/"));
+
+builder.Services.AddRefitClient<IIdentityClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5001/"));
+//builder.Configuration["ApiAddresses:Products"]
 
 
 // Регистрация конфигурации автомаппера

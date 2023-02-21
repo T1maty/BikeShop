@@ -3,6 +3,9 @@ using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
 using BikeShop.Identity.Application.CQRS.Commands.UpdateUserPublic;
 using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
+using BikeShop.Identity.Application.DTO;
+using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.WebApi.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,12 +22,17 @@ public class UserController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
+    private readonly IUserService _userService;
 
-    public UserController(IMapper mapper, IMediator mediator)
+    public UserController(IMapper mapper, IMediator mediator, IUserService userService)
     {
         _mapper = mapper;
         _mediator = mediator;
+        _userService = userService;
     }
+
+
+
 
     /// <summary>
     /// Обновление публичной даты пользователя (ФИО, почта)
@@ -111,7 +119,7 @@ public class UserController : ControllerBase
 
         var command = _mapper.Map<CreateUserCommand>(model);
         await _mediator.Send(command);
-        
+
         return Ok();
     }
 
@@ -143,5 +151,14 @@ public class UserController : ControllerBase
         var usersModel = await _mediator.Send(query);
 
         return Ok(usersModel);
+    }
+
+    [HttpGet("getbyid")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<UserDTO?> GetById([FromQuery]Guid id)
+    {
+        return await _userService.GetUserById(id);
     }
 }

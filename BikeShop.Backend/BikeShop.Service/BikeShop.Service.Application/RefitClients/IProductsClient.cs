@@ -11,7 +11,7 @@ namespace BikeShop.Service.Application.RefitClients
 {
     public interface IProductsClient
     {
-        [Get("/products/getbyIds")]
+        [Post("/product/getbyIds")]
         public Task<List<Product>> GetProductsByIdsArray(List<int> Ids);
 
 

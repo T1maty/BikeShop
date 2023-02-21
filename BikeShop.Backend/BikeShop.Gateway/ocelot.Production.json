@@ -65,6 +65,22 @@
     },
 
     {
+      "UpstreamPathTemplate": "/api/product/getbyids",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/product/getbyids",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+
+    {
       "UpstreamPathTemplate": "/api/tag/getall",
       "UpstreamHttpMethod": [
         "Get"
@@ -376,6 +392,22 @@
         "Get"
       ],
       "DownstreamPathTemplate": "/user/find",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/user/getbyid",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/user/getbyid",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
