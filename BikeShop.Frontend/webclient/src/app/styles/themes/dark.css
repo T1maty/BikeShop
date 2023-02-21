@@ -2,7 +2,11 @@
     --primary-color: #ffffff;
     --inverted-primary-color: #505050;
     --button-disabled-color: #5C636A;
-    --button-hover-color: #272727;
+    --button-hover-bgcolor: #272727;
+    --button-hover-color: white;
+
+    --button-active-bgcolor: white;
+    --button-active-color: black;
 
     --bg-color: #000000;
     --header-color:#272727;

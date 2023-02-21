@@ -1,5 +1,6 @@
 import React, {useEffect, useState, ChangeEvent} from 'react';
 import s from './Service.module.scss'
+import style from '../../../shared/ui/Button/Button.module.scss'
 import {ChooseClientModal} from '../../../features';
 import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
@@ -45,10 +46,16 @@ const Service = () => {
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
+    const getFilteredServices = useService(s => s.getFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     // const updateService = useService(s => s.updateService)
     // const updateServiceStatus = useService(s => s.updateServiceStatus)
+
+    // для стилей кнопок фильтрации
+    const [isActiveWaiting, setIsActiveWaiting] = useState<boolean>(false)
+    const [isActiveProcess, setIsActiveProcess] = useState<boolean>(false)
+    const [isActiveEnded, setIsActiveEnded] = useState<boolean>(false)
 
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
@@ -59,13 +66,13 @@ const Service = () => {
         {id: 6, title: 'Втулка', price: 2000, count: 1},
         {id: 7, title: 'Вынос', price: 1500, count: 1},
     ])
-
     const [repairItems, setRepairItems] = useState([
         {id: 1, title: 'Замена покрышки', price: 25, count: 3},
         {id: 2, title: 'Сезонное ТО', price: 2500, count: 1},
         {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
     ])
 
+    // сбор данных с формы
     const formControl = useForm({
         defaultValues: {
             name: '',
@@ -80,6 +87,7 @@ const Service = () => {
         data.clientId = user.id
         // data.userMasterId = userMasterId
 
+        // надо сделать проверку на выбор клиента
         // if (!data.clientId) {
         //     console.log('выберите клиента')
         // } else {
@@ -92,13 +100,27 @@ const Service = () => {
             formControl.setValue('userMaster', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-            getAllServices() // запрос, чтобы добавился новый сервис
+            getFilteredServices() // запрос, чтобы добавился новый сервис в список
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
             formControl.setError('name', {type: 'serverError', message: message})
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
             console.error(error.response.data)
         })
+    }
+
+    // хендлеры
+    const chooseServiceItem = (service: ServiceItem) => {
+        console.log('Клик по ремонту', service)
+
+        formControl.setValue('name', service.name)
+        formControl.setValue('clientDescription', service.clientDescription)
+        formControl.setValue('userMaster', service.userMaster)
+    }
+    const chooseClientHandler = (user: IUser) => {
+        setUser(user)
+        setChooseClientModal(false)
+        console.log('Service click user', user)
     }
 
     // const handleChangeSelect = (event: SelectChangeEvent) => {
@@ -110,27 +132,35 @@ const Service = () => {
     //     console.log('клик по селекту', event.target.value)
     // };
 
-    const chooseServiceItem = (service: ServiceItem) => {
-
-        console.log('Клик по ремонту', service)
-
-        formControl.setValue('name', service.name)
-        formControl.setValue('clientDescription', service.clientDescription)
-        formControl.setValue('userMaster', service.userMaster)
-    }
-
-    const chooseClientHandler = (user: IUser) => {
-        setUser(user)
-        setChooseClientModal(false)
-        console.log('Service click user', user)
-    }
-
+    // фильтрация сервисов
     const waitingServicesArray = services.filter(s => s.status === 'Waiting')
     const inProcessServicesArray = services.filter(s => s.status === 'InProcess')
     const endedServicesArray = services.filter(s => s.status === 'Ended')
 
+    const filterWaitingHandler = () => {
+        setFilteredServices(waitingServicesArray)
+        setIsActiveWaiting(current => !current)
+        setIsActiveProcess(false)
+        setIsActiveEnded(false)
+    }
+    const filterInProcessHandler = () => {
+        setFilteredServices(inProcessServicesArray)
+        setIsActiveWaiting(false)
+        setIsActiveProcess(current => !current)
+        setIsActiveEnded(false)
+    }
+    const filterEndedHandler = () => {
+        setFilteredServices(endedServicesArray)
+        setIsActiveWaiting(false)
+        setIsActiveProcess(false)
+        setIsActiveEnded(current => !current)
+    }
+
+    // первый рендер
     useEffect(() => {
-        getAllServices()
+        getAllServices() // получение всех сервисов для фильтрации
+        getFilteredServices() // первоначальное отображение списка (ожидание)
+        setIsActiveWaiting(true) // цвет кнопки
     }, [])
 
     return (
@@ -149,26 +179,23 @@ const Service = () => {
                         </div>
                         <div className={s.buttons_info}>
                             <div>
-                                <Button onClick={() => {
-                                    setFilteredServices(waitingServicesArray)
-                                    // console.log(waitingServices)
-                                }}>
+                                <Button className={isActiveWaiting ? style.waiting : ''}
+                                        onClick={filterWaitingHandler}
+                                >
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {
-                                    setFilteredServices(inProcessServicesArray)
-                                    // console.log(inProcessServices)
-                                }}>
+                                <Button className={isActiveProcess ? style.process : ''}
+                                        onClick={filterInProcessHandler}
+                                >
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {
-                                    setFilteredServices(endedServicesArray)
-                                    // console.log(endedServices)
-                                }}>
+                                <Button className={isActiveEnded ? style.ended : ''}
+                                        onClick={filterEndedHandler}
+                                >
                                     Готово
                                 </Button>
                             </div>
