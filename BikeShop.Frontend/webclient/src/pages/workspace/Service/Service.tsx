@@ -3,16 +3,16 @@ import s from './Service.module.scss'
 import {ChooseClientModal} from '../../../features';
 import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
-import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
+import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
-import {CreateService} from "../../../entities/requests/CreateService";
-import {useSnackbar} from "notistack";
-import useService from "./ServiceStore";
-import {Errors} from "../../../entities/errors/workspaceErrors";
-import {ClientCard} from "../../../widgets";
-import {ServiceItem} from "../../../entities/responses/ServiceItem";
+import {CreateService} from '../../../entities/requests/CreateService';
+import {useSnackbar} from 'notistack';
+import useService from './ServiceStore';
+import {Errors} from '../../../entities/errors/workspaceErrors';
+import {ClientCard} from '../../../widgets';
+import {ServiceItem} from '../../../entities/responses/ServiceItem';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {IUser} from "../../../entities";
+import {IUser} from '../../../entities';
 
 export type ServiceStatusType =
     'Waiting' |
@@ -86,19 +86,19 @@ const Service = () => {
         //
         // }
 
-            addNewService(data).then((response: ServiceItem) => {
-                formControl.setValue('name', '')
-                formControl.setValue('clientDescription', '')
-                formControl.setValue('userMaster', '')
+        addNewService(data).then((response: ServiceItem) => {
+            formControl.setValue('name', '')
+            formControl.setValue('clientDescription', '')
+            formControl.setValue('userMaster', '')
 
-                enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-                getAllServices() // запрос, чтобы добавился новый сервис
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+            getAllServices() // запрос, чтобы добавился новый сервис
+        }).catch((error: any) => {
+            let message = error(error.response.data.errorDescription).toString()
+            formControl.setError('name', {type: 'serverError', message: message})
+            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+            console.error(error.response.data)
+        })
     }
 
     // const handleChangeSelect = (event: SelectChangeEvent) => {
@@ -131,7 +131,6 @@ const Service = () => {
 
     useEffect(() => {
         getAllServices()
-        setFilteredServices(waitingServicesArray)
     }, [])
 
     return (
@@ -143,7 +142,8 @@ const Service = () => {
                     <div className={s.leftSide_buttons}>
                         <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                         <div className={s.buttons_create}>
-                            <Button onClick={() => {setChooseClientModal(true)}}>
+                            <Button onClick={() => {
+                                setChooseClientModal(true)}}>
                                 Создать ремонт
                             </Button>
                         </div>
@@ -206,15 +206,15 @@ const Service = () => {
 
                                     filteredServices.length === 0 ? <div>Список пуст</div> :
 
-                                filteredServices.map(service => {
-                                    return (
-                                        <div className={s.service_item} key={service.id}
-                                             onClick={() => {chooseServiceItem(service)}}
-                                        >
-                                            {service.name}
-                                        </div>
-                                    )
-                                })
+                                        filteredServices.map(service => {
+                                            return (
+                                                <div className={s.service_item} key={service.id}
+                                                     onClick={() => {chooseServiceItem(service)}}
+                                                >
+                                                    {service.name}
+                                                </div>
+                                            )
+                                        })
                             }
                         </div>
                     </div>
