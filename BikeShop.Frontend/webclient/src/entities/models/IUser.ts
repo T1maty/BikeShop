@@ -1,14 +1,14 @@
 export interface IUser {
-    firstName: string,
-    lastName: string,
-    patronymic: string,
-    shopId: number,
-    balance: number,
-    balanceCurrencyId: number,
-    creditLimit: number,
-    id: string,
-    email: string,
-    phoneNumber: string,
-    emailConfirmed: boolean,
-    phoneNumberConfirmed: boolean,
+    id: string
+    shopId: number
+    lastName: string
+    firstName: string
+    patronymic: string
+    balance: number
+    balanceCurrencyId: number
+    creditLimit: number
+    phoneNumber: string
+    phoneNumberConfirmed: boolean
+    email: string
+    emailConfirmed: boolean
 }

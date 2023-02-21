@@ -14,20 +14,29 @@ import useCashboxGlobal from "../GlobalDataStore";
 import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
 import useGlobalDataStore from '../GlobalDataStore';
+import {IUser} from "../../../entities";
 
 const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
+
+    const user = useService(s => s.user)
+    const setUser = useService(s => s.setUser)
+
+
+
     const userId = useCashboxGlobal(s => s.userId)
     const isLoading = useService(s => s.isLoading)
     const services = useService(s => s.services)
-    const addNewService = useService(s => s.addNewService)
-    const updateService = useService(s => s.updateService)
+    // const addNewService = useService(s => s.addNewService)
+    // const updateService = useService(s => s.updateService)
     const getAllServices = useService(s => s.getAllServices)
 
-    const userMasterId = useService(s => s.userMasterId)
-    const setUserMasterId = useService(s => s.setUserMasterId)
+
+
+    // const userMasterId = useService(s => s.userMasterId)
+    // const setUserMasterId = useService(s => s.setUserMasterId)
 
     const users = useGlobalDataStore(s => s.users)
     const getUsers = useGlobalDataStore(s => s.getUsers)
@@ -59,7 +68,7 @@ const Service = () => {
     //     console.log(event.target.value)
     // };
     const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-        setUserMasterId(event.target.value as string)
+        // setUserMasterId(event.target.value as string)
         console.log('клик по селекту', event.target.value)
     };
 
@@ -78,20 +87,20 @@ const Service = () => {
         data.clientId = userId
         // data.userMasterId = userMasterId
 
-        addNewService(data).then((response: ServiceItem) => {
-            formControl.setValue('name', '')
-            formControl.setValue('clientDescription', '')
-            // formControl.setValue('userMasterDescription', '')
-            formControl.setValue('userMasterId', '')
-
-            enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-            getAllServices() // запрос, чтобы добавился новый сервис
-        }).catch((error: any) => {
-            let message = error(error.response.data.errorDescription).toString()
-            formControl.setError('name', {type: 'serverError', message: message})
-            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-            console.error(error.response.data)
-        })
+        // addNewService(data).then((response: ServiceItem) => {
+        //     formControl.setValue('name', '')
+        //     formControl.setValue('clientDescription', '')
+        //     // formControl.setValue('userMasterDescription', '')
+        //     formControl.setValue('userMasterId', '')
+        //
+        //     enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+        //     getAllServices() // запрос, чтобы добавился новый сервис
+        // }).catch((error: any) => {
+        //     let message = error(error.response.data.errorDescription).toString()
+        //     formControl.setError('name', {type: 'serverError', message: message})
+        //     enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+        //     console.error(error.response.data)
+        // })
     }
 
     const chooseServiceItem = (data: {clientId: string, name: string,
@@ -113,15 +122,17 @@ const Service = () => {
         formControl.setValue('userMasterId', data.userMasterId)
     }
 
-    console.log(users)
+    // console.log(users)
 
-    const chooseClient = () => {
-
+    const chooseClientHandler = (user: IUser) => {
+        setUser(user)
+        setChooseClientModal(false)
+        console.log('Service click user', user)
     }
     
     useEffect(() => {
         getAllServices()
-        getUsers() // надо убрать перерисовку при выборе селекта
+        // getUsers() // надо убрать перерисовку при выборе селекта
     }, [])
 
     return (
@@ -131,7 +142,7 @@ const Service = () => {
 
                 <div className={s.service_leftSide}>
                     <div className={s.leftSide_buttons}>
-                        <ChooseClientModal extraCallback={chooseClient}/>
+                        <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                         <div className={s.buttons_create}>
                             <Button onClick={() => {setChooseClientModal(true)}}>
                                 Создать ремонт
@@ -225,10 +236,10 @@ const Service = () => {
                             </div>
                             <div className={s.content_masterInput}>
 
-                                {/*<ControlledInput name={'userMasterDescription'} label={'Мастер'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
+                                <ControlledInput name={'userMasterDescription'} label={'Мастер'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
 
                                 {/*<FormControl fullWidth>*/}
                                 {/*    <InputLabel id="master-select-label">Мастер</InputLabel>*/}
@@ -255,29 +266,34 @@ const Service = () => {
                                 {/*    </Select>*/}
                                 {/*</FormControl>*/}
 
-                                <select name="userMasterId" value={userMasterId} onChange={handleChangeSelect}>
-                                    {
-                                        users.map(u => {
-                                            return (
-                                                <option key={u.user.id} value={u.user.id}>
-                                                    {u.user.lastName} {u.user.firstName} {u.user.patronymic}
-                                                </option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                {/*<select name="userMasterId" value={userMasterId} onChange={handleChangeSelect}>*/}
+                                {/*    {*/}
+                                {/*        users.map(u => {*/}
+                                {/*            return (*/}
+                                {/*                <option key={u.user.id} value={u.user.id}>*/}
+                                {/*                    {u.user.lastName} {u.user.firstName} {u.user.patronymic}*/}
+                                {/*                </option>*/}
+                                {/*            )*/}
+                                {/*        })*/}
+                                {/*    }*/}
+                                {/*</select>*/}
 
                             </div>
                             <div className={s.content_buttons}>
-                                <div className={s.content_saveBtn}>
+                                {/*<div className={s.content_saveBtn}>
                                     <Button type={'submit'}>
                                         Создать
                                     </Button>
                                 </div>
-                                <div className={s.content_cancelBtn}>
-                                    <Button onClick={() => {
-                                    }}>
+                                <div className={s.content_updateBtn}>
+                                    <Button onClick={() => {}}>
                                         Обновить
+                                    </Button>
+                                </div>*/}
+
+                                <div className={s.content_saveBtn}>
+                                    <Button onClick={() => {}}>
+                                        Сохранить
                                     </Button>
                                 </div>
                                 <div className={s.content_sumField}>
@@ -286,11 +302,9 @@ const Service = () => {
                             </div>
                         </div>
                         <div className={s.infoFields_clientCard}>
-                            {/*<ClientCard/>*/}
+                            <ClientCard user={user}/>
                             <div className={s.clientCard_changeClientBtn}>
-                                <Button onClick={() => {
-                                    setChooseClientModal(true)
-                                }}>
+                                <Button onClick={() => {setChooseClientModal(true)}}>
                                     Выбрать клиента
                                 </Button>
                             </div>

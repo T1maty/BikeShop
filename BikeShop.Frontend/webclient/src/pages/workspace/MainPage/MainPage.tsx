@@ -7,6 +7,8 @@ import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
 import useClientCardStore from '../../../widgets/workspace/ClientCard/_ClientCardStore';
+import {IUser} from "../../../entities";
+import useMainPageStore from "../Cashbox/MainPageStore";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -14,13 +16,8 @@ const MainPage = () => {
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
 
-    const lastName = useClientCardStore(s => s.lastName)
-    const firstName = useClientCardStore(s => s.firstName)
-    const patronymic = useClientCardStore(s => s.patronymic)
-    const setUserId = useClientCardStore(s => s.setUserId)
-    const setCardLastName = useClientCardStore(s => s.setCardLastName)
-    const setCardFirstName = useClientCardStore(s => s.setCardFirstName)
-    const setCardPatronymic = useClientCardStore(s => s.setCardPatronymic)
+    const user = useMainPageStore(s => s.user)
+    const setUser = useMainPageStore(s => s.setUser)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -35,12 +32,10 @@ const MainPage = () => {
         {id: 10, task: 'task 10'},
     ])
 
-    const chooseClientHandler = (user: any) => {
-        setUserId(user.id)
-        setCardLastName(user.lastName)
-        setCardFirstName(user.firstName)
-        setCardPatronymic(user.patronymic)
+    const chooseClientHandler = (user: IUser) => {
+        setUser(user)
         setChooseClientModal(false)
+        console.log('MainPage click user', user)
     }
 
     return (
@@ -50,7 +45,7 @@ const MainPage = () => {
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
                             <div>
-                                <ChooseClientModal extraCallback={(user: any) => {chooseClientHandler(user)}}/>
+                                <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                                 <Button onClick={() => {
                                     navigate(BikeShopPaths.WORKSPACE.SERVICE)
                                     setChooseClientModal(true)
@@ -149,7 +144,7 @@ const MainPage = () => {
                                     </Button>
                                 </div>
                                 <div className={s.search_searchInput}>
-                                    {lastName} {firstName} {patronymic}
+                                    {user.lastName} {user.firstName} {user.patronymic}
                                 </div>
                             </div>
 

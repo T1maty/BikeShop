@@ -123,17 +123,28 @@
                     }
                     .content_buttons {
                         @include flexBetween();
+                        gap: $defaultLargeMargin;
+
+                        //.content_saveBtn {
+                        //    button {
+                        //        width: 150px;
+                        //        height: 50px;
+                        //    }
+                        //
+                        //}
+                        //.content_updateBtn {
+                        //    button {
+                        //        width: 150px;
+                        //        height: 50px;
+                        //    }
+                        //
+                        //}
 
                         .content_saveBtn {
-                            button {
-                                width: 150px;
-                                height: 50px;
-                            }
+                            width: 100%;
 
-                        }
-                        .content_cancelBtn {
                             button {
-                                width: 150px;
+                                width: 100%;
                                 height: 50px;
                             }
 

@@ -1,27 +1,12 @@
 import React from 'react'
 import s from "./ClientCard.module.scss";
+import {IUser} from "../../../entities";
 
 interface ClientCardProps {
-    user: {
-        id: string
-        lastName: string
-        firstName: string
-        patronymic: string
-        phoneNumber: string
-        balance: number
-        creditLimit: number
-    }
+    user: IUser
 }
 
 const ClientCard: React.FC<ClientCardProps> = ({user}) => {
-
-    // const lastName = useClientCardStore(s => s.lastName)
-    // const firstName = useClientCardStore(s => s.firstName)
-    // const patronymic = useClientCardStore(s => s.patronymic)
-    // const phoneNumber = useClientCardStore(s => s.phoneNumber)
-    // // const email = useGlobalDataStore(s => s.email)
-    // const balance = useClientCardStore(s => s.balance)
-    // const creditLimit = useClientCardStore(s => s.creditLimit)
 
     return (
         <div className={s.clientCard_background}>
