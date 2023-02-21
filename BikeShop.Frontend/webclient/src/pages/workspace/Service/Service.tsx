@@ -10,10 +10,8 @@ import {useSnackbar} from "notistack";
 import useService from "./ServiceStore";
 import {Errors} from "../../../entities/errors/workspaceErrors";
 import {ClientCard} from "../../../widgets";
-import useCashboxGlobal from "../GlobalDataStore";
 import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import useGlobalDataStore from '../GlobalDataStore';
 import {IUser} from "../../../entities";
 
 const Service = () => {
@@ -29,11 +27,6 @@ const Service = () => {
     const getAllServices = useService(s => s.getAllServices)
     // const addNewService = useService(s => s.addNewService)
     // const updateService = useService(s => s.updateService)
-
-    // const userId = useCashboxGlobal(s => s.userId)
-    // const userMasterId = useService(s => s.userMasterId)
-    // const setUserMasterId = useService(s => s.setUserMasterId)
-
 
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
@@ -51,21 +44,13 @@ const Service = () => {
         {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
     ])
 
-    // const handleChangeSelect = (event: SelectChangeEvent) => {
-    //     setUserMasterId(event.target.value as string)
-    //     console.log(event.target.value)
-    // };
-    // const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    //     // setUserMasterId(event.target.value as string)
-    //     console.log('клик по селекту', event.target.value)
-    // };
-
     const formControl = useForm({
         defaultValues: {
             name: '',
             clientDescription: '',
             // userMasterDescription: '',
-            userMasterId: '',
+            // userMasterId: '',
+            createdAt: '', // заглушка
         }
     });
     const onSubmit: SubmitHandler<any> = (data: CreateService) => {
@@ -91,9 +76,18 @@ const Service = () => {
         // })
     }
 
+    // const handleChangeSelect = (event: SelectChangeEvent) => {
+    //     setUserMasterId(event.target.value as string)
+    //     console.log(event.target.value)
+    // };
+    // const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    //     // setUserMasterId(event.target.value as string)
+    //     console.log('клик по селекту', event.target.value)
+    // };
+
     const chooseServiceItem = (service: ServiceItem) => {
 
-        console.log('клик по ремонту', service)
+        console.log('Клик по ремонту', service)
 
         // setUserId(data.clientId)
         // // setUserMasterId(data.userMasterId)
@@ -106,10 +100,8 @@ const Service = () => {
         formControl.setValue('name', service.name)
         formControl.setValue('clientDescription', service.clientDescription)
         // formControl.setValue('userMasterDescription', data.userMasterDescription)
-        formControl.setValue('userMasterId', service.userMasterId)
+        formControl.setValue('createdAt', service.createdAt)
     }
-
-    // console.log(users)
 
     const chooseClientHandler = (user: IUser) => {
         setUser(user)
@@ -217,8 +209,7 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-
-                                <ControlledInput name={'userMasterDescription'} label={'Мастер'}
+                                <ControlledInput name={'createdAt'} label={'Мастер'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />

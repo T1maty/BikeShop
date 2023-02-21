@@ -4,7 +4,6 @@ import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {$api} from "../../../shared";
-import {CreateService} from "../../../entities/requests/CreateService";
 import {IUser} from "../../../entities";
 
 interface ServiceStore {
@@ -17,16 +16,6 @@ interface ServiceStore {
     setService: (value: string) => void
     getAllServices: () => any // надо исправить тип
 
-
-
-    // name: string
-    // clientDescription: string
-
-    // userMasterId: string
-    // setUserMasterId: (value: string) => void
-    // userMasterDescription: string
-    // setUserMasterDescription: (value: string) => void
-    //
     // addNewService: (data: any) => any // надо исправить тип
     // updateService: (data: any) => any // надо исправить тип
 }
@@ -56,20 +45,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         })
     },
 
-    // name: '',
-    // clientDescription: '',
-
-
-
-    // userMasterId: '',
-    // userMasterDescription: '',
-    // setUserMasterId: (value: string) => set({
-    //     userMasterId: value
-    // }),
-    // setUserMasterDescription: (value: string) => set({
-    //     userMasterDescription: value
-    // }),
-    //
     // addNewService: (data: CreateService) => {
     //     return $api.post('/service/create', data)
     // },
