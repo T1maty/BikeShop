@@ -14,6 +14,23 @@ import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
 import {IUser} from "../../../entities";
 
+export type ServiceStatusType =
+    'Waiting' |
+    'InProcess' |
+    'WaitingSupply' |
+    'Ended' |
+    'Canceled' |
+    'Deleted';
+
+enum ServiceStatus {
+    Waiting = 0, // ожидают
+    InProcess = 1, // в ремонте
+    WaitingSupply = 2, // ждёт поставки
+    Ended = 3, // готово
+    Canceled = 4, // отменен
+    Deleted = 5 // удален
+}
+
 const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
@@ -26,7 +43,9 @@ const Service = () => {
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
+    const filterServices = useService(s => s.filterServices)
     // const updateService = useService(s => s.updateService)
+    // const updateServiceStatus = useService(s => s.updateServiceStatus)
 
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
@@ -103,6 +122,10 @@ const Service = () => {
         console.log('Service click user', user)
     }
 
+    const waitingServices = services.filter(s => s.status === 'Waiting')
+    const inProcessServices = services.filter(s => s.status === 'InProcess')
+    const endedServices = services.filter(s => s.status === 'Ended')
+
     useEffect(() => {
         getAllServices()
         // getUsers() // надо убрать перерисовку при выборе селекта
@@ -123,17 +146,26 @@ const Service = () => {
                         </div>
                         <div className={s.buttons_info}>
                             <div>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                    filterServices(waitingServices)
+                                    console.log(waitingServices)
+                                }}>
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                    filterServices(inProcessServices)
+                                    console.log(inProcessServices)
+                                }}>
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                    filterServices(endedServices)
+                                    console.log(endedServices)
+                                }}>
                                     Готово
                                 </Button>
                             </div>

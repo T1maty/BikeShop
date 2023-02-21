@@ -6,6 +6,7 @@ import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {$api} from "../../../shared";
 import {IUser} from "../../../entities";
 import {CreateService} from "../../../entities/requests/CreateService";
+import {ServiceStatusType} from "./Service";
 
 interface ServiceStore {
     isLoading: boolean
@@ -14,11 +15,16 @@ interface ServiceStore {
     setUser: (user: IUser) => void
 
     services: ServiceItem[]
-    setService: (value: string) => void
+    filterServices: (filteredServices: ServiceItem[]) => void
     getAllServices: () => any // надо исправить тип
 
     addNewService: (data: any) => any // надо исправить тип
     // updateService: (data: any) => any // надо исправить тип
+}
+
+export interface updateServiceStatus {
+    serviceId: number
+    newStatus: number
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
@@ -32,8 +38,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     }),
 
     services: [],
-    setService: () => set({
-        // code here
+    filterServices: (filteredServices: ServiceItem[]) => set({
+        services: filteredServices
     }),
     getAllServices: () => {
         set({isLoading: true});
@@ -52,8 +58,11 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     // updateService: (data: CreateService) => {
     //     return $api.put('/service/updateservice', data)
     // },
+    // updateServiceStatus: (data: updateServiceStatus) => {
+    //     return $api.put('/service/updateservicestatus', data)
+    // },
 })))/*, {
-    name: "ServiceStore",
+    name: "serviceStore",
     version: 1
 })*/);
 

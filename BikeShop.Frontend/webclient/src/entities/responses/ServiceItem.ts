@@ -1,3 +1,5 @@
+import {ServiceStatusType} from "../../pages/workspace/Service/Service";
+
 export interface ServiceItem {
     shopId: number
 
@@ -7,7 +9,7 @@ export interface ServiceItem {
     enabled: boolean
 
     name: string // название техники (по макету)
-    status: number // статус заказа
+    status: ServiceStatusType // статус заказа
     clientId: string
     clientDescription: string // описание заказа
     userCreatedId: string
