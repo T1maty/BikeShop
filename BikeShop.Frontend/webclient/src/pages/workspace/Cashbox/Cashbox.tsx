@@ -9,6 +9,8 @@ import useChooseProductModal from '../../../features/ChooseProductModal/ChoosePr
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
 import {IUser} from '../../../entities'
+import SelectProductModal from "../../../features/SelectProductWorkModals/SelectProductModal";
+import SelectWorkModal from "../../../features/SelectProductWorkModals/SelectWorkModal";
 
 const Cashbox = () => {
 
@@ -95,7 +97,6 @@ const Cashbox = () => {
                         </div>
                     </div>
                 </div>
-
 
                 <div className={s.cashboxMainBlock_rightSideWrapper}>
                     <div className={s.cashboxMainBlock_rightSideHeader}>

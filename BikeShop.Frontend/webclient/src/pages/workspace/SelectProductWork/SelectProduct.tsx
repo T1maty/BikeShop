@@ -1,6 +1,6 @@
-import React from 'react';
-import s from './SelectProduct.module.scss'
-import {Button, InputUI} from "../../../shared/ui";
+import React from 'react'
+import s from './SelectProductWork.module.scss'
+import {Button, InputUI} from "../../../shared/ui"
 
 const SelectProduct = () => {
     return (

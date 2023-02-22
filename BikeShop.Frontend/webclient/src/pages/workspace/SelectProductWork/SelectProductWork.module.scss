@@ -12,27 +12,31 @@
         border: 1px solid white;
         @include flexColumn();
         width: 30%;
+        min-height: 700px;
+
+        > div {
+            width: 100%;
+        }
 
         .leftSide_header {
             background-color: $themeColorDark;
             border-radius: $defaultBorderRadius;
             margin-bottom: $defaultSmallMargin;
-            width: 100%;
             height: 150px;
         }
         .leftSide_treeView {
             background-color: $themeColorDark;
             border-radius: $defaultBorderRadius;
             margin-bottom: $defaultSmallMargin;
-            width: 100%;
-            height: 500px;
+            flex: 1 1 auto;
+            //height: 500px;
         }
         .leftSide_buttons {
             @include flexOnlyBetween();
-            width: 100%;
+            flex-wrap: wrap;
 
             button {
-                width: 170px;
+                width: 200px;
             }
         }
     }
