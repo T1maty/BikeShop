@@ -53,10 +53,31 @@ const Service = () => {
     // const updateServiceStatus = useService(s => s.updateServiceStatus)
 
     // для стилей кнопок фильтрации
+
+    // const [isFilterActive, setIsFilterActive] = useState<boolean[]>([false, false, false])
+    // пример №1
+    // const checkHandler = (index) => {
+    //     setCheckBoxState(prevState => prevState.map((item, idx) => idx === index ? !item : item))
+    // };
+
+    // пример №2
+    // const [arr, setValue] = useState(['Тише', 'мыши', 'кот', 'на', 'крыше']);
+    // let copy = Object.assign([], arr);
+    // let index = 2;
+    // copy[index] = 'котята';
+    // setValue(copy); // результат: ['Тише', 'мыши', 'котята', 'на', 'крыше']
+
+    // const [isFilterActive, setIsFilterActive] = useState<any[]>([
+    //     {title: 'isActiveWaiting', value: false},
+    //     {title: 'isActiveProcess', value: false},
+    //     {title: 'isActiveEnded', value: false},
+    // ])
+
     const [isActiveWaiting, setIsActiveWaiting] = useState<boolean>(false)
     const [isActiveProcess, setIsActiveProcess] = useState<boolean>(false)
     const [isActiveEnded, setIsActiveEnded] = useState<boolean>(false)
 
+    // тестовые данные
     const [productsItem, setProductsItem] = useState([
         {id: 1, title: 'Колесо', price: 25, count: 3},
         {id: 2, title: 'Велосипед', price: 25000000, count: 1},
@@ -158,9 +179,9 @@ const Service = () => {
 
     // первый рендер
     useEffect(() => {
-        getAllServices() // получение всех сервисов для фильтрации
+        getAllServices() // получение всех сервисов для последующей фильтрации
         getFilteredServices() // первоначальное отображение списка (ожидание)
-        setIsActiveWaiting(true) // цвет кнопки
+        setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
 
     return (
@@ -172,12 +193,37 @@ const Service = () => {
                     <div className={s.leftSide_buttons}>
                         <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                         <div className={s.buttons_create}>
-                            <Button onClick={() => {
-                                setChooseClientModal(true)}}>
+                            <Button onClick={() => {setChooseClientModal(true)}}>
                                 Создать ремонт
                             </Button>
                         </div>
-                        <div className={s.buttons_info}>
+                        {/*<div className={s.buttons_filter}>
+                            <div>
+                                <Button className={isActiveWaiting ? style.waiting : ''}
+                                        onClick={filterWaitingHandler}
+                                >
+                                    Ожидают
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className={isActiveProcess ? style.process : ''}
+                                        onClick={filterInProcessHandler}
+                                >
+                                    В ремонте
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className={isActiveEnded ? style.ended : ''}
+                                        onClick={filterEndedHandler}
+                                >
+                                    Готово
+                                </Button>
+                            </div>
+                        </div>*/}
+                    </div>
+
+                    <div className={s.leftSide_content}>
+                        <div className={s.buttons_filter}>
                             <div>
                                 <Button className={isActiveWaiting ? style.waiting : ''}
                                         onClick={filterWaitingHandler}
@@ -200,32 +246,39 @@ const Service = () => {
                                 </Button>
                             </div>
                         </div>
-                    </div>
-
-                    <div className={s.leftSide_content}>
                         <div className={s.content_title}>
-                            {/*Таблица ремонтов*/}
-                            <div className={s.content_startBtn}>
-                                <Button onClick={() => {}}>
-                                    Начать ремонт
-                                </Button>
-                            </div>
-                            <div className={s.content_inProcessButtons}>
-                                <Button onClick={() => {}}>
-                                    Остановить ремонт
-                                </Button>
-                                <Button onClick={() => {}}>
-                                    Закончить ремонт
-                                </Button>
-                            </div>
-                            <div className={s.content_doneButtons}>
-                                <Button onClick={() => {}}>
-                                    Продолжить ремонт
-                                </Button>
-                                <Button onClick={() => {}}>
-                                    Выдать велосипед
-                                </Button>
-                            </div>
+                            {
+                                isActiveWaiting &&
+                                <div className={s.content_startBtn}>
+                                    <Button onClick={() => {}}>
+                                        Начать ремонт
+                                    </Button>
+                                </div>
+                            }
+
+                            {
+                                isActiveProcess &&
+                                <div className={s.content_inProcessButtons}>
+                                    <Button onClick={() => {}}>
+                                        Остановить ремонт
+                                    </Button>
+                                    <Button onClick={() => {}}>
+                                        Закончить ремонт
+                                    </Button>
+                                </div>
+                            }
+
+                            {
+                                isActiveEnded &&
+                                <div className={s.content_doneButtons}>
+                                    <Button onClick={() => {}}>
+                                        Продолжить ремонт
+                                    </Button>
+                                    <Button onClick={() => {}}>
+                                        Выдать велосипед
+                                    </Button>
+                                </div>
+                            }
                         </div>
                         <div className={s.content_info}>
                             {
@@ -255,7 +308,6 @@ const Service = () => {
                                          rules={{required: Errors[0].name}}
                         />
                     </div>
-
                     <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
@@ -339,7 +391,6 @@ const Service = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className={s.rightSide_tables}>
                         <ServiceTable data={productsItem}/>
                         <ServiceTable data={repairItems}/>
