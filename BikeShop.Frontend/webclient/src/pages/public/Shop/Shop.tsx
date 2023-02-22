@@ -2,6 +2,7 @@ import React from 'react'
 import s from './Shop.module.scss'
 import headerPhoto from '../../../shared/assets/header_photo.png'
 import socialLogo from '../../../shared/assets/logo_instagram.png'
+import socialLogoWhite from '../../../shared/assets/logo_instagram-white.png'
 import catalogBikes from '../../../shared/assets/catalog-bikes.png'
 import catalogProtection from '../../../shared/assets/catalog-protection.png'
 import catalogSpares from '../../../shared/assets/catalog-spares.png'
@@ -9,6 +10,7 @@ import catalogClothes from '../../../shared/assets/catalog-clothes.png'
 import catalogChemistry from '../../../shared/assets/catalog-chemistry.png'
 import catalogAccessories from '../../../shared/assets/catalog-accessories.png'
 import catalogFood from '../../../shared/assets/catalog-food.png'
+import map from '../../../shared/assets/map-01.png'
 
 const Shop = () => {
     return (
@@ -30,31 +32,36 @@ const Shop = () => {
                         </div>
                     </div>
                     <div className={s.catalog}>
-                        <div className={s.catalog_item1}>
-                            <img src={catalogBikes} alt="catalog-bikes"/>
+                        <div className={s.catalog_group1}>
+                            <div className={s.catalog_item1}>
+                                <img src={catalogBikes} alt="catalog-bikes"/>
+                            </div>
+                            <div className={s.catalog_item2}>
+                                <img src={catalogProtection} alt="catalog-protection"/>
+                            </div>
+                            <div className={s.catalog_item3}>
+                                <img src={catalogSpares} alt="catalog-spares"/>
+                            </div>
+                            <div className={s.catalog_item4}>
+                                <img src={catalogClothes} alt="catalog-clothes"/>
+                            </div>
+                            <div className={s.catalog_item5}>
+                                <img src={catalogChemistry} alt="catalog-chemistry"/>
+                            </div>
                         </div>
-                        <div className={s.catalog_item}>
-                            <img src={catalogProtection} alt="catalog-protection"/>
+                        <div className={s.catalog_group2}>
+                            <div className={s.catalog_item}>
+                                <img src={catalogAccessories} alt="catalog-accessories"/>
+                            </div>
+                            <div className={s.catalog_item}>
+                                <img src={catalogFood} alt="catalog-food"/>
+                            </div>
                         </div>
-                        <div className={s.catalog_item}>
-                            <img src={catalogSpares} alt="catalog-spares"/>
-                        </div>
-                        <div className={s.catalog_item}>
-                            <img src={catalogClothes} alt="catalog-clothes"/>
-                        </div>
-                        <div className={s.catalog_item}>
-                            <img src={catalogChemistry} alt="catalog-chemistry"/>
-                        </div>
-                        <div className={s.catalog_item6}>
-                            <img src={catalogAccessories} alt="catalog-accessories"/>
-                        </div>
-                        <div className={s.catalog_item7}>
-                            <img src={catalogFood} alt="catalog-food"/>
-                        </div>
+
                     </div>
                 </div>
                 <div className={s.map}>
-                    map
+                    <img src={map} alt="map"/>
                 </div>
                 <div className={s.footer}>
                     <div className={s.footer_links}>
@@ -98,7 +105,7 @@ const Shop = () => {
                         </div>
                     </div>
                     <div className={s.footer_social}>
-                        <img src={socialLogo} alt="footer-social-logo"/>
+                        <img src={socialLogoWhite} alt="footer-social-logo"/>
                     </div>
                 </div>
             </div>
