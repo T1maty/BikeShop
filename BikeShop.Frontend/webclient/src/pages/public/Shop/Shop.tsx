@@ -1,7 +1,14 @@
-import React from 'react';
+import React from 'react'
 import s from './Shop.module.scss'
 import headerPhoto from '../../../shared/assets/header_photo.png'
 import socialLogo from '../../../shared/assets/logo_instagram.png'
+import catalogBikes from '../../../shared/assets/catalog-bikes.png'
+import catalogProtection from '../../../shared/assets/catalog-protection.png'
+import catalogSpares from '../../../shared/assets/catalog-spares.png'
+import catalogClothes from '../../../shared/assets/catalog-clothes.png'
+import catalogChemistry from '../../../shared/assets/catalog-chemistry.png'
+import catalogAccessories from '../../../shared/assets/catalog-accessories.png'
+import catalogFood from '../../../shared/assets/catalog-food.png'
 
 const Shop = () => {
     return (
@@ -23,7 +30,27 @@ const Shop = () => {
                         </div>
                     </div>
                     <div className={s.catalog}>
-                        catalog
+                        <div className={s.catalog_item1}>
+                            <img src={catalogBikes} alt="catalog-bikes"/>
+                        </div>
+                        <div className={s.catalog_item}>
+                            <img src={catalogProtection} alt="catalog-protection"/>
+                        </div>
+                        <div className={s.catalog_item}>
+                            <img src={catalogSpares} alt="catalog-spares"/>
+                        </div>
+                        <div className={s.catalog_item}>
+                            <img src={catalogClothes} alt="catalog-clothes"/>
+                        </div>
+                        <div className={s.catalog_item}>
+                            <img src={catalogChemistry} alt="catalog-chemistry"/>
+                        </div>
+                        <div className={s.catalog_item6}>
+                            <img src={catalogAccessories} alt="catalog-accessories"/>
+                        </div>
+                        <div className={s.catalog_item7}>
+                            <img src={catalogFood} alt="catalog-food"/>
+                        </div>
                     </div>
                 </div>
                 <div className={s.map}>
