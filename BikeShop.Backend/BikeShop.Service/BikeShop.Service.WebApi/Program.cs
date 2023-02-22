@@ -29,12 +29,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 // Register refit
 builder.Services.AddRefitClient<IProductsClient>()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5002/"));
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
 
 builder.Services.AddRefitClient<IIdentityClient>()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5001/"));
-//builder.Configuration["ApiAddresses:Products"]
-
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Identity"]));
 
 // Регистрация конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>
