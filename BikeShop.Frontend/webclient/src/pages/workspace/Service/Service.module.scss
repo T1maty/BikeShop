@@ -18,24 +18,26 @@
                 background-color: $themeColorDark;
                 padding: $defaultLargeMargin;
                 margin-bottom: $defaultSmallMargin;
+                width: 100%;
 
                 .buttons_create {
                     @include flexCenter();
-                    margin-bottom: $defaultLargeMargin;
+                    //margin-bottom: $defaultLargeMargin;
 
                     button {
                         width: 95%;
+                        height: $bigButtonHeight;
                     }
                 }
-                .buttons_info {
-                    @include flexBetween();
-                    width: 100%;
-
-                    button {
-                        padding: 5px 7px;
-                        margin: 0 5px;
-                    }
-                }
+                //.buttons_filter {
+                //    @include flexBetween();
+                //    width: 100%;
+                //
+                //    button {
+                //        padding: 5px 7px;
+                //        margin: 0 5px;
+                //    }
+                //}
 
             }
             .leftSide_content {
@@ -43,6 +45,17 @@
                 background-color: $themeColorDark;
                 padding: $defaultLargeMargin;
                 @include widthHeightFull();
+
+                .buttons_filter {
+                    @include flexBetween();
+                    margin-bottom: $defaultLargeMargin;
+                    width: 100%;
+
+                    button {
+                        padding: 5px 7px;
+                        margin: 0 5px;
+                    }
+                }
 
                 .content_title {
                     //font-size: 26px;
