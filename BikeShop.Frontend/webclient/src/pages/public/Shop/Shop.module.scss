@@ -1,0 +1,86 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.shop_wrapper {
+    @include defaultContainer();
+
+    .shop_mainBox {
+
+        .header {
+            img {
+                max-width: 1400px;
+                height: auto;
+                //overflow: auto;
+            }
+        }
+
+        .content {
+            background-color: green;
+
+            .menu {
+                @include flexBetween();
+                background-color: #D9D9D9;
+                height: 80px;
+                padding: 0 100px;
+                font-size: 32px;
+                font-weight: bold;
+                color: black;
+
+                .menu_items {
+                    @include flexBetween();
+
+                    > div:not(:last-child) {
+                        padding-right: 50px;
+                    }
+                }
+                .menu_social {
+                    img  {
+                        width: 63px;
+                        height: 63px;
+                    }
+                }
+            }
+
+            .catalog {
+                padding: 0 100px;
+            }
+        }
+
+        .map {
+            background-color: blue;
+        }
+
+        .footer {
+            background-color: $themeColorShopFooter;
+            padding: 30px 200px;
+            @include flexBetween();
+
+            .footer_links {
+                @include flexBetween();
+
+                > div:not(:last-child) {
+                    padding-right: 50px;
+                }
+
+                .links_column {
+                    .column_title {
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                    }
+                    .column_text {
+                        > div:not(:last-child) {
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+            .footer_social {
+
+                img  {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+        }
+    }
+}

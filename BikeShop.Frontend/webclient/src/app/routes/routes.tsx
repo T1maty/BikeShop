@@ -4,8 +4,7 @@ import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} fro
 import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
 import {BikeShopPaths} from "./paths";
 import {BarcodeScanerListenerProvider} from "../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider";
-import SelectProduct from "../../pages/workspace/SelectProductWork/SelectProduct";
-import SelectWork from "pages/workspace/SelectProductWork/SelectWork";
+import Shop from "pages/public/Shop/Shop";
 
 
 // @ts-ignore
@@ -57,6 +56,11 @@ export const Routes = createBrowserRouter([
         element: <WorkspaceHeaderProvider>
             <Service/>
         </WorkspaceHeaderProvider>
+    },
+    // для Shop
+    {
+        path: '/shop',
+        element: <Shop/>
     },
 
     ////                                        ////
