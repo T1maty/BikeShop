@@ -29,7 +29,7 @@ enum ServiceStatus {
     InProcess = 1, // в ремонте
     WaitingSupply = 2, // ждёт поставки
     Ready = 3, // готово
-    Ended = 4, // готово
+    Ended = 4, // выдать велосипед
     Canceled = 5, // отменен
     Deleted = 6 // удален
 }
@@ -49,11 +49,10 @@ const Service = () => {
     const getFilteredServices = useService(s => s.getFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
-    // const updateService = useService(s => s.updateService)
-    // const updateServiceStatus = useService(s => s.updateServiceStatus)
+    const updateService = useService(s => s.updateService)
+    const updateServiceStatus = useService(s => s.updateServiceStatus)
 
     // для стилей кнопок фильтрации
-
     // const [isFilterActive, setIsFilterActive] = useState<boolean[]>([false, false, false])
     // пример №1
     // const checkHandler = (index) => {
@@ -128,6 +127,8 @@ const Service = () => {
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
             console.error(error.response.data)
         })
+
+        // updateService(data).then((response) => {}
     }
 
     // хендлеры
@@ -175,6 +176,28 @@ const Service = () => {
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
         setIsActiveEnded(current => !current)
+    }
+
+    // // изменение статуса заказа
+    // начать ремонт (=> InProcess = 1)
+    const startService = () => {
+        updateServiceStatus({serviceId: 3, newStatus: 1})
+    }
+    // остановить ремонт (WaitingSupply = 2)
+    const stopService = () => {
+
+    }
+    // закончить ремонт (Ready = 3)
+    const endService = () => {
+
+    }
+    // продолжить ремонт (InProcess = 1)
+    const continueService = () => {
+
+    }
+    // выдать велосипед (Ended = 4)
+    const getBike = () => {
+
     }
 
     // первый рендер
@@ -250,7 +273,7 @@ const Service = () => {
                             {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
-                                    <Button onClick={() => {}}>
+                                    <Button onClick={startService}>
                                         Начать ремонт
                                     </Button>
                                 </div>

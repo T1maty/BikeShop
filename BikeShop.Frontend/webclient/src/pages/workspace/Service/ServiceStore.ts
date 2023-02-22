@@ -4,7 +4,7 @@ import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {$api} from "../../../shared";
-import {IUser} from "../../../entities";
+import {IUser, UpdateService, UpdateServiceStatus} from "../../../entities";
 import {CreateService} from "../../../entities/requests/CreateService";
 
 interface ServiceStore {
@@ -17,14 +17,9 @@ interface ServiceStore {
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
     getFilteredServices: () => any // надо исправить тип
-    addNewService: (data: any) => any // надо исправить тип
-    // updateService: (data: any) => any // надо исправить тип
-    // updateServiceStatus: (data: any) => any // надо исправить тип
-}
-
-export interface UpdateServiceStatus {
-    serviceId: number
-    newStatus: number
+    addNewService: (data: CreateService) => any // надо исправить тип
+    updateService: (data: UpdateService) => any // надо исправить тип
+    updateServiceStatus: (data: UpdateServiceStatus) => any // надо исправить тип
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
@@ -65,12 +60,12 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     addNewService: (data: CreateService) => {
         return $api.post('/service/create', data)
     },
-    // updateService: (data: CreateService) => {
-    //     return $api.put('/service/updateservice', data)
-    // },
-    // updateServiceStatus: (data: updateServiceStatus) => {
-    //     return $api.put('/service/updateservicestatus', data)
-    // },
+    updateService: (data: UpdateService) => {
+        return $api.put('/service/updateservice', data)
+    },
+    updateServiceStatus: (data: UpdateServiceStatus) => {
+        return $api.put('/service/updateservicestatus', data)
+    },
 })))/*, {
     name: "serviceStore",
     version: 1

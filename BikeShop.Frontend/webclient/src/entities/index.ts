@@ -12,6 +12,8 @@ export type {ICreateTag} from './requests/CreateTag'
 export type {IUpdateTag} from './requests/UpdateTag'
 export type {ICreateProduct} from './requests/CreateProduct'
 export type {IUpdateProduct} from './requests/UpdateProduct'
+export type {UpdateService} from './requests/UpdateService'
+export type {UpdateServiceStatus} from './requests/UpdateService'
 export type {IProduct} from './models/Product'
 
 export type {default as IGroupResponse} from './responses/GroupResponse'
