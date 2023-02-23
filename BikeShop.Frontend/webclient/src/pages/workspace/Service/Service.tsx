@@ -46,7 +46,7 @@ const Service = () => {
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
-    const getFilteredServices = useService(s => s.getFilteredServices)
+    const getWaitingFilteredServices = useService(s => s.getWaitingFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const updateService = useService(s => s.updateService)
@@ -150,7 +150,7 @@ const Service = () => {
             formControl.setValue('userMaster', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-            getFilteredServices() // запрос, чтобы добавился новый сервис в список
+            getWaitingFilteredServices() // запрос, чтобы добавился новый сервис в список
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
             formControl.setError('name', {type: 'serverError', message: message})
@@ -209,32 +209,15 @@ const Service = () => {
         setIsActiveEnded(true)
     }
 
-    // // изменение статуса заказа
-    // начать ремонт (=> InProcess = 1)
-    const startService = () => {
-        updateServiceStatus({serviceId: service.id, newStatus: 1})
-    }
-    // остановить ремонт (WaitingSupply = 2)
-    const stopService = () => {
-
-    }
-    // закончить ремонт (Ready = 3)
-    const readyService = () => {
-        updateServiceStatus({serviceId: service.id, newStatus: 3})
-    }
-    // продолжить ремонт (InProcess = 1)
-    const continueService = () => {
-
-    }
-    // выдать велосипед (Ended = 4)
-    const getBike = () => {
-
+    // изменение статуса заказа
+    const changeServiceStatus = (status: number) => {
+        updateServiceStatus({serviceId: service.id, newStatus: status})
     }
 
     // первый рендер
     useEffect(() => {
         getAllServices() // получение всех сервисов для последующей фильтрации
-        getFilteredServices() // первоначальное отображение списка (ожидание)
+        getWaitingFilteredServices() // первоначальное отображение списка (ожидание)
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
 
@@ -304,7 +287,7 @@ const Service = () => {
                             {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
-                                    <Button onClick={startService}>
+                                    <Button onClick={() => {changeServiceStatus(1)}}>
                                         Начать ремонт
                                     </Button>
                                 </div>
@@ -313,10 +296,10 @@ const Service = () => {
                             {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
-                                    <Button onClick={stopService}>
+                                    <Button onClick={() => {changeServiceStatus(2)}}>
                                         Остановить ремонт
                                     </Button>
-                                    <Button onClick={readyService}>
+                                    <Button onClick={() => {changeServiceStatus(3)}}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
@@ -325,10 +308,10 @@ const Service = () => {
                             {
                                 isActiveEnded &&
                                 <div className={s.content_doneButtons}>
-                                    <Button onClick={continueService}>
+                                    <Button onClick={() => {changeServiceStatus(1)}}>
                                         Продолжить ремонт
                                     </Button>
-                                    <Button onClick={getBike}>
+                                    <Button onClick={() => {changeServiceStatus(4)}}>
                                         Выдать велосипед
                                     </Button>
                                 </div>
