@@ -194,18 +194,21 @@ const Service = () => {
     const readyServicesArray = services.filter(s => s.status === 'Ready')
 
     const filterWaitingHandler = () => {
+        getAllServices()
         setFilteredServices(waitingServicesArray)
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
         setIsActiveEnded(false)
     }
     const filterInProcessHandler = () => {
+        getAllServices()
         setFilteredServices(inProcessServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(true)
         setIsActiveEnded(false)
     }
     const filterEndedHandler = () => {
+        getAllServices()
         setFilteredServices(readyServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
@@ -215,6 +218,7 @@ const Service = () => {
     // изменение статуса заказа
     const changeServiceStatus = (status: number) => {
         updateServiceStatus({serviceId: service.id, newStatus: status})
+        getAllServices()
     }
     const changeServiceStatusToWaitingSupply = () => {
         updateServiceStatus({serviceId: service.id, newStatus: 2})
