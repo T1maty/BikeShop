@@ -71,7 +71,7 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
         setUsers([])
     }*/
 
-    const itemClickHandler = (user: IUser) => {
+    const userClickHandler = (user: IUser) => {
         extraCallback(user)
     }
 
@@ -131,7 +131,7 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
                                         users.map((u: any) => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}
-                                                    onClick={() => {itemClickHandler(u.user)}}
+                                                    onClick={() => {userClickHandler(u.user)}}
                                                 >
                                                     {u.user.lastName} {u.user.firstName} {u.user.patronymic}
                                                 </div>

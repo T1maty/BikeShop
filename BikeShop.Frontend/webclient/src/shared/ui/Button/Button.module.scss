@@ -19,6 +19,9 @@
     background-color: var(--button-hover-bgcolor);
     color: var(--button-hover-color);
 }
+.btn:disabled:hover {
+    background-color: var(--button-disabled-color);
+}
 
 .waiting {
     background-color: red;

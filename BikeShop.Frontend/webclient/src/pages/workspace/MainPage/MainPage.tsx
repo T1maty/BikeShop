@@ -8,13 +8,16 @@ import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClie
 import {BikeShopPaths} from "../../../app/routes/paths";
 import {IUser} from "../../../entities";
 import useMainPageStore from "./MainPageStore";
+import useService from '../Service/ServiceStore';
 
 const MainPage = () => {
     const navigate = useNavigate();
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
+    const setIsClientChosen = useChooseClientModal(s => s.setIsClientChosen)
 
+    const setServiceUser = useService(s => s.setUser)
     const user = useMainPageStore(s => s.user)
     const setUser = useMainPageStore(s => s.setUser)
 
@@ -32,9 +35,16 @@ const MainPage = () => {
     ])
 
     const chooseClientHandler = (user: IUser) => {
-        setUser(user)
+        // setUser(user)
+        setServiceUser(user)
+        setIsClientChosen(true)
         setChooseClientModal(false)
+        navigate(BikeShopPaths.WORKSPACE.SERVICE)
         console.log('MainPage click user', user)
+    }
+
+    const createServiceHandler = () => {
+        setChooseClientModal(true)
     }
 
     return (
@@ -45,10 +55,7 @@ const MainPage = () => {
                         <div className={s.header_leftSide_deal}>
                             <div>
                                 <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
-                                <Button onClick={() => {
-                                    navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                                    setChooseClientModal(true)
-                                }}>
+                                <Button onClick={createServiceHandler}>
                                     Создать ремонт
                                 </Button>
                             </div>
@@ -138,7 +145,7 @@ const MainPage = () => {
                         <div className={s.rightSide_top}>
                             <div className={s.rightSide_top_search}>
                                 <div className={s.search_searchButton}>
-                                    <Button onClick={() => {setChooseClientModal(true)}}>
+                                    <Button onClick={() => {alert('Пока что не знаю что с этим делать')}}>
                                         Выбрать клиента
                                     </Button>
                                 </div>

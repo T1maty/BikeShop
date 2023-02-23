@@ -15,6 +15,8 @@ interface ChooseClientModalStore {
     setChooseClientModal: (value: boolean) => void
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+    isClientChosen: boolean
+    setIsClientChosen: (value: boolean) => void
     users: IUser[]
     // setUsers: (users: User[]) => void
     fio: string
@@ -34,6 +36,10 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
     isLoading: false,
     setIsLoading: (value: boolean) => set({
        isLoading: value
+    }),
+    isClientChosen: false,
+    setIsClientChosen: (value: boolean) => set({
+        isClientChosen: value
     }),
 
     users: [],

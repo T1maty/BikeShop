@@ -37,6 +37,8 @@ const Service = () => {
     const {enqueueSnackbar} = useSnackbar()
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const isLoading = useService(s => s.isLoading)
+    const isClientChosen = useChooseClientModal(s => s.isClientChosen)
+    const setIsClientChosen = useChooseClientModal(s => s.setIsClientChosen)
 
     const user = useService(s => s.user)
     const setUser = useService(s => s.setUser)
@@ -172,6 +174,7 @@ const Service = () => {
     }
     const chooseClientHandler = (user: IUser) => {
         setUser(user)
+        setIsClientChosen(true)
         setChooseClientModal(false)
         console.log('Service click user', user)
     }
@@ -213,6 +216,10 @@ const Service = () => {
     const changeServiceStatus = (status: number) => {
         updateServiceStatus({serviceId: service.id, newStatus: status})
     }
+    const changeServiceStatusToWaitingSupply = () => {
+        updateServiceStatus({serviceId: service.id, newStatus: 0})
+        // updateService({...service, name: 'boo'})
+    }
 
     // первый рендер
     useEffect(() => {
@@ -230,35 +237,13 @@ const Service = () => {
                     <div className={s.leftSide_buttons}>
                         <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                         <div className={s.buttons_create}>
-                            <Button onClick={() => {setChooseClientModal(true)}}>
+                            <Button disabled={isClientChosen}
+                                    onClick={() => {alert('Пока что не знаю что с этим делать')}}
+                            >
                                 Создать ремонт
                             </Button>
                         </div>
-                        {/*<div className={s.buttons_filter}>
-                            <div>
-                                <Button className={isActiveWaiting ? style.waiting : ''}
-                                        onClick={filterWaitingHandler}
-                                >
-                                    Ожидают
-                                </Button>
-                            </div>
-                            <div>
-                                <Button className={isActiveProcess ? style.process : ''}
-                                        onClick={filterInProcessHandler}
-                                >
-                                    В ремонте
-                                </Button>
-                            </div>
-                            <div>
-                                <Button className={isActiveEnded ? style.ended : ''}
-                                        onClick={filterEndedHandler}
-                                >
-                                    Готово
-                                </Button>
-                            </div>
-                        </div>*/}
                     </div>
-
                     <div className={s.leftSide_content}>
                         <div className={s.buttons_filter}>
                             <div>
@@ -296,7 +281,7 @@ const Service = () => {
                             {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
-                                    <Button onClick={() => {changeServiceStatus(2)}}>
+                                    <Button onClick={changeServiceStatusToWaitingSupply}>
                                         Остановить ремонт
                                     </Button>
                                     <Button onClick={() => {changeServiceStatus(3)}}>
@@ -398,19 +383,8 @@ const Service = () => {
 
                             </div>
                             <div className={s.content_buttons}>
-                                {/*<div className={s.content_saveBtn}>
-                                    <Button type={'submit'}>
-                                        Создать
-                                    </Button>
-                                </div>
-                                <div className={s.content_updateBtn}>
-                                    <Button onClick={() => {}}>
-                                        Обновить
-                                    </Button>
-                                </div>*/}
-
                                 <div className={s.content_saveBtn}>
-                                    <Button type={'submit'}>
+                                    <Button type={'submit'} disabled={!isClientChosen}>
                                         Сохранить
                                     </Button>
                                 </div>
