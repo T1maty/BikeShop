@@ -55,7 +55,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
-                state.filteredServices = [...res.data.filter((s: any) => s.status === 'Waiting')]
+                state.filteredServices = [...res.data.filter((s: ServiceItem) =>
+                    s.status === 'Waiting' && 'WaitingSupply'
+                )]
             })
             set({isLoading: false});
         })

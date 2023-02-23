@@ -189,7 +189,7 @@ const Service = () => {
     // };
 
     // фильтрация сервисов
-    const waitingServicesArray = services.filter(s => s.status === 'Waiting')
+    const waitingServicesArray = services.filter(s => s.status === 'Waiting' && 'WaitingSupply')
     const inProcessServicesArray = services.filter(s => s.status === 'InProcess')
     const readyServicesArray = services.filter(s => s.status === 'Ready')
 
@@ -217,7 +217,7 @@ const Service = () => {
         updateServiceStatus({serviceId: service.id, newStatus: status})
     }
     const changeServiceStatusToWaitingSupply = () => {
-        updateServiceStatus({serviceId: service.id, newStatus: 0})
+        updateServiceStatus({serviceId: service.id, newStatus: 2})
         // updateService({...service, name: 'boo'})
     }
 
