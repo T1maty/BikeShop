@@ -188,7 +188,7 @@ const Service = () => {
     // фильтрация сервисов
     const waitingServicesArray = services.filter(s => s.status === 'Waiting')
     const inProcessServicesArray = services.filter(s => s.status === 'InProcess')
-    const endedServicesArray = services.filter(s => s.status === 'Ended')
+    const readyServicesArray = services.filter(s => s.status === 'Ready')
 
     const filterWaitingHandler = () => {
         setFilteredServices(waitingServicesArray)
@@ -203,7 +203,7 @@ const Service = () => {
         setIsActiveEnded(false)
     }
     const filterEndedHandler = () => {
-        setFilteredServices(endedServicesArray)
+        setFilteredServices(readyServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
         setIsActiveEnded(true)
@@ -219,7 +219,7 @@ const Service = () => {
 
     }
     // закончить ремонт (Ready = 3)
-    const endService = () => {
+    const readyService = () => {
         updateServiceStatus({serviceId: service.id, newStatus: 3})
     }
     // продолжить ремонт (InProcess = 1)
@@ -316,7 +316,7 @@ const Service = () => {
                                     <Button onClick={stopService}>
                                         Остановить ремонт
                                     </Button>
-                                    <Button onClick={endService}>
+                                    <Button onClick={readyService}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
