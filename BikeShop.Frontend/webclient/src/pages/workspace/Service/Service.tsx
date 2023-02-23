@@ -6,7 +6,7 @@ import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
-import {CreateService} from '../../../entities/requests/CreateService';
+import {CreateNewService, CreateService} from '../../../entities/requests/CreateService';
 import {useSnackbar} from 'notistack';
 import useService from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
@@ -97,10 +97,10 @@ const Service = () => {
         defaultValues: {
             name: '',
             clientDescription: '',
-            userMaster: '',
+            userMasterId: '',
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: CreateService) => {
+    const onSubmit: SubmitHandler<any> = (data: CreateNewService) => {
         console.log('сабмит данные', data)
 
         data.shopId = 1
@@ -117,7 +117,7 @@ const Service = () => {
         addNewService(data).then((response: ServiceItem) => {
             formControl.setValue('name', '')
             formControl.setValue('clientDescription', '')
-            formControl.setValue('userMaster', '')
+            formControl.setValue('userMasterId', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
             getFilteredServices() // запрос, чтобы добавился новый сервис в список
@@ -137,7 +137,7 @@ const Service = () => {
 
         formControl.setValue('name', service.name)
         formControl.setValue('clientDescription', service.clientDescription)
-        formControl.setValue('userMaster', service.userMaster)
+        formControl.setValue('userMasterId', service.userMasterId)
     }
     const chooseClientHandler = (user: IUser) => {
         setUser(user)
@@ -340,7 +340,7 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                <ControlledInput name={'userMaster'} label={'Мастер'}
+                                <ControlledInput name={'userMasterId'} label={'Мастер'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />

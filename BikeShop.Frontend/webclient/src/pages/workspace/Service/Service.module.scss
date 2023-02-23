@@ -48,6 +48,7 @@
 
                 .buttons_filter {
                     @include flexBetween();
+                    flex-wrap: wrap;
                     margin-bottom: $defaultLargeMargin;
                     width: 100%;
 
@@ -69,6 +70,7 @@
                     //margin-bottom: $defaultSmallMargin;
 
                     @include flexColumn();
+
                     > div:not(:last-child) {
                         margin-bottom: $defaultSmallMargin;
                     }
@@ -84,10 +86,12 @@
                     .content_inProcessButtons {
                         @include flexOnlyBetween();
                         gap: $defaultSmallMargin;
+                        flex-wrap: wrap;
                     }
                     .content_doneButtons {
                         @include flexOnlyBetween();
                         gap: $defaultSmallMargin;
+                        flex-wrap: wrap;
                     }
                 }
                 .content_info {

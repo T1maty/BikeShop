@@ -12,23 +12,23 @@ export interface ServiceItem {
     status: ServiceStatusType // статус заказа
     clientId: string
     clientDescription: string // описание заказа
-    userCreatedId: string
-    userCreatedDescription: string // тот, кто создал заказ
-    // userMasterId: string
-    userMaster: string // ?
-    userMasterDescription: string // имя мастера
+
+    userCreatedId: string // ИД того, кто создал заказ
+    userCreatedDescription: string // имя того, кто создал заказ
     userDeleted: string // тот, кто удалил заказ из архива
+
+    userMasterId: string
+    userMasterDescription: string // имя мастера
 
     priceWork: number // стоимость услуги
     discountWork: number
     totalWork: number
 
-    priceService: number // ?! стоимость продукта
-    discountService: number
-    totalService: number
+    priceProduct: number // стоимость продукта
+    discountProduct: number
+    totalProduct: number
 
     price: number // общая стоимость сервиса
     discount: number
     total: number
-
 }
