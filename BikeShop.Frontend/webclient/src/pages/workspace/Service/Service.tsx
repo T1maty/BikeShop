@@ -41,6 +41,8 @@ const Service = () => {
     const user = useService(s => s.user)
     const setUser = useService(s => s.setUser)
 
+    const service = useService(s => s.service)
+    const setService = useService(s => s.setService)
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
@@ -160,11 +162,12 @@ const Service = () => {
     }
 
     // хендлеры
-    const chooseServiceItem = (serviceObject: ServiceItem) => {
-        console.log('Клик по ремонту', serviceObject)
+    const chooseServiceItem = (ServiceItem: ServiceItem) => {
+        console.log('Клик по ремонту', ServiceItem)
+        setService(ServiceItem)
 
-        formControl.setValue('name', serviceObject.name)
-        formControl.setValue('clientDescription', serviceObject.clientDescription)
+        formControl.setValue('name', ServiceItem.name)
+        formControl.setValue('clientDescription', ServiceItem.clientDescription)
         formControl.setValue('userMaster', 'Выбранный мастер')
     }
     const chooseClientHandler = (user: IUser) => {
@@ -189,27 +192,27 @@ const Service = () => {
 
     const filterWaitingHandler = () => {
         setFilteredServices(waitingServicesArray)
-        setIsActiveWaiting(current => !current)
+        setIsActiveWaiting(true)
         setIsActiveProcess(false)
         setIsActiveEnded(false)
     }
     const filterInProcessHandler = () => {
         setFilteredServices(inProcessServicesArray)
         setIsActiveWaiting(false)
-        setIsActiveProcess(current => !current)
+        setIsActiveProcess(true)
         setIsActiveEnded(false)
     }
     const filterEndedHandler = () => {
         setFilteredServices(endedServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
-        setIsActiveEnded(current => !current)
+        setIsActiveEnded(true)
     }
 
     // // изменение статуса заказа
     // начать ремонт (=> InProcess = 1)
     const startService = () => {
-        updateServiceStatus({serviceId: 3, newStatus: 1})
+        updateServiceStatus({serviceId: service.id, newStatus: 1})
     }
     // остановить ремонт (WaitingSupply = 2)
     const stopService = () => {
@@ -217,7 +220,7 @@ const Service = () => {
     }
     // закончить ремонт (Ready = 3)
     const endService = () => {
-
+        updateServiceStatus({serviceId: service.id, newStatus: 3})
     }
     // продолжить ремонт (InProcess = 1)
     const continueService = () => {
@@ -310,10 +313,10 @@ const Service = () => {
                             {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
-                                    <Button onClick={() => {}}>
+                                    <Button onClick={stopService}>
                                         Остановить ремонт
                                     </Button>
-                                    <Button onClick={() => {}}>
+                                    <Button onClick={endService}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
@@ -322,10 +325,10 @@ const Service = () => {
                             {
                                 isActiveEnded &&
                                 <div className={s.content_doneButtons}>
-                                    <Button onClick={() => {}}>
+                                    <Button onClick={continueService}>
                                         Продолжить ремонт
                                     </Button>
-                                    <Button onClick={() => {}}>
+                                    <Button onClick={getBike}>
                                         Выдать велосипед
                                     </Button>
                                 </div>

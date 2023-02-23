@@ -86,12 +86,12 @@
                     .content_inProcessButtons {
                         @include flexOnlyBetween();
                         gap: $defaultSmallMargin;
-                        flex-wrap: wrap;
+                        //flex-wrap: wrap;
                     }
                     .content_doneButtons {
                         @include flexOnlyBetween();
                         gap: $defaultSmallMargin;
-                        flex-wrap: wrap;
+                        //flex-wrap: wrap;
                     }
                 }
                 .content_info {
