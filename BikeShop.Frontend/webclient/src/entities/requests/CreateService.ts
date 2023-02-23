@@ -1,20 +1,24 @@
+// export interface CreateService {
+//     shopId: number
+//     clientId: string
+//     name: string
+//     clientDescription: string
+//     userMasterId: string
+// }
+
 export interface CreateService {
     shopId: number
-    clientId: string
-    name: string
-    clientDescription: string
-    userMasterId: string
-}
 
-export interface CreateNewService {
-    name: string
-    shopId: number
     clientId: string
+    name: string
     clientDescription: string
+
     userCreatedId: string
     userMasterId: string
-    workDiscountId: number
+
     productDiscountId: number
+    workDiscountId: number
+
     serviceProducts: [
         {
             catalogKey: string

@@ -6,14 +6,13 @@ import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
-import {CreateNewService, CreateService} from '../../../entities/requests/CreateService';
 import {useSnackbar} from 'notistack';
 import useService from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
 import {ServiceItem} from '../../../entities/responses/ServiceItem';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {IUser} from '../../../entities';
+import {CreateService, IUser} from '../../../entities';
 
 export type ServiceStatusType =
     'Waiting' |
@@ -100,12 +99,42 @@ const Service = () => {
             userMasterId: '',
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: CreateNewService) => {
+    const onSubmit: SubmitHandler<any> = (data: CreateService) => {
         console.log('сабмит данные', data)
 
         data.shopId = 1
         data.clientId = user.id
-        // data.userMasterId = userMasterId
+        data.userCreatedId = data.userMasterId
+        data.userMasterId = user.id
+
+        data.productDiscountId = 0
+        data.workDiscountId = 0
+
+        data.serviceWorks = [
+            {
+                name: 'string',
+                description: 'string',
+                quantity: 0,
+                quantityUnitId: 0,
+                price: 0,
+                discount: 0,
+                total: 0,
+                userId: user.id
+            }
+        ]
+        data.serviceProducts = [
+            {
+                catalogKey: 'string',
+                serialNumber: 'string',
+                name: 'string',
+                quantity: 0,
+                quantityUnitId: 0,
+                price: 0,
+                discount: 0,
+                total: 0,
+                userId: user.id
+            }
+        ]
 
         // надо сделать проверку на выбор клиента
         // if (!data.clientId) {
