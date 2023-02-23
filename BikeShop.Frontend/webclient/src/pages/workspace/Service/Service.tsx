@@ -10,9 +10,8 @@ import {useSnackbar} from 'notistack';
 import useService from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
-import {ServiceItem} from '../../../entities/responses/ServiceItem';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {CreateService, IUser} from '../../../entities';
+import {CreateService, IUser, ServiceItem} from '../../../entities';
 
 export type ServiceStatusType =
     'Waiting' |
@@ -96,7 +95,7 @@ const Service = () => {
         defaultValues: {
             name: '',
             clientDescription: '',
-            userMasterId: '',
+            userMaster: '',
         }
     });
     const onSubmit: SubmitHandler<any> = (data: CreateService) => {
@@ -104,7 +103,7 @@ const Service = () => {
 
         data.shopId = 1
         data.clientId = user.id
-        data.userCreatedId = data.userMasterId
+        data.userCreatedId = '03470748-93c9-437d-a91b-5a71c92bad28' // выбор ил селекта
         data.userMasterId = user.id
 
         data.productDiscountId = 0
@@ -146,7 +145,7 @@ const Service = () => {
         addNewService(data).then((response: ServiceItem) => {
             formControl.setValue('name', '')
             formControl.setValue('clientDescription', '')
-            formControl.setValue('userMasterId', '')
+            formControl.setValue('userMaster', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
             getFilteredServices() // запрос, чтобы добавился новый сервис в список
@@ -161,12 +160,12 @@ const Service = () => {
     }
 
     // хендлеры
-    const chooseServiceItem = (service: ServiceItem) => {
-        console.log('Клик по ремонту', service)
+    const chooseServiceItem = (serviceObject: ServiceItem) => {
+        console.log('Клик по ремонту', serviceObject)
 
-        formControl.setValue('name', service.name)
-        formControl.setValue('clientDescription', service.clientDescription)
-        formControl.setValue('userMasterId', service.userMasterId)
+        formControl.setValue('name', serviceObject.name)
+        formControl.setValue('clientDescription', serviceObject.clientDescription)
+        formControl.setValue('userMaster', 'Выбранный мастер')
     }
     const chooseClientHandler = (user: IUser) => {
         setUser(user)
@@ -369,7 +368,7 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                <ControlledInput name={'userMasterId'} label={'Мастер'}
+                                <ControlledInput name={'userMaster'} label={'Мастер'}
                                                  control={formControl}
                                                  rules={{required: Errors[0].name}}
                                 />

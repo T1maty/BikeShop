@@ -2,15 +2,16 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
-import {ServiceItem} from "../../../entities/responses/ServiceItem";
 import {$api} from "../../../shared";
-import {CreateService, IUser, UpdateService, UpdateServiceStatus} from "../../../entities";
+import {CreateService, IUser, ServiceItem, UpdateService, UpdateServiceStatus} from "../../../entities";
 
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     user: IUser
     setUser: (user: IUser) => void
+    service: ServiceItem
+    setService: (service: ServiceItem) => void
     services: ServiceItem[]
     getAllServices: () => any // надо исправить тип
     filteredServices: ServiceItem[]
@@ -29,6 +30,10 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     user: {} as IUser,
     setUser: (user: IUser) => set({
         user: user
+    }),
+    service: {} as ServiceItem,
+    setService: (service: ServiceItem) => set({
+        service: service
     }),
 
     services: [],

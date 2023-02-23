@@ -1,6 +1,6 @@
 import {ServiceStatusType} from "../../pages/workspace/Service/Service";
 
-export interface ServiceItem {
+export interface CreateServiceResponse {
     shopId: number
 
     id: number // номер заказа
@@ -17,7 +17,7 @@ export interface ServiceItem {
     userCreatedDescription: string // имя того, кто создал заказ
     userDeleted: string // тот, кто удалил заказ из архива
 
-    userMasterId: string // ?
+    userMasterId: string
     userMasterDescription: string // имя мастера
 
     priceWork: number // стоимость услуги
