@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using BikeShop.Service.Application.Common.Exceptions;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.DTO.UpdateService;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
 using BikeShop.Service.Domain.Entities;
+using BikeShop.Service.Domain.Enums;
 using BikeShop.Service.WebApi.Models.Service;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -151,5 +154,19 @@ public class ServiceService : IServiceService
         await _context.ServiceProducts.AddRangeAsync(serviceProducts);
 
         await _context.SaveChangesAsync(new CancellationToken());
+    }
+
+    public async Task UpdateStatus(string status, int id)
+    {
+        if (StatusDict.Get().ContainsKey(status))
+        {
+            var service = await _context.Services.FindAsync(id);
+            service.Status = status;
+            await _context.SaveChangesAsync(new CancellationToken());
+        }
+        else
+        {
+            throw new NotFoundException($"Status {status} not found");
+        }
     }
 }

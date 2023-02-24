@@ -92,13 +92,12 @@ public class ServiceController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateServiceStatus([FromBody] UpdateServiceStatusModel model)
+    public async Task<IActionResult> UpdateServiceStatus([FromQuery] string status, int id)
     {
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
-        var command = _mapper.Map<UpdateServiceStatusCommand>(model);
-        await _mediator.Send(command);
+        await _serviceService.UpdateStatus(status, id);
 
         return Ok();
     }

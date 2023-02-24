@@ -9,4 +9,6 @@ public interface IServiceService
     public Task<List<GetServiceDTO>> GetServiceByShopId(int ShopId);
     public Task Update(UpdateServiceDTO dto);
     public Task<GetServiceDTO> GetServiceById(int Id);
+
+    public Task UpdateStatus(string status, int id);
 }
