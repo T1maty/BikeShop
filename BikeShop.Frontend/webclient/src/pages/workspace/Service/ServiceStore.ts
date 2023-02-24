@@ -8,8 +8,10 @@ import {CreateService, IUser, ServiceItem, UpdateService, UpdateServiceStatus} f
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+
     user: IUser
     setUser: (user: IUser) => void
+
     service: ServiceItem
     setService: (service: ServiceItem) => void
     services: ServiceItem[]
@@ -17,6 +19,7 @@ interface ServiceStore {
     getAllServices: () => any // надо исправить тип
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
+
     addNewService: (data: CreateService) => any // надо исправить тип
     updateService: (data: UpdateService) => any // надо исправить тип
     updateServiceStatus: (data: UpdateServiceStatus) => any // надо исправить тип
@@ -47,7 +50,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
                 state.services = [...res.data]
-                state.filteredServices = [...res.data].filter((item: any) => item.status === 'Waiting' || item.status === 'WaitingSupply')
+                state.filteredServices = [...res.data]
+                    .filter((item: any) => item.status === 'Waiting' || item.status === 'WaitingSupply')
             })
             set({isLoading: false})
         })
@@ -65,7 +69,13 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         return $api.put('/service/updateservice', data)
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
-        return $api.put('/service/updateservicestatus', data)
+        return $api.put('/service/updateservicestatus', data).then(res => {
+            // зарефакторить
+            set(state => {state.services.filter(ser =>
+                ser.id === data.serviceId)[0].status = 'InProcess'}) // data.newStatus.toString()
+            set(state => {state.filteredServices = state.services.filter(serv =>
+                serv.status === 'Waiting' || serv.status === 'WaitingSupply')})
+        })
     },
 })))/*, {
     name: "serviceStore",

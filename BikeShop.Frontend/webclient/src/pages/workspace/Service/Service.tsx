@@ -50,6 +50,7 @@ const Service = () => {
     const getAllServices = useService(s => s.getAllServices)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
+
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
@@ -81,13 +82,14 @@ const Service = () => {
     // дополнительные функции
     // const refreshServiceList = () => {
     //     if (isActiveWaiting) {
-    //         getFilteredServices('Waiting', 'WaitingSupply')
+    //         setFilteredServices(services.filter(serv =>
+    //             serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
     //     }
     //     if (isActiveProcess) {
-    //         getFilteredServices('InProcess')
+    //         setFilteredServices(services.filter(serv => serv.status === 'InProcess'))
     //     }
     //     if (isActiveReady) {
-    //         getFilteredServices('Ready')
+    //         setFilteredServices(services.filter(serv => serv.status === 'Ready'))
     //     }
     // }
 
@@ -209,7 +211,12 @@ const Service = () => {
     // изменение статуса заказа
     const changeServiceStatus = (status: number) => {
         updateServiceStatus({serviceId: service.id, newStatus: status})
-        // refreshServiceList()
+
+        // зарефакторить
+        if (status === 1) {
+            setFilteredServices(services.filter(serv =>
+                serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
+        }
     }
     const changeServiceStatusToWaitingSupply = () => {
         updateServiceStatus({serviceId: service.id, newStatus: 2})
