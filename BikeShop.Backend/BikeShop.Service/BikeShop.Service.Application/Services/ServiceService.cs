@@ -25,7 +25,7 @@ public class ServiceService : IServiceService
         _identityClient = identityClient;
     }
 
-    public async Task<CreateServiceDTO> CreateService(CreateServiceModel model, CancellationToken cancellationToken)
+    public async Task<GetServiceDTO> CreateService(CreateServiceModel model, CancellationToken cancellationToken)
     {
         var service = _mapper.Map<CreateServiceDTO>(model);
 
@@ -43,7 +43,48 @@ public class ServiceService : IServiceService
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return service;
+        var r = await GetServiceById(service.Id);
+
+        return r;
+    }
+
+    public async Task<GetServiceDTO> GetServiceById(int Id)
+    {
+        //Достаем сущность ремонта и мапим ее в сущность для ответа
+        var services = _context.Services.Where(n => n.Id == Id);
+        var servicesModel = await _mapper.ProjectTo<GetServiceDTO>(services).ToListAsync();
+
+        //Подтягиваем все услуги ремонта
+        servicesModel.ForEach(async service => {
+            service.Works = await _context.ServiceWorks.Where(n => n.Id == service.Id).ToListAsync();
+        });
+
+        //Подтягиваем все товары
+        servicesModel.ForEach(async service => {
+            service.Products = await _context.ServiceProducts.Where(n => n.Id == service.Id).ToListAsync();
+        });
+
+        servicesModel.ForEach(async service => {
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().ClientId);
+            service.Client = user;
+        });
+
+        servicesModel.ForEach(async service => {
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserCreatedId);
+            service.UserCreated = user;
+        });
+
+        servicesModel.ForEach(async service => {
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserMasterId);
+            service.UserMaster = user;
+        });
+
+        servicesModel.ForEach(async service => {
+            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserDeletedId);
+            service.UserDeleted = user;
+        });
+
+        return servicesModel.First();
     }
 
     public async Task<List<GetServiceDTO>> GetServiceByShopId(int ShopId)

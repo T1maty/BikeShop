@@ -104,9 +104,16 @@ public class ServiceController : ControllerBase
     }
     
     [HttpPost("create")]
-    public async Task<CreateServiceDTO> Create([FromBody] CreateServiceModel model)
+    public async Task<GetServiceDTO> Create([FromBody] CreateServiceModel model)
     {
 
         return await _serviceService.CreateService(model, new CancellationTokenSource().Token);
+    }
+
+    [HttpGet("getbyid")]
+    public async Task<GetServiceDTO> GetById([FromQuery] int Id)
+    {
+
+        return await _serviceService.GetServiceById(Id);
     }
 }
