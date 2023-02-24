@@ -46,32 +46,13 @@ const Service = () => {
     const service = useService(s => s.service)
     const setService = useService(s => s.setService)
     const services = useService(s => s.services)
+    // const setNewService = useService(s => s.setNewService)
     const getAllServices = useService(s => s.getAllServices)
-    const addNewService = useService(s => s.addNewService)
-    const getFilteredServices = useService(s => s.getFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
+    const setFilteredServices = useService(s => s.setFilteredServices)
+    const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
-
-    // примеры рефакторинга для стилей кнопок фильтрации
-    // const [isFilterActive, setIsFilterActive] = useState<boolean[]>([false, false, false])
-    // пример №1
-    // const checkHandler = (index) => {
-    //     setCheckBoxState(prevState => prevState.map((item, idx) => idx === index ? !item : item))
-    // };
-
-    // пример №2
-    // const [arr, setValue] = useState(['Тише', 'мыши', 'кот', 'на', 'крыше']);
-    // let copy = Object.assign([], arr);
-    // let index = 2;
-    // copy[index] = 'котята';
-    // setValue(copy); // результат: ['Тише', 'мыши', 'котята', 'на', 'крыше']
-
-    // const [isFilterActive, setIsFilterActive] = useState<any[]>([
-    //     {title: 'isActiveWaiting', value: false},
-    //     {title: 'isActiveProcess', value: false},
-    //     {title: 'isActiveReady', value: false},
-    // ])
 
     // для стилей кнопок фильтрации
     const [isActiveWaiting, setIsActiveWaiting] = useState<boolean>(false)
@@ -98,17 +79,17 @@ const Service = () => {
     ])
 
     // дополнительные функции
-    const refreshServiceList = () => {
-        if (isActiveWaiting) {
-            getFilteredServices('Waiting', 'WaitingSupply')
-        }
-        if (isActiveProcess) {
-            getFilteredServices('InProcess')
-        }
-        if (isActiveReady) {
-            getFilteredServices('Ready')
-        }
-    }
+    // const refreshServiceList = () => {
+    //     if (isActiveWaiting) {
+    //         getFilteredServices('Waiting', 'WaitingSupply')
+    //     }
+    //     if (isActiveProcess) {
+    //         getFilteredServices('InProcess')
+    //     }
+    //     if (isActiveReady) {
+    //         getFilteredServices('Ready')
+    //     }
+    // }
 
     // сбор данных с формы
     const formControl = useForm({
@@ -123,7 +104,7 @@ const Service = () => {
 
         data.shopId = 1
         data.clientId = user.id
-        data.userCreatedId = '03470748-93c9-437d-a91b-5a71c92bad28' // выбор ил селекта
+        data.userCreatedId = '03470748-93c9-437d-a91b-5a71c92bad28' // выбор из селекта
         data.userMasterId = user.id
 
         data.productDiscountId = 0
@@ -156,7 +137,8 @@ const Service = () => {
         ]
 
         addNewService(data).then((response: ServiceItem) => {
-            refreshServiceList() // запрос, чтобы список обновился
+            // refreshServiceList() // запрос, чтобы список обновился
+            // setNewService(data)
 
             formControl.setValue('name', '')
             formControl.setValue('clientDescription', '')
@@ -204,25 +186,21 @@ const Service = () => {
     //     console.log('клик по селекту', event.target.value)
     // };
 
-    // фильтрация сервисов
-    // const waitingServicesArray = services.filter(s => s.status === 'Waiting' && 'WaitingSupply')
-    // const inProcessServicesArray = services.filter(s => s.status === 'InProcess')
-    // const readyServicesArray = services.filter(s => s.status === 'Ready')
-
     const filterWaitingHandler = () => {
-        getFilteredServices('Waiting', 'WaitingSupply')
+        setFilteredServices(services.filter(serv =>
+            serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
         setIsActiveReady(false)
     }
     const filterInProcessHandler = () => {
-        getFilteredServices('InProcess')
+        setFilteredServices(services.filter(serv => serv.status === 'InProcess'))
         setIsActiveWaiting(false)
         setIsActiveProcess(true)
         setIsActiveReady(false)
     }
     const filterReadyHandler = () => {
-        getFilteredServices('Ready')
+        setFilteredServices(services.filter(serv => serv.status === 'Ready'))
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
         setIsActiveReady(true)
@@ -231,7 +209,7 @@ const Service = () => {
     // изменение статуса заказа
     const changeServiceStatus = (status: number) => {
         updateServiceStatus({serviceId: service.id, newStatus: status})
-        refreshServiceList()
+        // refreshServiceList()
     }
     const changeServiceStatusToWaitingSupply = () => {
         updateServiceStatus({serviceId: service.id, newStatus: 2})
@@ -240,10 +218,8 @@ const Service = () => {
 
     // первый рендер
     useEffect(() => {
-        getAllServices() // получение всех сервисов
-        getFilteredServices('Waiting', 'WaitingSupply') // первоначальное отображение списка (ожидание)
+        getAllServices()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
-        console.log('количество сервисов =', services.length)
     }, [])
 
     return (

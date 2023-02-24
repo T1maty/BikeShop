@@ -11,7 +11,6 @@ import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
 import useChooseClientModal from './ChooseClientModalStore';
 import {Errors} from "../../entities/errors/workspaceErrors";
-import useGlobalDataStore from '../../pages/workspace/GlobalDataStore';
 
 interface ChooseClientModalProps {
     extraCallback: (user: IUser) => void
