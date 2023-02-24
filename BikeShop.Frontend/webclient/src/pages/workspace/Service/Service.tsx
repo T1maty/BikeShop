@@ -49,15 +49,11 @@ const Service = () => {
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
     const getFilteredServices = useService(s => s.getFilteredServices)
-    // const getWaitingFilteredServices = useService(s => s.getWaitingFilteredServices)
-    // const getInProcessFilteredServices = useService(s => s.getInProcessFilteredServices)
-    // const getReadyFilteredServices = useService(s => s.getReadyFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
-    // const setFilteredServices = useService(s => s.setFilteredServices)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
 
-    // для стилей кнопок фильтрации
+    // примеры рефакторинга для стилей кнопок фильтрации
     // const [isFilterActive, setIsFilterActive] = useState<boolean[]>([false, false, false])
     // пример №1
     // const checkHandler = (index) => {
@@ -74,12 +70,16 @@ const Service = () => {
     // const [isFilterActive, setIsFilterActive] = useState<any[]>([
     //     {title: 'isActiveWaiting', value: false},
     //     {title: 'isActiveProcess', value: false},
-    //     {title: 'isActiveEnded', value: false},
+    //     {title: 'isActiveReady', value: false},
     // ])
 
+    // для стилей кнопок фильтрации
     const [isActiveWaiting, setIsActiveWaiting] = useState<boolean>(false)
     const [isActiveProcess, setIsActiveProcess] = useState<boolean>(false)
-    const [isActiveEnded, setIsActiveEnded] = useState<boolean>(false)
+    const [isActiveReady, setIsActiveReady] = useState<boolean>(false)
+
+    // для стилей выбранного элемента
+    const [activeId, setActiveId] = useState<number | null>(null)
 
     // тестовые данные
     const [productsItem, setProductsItem] = useState([
@@ -96,6 +96,19 @@ const Service = () => {
         {id: 2, title: 'Сезонное ТО', price: 2500, count: 1},
         {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
     ])
+
+    // дополнительные функции
+    const refreshServiceList = () => {
+        if (isActiveWaiting) {
+            getFilteredServices('Waiting', 'WaitingSupply')
+        }
+        if (isActiveProcess) {
+            getFilteredServices('InProcess')
+        }
+        if (isActiveReady) {
+            getFilteredServices('Ready')
+        }
+    }
 
     // сбор данных с формы
     const formControl = useForm({
@@ -142,20 +155,14 @@ const Service = () => {
             }
         ]
 
-        // надо сделать проверку на выбор клиента
-        // if (!data.clientId) {
-        //     console.log('выберите клиента')
-        // } else {
-        //
-        // }
-
         addNewService(data).then((response: ServiceItem) => {
+            refreshServiceList() // запрос, чтобы список обновился
+
             formControl.setValue('name', '')
             formControl.setValue('clientDescription', '')
             formControl.setValue('userMaster', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-            // getWaitingFilteredServices() // запрос, чтобы добавился новый сервис в список
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
             formControl.setError('name', {type: 'serverError', message: message})
@@ -165,10 +172,15 @@ const Service = () => {
 
         // updateService(data).then((response) => {}
     }
-
+    
     // хендлеры
     const chooseServiceItem = (ServiceItem: ServiceItem) => {
         console.log('Клик по ремонту', ServiceItem)
+        
+        // поиск элемента из массива для применения стилей
+        const activeElement = filteredServices.find(item => item.id === ServiceItem.id)
+        activeElement && setActiveId(ServiceItem.id)
+
         setService(ServiceItem)
         setIsClientChosen(true)
 
@@ -193,39 +205,33 @@ const Service = () => {
     // };
 
     // фильтрация сервисов
-    const waitingServicesArray = services.filter(s => s.status === 'Waiting' && 'WaitingSupply')
-    const inProcessServicesArray = services.filter(s => s.status === 'InProcess')
-    const readyServicesArray = services.filter(s => s.status === 'Ready')
+    // const waitingServicesArray = services.filter(s => s.status === 'Waiting' && 'WaitingSupply')
+    // const inProcessServicesArray = services.filter(s => s.status === 'InProcess')
+    // const readyServicesArray = services.filter(s => s.status === 'Ready')
 
     const filterWaitingHandler = () => {
         getFilteredServices('Waiting', 'WaitingSupply')
-        // getAllServices()
-        // setFilteredServices(waitingServicesArray)
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
-        setIsActiveEnded(false)
+        setIsActiveReady(false)
     }
     const filterInProcessHandler = () => {
         getFilteredServices('InProcess')
-        // getAllServices()
-        // setFilteredServices(inProcessServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(true)
-        setIsActiveEnded(false)
+        setIsActiveReady(false)
     }
     const filterReadyHandler = () => {
         getFilteredServices('Ready')
-        // getAllServices()
-        // setFilteredServices(readyServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
-        setIsActiveEnded(true)
+        setIsActiveReady(true)
     }
 
     // изменение статуса заказа
     const changeServiceStatus = (status: number) => {
         updateServiceStatus({serviceId: service.id, newStatus: status})
-        // getAllServices()
+        refreshServiceList()
     }
     const changeServiceStatusToWaitingSupply = () => {
         updateServiceStatus({serviceId: service.id, newStatus: 2})
@@ -273,7 +279,7 @@ const Service = () => {
                                 </Button>
                             </div>
                             <div>
-                                <Button className={isActiveEnded ? style.ended : ''}
+                                <Button className={isActiveReady ? style.ended : ''}
                                         onClick={filterReadyHandler}
                                 >
                                     Готово
@@ -284,7 +290,8 @@ const Service = () => {
                             {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
-                                    <Button onClick={() => {changeServiceStatus(1)}}>
+                                    <Button disabled={!isClientChosen}
+                                            onClick={() => {changeServiceStatus(1)}}>
                                         Начать ремонт
                                     </Button>
                                 </div>
@@ -293,22 +300,26 @@ const Service = () => {
                             {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
-                                    <Button onClick={changeServiceStatusToWaitingSupply}>
+                                    <Button disabled={!isClientChosen}
+                                            onClick={changeServiceStatusToWaitingSupply}>
                                         Остановить ремонт
                                     </Button>
-                                    <Button onClick={() => {changeServiceStatus(3)}}>
+                                    <Button disabled={!isClientChosen}
+                                            onClick={() => {changeServiceStatus(3)}}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
                             }
 
                             {
-                                isActiveEnded &&
+                                isActiveReady &&
                                 <div className={s.content_doneButtons}>
-                                    <Button onClick={() => {changeServiceStatus(1)}}>
+                                    <Button disabled={!isClientChosen}
+                                            onClick={() => {changeServiceStatus(1)}}>
                                         Продолжить ремонт
                                     </Button>
-                                    <Button onClick={() => {changeServiceStatus(4)}}>
+                                    <Button disabled={!isClientChosen}
+                                            onClick={() => {changeServiceStatus(4)}}>
                                         Выдать велосипед
                                     </Button>
                                 </div>
@@ -322,7 +333,8 @@ const Service = () => {
 
                                         filteredServices.map(service => {
                                             return (
-                                                <div className={s.service_item} key={service.id}
+                                                <div key={service.id}
+                                                     className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
                                                      onClick={() => {chooseServiceItem(service)}}
                                                 >
                                                     {service.name}

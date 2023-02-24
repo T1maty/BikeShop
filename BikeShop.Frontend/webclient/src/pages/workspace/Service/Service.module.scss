@@ -98,8 +98,12 @@
                     @include flexColumn();
                     margin-top: $defaultSmallMargin;
 
-                    .service_item {
+                    .serviceItem {
                         @include hoverItem();
+                    }
+                    .serviceItem_active {
+                        padding: 5px 0;
+                        background-color: $themeColorGray;
                     }
                 }
             }
