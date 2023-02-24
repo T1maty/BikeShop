@@ -16,7 +16,12 @@ interface ServiceStore {
     getAllServices: () => any // надо исправить тип
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
-    getWaitingFilteredServices: () => any // надо исправить тип
+
+    getFilteredServices: (incomingStatus: string, extraStatus?: string) => any // надо исправить тип
+    // getWaitingFilteredServices: () => any // надо исправить тип
+    // getInProcessFilteredServices: () => any // надо исправить тип
+    // getReadyFilteredServices: () => any // надо исправить тип
+
     addNewService: (data: CreateService) => any // надо исправить тип
     updateService: (data: UpdateService) => any // надо исправить тип
     updateServiceStatus: (data: UpdateServiceStatus) => any // надо исправить тип
@@ -41,7 +46,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
-                state.services = [...res.data] // рабочий вариант
+                state.services = [...res.data]
             })
             set({isLoading: false});
         })
@@ -51,17 +56,52 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     setFilteredServices: (filteredServices: ServiceItem[]) => set({
         filteredServices: filteredServices
     }),
-    getWaitingFilteredServices: () => {
+
+    getFilteredServices: (incomingStatus: string, extraStatus?: string) => {
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
                 state.filteredServices = [...res.data.filter((s: ServiceItem) =>
-                    s.status === 'Waiting' && 'WaitingSupply'
+                    s.status === incomingStatus || s.status === extraStatus
                 )]
             })
             set({isLoading: false});
         })
     },
+
+    // getWaitingFilteredServices: () => {
+    //     set({isLoading: true});
+    //     return $api.get('/service/getbyshopid/1').then(res => {
+    //         set(state => {
+    //             state.filteredServices = [...res.data.filter((s: ServiceItem) =>
+    //                 s.status === 'Waiting' || s.status === 'WaitingSupply'
+    //             )]
+    //         })
+    //         set({isLoading: false});
+    //     })
+    // },
+    // getInProcessFilteredServices: () => {
+    //     set({isLoading: true});
+    //     return $api.get('/service/getbyshopid/1').then(res => {
+    //         set(state => {
+    //             state.filteredServices = [...res.data.filter((s: ServiceItem) =>
+    //                 s.status === 'InProcess'
+    //             )]
+    //         })
+    //         set({isLoading: false});
+    //     })
+    // },
+    // getReadyFilteredServices: () => {
+    //     set({isLoading: true});
+    //     return $api.get('/service/getbyshopid/1').then(res => {
+    //         set(state => {
+    //             state.filteredServices = [...res.data.filter((s: ServiceItem) =>
+    //                 s.status === 'Ready'
+    //             )]
+    //         })
+    //         set({isLoading: false});
+    //     })
+    // },
 
     addNewService: (data: CreateService) => {
         return $api.post('/service/create', data)

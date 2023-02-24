@@ -48,7 +48,10 @@ const Service = () => {
     const services = useService(s => s.services)
     const getAllServices = useService(s => s.getAllServices)
     const addNewService = useService(s => s.addNewService)
-    const getWaitingFilteredServices = useService(s => s.getWaitingFilteredServices)
+    const getFilteredServices = useService(s => s.getFilteredServices)
+    // const getWaitingFilteredServices = useService(s => s.getWaitingFilteredServices)
+    // const getInProcessFilteredServices = useService(s => s.getInProcessFilteredServices)
+    // const getReadyFilteredServices = useService(s => s.getReadyFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const updateService = useService(s => s.updateService)
@@ -152,7 +155,7 @@ const Service = () => {
             formControl.setValue('userMaster', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-            getWaitingFilteredServices() // запрос, чтобы добавился новый сервис в список
+            // getWaitingFilteredServices() // запрос, чтобы добавился новый сервис в список
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
             formControl.setError('name', {type: 'serverError', message: message})
@@ -194,22 +197,25 @@ const Service = () => {
     const readyServicesArray = services.filter(s => s.status === 'Ready')
 
     const filterWaitingHandler = () => {
-        getAllServices()
-        setFilteredServices(waitingServicesArray)
+        getFilteredServices('Waiting', 'WaitingSupply')
+        // getAllServices()
+        // setFilteredServices(waitingServicesArray)
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
         setIsActiveEnded(false)
     }
     const filterInProcessHandler = () => {
-        getAllServices()
-        setFilteredServices(inProcessServicesArray)
+        getFilteredServices('InProcess')
+        // getAllServices()
+        // setFilteredServices(inProcessServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(true)
         setIsActiveEnded(false)
     }
-    const filterEndedHandler = () => {
-        getAllServices()
-        setFilteredServices(readyServicesArray)
+    const filterReadyHandler = () => {
+        getFilteredServices('Ready')
+        // getAllServices()
+        // setFilteredServices(readyServicesArray)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
         setIsActiveEnded(true)
@@ -218,7 +224,7 @@ const Service = () => {
     // изменение статуса заказа
     const changeServiceStatus = (status: number) => {
         updateServiceStatus({serviceId: service.id, newStatus: status})
-        getAllServices()
+        // getAllServices()
     }
     const changeServiceStatusToWaitingSupply = () => {
         updateServiceStatus({serviceId: service.id, newStatus: 2})
@@ -227,9 +233,10 @@ const Service = () => {
 
     // первый рендер
     useEffect(() => {
-        getAllServices() // получение всех сервисов для последующей фильтрации
-        getWaitingFilteredServices() // первоначальное отображение списка (ожидание)
+        // getAllServices() // получение всех сервисов для последующей фильтрации
+        getFilteredServices('Waiting', 'WaitingSupply') // первоначальное отображение списка (ожидание)
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
+        console.log('количество сервисов =', services.length)
     }, [])
 
     return (
@@ -266,7 +273,7 @@ const Service = () => {
                             </div>
                             <div>
                                 <Button className={isActiveEnded ? style.ended : ''}
-                                        onClick={filterEndedHandler}
+                                        onClick={filterReadyHandler}
                                 >
                                     Готово
                                 </Button>
