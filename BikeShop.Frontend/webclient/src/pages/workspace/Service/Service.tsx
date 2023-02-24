@@ -53,7 +53,7 @@ const Service = () => {
     // const getInProcessFilteredServices = useService(s => s.getInProcessFilteredServices)
     // const getReadyFilteredServices = useService(s => s.getReadyFilteredServices)
     const filteredServices = useService(s => s.filteredServices)
-    const setFilteredServices = useService(s => s.setFilteredServices)
+    // const setFilteredServices = useService(s => s.setFilteredServices)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
 
@@ -170,6 +170,7 @@ const Service = () => {
     const chooseServiceItem = (ServiceItem: ServiceItem) => {
         console.log('Клик по ремонту', ServiceItem)
         setService(ServiceItem)
+        setIsClientChosen(true)
 
         formControl.setValue('name', ServiceItem.name)
         formControl.setValue('clientDescription', ServiceItem.clientDescription)
@@ -233,7 +234,7 @@ const Service = () => {
 
     // первый рендер
     useEffect(() => {
-        // getAllServices() // получение всех сервисов для последующей фильтрации
+        getAllServices() // получение всех сервисов
         getFilteredServices('Waiting', 'WaitingSupply') // первоначальное отображение списка (ожидание)
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
         console.log('количество сервисов =', services.length)

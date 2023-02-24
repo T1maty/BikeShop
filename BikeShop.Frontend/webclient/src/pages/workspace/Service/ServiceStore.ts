@@ -15,8 +15,7 @@ interface ServiceStore {
     services: ServiceItem[]
     getAllServices: () => any // надо исправить тип
     filteredServices: ServiceItem[]
-    setFilteredServices: (filteredServices: ServiceItem[]) => void
-
+    // setFilteredServices: (filteredServices: ServiceItem[]) => void
     getFilteredServices: (incomingStatus: string, extraStatus?: string) => any // надо исправить тип
     // getWaitingFilteredServices: () => any // надо исправить тип
     // getInProcessFilteredServices: () => any // надо исправить тип
@@ -53,10 +52,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     },
 
     filteredServices: [],
-    setFilteredServices: (filteredServices: ServiceItem[]) => set({
-        filteredServices: filteredServices
-    }),
-
+    // setFilteredServices: (filteredServices: ServiceItem[]) => set({
+    //     filteredServices: filteredServices
+    // }),
     getFilteredServices: (incomingStatus: string, extraStatus?: string) => {
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
