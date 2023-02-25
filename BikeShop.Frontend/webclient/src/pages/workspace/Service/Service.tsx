@@ -158,7 +158,7 @@ const Service = () => {
 
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItem)
-        setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
+        // setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
         setIsClientChosen(true)
         console.log('клиент выбранного сервиса', currentUser)
 
