@@ -1,6 +1,6 @@
 export interface IUser {
-    id: string
     shopId: number
+    id: string
     lastName: string
     firstName: string
     patronymic: string

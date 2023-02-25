@@ -8,14 +8,14 @@ import {CreateService, IUser, ServiceItem, UpdateService, UpdateServiceStatus} f
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+    currentUser: IUser
+    setCurrentUser: (user: any) => void
+    currentService: ServiceItem
+    setCurrentService: (service: ServiceItem | undefined) => void // исправить тип?
 
-    user: IUser
-    setUser: (user: IUser) => void
-
-    service: ServiceItem
-    setService: (service: ServiceItem) => void
+    users: any[],
+    getAllUsersFromServices: () => void // надо исправить тип
     services: ServiceItem[]
-    // setNewService: (service: CreateService) => void
     getAllServices: () => any // надо исправить тип
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
@@ -30,21 +30,24 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     setIsLoading: (value: boolean) => set({
         isLoading: value
     }),
-    user: {} as IUser,
-    setUser: (user: IUser) => set({
-        user: user
+    currentUser: {} as IUser,
+    setCurrentUser: (user: any) => set({
+        currentUser: user
     }),
-    service: {} as ServiceItem,
-    setService: (service: ServiceItem) => set({
-        service: service
+    currentService: {} as ServiceItem,
+    setCurrentService: (service: ServiceItem | undefined) => set({
+        currentService: service // исправить тип?
     }),
 
+    users: [],
+    getAllUsersFromServices: () => {
+        return $api.get('/service/getbyshopid/1').then(res => {
+            set(state => {
+                state.users = [...res.data].map((s: any) => s.client)
+            })
+        })
+    },
     services: [],
-    // setNewService: (newService: CreateService) => set(state => {
-    //     // @ts-ignore
-    //     state.services.push(newService);
-    // }),
-    // получение всех сервисов и фильтрация списка ожидания
     getAllServices: () => {
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
@@ -56,10 +59,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
             set({isLoading: false})
         })
     },
-
     filteredServices: [],
     setFilteredServices: (filteredServices: ServiceItem[]) => set(state => {
-        state.filteredServices = [...filteredServices]
+        state.filteredServices = filteredServices
     }),
 
     addNewService: (data: CreateService) => {

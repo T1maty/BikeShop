@@ -1,3 +1,14 @@
+import {IUser} from "./IUser";
+
+export type ServiceStatusType =
+    'Waiting' |
+    'InProcess' |
+    'WaitingSupply' |
+    'Ready' |
+    'Ended' |
+    'Canceled' |
+    'Deleted';
+
 export interface ServiceItem {
     id: number
     createdAt: string
@@ -5,8 +16,8 @@ export interface ServiceItem {
     enabled: boolean
 
     name: string
-    status: string
-    client: null | string
+    status: ServiceStatusType
+    client: IUser
     clientDescription: string
     userMaster: string // null | string
     userMasterDescription: string
