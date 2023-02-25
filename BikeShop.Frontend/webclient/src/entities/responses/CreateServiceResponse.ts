@@ -1,4 +1,5 @@
 import {ServiceStatusType} from "../models/ServiceItem";
+import {IUser} from "../models/IUser";
 
 export interface CreateServiceResponse {
     shopId: number
@@ -9,16 +10,16 @@ export interface CreateServiceResponse {
     enabled: boolean
 
     name: string // название техники (по макету)
-    status: ServiceStatusType // статус заказа
-    clientId: string
     clientDescription: string // описание заказа
+    status: ServiceStatusType // статус заказа
+    client: IUser // данные клиента
 
-    userCreatedId: string // ИД того, кто создал заказ
-    userCreatedDescription: string // имя того, кто создал заказ
+    userCreated: IUser // тот, кто создал заказ
+    userCreatedDescription: string // комментарий к описанию удаления
     userDeleted: string // тот, кто удалил заказ из архива
 
-    userMasterId: string
-    userMasterDescription: string // имя мастера
+    userMaster: IUser // данные мастера
+    userMasterDescription: string // комментарий от мастера
 
     priceWork: number // стоимость услуги
     discountWork: number
@@ -31,4 +32,23 @@ export interface CreateServiceResponse {
     price: number // общая стоимость сервиса
     discount: number
     total: number
+
+    products: ProductWorkItem[]
+    works: ProductWorkItem[]
+}
+
+type ProductWorkItem = {
+    id: number
+    createdAt: string
+    updatedAt: string
+    enabled: true
+    name: string
+    description: string
+    quantity: number
+    quantityUnitId: number
+    price: number
+    discount: number
+    total: number
+    userId: string
+    serviceId: number
 }
