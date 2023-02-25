@@ -131,14 +131,7 @@ const Service = () => {
         ]
 
         addNewService(data).then((response: ServiceItem) => {
-            // refreshServiceList() // запрос, чтобы список обновился
-            // setNewService(data)
-
             clearInputsHandler()
-            // formControl.setValue('name', '')
-            // formControl.setValue('clientDescription', '')
-            // formControl.setValue('userMaster', '')
-
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
@@ -163,6 +156,7 @@ const Service = () => {
         const activeElement = filteredServices.find(item => item.id === ServiceItem.id)
         activeElement && setActiveId(ServiceItem.id)
 
+        // сетаем данные в стор при выборе
         setCurrentService(ServiceItem)
         setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
         setIsClientChosen(true)

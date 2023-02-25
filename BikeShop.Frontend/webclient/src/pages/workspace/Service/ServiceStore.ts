@@ -43,7 +43,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     getAllUsersFromServices: () => {
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
-                state.users = [...res.data].map((s: any) => s.client)
+                state.users = res.data.map((s: any) => s.client)
             })
         })
     },
@@ -52,8 +52,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
-                state.services = [...res.data]
-                state.filteredServices = [...res.data]
+                state.services = res.data
+                state.filteredServices = res.data
                     .filter((item: any) => item.status === 'Waiting' || item.status === 'WaitingSupply')
             })
             set({isLoading: false})
@@ -73,8 +73,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     updateServiceStatus: (data: UpdateServiceStatus) => {
         return $api.put('/service/updateservicestatus', data).then(res => {
             // зарефакторить
-            set(state => {state.services.filter(ser =>
-                ser.id === data.serviceId)[0].status = 'InProcess'}) // data.newStatus.toString()
+            set(state => {state.services.filter(serv =>
+                serv.id === data.serviceId)[0].status = 'InProcess'}) // data.newStatus.toString()
             set(state => {state.filteredServices = state.services.filter(serv =>
                 serv.status === 'Waiting' || serv.status === 'WaitingSupply')})
         })
