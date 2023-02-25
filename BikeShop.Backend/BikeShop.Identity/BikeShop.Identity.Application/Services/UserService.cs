@@ -34,5 +34,20 @@ namespace BikeShop.Identity.Application.Services
             var res = _mapper.Map<UserDTO>(user);
             return res;
         }
+
+        public async Task<Dictionary<string, UserDTO>> GetUsersDictionary(List<string> guids)
+        {
+            var dict = new Dictionary<string, UserDTO>();
+            foreach (var guid in guids)
+            {
+                var user = await _userManager.FindByIdAsync(guid);
+                if(user != null && !dict.ContainsKey(guid))
+                {
+                    dict.Add(guid, _mapper.Map<UserDTO>(user));
+                }
+            }
+
+            return dict;
+        }
     }
 }

@@ -13,5 +13,8 @@ namespace BikeShop.Service.Application.RefitClients
     {
         [Get("/user/getById")]
         public Task<UserDTO?> GetById(Guid id);
+
+        [Post("/user/getdictionary")]
+        public Task<Dictionary<string, UserDTO>> GetDictionary(List<string> guids);
     }
 }

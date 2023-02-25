@@ -416,6 +416,22 @@
       ],
       "SwaggerKey": "identity"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/user/getdictionary",
+      "UpstreamHttpMethod": [
+        "post"
+      ],
+      "DownstreamPathTemplate": "/user/getdictionary",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
 
     {
       "UpstreamPathTemplate": "/api/user/getbyid",

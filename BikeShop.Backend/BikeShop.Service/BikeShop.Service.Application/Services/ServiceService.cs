@@ -57,34 +57,33 @@ public class ServiceService : IServiceService
         var services = _context.Services.Where(n => n.Id == Id);
         var servicesModel = await _mapper.ProjectTo<GetServiceDTO>(services).ToListAsync();
 
-        //Подтягиваем все услуги ремонта
+        var usersToFind = new List<string>();
+
+        foreach (var n in services)
+        {
+            if (!usersToFind.Contains(n.ClientId.ToString())) usersToFind.Add(n.ClientId.ToString());
+            if (!usersToFind.Contains(n.UserCreatedId.ToString())) usersToFind.Add(n.UserCreatedId.ToString());
+            if (!usersToFind.Contains(n.UserDeletedId.ToString())) usersToFind.Add(n.UserDeletedId.ToString());
+            if (!usersToFind.Contains(n.UserMasterId.ToString())) usersToFind.Add(n.UserMasterId.ToString());
+        }
+
+        var usersDitionary = await _identityClient.GetDictionary(usersToFind);
+
         servicesModel.ForEach(async service => {
             service.Works = await _context.ServiceWorks.Where(n => n.Id == service.Id).ToListAsync();
-        });
-
-        //Подтягиваем все товары
-        servicesModel.ForEach(async service => {
             service.Products = await _context.ServiceProducts.Where(n => n.Id == service.Id).ToListAsync();
-        });
 
-        servicesModel.ForEach(async service => {
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().ClientId);
-            service.Client = user;
-        });
+            var clientId = services.Where(n => n.Id == service.Id).First().ClientId.ToString();
+            service.Client = usersDitionary.ContainsKey(clientId) ? usersDitionary[clientId] : null;
 
-        servicesModel.ForEach(async service => {
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserCreatedId);
-            service.UserCreated = user;
-        });
+            var userCreatedId = services.Where(n => n.Id == service.Id).First().UserCreatedId.ToString();
+            service.UserCreated = usersDitionary.ContainsKey(userCreatedId) ? usersDitionary[userCreatedId] : null;
 
-        servicesModel.ForEach(async service => {
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserMasterId);
-            service.UserMaster = user;
-        });
+            var userDeletedId = services.Where(n => n.Id == service.Id).First().UserDeletedId.ToString();
+            service.UserDeleted = usersDitionary.ContainsKey(userDeletedId) ? usersDitionary[userDeletedId] : null;
 
-        servicesModel.ForEach(async service => {
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserDeletedId);
-            service.UserDeleted = user;
+            var userMasterId = services.Where(n => n.Id == service.Id).First().UserMasterId.ToString();
+            service.UserMaster = usersDitionary.ContainsKey(userMasterId) ? usersDitionary[userMasterId] : null;
         });
 
         return servicesModel.First();
@@ -96,34 +95,33 @@ public class ServiceService : IServiceService
         var services = _context.Services.Where(n => n.ShopId == ShopId);
         var servicesModel =await _mapper.ProjectTo<GetServiceDTO>(services).ToListAsync();
 
-        //Подтягиваем все услуги ремонта
+        var usersToFind = new List<string>();
+
+        foreach (var n in services)
+        {
+            if (!usersToFind.Contains(n.ClientId.ToString())) usersToFind.Add(n.ClientId.ToString());
+            if (!usersToFind.Contains(n.UserCreatedId.ToString())) usersToFind.Add(n.UserCreatedId.ToString());
+            if (!usersToFind.Contains(n.UserDeletedId.ToString())) usersToFind.Add(n.UserDeletedId.ToString());
+            if (!usersToFind.Contains(n.UserMasterId.ToString())) usersToFind.Add(n.UserMasterId.ToString());
+        }
+
+        var usersDitionary = await _identityClient.GetDictionary(usersToFind);
+
         servicesModel.ForEach(async service => {
             service.Works = await _context.ServiceWorks.Where(n => n.Id == service.Id).ToListAsync();
-        });
-
-        //Подтягиваем все товары
-        servicesModel.ForEach(async service => {
             service.Products = await _context.ServiceProducts.Where(n => n.Id == service.Id).ToListAsync();
-        });
 
-        servicesModel.ForEach(async service =>{
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().ClientId);
-            service.Client = user;
-        });
+            var clientId = services.Where(n => n.Id == service.Id).First().ClientId.ToString();
+            service.Client = usersDitionary.ContainsKey(clientId) ? usersDitionary[clientId]:null;
 
-        servicesModel.ForEach(async service => {
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserCreatedId);
-            service.UserCreated = user;
-        });
+            var userCreatedId = services.Where(n => n.Id == service.Id).First().UserCreatedId.ToString();
+            service.UserCreated = usersDitionary.ContainsKey(userCreatedId) ? usersDitionary[userCreatedId] : null;
 
-        servicesModel.ForEach(async service => {
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserMasterId);
-            service.UserMaster = user;
-        });
+            var userDeletedId = services.Where(n => n.Id == service.Id).First().UserDeletedId.ToString();
+            service.UserDeleted = usersDitionary.ContainsKey(userDeletedId) ? usersDitionary[userDeletedId] : null;
 
-        servicesModel.ForEach(async service => {
-            var user = await _identityClient.GetById(services.Where(n => n.Id == service.Id).First().UserDeletedId);
-            service.UserDeleted = user;
+            var userMasterId = services.Where(n => n.Id == service.Id).First().UserMasterId.ToString();
+            service.UserMaster = usersDitionary.ContainsKey(userMasterId) ? usersDitionary[userMasterId] : null;
         });
 
         return servicesModel;

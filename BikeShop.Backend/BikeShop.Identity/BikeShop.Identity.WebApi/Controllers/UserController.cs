@@ -161,4 +161,13 @@ public class UserController : ControllerBase
     {
         return await _userService.GetUserById(id);
     }
+
+    [HttpPost("getdictionary")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<Dictionary<string, UserDTO>> GetDictionary([FromBody] List<string> guids)
+    {
+        return await _userService.GetUsersDictionary(guids);
+    }
 }
