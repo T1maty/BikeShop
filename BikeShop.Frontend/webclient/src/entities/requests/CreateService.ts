@@ -15,7 +15,7 @@ export interface CreateService {
     serviceWorks: ServiceWork[]
 }
 
-type ServiceProductWork = {
+export type ServiceProductWork = {
     name: string
     quantity: number
     quantityUnitId: number
@@ -25,11 +25,11 @@ type ServiceProductWork = {
     userId: string
 }
 
-type ServiceProduct = ServiceProductWork & {
+export type ServiceProduct = ServiceProductWork & {
     catalogKey: string
     serialNumber: string
 }
 
-type ServiceWork = ServiceProductWork & {
+export type ServiceWork = ServiceProductWork & {
     description: string
 }

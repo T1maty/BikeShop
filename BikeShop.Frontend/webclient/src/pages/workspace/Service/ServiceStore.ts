@@ -4,6 +4,7 @@ import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {$api} from "../../../shared";
 import {CreateService, IUser, ServiceItem, UpdateService, UpdateServiceStatus} from "../../../entities";
+import {ServiceProduct, ServiceWork} from "../../../entities/requests/CreateService";
 
 interface ServiceStore {
     isLoading: boolean
@@ -19,6 +20,10 @@ interface ServiceStore {
     getAllServices: () => any // надо исправить тип
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
+
+    products: ServiceProduct[]
+    works: ServiceWork[]
+    getUserProductsWorks: () => void // надо исправить тип
 
     addNewService: (data: CreateService) => any // надо исправить тип
     updateService: (data: UpdateService) => any // надо исправить тип
@@ -63,6 +68,19 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     setFilteredServices: (filteredServices: ServiceItem[]) => set(state => {
         state.filteredServices = filteredServices
     }),
+
+    products: [],
+    works: [],
+    getUserProductsWorks: () => {
+        set({isLoading: true});
+        return $api.get('/service/getbyshopid/1').then(res => {
+            set(state => {
+                state.products = [...res.data.products]
+                state.works = [...res.data.works]
+            })
+            set({isLoading: false});
+        })
+    },
 
     addNewService: (data: CreateService) => {
         return $api.post('/service/create', data)

@@ -2,16 +2,16 @@ import React from 'react'
 import s from './TableProductItem.module.scss'
 
 interface TableItemProps {
-    title: string
+    name: string
     price: number
     count: number
 }
 
-const TableProductItem: React.FC<TableItemProps> = ({title, price, count}) => {
+const TableProductItem: React.FC<TableItemProps> = ({name, price, count}) => {
 
     return (
         <div className={s.tableItem_box}>
-            <div className={s.tableItem_title}>{title}</div>
+            <div className={s.tableItem_title}>{name}</div>
             <div className={s.tableItem_numbers}>
                 <div className={s.tableItem_price}>
                     <div>{price}</div>
