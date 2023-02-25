@@ -2,16 +2,10 @@ import React from 'react';
 import {Button} from '../../../shared/ui';
 import s from './ServiceTable.module.scss';
 import {TableProductItem} from '../../../features';
+import {ServiceProductWork} from "../../../entities/requests/CreateService";
 
 type ServiceTableProps = {
-    data: ItemType[]
-}
-
-type ItemType = {
-    id: number
-    title: string
-    price: number
-    count: number
+    data: ServiceProductWork[]
 }
 
 const ServiceTable: React.FC<ServiceTableProps> = ({data}) => {
@@ -39,12 +33,13 @@ const ServiceTable: React.FC<ServiceTableProps> = ({data}) => {
             </div>
             <div className={s.tableBox_table}>
                 {
+                    data.length === 0 ? <div>Список пуст</div> :
                     data.map(item => {
                         return (
-                            <TableProductItem key={item.id}
-                                              title={item.title}
+                            <TableProductItem key={item.quantityUnitId}
+                                              name={item.name}
                                               price={item.price}
-                                              count={item.count}
+                                              count={2}
                             />
                         )
                     })

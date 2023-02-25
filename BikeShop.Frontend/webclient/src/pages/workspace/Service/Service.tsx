@@ -43,6 +43,11 @@ const Service = () => {
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
 
+    const products = useService(s => s.products)
+    const works = useService(s => s.works)
+    const getUserProductsWorks = useService(s => s.getUserProductsWorks)
+
+
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
@@ -56,20 +61,20 @@ const Service = () => {
     const [activeId, setActiveId] = useState<number | null>(null)
 
     // тестовые данные
-    const [productsItem, setProductsItem] = useState([
-        {id: 1, title: 'Колесо', price: 25, count: 3},
-        {id: 2, title: 'Велосипед', price: 25000000, count: 1},
-        {id: 3, title: 'Руль', price: 250, count: 2},
-        {id: 4, title: 'Рама', price: 500, count: 1},
-        {id: 5, title: 'Вилка', price: 1000, count: 1},
-        {id: 6, title: 'Втулка', price: 2000, count: 1},
-        {id: 7, title: 'Вынос', price: 1500, count: 1},
-    ])
-    const [repairItems, setRepairItems] = useState([
-        {id: 1, title: 'Замена покрышки', price: 25, count: 3},
-        {id: 2, title: 'Сезонное ТО', price: 2500, count: 1},
-        {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
-    ])
+    // const [productsItem, setProductsItem] = useState([
+    //     {id: 1, title: 'Колесо', price: 25, count: 3},
+    //     {id: 2, title: 'Велосипед', price: 25000000, count: 1},
+    //     {id: 3, title: 'Руль', price: 250, count: 2},
+    //     {id: 4, title: 'Рама', price: 500, count: 1},
+    //     {id: 5, title: 'Вилка', price: 1000, count: 1},
+    //     {id: 6, title: 'Втулка', price: 2000, count: 1},
+    //     {id: 7, title: 'Вынос', price: 1500, count: 1},
+    // ])
+    // const [repairItems, setRepairItems] = useState([
+    //     {id: 1, title: 'Замена покрышки', price: 25, count: 3},
+    //     {id: 2, title: 'Сезонное ТО', price: 2500, count: 1},
+    //     {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
+    // ])
 
     // дополнительные функции
     // const refreshServiceList = () => {
@@ -131,14 +136,7 @@ const Service = () => {
         ]
 
         addNewService(data).then((response: ServiceItem) => {
-            // refreshServiceList() // запрос, чтобы список обновился
-            // setNewService(data)
-
             clearInputsHandler()
-            // formControl.setValue('name', '')
-            // formControl.setValue('clientDescription', '')
-            // formControl.setValue('userMaster', '')
-
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
@@ -163,6 +161,7 @@ const Service = () => {
         const activeElement = filteredServices.find(item => item.id === ServiceItem.id)
         activeElement && setActiveId(ServiceItem.id)
 
+        // сетаем данные в стор при выборе
         setCurrentService(ServiceItem)
         setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
         setIsClientChosen(true)
@@ -232,11 +231,14 @@ const Service = () => {
     useEffect(() => {
         getAllServices()
         getAllUsersFromServices()
+        getUserProductsWorks()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
 
     console.log('все юзеры из сервиса', users)
     console.log('все сервисы', services)
+    console.log('продукты', products)
+    console.log('работы', works)
 
     return (
         // <div className={s.serviceWrapper}>
@@ -419,8 +421,8 @@ const Service = () => {
                         </div>
                     </div>
                     <div className={s.rightSide_tables}>
-                        <ServiceTable data={productsItem}/>
-                        <ServiceTable data={repairItems}/>
+                        <ServiceTable data={products}/>
+                        <ServiceTable data={works}/>
                     </div>
                 </div>
 

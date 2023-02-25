@@ -1,11 +1,3 @@
-// export interface CreateService {
-//     shopId: number
-//     clientId: string
-//     name: string
-//     clientDescription: string
-//     userMasterId: string
-// }
-
 export interface CreateService {
     shopId: number
 
@@ -19,29 +11,25 @@ export interface CreateService {
     productDiscountId: number
     workDiscountId: number
 
-    serviceProducts: [
-        {
-            catalogKey: string
-            serialNumber: string
-            name: string
-            quantity: number
-            quantityUnitId: number
-            price: number
-            discount: number
-            total: number
-            userId: string
-        }
-    ],
-    serviceWorks: [
-        {
-            name: string
-            description: string
-            quantity: number
-            quantityUnitId: number
-            price: number
-            discount: number
-            total: number
-            userId: string
-        }
-    ]
+    serviceProducts: ServiceProduct[]
+    serviceWorks: ServiceWork[]
+}
+
+export type ServiceProductWork = {
+    name: string
+    quantity: number
+    quantityUnitId: number
+    price: number
+    discount: number
+    total: number
+    userId: string
+}
+
+export type ServiceProduct = ServiceProductWork & {
+    catalogKey: string
+    serialNumber: string
+}
+
+export type ServiceWork = ServiceProductWork & {
+    description: string
 }
