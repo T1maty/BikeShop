@@ -1,4 +1,4 @@
-import {ServiceStatusType} from "../../pages/workspace/Service/Service";
+import {ServiceStatusType} from "../models/ServiceItem";
 
 export interface CreateServiceResponse {
     shopId: number

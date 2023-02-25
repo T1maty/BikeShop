@@ -100,10 +100,12 @@
 
                     .serviceItem {
                         @include hoverItem();
+                        word-break: break-word;
                     }
                     .serviceItem_active {
                         padding: 5px 0;
                         background-color: $themeColorGray;
+                        word-break: break-word;
                     }
                 }
             }

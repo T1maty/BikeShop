@@ -13,15 +13,6 @@ import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
 import {CreateService, IUser, ServiceItem} from '../../../entities';
 
-export type ServiceStatusType =
-    'Waiting' |
-    'InProcess' |
-    'WaitingSupply' |
-    'Ready' |
-    'Ended' |
-    'Canceled' |
-    'Deleted';
-
 enum ServiceStatus {
     Waiting = 0, // ожидают
     InProcess = 1, // в ремонте
@@ -40,13 +31,14 @@ const Service = () => {
     const isClientChosen = useChooseClientModal(s => s.isClientChosen)
     const setIsClientChosen = useChooseClientModal(s => s.setIsClientChosen)
 
-    const user = useService(s => s.user)
-    const setUser = useService(s => s.setUser)
+    const currentUser = useService(s => s.currentUser)
+    const setCurrentUser = useService(s => s.setCurrentUser)
+    const currentService = useService(s => s.currentService)
+    const setCurrentService = useService(s => s.setCurrentService)
 
-    const service = useService(s => s.service)
-    const setService = useService(s => s.setService)
+    const users = useService(s => s.users)
+    const getAllUsersFromServices = useService(s => s.getAllUsersFromServices)
     const services = useService(s => s.services)
-    // const setNewService = useService(s => s.setNewService)
     const getAllServices = useService(s => s.getAllServices)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
@@ -105,9 +97,9 @@ const Service = () => {
         console.log('сабмит данные', data)
 
         data.shopId = 1
-        data.clientId = user.id
+        data.clientId = currentUser.id
         data.userCreatedId = '03470748-93c9-437d-a91b-5a71c92bad28' // выбор из селекта
-        data.userMasterId = user.id
+        data.userMasterId = currentUser.id
 
         data.productDiscountId = 0
         data.workDiscountId = 0
@@ -121,7 +113,7 @@ const Service = () => {
                 price: 0,
                 discount: 0,
                 total: 0,
-                userId: user.id
+                userId: currentUser.id
             }
         ]
         data.serviceProducts = [
@@ -134,7 +126,7 @@ const Service = () => {
                 price: 0,
                 discount: 0,
                 total: 0,
-                userId: user.id
+                userId: currentUser.id
             }
         ]
 
@@ -142,9 +134,10 @@ const Service = () => {
             // refreshServiceList() // запрос, чтобы список обновился
             // setNewService(data)
 
-            formControl.setValue('name', '')
-            formControl.setValue('clientDescription', '')
-            formControl.setValue('userMaster', '')
+            clearInputsHandler()
+            // formControl.setValue('name', '')
+            // formControl.setValue('clientDescription', '')
+            // formControl.setValue('userMaster', '')
 
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
@@ -156,27 +149,34 @@ const Service = () => {
 
         // updateService(data).then((response) => {}
     }
+    const clearInputsHandler = () => {
+        formControl.setValue('name', '')
+        formControl.setValue('clientDescription', '')
+        formControl.setValue('userMaster', '')
+    }
     
     // хендлеры
     const chooseServiceItem = (ServiceItem: ServiceItem) => {
-        console.log('Клик по ремонту', ServiceItem)
+        console.log('клик по ремонту', ServiceItem)
         
         // поиск элемента из массива для применения стилей
         const activeElement = filteredServices.find(item => item.id === ServiceItem.id)
         activeElement && setActiveId(ServiceItem.id)
 
-        setService(ServiceItem)
+        setCurrentService(ServiceItem)
+        setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
         setIsClientChosen(true)
+        console.log('клиент выбранного сервиса', currentUser)
 
         formControl.setValue('name', ServiceItem.name)
         formControl.setValue('clientDescription', ServiceItem.clientDescription)
         formControl.setValue('userMaster', 'Выбранный мастер')
     }
     const chooseClientHandler = (user: IUser) => {
-        setUser(user)
+        setCurrentUser(user)
         setIsClientChosen(true)
         setChooseClientModal(false)
-        console.log('Service click user', user)
+        console.log('выбранный клиент из модалки', user)
     }
 
     // const handleChangeSelect = (event: SelectChangeEvent) => {
@@ -209,25 +209,34 @@ const Service = () => {
     }
 
     // изменение статуса заказа
-    const changeServiceStatus = (status: number) => {
-        updateServiceStatus({serviceId: service.id, newStatus: status})
+    const updateServiceStatusHandler = (status: number) => {
+        updateServiceStatus({serviceId: currentService.id, newStatus: status})
 
         // зарефакторить
         if (status === 1) {
             setFilteredServices(services.filter(serv =>
                 serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
         }
+
+        // зачистка полей после изменения статуса
+        setCurrentService(undefined) // исправить тип?
+        setActiveId(null)
+        clearInputsHandler()
     }
-    const changeServiceStatusToWaitingSupply = () => {
-        updateServiceStatus({serviceId: service.id, newStatus: 2})
+    const updateServiceStatusToWaitingSupply = () => {
+        updateServiceStatus({serviceId: currentService.id, newStatus: 2})
         // updateService({...service, name: 'boo'})
     }
 
     // первый рендер
     useEffect(() => {
         getAllServices()
+        getAllUsersFromServices()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
+
+    console.log('все юзеры из сервиса', users)
+    console.log('все сервисы', services)
 
     return (
         // <div className={s.serviceWrapper}>
@@ -274,7 +283,7 @@ const Service = () => {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {changeServiceStatus(1)}}>
+                                            onClick={() => {updateServiceStatusHandler(1)}}>
                                         Начать ремонт
                                     </Button>
                                 </div>
@@ -284,11 +293,11 @@ const Service = () => {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={changeServiceStatusToWaitingSupply}>
+                                            onClick={updateServiceStatusToWaitingSupply}>
                                         Остановить ремонт
                                     </Button>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {changeServiceStatus(3)}}>
+                                            onClick={() => {updateServiceStatusHandler(3)}}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
@@ -298,11 +307,11 @@ const Service = () => {
                                 isActiveReady &&
                                 <div className={s.content_doneButtons}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {changeServiceStatus(1)}}>
+                                            onClick={() => {updateServiceStatusHandler(1)}}>
                                         Продолжить ремонт
                                     </Button>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {changeServiceStatus(4)}}>
+                                            onClick={() => {updateServiceStatusHandler(4)}}>
                                         Выдать велосипед
                                     </Button>
                                 </div>
@@ -401,7 +410,7 @@ const Service = () => {
                             </div>
                         </div>
                         <div className={s.infoFields_clientCard}>
-                            <ClientCard user={user}/>
+                            <ClientCard user={currentUser}/>
                             <div className={s.clientCard_changeClientBtn}>
                                 <Button onClick={() => {setChooseClientModal(true)}}>
                                     Выбрать клиента
