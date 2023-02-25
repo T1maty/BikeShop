@@ -37,16 +37,12 @@ const Service = () => {
     const setCurrentService = useService(s => s.setCurrentService)
 
     const users = useService(s => s.users)
-    const getAllUsersFromServices = useService(s => s.getAllUsersFromServices)
     const services = useService(s => s.services)
-    const getAllServices = useService(s => s.getAllServices)
-    const filteredServices = useService(s => s.filteredServices)
-    const setFilteredServices = useService(s => s.setFilteredServices)
-
     const products = useService(s => s.products)
     const works = useService(s => s.works)
-    const getUserProductsWorks = useService(s => s.getUserProductsWorks)
-
+    const getAllServicesInfo = useService(s => s.getAllServicesInfo)
+    const filteredServices = useService(s => s.filteredServices)
+    const setFilteredServices = useService(s => s.setFilteredServices)
 
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
@@ -229,9 +225,7 @@ const Service = () => {
 
     // первый рендер
     useEffect(() => {
-        getAllServices()
-        getAllUsersFromServices()
-        getUserProductsWorks()
+        getAllServicesInfo()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
 

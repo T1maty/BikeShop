@@ -3,8 +3,16 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {$api} from "../../../shared";
-import {CreateService, IUser, ServiceItem, UpdateService, UpdateServiceStatus} from "../../../entities";
+import {
+    CreateService,
+    CreateServiceResponse,
+    IUser,
+    ServiceItem,
+    UpdateService,
+    UpdateServiceStatus
+} from '../../../entities';
 import {ServiceProduct, ServiceWork} from "../../../entities/requests/CreateService";
+import {UpdateServiceResponse} from '../../../entities/responses/UpdateServiceResponse';
 
 interface ServiceStore {
     isLoading: boolean
@@ -12,22 +20,19 @@ interface ServiceStore {
     currentUser: IUser
     setCurrentUser: (user: any) => void
     currentService: ServiceItem
-    setCurrentService: (service: ServiceItem | undefined) => void // исправить тип?
+    setCurrentService: (service: ServiceItem | undefined) => void // надо исправить тип
 
     users: any[],
-    getAllUsersFromServices: () => void // надо исправить тип
     services: ServiceItem[]
-    getAllServices: () => any // надо исправить тип
-    filteredServices: ServiceItem[]
-    setFilteredServices: (filteredServices: ServiceItem[]) => void
-
     products: ServiceProduct[]
     works: ServiceWork[]
-    getUserProductsWorks: () => void // надо исправить тип
+    filteredServices: ServiceItem[]
+    setFilteredServices: (filteredServices: ServiceItem[]) => void
+    getAllServicesInfo: () => any // надо исправить тип
 
     addNewService: (data: CreateService) => any // надо исправить тип
-    updateService: (data: UpdateService) => any // надо исправить тип
-    updateServiceStatus: (data: UpdateServiceStatus) => any // надо исправить тип
+    updateService: (data: UpdateService) => Promise<AxiosResponse<UpdateServiceResponse>>
+    updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
@@ -41,52 +46,38 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     }),
     currentService: {} as ServiceItem,
     setCurrentService: (service: ServiceItem | undefined) => set({
-        currentService: service // исправить тип?
+        currentService: service // надо исправить тип
     }),
 
     users: [],
-    getAllUsersFromServices: () => {
-        return $api.get('/service/getbyshopid/1').then(res => {
-            set(state => {
-                state.users = res.data.map((s: any) => s.client)
-            })
-        })
-    },
     services: [],
-    getAllServices: () => {
-        set({isLoading: true});
-        return $api.get('/service/getbyshopid/1').then(res => {
-            set(state => {
-                state.services = res.data
-                state.filteredServices = res.data
-                    .filter((item: any) => item.status === 'Waiting' || item.status === 'WaitingSupply')
-            })
-            set({isLoading: false})
-        })
-    },
+    products: [],
+    works: [],
     filteredServices: [],
     setFilteredServices: (filteredServices: ServiceItem[]) => set(state => {
         state.filteredServices = filteredServices
     }),
-
-    products: [],
-    works: [],
-    getUserProductsWorks: () => {
+    getAllServicesInfo: () => {
         set({isLoading: true});
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
+                state.users = res.data.map((item: CreateServiceResponse) => item.client)
+                state.services = res.data
                 state.products = [...res.data.products]
                 state.works = [...res.data.works]
+
+                state.filteredServices = res.data
+                    .filter((item: CreateServiceResponse) => item.status === 'Waiting' || item.status === 'WaitingSupply')
             })
-            set({isLoading: false});
+            set({isLoading: false})
         })
     },
 
     addNewService: (data: CreateService) => {
-        return $api.post('/service/create', data)
+        return $api.post<CreateServiceResponse>('/service/create', data)
     },
     updateService: (data: UpdateService) => {
-        return $api.put('/service/updateservice', data)
+        return $api.put<UpdateServiceResponse>('/service/updateservice', data)
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         return $api.put('/service/updateservicestatus', data).then(res => {

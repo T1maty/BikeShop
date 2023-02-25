@@ -37,7 +37,7 @@ export interface CreateServiceResponse {
     works: ProductWorkItem[]
 }
 
-type ProductWorkItem = {
+export type ProductWorkItem = {
     id: number
     createdAt: string
     updatedAt: string
@@ -51,4 +51,13 @@ type ProductWorkItem = {
     total: number
     userId: string
     serviceId: number
+}
+
+type ServiceResponseAxiosType = {
+    config: any
+    data: CreateServiceResponse[]
+    headers: any
+    request: any
+    status: number
+    statusText: string
 }
