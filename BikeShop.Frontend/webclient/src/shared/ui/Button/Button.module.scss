@@ -1,3 +1,5 @@
+@import '../../../app/styles/variables/variables';
+
 .btn {
     position: relative;
     overflow: hidden;
@@ -26,12 +28,12 @@
 }
 
 .waiting {
-    background-color: red;
+    background-color: $filterButtonWaitingColor;
 }
 .process {
-    background-color: #ff6a00;
+    background-color: $filterButtonInProcessColor;
 }
-.ended {
+.ready {
     background-color: var(--button-active-bgcolor);
     color: var(--button-active-color);
 }

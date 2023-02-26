@@ -92,7 +92,7 @@
                     }
                     .serviceItem_WaitingSupply {
                         @include hoverItem();
-                        color: orange;
+                        color: $filterButtonWaitingColorExtra;
                     }
                 }
             }
