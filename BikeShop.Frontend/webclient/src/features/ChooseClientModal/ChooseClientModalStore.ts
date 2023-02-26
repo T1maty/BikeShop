@@ -14,16 +14,13 @@ interface ChooseClientModalStore {
     chooseClientModal: boolean
     setChooseClientModal: (value: boolean) => void
     isLoading: boolean
-    setIsLoading: (value: boolean) => void
     isClientChosen: boolean
     setIsClientChosen: (value: boolean) => void
     users: IUser[]
-    // setUsers: (users: User[]) => void
     fio: string
     phoneNumber: string
     setFIO: (value: string) => void
     setPhoneNumber: (value: string) => void
-    // getUsers: () => any // надо исправить тип
     findUser: (data: SearchClient) => any // надо исправить тип
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
@@ -34,18 +31,12 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
         chooseClientModal: value
     }),
     isLoading: false,
-    setIsLoading: (value: boolean) => set({
-       isLoading: value
-    }),
     isClientChosen: false,
     setIsClientChosen: (value: boolean) => set({
         isClientChosen: value
     }),
 
     users: [],
-    // setUsers: (users: User[]) => set({
-    //     users: [...users]
-    // }),
     fio: '',
     setFIO: (value: string) => set({
         fio: value
@@ -55,16 +46,6 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
         phoneNumber: value
     }),
 
-    // getUsers: () => {
-    //     set({isLoading: true});
-    //     return $api.get('/user/find').then(res => {
-    //         set(state => {
-    //             // state.users.push(...res.data.users)
-    //             state.users = [...res.data.users]
-    //         })
-    //         set({isLoading: false});
-    //     })
-    // },
     findUser: (data: SearchClient) => {
         set({isLoading: true});
         return $api.get(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)

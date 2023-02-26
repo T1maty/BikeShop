@@ -11,21 +11,32 @@ import useService from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {CreateService, IUser, ServiceItem} from '../../../entities';
+import {CreateService, CreateServiceResponse, IUser, ServiceItem} from '../../../entities';
 
-enum ServiceStatus {
-    Waiting = 0, // ожидают
-    InProcess = 1, // в ремонте
-    WaitingSupply = 2, // ждёт поставки
-    Ready = 3, // готово
-    Ended = 4, // выдать велосипед
-    Canceled = 5, // отменен
-    Deleted = 6 // удален
+// enum ServiceStatus {
+//     Waiting = 0, // ожидают
+//     InProcess = 1, // в ремонте
+//     WaitingSupply = 2, // ждёт поставки
+//     Ready = 3, // готово
+//     Ended = 4, // выдать велосипед
+//     Canceled = 5, // отменен
+//     Deleted = 6 // удален
+// }
+
+const ServiceStatuses = {
+    Waiting: 'Waiting', // ожидают
+    InProcess: 'InProcess', // в ремонте
+    WaitingSupply: 'WaitingSupply', // ждёт поставки
+    Ready: 'Ready', // готово
+    Ended: 'Ended', // выдать велосипед
+    Canceled: 'Canceled', // отменен
+    Deleted: 'Deleted' // удален
 }
 
 const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
+
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const isLoading = useService(s => s.isLoading)
     const isClientChosen = useChooseClientModal(s => s.isClientChosen)
@@ -38,12 +49,12 @@ const Service = () => {
 
     const users = useService(s => s.users)
     const services = useService(s => s.services)
-    const products = useService(s => s.products)
-    const works = useService(s => s.works)
-    const getAllServicesInfo = useService(s => s.getAllServicesInfo)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
+    const products = useService(s => s.products)
+    const works = useService(s => s.works)
 
+    const getAllServicesInfo = useService(s => s.getAllServicesInfo)
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
@@ -99,7 +110,7 @@ const Service = () => {
 
         data.shopId = 1
         data.clientId = currentUser.id
-        data.userCreatedId = '03470748-93c9-437d-a91b-5a71c92bad28' // выбор из селекта
+        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // выбор из селекта
         data.userMasterId = currentUser.id
 
         data.productDiscountId = 0
@@ -131,7 +142,7 @@ const Service = () => {
             }
         ]
 
-        addNewService(data).then((response: ServiceItem) => {
+        addNewService(data).then((response) => {
             clearInputsHandler()
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
@@ -150,21 +161,20 @@ const Service = () => {
     }
     
     // хендлеры
-    const chooseServiceItem = (ServiceItem: ServiceItem) => {
-        console.log('клик по ремонту', ServiceItem)
-        
+    const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
         // поиск элемента из массива для применения стилей
-        const activeElement = filteredServices.find(item => item.id === ServiceItem.id)
-        activeElement && setActiveId(ServiceItem.id)
+        const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
+        activeElement && setActiveId(ServiceItemObj.id)
 
         // сетаем данные в стор при выборе
-        setCurrentService(ServiceItem)
-        setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
-        setIsClientChosen(true)
+        setCurrentService(ServiceItemObj)
+        console.log('клик по сервису', ServiceItemObj)
+        setCurrentUser(users.slice(1).find(u => u.id === ServiceItemObj.client.id))
         console.log('клиент выбранного сервиса', currentUser)
+        setIsClientChosen(true)
 
-        formControl.setValue('name', ServiceItem.name)
-        formControl.setValue('clientDescription', ServiceItem.clientDescription)
+        formControl.setValue('name', ServiceItemObj.name)
+        formControl.setValue('clientDescription', ServiceItemObj.clientDescription)
         formControl.setValue('userMaster', 'Выбранный мастер')
     }
     const chooseClientHandler = (user: IUser) => {
@@ -185,41 +195,45 @@ const Service = () => {
 
     const filterWaitingHandler = () => {
         setFilteredServices(services.filter(serv =>
-            serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
+            serv.status === ServiceStatuses.Waiting || serv.status === ServiceStatuses.WaitingSupply))
+        console.log('отфильтрованные сервисы - в ожидании', filteredServices)
+
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
         setIsActiveReady(false)
     }
     const filterInProcessHandler = () => {
-        setFilteredServices(services.filter(serv => serv.status === 'InProcess'))
+        setFilteredServices(services.filter(serv => serv.status === ServiceStatuses.InProcess))
+        console.log('отфильтрованные сервисы - в ремонте', filteredServices)
         setIsActiveWaiting(false)
         setIsActiveProcess(true)
         setIsActiveReady(false)
     }
     const filterReadyHandler = () => {
-        setFilteredServices(services.filter(serv => serv.status === 'Ready'))
+        setFilteredServices(services.filter(serv => serv.status === ServiceStatuses.Ready))
+        console.log('отфильтрованные сервисы - готово', filteredServices)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
         setIsActiveReady(true)
     }
 
     // изменение статуса заказа
-    const updateServiceStatusHandler = (status: number) => {
-        updateServiceStatus({serviceId: currentService.id, newStatus: status})
+    const updateServiceStatusHandler = (newStatus: string) => {
+        updateServiceStatus({id: currentService.id, status: newStatus})
 
         // зарефакторить
-        if (status === 1) {
+        if (newStatus === 'InProcess') {
             setFilteredServices(services.filter(serv =>
-                serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
+                serv.status === ServiceStatuses.Waiting || serv.status === ServiceStatuses.WaitingSupply))
         }
 
         // зачистка полей после изменения статуса
-        setCurrentService(undefined) // исправить тип?
+        setCurrentService(undefined) // исправить тип
         setActiveId(null)
         clearInputsHandler()
     }
     const updateServiceStatusToWaitingSupply = () => {
-        updateServiceStatus({serviceId: currentService.id, newStatus: 2})
+        updateServiceStatus({id: currentService.id, status: ServiceStatuses.WaitingSupply})
         // updateService({...service, name: 'boo'})
     }
 
@@ -228,11 +242,6 @@ const Service = () => {
         getAllServicesInfo()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
-
-    console.log('все юзеры из сервиса', users)
-    console.log('все сервисы', services)
-    console.log('продукты', products)
-    console.log('работы', works)
 
     return (
         // <div className={s.serviceWrapper}>
@@ -279,7 +288,7 @@ const Service = () => {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(1)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.InProcess)}}>
                                         Начать ремонт
                                     </Button>
                                 </div>
@@ -293,7 +302,7 @@ const Service = () => {
                                         Остановить ремонт
                                     </Button>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(3)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.Ready)}}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
@@ -303,11 +312,11 @@ const Service = () => {
                                 isActiveReady &&
                                 <div className={s.content_doneButtons}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(1)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.InProcess)}}>
                                         Продолжить ремонт
                                     </Button>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(4)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.Ended)}}>
                                         Выдать велосипед
                                     </Button>
                                 </div>
@@ -322,7 +331,9 @@ const Service = () => {
                                         filteredServices.map(service => {
                                             return (
                                                 <div key={service.id}
-                                                     className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
+                                                     // className={service.id === activeId ? s.serviceItem_active : serviceItem}
+                                                     className={service.id === activeId ? s.serviceItem_active :
+                                                         service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
                                                      onClick={() => {chooseServiceItem(service)}}
                                                 >
                                                     {service.name}

@@ -9,17 +9,17 @@ export interface CreateServiceResponse {
     updatedAt: string
     enabled: boolean
 
-    name: string // название техники (по макету)
-    clientDescription: string // описание заказа
+    name: string // название техники
     status: ServiceStatusType // статус заказа
     client: IUser // данные клиента
-
-    userCreated: IUser // тот, кто создал заказ
-    userCreatedDescription: string // комментарий к описанию удаления
-    userDeleted: string // тот, кто удалил заказ из архива
+    clientDescription: string // описание заказа
 
     userMaster: IUser // данные мастера
     userMasterDescription: string // комментарий от мастера
+
+    userCreated: IUser // тот, кто создал заказ
+    userCreatedDescription: string // комментарий к описанию удаления
+    userDeleted: IUser // тот, кто удалил заказ из архива
 
     priceWork: number // стоимость услуги
     discountWork: number
@@ -37,7 +37,7 @@ export interface CreateServiceResponse {
     works: ProductWorkItem[]
 }
 
-export type ProductWorkItem = {
+export interface ProductWorkItem {
     id: number
     createdAt: string
     updatedAt: string

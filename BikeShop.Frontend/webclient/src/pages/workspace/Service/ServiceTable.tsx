@@ -39,7 +39,7 @@ const ServiceTable: React.FC<ServiceTableProps> = ({data}) => {
                             <TableProductItem key={item.quantityUnitId}
                                               name={item.name}
                                               price={item.price}
-                                              count={2}
+                                              count={1}
                             />
                         )
                     })
