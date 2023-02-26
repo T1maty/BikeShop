@@ -7,7 +7,6 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {CreateUser, IUser} from '../../entities';
 import {useSnackbar} from 'notistack';
 import {Loader} from "../../shared/ui/Loader/Loader";
-import {PageLoader} from "../../shared/ui/PageLoader/PageLoader";
 import {useDebounce} from "../../shared/hooks/useDebounce";
 import useChooseClientModal from './ChooseClientModalStore';
 import {Errors} from "../../entities/errors/workspaceErrors";

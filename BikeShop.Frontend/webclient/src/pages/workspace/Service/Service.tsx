@@ -11,7 +11,7 @@ import useService from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {CreateService, IUser, ServiceItem} from '../../../entities';
+import {CreateService, CreateServiceResponse, IUser, ServiceItem} from '../../../entities';
 
 enum ServiceStatus {
     Waiting = 0, // ожидают
@@ -26,6 +26,7 @@ enum ServiceStatus {
 const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
+
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const isLoading = useService(s => s.isLoading)
     const isClientChosen = useChooseClientModal(s => s.isClientChosen)
@@ -38,12 +39,12 @@ const Service = () => {
 
     const users = useService(s => s.users)
     const services = useService(s => s.services)
-    const products = useService(s => s.products)
-    const works = useService(s => s.works)
-    const getAllServicesInfo = useService(s => s.getAllServicesInfo)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
+    const products = useService(s => s.products)
+    const works = useService(s => s.works)
 
+    const getAllServicesInfo = useService(s => s.getAllServicesInfo)
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
@@ -99,7 +100,7 @@ const Service = () => {
 
         data.shopId = 1
         data.clientId = currentUser.id
-        data.userCreatedId = '03470748-93c9-437d-a91b-5a71c92bad28' // выбор из селекта
+        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // выбор из селекта
         data.userMasterId = currentUser.id
 
         data.productDiscountId = 0
@@ -131,7 +132,7 @@ const Service = () => {
             }
         ]
 
-        addNewService(data).then((response: ServiceItem) => {
+        addNewService(data).then((response) => {
             clearInputsHandler()
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
@@ -151,8 +152,6 @@ const Service = () => {
     
     // хендлеры
     const chooseServiceItem = (ServiceItem: ServiceItem) => {
-        console.log('клик по ремонту', ServiceItem)
-        
         // поиск элемента из массива для применения стилей
         const activeElement = filteredServices.find(item => item.id === ServiceItem.id)
         activeElement && setActiveId(ServiceItem.id)
@@ -161,6 +160,7 @@ const Service = () => {
         setCurrentService(ServiceItem)
         setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
         setIsClientChosen(true)
+        console.log('клик по сервису', ServiceItem)
         console.log('клиент выбранного сервиса', currentUser)
 
         formControl.setValue('name', ServiceItem.name)
@@ -192,12 +192,14 @@ const Service = () => {
     }
     const filterInProcessHandler = () => {
         setFilteredServices(services.filter(serv => serv.status === 'InProcess'))
+        console.log('отфильтрованные сервисы - в ремонте', filteredServices)
         setIsActiveWaiting(false)
         setIsActiveProcess(true)
         setIsActiveReady(false)
     }
     const filterReadyHandler = () => {
         setFilteredServices(services.filter(serv => serv.status === 'Ready'))
+        console.log('отфильтрованные сервисы - готово', filteredServices)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
         setIsActiveReady(true)
@@ -228,11 +230,6 @@ const Service = () => {
         getAllServicesInfo()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
-
-    console.log('все юзеры из сервиса', users)
-    console.log('все сервисы', services)
-    console.log('продукты', products)
-    console.log('работы', works)
 
     return (
         // <div className={s.serviceWrapper}>
