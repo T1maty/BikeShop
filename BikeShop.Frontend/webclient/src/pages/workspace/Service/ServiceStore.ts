@@ -19,11 +19,11 @@ interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     currentUser: IUser
-    setCurrentUser: (user: IUser | undefined) => void // надо исправить тип
+    setCurrentUser: (user: any) => void // надо исправить тип
     currentService: ServiceItem
     setCurrentService: (service: ServiceItem | undefined) => void // надо исправить тип
 
-    users: IUser[],
+    users: IUser[]
     services: ServiceItem[]
     filteredServices: ServiceItem[]
     products: ServiceProduct[]
@@ -42,7 +42,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         isLoading: value
     }),
     currentUser: {} as IUser,
-    setCurrentUser: (user: IUser | undefined) => set({
+    setCurrentUser: (user: any) => set({
         currentUser: user // надо исправить тип
     }),
     currentService: {} as ServiceItem,
@@ -89,7 +89,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         return $api.put('/service/updateservicestatus', data).then(res => {
             // зарефакторить
             set(state => {state.services.filter(serv =>
-                serv.id === data.serviceId)[0].status = 'InProcess'}) // data.newStatus.toString()
+                serv.id === data.id)[0].status = 'InProcess'}) // data.newStatus.toString()
             set(state => {state.filteredServices = state.services.filter(serv =>
                 serv.status === 'Waiting' || serv.status === 'WaitingSupply')})
         })

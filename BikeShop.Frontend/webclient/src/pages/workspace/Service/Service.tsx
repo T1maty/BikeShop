@@ -13,14 +13,24 @@ import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
 import {CreateService, CreateServiceResponse, IUser, ServiceItem} from '../../../entities';
 
-enum ServiceStatus {
-    Waiting = 0, // ожидают
-    InProcess = 1, // в ремонте
-    WaitingSupply = 2, // ждёт поставки
-    Ready = 3, // готово
-    Ended = 4, // выдать велосипед
-    Canceled = 5, // отменен
-    Deleted = 6 // удален
+// enum ServiceStatus {
+//     Waiting = 0, // ожидают
+//     InProcess = 1, // в ремонте
+//     WaitingSupply = 2, // ждёт поставки
+//     Ready = 3, // готово
+//     Ended = 4, // выдать велосипед
+//     Canceled = 5, // отменен
+//     Deleted = 6 // удален
+// }
+
+const ServiceStatuses = {
+    Waiting: 'Waiting', // ожидают
+    InProcess: 'InProcess', // в ремонте
+    WaitingSupply: 'WaitingSupply', // ждёт поставки
+    Ready: 'Ready', // готово
+    Ended: 'Ended', // выдать велосипед
+    Canceled: 'Canceled', // отменен
+    Deleted: 'Deleted' // удален
 }
 
 const Service = () => {
@@ -158,7 +168,7 @@ const Service = () => {
 
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItem)
-        setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
+        // setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
         setIsClientChosen(true)
         console.log('клик по сервису', ServiceItem)
         console.log('клиент выбранного сервиса', currentUser)
@@ -185,20 +195,21 @@ const Service = () => {
 
     const filterWaitingHandler = () => {
         setFilteredServices(services.filter(serv =>
-            serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
+            serv.status === ServiceStatuses.Waiting || serv.status === ServiceStatuses.WaitingSupply))
+        console.log('отфильтрованные сервисы - в ожидании', filteredServices)
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
         setIsActiveReady(false)
     }
     const filterInProcessHandler = () => {
-        setFilteredServices(services.filter(serv => serv.status === 'InProcess'))
+        setFilteredServices(services.filter(serv => serv.status === ServiceStatuses.InProcess))
         console.log('отфильтрованные сервисы - в ремонте', filteredServices)
         setIsActiveWaiting(false)
         setIsActiveProcess(true)
         setIsActiveReady(false)
     }
     const filterReadyHandler = () => {
-        setFilteredServices(services.filter(serv => serv.status === 'Ready'))
+        setFilteredServices(services.filter(serv => serv.status === ServiceStatuses.Ready))
         console.log('отфильтрованные сервисы - готово', filteredServices)
         setIsActiveWaiting(false)
         setIsActiveProcess(false)
@@ -206,22 +217,22 @@ const Service = () => {
     }
 
     // изменение статуса заказа
-    const updateServiceStatusHandler = (status: number) => {
-        updateServiceStatus({serviceId: currentService.id, newStatus: status})
+    const updateServiceStatusHandler = (newStatus: string) => {
+        updateServiceStatus({id: currentService.id, status: newStatus})
 
         // зарефакторить
-        if (status === 1) {
+        if (newStatus === 'InProcess') {
             setFilteredServices(services.filter(serv =>
-                serv.status === 'Waiting' || serv.status === 'WaitingSupply'))
+                serv.status === ServiceStatuses.Waiting || serv.status === ServiceStatuses.WaitingSupply))
         }
 
         // зачистка полей после изменения статуса
-        setCurrentService(undefined) // исправить тип?
+        setCurrentService(undefined) // исправить тип
         setActiveId(null)
         clearInputsHandler()
     }
     const updateServiceStatusToWaitingSupply = () => {
-        updateServiceStatus({serviceId: currentService.id, newStatus: 2})
+        updateServiceStatus({id: currentService.id, status: ServiceStatuses.WaitingSupply})
         // updateService({...service, name: 'boo'})
     }
 
@@ -276,7 +287,7 @@ const Service = () => {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(1)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.InProcess)}}>
                                         Начать ремонт
                                     </Button>
                                 </div>
@@ -290,7 +301,7 @@ const Service = () => {
                                         Остановить ремонт
                                     </Button>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(3)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.Ready)}}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
@@ -300,11 +311,11 @@ const Service = () => {
                                 isActiveReady &&
                                 <div className={s.content_doneButtons}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(1)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.InProcess)}}>
                                         Продолжить ремонт
                                     </Button>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler(4)}}>
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.Ended)}}>
                                         Выдать велосипед
                                     </Button>
                                 </div>
