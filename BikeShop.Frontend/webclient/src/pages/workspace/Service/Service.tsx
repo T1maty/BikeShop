@@ -199,11 +199,11 @@ const Service = () => {
     //     console.log('клик по селекту', event.target.value)
     // };
 
-    const filterHandler = (filterName: string) => {
-        setFilteredServices(services.filter(serv => serv.status === filterName))
+    const filterHandler = (filterName: ServiceStatusType, extraStatus?: ServiceStatusType) => {
+        setFilteredServices(services.filter(serv => serv.status === filterName || serv.status === extraStatus))
     }
     const filterWaitingHandler = () => {
-        filterHandler('Waiting' || 'WaitingSupply')
+        filterHandler('Waiting', 'WaitingSupply')
         console.log('отфильтрованные сервисы - в ожидании', filteredServices)
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
