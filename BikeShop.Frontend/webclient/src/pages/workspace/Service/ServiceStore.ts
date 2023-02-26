@@ -13,7 +13,7 @@ import {
 } from '../../../entities';
 import {ServiceProduct, ServiceWork} from "../../../entities/requests/CreateService";
 import {UpdateServiceResponse} from '../../../entities/responses/UpdateServiceResponse';
-import {GetServicesResponse} from "../../../entities/responses/GetServicesResponse";
+import {ServiceStatuses} from "./Service";
 
 interface ServiceStore {
     isLoading: boolean
@@ -86,13 +86,17 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         return $api.put<UpdateServiceResponse>('/service/updateservice', data)
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
-        return $api.put('/service/updateservicestatus', data).then(res => {
-            // зарефакторить
-            set(state => {state.services.filter(serv =>
-                serv.id === data.id)[0].status = 'InProcess'}) // data.newStatus.toString()
-            set(state => {state.filteredServices = state.services.filter(serv =>
-                serv.status === 'Waiting' || serv.status === 'WaitingSupply')})
-        })
+        return $api.put(`/service/updateservicestatus?id=${data.id}&status=${data.status}`)
+            .then(res => {
+                // зарефакторить?
+                set(state => {
+                    state.services.filter(serv => serv.id === data.id)[0].status = 'InProcess'
+                })
+                set(state => {
+                    state.filteredServices = state.services.filter(serv =>
+                        serv.status === ServiceStatuses.Waiting || serv.status === ServiceStatuses.WaitingSupply)
+                })
+            })
     },
 })))/*, {
     name: "serviceStore",
