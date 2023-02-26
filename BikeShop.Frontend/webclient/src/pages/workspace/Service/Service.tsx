@@ -161,20 +161,20 @@ const Service = () => {
     }
     
     // хендлеры
-    const chooseServiceItem = (ServiceItem: ServiceItem) => {
+    const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
         // поиск элемента из массива для применения стилей
-        const activeElement = filteredServices.find(item => item.id === ServiceItem.id)
-        activeElement && setActiveId(ServiceItem.id)
+        const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
+        activeElement && setActiveId(ServiceItemObj.id)
 
         // сетаем данные в стор при выборе
-        setCurrentService(ServiceItem)
+        setCurrentService(ServiceItemObj)
         // setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
         setIsClientChosen(true)
-        console.log('клик по сервису', ServiceItem)
+        console.log('клик по сервису', ServiceItemObj)
         console.log('клиент выбранного сервиса', currentUser)
 
-        formControl.setValue('name', ServiceItem.name)
-        formControl.setValue('clientDescription', ServiceItem.clientDescription)
+        formControl.setValue('name', ServiceItemObj.name)
+        formControl.setValue('clientDescription', ServiceItemObj.clientDescription)
         formControl.setValue('userMaster', 'Выбранный мастер')
     }
     const chooseClientHandler = (user: IUser) => {
@@ -197,6 +197,7 @@ const Service = () => {
         setFilteredServices(services.filter(serv =>
             serv.status === ServiceStatuses.Waiting || serv.status === ServiceStatuses.WaitingSupply))
         console.log('отфильтрованные сервисы - в ожидании', filteredServices)
+
         setIsActiveWaiting(true)
         setIsActiveProcess(false)
         setIsActiveReady(false)
@@ -330,7 +331,9 @@ const Service = () => {
                                         filteredServices.map(service => {
                                             return (
                                                 <div key={service.id}
-                                                     className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
+                                                     // className={service.id === activeId ? s.serviceItem_active : serviceItem}
+                                                     className={service.id === activeId ? s.serviceItem_active :
+                                                         service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
                                                      onClick={() => {chooseServiceItem(service)}}
                                                 >
                                                     {service.name}
