@@ -2,8 +2,8 @@ import {ServiceStatusType} from "../models/ServiceItem";
 
 export interface UpdateServiceStatus {
     id: number
-    status: string
-    // status: ServiceStatusType
+    // status: string
+    status: ServiceStatusType
 }
 
 export interface UpdateService {

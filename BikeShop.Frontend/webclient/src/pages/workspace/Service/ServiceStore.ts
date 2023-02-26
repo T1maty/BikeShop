@@ -1,27 +1,25 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {AxiosResponse} from "axios";
-import {$api} from "../../../shared";
+import {create} from 'zustand';
+import {devtools, persist} from 'zustand/middleware';
+import {immer} from 'zustand/middleware/immer';
+import {AxiosResponse} from 'axios';
+import {$api} from '../../../shared';
 import {
-    CreateService,
-    CreateServiceResponse,
-    IUser,
-    ServiceItem,
-    UpdateService,
-    UpdateServiceStatus
+    CreateService, CreateServiceResponse, IUser,
+    ServiceItem, UpdateService, UpdateServiceStatus
 } from '../../../entities';
-import {ServiceProduct, ServiceWork} from "../../../entities/requests/CreateService";
+import {ServiceProduct, ServiceWork} from '../../../entities/requests/CreateService';
 import {UpdateServiceResponse} from '../../../entities/responses/UpdateServiceResponse';
-import {ServiceStatuses} from "./Service";
+import {ServiceListStatusType, ServiceStatuses} from './Service';
 
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+    // serviceListStatus: ServiceListStatusType
+    // setServiceListStatus: (status: ServiceListStatusType) => void
     currentUser: IUser
     setCurrentUser: (user: any) => void // надо исправить тип
-    currentService: ServiceItem
-    setCurrentService: (service: ServiceItem | undefined) => void // надо исправить тип
+    currentService: ServiceItem | null
+    setCurrentService: (service: ServiceItem | null) => void
 
     users: IUser[]
     services: ServiceItem[]
@@ -38,24 +36,20 @@ interface ServiceStore {
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
     isLoading: false,
-    setIsLoading: (value: boolean) => set({
-        isLoading: value
-    }),
+    setIsLoading: (value) => set({isLoading: value}),
+    // serviceListStatus: 'Waiting',
+    // setServiceListStatus: (status) => set({serviceListStatus: status}),
     currentUser: {} as IUser,
-    setCurrentUser: (user: any) => set({
-        currentUser: user // надо исправить тип
-    }),
-    currentService: {} as ServiceItem,
-    setCurrentService: (service: ServiceItem | undefined) => set({
-        currentService: service // надо исправить тип
-    }),
+    setCurrentUser: (user) => set({currentUser: user}),
+    currentService: null,
+    setCurrentService: (service) => set({currentService: service}),
 
     users: [],
     services: [],
     filteredServices: [],
     products: [],
     works: [],
-    setFilteredServices: (filteredServices: ServiceItem[]) => set(state => {
+    setFilteredServices: (filteredServices) => set(state => {
         state.filteredServices = filteredServices
     }),
 
@@ -65,7 +59,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
             set(state => {
                 state.services = res.data
                 state.filteredServices = res.data
-                    .filter((item: CreateServiceResponse) => item.status === 'Waiting' || item.status === 'WaitingSupply')
+                    .filter((item: CreateServiceResponse) =>
+                        item.status === ServiceStatuses.Waiting || item.status === ServiceStatuses.WaitingSupply)
                 state.users = res.data.map((item: CreateServiceResponse) => item.client)
                 // state.products = [...res.data.products]
                 // state.works = [...res.data.works]
@@ -90,7 +85,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
             .then(res => {
                 // зарефакторить?
                 set(state => {
-                    state.services.filter(serv => serv.id === data.id)[0].status = 'InProcess'
+                    // @ts-ignore
+                    state.services.filter(serv => serv.id === data.id)[0].status = ServiceStatuses.InProcess
                 })
                 set(state => {
                     state.filteredServices = state.services.filter(serv =>

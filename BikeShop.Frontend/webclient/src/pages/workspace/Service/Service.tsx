@@ -34,12 +34,16 @@ export const ServiceStatuses = {
     Deleted: 'Deleted' // удален
 }
 
+export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
+
 const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const isLoading = useService(s => s.isLoading)
+    // const serviceListStatus = useService(s => s.serviceListStatus)
+    // const setServiceListStatus = useService(s => s.setServiceListStatus)
     const isClientChosen = useChooseClientModal(s => s.isClientChosen)
     const setIsClientChosen = useChooseClientModal(s => s.setIsClientChosen)
 
@@ -51,6 +55,21 @@ const Service = () => {
     const users = useService(s => s.users)
     const services = useService(s => s.services)
     const filteredServices = useService(s => s.filteredServices)
+
+    // другой вариант фильтрации
+    /*const filteredServices = useService(s => {
+        switch (serviceListStatus) {
+            case 'Waiting':
+                return s.services.filter(serv => serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+            case 'InProcess':
+                return s.services.filter(serv => serv.status === 'InProcess')
+            case 'Ready':
+                return s.services.filter(serv => serv.status === 'Ready')
+            default:
+                return s.services.filter(serv => serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+        }
+    })*/
+
     const setFilteredServices = useService(s => s.setFilteredServices)
     const products = useService(s => s.products)
     const works = useService(s => s.works)
@@ -207,22 +226,22 @@ const Service = () => {
     }
 
     // изменение статуса заказа
-    const updateServiceStatusHandler = (newStatus: string) => {
-        updateServiceStatus({id: currentService.id, status: newStatus})
+    const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
+        updateServiceStatus({id: currentService?.id || -1, status: newStatus})
 
         // зарефакторить?
         if (newStatus === ServiceStatuses.InProcess) {
             filterHandler(ServiceStatuses.Waiting || ServiceStatuses.WaitingSupply)
         }
-        if (newStatus === ServiceStatuses.WaitingSupply || ServiceStatuses.Ready) {
-            filterHandler(ServiceStatuses.InProcess)
-        }
-        if (newStatus === ServiceStatuses.InProcess || ServiceStatuses.Ended) {
-            filterHandler(ServiceStatuses.Ready)
-        }
+        // if (newStatus === ServiceStatuses.WaitingSupply || ServiceStatuses.Ready) {
+        //     filterHandler(ServiceStatuses.InProcess)
+        // }
+        // if (newStatus === ServiceStatuses.InProcess || ServiceStatuses.Ended) {
+        //     filterHandler(ServiceStatuses.Ready)
+        // }
 
         // зачистка полей после изменения статуса
-        setCurrentService(undefined) // исправить тип
+        setCurrentService(null)
         setActiveId(null)
         clearInputsHandler()
     }
@@ -278,7 +297,8 @@ const Service = () => {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler('InProcess')}}>
+                                        // @ts-ignore
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.InProcess)}}>
                                         Начать ремонт
                                     </Button>
                                 </div>
@@ -288,11 +308,13 @@ const Service = () => {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler('WaitingSupply')}}>
+                                        // @ts-ignore
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.WaitingSupply)}}>
                                         Остановить ремонт
                                     </Button>
                                     <Button disabled={!isClientChosen}
-                                            onClick={() => {updateServiceStatusHandler('Ready')}}>
+                                        // @ts-ignore
+                                            onClick={() => {updateServiceStatusHandler(ServiceStatuses.Ready)}}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
