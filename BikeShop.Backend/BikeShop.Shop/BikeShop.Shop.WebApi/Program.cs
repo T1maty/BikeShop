@@ -7,6 +7,8 @@ using BikeShop.Shop.Application.Mappings;
 using Bikeshop.Shop.Persistence;
 using BikeShop.Shop.WebApi.Middleware;
 using Microsoft.Extensions.Options;
+using BikeShop.Shop.Application.ReficClients;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,9 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
     });
 
+// Register refit
+builder.Services.AddRefitClient<IIdentityClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Identity"]));
 
 // Инъекция сервисов из слоя Application и Persistence
 builder.Services.AddApplication();

@@ -17,14 +17,12 @@ public class ServiceService : IServiceService
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
-    private readonly IProductsClient _productClient;
     private readonly IIdentityClient _identityClient;
 
-    public ServiceService(IApplicationDbContext context, IMapper mapper, IProductsClient productClient, IIdentityClient identityClient)
+    public ServiceService(IApplicationDbContext context, IMapper mapper, IIdentityClient identityClient)
     {
         _context = context;
         _mapper = mapper;
-        _productClient = productClient;
         _identityClient = identityClient;
     }
 

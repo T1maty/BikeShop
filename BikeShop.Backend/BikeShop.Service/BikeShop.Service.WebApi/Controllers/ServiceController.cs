@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using BikeShop.Service.Application.Common.Exceptions;
-using BikeShop.Service.Application.CQRS.Commands.Service.UpdateService;
-using BikeShop.Service.Application.CQRS.Commands.Service.UpdateServiceStatus;
-using BikeShop.Service.Application.CQRS.Queries.Service.GetOngoingServicesByShopId;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.WebApi.Models.Service;

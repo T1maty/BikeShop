@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using BikeShop.Service.Application.Common.Mappings;
-using BikeShop.Service.Application.CQRS.Commands.Service.UpdateService;
-using BikeShop.Service.Application.DTO;
+﻿using BikeShop.Service.Application.DTO;
 
 namespace BikeShop.Service.WebApi.Models.Service;
 

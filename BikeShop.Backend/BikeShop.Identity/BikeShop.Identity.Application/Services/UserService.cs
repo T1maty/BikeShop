@@ -49,5 +49,14 @@ namespace BikeShop.Identity.Application.Services
 
             return dict;
         }
+
+        public async Task SetUsersShop(Guid userId, int shopId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            user.ShopId = shopId;
+
+            await _userManager.UpdateAsync(user);
+        }
     }
 }

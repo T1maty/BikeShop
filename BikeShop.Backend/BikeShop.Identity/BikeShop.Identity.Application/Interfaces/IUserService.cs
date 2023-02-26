@@ -12,5 +12,7 @@ namespace BikeShop.Identity.Application.Interfaces
     {
         public Task<UserDTO> GetUserById(Guid id);
         public Task<Dictionary<string, UserDTO>> GetUsersDictionary(List<string> guids);
+
+        public Task SetUsersShop(Guid userId, int shopId);
     }
 }

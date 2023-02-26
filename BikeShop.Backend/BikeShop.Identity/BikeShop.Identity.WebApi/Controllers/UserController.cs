@@ -170,4 +170,14 @@ public class UserController : ControllerBase
     {
         return await _userService.GetUsersDictionary(guids);
     }
+
+    [HttpPost("changeshop")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> ChangeShop(Guid userId, int shopId)
+    {
+        await _userService.SetUsersShop(userId, shopId);
+        return Ok();
+    }
 }
