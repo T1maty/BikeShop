@@ -20,8 +20,15 @@ public static class DependencyInjection
             // {
             //     options.SetPostgresVersion(new Version("9.6"));
             // });
-            
-            options.UseSqlite(connectionConfiguration.Sqlite);
+            if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                //options.UseSqlite(connectionConfiguration.Sqlite);
+                options.UseMySql(connectionConfiguration.MySql,  new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+            }
+            else
+            {
+                options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+            }
 
         });
 

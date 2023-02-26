@@ -54,6 +54,7 @@ public class ServiceService : IServiceService
         //Достаем сущность ремонта и мапим ее в сущность для ответа
         var services = _context.Services.Where(n => n.Id == Id);
         var servicesModel = await _mapper.ProjectTo<GetServiceDTO>(services).ToListAsync();
+        var servicesDict = services.ToDictionary(n => n.Id, n => n);
 
         var usersToFind = new List<string>();
 
@@ -71,16 +72,16 @@ public class ServiceService : IServiceService
             service.Works = await _context.ServiceWorks.Where(n => n.Id == service.Id).ToListAsync();
             service.Products = await _context.ServiceProducts.Where(n => n.Id == service.Id).ToListAsync();
 
-            var clientId = services.Where(n => n.Id == service.Id).First().ClientId.ToString();
+            var clientId = servicesDict[service.Id].ClientId.ToString();
             service.Client = usersDitionary.ContainsKey(clientId) ? usersDitionary[clientId] : null;
 
-            var userCreatedId = services.Where(n => n.Id == service.Id).First().UserCreatedId.ToString();
+            var userCreatedId = servicesDict[service.Id].UserCreatedId.ToString();
             service.UserCreated = usersDitionary.ContainsKey(userCreatedId) ? usersDitionary[userCreatedId] : null;
 
-            var userDeletedId = services.Where(n => n.Id == service.Id).First().UserDeletedId.ToString();
+            var userDeletedId = servicesDict[service.Id].UserDeletedId.ToString();
             service.UserDeleted = usersDitionary.ContainsKey(userDeletedId) ? usersDitionary[userDeletedId] : null;
 
-            var userMasterId = services.Where(n => n.Id == service.Id).First().UserMasterId.ToString();
+            var userMasterId = servicesDict[service.Id].UserMasterId.ToString();
             service.UserMaster = usersDitionary.ContainsKey(userMasterId) ? usersDitionary[userMasterId] : null;
         });
 
