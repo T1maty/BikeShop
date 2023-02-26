@@ -168,10 +168,10 @@ const Service = () => {
 
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItemObj)
-        // setCurrentUser(users.find(u => u.id === ServiceItem.client.id))
-        setIsClientChosen(true)
         console.log('клик по сервису', ServiceItemObj)
+        setCurrentUser(users.slice(1).find(u => u.id === ServiceItemObj.client.id))
         console.log('клиент выбранного сервиса', currentUser)
+        setIsClientChosen(true)
 
         formControl.setValue('name', ServiceItemObj.name)
         formControl.setValue('clientDescription', ServiceItemObj.clientDescription)
