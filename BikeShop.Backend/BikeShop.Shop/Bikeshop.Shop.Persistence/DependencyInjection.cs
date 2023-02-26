@@ -16,7 +16,15 @@ public static class DependencyInjection
         // Инжект DbContext-а
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseSqlite(connectionConfiguration.Sqlite);
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                //options.UseSqlite(connectionConfiguration.Sqlite);
+                options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+            }
+            else
+            {
+                options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+            }
         });
 
         // Связал интерфейс контекста с ранее созданным сервисом на классе 

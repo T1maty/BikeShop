@@ -18,13 +18,16 @@ public static class DependencyInjection
         // Регистрирую AuthDbContext
         services.AddDbContext<AuthDbContext>(options =>
         {
-            options.UseSqlite(connectionConfiguration.Sqlite);
-            // options.UseNpgsql(connectionConfiguration.Postgres, 
-            //     options =>
-            //     {
-            //         options.SetPostgresVersion(new Version("9.6"));
-            //         options.MigrationsAssembly("BikeShop.Identity.WebApi");
-            //     });
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                options.UseSqlite(connectionConfiguration.Sqlite);
+                //options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+            }
+            else
+            {
+                options.UseSqlite(connectionConfiguration.Sqlite);
+                //options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+            }
         });
 
         // Связал интерфейс контекста с ранее созданным сервисом на классе 

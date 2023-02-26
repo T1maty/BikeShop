@@ -3,5 +3,6 @@
 public class ConnectionConfiguration
 {
     public string Sqlite { get; set; }
-    public string Postgres { get; set; }
+    public string MySql { get; set; }
+    public string MySqlVersion { get; set; }
 }
