@@ -66,6 +66,7 @@ const Service = () => {
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
 
+    // стили //
     // для стилей кнопок фильтрации
     const [isActiveWaiting, setIsActiveWaiting] = useState<boolean>(false)
     const [isActiveProcess, setIsActiveProcess] = useState<boolean>(false)
@@ -90,7 +91,7 @@ const Service = () => {
     //     {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
     // ])
 
-    // сбор данных с формы
+    // сбор данных с формы //
     const formControl = useForm({
         defaultValues: {
             name: '',
@@ -159,7 +160,17 @@ const Service = () => {
         formControl.setValue('userMaster', '')
     }
     
-    // хендлеры
+    // хендлеры //
+    // селект
+    // const handleChangeSelect = (event: SelectChangeEvent) => {
+    //     setUserMasterId(event.target.value as string)
+    //     console.log(event.target.value)
+    // };
+    // const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    //     // setUserMasterId(event.target.value as string)
+    //     console.log('клик по селекту', event.target.value)
+    // };
+
     const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
         // поиск элемента из массива для применения стилей
         const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
@@ -185,16 +196,6 @@ const Service = () => {
         console.log('выбранный клиент из модалки', user)
     }
 
-    // const handleChangeSelect = (event: SelectChangeEvent) => {
-    //     setUserMasterId(event.target.value as string)
-    //     console.log(event.target.value)
-    // };
-    // const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    //     // setUserMasterId(event.target.value as string)
-    //     console.log('клик по селекту', event.target.value)
-    // };
-
-
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
                                             extraFilterName?: ServiceStatusType) => {
@@ -204,10 +205,10 @@ const Service = () => {
         setIsActiveWaiting(isButtonWaitingOn)
         setIsActiveProcess(isButtonInProcessOn)
         setIsActiveReady(isButtonReadyOn)
-        // console.log('отфильтрованные сервисы', filteredServices)
+        console.log('отфильтрованные сервисы', filteredServices)
     }
 
-    // изменение статуса заказа
+    // изменение статуса заказа //
     const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
         updateServiceStatus({id: currentService?.id || -1, status: newStatus})
 
@@ -219,7 +220,7 @@ const Service = () => {
         clearInputsHandler()
     }
 
-    // первый рендер
+    // первый рендер //
     useEffect(() => {
         getAllServicesInfo()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
@@ -235,7 +236,7 @@ const Service = () => {
                         <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                         <div className={s.buttons_create}>
                             <Button disabled={isClientChosen}
-                                    onClick={() => {alert('Пока что не знаю что с этим делать')}}
+                                    onClick={() => {setChooseClientModal(true)}}
                             >
                                 Создать ремонт
                             </Button>
