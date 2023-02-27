@@ -3,11 +3,10 @@ import {devtools, persist} from 'zustand/middleware';
 import {immer} from 'zustand/middleware/immer';
 import {AxiosResponse} from 'axios';
 import {$api} from '../../../shared';
-import {CreateService, CreateServiceResponse, IUser,
-    ServiceItem, UpdateService, UpdateServiceStatus} from '../../../entities';
+import {CreateService, CreateServiceResponse, GetUsersResponse, IUser,
+    ServiceItem, UpdateService, UpdateServiceStatus, UserResponse} from '../../../entities';
 import {ServiceProduct, ServiceWork} from '../../../entities/requests/CreateService';
 import {UpdateServiceResponse} from '../../../entities/responses/UpdateServiceResponse';
-import {ServiceStatusType} from '../../../entities/models/ServiceItem';
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
@@ -16,10 +15,14 @@ interface ServiceStore {
     setIsLoading: (value: boolean) => void
     currentUser: IUser | null
     setCurrentUser: (user: IUser | null) => void // надо исправить тип
+    currentMaster: string
+    setCurrentMaster: (userMasterId: string) => void
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
 
     users: IUser[]
+    masters: UserResponse[]
+    getMasters: () => any // надо исправить тип
     services: ServiceItem[]
     setServices: (services: ServiceItem[]) => void
     filteredServices: ServiceItem[]
@@ -41,10 +44,21 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     // currentUser: {} as IUser,
     currentUser: null,
     setCurrentUser: (user) => set({currentUser: user}),
+    currentMaster: '',
+    setCurrentMaster: (userMasterId) => set({currentMaster: userMasterId}),
     currentService: null,
     setCurrentService: (service) => set({currentService: service}),
 
     users: [],
+    masters: [],
+    getMasters: () => {
+        return $api.get<GetUsersResponse>('/user/find').then(res => {
+            set(state => {
+                state.masters = res.data.users.filter((m: UserResponse) => m.user.shopId === 0)
+                console.log('все мастер', state.masters)
+            })
+        })
+    },
     services: [],
     setServices: (services) => set(state => {state.services = services}),
     filteredServices: [],
@@ -75,6 +89,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     .filter((item: CreateServiceResponse) =>
                         item.status === 'Waiting' || item.status === 'WaitingSupply')
                 state.users = res.data.map((item: CreateServiceResponse) => item.client)
+                // state.masters = res.data.filter((m: CreateServiceResponse) => m.client)
                 // state.products = [...res.data.products]
                 // state.works = [...res.data.works]
 

@@ -11,7 +11,7 @@ import useService, {ServiceListStatusType} from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {CreateService, IUser, ServiceItem} from '../../../entities';
+import {CreateService, IUser, ServiceItem, UserResponse} from '../../../entities';
 import {ServiceStatusType} from "../../../entities/models/ServiceItem";
 
 // enum ServiceStatus {
@@ -49,10 +49,14 @@ const Service = () => {
 
     const currentUser = useService(s => s.currentUser)
     const setCurrentUser = useService(s => s.setCurrentUser)
+    const currentMaster = useService(s => s.currentMaster)
+    const setCurrentMaster = useService(s => s.setCurrentMaster)
     const currentService = useService(s => s.currentService)
     const setCurrentService = useService(s => s.setCurrentService)
 
     const users = useService(s => s.users)
+    const masters = useService(s => s.masters)
+    const getMasters = useService(s => s.getMasters)
     const services = useService(s => s.services)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
@@ -96,7 +100,7 @@ const Service = () => {
         defaultValues: {
             name: '',
             clientDescription: '',
-            userMaster: '',
+            userMasterId: '',
         }
     });
     const onSubmit: SubmitHandler<any> = (data: CreateService) => {
@@ -105,7 +109,7 @@ const Service = () => {
         data.shopId = 1
         data.clientId = currentUser?.id || '' // !
         data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // выбор из селекта
-        data.userMasterId = currentUser?.id || '' // !
+        data.userMasterId = currentMaster // ?.id || '' // !
 
         data.productDiscountId = 0
         data.workDiscountId = 0
@@ -157,7 +161,7 @@ const Service = () => {
     const clearInputsHandler = () => {
         formControl.setValue('name', '')
         formControl.setValue('clientDescription', '')
-        formControl.setValue('userMaster', '')
+        // formControl.setValue('userMasterId', '')
     }
     
     // хендлеры //
@@ -166,10 +170,10 @@ const Service = () => {
     //     setUserMasterId(event.target.value as string)
     //     console.log(event.target.value)
     // };
-    // const handleChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    //     // setUserMasterId(event.target.value as string)
-    //     console.log('клик по селекту', event.target.value)
-    // };
+    const onChangeSelectHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+        setCurrentMaster(event.currentTarget.value)
+        console.log('клик по селекту мастера', event.currentTarget.value)
+    };
 
     const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
         // поиск элемента из массива для применения стилей
@@ -187,7 +191,7 @@ const Service = () => {
 
         formControl.setValue('name', ServiceItemObj.name)
         formControl.setValue('clientDescription', ServiceItemObj.clientDescription)
-        formControl.setValue('userMaster', 'Выбранный мастер')
+        formControl.setValue('userMasterId', currentMaster)
     }
     const chooseClientHandler = (user: IUser) => {
         setCurrentUser(user)
@@ -223,6 +227,7 @@ const Service = () => {
     // первый рендер //
     useEffect(() => {
         getAllServicesInfo()
+        getMasters()
         setIsActiveWaiting(true) // цвет кнопки (ожидание)
     }, [])
 
@@ -349,10 +354,10 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                <ControlledInput name={'userMaster'} label={'Мастер'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
+                                {/*<ControlledInput name={'userMaster'} label={'Мастер'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*/>*/}
 
                                 {/*<FormControl fullWidth>*/}
                                 {/*    <InputLabel id="master-select-label">Мастер</InputLabel>*/}
@@ -379,17 +384,17 @@ const Service = () => {
                                 {/*    </Select>*/}
                                 {/*</FormControl>*/}
 
-                                {/*<select name="userMasterId" value={userMasterId} onChange={handleChangeSelect}>*/}
-                                {/*    {*/}
-                                {/*        users.map(u => {*/}
-                                {/*            return (*/}
-                                {/*                <option key={u.user.id} value={u.user.id}>*/}
-                                {/*                    {u.user.lastName} {u.user.firstName} {u.user.patronymic}*/}
-                                {/*                </option>*/}
-                                {/*            )*/}
-                                {/*        })*/}
-                                {/*    }*/}
-                                {/*</select>*/}
+                                <select name='userMasterId' value={currentMaster} onChange={onChangeSelectHandler}>
+                                    {
+                                        masters.map((m: UserResponse) => {
+                                            return (
+                                                <option key={m.user.id} value={m.user.id}>
+                                                    {m.user.lastName} {m.user.firstName} {m.user.patronymic}
+                                                </option>
+                                            )
+                                        })
+                                    }
+                                </select>
 
                             </div>
                             <div className={s.content_buttons}>
