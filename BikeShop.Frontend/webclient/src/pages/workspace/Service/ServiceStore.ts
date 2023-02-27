@@ -7,13 +7,13 @@ import {CreateService, CreateServiceResponse, IUser,
     ServiceItem, UpdateService, UpdateServiceStatus} from '../../../entities';
 import {ServiceProduct, ServiceWork} from '../../../entities/requests/CreateService';
 import {UpdateServiceResponse} from '../../../entities/responses/UpdateServiceResponse';
+import {ServiceStatusType} from '../../../entities/models/ServiceItem';
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
-    // currentUser: IUser
     currentUser: IUser | null
     setCurrentUser: (user: IUser | null) => void // надо исправить тип
     currentService: ServiceItem | null
@@ -32,8 +32,6 @@ interface ServiceStore {
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => Promise<AxiosResponse<CreateServiceResponse>>
     updateService: (data: UpdateService) => Promise<AxiosResponse<UpdateServiceResponse>>
-    // updateStatusHandler: (data: UpdateServiceStatus, serviceStatus: ServiceStatusType,
-    //                       filteredStatus: ServiceStatusType, extraStatus?: ServiceStatusType) => void
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
@@ -95,46 +93,13 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     updateService: (data: UpdateService) => {
         return $api.put<UpdateServiceResponse>('/service/updateservice', data)
     },
-    // updateStatusHandler: (data, serviceStatus, filteredStatus, extraStatus) => {
-    //     // ожидают
-    //     if (/*data.status === 'InProcess' && */currentListStatus === 'Waiting') {
-    //         set(state => {
-    //             state.services.filter(serv => serv.id === data.id)[0].status = data.status
-    //         })
-    //         set(state => {
-    //             state.filteredServices = state.services.filter(serv =>
-    //                 serv.status === 'Waiting' || serv.status === 'WaitingSupply')
-    //         })
-    //     }
-    // },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true});
         return $api.put(`/service/updateservicestatus?id=${data.id}&status=${data.status}`)
             .then(res => {
-                // текущий фильтр лист
                 const currentListStatus = useService.getState().serviceListStatus
-                // ожидают
-                if (/*data.status === 'InProcess' && */currentListStatus === 'Waiting') {
-                    set(state => {
-                        state.services.filter(serv => serv.id === data.id)[0].status = data.status
-                    })
-                    set(state => {
-                        state.filteredServices = state.services.filter(serv =>
-                            serv.status === 'Waiting' || serv.status === 'WaitingSupply')
-                    })
-                }
-                // в ремонте
-                if (/*data.status === 'WaitingSupply' || data.status === 'Ready'*/currentListStatus === 'InProcess') {
-                    set(state => {
-                        state.services.filter(serv => serv.id === data.id)[0].status = data.status
-                    })
-                    set(state => {
-                        state.filteredServices = state.services.filter(serv =>
-                            serv.status === currentListStatus)
-                    })
-                }
-                // готово
-                if (/*(data.status === 'InProcess' || data.status === 'Ended') && */currentListStatus === 'Ready') {
+
+                if (currentListStatus) {
                     set(state => {
                         state.services.filter(serv => serv.id === data.id)[0].status = data.status
                     })
