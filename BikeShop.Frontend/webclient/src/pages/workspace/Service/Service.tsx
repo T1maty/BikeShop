@@ -145,6 +145,7 @@ const Service = () => {
         addNewService(data).then((response: any) => {
             clearInputsHandler()
             setCurrentUser(null)
+            setCurrentMaster('')
             setFIO('')
             setPhoneNumber('')
             setModalUsers([])
@@ -166,14 +167,14 @@ const Service = () => {
     
     // хендлеры //
     // селект
-    // const handleChangeSelect = (event: SelectChangeEvent) => {
-    //     setUserMasterId(event.target.value as string)
-    //     console.log(event.target.value)
-    // };
-    const onChangeSelectHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-        setCurrentMaster(event.currentTarget.value)
-        console.log('клик по селекту мастера', event.currentTarget.value)
+    const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
+        setCurrentMaster(event.target.value as string)
+        console.log('клик по селекту мастера', event.target.value)
     };
+    // const onChangeDefaultSelectHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    //     setCurrentMaster(event.currentTarget.value)
+    //     console.log('клик по селекту мастера', event.currentTarget.value)
+    // };
 
     const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
         // поиск элемента из массива для применения стилей
@@ -359,42 +360,40 @@ const Service = () => {
                                 {/*                 rules={{required: Errors[0].name}}*/}
                                 {/*/>*/}
 
-                                {/*<FormControl fullWidth>*/}
-                                {/*    <InputLabel id="master-select-label">Мастер</InputLabel>*/}
-                                {/*    <Select*/}
-                                {/*        labelId="master-select-label"*/}
-                                {/*        id="master-select"*/}
-                                {/*        name={'userMasterDescription'}*/}
-                                {/*        value={userMasterDescription}*/}
-                                {/*        label="userMasterDescription"*/}
-                                {/*        onChange={handleChangeSelect}*/}
-                                {/*    >*/}
-                                {/*        /!*<MenuItem value={10}>10%</MenuItem>*!/*/}
-                                {/*        /!*<MenuItem value={20}>20%</MenuItem>*!/*/}
-                                {/*        */}
-                                {/*        {*/}
-                                {/*            users.map(u => {*/}
-                                {/*                return (*/}
-                                {/*                    <MenuItem key={u.user.id} value={u.user.id}>*/}
-                                {/*                        {u.user.lastName} {u.user.firstName} {u.user.patronymic}*/}
-                                {/*                    </MenuItem>*/}
-                                {/*                )*/}
-                                {/*            })*/}
-                                {/*        }*/}
-                                {/*    </Select>*/}
-                                {/*</FormControl>*/}
+                                {/*<select name='userMasterId' value={currentMaster} onChange={onChangeDefaultSelectHandler}>*/}
+                                {/*    <option selected disabled value={''}>Выберите мастера</option>*/}
+                                {/*    {*/}
+                                {/*        masters.map((m: UserResponse) => {*/}
+                                {/*            return (*/}
+                                {/*                <option key={m.user.id} value={m.user.id}>*/}
+                                {/*                    {m.user.lastName} {m.user.firstName} {m.user.patronymic}*/}
+                                {/*                </option>*/}
+                                {/*            )*/}
+                                {/*        })*/}
+                                {/*    }*/}
+                                {/*</select>*/}
 
-                                <select name='userMasterId' value={currentMaster} onChange={onChangeSelectHandler}>
-                                    {
-                                        masters.map((m: UserResponse) => {
-                                            return (
-                                                <option key={m.user.id} value={m.user.id}>
-                                                    {m.user.lastName} {m.user.firstName} {m.user.patronymic}
-                                                </option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                <FormControl fullWidth>
+                                    <InputLabel id="master-select-label">Мастер</InputLabel>
+                                    <Select
+                                        labelId="master-select-label"
+                                        id="master-select"
+                                        name={'userMasterId'}
+                                        value={currentMaster}
+                                        label="userMasterId"
+                                        onChange={onChangeMUISelectHandler}
+                                    >
+                                        {
+                                            masters.map((m: UserResponse) => {
+                                                return (
+                                                    <MenuItem key={m.user.id} value={m.user.id}>
+                                                        {m.user.lastName} {m.user.firstName} {m.user.patronymic}
+                                                    </MenuItem>
+                                                )
+                                            })
+                                        }
+                                    </Select>
+                                </FormControl>
 
                             </div>
                             <div className={s.content_buttons}>

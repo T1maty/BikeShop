@@ -128,7 +128,7 @@
                         }
                     }
                     .content_masterInput {
-                        //margin-bottom: $defaultLargeMargin;
+                        margin-bottom: $defaultLargeMargin;
                     }
                     .content_buttons {
                         @include flexBetween();
