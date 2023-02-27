@@ -111,10 +111,18 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     set(state => {
                         state.services.filter(serv => serv.id === data.id)[0].status = data.status
                     })
-                    set(state => {
-                        state.filteredServices = state.services.filter(serv =>
-                            serv.status === currentListStatus)
-                    })
+                    if (currentListStatus === 'Waiting') {
+                        set(state => {
+                            state.filteredServices = state.services.filter(serv =>
+                                serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+                        })
+                    } else {
+                        set(state => {
+                            state.filteredServices = state.services.filter(serv =>
+                                serv.status === currentListStatus)
+                        })
+                    }
+
                 }
 
                 set({isLoading: false})
