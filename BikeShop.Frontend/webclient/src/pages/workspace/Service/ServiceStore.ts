@@ -3,21 +3,16 @@ import {devtools, persist} from 'zustand/middleware';
 import {immer} from 'zustand/middleware/immer';
 import {AxiosResponse} from 'axios';
 import {$api} from '../../../shared';
-import {
-    CreateService, CreateServiceResponse, IUser,
-    ServiceItem, UpdateService, UpdateServiceStatus
-} from '../../../entities';
+import {CreateService, CreateServiceResponse, IUser,
+    ServiceItem, UpdateService, UpdateServiceStatus} from '../../../entities';
 import {ServiceProduct, ServiceWork} from '../../../entities/requests/CreateService';
 import {UpdateServiceResponse} from '../../../entities/responses/UpdateServiceResponse';
-import {ServiceStatusType} from '../../../entities/models/ServiceItem';
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
-    // serviceListStatus: ServiceListStatusType
-    // setServiceListStatus: (status: ServiceListStatusType) => void
     currentUser: IUser
     setCurrentUser: (user: any) => void // надо исправить тип
     currentService: ServiceItem | null
@@ -28,6 +23,8 @@ interface ServiceStore {
     setServices: (services: ServiceItem[]) => void
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
+    serviceListStatus: ServiceListStatusType
+    setServiceListStatus: (serviceListStatus: ServiceListStatusType) => any
     products: ServiceProduct[]
     works: ServiceWork[]
 
@@ -39,11 +36,9 @@ interface ServiceStore {
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
-const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
+const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
-    // serviceListStatus: 'Waiting',
-    // setServiceListStatus: (status) => set({serviceListStatus: status}),
     currentUser: {} as IUser,
     setCurrentUser: (user) => set({currentUser: user}),
     currentService: null,
@@ -51,13 +46,23 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
 
     users: [],
     services: [],
-    setServices: (services) => set(state => {
-        state.services = services
-    }),
+    setServices: (services) => set(state => {state.services = services}),
     filteredServices: [],
-    setFilteredServices: (filteredServices) => set(state => {
-        state.filteredServices = filteredServices
-    }),
+    setFilteredServices: (filteredServices) => set(state => {state.filteredServices = filteredServices}),
+    serviceListStatus: 'Waiting',
+    setServiceListStatus: (serviceListStatus) => set({serviceListStatus: serviceListStatus}),
+    // setServiceListStatus: (serviceListStatus) => set(state => {
+    //     switch (serviceListStatus) {
+    //         case 'Waiting':
+    //             return state.filteredServices = state.services.filter(serv => serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+    //         case 'InProcess':
+    //             return state.filteredServices = state.services.filter(serv => serv.status === 'InProcess')
+    //         case 'Ready':
+    //             return state.filteredServices = state.services.filter(serv => serv.status === 'Ready')
+    //         default:
+    //             return state.filteredServices
+    //     }
+    // }),
     products: [],
     works: [],
 
@@ -89,21 +94,25 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
         return $api.put<UpdateServiceResponse>('/service/updateservice', data)
     },
     // updateStatusHandler: (data, serviceStatus, filteredStatus, extraStatus) => {
-    //     set(state => {
-    //         state.services.filter(serv => serv.id === data.id)[0].status = serviceStatus
-    //     })
-    //     set(state => {
-    //         state.filteredServices = state.services.filter(serv =>
-    //             serv.status === filteredStatus || serv.status === extraStatus)
-    //     })
+    //     // ожидают
+    //     if (/*data.status === 'InProcess' && */currentListStatus === 'Waiting') {
+    //         set(state => {
+    //             state.services.filter(serv => serv.id === data.id)[0].status = data.status
+    //         })
+    //         set(state => {
+    //             state.filteredServices = state.services.filter(serv =>
+    //                 serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+    //         })
+    //     }
     // },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true});
         return $api.put(`/service/updateservicestatus?id=${data.id}&status=${data.status}`)
             .then(res => {
-
-                // зарефакторить!
-                if (data.status === 'InProcess') {
+                // текущий фильтр лист
+                const currentListStatus = useService.getState().serviceListStatus
+                // ожидают
+                if (/*data.status === 'InProcess' && */currentListStatus === 'Waiting') {
                     set(state => {
                         state.services.filter(serv => serv.id === data.id)[0].status = data.status
                     })
@@ -112,22 +121,24 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set) => ({
                             serv.status === 'Waiting' || serv.status === 'WaitingSupply')
                     })
                 }
-                if (data.status === 'WaitingSupply' || data.status === 'Ready') {
+                // в ремонте
+                if (/*data.status === 'WaitingSupply' || data.status === 'Ready'*/currentListStatus === 'InProcess') {
                     set(state => {
                         state.services.filter(serv => serv.id === data.id)[0].status = data.status
                     })
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
-                            serv.status === 'InProcess')
+                            serv.status === currentListStatus)
                     })
                 }
-                if (data.status === 'InProcess' || data.status === 'Ended') {
+                // готово
+                if (/*(data.status === 'InProcess' || data.status === 'Ended') && */currentListStatus === 'Ready') {
                     set(state => {
                         state.services.filter(serv => serv.id === data.id)[0].status = data.status
                     })
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
-                            serv.status === 'Ready')
+                            serv.status === currentListStatus)
                     })
                 }
 
