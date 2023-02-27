@@ -7,7 +7,7 @@ import {ServiceTable} from '../../index';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {useSnackbar} from 'notistack';
-import useService from './ServiceStore';
+import useService, {ServiceListStatusType} from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
@@ -183,32 +183,17 @@ const Service = () => {
     //     console.log('клик по селекту', event.target.value)
     // };
 
-    const filterHandler = (filterName: ServiceStatusType, extraStatus?: ServiceStatusType) => {
-        setFilteredServices(services.filter(serv => serv.status === filterName || serv.status === extraStatus))
-    }
-    const filterWaitingHandler = () => {
-        filterHandler('Waiting', 'WaitingSupply')
-        setServiceListStatus('Waiting')
-        console.log('отфильтрованные сервисы - в ожидании', filteredServices)
-        setIsActiveWaiting(true)
-        setIsActiveProcess(false)
-        setIsActiveReady(false)
-    }
-    const filterInProcessHandler = () => {
-        filterHandler('InProcess')
-        setServiceListStatus('InProcess')
-        console.log('отфильтрованные сервисы - в ремонте', filteredServices)
-        setIsActiveWaiting(false)
-        setIsActiveProcess(true)
-        setIsActiveReady(false)
-    }
-    const filterReadyHandler = () => {
-        filterHandler('Ready')
-        setServiceListStatus('Ready')
-        console.log('отфильтрованные сервисы - готово', filteredServices)
-        setIsActiveWaiting(false)
-        setIsActiveProcess(false)
-        setIsActiveReady(true)
+
+    const filterServicesUniversalHandler = (filterName: ServiceListStatusType, /*serviceListStatus: ServiceListStatusType,*/
+                                            isButtonWaitingOn: boolean, isButtonInProcessOn: boolean,
+                                            isButtonReadyOn: boolean, extraFilterName?: ServiceStatusType) => {
+
+        setFilteredServices(services.filter(serv => serv.status === filterName || serv.status === extraFilterName))
+        setServiceListStatus(filterName) // статус фильтр листа
+        setIsActiveWaiting(isButtonWaitingOn)
+        setIsActiveProcess(isButtonInProcessOn)
+        setIsActiveReady(isButtonReadyOn)
+        // console.log('отфильтрованные сервисы', filteredServices)
     }
 
     // изменение статуса заказа
@@ -248,21 +233,25 @@ const Service = () => {
                         <div className={s.buttons_filter}>
                             <div>
                                 <Button className={isActiveWaiting ? style.waiting : ''}
-                                        onClick={filterWaitingHandler}
+                                        onClick={() => {filterServicesUniversalHandler('Waiting',
+                                            true, false, false,
+                                            'WaitingSupply')}}
                                 >
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
                                 <Button className={isActiveProcess ? style.process : ''}
-                                        onClick={filterInProcessHandler}
+                                        onClick={() => {filterServicesUniversalHandler('InProcess',
+                                            false, true, false)}}
                                 >
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
                                 <Button className={isActiveReady ? style.ready : ''}
-                                        onClick={filterReadyHandler}
+                                        onClick={() => {filterServicesUniversalHandler('Ready',
+                                            false, false, true)}}
                                 >
                                     Готово
                                 </Button>
