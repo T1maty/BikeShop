@@ -6,7 +6,7 @@ interface CustomTableProps {
     theadData: string[],
     tbodyData: object[],
     customClass?: string,
-    onContext: any
+    onContext: (data: any) => void
 }
 
 interface TableHeadItemProps {
@@ -40,7 +40,7 @@ export const CustomTable: FC<CustomTableProps> = ({theadData, tbodyData, customC
 
         const onCloseHandler = useCallback((variant?: string) => {
             setState({...state, isOpen: false, variant: variant || ''})
-        },[])
+        },[state])
 
         return (
             <>

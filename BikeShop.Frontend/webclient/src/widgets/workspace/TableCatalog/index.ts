@@ -1,5 +1,5 @@
-import {TableCatalog} from "./ui/TableCatalog";
+import {Catalog} from "./ui/Catalog";
 
 export {
-    TableCatalog
+    Catalog
 }

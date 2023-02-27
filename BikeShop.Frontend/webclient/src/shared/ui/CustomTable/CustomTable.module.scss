@@ -18,14 +18,13 @@
 }
 
 .thead {
-  padding: 10px;
   border-bottom: 1px solid rgb(81, 81, 81);
   text-align: center;
 }
 
 .tbody {
   display: block;
-  height: 500px;
+  max-height: 500px;
   overflow: auto;
 }
 
@@ -46,10 +45,5 @@
 }
 
 .body__item{
-  padding: 10px;
-}
-
-.span{
-  position: absolute;
-
+  padding: 5px;
 }

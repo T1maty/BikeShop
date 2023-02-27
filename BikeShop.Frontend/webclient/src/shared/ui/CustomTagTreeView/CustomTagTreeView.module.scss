@@ -1,0 +1,42 @@
+.tree ul {
+  padding-left: 1em;
+  line-height: 1.5em;
+  list-style-type: none;
+}
+.tree li {
+  list-style-type: none;
+  position: relative;
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+  line-height: 1.5em;
+}
+.tree ul ul:before {
+  position: absolute;
+  left: 0;
+  content: "▶";
+  transform: rotate(90deg);
+}
+
+
+.content:hover{
+  background-color: red;
+  width: auto;
+}
+
+ul.none li{
+  display: none;
+}
+
+.tree ul ul.none:before {
+  position: absolute;
+  left: 5px;
+  content: "▶";
+  transform: rotate(0deg);
+}
+.tree li:last-child:before {
+  height: 1em;
+}
+
+.child:hover{
+ background-color: grey;
+}
