@@ -1,6 +1,6 @@
 import React, {FC, useCallback, useEffect, useRef, useState, MouseEvent, memo} from 'react';
 import cls from './ContextMenu.module.scss'
-import {Button} from "../../../../shared/ui";
+import {Button} from "shared/ui";
 import {Portal} from "../../Portal/Portal";
 import clsx from "clsx";
 
@@ -42,7 +42,6 @@ const ContextMenu: FC<ContextMenuProps> = memo((
             }, ANIMATION_DELAY)
         }
     }, [onClose])
-    console.log(isClosing)
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape') {
@@ -68,6 +67,8 @@ const ContextMenu: FC<ContextMenuProps> = memo((
         [cls.opened]: isOpen,
         [cls.isClosing]: isClosing
     }
+    if (!isOpen) return null
+
     return (
         <Portal>
             <div className={clsx(cls.menu, mods)} >
