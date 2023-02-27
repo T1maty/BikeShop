@@ -17,34 +17,28 @@ interface ChooseClientModalStore {
     isClientChosen: boolean
     setIsClientChosen: (value: boolean) => void
     users: IUser[]
+    setUsers: (users: any) => void
     fio: string
     phoneNumber: string
     setFIO: (value: string) => void
     setPhoneNumber: (value: string) => void
-    findUser: (data: SearchClient) => any // надо исправить тип
+    findUser: (data: SearchClient) => any // исправить тип
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
 
 const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtools(immer((set) => ({
     chooseClientModal: false,
-    setChooseClientModal: (value: boolean) => set({
-        chooseClientModal: value
-    }),
+    setChooseClientModal: (value) => set({chooseClientModal: value}),
     isLoading: false,
     isClientChosen: false,
-    setIsClientChosen: (value: boolean) => set({
-        isClientChosen: value
-    }),
+    setIsClientChosen: (value) => set({isClientChosen: value}),
 
     users: [],
+    setUsers: (users) => set({users: users}),
     fio: '',
-    setFIO: (value: string) => set({
-        fio: value
-    }),
+    setFIO: (value) => set({fio: value}),
     phoneNumber: '',
-    setPhoneNumber: (value: string) => set({
-        phoneNumber: value
-    }),
+    setPhoneNumber: (value) => set({phoneNumber: value}),
 
     findUser: (data: SearchClient) => {
         set({isLoading: true});
@@ -54,9 +48,7 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
             set({isLoading: false})
         })
     },
-    addNewUser: (data) => {
-        return $api.post<CreateUser>('/user/create', data)
-    }
+    addNewUser: (data) => {return $api.post<CreateUser>('/user/create', data)}
 })))/*, {
     name: "chooseClientModalStore",
     version: 1

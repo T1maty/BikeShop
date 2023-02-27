@@ -39,6 +39,10 @@ const Service = () => {
     const {enqueueSnackbar} = useSnackbar()
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
+    const setModalUsers = useChooseClientModal(s => s.setUsers)
+    const setFIO = useChooseClientModal(s => s.setFIO)
+    const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
+
     const isLoading = useService(s => s.isLoading)
     const isClientChosen = useChooseClientModal(s => s.isClientChosen)
     const setIsClientChosen = useChooseClientModal(s => s.setIsClientChosen)
@@ -133,8 +137,12 @@ const Service = () => {
             }
         ]
 
-        addNewService(data).then((response) => {
+        addNewService(data).then((response: any) => {
             clearInputsHandler()
+            setCurrentUser(null)
+            setFIO('')
+            setPhoneNumber('')
+            setModalUsers([])
             enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
@@ -187,9 +195,9 @@ const Service = () => {
     // };
 
 
-    const filterServicesUniversalHandler = (filterName: ServiceListStatusType, /*serviceListStatus: ServiceListStatusType,*/
-                                            isButtonWaitingOn: boolean, isButtonInProcessOn: boolean,
-                                            isButtonReadyOn: boolean, extraFilterName?: ServiceStatusType) => {
+    const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
+                                            isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
+                                            extraFilterName?: ServiceStatusType) => {
 
         setFilteredServices(services.filter(serv => serv.status === filterName || serv.status === extraFilterName))
         setServiceListStatus(filterName) // статус фильтр листа
@@ -205,6 +213,7 @@ const Service = () => {
 
         // зачистка полей после изменения статуса
         setCurrentUser(null)
+        setIsClientChosen(false)
         setCurrentService(null)
         setActiveId(null)
         clearInputsHandler()

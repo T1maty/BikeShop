@@ -30,7 +30,7 @@ interface ServiceStore {
     works: ServiceWork[]
 
     getAllServicesInfo: () => any // надо исправить тип
-    addNewService: (data: CreateService) => Promise<AxiosResponse<CreateServiceResponse>>
+    addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
     updateService: (data: UpdateService) => Promise<AxiosResponse<UpdateServiceResponse>>
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
@@ -88,7 +88,15 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     addNewService: (data: CreateService) => {
-        return $api.post<CreateServiceResponse>('/service/create', data)
+        return $api.post('/service/create', data).then(res => {
+            set(state => {
+                state.services.push(res.data)
+            })
+            set(state => {
+                state.filteredServices = state.services.filter(serv =>
+                    serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+            })
+        })
     },
     updateService: (data: UpdateService) => {
         return $api.put<UpdateServiceResponse>('/service/updateservice', data)
