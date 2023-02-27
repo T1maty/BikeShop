@@ -13,8 +13,9 @@ export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
-    currentUser: IUser
-    setCurrentUser: (user: any) => void // надо исправить тип
+    // currentUser: IUser
+    currentUser: IUser | null
+    setCurrentUser: (user: IUser | null) => void // надо исправить тип
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
 
@@ -39,7 +40,8 @@ interface ServiceStore {
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
-    currentUser: {} as IUser,
+    // currentUser: {} as IUser,
+    currentUser: null,
     setCurrentUser: (user) => set({currentUser: user}),
     currentService: null,
     setCurrentService: (service) => set({currentService: service}),

@@ -98,9 +98,9 @@ const Service = () => {
         console.log('сабмит данные', data)
 
         data.shopId = 1
-        data.clientId = currentUser.id
+        data.clientId = currentUser?.id || '' // !
         data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // выбор из селекта
-        data.userMasterId = currentUser.id
+        data.userMasterId = currentUser?.id || '' // !
 
         data.productDiscountId = 0
         data.workDiscountId = 0
@@ -114,7 +114,8 @@ const Service = () => {
                 price: 0,
                 discount: 0,
                 total: 0,
-                userId: currentUser.id
+                // userId: currentUser.id
+                userId: 'e9267875-5844-4f12-9639-53595d3105f4'
             }
         ]
         data.serviceProducts = [
@@ -127,7 +128,8 @@ const Service = () => {
                 price: 0,
                 discount: 0,
                 total: 0,
-                userId: currentUser.id
+                // userId: currentUser.id
+                userId: 'e9267875-5844-4f12-9639-53595d3105f4'
             }
         ]
 
@@ -159,7 +161,8 @@ const Service = () => {
         setCurrentService(ServiceItemObj)
         console.log('клик по сервису', ServiceItemObj)
         // надо будет убрать слайс!!!
-        setCurrentUser(users.slice(1).find(u => u.id === ServiceItemObj.client.id))
+        // @ts-ignore
+        setCurrentUser(users.slice(1).find((u: IUser) => u.id === ServiceItemObj.client.id))
         console.log('клиент выбранного сервиса', currentUser)
         setIsClientChosen(true)
 
@@ -201,7 +204,7 @@ const Service = () => {
         updateServiceStatus({id: currentService?.id || -1, status: newStatus})
 
         // зачистка полей после изменения статуса
-        // setCurrentUser({})
+        setCurrentUser(null)
         setCurrentService(null)
         setActiveId(null)
         clearInputsHandler()

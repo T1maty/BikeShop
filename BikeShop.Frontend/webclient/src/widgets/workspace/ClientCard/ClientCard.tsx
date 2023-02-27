@@ -3,7 +3,7 @@ import s from "./ClientCard.module.scss";
 import {IUser} from "../../../entities";
 
 interface ClientCardProps {
-    user: IUser
+    user: IUser | null
 }
 
 const ClientCard: React.FC<ClientCardProps> = ({user}) => {
@@ -13,14 +13,14 @@ const ClientCard: React.FC<ClientCardProps> = ({user}) => {
             <h3>Клиент</h3>
             <p>
                 <span>ФИО:</span> {''}
-                {user.lastName ? user.lastName : 'Клиент'} {''}
-                {user.firstName ? user.firstName : 'не'} {''}
-                {user.patronymic ? user.patronymic : 'выбран'}
+                {user?.lastName ? user?.lastName : 'Клиент'} {''}
+                {user?.firstName ? user?.firstName : 'не'} {''}
+                {user?.patronymic ? user?.patronymic : 'выбран'}
             </p>
-            <p><span>Номер телефона:</span> {user.phoneNumber ? user.phoneNumber : 'Клиент не выбран'}</p>
+            <p><span>Номер телефона:</span> {user?.phoneNumber ? user?.phoneNumber : 'Клиент не выбран'}</p>
             {/*<p><span>Почта:</span> {email}</p>*/}
-            <p><span>Баланс:</span> {user.balance ? user.balance : 0}</p>
-            <p><span>Кредитный лимит:</span> {user.creditLimit ? user.creditLimit : 0}</p>
+            <p><span>Баланс:</span> {user?.balance ? user?.balance : 0}</p>
+            <p><span>Кредитный лимит:</span> {user?.creditLimit ? user?.creditLimit : 0}</p>
         </div>
     )
 }
