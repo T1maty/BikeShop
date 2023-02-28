@@ -110,7 +110,7 @@ const Service = () => {
         console.log('сабмит данные', data)
 
         data.shopId = 1
-        data.clientId = currentUser?.id || '' // !
+        data.clientId = currentUser?.id || ''
         data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
         data.userMasterId = currentMasterId
 
@@ -185,14 +185,9 @@ const Service = () => {
         setCurrentService(ServiceItemObj)
         console.log('клик по сервису', ServiceItemObj)
 
-        // надо будет убрать слайс!!!
-        // @ts-ignore
-        setCurrentUser(users.slice(1).find((u: IUser) => u.id === ServiceItemObj.client.id))
-        console.log('клиент выбранного сервиса', currentUser)
-
-        const selectMaster = masters.find((m: UserResponse) => m.user.id === ServiceItemObj.userMaster.id)
-        // @ts-ignore
-        setCurrentMasterId(selectMaster)
+        setCurrentUser(users.find((u: IUser) => u.id === ServiceItemObj.client.id))
+        // console.log('клиент выбранного сервиса', currentUser)
+        setCurrentMasterId(masters.find((m: UserResponse) => m.user.id === ServiceItemObj.userMaster.id))
         // setCurrentMasterId('06a42f37-cd75-446c-963c-dbca0b615b20') // так работает
 
         setIsClientChosen(true)
@@ -390,12 +385,14 @@ const Service = () => {
                                         labelId="master-select-label"
                                         id="master-select"
                                         name={'userMasterId'}
-                                        value={currentMasterId}
+                                        value={currentMasterId ? currentMasterId : ''}
+                                        defaultValue=''
                                         label="userMasterId"
                                         onChange={onChangeMUISelectHandler}
                                     >
                                         {
                                             masters.map((m: UserResponse) => {
+                                                // const [[key, val]] = Object.entries(m)
                                                 return (
                                                     <MenuItem key={m.user.id} value={m.user.id}>
                                                         {m.user.lastName} {m.user.firstName} {m.user.patronymic}

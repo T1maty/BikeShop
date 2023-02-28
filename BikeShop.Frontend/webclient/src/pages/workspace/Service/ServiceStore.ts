@@ -14,9 +14,9 @@ interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     currentUser: IUser | null
-    setCurrentUser: (user: IUser | null) => void
+    setCurrentUser: (user: any /*IUser | null*/) => void // надо исправить тип
     currentMasterId: string
-    setCurrentMasterId: (userMasterId: string) => void
+    setCurrentMasterId: (userMasterId: any /*string*/) => void // надо исправить тип
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
 
@@ -89,7 +89,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     .filter((item: CreateServiceResponse) =>
                         item.status === 'Waiting' || item.status === 'WaitingSupply')
                 state.users = res.data.map((item: CreateServiceResponse) => item.client)
-                state.masters = res.data.filter((m: CreateServiceResponse) => m.client)
                 // state.products = [...res.data.products]
                 // state.works = [...res.data.works]
 
