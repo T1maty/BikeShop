@@ -6,17 +6,22 @@ import {ServiceProductWork} from "../../../entities/requests/CreateService";
 
 type ServiceTableProps = {
     data: ServiceProductWork[]
+    buttonTitle: string
+    serviceTableCallback: () => void
 }
 
-const ServiceTable: React.FC<ServiceTableProps> = ({data}) => {
+const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTableCallback}) => {
+
+    const userClickHandler = () => {
+        serviceTableCallback()
+    }
 
     return (
         <div className={s.tableBox}>
             <div className={s.tableBox_buttons}>
                 <div className={s.buttons_editBtn}>
-                    <Button onClick={() => {
-                    }}>
-                        Редактор
+                    <Button onClick={userClickHandler}>
+                        {buttonTitle}
                     </Button>
                 </div>
                 <div className={s.buttons_discountField}>

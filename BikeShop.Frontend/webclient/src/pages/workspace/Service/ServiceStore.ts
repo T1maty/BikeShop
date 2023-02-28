@@ -14,9 +14,9 @@ interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     currentUser: IUser | null
-    setCurrentUser: (user: IUser | null) => void // надо исправить тип
-    currentMaster: string
-    setCurrentMaster: (userMasterId: string) => void
+    setCurrentUser: (user: IUser | null) => void
+    currentMasterId: string
+    setCurrentMasterId: (userMasterId: string) => void
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
 
@@ -28,7 +28,7 @@ interface ServiceStore {
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
     serviceListStatus: ServiceListStatusType
-    setServiceListStatus: (serviceListStatus: ServiceListStatusType) => any
+    setServiceListStatus: (serviceListStatus: ServiceListStatusType) => void
     products: ServiceProduct[]
     works: ServiceWork[]
 
@@ -44,8 +44,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     // currentUser: {} as IUser,
     currentUser: null,
     setCurrentUser: (user) => set({currentUser: user}),
-    currentMaster: '',
-    setCurrentMaster: (userMasterId) => set({currentMaster: userMasterId}),
+    currentMasterId: '',
+    setCurrentMasterId: (userMasterId) => set({currentMasterId: userMasterId}),
     currentService: null,
     setCurrentService: (service) => set({currentService: service}),
 

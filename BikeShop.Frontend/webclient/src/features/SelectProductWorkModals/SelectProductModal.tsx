@@ -2,15 +2,18 @@ import React, {useState} from 'react';
 import {Modal} from '@mui/material';
 import s from './SelectProductWorkModal.module.scss'
 import SelectProduct from "../../pages/workspace/SelectProductWork/SelectProduct";
+import useSelectProductWorkModal from "./SelectProductWorkModalStore";
 
-const SelectProductModal = () => {
+export const SelectProductModal = () => {
 
-    const [open, setOpen] = useState<boolean>(true)
+    // const [open, setOpen] = useState<boolean>(false)
+    const selectProductModal = useSelectProductWorkModal(s => s.selectProductModal)
+    const setSelectProductModal = useSelectProductWorkModal(s => s.setSelectProductModal)
 
     return (
         <Modal
-            open={open}
-            onClose={() => {setOpen(false)}}
+            open={selectProductModal}
+            onClose={() => {setSelectProductModal(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -20,5 +23,3 @@ const SelectProductModal = () => {
         </Modal>
     );
 };
-
-export default SelectProductModal;

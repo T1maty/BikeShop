@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import s from './Service.module.scss'
 import style from '../../../shared/ui/Button/Button.module.scss'
-import {ChooseClientModal} from '../../../features';
+import {ChooseClientModal, SelectProductModal, SelectWorkModal} from '../../../features';
 import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
@@ -13,6 +13,7 @@ import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
 import {CreateService, IUser, ServiceItem, UserResponse} from '../../../entities';
 import {ServiceStatusType} from "../../../entities/models/ServiceItem";
+import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore";
 
 // enum ServiceStatus {
 //     Waiting = 0, // ожидают
@@ -38,6 +39,8 @@ const Service = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
+    const setSelectProductModal = useSelectProductWorkModal(s => s.setSelectProductModal)
+    const setSelectWorkModal = useSelectProductWorkModal(s => s.setSelectWorkModal)
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setModalUsers = useChooseClientModal(s => s.setUsers)
     const setFIO = useChooseClientModal(s => s.setFIO)
@@ -49,8 +52,8 @@ const Service = () => {
 
     const currentUser = useService(s => s.currentUser)
     const setCurrentUser = useService(s => s.setCurrentUser)
-    const currentMaster = useService(s => s.currentMaster)
-    const setCurrentMaster = useService(s => s.setCurrentMaster)
+    const currentMasterId = useService(s => s.currentMasterId)
+    const setCurrentMasterId = useService(s => s.setCurrentMasterId)
     const currentService = useService(s => s.currentService)
     const setCurrentService = useService(s => s.setCurrentService)
 
@@ -108,8 +111,8 @@ const Service = () => {
 
         data.shopId = 1
         data.clientId = currentUser?.id || '' // !
-        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // выбор из селекта
-        data.userMasterId = currentMaster // ?.id || '' // !
+        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
+        data.userMasterId = currentMasterId
 
         data.productDiscountId = 0
         data.workDiscountId = 0
@@ -123,8 +126,8 @@ const Service = () => {
                 price: 0,
                 discount: 0,
                 total: 0,
-                // userId: currentUser.id
-                userId: 'e9267875-5844-4f12-9639-53595d3105f4'
+                userId: currentUser?.id || ''
+                // userId: 'e9267875-5844-4f12-9639-53595d3105f4'
             }
         ]
         data.serviceProducts = [
@@ -137,15 +140,15 @@ const Service = () => {
                 price: 0,
                 discount: 0,
                 total: 0,
-                // userId: currentUser.id
-                userId: 'e9267875-5844-4f12-9639-53595d3105f4'
+                userId: currentUser?.id || ''
+                // userId: 'e9267875-5844-4f12-9639-53595d3105f4'
             }
         ]
 
         addNewService(data).then((response: any) => {
             clearInputsHandler()
             setCurrentUser(null)
-            setCurrentMaster('')
+            setCurrentMasterId('')
             setFIO('')
             setPhoneNumber('')
             setModalUsers([])
@@ -168,14 +171,11 @@ const Service = () => {
     // хендлеры //
     // селект
     const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
-        setCurrentMaster(event.target.value as string)
+        setCurrentMasterId(event.target.value as string)
         console.log('клик по селекту мастера', event.target.value)
     };
-    // const onChangeDefaultSelectHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    //     setCurrentMaster(event.currentTarget.value)
-    //     console.log('клик по селекту мастера', event.currentTarget.value)
-    // };
 
+    // выбор элементов
     const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
         // поиск элемента из массива для применения стилей
         const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
@@ -192,7 +192,7 @@ const Service = () => {
 
         formControl.setValue('name', ServiceItemObj.name)
         formControl.setValue('clientDescription', ServiceItemObj.clientDescription)
-        formControl.setValue('userMasterId', currentMaster)
+        formControl.setValue('userMasterId', currentMasterId)
     }
     const chooseClientHandler = (user: IUser) => {
         setCurrentUser(user)
@@ -201,6 +201,7 @@ const Service = () => {
         console.log('выбранный клиент из модалки', user)
     }
 
+    // фильтрация сервисов
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
                                             extraFilterName?: ServiceStatusType) => {
@@ -213,7 +214,7 @@ const Service = () => {
         console.log('отфильтрованные сервисы', filteredServices)
     }
 
-    // изменение статуса заказа //
+    // изменение статуса сервиса
     const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
         updateServiceStatus({id: currentService?.id || -1, status: newStatus})
 
@@ -223,6 +224,14 @@ const Service = () => {
         setCurrentService(null)
         setActiveId(null)
         clearInputsHandler()
+    }
+
+    // выбор продуктов
+    const chooseProductsHandler = () => {
+        setSelectProductModal(true)
+    }
+    const chooseWorksHandler = () => {
+        setSelectWorkModal(true)
     }
 
     // первый рендер //
@@ -355,12 +364,7 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                {/*<ControlledInput name={'userMaster'} label={'Мастер'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
-
-                                {/*<select name='userMasterId' value={currentMaster} onChange={onChangeDefaultSelectHandler}>*/}
+                                {/*<select name='userMasterId' value={currentMasterId} onChange={onChangeDefaultSelectHandler}>*/}
                                 {/*    <option selected disabled value={''}>Выберите мастера</option>*/}
                                 {/*    {*/}
                                 {/*        masters.map((m: UserResponse) => {*/}
@@ -379,7 +383,7 @@ const Service = () => {
                                         labelId="master-select-label"
                                         id="master-select"
                                         name={'userMasterId'}
-                                        value={currentMaster}
+                                        value={currentMasterId}
                                         label="userMasterId"
                                         onChange={onChangeMUISelectHandler}
                                     >
@@ -417,8 +421,14 @@ const Service = () => {
                         </div>
                     </div>
                     <div className={s.rightSide_tables}>
-                        <ServiceTable data={products}/>
-                        <ServiceTable data={works}/>
+                        <SelectProductModal/>
+                        <ServiceTable data={products}
+                                      buttonTitle={'Редактор товаров'}
+                                      serviceTableCallback={chooseProductsHandler}/>
+                        <SelectWorkModal/>
+                        <ServiceTable data={works}
+                                      buttonTitle={'Редактор услуг'}
+                                      serviceTableCallback={chooseWorksHandler}/>
                     </div>
                 </div>
 

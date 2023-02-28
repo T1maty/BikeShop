@@ -59,6 +59,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
         })
     }
 
+    // зачистка инпутов
     /*const clearFioInput = () => {
         setFIO('')
         setUsers([])
@@ -77,17 +78,6 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
             findUser({fio, phoneNumber});
         }
     }, [searchClientByFIO, searchClientByPhone])
-
-    // useEffect(() => {
-    //     if (chooseClientModal) {
-    //         getUsers()
-    //         //     .then((res: any) => {
-    //         //     setUsers(res.data.users)
-    //         // })
-    //         console.log('getUsers request in IF')
-    //     }
-    //     console.log('getUsers request without IF')
-    // }, [chooseClientModal])
 
     return (
         <Modal
