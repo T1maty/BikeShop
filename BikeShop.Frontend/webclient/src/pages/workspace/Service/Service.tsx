@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from './Service.module.scss'
 import style from '../../../shared/ui/Button/Button.module.scss'
 import {ChooseClientModal, SelectProductModal, SelectWorkModal} from '../../../features';
@@ -165,7 +165,7 @@ const Service = () => {
     const clearInputsHandler = () => {
         formControl.setValue('name', '')
         formControl.setValue('clientDescription', '')
-        // formControl.setValue('userMasterId', '')
+        formControl.setValue('userMasterId', '')
     }
     
     // хендлеры //
@@ -173,7 +173,11 @@ const Service = () => {
     const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
         setCurrentMasterId(event.target.value as string)
         console.log('клик по селекту мастера', event.target.value)
-    };
+    }
+    // const onChangeDefaultSelectHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    //     setCurrentMasterId(event.target.value as string)
+    //     console.log('клик по селекту мастера', event.target.value)
+    // }
 
     // выбор элементов
     const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
@@ -184,11 +188,9 @@ const Service = () => {
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItemObj)
         console.log('клик по сервису', ServiceItemObj)
-
         setCurrentUser(users.find((u: IUser) => u.id === ServiceItemObj.client.id))
-        // console.log('клиент выбранного сервиса', currentUser)
-        setCurrentMasterId(masters.find((m: UserResponse) => m.user.id === ServiceItemObj.userMaster.id))
-        // setCurrentMasterId('06a42f37-cd75-446c-963c-dbca0b615b20') // так работает
+        console.log('клиент выбранного сервиса', currentUser)
+        setCurrentMasterId(ServiceItemObj.userMaster.id)
 
         setIsClientChosen(true)
 
@@ -366,33 +368,32 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-                                {/*<select name='userMasterId' value={currentMasterId} onChange={onChangeDefaultSelectHandler}>*/}
-                                {/*    <option selected disabled value={''}>Выберите мастера</option>*/}
-                                {/*    {*/}
-                                {/*        masters.map((m: UserResponse) => {*/}
-                                {/*            return (*/}
-                                {/*                <option key={m.user.id} value={m.user.id}>*/}
-                                {/*                    {m.user.lastName} {m.user.firstName} {m.user.patronymic}*/}
-                                {/*                </option>*/}
-                                {/*            )*/}
-                                {/*        })*/}
-                                {/*    }*/}
-                                {/*</select>*/}
+
+                                {/*<select name='userMasterId' value={currentMasterId} onChange={onChangeDefaultSelectHandler}>
+                                    <option selected disabled value={''}>Выберите мастера</option>
+                                    {
+                                        masters.map((m: UserResponse) => {
+                                            return (
+                                                <option key={m.user.id} value={m.user.id}>
+                                                    {m.user.lastName} {m.user.firstName} {m.user.patronymic}
+                                                </option>
+                                            )
+                                        })
+                                    }
+                                </select>*/}
 
                                 <FormControl fullWidth>
-                                    <InputLabel id="master-select-label">Мастер</InputLabel>
+                                    <InputLabel id="master-select-label">Выберите мастера</InputLabel>
                                     <Select
                                         labelId="master-select-label"
                                         id="master-select"
                                         name={'userMasterId'}
-                                        value={currentMasterId ? currentMasterId : ''}
-                                        defaultValue=''
+                                        value={currentMasterId}
                                         label="userMasterId"
                                         onChange={onChangeMUISelectHandler}
                                     >
                                         {
                                             masters.map((m: UserResponse) => {
-                                                // const [[key, val]] = Object.entries(m)
                                                 return (
                                                     <MenuItem key={m.user.id} value={m.user.id}>
                                                         {m.user.lastName} {m.user.firstName} {m.user.patronymic}
