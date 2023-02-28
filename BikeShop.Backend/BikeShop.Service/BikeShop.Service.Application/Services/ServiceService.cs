@@ -68,9 +68,9 @@ public class ServiceService : IServiceService
 
         var usersDitionary = await _identityClient.GetDictionary(usersToFind);
 
-        servicesModel.ForEach(async service => {
-            service.Works = await _context.ServiceWorks.Where(n => n.Id == service.Id).ToListAsync();
-            service.Products = await _context.ServiceProducts.Where(n => n.Id == service.Id).ToListAsync();
+        servicesModel.ForEach(service => {
+            service.Works = _context.ServiceWorks.Where(n => n.ServiceId == service.Id).ToList();
+            service.Products = _context.ServiceProducts.Where(n => n.ServiceId == service.Id).ToList();
 
             var clientId = servicesDict[service.Id].ClientId.ToString();
             service.Client = usersDitionary.ContainsKey(clientId) ? usersDitionary[clientId] : null;
@@ -105,10 +105,10 @@ public class ServiceService : IServiceService
         }
 
         var usersDitionary = await _identityClient.GetDictionary(usersToFind);
-
-        servicesModel.ForEach(async service => {
-            service.Works = await _context.ServiceWorks.Where(n => n.Id == service.Id).ToListAsync();
-            service.Products = await _context.ServiceProducts.Where(n => n.Id == service.Id).ToListAsync();
+        
+        servicesModel.ForEach(service => {
+            service.Works = _context.ServiceWorks.Where(n => n.ServiceId == service.Id).ToList();
+            service.Products = _context.ServiceProducts.Where(n => n.ServiceId == service.Id).ToList();
 
             var clientId = services.Where(n => n.Id == service.Id).First().ClientId.ToString();
             service.Client = usersDitionary.ContainsKey(clientId) ? usersDitionary[clientId]:null;
@@ -122,7 +122,7 @@ public class ServiceService : IServiceService
             var userMasterId = services.Where(n => n.Id == service.Id).First().UserMasterId.ToString();
             service.UserMaster = usersDitionary.ContainsKey(userMasterId) ? usersDitionary[userMasterId] : null;
         });
-
+        
         return servicesModel;
     }
 
