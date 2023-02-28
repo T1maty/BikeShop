@@ -9,6 +9,7 @@ public class Product : BaseEntity
     public string Category { get; set; } = string.Empty;
     public string Barcode { get; set; } = string.Empty;
     public string? ManufacturerBarcode { get; set; }
+    public int QuantityUnitId { get; set; }
 
     public decimal IncomePrice { get; set; }
     public decimal DealerPrice { get; set; }

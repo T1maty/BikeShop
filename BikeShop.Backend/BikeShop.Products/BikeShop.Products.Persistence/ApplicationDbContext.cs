@@ -16,6 +16,13 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<StorageProduct> StorageProducts { get; set; }
     public DbSet<Storage> Storages { get; set; }
     public DbSet<ProductStorageMove> ProductStorageMoves { get; set; }
+    public DbSet<ProductStoragesTtansition> ProductStoragesTtansitions { get; set; }
+    public DbSet<ProductReservation> ProductReservations { get; set; }
+    public DbSet<ProductSerialNumber> ProductSerialNumbers { get; set; }
+    public DbSet<QuantityUnit> QuantityUnits { get; set; }
+    public DbSet<QuantityUnitGroup> QuantityUnitGroup { get; set; }
+    public DbSet<PriceHistory> PriceHistories { get; set; }
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         // Позволяет не конвертировать время в UTC для postgresql

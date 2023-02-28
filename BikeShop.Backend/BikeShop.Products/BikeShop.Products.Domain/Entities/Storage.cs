@@ -8,6 +8,9 @@ namespace BikeShop.Products.Domain.Entities
 {
     public class Storage : BaseEntity
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "DefaultName";
+
+        public string SupplyDelay { get; set; } = string.Empty;
+        public bool IsOutsource { get; set; } = false;
     }
 }

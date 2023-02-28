@@ -17,6 +17,12 @@ public interface IApplicationDbContext
     DbSet<StorageProduct> StorageProducts { get; set; }
     DbSet<Storage> Storages { get; set; }
     DbSet<ProductStorageMove> ProductStorageMoves { get; set; }
+    DbSet<ProductStoragesTtansition> ProductStoragesTtansitions { get; set; }
+    DbSet<ProductReservation> ProductReservations { get; set; }
+    DbSet<ProductSerialNumber> ProductSerialNumbers { get; set; }
+    DbSet<QuantityUnit> QuantityUnits { get; set; }
+    DbSet<QuantityUnitGroup> QuantityUnitGroup { get; set; }
+    DbSet<PriceHistory> PriceHistories { get; set; }
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

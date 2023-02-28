@@ -79,6 +79,22 @@
       ],
       "SwaggerKey": "products"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/storage/getbystorage",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/storage/getbystorage",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
 
     {
       "UpstreamPathTemplate": "/api/tag/getall",

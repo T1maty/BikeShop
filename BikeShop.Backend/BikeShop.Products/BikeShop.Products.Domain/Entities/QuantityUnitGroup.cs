@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Products.Domain.Entities
 {
-    public class StorageProduct : BaseEntity
+    public class QuantityUnitGroup : BaseEntity
     {
-        public int ProductId { get; set; }
-        public int StorageId { get; set; }
-        public decimal Quantity { get; set; }
+        public string Name { get; set; }
     }
 }

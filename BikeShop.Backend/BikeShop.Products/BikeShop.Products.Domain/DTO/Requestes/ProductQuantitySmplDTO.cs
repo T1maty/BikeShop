@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BikeShop.Products.Domain.Entities
+namespace BikeShop.Products.Domain.DTO.Requestes
 {
-    public class StorageProduct : BaseEntity
+    public class ProductQuantitySmplDTO
     {
         public int ProductId { get; set; }
-        public int StorageId { get; set; }
         public decimal Quantity { get; set; }
     }
 }
