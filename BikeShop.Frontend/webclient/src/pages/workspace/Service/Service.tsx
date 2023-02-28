@@ -184,6 +184,7 @@ const Service = () => {
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItemObj)
         console.log('клик по сервису', ServiceItemObj)
+
         // надо будет убрать слайс!!!
         // @ts-ignore
         setCurrentUser(users.slice(1).find((u: IUser) => u.id === ServiceItemObj.client.id))
@@ -192,8 +193,8 @@ const Service = () => {
         const selectMaster = masters.find((m: UserResponse) => m.user.id === ServiceItemObj.userMaster.id)
         // @ts-ignore
         setCurrentMasterId(selectMaster)
-
         // setCurrentMasterId('06a42f37-cd75-446c-963c-dbca0b615b20') // так работает
+
         setIsClientChosen(true)
 
         formControl.setValue('name', ServiceItemObj.name)

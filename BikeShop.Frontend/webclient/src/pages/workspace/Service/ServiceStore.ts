@@ -89,7 +89,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     .filter((item: CreateServiceResponse) =>
                         item.status === 'Waiting' || item.status === 'WaitingSupply')
                 state.users = res.data.map((item: CreateServiceResponse) => item.client)
-                // state.masters = res.data.filter((m: CreateServiceResponse) => m.client)
+                state.masters = res.data.filter((m: CreateServiceResponse) => m.client)
                 // state.products = [...res.data.products]
                 // state.works = [...res.data.works]
 
