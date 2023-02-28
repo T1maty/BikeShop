@@ -27,6 +27,7 @@
     cursor: inherit;
 }
 
+
 .waiting {
     background-color: $filterButtonWaitingColor;
 }
@@ -37,6 +38,18 @@
     background-color: var(--button-active-bgcolor);
     color: var(--button-active-color);
 }
+
+
+.ended {
+    background-color: green;
+}
+.canceled {
+    background-color: $filterButtonInProcessColor;
+}
+.deleted {
+    background-color: $filterButtonWaitingColor;
+}
+
 
 span.ripple {
     position: absolute;

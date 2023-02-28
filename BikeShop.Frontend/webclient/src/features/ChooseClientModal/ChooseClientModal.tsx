@@ -14,7 +14,7 @@ interface ChooseClientModalProps {
     extraCallback: (user: IUser) => void
 }
 
-const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) => {
+export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -179,5 +179,3 @@ const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) =>
         </Modal>
     );
 };
-
-export default ChooseClientModal;

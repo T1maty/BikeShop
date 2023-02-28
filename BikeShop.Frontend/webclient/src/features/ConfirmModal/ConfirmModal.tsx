@@ -8,7 +8,7 @@ interface ConfirmModalProps {
     extraCallback: () => void
 }
 
-const ConfirmModal: React.FC<ConfirmModalProps> = ({extraCallback}) => {
+export const ConfirmModal: React.FC<ConfirmModalProps> = ({extraCallback}) => {
     const open = useConfirmModal(s => s.confirmModal)
     const setOpen = useConfirmModal(s => s.setConfirmModal)
 
@@ -40,5 +40,3 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({extraCallback}) => {
         </Modal>
     );
 };
-
-export default ConfirmModal;

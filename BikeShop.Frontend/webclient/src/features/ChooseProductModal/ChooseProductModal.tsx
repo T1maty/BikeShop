@@ -4,7 +4,7 @@ import s from '../ChooseProductModal/ChooseProductModal.module.scss'
 import useChooseProductModal from './ChooseProductModalStore';
 import {ProductCatalog} from '../../pages';
 
-const ChooseProductModal = () => {
+export const ChooseProductModal = () => {
 
     const open = useChooseProductModal(s => s.chooseProductModal)
     const setOpen = useChooseProductModal(s => s.setChooseProductModal)
@@ -22,5 +22,3 @@ const ChooseProductModal = () => {
         </Modal>
     );
 };
-
-export default ChooseProductModal;

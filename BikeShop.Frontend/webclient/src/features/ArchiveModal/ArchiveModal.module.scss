@@ -1,0 +1,100 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.archiveModal_mainBox {
+    @include defaultModalStyle();
+    width: 600px;
+
+    .archiveModal_title {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: $defaultLargeMargin;
+    }
+    .archiveModal_services {
+        @include flexOnlyBetween();
+        gap: $defaultLargeMargin;
+        margin-bottom: $defaultLargeMargin;
+
+        > div {
+            background-color: $themeColorGray;
+            border-radius: $defaultBorderRadius;
+            padding: $defaultLargeMargin;
+            @include flexColumn;
+        }
+        height: 500px;
+
+        .archiveModal_serviceList {
+            width: 100%;
+            .serviceList_header {
+                margin-bottom: $defaultLargeMargin;
+                background-color: $themeColorDark;
+                border-radius: $defaultBorderRadius;
+                padding: $defaultLargeMargin;
+                @include flexColumn;
+
+                > div {
+                    width: 100%;
+
+                    button {
+                        width: 100%;
+                    }
+                }
+                div:not(:last-child) {
+                    margin-bottom: $defaultSmallMargin;
+                }
+            }
+            .serviceList_content {
+                @include flexColumn;
+
+                .serviceItem {
+                    padding: 5px 0;
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $themeColorDark;
+                    }
+                    word-break: break-word;
+                }
+                .serviceItem_active {
+                    padding: 5px 0;
+                    background-color: $themeColorDark;
+                    word-break: break-word;
+                    cursor: default;
+                }
+            }
+        }
+        .archiveModal_serviceInfo {
+            width: 100%;
+
+            .serviceInfo_header {
+                margin-bottom: $defaultLargeMargin;
+                text-decoration: underline;
+                font-weight: bold;
+            }
+            .serviceInfo_content {
+                @include flexColumn;
+
+                .contentItem {
+                    .contentItem_box {
+                        text-align: center;
+
+                        .contentItem_title {
+                            text-decoration: underline;
+                        }
+                        .contentItem_info {
+                            word-break: break-word;
+                        }
+                    }
+                    .contentItem_box:not(:last-child) {
+                        margin-bottom: $defaultSmallMargin;
+                    }
+                }
+            }
+        }
+    }
+    .archiveModal_closeBtn {
+        button {
+            width: 100%;
+        }
+    }
+}

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import s from "./MainPage.module.scss";
 import {Button} from '../../../shared/ui';
-import {ChooseClientModal, PayModal} from '../../../features';
+import {ArchiveModal, ChooseClientModal, PayModal} from '../../../features';
 import usePayModal from '../../../features/PayModal/PayModalStore';
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
@@ -50,6 +50,7 @@ const MainPage = () => {
     return (
         // <div className={s.mainPageWrapper}>
             <div className={s.mainPageMainBlock}>
+                <ArchiveModal/>
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>

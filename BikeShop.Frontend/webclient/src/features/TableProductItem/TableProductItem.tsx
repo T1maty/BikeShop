@@ -7,7 +7,7 @@ interface TableItemProps {
     count: number
 }
 
-const TableProductItem: React.FC<TableItemProps> = ({name, price, count}) => {
+export const TableProductItem: React.FC<TableItemProps> = ({name, price, count}) => {
 
     return (
         <div className={s.tableItem_box}>
@@ -23,5 +23,3 @@ const TableProductItem: React.FC<TableItemProps> = ({name, price, count}) => {
         </div>
     )
 }
-
-export default TableProductItem;

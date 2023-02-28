@@ -324,7 +324,7 @@ const Service = () => {
                                         filteredServices.map(service => {
                                             return (
                                                 <div key={service.id}
-                                                     // className={service.id === activeId ? s.serviceItem_active : serviceItem}
+                                                     // className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
                                                      className={service.id === activeId ? s.serviceItem_active :
                                                          service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
                                                      onClick={() => {chooseServiceItem(service)}}

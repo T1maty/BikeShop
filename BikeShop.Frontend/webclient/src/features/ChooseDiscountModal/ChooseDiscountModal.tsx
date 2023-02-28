@@ -4,7 +4,7 @@ import {Button} from '../../shared/ui';
 import s from './ChooseDiscountModal.module.scss'
 import useChooseDiscountModal from './ChooseDiscountModalStore';
 
-const ChooseDiscountModal = () => {
+export const ChooseDiscountModal = () => {
     const open = useChooseDiscountModal(s => s.chooseDiscountModal)
     const setOpen = useChooseDiscountModal(s => s.setChooseDiscountModal)
 
@@ -58,5 +58,3 @@ const ChooseDiscountModal = () => {
         </Modal>
     );
 };
-
-export default ChooseDiscountModal;
