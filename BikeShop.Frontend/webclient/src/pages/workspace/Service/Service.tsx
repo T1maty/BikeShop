@@ -1,4 +1,4 @@
-import React, {useEffect, useState, ChangeEvent} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Service.module.scss'
 import style from '../../../shared/ui/Button/Button.module.scss'
 import {ChooseClientModal} from '../../../features';
