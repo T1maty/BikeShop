@@ -115,9 +115,9 @@ const CreateProductModal = (props: CreateProductModalProps) => {
                 <ControlledInput name={"retailPrice"} label={"Розничная цена"} control={formControl}
                                  rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
-                <ControlledCheckbox name={"b2BVisibility"} lable={'Видим в B2B'}
+                <ControlledCheckbox name={"b2BVisibility"} label={'Видим в B2B'}
                                     control={formControl}/>
-                <ControlledCheckbox name={"retailVisibility"} lable={'Видим в интернет-магазине'}
+                <ControlledCheckbox name={"retailVisibility"} label={'Видим в интернет-магазине'}
                                     control={formControl}/>
 
                 <br/>

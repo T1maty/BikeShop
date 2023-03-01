@@ -309,7 +309,6 @@ const Service = () => {
                         {/*    </Button>*/}
                         {/*</div>*/}
 
-
                         <div className={s.buttons_filter}>
                             <div>
                                 <Button className={isActiveWaiting ? style.waiting : ''}
@@ -376,7 +375,6 @@ const Service = () => {
                                 </div>
                             }
                         </div>
-
 
                     </div>
                     <div className={s.leftSide_content}>
@@ -446,6 +444,7 @@ const Service = () => {
                                 </div>
                             }
                         </div>*/}
+
                         <div className={s.content_info}>
                             {
                                 isLoading ? <div>Загрузка...</div> :
@@ -472,17 +471,19 @@ const Service = () => {
 
                 <div className={s.service_rightSide}>
                     <div className={s.rightSide_stuffInput}>
-                        <ControlledInput name={'name'} label={'Техника'}
+                        <ControlledInput name={'name'}
+                                         label={'Техника'}
                                          control={formControl}
-                                         rules={{required: Errors[0].name}}
+                                         rules={{required: Errors[1].name}}
                         />
                     </div>
                     <div className={s.rightSide_infoFields}>
                         <div className={s.infoFields_content}>
                             <div className={s.content_detailsInput}>
-                                <ControlledInput name={'clientDescription'} label={'Детальное описание'}
+                                <ControlledInput name={'clientDescription'}
+                                                 label={'Детальное описание'}
                                                  control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                                 rules={{required: Errors[1].name}}
                                 />
                             </div>
                             <div className={s.content_masterInput}>

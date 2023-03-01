@@ -97,9 +97,9 @@ const UpdateTagModal = (props: props) => {
                                      validate: (value: number) => value > -1
                                  }}/>
 
-                <ControlledCheckbox name={"isRetailVisible"} lable={'Видим в интернет-магазине'} control={control}/>
-                <ControlledCheckbox name={"isB2BVisible"} lable={'Виден в B2B'} control={control}/>
-                <ControlledCheckbox name={"isUniversal"} lable={'Универсальный тег'} control={control}/>
+                <ControlledCheckbox name={"isRetailVisible"} label={'Видим в интернет-магазине'} control={control}/>
+                <ControlledCheckbox name={"isB2BVisible"} label={'Виден в B2B'} control={control}/>
+                <ControlledCheckbox name={"isUniversal"} label={'Универсальный тег'} control={control}/>
                 <br/>
                 <Button color='primary' type="submit">Редактировать тег</Button>
 
