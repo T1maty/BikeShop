@@ -11,7 +11,7 @@ import useService, {ServiceListStatusType} from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {CreateService, IUser, ServiceItem, UserResponse} from '../../../entities';
+import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities';
 import {ServiceStatusType} from "../../../entities/models/ServiceItem";
 import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore";
 
@@ -100,7 +100,7 @@ const Service = () => {
             userMasterId: '',
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: any /*CreateService*/, updateData: any) => {
+    const onSubmit: SubmitHandler<any> = (data: any /*CreateService*/, updateData: any /*UpdateService*/) => {
         console.log('сабмит данные для создания', data)
         console.log('сабмит данные для обновления', updateData)
 
@@ -108,8 +108,8 @@ const Service = () => {
 
         data.shopId = 1
         data.clientId = currentUser?.id || ''
-        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
         data.userMasterId = currentMasterId
+        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
 
         data.productDiscountId = 0
         data.workDiscountId = 0
@@ -140,9 +140,9 @@ const Service = () => {
             }
         ]
 
-        if (isClientChosen) {
+        if (isClientChosen && !isServiceItemChosen) {
             console.log('create IF works')
-            addNewService(data).then((response: any) => {
+            addNewService(data).then((res: any) => {
                 clearInputsHandler()
                 setCurrentUser(null)
                 setCurrentMasterId('')
@@ -161,9 +161,12 @@ const Service = () => {
         // обновление сервиса
 
         updateData.id = currentService?.id || -1
-        updateData.userMasterId = currentMasterId
         updateData.name = 'Updated name'
         updateData.clientDescription = 'Updated description'
+        updateData.userMasterId = currentMasterId
+
+        updateData.userMasterDescription = 'string'
+        updateData.userCreatedDescription = 'string'
 
         updateData.productDiscountId = 0
         updateData.workDiscountId = 0
@@ -196,7 +199,7 @@ const Service = () => {
 
         if (isServiceItemChosen) {
             console.log('update IF works')
-            updateService(updateData).then((response: any) => {
+            updateService(updateData).then((res: any) => {
                 clearInputsHandler()
                 setCurrentUser(null)
                 setCurrentMasterId('')
