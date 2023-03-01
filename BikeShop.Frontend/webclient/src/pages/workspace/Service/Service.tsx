@@ -239,8 +239,7 @@ const Service = () => {
         const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
         activeElement && setActiveId(ServiceItemObj.id)
 
-        // флаг для кнопки Сохранить
-        setIsServiceItemChosen(true)
+        setIsServiceItemChosen(true) // флаг для кнопки Сохранить
 
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItemObj)
@@ -279,14 +278,6 @@ const Service = () => {
     const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
         updateServiceStatus({id: currentService?.id || -1, status: newStatus})
         clearAllServiceInfo() // зачистка полей после изменения статуса
-    }
-
-    // выбор продуктов
-    const chooseProductsHandler = () => {
-        setSelectProductModal(true)
-    }
-    const chooseWorksHandler = () => {
-        setSelectWorkModal(true)
     }
 
     // первый рендер //
@@ -475,12 +466,12 @@ const Service = () => {
                         <ServiceTable data={currentProducts}
                                       // data={productsItems}
                                       buttonTitle={'Редактор товаров'}
-                                      serviceTableCallback={chooseProductsHandler}/>
+                                      serviceTableCallback={() => {setSelectProductModal(true)}}/>
                         <SelectWorkModal/>
                         <ServiceTable data={currentWorks}
                                       // data={worksItems}
                                       buttonTitle={'Редактор услуг'}
-                                      serviceTableCallback={chooseWorksHandler}/>
+                                      serviceTableCallback={() => {setSelectWorkModal(true)}}/>
                     </div>
                 </div>
 
