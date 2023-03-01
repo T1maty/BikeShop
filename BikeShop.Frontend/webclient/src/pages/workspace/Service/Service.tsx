@@ -145,6 +145,7 @@ const Service = () => {
             addNewService(data).then((res: any) => {
                 clearInputsHandler()
                 setCurrentUser(null)
+                setIsClientChosen(false)
                 setCurrentMasterId('')
                 setFIO('')
                 setPhoneNumber('')
@@ -202,6 +203,7 @@ const Service = () => {
             updateService(updateData).then((res: any) => {
                 clearInputsHandler()
                 setCurrentUser(null)
+                setIsClientChosen(false)
                 setCurrentMasterId('')
                 setFIO('')
                 setPhoneNumber('')
@@ -299,16 +301,15 @@ const Service = () => {
 
                 <div className={s.service_leftSide}>
                     <div className={s.leftSide_buttons}>
-                        <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
-                        <div className={s.buttons_create}>
-                            <Button disabled={isClientChosen}
-                                    onClick={() => {setChooseClientModal(true)}}
-                            >
-                                Создать ремонт
-                            </Button>
-                        </div>
-                    </div>
-                    <div className={s.leftSide_content}>
+                        {/*<div className={s.buttons_create}>*/}
+                        {/*    <Button disabled={isClientChosen}*/}
+                        {/*            onClick={() => {setChooseClientModal(true)}}*/}
+                        {/*    >*/}
+                        {/*        Создать ремонт*/}
+                        {/*    </Button>*/}
+                        {/*</div>*/}
+
+
                         <div className={s.buttons_filter}>
                             <div>
                                 <Button className={isActiveWaiting ? style.waiting : ''}
@@ -375,6 +376,76 @@ const Service = () => {
                                 </div>
                             }
                         </div>
+
+
+                    </div>
+                    <div className={s.leftSide_content}>
+                        {/*<div className={s.buttons_filter}>
+                            <div>
+                                <Button className={isActiveWaiting ? style.waiting : ''}
+                                        onClick={() => {filterServicesUniversalHandler('Waiting',
+                                            true, false, false,
+                                            'WaitingSupply')}}
+                                >
+                                    Ожидают
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className={isActiveProcess ? style.process : ''}
+                                        onClick={() => {filterServicesUniversalHandler('InProcess',
+                                            false, true, false)}}
+                                >
+                                    В ремонте
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className={isActiveReady ? style.ready : ''}
+                                        onClick={() => {filterServicesUniversalHandler('Ready',
+                                            false, false, true)}}
+                                >
+                                    Готово
+                                </Button>
+                            </div>
+                        </div>
+                        <div className={s.content_title}>
+                            {
+                                isActiveWaiting &&
+                                <div className={s.content_startBtn}>
+                                    <Button disabled={!isServiceItemChosen}
+                                            onClick={() => {updateServiceStatusHandler('InProcess')}}>
+                                        Начать ремонт
+                                    </Button>
+                                </div>
+                            }
+
+                            {
+                                isActiveProcess &&
+                                <div className={s.content_inProcessButtons}>
+                                    <Button disabled={!isServiceItemChosen}
+                                            onClick={() => {updateServiceStatusHandler('WaitingSupply')}}>
+                                        Остановить ремонт
+                                    </Button>
+                                    <Button disabled={!isServiceItemChosen}
+                                            onClick={() => {updateServiceStatusHandler('Ready')}}>
+                                        Закончить ремонт
+                                    </Button>
+                                </div>
+                            }
+
+                            {
+                                isActiveReady &&
+                                <div className={s.content_doneButtons}>
+                                    <Button disabled={!isServiceItemChosen}
+                                            onClick={() => {updateServiceStatusHandler('InProcess')}}>
+                                        Продолжить ремонт
+                                    </Button>
+                                    <Button disabled={!isServiceItemChosen}
+                                            onClick={() => {updateServiceStatusHandler('Ended')}}>
+                                        Выдать велосипед
+                                    </Button>
+                                </div>
+                            }
+                        </div>*/}
                         <div className={s.content_info}>
                             {
                                 isLoading ? <div>Загрузка...</div> :
@@ -451,6 +522,7 @@ const Service = () => {
                         <div className={s.infoFields_clientCard}>
                             <ClientCard user={currentUser}/>
                             <div className={s.clientCard_buttons}>
+                                <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                                 <div className={s.clientCard_changeClientBtn}>
                                     <Button disabled={isServiceItemChosen}
                                             onClick={() => {setChooseClientModal(true)}}>
