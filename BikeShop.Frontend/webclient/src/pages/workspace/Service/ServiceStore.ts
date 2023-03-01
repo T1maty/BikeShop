@@ -13,10 +13,15 @@ export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 interface ServiceStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+    isClientChosen: boolean
+    setIsClientChosen: (value: boolean) => void
+    isServiceItemChosen: boolean
+    setIsServiceItemChosen: (value: boolean) => void
+
     currentUser: IUser | null
-    setCurrentUser: (user: any /*IUser | null*/) => void // надо исправить тип
+    setCurrentUser: (user: IUser | null) => void
     currentMasterId: string
-    setCurrentMasterId: (userMasterId: any /*string*/) => void // надо исправить тип
+    setCurrentMasterId: (userMasterId: string) => void
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
 
@@ -36,13 +41,18 @@ interface ServiceStore {
 
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
-    updateService: (data: UpdateService) => Promise<AxiosResponse<UpdateServiceResponse>>
+    updateService: (updateData: UpdateService) => Promise<AxiosResponse<UpdateServiceResponse>>
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
+    isClientChosen: false,
+    setIsClientChosen: (value) => set({isClientChosen: value}),
+    isServiceItemChosen: false,
+    setIsServiceItemChosen: (value) => set({isServiceItemChosen: value}),
+
     // currentUser: {} as IUser,
     currentUser: null,
     setCurrentUser: (user) => set({currentUser: user}),
@@ -115,8 +125,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             })
         })
     },
-    updateService: (data: UpdateService) => {
-        return $api.put<UpdateServiceResponse>('/service/updateservice', data)
+    updateService: (updateData: UpdateService) => {
+        return $api.put<UpdateServiceResponse>('/service/updateservice', updateData)
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true});

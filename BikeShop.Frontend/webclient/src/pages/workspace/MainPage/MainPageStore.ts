@@ -7,15 +7,17 @@ import {IUser} from '../../../entities';
 interface MainPageStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+    isClientChosen: boolean
+    setIsClientChosen: (value: boolean) => void
     user: IUser
     setUser: (user: IUser) => void
 }
 
 const useMainPageStore = create<MainPageStore>()(/*persist(*/devtools(immer((set) => ({
     isLoading: false,
-    setIsLoading: (value: boolean) => set({
-        isLoading: value
-    }),
+    setIsLoading: (value: boolean) => set({isLoading: value}),
+    isClientChosen: false,
+    setIsClientChosen: (value) => set({isClientChosen: value}),
     user: {
         id: '',
         shopId: 0,
@@ -30,9 +32,7 @@ const useMainPageStore = create<MainPageStore>()(/*persist(*/devtools(immer((set
         email: '',
         emailConfirmed: false
     },
-    setUser: (user: IUser) => set({
-        user: user
-    }),
+    setUser: (user: IUser) => set({user: user}),
 })))/*, {
     name: "mainPageStore",
     version: 1
