@@ -1,11 +1,11 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Service.module.scss'
 import style from '../../../shared/ui/Button/Button.module.scss'
 import {ChooseClientModal, SelectProductModal, SelectWorkModal} from '../../../features';
 import {Button, ControlledInput} from '../../../shared/ui';
 import {ServiceTable} from '../../index';
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
-import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import {useSnackbar} from 'notistack';
 import useService, {ServiceListStatusType} from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
@@ -23,16 +23,6 @@ import useSelectProductWorkModal from "../../../features/SelectProductWorkModals
 //     Ended = 4, // выдать велосипед
 //     Canceled = 5, // отменен
 //     Deleted = 6 // удален
-// }
-
-// export const ServiceStatuses = {
-//     Waiting: 'Waiting', // ожидают
-//     InProcess: 'InProcess', // в ремонте
-//     WaitingSupply: 'WaitingSupply', // ждёт поставки
-//     Ready: 'Ready', // готово
-//     Ended: 'Ended', // выдать велосипед
-//     Canceled: 'Canceled', // отменен
-//     Deleted: 'Deleted' // удален
 // }
 
 const Service = () => {
@@ -65,8 +55,10 @@ const Service = () => {
     const setFilteredServices = useService(s => s.setFilteredServices)
     const setServiceListStatus = useService(s => s.setServiceListStatus)
 
-    const products = useService(s => s.products)
-    const works = useService(s => s.works)
+    const currentProducts = useService(s => s.currentProducts)
+    const setCurrentProducts = useService(s => s.setCurrentProducts)
+    const currentWorks = useService(s => s.currentWorks)
+    const setCurrentWorks = useService(s => s.setCurrentWorks)
 
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
     const addNewService = useService(s => s.addNewService)
@@ -83,7 +75,7 @@ const Service = () => {
     const [activeId, setActiveId] = useState<number | null>(null)
 
     // тестовые данные
-    // const [productsItem, setProductsItem] = useState([
+    // const [productsItems, setProductsItem] = useState([
     //     {id: 1, title: 'Колесо', price: 25, count: 3},
     //     {id: 2, title: 'Велосипед', price: 25000000, count: 1},
     //     {id: 3, title: 'Руль', price: 250, count: 2},
@@ -92,7 +84,7 @@ const Service = () => {
     //     {id: 6, title: 'Втулка', price: 2000, count: 1},
     //     {id: 7, title: 'Вынос', price: 1500, count: 1},
     // ])
-    // const [repairItems, setRepairItems] = useState([
+    // const [worksItems, setWorksItems] = useState([
     //     {id: 1, title: 'Замена покрышки', price: 25, count: 3},
     //     {id: 2, title: 'Сезонное ТО', price: 2500, count: 1},
     //     {id: 3, title: 'Переспицовка колеса', price: 250, count: 2},
@@ -127,7 +119,6 @@ const Service = () => {
                 discount: 0,
                 total: 0,
                 userId: currentUser?.id || ''
-                // userId: 'e9267875-5844-4f12-9639-53595d3105f4'
             }
         ]
         data.serviceProducts = [
@@ -141,7 +132,6 @@ const Service = () => {
                 discount: 0,
                 total: 0,
                 userId: currentUser?.id || ''
-                // userId: 'e9267875-5844-4f12-9639-53595d3105f4'
             }
         ]
 
@@ -174,12 +164,8 @@ const Service = () => {
         setCurrentMasterId(event.target.value as string)
         console.log('клик по селекту мастера', event.target.value)
     }
-    // const onChangeDefaultSelectHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    //     setCurrentMasterId(event.target.value as string)
-    //     console.log('клик по селекту мастера', event.target.value)
-    // }
 
-    // выбор элементов
+    // выбор сервиса
     const chooseServiceItem = (ServiceItemObj: ServiceItem) => {
         // поиск элемента из массива для применения стилей
         const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
@@ -189,8 +175,9 @@ const Service = () => {
         setCurrentService(ServiceItemObj)
         console.log('клик по сервису', ServiceItemObj)
         setCurrentUser(users.find((u: IUser) => u.id === ServiceItemObj.client.id))
-        console.log('клиент выбранного сервиса', currentUser)
         setCurrentMasterId(ServiceItemObj.userMaster.id)
+        setCurrentProducts(ServiceItemObj.products)
+        setCurrentWorks(ServiceItemObj.works)
 
         setIsClientChosen(true)
 
@@ -368,22 +355,8 @@ const Service = () => {
                                 />
                             </div>
                             <div className={s.content_masterInput}>
-
-                                {/*<select name='userMasterId' value={currentMasterId} onChange={onChangeDefaultSelectHandler}>
-                                    <option selected disabled value={''}>Выберите мастера</option>
-                                    {
-                                        masters.map((m: UserResponse) => {
-                                            return (
-                                                <option key={m.user.id} value={m.user.id}>
-                                                    {m.user.lastName} {m.user.firstName} {m.user.patronymic}
-                                                </option>
-                                            )
-                                        })
-                                    }
-                                </select>*/}
-
                                 <FormControl fullWidth>
-                                    <InputLabel id="master-select-label">Выберите мастера</InputLabel>
+                                    <InputLabel id="master-select-label">Мастер</InputLabel>
                                     <Select
                                         labelId="master-select-label"
                                         id="master-select"
@@ -403,7 +376,6 @@ const Service = () => {
                                         }
                                     </Select>
                                 </FormControl>
-
                             </div>
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>
@@ -427,11 +399,13 @@ const Service = () => {
                     </div>
                     <div className={s.rightSide_tables}>
                         <SelectProductModal/>
-                        <ServiceTable data={products}
+                        <ServiceTable data={currentProducts}
+                                      // data={productsItems}
                                       buttonTitle={'Редактор товаров'}
                                       serviceTableCallback={chooseProductsHandler}/>
                         <SelectWorkModal/>
-                        <ServiceTable data={works}
+                        <ServiceTable data={currentWorks}
+                                      // data={worksItems}
                                       buttonTitle={'Редактор услуг'}
                                       serviceTableCallback={chooseWorksHandler}/>
                     </div>

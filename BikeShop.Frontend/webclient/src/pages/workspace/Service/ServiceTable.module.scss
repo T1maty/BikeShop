@@ -36,8 +36,8 @@
         border-radius: $defaultBorderRadius;
         padding: $defaultLargeMargin;
         @include flexColumn();
-        height: 500px;
-        overflow: auto;
-        //overflow-x: hidden;
+        height: 400px;
+        //overflow: auto;
+        overflow-x: hidden;
     }
 }
