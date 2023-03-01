@@ -162,6 +162,8 @@ const Service = () => {
 
         updateData.id = currentService?.id || -1
         updateData.userMasterId = currentMasterId
+        updateData.name = 'Updated name'
+        updateData.clientDescription = 'Updated description'
 
         updateData.productDiscountId = 0
         updateData.workDiscountId = 0

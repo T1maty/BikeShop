@@ -41,7 +41,7 @@ interface ServiceStore {
 
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
-    updateService: (updateData: UpdateService) => Promise<AxiosResponse<UpdateServiceResponse>>
+    updateService: (updateData: UpdateService) => any // Promise<AxiosResponse<UpdateServiceResponse>>
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
@@ -80,7 +80,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     // setServiceListStatus: (serviceListStatus) => set(state => {
     //     switch (serviceListStatus) {
     //         case 'Waiting':
-    //             return state.filteredServices = state.services.filter(serv => serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+    //             return state.filteredServices = state.services.filter(serv => serv.status === 'Waiting' ||
+    //             serv.status === 'WaitingSupply')
     //         case 'InProcess':
     //             return state.filteredServices = state.services.filter(serv => serv.status === 'InProcess')
     //         case 'Ready':
@@ -126,7 +127,19 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     updateService: (updateData: UpdateService) => {
-        return $api.put<UpdateServiceResponse>('/service/updateservice', updateData)
+        return $api.put<UpdateServiceResponse>('/service/updateservice', updateData).then(res => {
+            const currentService = useService.getState().currentService
+
+            if (currentService) {
+                set(state => {
+                    state.services.filter(serv => {
+                        serv.id === currentService.id ? {...serv} : serv
+                    })
+                })
+            } else {
+                console.log('no current service')
+            }
+        })
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true});
