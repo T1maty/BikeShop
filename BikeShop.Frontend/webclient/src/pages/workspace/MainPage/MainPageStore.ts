@@ -19,8 +19,8 @@ const useMainPageStore = create<MainPageStore>()(/*persist(*/devtools(immer((set
     isClientChosen: false,
     setIsClientChosen: (value) => set({isClientChosen: value}),
     user: {
-        id: '',
         shopId: 0,
+        id: '',
         lastName: 'Клиент',
         firstName: 'не',
         patronymic: 'выбран',

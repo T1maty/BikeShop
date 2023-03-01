@@ -17,7 +17,7 @@ const MainPage = () => {
     const setPayModal = usePayModal(s => s.setPayModal)
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
 
-    const setServiceUser = useService(s => s.setCurrentUser)
+    // const setServiceUser = useService(s => s.setCurrentUser)
     const user = useMainPageStore(s => s.user)
     const setUser = useMainPageStore(s => s.setUser)
 
@@ -35,11 +35,10 @@ const MainPage = () => {
     ])
 
     const chooseClientHandler = (user: IUser) => {
-        // setUser(user)
-        setServiceUser(user)
+        // setServiceUser(user)
+        setUser(user)
         setIsClientChosen(true)
         setChooseClientModal(false)
-        navigate(BikeShopPaths.WORKSPACE.SERVICE)
         console.log('MainPage click user', user)
     }
 
@@ -53,12 +52,11 @@ const MainPage = () => {
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
-                            <div>
-                                <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
-                                <Button onClick={createServiceHandler}>
-                                    Создать ремонт
-                                </Button>
-                            </div>
+                            {/*<div>*/}
+                            {/*    <Button onClick={createServiceHandler}>*/}
+                            {/*        Создать ремонт*/}
+                            {/*    </Button>*/}
+                            {/*</div>*/}
                             <div>
                                 <Button onClick={() => {}}>
                                     Создать заказ
@@ -67,6 +65,11 @@ const MainPage = () => {
                             <div>
                                 <Button  onClick={() => {}}>
                                     Добавить горячего клиента
+                                </Button>
+                            </div>
+                            <div>
+                                <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
+                                    Ремонты
                                 </Button>
                             </div>
                             <div>
@@ -84,11 +87,6 @@ const MainPage = () => {
                             <div>
                                 <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                                     Каталог товаров
-                                </Button>
-                            </div>
-                            <div>
-                                <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
-                                    Ремонты
                                 </Button>
                             </div>
                             <div>
@@ -144,8 +142,9 @@ const MainPage = () => {
                     <div className={s.content_rightSide}>
                         <div className={s.rightSide_top}>
                             <div className={s.rightSide_top_search}>
+                                <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                                 <div className={s.search_searchButton}>
-                                    <Button onClick={() => {alert('Пока что не знаю что с этим делать')}}>
+                                    <Button onClick={() => {setChooseClientModal(true)}}>
                                         Выбрать клиента
                                     </Button>
                                 </div>
