@@ -20,20 +20,14 @@
                 margin-bottom: $defaultLargeMargin;
                 width: 100%;
 
-                .buttons_create {
-                    @include flexCenter();
-
-                    button {
-                        width: 95%;
-                        height: $bigButtonHeight;
-                    }
-                }
-            }
-            .leftSide_content {
-                border-radius: $defaultBorderRadius;
-                background-color: $themeColorDark;
-                padding: $defaultLargeMargin;
-                @include widthHeightFull();
+                //.buttons_create {
+                //    @include flexCenter();
+                //
+                //    button {
+                //        width: 95%;
+                //        height: $bigButtonHeight;
+                //    }
+                //}
 
                 .buttons_filter {
                     //@include flexBetween();
@@ -58,6 +52,8 @@
                     background-color: $themeColorGray;
                     padding: $defaultLargeMargin;
                     @include flexColumn();
+                    justify-content: center;
+                    height: 88px;
 
                     > div:not(:last-child) {
                         margin-bottom: $defaultSmallMargin;
@@ -69,6 +65,7 @@
 
                         button {
                             width: 100%;
+                            padding: 10px 0;
                         }
                     }
                     .content_inProcessButtons {
@@ -82,6 +79,61 @@
                         //flex-wrap: wrap;
                     }
                 }
+
+            }
+            .leftSide_content {
+                border-radius: $defaultBorderRadius;
+                background-color: $themeColorDark;
+                padding: $defaultLargeMargin;
+                @include widthHeightFull();
+
+                //.buttons_filter {
+                //    //@include flexBetween();
+                //    //gap: 5px;
+                //    //flex-wrap: wrap;
+                //    width: 100%;
+                //    margin-bottom: $defaultLargeMargin;
+                //
+                //    > div:not(:last-child) {
+                //        margin-bottom: $defaultSmallMargin;
+                //    }
+                //
+                //    button {
+                //        width: 100%;
+                //        padding: 5px 10px;
+                //        //margin: 0 5px;
+                //    }
+                //}
+                //
+                //.content_title {
+                //    border-radius: $defaultBorderRadius;
+                //    background-color: $themeColorGray;
+                //    padding: $defaultLargeMargin;
+                //    @include flexColumn();
+                //
+                //    > div:not(:last-child) {
+                //        margin-bottom: $defaultSmallMargin;
+                //    }
+                //
+                //    .content_startBtn {
+                //        width: 100%;
+                //        @include flexCenter();
+                //
+                //        button {
+                //            width: 100%;
+                //        }
+                //    }
+                //    .content_inProcessButtons {
+                //        @include flexOnlyBetween();
+                //        gap: $defaultSmallMargin;
+                //        //flex-wrap: wrap;
+                //    }
+                //    .content_doneButtons {
+                //        @include flexOnlyBetween();
+                //        gap: $defaultSmallMargin;
+                //        //flex-wrap: wrap;
+                //    }
+                //}
                 .content_info {
                     @include flexColumn();
                     margin-top: $defaultSmallMargin;
