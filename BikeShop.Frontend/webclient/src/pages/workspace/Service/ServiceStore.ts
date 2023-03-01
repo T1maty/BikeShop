@@ -29,8 +29,10 @@ interface ServiceStore {
     setFilteredServices: (filteredServices: ServiceItem[]) => void
     serviceListStatus: ServiceListStatusType
     setServiceListStatus: (serviceListStatus: ServiceListStatusType) => void
-    products: ServiceProduct[]
-    works: ServiceWork[]
+    currentProducts: ServiceProduct[]
+    setCurrentProducts: (products: ServiceProduct[]) => void
+    currentWorks: ServiceWork[]
+    setCurrentWorks: (works: ServiceWork[]) => void
 
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
@@ -77,8 +79,10 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     //             return state.filteredServices
     //     }
     // }),
-    products: [],
-    works: [],
+    currentProducts: [],
+    setCurrentProducts: (products) => set(state => {state.currentProducts = products}),
+    currentWorks: [],
+    setCurrentWorks: (works) => set(state => {state.currentWorks = works}),
 
     getAllServicesInfo: () => {
         set({isLoading: true});
@@ -89,14 +93,13 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     .filter((item: CreateServiceResponse) =>
                         item.status === 'Waiting' || item.status === 'WaitingSupply')
                 state.users = res.data.map((item: CreateServiceResponse) => item.client)
-                // state.products = [...res.data.products]
-                // state.works = [...res.data.works]
+
+                // state.currentProducts = res.data.map((service: ServiceItem) => service.products)
+                // state.currentWorks = res.data.map((service: ServiceItem) => service.works)
 
                 console.log('все сервисы', state.services)
                 console.log('отфильтрованные сервисы - ожидание', state.filteredServices)
                 console.log('все юзеры из сервиса', state.users)
-                console.log('продукты', state.products)
-                console.log('работы', state.works)
             })
             set({isLoading: false})
         })
@@ -136,9 +139,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                                 serv.status === currentListStatus)
                         })
                     }
-
                 }
-
                 set({isLoading: false})
             })
     },

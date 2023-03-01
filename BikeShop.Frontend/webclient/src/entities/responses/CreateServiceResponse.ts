@@ -1,5 +1,6 @@
 import {ServiceStatusType} from "../models/ServiceItem";
 import {IUser} from "../models/IUser";
+import {ServiceProduct, ServiceWork} from "../requests/CreateService";
 
 export interface CreateServiceResponse {
     shopId: number
@@ -33,31 +34,31 @@ export interface CreateServiceResponse {
     discount: number
     total: number
 
-    products: ProductWorkItem[]
-    works: ProductWorkItem[]
+    products: ServiceProduct[]
+    works: ServiceWork[]
 }
 
-export interface ProductWorkItem {
-    id: number
-    createdAt: string
-    updatedAt: string
-    enabled: true
-    name: string
-    description: string
-    quantity: number
-    quantityUnitId: number
-    price: number
-    discount: number
-    total: number
-    userId: string
-    serviceId: number
-}
+// export interface ProductWorkItem {
+//     id: number
+//     createdAt: string
+//     updatedAt: string
+//     enabled: true
+//     name: string
+//     description: string
+//     quantity: number
+//     quantityUnitId: number
+//     price: number
+//     discount: number
+//     total: number
+//     userId: string
+//     serviceId: number
+// }
 
-type ServiceResponseAxiosType = {
-    config: any
-    data: CreateServiceResponse[]
-    headers: any
-    request: any
-    status: number
-    statusText: string
-}
+// type ServiceResponseAxiosType = {
+//     config: any
+//     data: CreateServiceResponse[]
+//     headers: any
+//     request: any
+//     status: number
+//     statusText: string
+// }
