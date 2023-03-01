@@ -101,7 +101,8 @@ const Service = () => {
         }
     });
     const onSubmit: SubmitHandler<any> = (data: any /*CreateService*/, updateData: any) => {
-        console.log('сабмит данные', data)
+        console.log('сабмит данные для создания', data)
+        console.log('сабмит данные для обновления', updateData)
 
         // создание сервиса
 
@@ -140,7 +141,7 @@ const Service = () => {
         ]
 
         if (isClientChosen) {
-            console.log('create works')
+            console.log('create IF works')
             addNewService(data).then((response: any) => {
                 clearInputsHandler()
                 setCurrentUser(null)
@@ -211,16 +212,25 @@ const Service = () => {
     }
     
     // хендлеры //
+    // селект
+    const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
+        setCurrentMasterId(event.target.value as string)
+        console.log('клик по селекту мастера', event.target.value)
+    }
     // очистка формы
     const clearInputsHandler = () => {
         formControl.setValue('name', '')
         formControl.setValue('clientDescription', '')
         formControl.setValue('userMasterId', '')
     }
-    // селект
-    const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
-        setCurrentMasterId(event.target.value as string)
-        console.log('клик по селекту мастера', event.target.value)
+    const clearAllServiceInfo = () => {
+        setCurrentUser(null)
+        setCurrentService(null)
+        setCurrentMasterId('')
+        setIsServiceItemChosen(false)
+        setIsClientChosen(false)
+        setActiveId(null)
+        clearInputsHandler()
     }
 
     // выбор сервиса
@@ -268,15 +278,7 @@ const Service = () => {
     // изменение статуса сервиса
     const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
         updateServiceStatus({id: currentService?.id || -1, status: newStatus})
-
-        // зачистка полей после изменения статуса
-        setCurrentUser(null)
-        setCurrentService(null)
-        setCurrentMasterId('')
-        setIsServiceItemChosen(false)
-        setIsClientChosen(false)
-        setActiveId(null)
-        clearInputsHandler()
+        clearAllServiceInfo() // зачистка полей после изменения статуса
     }
 
     // выбор продуктов
@@ -452,10 +454,19 @@ const Service = () => {
                         </div>
                         <div className={s.infoFields_clientCard}>
                             <ClientCard user={currentUser}/>
-                            <div className={s.clientCard_changeClientBtn}>
-                                <Button onClick={() => {setChooseClientModal(true)}}>
-                                    Выбрать клиента
-                                </Button>
+                            <div className={s.clientCard_buttons}>
+                                <div className={s.clientCard_changeClientBtn}>
+                                    <Button disabled={isServiceItemChosen}
+                                            onClick={() => {setChooseClientModal(true)}}>
+                                        Выбрать клиента
+                                    </Button>
+                                </div>
+                                <div className={s.clientCard_changeClientBtn}>
+                                    <Button disabled={!isServiceItemChosen}
+                                            onClick={clearAllServiceInfo}>
+                                        Отмена
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
