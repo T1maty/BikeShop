@@ -11,7 +11,7 @@ import useService, {ServiceListStatusType} from './ServiceStore';
 import {Errors} from '../../../entities/errors/workspaceErrors';
 import {ClientCard} from '../../../widgets';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {CreateService, IUser, ServiceItem, UserResponse} from '../../../entities';
+import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities';
 import {ServiceStatusType} from "../../../entities/models/ServiceItem";
 import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore";
 
@@ -100,15 +100,16 @@ const Service = () => {
             userMasterId: '',
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: any /*CreateService*/, updateData: any) => {
-        console.log('сабмит данные', data)
+    const onSubmit: SubmitHandler<any> = (data: any /*CreateService*/, updateData: any /*UpdateService*/) => {
+        console.log('сабмит данные для создания', data)
+        console.log('сабмит данные для обновления', updateData)
 
         // создание сервиса
 
         data.shopId = 1
         data.clientId = currentUser?.id || ''
-        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
         data.userMasterId = currentMasterId
+        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
 
         data.productDiscountId = 0
         data.workDiscountId = 0
@@ -139,9 +140,9 @@ const Service = () => {
             }
         ]
 
-        if (isClientChosen) {
-            console.log('create works')
-            addNewService(data).then((response: any) => {
+        if (isClientChosen && !isServiceItemChosen) {
+            console.log('create IF works')
+            addNewService(data).then((res: any) => {
                 clearInputsHandler()
                 setCurrentUser(null)
                 setCurrentMasterId('')
@@ -160,7 +161,12 @@ const Service = () => {
         // обновление сервиса
 
         updateData.id = currentService?.id || -1
+        updateData.name = 'Updated name'
+        updateData.clientDescription = 'Updated description'
         updateData.userMasterId = currentMasterId
+
+        updateData.userMasterDescription = 'string'
+        updateData.userCreatedDescription = 'string'
 
         updateData.productDiscountId = 0
         updateData.workDiscountId = 0
@@ -193,7 +199,7 @@ const Service = () => {
 
         if (isServiceItemChosen) {
             console.log('update IF works')
-            updateService(updateData).then((response: any) => {
+            updateService(updateData).then((res: any) => {
                 clearInputsHandler()
                 setCurrentUser(null)
                 setCurrentMasterId('')
@@ -211,16 +217,25 @@ const Service = () => {
     }
     
     // хендлеры //
+    // селект
+    const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
+        setCurrentMasterId(event.target.value as string)
+        console.log('клик по селекту мастера', event.target.value)
+    }
     // очистка формы
     const clearInputsHandler = () => {
         formControl.setValue('name', '')
         formControl.setValue('clientDescription', '')
         formControl.setValue('userMasterId', '')
     }
-    // селект
-    const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
-        setCurrentMasterId(event.target.value as string)
-        console.log('клик по селекту мастера', event.target.value)
+    const clearAllServiceInfo = () => {
+        setCurrentUser(null)
+        setCurrentService(null)
+        setCurrentMasterId('')
+        setIsServiceItemChosen(false)
+        setIsClientChosen(false)
+        setActiveId(null)
+        clearInputsHandler()
     }
 
     // выбор сервиса
@@ -229,8 +244,7 @@ const Service = () => {
         const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
         activeElement && setActiveId(ServiceItemObj.id)
 
-        // флаг для кнопки Сохранить
-        setIsServiceItemChosen(true)
+        setIsServiceItemChosen(true) // флаг для кнопки Сохранить
 
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItemObj)
@@ -268,23 +282,7 @@ const Service = () => {
     // изменение статуса сервиса
     const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
         updateServiceStatus({id: currentService?.id || -1, status: newStatus})
-
-        // зачистка полей после изменения статуса
-        setCurrentUser(null)
-        setCurrentService(null)
-        setCurrentMasterId('')
-        setIsServiceItemChosen(false)
-        setIsClientChosen(false)
-        setActiveId(null)
-        clearInputsHandler()
-    }
-
-    // выбор продуктов
-    const chooseProductsHandler = () => {
-        setSelectProductModal(true)
-    }
-    const chooseWorksHandler = () => {
-        setSelectWorkModal(true)
+        clearAllServiceInfo() // зачистка полей после изменения статуса
     }
 
     // первый рендер //
@@ -452,10 +450,19 @@ const Service = () => {
                         </div>
                         <div className={s.infoFields_clientCard}>
                             <ClientCard user={currentUser}/>
-                            <div className={s.clientCard_changeClientBtn}>
-                                <Button onClick={() => {setChooseClientModal(true)}}>
-                                    Выбрать клиента
-                                </Button>
+                            <div className={s.clientCard_buttons}>
+                                <div className={s.clientCard_changeClientBtn}>
+                                    <Button disabled={isServiceItemChosen}
+                                            onClick={() => {setChooseClientModal(true)}}>
+                                        Выбрать клиента
+                                    </Button>
+                                </div>
+                                <div className={s.clientCard_changeClientBtn}>
+                                    <Button disabled={!isServiceItemChosen}
+                                            onClick={clearAllServiceInfo}>
+                                        Отмена
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -464,12 +471,12 @@ const Service = () => {
                         <ServiceTable data={currentProducts}
                                       // data={productsItems}
                                       buttonTitle={'Редактор товаров'}
-                                      serviceTableCallback={chooseProductsHandler}/>
+                                      serviceTableCallback={() => {setSelectProductModal(true)}}/>
                         <SelectWorkModal/>
                         <ServiceTable data={currentWorks}
                                       // data={worksItems}
                                       buttonTitle={'Редактор услуг'}
-                                      serviceTableCallback={chooseWorksHandler}/>
+                                      serviceTableCallback={() => {setSelectWorkModal(true)}}/>
                     </div>
                 </div>
 

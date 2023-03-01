@@ -6,7 +6,6 @@ import {$api} from '../../../shared';
 import {CreateService, CreateServiceResponse, GetUsersResponse, IUser,
     ServiceItem, UpdateService, UpdateServiceStatus, UserResponse} from '../../../entities';
 import {ServiceProduct, ServiceWork} from '../../../entities/requests/CreateService';
-import {UpdateServiceResponse} from '../../../entities/responses/UpdateServiceResponse';
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
@@ -41,7 +40,7 @@ interface ServiceStore {
 
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
-    updateService: (updateData: UpdateService) => Promise<AxiosResponse<UpdateServiceResponse>>
+    updateService: (updateData: UpdateService) => any
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
@@ -53,7 +52,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     isServiceItemChosen: false,
     setIsServiceItemChosen: (value) => set({isServiceItemChosen: value}),
 
-    // currentUser: {} as IUser,
     currentUser: null,
     setCurrentUser: (user) => set({currentUser: user}),
     currentMasterId: '',
@@ -77,18 +75,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     setFilteredServices: (filteredServices) => set(state => {state.filteredServices = filteredServices}),
     serviceListStatus: 'Waiting',
     setServiceListStatus: (serviceListStatus) => set({serviceListStatus: serviceListStatus}),
-    // setServiceListStatus: (serviceListStatus) => set(state => {
-    //     switch (serviceListStatus) {
-    //         case 'Waiting':
-    //             return state.filteredServices = state.services.filter(serv => serv.status === 'Waiting' || serv.status === 'WaitingSupply')
-    //         case 'InProcess':
-    //             return state.filteredServices = state.services.filter(serv => serv.status === 'InProcess')
-    //         case 'Ready':
-    //             return state.filteredServices = state.services.filter(serv => serv.status === 'Ready')
-    //         default:
-    //             return state.filteredServices
-    //     }
-    // }),
     currentProducts: [],
     setCurrentProducts: (products) => set(state => {state.currentProducts = products}),
     currentWorks: [],
@@ -103,9 +89,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     .filter((item: CreateServiceResponse) =>
                         item.status === 'Waiting' || item.status === 'WaitingSupply')
                 state.users = res.data.map((item: CreateServiceResponse) => item.client)
-
-                // state.currentProducts = res.data.map((service: ServiceItem) => service.products)
-                // state.currentWorks = res.data.map((service: ServiceItem) => service.works)
 
                 console.log('все сервисы', state.services)
                 console.log('отфильтрованные сервисы - ожидание', state.filteredServices)
@@ -126,7 +109,21 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     updateService: (updateData: UpdateService) => {
-        return $api.put<UpdateServiceResponse>('/service/updateservice', updateData)
+        return $api.put('/service/updateservice', updateData)/*.then(res => {
+            const currentService = useService.getState().currentService
+
+            if (currentService) {
+                set(state => {
+                    //
+                })
+                console.log('service updated')
+            } else {
+                console.log('no current service')
+            }
+
+        }).catch((error: any) => {
+            console.log('service NOT updated')
+        })*/
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true});
