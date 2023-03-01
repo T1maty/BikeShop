@@ -15,7 +15,7 @@ const MainPage = () => {
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
     const setPayModal = usePayModal(s => s.setPayModal)
-    const setIsClientChosen = useChooseClientModal(s => s.setIsClientChosen)
+    const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
 
     const setServiceUser = useService(s => s.setCurrentUser)
     const user = useMainPageStore(s => s.user)

@@ -37,8 +37,10 @@ const Service = () => {
     const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
 
     const isLoading = useService(s => s.isLoading)
-    const isClientChosen = useChooseClientModal(s => s.isClientChosen)
-    const setIsClientChosen = useChooseClientModal(s => s.setIsClientChosen)
+    const isClientChosen = useService(s => s.isClientChosen)
+    const setIsClientChosen = useService(s => s.setIsClientChosen)
+    const isServiceItemChosen = useService(s => s.isServiceItemChosen)
+    const setIsServiceItemChosen = useService(s => s.setIsServiceItemChosen)
 
     const currentUser = useService(s => s.currentUser)
     const setCurrentUser = useService(s => s.setCurrentUser)
@@ -98,8 +100,10 @@ const Service = () => {
             userMasterId: '',
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: CreateService) => {
+    const onSubmit: SubmitHandler<any> = (data: any /*CreateService*/, updateData: any) => {
         console.log('сабмит данные', data)
+
+        // создание сервиса
 
         data.shopId = 1
         data.clientId = currentUser?.id || ''
@@ -135,30 +139,84 @@ const Service = () => {
             }
         ]
 
-        addNewService(data).then((response: any) => {
-            clearInputsHandler()
-            setCurrentUser(null)
-            setCurrentMasterId('')
-            setFIO('')
-            setPhoneNumber('')
-            setModalUsers([])
-            enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-        }).catch((error: any) => {
-            let message = error(error.response.data.errorDescription).toString()
-            formControl.setError('name', {type: 'serverError', message: message})
-            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-            console.error(error.response.data)
-        })
+        if (isClientChosen) {
+            console.log('create works')
+            addNewService(data).then((response: any) => {
+                clearInputsHandler()
+                setCurrentUser(null)
+                setCurrentMasterId('')
+                setFIO('')
+                setPhoneNumber('')
+                setModalUsers([])
+                enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+            }).catch((error: any) => {
+                let message = error(error.response.data.errorDescription).toString()
+                formControl.setError('name', {type: 'serverError', message: message})
+                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+                console.error(error.response.data)
+            })
+        }
 
-        // updateService(data).then((response) => {}
+        // обновление сервиса
+
+        updateData.id = currentService?.id || -1
+        updateData.userMasterId = currentMasterId
+
+        updateData.productDiscountId = 0
+        updateData.workDiscountId = 0
+
+        updateData.serviceWorks = [
+            {
+                name: 'string',
+                description: 'string',
+                quantity: 0,
+                quantityUnitId: 0,
+                price: 0,
+                discount: 0,
+                total: 0,
+                userId: currentUser?.id || ''
+            }
+        ]
+        updateData.serviceProducts = [
+            {
+                catalogKey: 'string',
+                serialNumber: 'string',
+                name: 'string',
+                quantity: 0,
+                quantityUnitId: 0,
+                price: 0,
+                discount: 0,
+                total: 0,
+                userId: currentUser?.id || ''
+            }
+        ]
+
+        if (isServiceItemChosen) {
+            console.log('update IF works')
+            updateService(updateData).then((response: any) => {
+                clearInputsHandler()
+                setCurrentUser(null)
+                setCurrentMasterId('')
+                setFIO('')
+                setPhoneNumber('')
+                setModalUsers([])
+                enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
+            }).catch((error: any) => {
+                let message = error(error.response.data.errorDescription).toString()
+                formControl.setError('name', {type: 'serverError', message: message})
+                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+                console.error(error.response.data)
+            })
+        }
     }
+    
+    // хендлеры //
+    // очистка формы
     const clearInputsHandler = () => {
         formControl.setValue('name', '')
         formControl.setValue('clientDescription', '')
         formControl.setValue('userMasterId', '')
     }
-    
-    // хендлеры //
     // селект
     const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
         setCurrentMasterId(event.target.value as string)
@@ -171,15 +229,17 @@ const Service = () => {
         const activeElement = filteredServices.find(item => item.id === ServiceItemObj.id)
         activeElement && setActiveId(ServiceItemObj.id)
 
+        // флаг для кнопки Сохранить
+        setIsServiceItemChosen(true)
+
         // сетаем данные в стор при выборе
         setCurrentService(ServiceItemObj)
         console.log('клик по сервису', ServiceItemObj)
-        setCurrentUser(users.find((u: IUser) => u.id === ServiceItemObj.client.id))
+        setCurrentUser(users?.find((u: IUser) => u.id === ServiceItemObj.client.id) || null)
         setCurrentMasterId(ServiceItemObj.userMaster.id)
+        // setCurrentMasterId(masters.find((m: any) => m.user.id === ServiceItemObj.userMaster.id))
         setCurrentProducts(ServiceItemObj.products)
         setCurrentWorks(ServiceItemObj.works)
-
-        setIsClientChosen(true)
 
         formControl.setValue('name', ServiceItemObj.name)
         formControl.setValue('clientDescription', ServiceItemObj.clientDescription)
@@ -211,8 +271,10 @@ const Service = () => {
 
         // зачистка полей после изменения статуса
         setCurrentUser(null)
-        setIsClientChosen(false)
         setCurrentService(null)
+        setCurrentMasterId('')
+        setIsServiceItemChosen(false)
+        setIsClientChosen(false)
         setActiveId(null)
         clearInputsHandler()
     }
@@ -280,7 +342,7 @@ const Service = () => {
                             {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
-                                    <Button disabled={!isClientChosen}
+                                    <Button disabled={!isServiceItemChosen}
                                             onClick={() => {updateServiceStatusHandler('InProcess')}}>
                                         Начать ремонт
                                     </Button>
@@ -290,11 +352,11 @@ const Service = () => {
                             {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
-                                    <Button disabled={!isClientChosen}
+                                    <Button disabled={!isServiceItemChosen}
                                             onClick={() => {updateServiceStatusHandler('WaitingSupply')}}>
                                         Остановить ремонт
                                     </Button>
-                                    <Button disabled={!isClientChosen}
+                                    <Button disabled={!isServiceItemChosen}
                                             onClick={() => {updateServiceStatusHandler('Ready')}}>
                                         Закончить ремонт
                                     </Button>
@@ -304,11 +366,11 @@ const Service = () => {
                             {
                                 isActiveReady &&
                                 <div className={s.content_doneButtons}>
-                                    <Button disabled={!isClientChosen}
+                                    <Button disabled={!isServiceItemChosen}
                                             onClick={() => {updateServiceStatusHandler('InProcess')}}>
                                         Продолжить ремонт
                                     </Button>
-                                    <Button disabled={!isClientChosen}
+                                    <Button disabled={!isServiceItemChosen}
                                             onClick={() => {updateServiceStatusHandler('Ended')}}>
                                         Выдать велосипед
                                     </Button>
@@ -379,7 +441,7 @@ const Service = () => {
                             </div>
                             <div className={s.content_buttons}>
                                 <div className={s.content_saveBtn}>
-                                    <Button type={'submit'} disabled={!isClientChosen}>
+                                    <Button type={'submit'} disabled={!isClientChosen && !isServiceItemChosen}>
                                         Сохранить
                                     </Button>
                                 </div>
