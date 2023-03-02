@@ -41,7 +41,7 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
     setPhoneNumber: (value) => set({phoneNumber: value}),
 
     findUser: (data: SearchClient) => {
-        set({isLoading: true});
+        set({isLoading: true})
         return $api.get(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
             .then(res => {
             set(state => {state.users = [...res.data.users]})

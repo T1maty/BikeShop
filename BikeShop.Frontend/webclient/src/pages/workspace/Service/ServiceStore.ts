@@ -92,6 +92,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
 
     getAllServicesInfo: () => {
         set({isLoading: true})
+
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
                 state.services = res.data
@@ -108,6 +109,10 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     addNewService: (data: CreateService) => {
+        set({isLoading: true})
+        set({isClientChosen: false})
+        set({isServiceItemChosen: false})
+
         return $api.post('/service/create', data).then(res => {
             set(state => {
                 state.services.push(res.data)
@@ -116,10 +121,16 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 state.filteredServices = state.services.filter(serv =>
                     serv.status === 'Waiting' || serv.status === 'WaitingSupply')
             })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            console.log('service NOT created', error)
         })
     },
     updateService: (updateData: UpdateService) => {
-        set({isLoading: true});
+        set({isLoading: true})
+        set({isClientChosen: false})
+        set({isServiceItemChosen: false})
+
         return $api.put('/service/updateservice', updateData).then(res => {
             $api.get('/service/getbyshopid/1').then(res => {
                 const currentListStatus = useService.getState().serviceListStatus
@@ -146,7 +157,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
-        set({isLoading: true});
+        set({isLoading: true})
+
         return $api.put(`/service/updateservicestatus?id=${data.id}&status=${data.status}`)
             .then(res => {
                 const currentListStatus = useService.getState().serviceListStatus
@@ -169,6 +181,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     }
                 }
                 set({isLoading: false})
+            }).catch((error: any) => {
+                console.log('service status NOT updated', error)
             })
     },
 })))/*, {

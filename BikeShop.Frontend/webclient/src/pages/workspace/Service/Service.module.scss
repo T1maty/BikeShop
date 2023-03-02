@@ -138,6 +138,9 @@
                     @include flexColumn();
                     margin-top: $defaultSmallMargin;
 
+                    overflow-y: auto;
+                    max-height: 560px;
+
                     .serviceItem {
                         @include hoverItem();
                         word-break: break-word;

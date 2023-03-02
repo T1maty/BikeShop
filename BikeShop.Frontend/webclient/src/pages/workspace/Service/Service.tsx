@@ -194,7 +194,6 @@ const Service = () => {
             updateService(data).then((res: any) => {
                 clearSubmitInfo() // очистка полей
                 setActiveId(null)
-                setIsServiceItemChosen(false)
                 enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
@@ -231,7 +230,6 @@ const Service = () => {
     const clearSubmitInfo = () => {
         clearInputsHandler()
         setCurrentUser(null)
-        setIsClientChosen(false)
         setCurrentMasterId('')
         setFIO('')
         setPhoneNumber('')
