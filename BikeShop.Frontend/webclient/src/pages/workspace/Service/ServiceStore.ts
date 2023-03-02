@@ -3,8 +3,10 @@ import {devtools, persist} from 'zustand/middleware';
 import {immer} from 'zustand/middleware/immer';
 import {AxiosResponse} from 'axios';
 import {$api} from '../../../shared';
-import {CreateService, CreateServiceResponse, GetUsersResponse, IUser,
-    ServiceItem, UpdateService, UpdateServiceStatus, UserResponse} from '../../../entities';
+import {
+    CreateService, CreateServiceResponse, GetUsersResponse, IUser,
+    ServiceItem, UpdateService, UpdateServiceStatus, UserResponse
+} from '../../../entities';
 import {ServiceProduct, ServiceWork} from '../../../entities/requests/CreateService';
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
@@ -70,18 +72,26 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     services: [],
-    setServices: (services) => set(state => {state.services = services}),
+    setServices: (services) => set(state => {
+        state.services = services
+    }),
     filteredServices: [],
-    setFilteredServices: (filteredServices) => set(state => {state.filteredServices = filteredServices}),
+    setFilteredServices: (filteredServices) => set(state => {
+        state.filteredServices = filteredServices
+    }),
     serviceListStatus: 'Waiting',
     setServiceListStatus: (serviceListStatus) => set({serviceListStatus: serviceListStatus}),
     currentProducts: [],
-    setCurrentProducts: (products) => set(state => {state.currentProducts = products}),
+    setCurrentProducts: (products) => set(state => {
+        state.currentProducts = products
+    }),
     currentWorks: [],
-    setCurrentWorks: (works) => set(state => {state.currentWorks = works}),
+    setCurrentWorks: (works) => set(state => {
+        state.currentWorks = works
+    }),
 
     getAllServicesInfo: () => {
-        set({isLoading: true});
+        set({isLoading: true})
         return $api.get('/service/getbyshopid/1').then(res => {
             set(state => {
                 state.services = res.data
@@ -109,21 +119,31 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     updateService: (updateData: UpdateService) => {
-        return $api.put('/service/updateservice', updateData)/*.then(res => {
-            const currentService = useService.getState().currentService
+        set({isLoading: true});
+        return $api.put('/service/updateservice', updateData).then(res => {
+            $api.get('/service/getbyshopid/1').then(res => {
+                const currentListStatus = useService.getState().serviceListStatus
 
-            if (currentService) {
                 set(state => {
-                    //
+                    state.services = res.data
                 })
-                console.log('service updated')
-            } else {
-                console.log('no current service')
-            }
-
+                // надо сделать универсальную функцию?
+                if (currentListStatus === 'Waiting') {
+                    set(state => {
+                        state.filteredServices = state.services.filter(serv =>
+                            serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+                    })
+                } else {
+                    set(state => {
+                        state.filteredServices = state.services.filter(serv =>
+                            serv.status === currentListStatus)
+                    })
+                }
+                set({isLoading: false})
+            })
         }).catch((error: any) => {
-            console.log('service NOT updated')
-        })*/
+            console.log('service NOT updated', error)
+        })
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true});
@@ -135,6 +155,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     set(state => {
                         state.services.filter(serv => serv.id === data.id)[0].status = data.status
                     })
+                    // надо сделать универсальную функцию?
                     if (currentListStatus === 'Waiting') {
                         set(state => {
                             state.filteredServices = state.services.filter(serv =>

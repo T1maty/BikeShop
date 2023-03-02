@@ -5,8 +5,8 @@ export interface CreateService {
     name: string
     clientDescription: string
 
-    userCreatedId: string
     userMasterId: string
+    userCreatedId: string
 
     productDiscountId: number
     workDiscountId: number

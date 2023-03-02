@@ -53,7 +53,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
             enqueueSnackbar('Клиент добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error) => {
             let message = error(error.response.data.errorDescription).toString()
-            formControl.setError('firstName', {type: 'serverError', message: message})
+            formControl.setError('phone', {type: 'serverError', message: message})
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
             console.error(error.response.data)
         })
