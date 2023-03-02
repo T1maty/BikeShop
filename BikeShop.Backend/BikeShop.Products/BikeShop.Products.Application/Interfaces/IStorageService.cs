@@ -1,4 +1,5 @@
-﻿using BikeShop.Products.Domain.DTO.Responses;
+﻿using BikeShop.Products.Domain.DTO.Requestes;
+using BikeShop.Products.Domain.DTO.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<List<StorageProductsDTO>> GetByIds(List<int> Ids);
         public Task<StorageProductsDTO> GetByStorage(int storageId);
 
-        //public Task AddProductsToStorage();
+        public Task AddProductsToStorage(List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId);
     }
 }

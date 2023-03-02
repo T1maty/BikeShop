@@ -17,8 +17,10 @@ namespace BikeShop.Products.Domain.Entities
         public string ProductName { get; set; }
         public string CatalogKey { get; set; }
         public decimal Quantity { get; set; }
-        public string QuantityUnit { get; set; }
-        public decimal Price { get; set; }
-        public string PriceCurrency { get; set; }
+        public int QuantityUnitId { get; set; }
+        public decimal IncomePrice { get; set; }
+        public decimal DealerPrice { get; set; }
+        public decimal RetailPrice { get; set; }
+        public int PriceCurrencyId { get; set; }
     }
 }

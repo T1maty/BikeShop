@@ -1,6 +1,8 @@
 ﻿using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
+using BikeShop.Products.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,50 @@ namespace BikeShop.Products.Application.Services
         public StorageService(IApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task AddProductsToStorage(List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId)
+        {
+            var prodsAsDict = products.ToDictionary(p => p.ProductId, n => n);
+            var storageItems = _context.StorageProducts.Where(n=>n.StorageId == storageId).Where(n => prodsAsDict.Keys.Contains(n.ProductId)).ToDictionary(n=>n.ProductId, n=>n);
+            var productsEntitiesDict = await _context.Products.Where(n => prodsAsDict.Keys.Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n);
+            var newItems = new Dictionary<int, StorageProduct>();
+            var newMoves = new Dictionary<int, ProductStorageMove>();
+            foreach (var product in products)
+            {
+                if (storageItems.ContainsKey(product.ProductId))
+                {
+                    storageItems[product.ProductId].Quantity += product.Quantity;
+                }
+                else
+                {
+                    if (newItems.ContainsKey(product.ProductId))
+                    {
+                        newItems[product.ProductId].Quantity += product.Quantity;
+                    }
+                    else
+                    {
+                        newItems.Add(product.ProductId, new StorageProduct { ProductId = product.ProductId, Quantity = product.Quantity, StorageId = storageId });
+                    }
+                }
+
+
+                if (newMoves.ContainsKey(product.ProductId))
+                {
+                    newMoves[product.ProductId].Quantity += product.Quantity;
+                }
+                else
+                {
+                    var prod = productsEntitiesDict[product.ProductId];
+                    var productMove = new ProductStorageMove { ProductId = product.ProductId, CatalogKey = prod.CatalogKey, Enabled = prod.Enabled, MoveDirection = MoveDirection.Get(MoveDirectionEnum.MovingToStorage), PriceCurrencyId = 0, IncomePrice = prod.IncomePrice, ProductName = prod.Name, Quantity = product.Quantity, RetailPrice = prod.RetailPrice, StorageId = storageId, DealerPrice = prod.DealerPrice, QuantityUnitId = prod.QuantityUnitId, ProductMoveSource = ProductMoveSource.Get(ProductMoveSource.Get(source)), SourceId = sourceId };
+                    newMoves.Add(product.ProductId, productMove);
+                }
+            }
+
+            await _context.StorageProducts.AddRangeAsync(newItems.Values);
+            await _context.ProductStorageMoves.AddRangeAsync(newMoves.Values);
+
+            await _context.SaveChangesAsync(new CancellationToken());
         }
 
         public async Task<List<StorageProductsDTO>> GetByIds(List<int> Ids)
@@ -61,7 +107,7 @@ namespace BikeShop.Products.Application.Services
             var prodQuantReservedDict = await _context.ProductReservations.Where(n => n.StorageId == storageId).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
             
             //Получаем сущности всех нужных продуктов в виде словаря.
-            var products = _context.Products.Where(n => prodQuantDict.ContainsKey(n.Id) || prodQuantReservedDict.ContainsKey(n.Id)).ToDictionary(n=>n.Id, n=>n);
+            var products = await _context.Products.Where(n => prodQuantDict.Keys.Contains(n.Id) || prodQuantReservedDict.Keys.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
 
             //Получаем доступные товары отнимая от товаров на складе зарезервированные товары
             var prodQuantAvailableDict = prodQuantDict;

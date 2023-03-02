@@ -30,9 +30,9 @@ namespace BikeShop.Products.WebApi.Controllers
         }
 
         [HttpPost("addproductstostorage")]
-        public async Task<StorageProductsDTO> AddProductsToStorage([FromBody] List<ProductQuantitySmplDTO> products, int storageId)
+        public async Task AddProductsToStorage([FromBody] List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId)
         {
-            return await _storageService.GetByStorage(storageId);
+            await _storageService.AddProductsToStorage(products,storageId,source,sourceId);
         }
 
     }
