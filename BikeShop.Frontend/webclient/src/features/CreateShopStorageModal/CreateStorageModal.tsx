@@ -2,15 +2,13 @@ import {useSnackbar} from 'notistack';
 import {useNavigate} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import React, {ChangeEvent, useEffect} from 'react';
-import {Modal, Checkbox} from '@mui/material';
+import {Modal} from '@mui/material';
 import s from './CreateShopStorageModal.module.scss';
-import {Button, ControlledInput} from '../../shared/ui';
+import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
 import useCreateStorageModal from "./CreateStorageModalStore";
 
 const CreateStorageModal = () => {
-
-    const label = {inputProps: {'aria-label': 'Checkbox demo'}}
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -25,12 +23,14 @@ const CreateStorageModal = () => {
         defaultValues: {
             storageName: '',
             storageWaiting: '',
+            isOutsourceStorage: true,
+            isShopWorking: true,
         }
     });
-    const onSubmit: SubmitHandler<any> = () => {
+    const onSubmit: SubmitHandler<any> = (data: any) => {
         alert('Склад создан')
 
-        // addNewShop().then((response: any) => {
+        // addNewStorage().then((response: any) => {
         //     // setOpen(false)
         //     // navigate(BikeShopPaths.WORKSPACE.SERVICE)
         //
@@ -63,27 +63,37 @@ const CreateStorageModal = () => {
 
                         <div className={s.shopStoreModal_inputFields}>
                             <div>
-                                <ControlledInput name={'storageName'} label={'Название склада'}
+                                <ControlledInput name={'storageName'}
+                                                 label={'Название склада'}
                                                  control={formControl}
-                                    // rules={{required: Errors[0].name}}
+                                                 rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'storageWaiting'} label={'Задержка поставки'}
+                                <ControlledInput name={'storageWaiting'}
+                                                 label={'Задержка поставки'}
                                                  control={formControl}
-                                    // rules={{required: Errors[0].name}}
+                                                 rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.infoBlock_checkbox}>
                                 <div className={s.infoBlock_checkboxItem}>
-                                    <div><Checkbox {...label} /></div>
-                                    <div>? Аутсорсный склад</div>
+                                    <div>
+                                        <ControlledCheckbox name={'isOutsourceStorage'}
+                                                            label={'? Аутсорсный склад'}
+                                                            control={formControl}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className={s.infoBlock_checkbox}>
                                 <div className={s.infoBlock_checkboxItem}>
-                                    <div><Checkbox {...label} /></div>
-                                    <div>Магазин работает</div>
+                                    <div>
+                                        <ControlledCheckbox name={'isShopWorking'}
+                                                            label={'Магазин работает'}
+                                                            control={formControl}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className={s.infoBlock_updateBtn}>

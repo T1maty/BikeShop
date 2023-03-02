@@ -3,34 +3,29 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
-import {CreateShop} from '../../entities/requests/CreateShop';
 
 interface CreateStorageModalStore {
     createStorageModal: boolean
     setCreateStorageModal: (value: boolean) => void
+
     storageName: string
-    storageWaiting: string
     setStorageName: (value: string) => void
+    storageWaiting: string
     setStorageWaiting: (value: string) => void
-    addNewStorage: () => any
+
+    addNewStorage: (data: any) => any
 }
 
 const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     createStorageModal: true,
-    setCreateStorageModal: (value: boolean) => set({
-        createStorageModal: value
-    }),
+    setCreateStorageModal: (value: boolean) => set({createStorageModal: value}),
 
     storageName: '',
+    setStorageName: (value: string) => set({storageName: value}),
     storageWaiting: '',
-    setStorageName: (value: string) => set({
-        storageName: value
-    }),
-    setStorageWaiting: (value: string) => set({
-        storageWaiting: value
-    }),
+    setStorageWaiting: (value: string) => set({storageWaiting: value}),
 
-    addNewStorage: () => {
+    addNewStorage: (data: any) => {
         // set({isLoading: true});
         // return $api.get('/user/find', data).then(res => {
         //     set(state => {

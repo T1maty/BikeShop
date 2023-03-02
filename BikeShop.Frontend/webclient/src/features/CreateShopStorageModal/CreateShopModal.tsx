@@ -11,8 +11,6 @@ import {CreateShopSubmit} from '../../entities';
 
 const CreateShopModal = () => {
 
-    const label = {inputProps: {'aria-label': 'Checkbox demo'}}
-
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
 
