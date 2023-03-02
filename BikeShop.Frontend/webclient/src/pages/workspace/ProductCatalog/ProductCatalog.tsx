@@ -47,7 +47,6 @@ const ProductCatalog = () => {
                         <ProductCatalogTable/>
                     </div>
                 </div>
-
             </div>
         // </div>
     );

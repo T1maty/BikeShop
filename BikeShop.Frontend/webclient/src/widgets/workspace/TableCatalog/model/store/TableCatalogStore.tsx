@@ -6,7 +6,9 @@ import {$api} from "../../../../../shared";
 interface WorkCatalogStore {
     works: [],
     group: [],
-    getWork: () => void,
+    isLoading: boolean,
+    currencyId: number | undefined
+    getWork: (id: number) => void,
     getGroup: () => void
     chooseMethod: (data: any) => void
     createWork: (data: any) => void
@@ -16,9 +18,13 @@ interface WorkCatalogStore {
 export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer((set, get) => ({
     works: [],
     group: [],
-    getWork() {
-        $api.get('/work/getbygroupid/1').then((data) => {
-            set({works: data.data.works})
+    isLoading: false,
+    currencyId: undefined,
+    getWork(id: number) {
+        set({isLoading: true})
+        $api.get(`/work/getbygroupid/${id}`).then((data) => {
+            set({works: data.data.works, currencyId: id})
+            set({isLoading: false})
         })
     },
 
@@ -29,7 +35,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
             "price": 0,
             "groupId": 1
         }).then(() => {
-            get().getWork()
+            get().getWork(1)
         })
     },
 
@@ -42,7 +48,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
             "currencyId": 2,
             "groupId": 1
         }).then(() => {
-            get().getWork()
+            get().getWork(1)
         })
     },
 
@@ -62,7 +68,6 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
                 break
         }
     },
-
 
 
 }))), {

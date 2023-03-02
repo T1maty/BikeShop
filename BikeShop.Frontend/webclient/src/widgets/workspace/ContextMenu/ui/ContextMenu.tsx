@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useRef, useState, MouseEvent, memo} from 'react';
+import React, {memo, MouseEvent, useCallback, useEffect, useRef, useState} from 'react';
 import cls from './ContextMenu.module.scss'
 import {Button} from "shared/ui";
 import {Portal} from "../../Portal/Portal";
@@ -13,7 +13,7 @@ type SettingsType = keyof typeof settingsData
 
 interface ContextMenuProps {
     settings: SettingsType,
-    isOpen?: boolean,
+    isOpen: boolean,
     onClose?: (variant?: string) => void,
     left?: number,
     top?: number
@@ -21,19 +21,11 @@ interface ContextMenuProps {
 
 const ANIMATION_DELAY = 300
 
-const ContextMenu: FC<ContextMenuProps> = memo((
-    {
-        settings,
-        isOpen = false,
-        onClose,
-        left,
-        top
-    }
-) => {
+const ContextMenu = memo(({onClose, top, isOpen, left, settings}:ContextMenuProps) => {
 
     const [isClosing, setIsClosing] = useState(false)
     const timerRef = useRef<ReturnType<typeof setTimeout>>()
-    const closeHandler = useCallback((e?:MouseEvent, value?: string) => {
+    const closeHandler = useCallback((e?: MouseEvent, value?: string) => {
         if (onClose) {
             setIsClosing(true)
             timerRef.current = setTimeout(() => {
@@ -49,8 +41,9 @@ const ContextMenu: FC<ContextMenuProps> = memo((
         }
     }, [closeHandler])
 
-    const onContentClick = (e: MouseEvent): void => {
-        e.stopPropagation()
+    const onContextMenuHandler = (e : MouseEvent) => {
+        e.preventDefault()
+        closeHandler()
     }
 
     useEffect(() => {
@@ -67,27 +60,27 @@ const ContextMenu: FC<ContextMenuProps> = memo((
         [cls.opened]: isOpen,
         [cls.isClosing]: isClosing
     }
+
     if (!isOpen) return null
 
     return (
         <Portal>
-            <div className={clsx(cls.menu, mods)} >
-                <div className={cls.overlay} onClick={closeHandler} onContextMenu={(e) => {
-                    e.preventDefault()
-                    closeHandler()
-                }}>
-                       <div className={cls.content} onClick={onContentClick} style={{left: left , top: top}}>
-                           {settingsData[settings].map((value, index) => {
-                               return <Button key={index}
-                                              className={cls.button}
-                                              onAnimate={false}
-                                              onClick={e => closeHandler(e, e.currentTarget.textContent as string)}>
-                                   {value}
-                               </Button>
-                           })}
-                       </div>
+            <div className={clsx(cls.menu, mods)}>
+                <div className={cls.overlay} onClick={closeHandler} onContextMenu={onContextMenuHandler}>
+                    <div className={cls.content}
+                         onClick={(e) => e.stopPropagation()}
+                         style={{left: left, top: top}}
+                    >
+                        {settingsData[settings].map((value, index) => (
+                            <Button key={index}
+                                    className={cls.button}
+                                    onAnimate={false}
+                                    onClick={e => closeHandler(e, e.currentTarget.textContent as string)}>
+                                {value}
+                            </Button>
+                        ))}
+                    </div>
                 </div>
-
             </div>
         </Portal>
     );

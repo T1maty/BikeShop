@@ -1,12 +1,14 @@
 import React, {FC, memo, MouseEvent, useCallback, useEffect, useState} from "react";
 import cls from './CustomTable.module.scss'
 import {ContextMenu} from "../../../widgets/workspace/ContextMenu";
+import {Loader} from "../Loader/Loader";
 
 interface CustomTableProps {
     theadData: string[],
     tbodyData: object[],
     customClass?: string,
     onContext: (data: any) => void
+    isLoading: boolean
 }
 
 interface TableHeadItemProps {
@@ -18,7 +20,9 @@ interface TableRowProps {
     onOpen: (left: any, top: any, data: any) => void,
 }
 
-export const CustomTable: FC<CustomTableProps> = ({theadData, tbodyData, customClass, onContext}) => {
+export const CustomTable = (props: CustomTableProps) => {
+        const {theadData, tbodyData, customClass, onContext, isLoading} = props
+
         const [state, setState] = useState({
             isOpen: false,
             left: 0,
@@ -26,13 +30,6 @@ export const CustomTable: FC<CustomTableProps> = ({theadData, tbodyData, customC
             data: [],
             variant: ''
         })
-        useEffect(() => {
-            if (state.variant) {
-                onContext({data: state.data, variant: state.variant})
-                setState({...state, variant: ''})
-            }
-        }, [state.variant])
-
 
         const onOpenHandler = useCallback((left: any, top: any, data: any) => {
             setState({...state, isOpen: true, left, top, data})
@@ -40,7 +37,8 @@ export const CustomTable: FC<CustomTableProps> = ({theadData, tbodyData, customC
 
         const onCloseHandler = useCallback((variant?: string) => {
             setState({...state, isOpen: false, variant: variant || ''})
-        },[state])
+            onContext({data: state.data, variant: variant})
+        }, [state])
 
         return (
             <>
@@ -48,11 +46,15 @@ export const CustomTable: FC<CustomTableProps> = ({theadData, tbodyData, customC
                     <thead className={cls.thead}>
                     <TableHeadItem theadData={theadData}/>
                     </thead>
-                        <tbody className={cls.tbody}>
-                        {tbodyData.map((item: any) => {
+                    <tbody className={cls.tbody}>
+                    {!isLoading?
+                        tbodyData.map((item: any) => {
                             return <TableRow key={item.id} data={item} onOpen={onOpenHandler}/>;
-                        })}
-                        </tbody>
+                        })
+                        : <tr style={{height: 250, display: "flex", justifyContent: 'center'}}><td><Loader variant={"ellipsis"}/></td></tr>
+                    }
+                    {tbodyData.length === 0 && !isLoading && <tr style={{height: 250, display: "flex", justifyContent: 'center'}}><td>Пусто</td></tr>}
+                    </tbody>
                 </table>
                 <ContextMenu isOpen={state.isOpen}
                              onClose={onCloseHandler}
@@ -60,7 +62,7 @@ export const CustomTable: FC<CustomTableProps> = ({theadData, tbodyData, customC
                              left={state.left}
                              top={state.top}
                 />
-    </>
+            </>
         );
     }
 ;
@@ -89,7 +91,7 @@ const TableRow = memo(({data, onOpen}: TableRowProps) => {
     }
     return (
         <tr className={cls.body__items} onContextMenu={(e) => onContextHandler(e)}>
-            {arr.map((item,index) => {
+            {arr.map((item, index) => {
                 return <td key={index} className={cls.body__item}>{item}</td>;
             })}
         </tr>
