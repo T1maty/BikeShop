@@ -15,6 +15,7 @@ interface authState {
 
     login: (loginData: ILoginData) => Promise<AxiosResponse<ILoginResponse>>
     register: (data: IRegistrationData) => Promise<AxiosResponse>
+    loginToShop: (shopId: number) => void
 
     logout: () => void
 }
@@ -38,6 +39,16 @@ const useAuth = create<authState>()(persist(devtools(immer((set) => ({
         $api.post('auth/logout')
         localStorage.removeItem('accessToken')
     }),
+
+    loginToShop: (shopId) => {
+        $api.get<IShop[]>('shop/getall').then((r) => {
+            let shop = r.data.filter(n => n.id === shopId)[0];
+            console.log(shop)
+            set(state => {
+                state.shop = shop
+            });
+        })
+    }
 
 }))), {name: "useAuthUser", version: 1}));
 

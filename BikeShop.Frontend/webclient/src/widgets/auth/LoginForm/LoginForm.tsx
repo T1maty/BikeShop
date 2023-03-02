@@ -11,6 +11,7 @@ const LoginForm = () => {
     const login = useAuthUser(s => s.login);
     const setUser = useAuthUser(s => s.setUser);
     const user = useAuthUser(s => s.user);
+    const loginToShop = useAuthUser(s => s.loginToShop);
 
 
     const navigate = useNavigate();
@@ -33,7 +34,9 @@ const LoginForm = () => {
 
             localStorage.setItem('accessToken', r.data.accessToken)
             setUser(r.data.user)
-
+            if (r.data.user.shopId != 0) {
+                loginToShop(r.data.user.shopId)
+            }
             navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
 
         });

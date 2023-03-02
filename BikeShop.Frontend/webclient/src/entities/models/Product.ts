@@ -14,5 +14,6 @@ export interface IProduct {
     id: number,
     createdAt: string,
     updatedAt: string,
-    enabled: boolean
+    enabled: boolean,
+    quantityUnitId: number
 }

@@ -5,6 +5,7 @@ import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
 import {BikeShopPaths} from "./paths";
 import {BarcodeScanerListenerProvider} from "../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider";
 import Shop from "pages/public/Shop/Shop";
+import CheckAuthRoute from "../providers/RouteProviders/CheckAuthRoute";
 
 
 // @ts-ignore
@@ -69,28 +70,28 @@ export const Routes = createBrowserRouter([
 
     {
         path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
-        element: /*<CheckAuthRout>*/
+        element: <CheckAuthRoute>
             <BarcodeScanerListenerProvider>
                 <WorkspaceHeaderProvider>
                     <MainPage/>
                 </WorkspaceHeaderProvider>
             </BarcodeScanerListenerProvider>
-        /*</CheckAuthRout>*/
+        </CheckAuthRoute>
     },
     {
         path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
-        element: /*<CheckAuthRoute>*/
+        element: <CheckAuthRoute>
             <WorkspaceHeaderProvider>
                 <ProductCatalog/>
             </WorkspaceHeaderProvider>
-        // </CheckAuthRoute>
+        </CheckAuthRoute>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
-        element: /*<CheckAuthRoute>*/
+        element: <CheckAuthRoute>
             <WorkspaceHeaderProvider>
                 <WorkCatalog/>
             </WorkspaceHeaderProvider>
-        // </CheckAuthRoute>
+        </CheckAuthRoute>
     },
 ])

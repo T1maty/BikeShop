@@ -14,6 +14,7 @@ export const Header: FC = () => {
 
     const navigate = useNavigate();
     const user = useAuthUser(s => s.user);
+    const shop = useAuthUser(s => s.shop);
     const {t} = useTranslation()
 
     return (
@@ -24,7 +25,7 @@ export const Header: FC = () => {
                     <div onClick={() => {
                         navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
                     }}>
-                        {t('Shop')}
+                        {shop ? shop.name : "Магазин не выбран"}
                     </div>
                 </div>
                 <div className={cls.center}>
@@ -33,7 +34,7 @@ export const Header: FC = () => {
                 <div className={cls.rightSide}>
                     <HeaderUserMenu firstName={user?.firstName} lastName={user?.lastName}/>
                     <Badge badgeContent={3}>
-                        <NotificationIcon />
+                        <NotificationIcon/>
                     </Badge>
                 </div>
             </div>
