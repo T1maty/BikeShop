@@ -46,6 +46,10 @@ export interface ServiceItem {
 }
 
 export type ServiceItemProductWork = {
+    id: number
+    createdAt: string
+    updatedAt: string
+    enabled: boolean
     name: string
     quantity: number
     quantityUnitId: number
@@ -54,10 +58,6 @@ export type ServiceItemProductWork = {
     total: number
     userId: string
     serviceId: number
-    id: number
-    createdAt: string
-    updatedAt: string
-    enabled: boolean
 }
 
 export type ServiceItemProduct = ServiceItemProductWork & {

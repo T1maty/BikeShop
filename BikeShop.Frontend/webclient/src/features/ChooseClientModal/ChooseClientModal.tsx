@@ -35,8 +35,8 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
 
     const formControl = useForm({
         defaultValues: {
-            firstName: '',
             lastName: '',
+            firstName: '',
             patronymic: '',
             phone: ''
         }
@@ -45,8 +45,8 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
         addNewUser(data).then((response) => {
             setOpen(false)
 
-            formControl.setValue('firstName', '')
             formControl.setValue('lastName', '')
+            formControl.setValue('firstName', '')
             formControl.setValue('patronymic', '')
             formControl.setValue('phone', '')
 
