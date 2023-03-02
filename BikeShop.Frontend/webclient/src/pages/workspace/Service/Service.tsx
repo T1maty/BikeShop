@@ -10,7 +10,7 @@ import {useSnackbar} from 'notistack'
 import useService, {ServiceListStatusType} from './ServiceStore'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import {ClientCard} from '../../../widgets'
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material'
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material'
 import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities'
 import {ServiceStatusType} from "../../../entities/models/ServiceItem"
 import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore"
@@ -155,8 +155,8 @@ const Service = () => {
             console.log('update IF works, updateData = ', data)
 
             data.id = currentService?.id || -1
-            data.name = 'UPDATED name' // currentService?.name || ''
-            data.clientDescription = 'UPDATED description' // currentService?.clientDescription || ''
+            data.name = formControl.getValues('name')
+            data.clientDescription = formControl.getValues('clientDescription')
             data.userMasterId = currentMasterId
 
             data.userMasterDescription = 'string'
@@ -272,7 +272,7 @@ const Service = () => {
                                             extraFilterName?: ServiceStatusType) => {
 
         setFilteredServices(services.filter(serv => serv.status === filterName || serv.status === extraFilterName))
-        setServiceListStatus(filterName) // статус фильтр листа
+        setServiceListStatus(filterName) // статус фильтр-листа
         setIsActiveWaiting(isButtonWaitingOn)
         setIsActiveProcess(isButtonInProcessOn)
         setIsActiveReady(isButtonReadyOn)

@@ -42,7 +42,7 @@ interface ServiceStore {
 
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
-    updateService: (updateData: UpdateService) => any
+    updateService: (updateData: UpdateService) => any // надо исправить тип
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
@@ -123,7 +123,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('service NOT created', error)
+            console.log('service not created', error)
         })
     },
     updateService: (updateData: UpdateService) => {
@@ -153,7 +153,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 set({isLoading: false})
             })
         }).catch((error: any) => {
-            console.log('service NOT updated', error)
+            console.log('service not updated', error)
         })
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
@@ -182,7 +182,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 }
                 set({isLoading: false})
             }).catch((error: any) => {
-                console.log('service status NOT updated', error)
+                console.log('service status not updated', error)
             })
     },
 })))/*, {
