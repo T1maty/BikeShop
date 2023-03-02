@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react'
 import s from './Service.module.scss'
 import style from '../../../shared/ui/Button/Button.module.scss'
-import {ChooseClientModal, SelectProductModal, SelectWorkModal} from '../../../features';
-import {Button, ControlledInput} from '../../../shared/ui';
-import {ServiceTable} from '../../index';
-import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import {useSnackbar} from 'notistack';
-import useService, {ServiceListStatusType} from './ServiceStore';
-import {Errors} from '../../../entities/errors/workspaceErrors';
-import {ClientCard} from '../../../widgets';
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities';
-import {ServiceStatusType} from "../../../entities/models/ServiceItem";
-import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore";
+import {ChooseClientModal, SelectProductModal, SelectWorkModal} from '../../../features'
+import {Button, ControlledInput} from '../../../shared/ui'
+import {ServiceTable} from '../../index'
+import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {useSnackbar} from 'notistack'
+import useService, {ServiceListStatusType} from './ServiceStore'
+import {Errors} from '../../../entities/errors/workspaceErrors'
+import {ClientCard} from '../../../widgets'
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material'
+import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities'
+import {ServiceStatusType} from "../../../entities/models/ServiceItem"
+import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore"
 
 // enum ServiceStatus {
 //     Waiting = 0, // ожидают
@@ -100,56 +100,47 @@ const Service = () => {
             userMasterId: '',
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: any /*CreateService*/, updateData: any /*UpdateService*/) => {
-        console.log('сабмит данные для создания', data)
-        console.log('сабмит данные для обновления', updateData)
-
+    const onSubmit: SubmitHandler<any> = (data: any) => {
         // создание сервиса
-
-        data.shopId = 1
-        data.clientId = currentUser?.id || ''
-        data.userMasterId = currentMasterId
-        data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
-
-        data.productDiscountId = 0
-        data.workDiscountId = 0
-
-        data.serviceWorks = [
-            {
-                name: 'string',
-                description: 'string',
-                quantity: 0,
-                quantityUnitId: 0,
-                price: 0,
-                discount: 0,
-                total: 0,
-                userId: currentUser?.id || ''
-            }
-        ]
-        data.serviceProducts = [
-            {
-                catalogKey: 'string',
-                serialNumber: 'string',
-                name: 'string',
-                quantity: 0,
-                quantityUnitId: 0,
-                price: 0,
-                discount: 0,
-                total: 0,
-                userId: currentUser?.id || ''
-            }
-        ]
-
         if (isClientChosen && !isServiceItemChosen) {
-            console.log('create IF works')
+            console.log('create IF works, new data =', data)
+
+            data.shopId = 1
+            data.clientId = currentUser?.id || ''
+            data.userMasterId = currentMasterId
+            data.userCreatedId = 'e9267875-5844-4f12-9639-53595d3105f4' // сотрудник
+
+            data.productDiscountId = 0
+            data.workDiscountId = 0
+
+            data.serviceWorks = [
+                {
+                    name: 'string',
+                    description: 'string',
+                    quantity: 0,
+                    quantityUnitId: 0,
+                    price: 0,
+                    discount: 0,
+                    total: 0,
+                    userId: currentUser?.id || ''
+                }
+            ]
+            data.serviceProducts = [
+                {
+                    catalogKey: 'string',
+                    serialNumber: 'string',
+                    name: 'string',
+                    quantity: 0,
+                    quantityUnitId: 0,
+                    price: 0,
+                    discount: 0,
+                    total: 0,
+                    userId: currentUser?.id || ''
+                }
+            ]
+
             addNewService(data).then((res: any) => {
-                clearInputsHandler()
-                setCurrentUser(null)
-                setIsClientChosen(false)
-                setCurrentMasterId('')
-                setFIO('')
-                setPhoneNumber('')
-                setModalUsers([])
+                clearSubmitInfo() // очистка полей
                 enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
@@ -160,54 +151,50 @@ const Service = () => {
         }
 
         // обновление сервиса
-
-        updateData.id = currentService?.id || -1
-        updateData.name = 'Updated name'
-        updateData.clientDescription = 'Updated description'
-        updateData.userMasterId = currentMasterId
-
-        updateData.userMasterDescription = 'string'
-        updateData.userCreatedDescription = 'string'
-
-        updateData.productDiscountId = 0
-        updateData.workDiscountId = 0
-
-        updateData.serviceWorks = [
-            {
-                name: 'string',
-                description: 'string',
-                quantity: 0,
-                quantityUnitId: 0,
-                price: 0,
-                discount: 0,
-                total: 0,
-                userId: currentUser?.id || ''
-            }
-        ]
-        updateData.serviceProducts = [
-            {
-                catalogKey: 'string',
-                serialNumber: 'string',
-                name: 'string',
-                quantity: 0,
-                quantityUnitId: 0,
-                price: 0,
-                discount: 0,
-                total: 0,
-                userId: currentUser?.id || ''
-            }
-        ]
-
         if (isServiceItemChosen) {
-            console.log('update IF works')
-            updateService(updateData).then((res: any) => {
-                clearInputsHandler()
-                setCurrentUser(null)
-                setIsClientChosen(false)
-                setCurrentMasterId('')
-                setFIO('')
-                setPhoneNumber('')
-                setModalUsers([])
+            console.log('update IF works, updateData = ', data)
+
+            data.id = currentService?.id || -1
+            data.name = 'UPDATED name' // currentService?.name || ''
+            data.clientDescription = 'UPDATED description' // currentService?.clientDescription || ''
+            data.userMasterId = currentMasterId
+
+            data.userMasterDescription = 'string'
+            data.userCreatedDescription = 'string'
+
+            data.productDiscountId = 0
+            data.workDiscountId = 0
+
+            data.serviceWorks = [
+                {
+                    name: 'string',
+                    description: 'string',
+                    quantity: 0,
+                    quantityUnitId: 0,
+                    price: 0,
+                    discount: 0,
+                    total: 0,
+                    userId: currentUser?.id || ''
+                }
+            ]
+            data.serviceProducts = [
+                {
+                    catalogKey: 'string',
+                    serialNumber: 'string',
+                    name: 'string',
+                    quantity: 0,
+                    quantityUnitId: 0,
+                    price: 0,
+                    discount: 0,
+                    total: 0,
+                    userId: currentUser?.id || ''
+                }
+            ]
+
+            updateService(data).then((res: any) => {
+                clearSubmitInfo() // очистка полей
+                setActiveId(null)
+                setIsServiceItemChosen(false)
                 enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
@@ -217,27 +204,45 @@ const Service = () => {
             })
         }
     }
-    
+
     // хендлеры //
-    // селект
+    // изменение селекта
     const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
         setCurrentMasterId(event.target.value as string)
         console.log('клик по селекту мастера', event.target.value)
     }
-    // очистка формы
+    // очистка инпутов формы
     const clearInputsHandler = () => {
         formControl.setValue('name', '')
         formControl.setValue('clientDescription', '')
         formControl.setValue('userMasterId', '')
     }
+    // очистка всех данных (кнопка ОТМЕНА)
     const clearAllServiceInfo = () => {
+        clearInputsHandler()
         setCurrentUser(null)
         setCurrentService(null)
         setCurrentMasterId('')
-        setIsServiceItemChosen(false)
         setIsClientChosen(false)
+        setIsServiceItemChosen(false)
         setActiveId(null)
+    }
+    // очистка данных после сабмита (кнопка СОХРАНИТЬ)
+    const clearSubmitInfo = () => {
         clearInputsHandler()
+        setCurrentUser(null)
+        setIsClientChosen(false)
+        setCurrentMasterId('')
+        setFIO('')
+        setPhoneNumber('')
+        setModalUsers([])
+    }
+    // выбор клиента в модалке
+    const chooseClientHandler = (user: IUser) => {
+        console.log('выбранный клиент из модалки', user)
+        setCurrentUser(user)
+        setIsClientChosen(true)
+        setChooseClientModal(false)
     }
 
     // выбор сервиса
@@ -248,9 +253,10 @@ const Service = () => {
 
         setIsServiceItemChosen(true) // флаг для кнопки Сохранить
 
-        // сетаем данные в стор при выборе
-        setCurrentService(ServiceItemObj)
+        // сетаем данные в стор при выборе сервиса
         console.log('клик по сервису', ServiceItemObj)
+
+        setCurrentService(ServiceItemObj)
         setCurrentUser(users?.find((u: IUser) => u.id === ServiceItemObj.client.id) || null)
         setCurrentMasterId(ServiceItemObj.userMaster.id)
         // setCurrentMasterId(masters.find((m: any) => m.user.id === ServiceItemObj.userMaster.id))
@@ -260,12 +266,6 @@ const Service = () => {
         formControl.setValue('name', ServiceItemObj.name)
         formControl.setValue('clientDescription', ServiceItemObj.clientDescription)
         formControl.setValue('userMasterId', currentMasterId)
-    }
-    const chooseClientHandler = (user: IUser) => {
-        setCurrentUser(user)
-        setIsClientChosen(true)
-        setChooseClientModal(false)
-        console.log('выбранный клиент из модалки', user)
     }
 
     // фильтрация сервисов
@@ -301,36 +301,34 @@ const Service = () => {
 
                 <div className={s.service_leftSide}>
                     <div className={s.leftSide_buttons}>
-                        {/*<div className={s.buttons_create}>*/}
-                        {/*    <Button disabled={isClientChosen}*/}
-                        {/*            onClick={() => {setChooseClientModal(true)}}*/}
-                        {/*    >*/}
-                        {/*        Создать ремонт*/}
-                        {/*    </Button>*/}
-                        {/*</div>*/}
-
                         <div className={s.buttons_filter}>
                             <div>
                                 <Button className={isActiveWaiting ? style.waiting : ''}
-                                        onClick={() => {filterServicesUniversalHandler('Waiting',
-                                            true, false, false,
-                                            'WaitingSupply')}}
+                                        onClick={() => {
+                                            filterServicesUniversalHandler('Waiting',
+                                                true, false, false,
+                                                'WaitingSupply')
+                                        }}
                                 >
                                     Ожидают
                                 </Button>
                             </div>
                             <div>
                                 <Button className={isActiveProcess ? style.process : ''}
-                                        onClick={() => {filterServicesUniversalHandler('InProcess',
-                                            false, true, false)}}
+                                        onClick={() => {
+                                            filterServicesUniversalHandler('InProcess',
+                                                false, true, false)
+                                        }}
                                 >
                                     В ремонте
                                 </Button>
                             </div>
                             <div>
                                 <Button className={isActiveReady ? style.ready : ''}
-                                        onClick={() => {filterServicesUniversalHandler('Ready',
-                                            false, false, true)}}
+                                        onClick={() => {
+                                            filterServicesUniversalHandler('Ready',
+                                                false, false, true)
+                                        }}
                                 >
                                     Готово
                                 </Button>
@@ -341,7 +339,9 @@ const Service = () => {
                                 isActiveWaiting &&
                                 <div className={s.content_startBtn}>
                                     <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('InProcess')}}>
+                                            onClick={() => {
+                                                updateServiceStatusHandler('InProcess')
+                                            }}>
                                         Начать ремонт
                                     </Button>
                                 </div>
@@ -351,11 +351,15 @@ const Service = () => {
                                 isActiveProcess &&
                                 <div className={s.content_inProcessButtons}>
                                     <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('WaitingSupply')}}>
+                                            onClick={() => {
+                                                updateServiceStatusHandler('WaitingSupply')
+                                            }}>
                                         Остановить ремонт
                                     </Button>
                                     <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('Ready')}}>
+                                            onClick={() => {
+                                                updateServiceStatusHandler('Ready')
+                                            }}>
                                         Закончить ремонт
                                     </Button>
                                 </div>
@@ -365,86 +369,22 @@ const Service = () => {
                                 isActiveReady &&
                                 <div className={s.content_doneButtons}>
                                     <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('InProcess')}}>
+                                            onClick={() => {
+                                                updateServiceStatusHandler('InProcess')
+                                            }}>
                                         Продолжить ремонт
                                     </Button>
                                     <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('Ended')}}>
+                                            onClick={() => {
+                                                updateServiceStatusHandler('Ended')
+                                            }}>
                                         Выдать велосипед
                                     </Button>
                                 </div>
                             }
                         </div>
-
                     </div>
                     <div className={s.leftSide_content}>
-                        {/*<div className={s.buttons_filter}>
-                            <div>
-                                <Button className={isActiveWaiting ? style.waiting : ''}
-                                        onClick={() => {filterServicesUniversalHandler('Waiting',
-                                            true, false, false,
-                                            'WaitingSupply')}}
-                                >
-                                    Ожидают
-                                </Button>
-                            </div>
-                            <div>
-                                <Button className={isActiveProcess ? style.process : ''}
-                                        onClick={() => {filterServicesUniversalHandler('InProcess',
-                                            false, true, false)}}
-                                >
-                                    В ремонте
-                                </Button>
-                            </div>
-                            <div>
-                                <Button className={isActiveReady ? style.ready : ''}
-                                        onClick={() => {filterServicesUniversalHandler('Ready',
-                                            false, false, true)}}
-                                >
-                                    Готово
-                                </Button>
-                            </div>
-                        </div>
-                        <div className={s.content_title}>
-                            {
-                                isActiveWaiting &&
-                                <div className={s.content_startBtn}>
-                                    <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('InProcess')}}>
-                                        Начать ремонт
-                                    </Button>
-                                </div>
-                            }
-
-                            {
-                                isActiveProcess &&
-                                <div className={s.content_inProcessButtons}>
-                                    <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('WaitingSupply')}}>
-                                        Остановить ремонт
-                                    </Button>
-                                    <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('Ready')}}>
-                                        Закончить ремонт
-                                    </Button>
-                                </div>
-                            }
-
-                            {
-                                isActiveReady &&
-                                <div className={s.content_doneButtons}>
-                                    <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('InProcess')}}>
-                                        Продолжить ремонт
-                                    </Button>
-                                    <Button disabled={!isServiceItemChosen}
-                                            onClick={() => {updateServiceStatusHandler('Ended')}}>
-                                        Выдать велосипед
-                                    </Button>
-                                </div>
-                            }
-                        </div>*/}
-
                         <div className={s.content_info}>
                             {
                                 isLoading ? <div>Загрузка...</div> :
@@ -454,10 +394,12 @@ const Service = () => {
                                         filteredServices.map(service => {
                                             return (
                                                 <div key={service.id}
-                                                     // className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
+                                                    // className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
                                                      className={service.id === activeId ? s.serviceItem_active :
                                                          service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
-                                                     onClick={() => {chooseServiceItem(service)}}
+                                                     onClick={() => {
+                                                         chooseServiceItem(service)
+                                                     }}
                                                 >
                                                     {service.name}
                                                 </div>
@@ -523,10 +465,14 @@ const Service = () => {
                         <div className={s.infoFields_clientCard}>
                             <ClientCard user={currentUser}/>
                             <div className={s.clientCard_buttons}>
-                                <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
+                                <ChooseClientModal extraCallback={(user: IUser) => {
+                                    chooseClientHandler(user)
+                                }}/>
                                 <div className={s.clientCard_changeClientBtn}>
                                     <Button disabled={isServiceItemChosen}
-                                            onClick={() => {setChooseClientModal(true)}}>
+                                            onClick={() => {
+                                                setChooseClientModal(true)
+                                            }}>
                                         Выбрать клиента
                                     </Button>
                                 </div>
@@ -542,14 +488,18 @@ const Service = () => {
                     <div className={s.rightSide_tables}>
                         <SelectProductModal/>
                         <ServiceTable data={currentProducts}
-                                      // data={productsItems}
+                                        // data={productsItems}
                                       buttonTitle={'Редактор товаров'}
-                                      serviceTableCallback={() => {setSelectProductModal(true)}}/>
+                                      serviceTableCallback={() => {
+                                          setSelectProductModal(true)
+                                      }}/>
                         <SelectWorkModal/>
                         <ServiceTable data={currentWorks}
-                                      // data={worksItems}
+                                        // data={worksItems}
                                       buttonTitle={'Редактор услуг'}
-                                      serviceTableCallback={() => {setSelectWorkModal(true)}}/>
+                                      serviceTableCallback={() => {
+                                          setSelectWorkModal(true)
+                                      }}/>
                     </div>
                 </div>
 

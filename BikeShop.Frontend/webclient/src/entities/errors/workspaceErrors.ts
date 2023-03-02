@@ -7,7 +7,7 @@ interface error {
 export const Errors: error[] = [
     {
         id: '1',
-        name: 'Поле обязательно для заполнения',
+        name: 'Поле обязательно для заполнения 111',
         description: 'Валидация формы создания клиента'
     },
     {
