@@ -9,6 +9,7 @@ import {BikeShopPaths} from "../../../app/routes/paths";
 import {IUser} from "../../../entities";
 import useMainPageStore from "./MainPageStore";
 import useService from '../Service/ServiceStore';
+import CreateShopModal from '../../../features/CreateShopStorageModal/CreateShopModal';
 
 const MainPage = () => {
     const navigate = useNavigate();

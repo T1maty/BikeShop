@@ -28,7 +28,7 @@
                 border-radius: $smallBorderRadius;
 
                 > div:not(:last-child) {
-                    margin-bottom: $defaultLargeMargin;
+                    margin-bottom: $defaultSmallMargin;
                 }
 
                 .infoBlock_checkbox {

@@ -14,6 +14,7 @@ import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui
 import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities'
 import {ServiceStatusType} from "../../../entities/models/ServiceItem"
 import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore"
+import CreateShopModal from '../../../features/CreateShopStorageModal/CreateShopModal';
 
 // enum ServiceStatus {
 //     Waiting = 0, // ожидают
@@ -414,7 +415,7 @@ const Service = () => {
                         <ControlledInput name={'name'}
                                          label={'Техника'}
                                          control={formControl}
-                                         rules={{required: Errors[1].name}}
+                                         rules={{required: Errors[0].name}}
                         />
                     </div>
                     <div className={s.rightSide_infoFields}>
@@ -423,7 +424,7 @@ const Service = () => {
                                 <ControlledInput name={'clientDescription'}
                                                  label={'Детальное описание'}
                                                  control={formControl}
-                                                 rules={{required: Errors[1].name}}
+                                                 rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.content_masterInput}>

@@ -4,17 +4,19 @@ export interface CreateShop {
     phone: string
     secret: string
     storageId: number
-    cashboxCash: number
-    cashboxTerminal: number
 }
 
 export interface UpdateShop extends CreateShop {
     id: number
+    enabled: boolean
+    cashboxCash: number
+    cashboxTerminal: number
 }
 
 export interface CreateShopSubmit {
     name: string
     address: string
     phone: string
-    // storageId: number | null
+    storageId: number
+    isShopWorking: boolean
 }

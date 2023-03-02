@@ -2,12 +2,12 @@ import {useSnackbar} from 'notistack';
 import {useNavigate} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import React, {ChangeEvent, useEffect} from 'react';
-import {Modal, Checkbox} from '@mui/material';
+import {Modal} from '@mui/material';
 import s from './CreateShopStorageModal.module.scss';
-import {Button, ControlledInput} from '../../shared/ui';
+import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
-import {CreateShop, CreateShopSubmit} from '../../entities/requests/CreateShop';
 import useCreateShopModal from './CreateShopModalStore';
+import {CreateShopSubmit} from '../../entities';
 
 const CreateShopModal = () => {
 
@@ -25,14 +25,14 @@ const CreateShopModal = () => {
             name: '',
             address: '',
             phone: '',
-            // storageId: '',
-            // isShopWorking: '',
+            storageId: '',
+            isShopWorking: true,
         }
     });
-    const onSubmit: SubmitHandler<CreateShopSubmit> = (data: CreateShopSubmit) => {
+    const onSubmit: SubmitHandler<any> = (data: CreateShopSubmit) => {
         // alert('Магазин создан')
 
-        addNewShop(data).then((response) => {
+        addNewShop(data).then((res: any) => {
             console.log(data)
             // setOpen(false)
             // navigate(BikeShopPaths.WORKSPACE.SERVICE)
@@ -40,10 +40,10 @@ const CreateShopModal = () => {
             formControl.setValue('name', '')
             formControl.setValue('address', '')
             formControl.setValue('phone', '')
-            // formControl.setValue('storageId', '')
+            formControl.setValue('storageId', '')
             // formControl.setValue('isShopWorking', '')
 
-            enqueueSnackbar('Магазин добавлен', {variant: 'success', autoHideDuration: 3000})
+            enqueueSnackbar('Магазин создан', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
             formControl.setError('name', {type: 'serverError', message: message})
@@ -69,37 +69,45 @@ const CreateShopModal = () => {
 
                         <div className={s.shopStoreModal_inputFields}>
                             <div>
-                                <ControlledInput name={'name'} label={'Название магазина'}
+                                <ControlledInput name={'name'}
+                                                 label={'Название магазина'}
                                                  control={formControl}
-                                    // rules={{required: Errors[0].name}}
+                                                 rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'address'} label={'Адрес магазина'}
+                                <ControlledInput name={'address'}
+                                                 label={'Адрес магазина'}
                                                  control={formControl}
-                                    // rules={{required: Errors[0].name}}
+                                                 rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'phone'} label={'Телефон магазина'}
+                                <ControlledInput name={'phone'}
+                                                 label={'Телефон магазина'}
                                                  control={formControl}
-                                    // rules={{required: Errors[0].name}}
+                                                 rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div>
-                                <ControlledInput name={'storageId'} label={'Склад'}
+                                <ControlledInput name={'storageId'}
+                                                 label={'Склад'}
                                                  control={formControl}
-                                    // rules={{required: Errors[0].name}}
+                                                 rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.infoBlock_checkbox}>
                                 <div className={s.infoBlock_checkboxItem}>
-                                    <div><Checkbox {...label} /></div>
-                                    <div>Магазин работает</div>
+                                    <div>
+                                        <ControlledCheckbox name={'isShopWorking'}
+                                                            label={'Магазин работает'}
+                                                            control={formControl}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className={s.infoBlock_updateBtn}>
-                                <Button>
+                                <Button onClick={() => {}}>
                                     Сохранить
                                 </Button>
                             </div>

@@ -9,6 +9,7 @@ import useChooseProductModal from '../../../features/ChooseProductModal/ChoosePr
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
 import {IUser} from '../../../entities'
+import CreateShopModal from '../../../features/CreateShopStorageModal/CreateShopModal';
 
 const Cashbox = () => {
 
@@ -31,7 +32,7 @@ const Cashbox = () => {
     return (
         // <div className={s.cashboxWrapper}>
             <div className={s.cashboxMainBlock}>
-
+                <CreateShopModal/>
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
                         <Button onClick={() => {}} disabled={!isActiveTable}>
