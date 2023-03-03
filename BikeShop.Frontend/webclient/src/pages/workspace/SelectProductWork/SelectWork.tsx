@@ -6,9 +6,6 @@ export const SelectWork = () => {
     return (
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
-                {/*<div className={s.leftSide_header}>*/}
-                {/*    1*/}
-                {/*</div>*/}
                 <div className={s.leftSide_treeView}>
                     2
                 </div>
@@ -25,7 +22,6 @@ export const SelectWork = () => {
                     </div>
                 </div>
             </div>
-
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
