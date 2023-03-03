@@ -32,11 +32,17 @@
             //height: 500px;
         }
         .leftSide_buttons {
-            @include flexOnlyBetween();
-            flex-wrap: wrap;
+            //@include flexOnlyBetween();
+            //gap: 5px;
+            //flex-wrap: wrap;
+            width: 100%;
+
+            > div:not(:last-child) {
+                margin-bottom: $defaultSmallMargin;
+            }
 
             button {
-                width: 200px;
+                width: 100%;
             }
         }
     }
