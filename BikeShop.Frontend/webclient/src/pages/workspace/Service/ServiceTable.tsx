@@ -10,7 +10,7 @@ type ServiceTableProps = {
     serviceTableCallback: () => void
 }
 
-const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTableCallback}) => {
+export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTableCallback}) => {
 
     const userClickHandler = () => {
         serviceTableCallback()
@@ -53,5 +53,3 @@ const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTa
         </div>
     );
 };
-
-export default ServiceTable;

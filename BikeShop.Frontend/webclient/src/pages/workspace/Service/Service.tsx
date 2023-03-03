@@ -14,7 +14,6 @@ import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui
 import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities'
 import {ServiceStatusType} from "../../../entities/models/ServiceItem"
 import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore"
-import CreateShopModal from '../../../features/CreateShopStorageModal/CreateShopModal';
 
 // enum ServiceStatus {
 //     Waiting = 0, // ожидают
@@ -211,15 +210,9 @@ const Service = () => {
         setCurrentMasterId(event.target.value as string)
         console.log('клик по селекту мастера', event.target.value)
     }
-    // очистка инпутов формы
-    const clearInputsHandler = () => {
-        formControl.setValue('name', '')
-        formControl.setValue('clientDescription', '')
-        formControl.setValue('userMasterId', '')
-    }
     // очистка всех данных (кнопка ОТМЕНА)
     const clearAllServiceInfo = () => {
-        clearInputsHandler()
+        formControl.reset()
         setCurrentUser(null)
         setCurrentService(null)
         setCurrentMasterId('')
@@ -229,7 +222,7 @@ const Service = () => {
     }
     // очистка данных после сабмита (кнопка СОХРАНИТЬ)
     const clearSubmitInfo = () => {
-        clearInputsHandler()
+        formControl.reset()
         setCurrentUser(null)
         setCurrentMasterId('')
         setFIO('')
@@ -258,7 +251,7 @@ const Service = () => {
         setCurrentService(ServiceItemObj)
         setCurrentUser(users?.find((u: IUser) => u.id === ServiceItemObj.client.id) || null)
         setCurrentMasterId(ServiceItemObj.userMaster.id)
-        // setCurrentMasterId(masters.find((m: any) => m.user.id === ServiceItemObj.userMaster.id))
+        // ?! setCurrentMasterId(masters.find((m: any) => m.user.id === ServiceItemObj.userMaster.id))
         setCurrentProducts(ServiceItemObj.products)
         setCurrentWorks(ServiceItemObj.works)
 

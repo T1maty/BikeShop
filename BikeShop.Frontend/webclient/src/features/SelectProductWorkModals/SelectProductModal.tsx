@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
-import {Modal} from '@mui/material';
+import React from 'react'
+import {Modal} from '@mui/material'
 import s from './SelectProductWorkModal.module.scss'
-import SelectProduct from "../../pages/workspace/SelectProductWork/SelectProduct";
-import useSelectProductWorkModal from "./SelectProductWorkModalStore";
+import useSelectProductWorkModal from './SelectProductWorkModalStore'
+import {SelectProduct} from '../../pages'
 
 export const SelectProductModal = () => {
 
-    // const [open, setOpen] = useState<boolean>(false)
     const selectProductModal = useSelectProductWorkModal(s => s.selectProductModal)
     const setSelectProductModal = useSelectProductWorkModal(s => s.setSelectProductModal)
 

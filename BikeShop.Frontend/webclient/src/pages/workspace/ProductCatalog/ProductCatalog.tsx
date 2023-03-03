@@ -3,11 +3,10 @@ import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widget
 import {Button, InputUI} from '../../../shared/ui';
 import s from './ProductCatalog.module.scss';
 
-const ProductCatalog = () => {
+export const ProductCatalog = () => {
     return (
         // <div className={s.productCatalogTableWrapper}>
         <div className={s.productCatalogTable_mainBlock}>
-
             <div className={s.productCatalogTable_leftSide}>
                 <div className={s.leftSide_header}>
                     <ProductTagCloud/>
@@ -51,22 +50,7 @@ const ProductCatalog = () => {
                     <ProductCatalogTable/>
                 </div>
             </div>
-
         </div>
         // </div>
     );
 };
-
-export default ProductCatalog;
-
-/*
-<div>
-    <Grid container spacing={1}>
-        <Grid item xs={4}>
-            <TagTreeView/>
-        </Grid>
-        <Grid item xs={8}>
-            <ProductCatalogTable/>
-        </Grid>
-    </Grid>
-</div>*/

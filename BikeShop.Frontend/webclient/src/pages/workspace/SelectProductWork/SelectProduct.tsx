@@ -1,8 +1,8 @@
 import React from 'react'
 import s from './SelectProductWork.module.scss'
-import {Button, InputUI} from "../../../shared/ui"
+import {Button, InputUI} from '../../../shared/ui'
 
-const SelectProduct = () => {
+export const SelectProduct = () => {
     return (
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
@@ -25,7 +25,6 @@ const SelectProduct = () => {
                     </div>
                 </div>
             </div>
-
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
@@ -54,5 +53,3 @@ const SelectProduct = () => {
         </div>
     )
 }
-
-export default SelectProduct;
