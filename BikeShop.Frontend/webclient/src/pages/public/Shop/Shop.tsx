@@ -1,24 +1,39 @@
 import React from 'react'
 import s from './Shop.module.scss'
-import headerPhoto from '../../../shared/assets/header_photo.png'
-import socialLogo from '../../../shared/assets/logo_instagram.png'
-import socialLogoWhite from '../../../shared/assets/logo_instagram-white.png'
-import catalogBikes from '../../../shared/assets/catalog-bikes.png'
-import catalogProtection from '../../../shared/assets/catalog-protection.png'
-import catalogSpares from '../../../shared/assets/catalog-spares.png'
-import catalogClothes from '../../../shared/assets/catalog-clothes.png'
-import catalogChemistry from '../../../shared/assets/catalog-chemistry.png'
-import catalogAccessories from '../../../shared/assets/catalog-accessories.png'
-import catalogFood from '../../../shared/assets/catalog-food.png'
-import map from '../../../shared/assets/map-01.png'
+import headerPhoto from '../../../shared/assets/shop/images/header_photo.png'
+import socialLogo from '../../../shared/assets/shop/icons/logo_instagram.png'
+import socialLogoWhite from '../../../shared/assets/shop/icons/logo_instagram-white.png'
+import catalogBikes from '../../../shared/assets/shop/images/catalog-bikes.png'
+import catalogProtection from '../../../shared/assets/shop/images/catalog-protection.png'
+import catalogSpares from '../../../shared/assets/shop/images/catalog-spares.png'
+import catalogClothes from '../../../shared/assets/shop/images/catalog-clothes.png'
+import catalogChemistry from '../../../shared/assets/shop/images/catalog-chemistry.png'
+import catalogAccessories from '../../../shared/assets/shop/images/catalog-accessories.png'
+import catalogFood from '../../../shared/assets/shop/images/catalog-food.png'
+import map from '../../../shared/assets/shop/images/map-01.png'
 
 const Shop = () => {
     return (
         <div className={s.shop_wrapper}>
             <div className={s.shop_mainBox}>
                 <div className={s.header}>
-                    <img src={headerPhoto} alt="header-photo"/>
+                    <div className={s.header_slider}>
+                        <img src={headerPhoto} alt="header-photo"/>
+                    </div>
+                    <div className={s.header_icons}>
+                        <div className={s.header_icons_left}>
+                            <div>1</div>
+                            <div>2</div>
+                        </div>
+                        <div className={s.header_icons_right}>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                        </div>
+                    </div>
                 </div>
+
                 <div className={s.content}>
                     <div className={s.menu}>
                         <div className={s.menu_items}>

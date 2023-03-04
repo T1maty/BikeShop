@@ -1,5 +1,5 @@
 import React, {ButtonHTMLAttributes, FC} from 'react';
-import icon from '../../assets/notification-light.svg'
+import icon from '../../assets/workspace/notification-light.svg'
 import {IconButton} from "./IconProvider";
 
 export const NotificationIcon: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {

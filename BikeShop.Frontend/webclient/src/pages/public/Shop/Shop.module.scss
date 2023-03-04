@@ -7,9 +7,28 @@
     .shop_mainBox {
 
         .header {
-            img {
-                width: 1400px;
-                height: auto;
+            position: relative;
+
+            .header_slider {
+                img {
+                    width: 1400px;
+                    height: auto;
+                }
+            }
+            .header_icons {
+                position: absolute;
+                top: 50px;
+                @include flexOnlyBetween;
+                width: 100%;
+                padding: 0 70px;
+                color: black;
+
+                .header_icons_left {
+                    @include flexBetween;
+                }
+                .header_icons_right {
+                    @include flexBetween;
+                }
             }
         }
 
