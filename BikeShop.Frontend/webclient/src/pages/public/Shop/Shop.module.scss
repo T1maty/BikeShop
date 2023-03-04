@@ -64,6 +64,11 @@
                     > div:not(:last-child) {
                         padding-right: 50px;
                     }
+                    > div {
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
                 }
 
                 .menu_social {

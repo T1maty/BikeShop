@@ -1,10 +1,20 @@
 import {createBrowserRouter} from "react-router-dom";
-import {Cashbox, Home, LoginPage, MainPage, ProductCatalog, RegistrationPage, Service} from "../../pages";
+import {
+    Cashbox,
+    Catalog,
+    Home,
+    LoginPage,
+    MainPage,
+    ProductCatalog,
+    RegistrationPage,
+    Service,
+    Shop,
+    ShopWrapper
+} from "../../pages";
 import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} from "../../entities";
 import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
 import {BikeShopPaths} from "./paths";
 import {BarcodeScanerListenerProvider} from "../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider";
-import Shop from "pages/public/Shop/Shop";
 import CheckAuthRoute from "../providers/RouteProviders/CheckAuthRoute";
 
 
@@ -62,6 +72,12 @@ export const Routes = createBrowserRouter([
     {
         path: '/shop',
         element: <Shop/>
+    },
+    {
+        path: '/shop/catalog',
+        element: <ShopWrapper>
+            <Catalog/>
+        </ShopWrapper>
     },
 
     ////                                        ////

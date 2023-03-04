@@ -17,8 +17,13 @@ import search from '../../../shared/assets/shop/icons/search.png'
 import cart from '../../../shared/assets/shop/icons/cart.png'
 import language from '../../../shared/assets/shop/icons/lang.png'
 import profile from '../../../shared/assets/shop/icons/profile.png'
+import {useNavigate} from 'react-router-dom'
+import {BikeShopPaths} from "../../../app/routes/paths";
 
-const Shop = () => {
+export const Shop = () => {
+
+    const navigate = useNavigate()
+
     return (
         <div className={s.shop_wrapper}>
             <div className={s.shop_mainBox}>
@@ -43,7 +48,7 @@ const Shop = () => {
                 <div className={s.content}>
                     <div className={s.menu}>
                         <div className={s.menu_items}>
-                            <div>Каталог</div>
+                            <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG)}}>Каталог</div>
                             <div>Мастерская</div>
                             <div>Фото</div>
                             <div>Контакты</div>
@@ -133,5 +138,3 @@ const Shop = () => {
         </div>
     );
 };
-
-export default Shop;

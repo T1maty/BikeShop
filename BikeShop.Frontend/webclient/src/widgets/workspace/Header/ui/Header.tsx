@@ -12,9 +12,9 @@ import {BikeShopPaths} from "../../../../app/routes/paths";
 
 export const Header: FC = () => {
 
-    const navigate = useNavigate();
-    const user = useAuthUser(s => s.user);
-    const shop = useAuthUser(s => s.shop);
+    const navigate = useNavigate()
+    const user = useAuthUser(s => s.user)
+    const shop = useAuthUser(s => s.shop)
     const {t} = useTranslation()
 
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)

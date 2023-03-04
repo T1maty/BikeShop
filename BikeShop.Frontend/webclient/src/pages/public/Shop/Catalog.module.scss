@@ -1,0 +1,10 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.catalog_wrapper {
+    @include defaultContainer();
+
+    .catalog_mainBox {
+        @include flexColumn
+    }
+}

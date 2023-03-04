@@ -12,6 +12,7 @@ export const BikeShopPaths = {
         CASHBOX: '/cashbox',
     },
     SHOP: {
-
+        HOME: '/shop',
+        CATALOG: '/shop/catalog',
     }
 }
