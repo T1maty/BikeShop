@@ -23,11 +23,25 @@
                 padding: 0 70px;
                 color: black;
 
+                img {
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
                 .header_icons_left {
                     @include flexBetween;
+
+                    > div:not(:last-child) {
+                        margin-right: 40px;
+                    }
                 }
                 .header_icons_right {
                     @include flexBetween;
+
+                    > div:not(:last-child) {
+                        margin-right: 40px;
+                    }
                 }
             }
         }

@@ -11,6 +11,12 @@ import catalogChemistry from '../../../shared/assets/shop/images/catalog-chemist
 import catalogAccessories from '../../../shared/assets/shop/images/catalog-accessories.png'
 import catalogFood from '../../../shared/assets/shop/images/catalog-food.png'
 import map from '../../../shared/assets/shop/images/map-01.png'
+import burgerMenu from '../../../shared/assets/shop/icons/menu.png'
+import position from '../../../shared/assets/shop/icons/position.png'
+import search from '../../../shared/assets/shop/icons/search.png'
+import cart from '../../../shared/assets/shop/icons/cart.png'
+import language from '../../../shared/assets/shop/icons/lang.png'
+import profile from '../../../shared/assets/shop/icons/profile.png'
 
 const Shop = () => {
     return (
@@ -22,14 +28,14 @@ const Shop = () => {
                     </div>
                     <div className={s.header_icons}>
                         <div className={s.header_icons_left}>
-                            <div>1</div>
-                            <div>2</div>
+                            <div><img src={burgerMenu} alt="burger-menu"/></div>
+                            <div><img src={position} alt="position-logo"/></div>
                         </div>
                         <div className={s.header_icons_right}>
-                            <div>3</div>
-                            <div>4</div>
-                            <div>5</div>
-                            <div>6</div>
+                            <div><img src={search} alt="search-logo"/></div>
+                            <div><img src={cart} alt="cart-logo"/></div>
+                            <div><img src={language} alt="language-logo"/></div>
+                            <div><img src={profile} alt="profile-logo"/></div>
                         </div>
                     </div>
                 </div>
