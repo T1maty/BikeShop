@@ -27,7 +27,7 @@
                 }
                 .burgerMenu_menuList {
                     position: absolute;
-                    background-color: $themeColorDark;
+                    background-color: var(--header-color);
                     border-radius: $defaultSmallMargin;
                     border: 1px solid white;
                     padding: $defaultLargeMargin;
