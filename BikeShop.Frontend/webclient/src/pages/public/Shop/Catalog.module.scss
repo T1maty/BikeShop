@@ -1,10 +1,8 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-.catalog_wrapper {
-    @include defaultContainer();
-
-    .catalog_mainBox {
-        @include flexColumn
-    }
+.catalog_mainBox {
+    @include flexColumn;
+    background-color: $themeShopGray;
+    flex: 1 1 auto; /*чтобы прибить футер к низу*/
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import s from './Shop.module.scss'
 import headerPhoto from '../../../shared/assets/shop/images/header_photo.png'
 import socialLogo from '../../../shared/assets/shop/icons/logo_instagram.png'
-import socialLogoWhite from '../../../shared/assets/shop/icons/logo_instagram-white.png'
 import catalogBikes from '../../../shared/assets/shop/images/catalog-bikes.png'
 import catalogProtection from '../../../shared/assets/shop/images/catalog-protection.png'
 import catalogSpares from '../../../shared/assets/shop/images/catalog-spares.png'
@@ -19,6 +18,7 @@ import language from '../../../shared/assets/shop/icons/lang.png'
 import profile from '../../../shared/assets/shop/icons/profile.png'
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../app/routes/paths";
+import {ShopFooter} from "./ShopFooter";
 
 export const Shop = () => {
 
@@ -89,51 +89,7 @@ export const Shop = () => {
                 <div className={s.map}>
                     <img src={map} alt="map"/>
                 </div>
-                <div className={s.footer}>
-                    <div className={s.footer_links}>
-                        <div className={s.links_column}>
-                            <div className={s.column_title}>
-                                Информация
-                            </div>
-                            <div className={s.column_text}>
-                                <div>О нас</div>
-                                <div>Сеть магазинов</div>
-                                <div>Условия сайта</div>
-                            </div>
-                        </div>
-                        <div className={s.links_column}>
-                            <div className={s.column_title}>
-                                Как приобрести
-                            </div>
-                            <div className={s.column_text}>
-                                <div>Оплата и доставка</div>
-                                <div>Гарантия и возврат</div>
-                                <div>Оплатить частями</div>
-                            </div>
-                        </div>
-                        <div className={s.links_column}>
-                            <div className={s.column_title}>
-                                Аренда велосипедов
-                            </div>
-                            <div className={s.column_text}>
-                                <div>Мероприятия</div>
-                            </div>
-                        </div>
-                        <div className={s.links_column}>
-                            <div className={s.column_title}>
-                                Бизнес
-                            </div>
-                            <div className={s.column_text}>
-                                <div>Сотрудничество</div>
-                                <div>Стать партнёром</div>
-                                <div>Кабинет партнёра</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={s.footer_social}>
-                        <img src={socialLogoWhite} alt="footer-social-logo"/>
-                    </div>
-                </div>
+                <ShopFooter/>
             </div>
         </div>
     );

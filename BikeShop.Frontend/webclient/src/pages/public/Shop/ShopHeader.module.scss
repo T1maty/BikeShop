@@ -1,0 +1,7 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.shop_header {
+    height: var(--navbar-height);
+    background-color: $themeColorDark;
+}

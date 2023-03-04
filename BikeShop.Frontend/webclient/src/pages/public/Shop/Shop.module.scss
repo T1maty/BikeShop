@@ -51,7 +51,7 @@
 
             .menu {
                 @include flexBetween();
-                background-color: #D9D9D9;
+                background-color: $themeShopGray;
                 height: 80px;
                 padding: 0 70px;
                 font-size: 32px;
