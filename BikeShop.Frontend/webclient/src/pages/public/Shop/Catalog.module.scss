@@ -40,14 +40,17 @@
 
         .right_filters {
             @include flexBetween;
+            gap: $defaultLargeMargin;
 
             > div {
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
+                gap: $defaultLargeMargin;
 
-                > div:not(:last-child) {
-                    margin-right: $defaultLargeMargin;
-                }
+                //> div:not(:last-child) {
+                //    margin-right: $defaultLargeMargin;
+                //}
             }
 
             .filter_buttons {
@@ -87,7 +90,7 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: $defaultLargeMargin;
 
             .content_item {
                 @include flexColumn;
