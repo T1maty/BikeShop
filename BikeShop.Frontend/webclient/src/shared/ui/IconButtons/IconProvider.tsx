@@ -2,7 +2,6 @@ import React, {ButtonHTMLAttributes, FC, MouseEvent} from 'react';
 import cls from './IconProvider.module.scss'
 import {createRipple} from "./lib/ripple";
 
-
 export const IconButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (
     {
         onClick,

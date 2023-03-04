@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {useAuthUser} from "../../../../entities";
 import {HeaderUserMenu} from "../../../../features";
 import {useNavigate} from "react-router-dom";
@@ -17,15 +17,163 @@ export const Header: FC = () => {
     const shop = useAuthUser(s => s.shop);
     const {t} = useTranslation()
 
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+
+    const [menuItems1, setMenuItems1] = useState([
+        {
+            title: 'Архив',
+            func: () => {
+                navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                setIsMenuOpen(false)
+            }
+        },
+        {
+            title: 'Архив сервисов',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Архив чеков',
+            func: () => {
+                //
+            }
+        },
+    ])
+
+    const [menuItems2, setMenuItems2] = useState([
+        {
+            title: 'Магазины',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Склады',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Валюты',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Ед. измерения',
+            func: () => {
+                //
+            }
+        },
+    ])
+
+    const [menuItems3, setMenuItems3] = useState([
+        {
+            title: 'Валюта:',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Язык:',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Тема:',
+            func: () => {
+                //
+            }
+        },
+    ])
+
+    const [menuItems4, setMenuItems4] = useState([
+        {
+            title: 'Статистика магазина',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Статистика сети',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Общие настройки',
+            func: () => {
+                //
+            }
+        },
+        {
+            title: 'Настройки',
+            func: () => {
+                //
+            }
+        },
+    ])
+
     return (
         <div className={cls.appBar}>
             <div className={cls.content}>
                 <div className={cls.leftSide}>
-                    <MenuIcon/>
-                    <div onClick={() => {
-                        navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
-                    }}>
-                        {shop ? shop.name : "Магазин не выбран"}
+                    <div className={cls.leftSide_burgerMenu}>
+                        <div className={cls.burgerMenu_iconButton}>
+                            <MenuIcon onClick={() => {setIsMenuOpen(!isMenuOpen)}}/>
+                        </div>
+                        {
+                            isMenuOpen ?
+                                <div className={cls.burgerMenu_menuList} >
+                                    {menuItems1.map(item => (
+                                        <div className={cls.menuList_item}
+                                             key={item.title}
+                                             onClick={item.func}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))}
+                                    <hr/>
+
+                                    {menuItems2.map(item => (
+                                        <div className={cls.menuList_item}
+                                             key={item.title}
+                                             onClick={item.func}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))}
+                                    <hr/>
+
+                                    {menuItems3.map(item => (
+                                        <div className={cls.menuList_item}
+                                             key={item.title}
+                                             onClick={item.func}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))}
+                                    <hr/>
+
+                                    {menuItems4.map(item => (
+                                        <div className={cls.menuList_item}
+                                             key={item.title}
+                                             onClick={item.func}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                : ''
+                        }
+                    </div>
+                    <div className={cls.leftSide_shopTitle}
+                         onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
+                    >
+                        {shop ? shop.name : 'Магазин не выбран'}
                     </div>
                 </div>
                 <div className={cls.center}>
