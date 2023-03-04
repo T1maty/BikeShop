@@ -38,21 +38,45 @@
         }
 
         .right_filters {
-            @include flexOnlyBetween;
+            @include flexBetween;
 
             > div {
                 display: flex;
+                align-items: center;
 
                 > div:not(:last-child) {
                     margin-right: $defaultLargeMargin;
                 }
             }
 
-            .filters_buttons {
+            .filter_buttons {
+                .filter_item {
+                    border: 2px solid $themeColorDark;
+                    border-radius: $defaultLargeMargin;
+                    padding: 5px 10px;
+
+                    &:hover {
+                        background-color: $themeColorDark;
+                        color: white;
+                        cursor: pointer;
+                    }
+                }
+
+                .filter_itemActive {
+                    border: 2px solid $themeColorDark;
+                    border-radius: $defaultLargeMargin;
+                    background-color: $themeColorDark;
+                    padding: 5px 10px;
+                    color: white;
+                }
 
             }
-            .filters_listType {
-
+            .filter_viewType {
+                .viewType_item {
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
             }
         }
 
