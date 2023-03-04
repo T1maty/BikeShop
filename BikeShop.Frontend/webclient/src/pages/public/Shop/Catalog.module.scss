@@ -34,6 +34,7 @@
                 background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
                 padding: $defaultLargeMargin;
+                color: white;
             }
         }
 
@@ -81,8 +82,52 @@
         }
 
         .right_content {
-            flex: 1 1 auto;
+            //flex: 1 1 auto;
             border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+
+            .content_item {
+                @include flexColumn;
+                border: 1px solid black;
+                background-color: white;
+                //width: 300px;
+
+                > div {
+                    margin-bottom: $defaultLargeMargin;
+                }
+
+                .item_image {
+                    img {
+                        width: 280px;
+                        height: auto;
+                    }
+                }
+                .item_title {
+                    font-weight: bold;
+                }
+                .item_buy {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    gap: $defaultLargeMargin;
+                    width: 100%;
+                    padding: 0 $defaultLargeMargin;
+
+                    .item_price {
+                        color: red;
+                        font-weight: bold;
+                    }
+                    .item_cart {
+                        img {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                }
+            }
         }
         .right_paginator {
             border: 1px solid black;

@@ -2,8 +2,17 @@ import React, {useState, useEffect} from 'react'
 import s from './Catalog.module.scss'
 import SortThumbnails from '../../../shared/assets/shop/icons/sort-thumbnails.png'
 import SortList from '../../../shared/assets/shop/icons/sort-list.png'
+import cart from "../../../shared/assets/shop/icons/cart.png"
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
+
+type ProductsType = {
+    id: string
+    image: string
+    name: string
+    price: number
+    addToCart: string
+}
 
 export const Catalog = () => {
 
@@ -30,6 +39,51 @@ export const Catalog = () => {
         },
     ])
 
+    const [products, setProducts] = useState<ProductsType[]>([
+        {
+            id: '1',
+            image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+            name: 'Merida',
+            price: 500,
+            addToCart: cart,
+        },
+        {
+            id: '2',
+            image: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            name: 'Specialized',
+            price: 100500,
+            addToCart: cart,
+        },
+        {
+            id: '3',
+            image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+            name: 'Merida',
+            price: 500,
+            addToCart: cart,
+        },
+        {
+            id: '4',
+            image: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            name: 'Specialized',
+            price: 100500,
+            addToCart: cart,
+        },
+        {
+            id: '5',
+            image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+            name: 'Merida',
+            price: 500,
+            addToCart: cart,
+        },
+        {
+            id: '6',
+            image: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            name: 'Specialized',
+            price: 100500,
+            addToCart: cart,
+        },
+    ])
+
     const filterUniversalHandler = (filterName: FilterProductsType,
                                     activeFilter1: boolean, activeFilter2: boolean,
                                     activeFilter3: boolean, activeFilter4: boolean) => {
@@ -49,6 +103,8 @@ export const Catalog = () => {
     return (
         <div className={s.catalog_mainBox}>
             <div className={s.catalog_left}>Категории</div>
+
+
             <div className={s.catalog_right}>
                 <div className={s.right_cloudCategory}>
                     <div className={s.cloudCategory_title}>Облако категорий</div>
@@ -93,7 +149,24 @@ export const Catalog = () => {
                         ))}
                     </div>
                 </div>
-                <div className={s.right_content}>Контент</div>
+
+                <div className={s.right_content}>
+                    {products.map(prod => (
+                        <div key={prod.id} className={s.content_item}>
+                            <div className={s.item_image}>
+                                <img src={prod.image} alt='product-image'/>
+                            </div>
+                            <div className={s.item_title}>{prod.name}</div>
+                            <div className={s.item_buy}>
+                                <div className={s.item_price}>{prod.price}</div>
+                                <div className={s.item_cart}>
+                                    <img src={prod.addToCart} alt='cart-logo'/>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
                 <div className={s.right_paginator}>Пагинатор</div>
             </div>
         </div>
