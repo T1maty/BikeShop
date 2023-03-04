@@ -20,7 +20,7 @@
                 top: 50px;
                 @include flexOnlyBetween;
                 width: 100%;
-                padding: 0 70px;
+                padding: $containerShopPadding;
                 color: black;
 
                 img {
@@ -51,9 +51,9 @@
 
             .menu {
                 @include flexBetween();
-                background-color: $themeShopGray;
+                background-color: $themeShopColorGray;
                 height: 80px;
-                padding: 0 70px;
+                padding: $containerShopPadding;
                 font-size: 32px;
                 font-weight: bold;
                 color: black;
@@ -139,7 +139,7 @@
         }
 
         .footer {
-            background-color: $themeColorShopFooter;
+            background-color: $themeShopColorDark;
             padding: 30px 200px;
             @include flexBetween();
 

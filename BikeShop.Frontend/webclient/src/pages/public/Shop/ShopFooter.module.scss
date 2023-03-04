@@ -2,7 +2,7 @@
 @import '../../../app/styles/variables/variables';
 
 .shop_footer {
-    background-color: $themeColorShopFooter;
+    background-color: $themeShopColorDark;
     padding: 30px 200px;
     @include flexBetween();
 

@@ -2,7 +2,66 @@
 @import '../../../app/styles/variables/variables';
 
 .catalog_mainBox {
-    @include flexColumn;
-    background-color: $themeShopGray;
+    @include flexOnlyBetween;
+    background-color: $themeShopColorGray;
     flex: 1 1 auto; /*чтобы прибить футер к низу*/
+    padding: 20px 70px;
+    color: black;
+    gap: $defaultLargeMargin;
+
+    .catalog_left {
+        border: 1px solid black;
+        width: 25%;
+    }
+    .catalog_right {
+        @include flexColumn;
+        border: 1px solid black;
+        width: 75%;
+
+        > div {
+            width: 100%;
+        }
+        > div:not(:last-child) {
+            margin-bottom: $defaultLargeMargin;
+        }
+
+        .right_cloudCategory {
+
+            .cloudCategory_title {
+                font-weight: bold;
+            }
+            .cloudCategory_content {
+                background-color: $themeColorDark;
+                border-radius: $defaultBorderRadius;
+                padding: $defaultLargeMargin;
+            }
+        }
+
+        .right_filters {
+            @include flexOnlyBetween;
+
+            > div {
+                display: flex;
+
+                > div:not(:last-child) {
+                    margin-right: $defaultLargeMargin;
+                }
+            }
+
+            .filters_buttons {
+
+            }
+            .filters_listType {
+
+            }
+        }
+
+        .right_content {
+            flex: 1 1 auto;
+            border: 1px solid black;
+        }
+        .right_paginator {
+            border: 1px solid black;
+        }
+    }
 }

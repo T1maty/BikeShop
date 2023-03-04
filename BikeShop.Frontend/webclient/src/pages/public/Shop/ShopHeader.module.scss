@@ -4,4 +4,25 @@
 .shop_header {
     height: var(--navbar-height);
     background-color: $themeColorDark;
+    @include flexBetween;
+    padding: $containerShopPadding;
+
+    img {
+        filter: invert(100%);
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .shop_header_left {
+
+    }
+    .shop_header_right {
+        @include flexBetween;
+
+        > div:not(:last-child) {
+            margin-right: 40px;
+        }
+    }
 }
