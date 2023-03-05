@@ -77,35 +77,48 @@
         }
     }
     .description {
-        //background-color: white;
-        //padding-bottom: $defaultLargeMargin;
 
         .description_chapters {
             @include flexOnlyBetween;
-            //padding-bottom: $defaultLargeMargin;
+            align-items: center;
 
             > div {
-                border: 1px solid black;
                 width: 100%;
                 text-align: center;
                 font-size: 24px;
                 font-weight: bold;
                 opacity: 50%;
+                padding: 10px 0;
 
                 &:hover {
                     cursor: pointer;
                 }
             }
+            // универсальный стиль active
+            .description_active {
+                background-color: white;
+                border-bottom: 2px solid black;
+                opacity: 100%;
+            }
+
             .chapters_characteristic {
 
             }
+            .characteristic_active {
+                background-color: white;
+                opacity: 100%;
+            }
             .chapters_details {
-
+                //border-right: 1px solid black;
+            }
+            .details_active {
+                background-color: white;
+                opacity: 100%;
             }
             .chapters_delivery {
 
             }
-            .description_active {
+            .delivery_active {
                 background-color: white;
                 opacity: 100%;
             }
