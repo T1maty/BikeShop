@@ -1,8 +1,29 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import s from './ShopProductItem.module.scss'
 import {Button} from "../../../shared/ui";
 
+// type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
+
 export const ShopProductItem = () => {
+
+    // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')
+    const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)
+    const [isDetails, setIsDetails] = useState<boolean>(false)
+    const [isDelivery, setIsDelivery] = useState<boolean>(false)
+
+    const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
+                                   isDetails: boolean, isDelivery: boolean) => {
+
+        // setDescriptionView(descriptionTitle)
+        setIsCharacteristic(isCharacteristic)
+        setIsDetails(isDetails)
+        setIsDelivery(isDelivery)
+    }
+
+    // useEffect(() => {
+    //     // setIsCharacteristic(true)
+    // }, [])
+
     return (
        <div className={s.shop_productItem_mainBox}>
            <div className={s.cloudCategory}>
@@ -50,9 +71,21 @@ export const ShopProductItem = () => {
            </div>
            <div className={s.description}>
                <div className={s.description_chapters}>
-                   <div>Характеристики</div>
-                   <div>Описание</div>
-                   <div>Доставка</div>
+                   <div className={isCharacteristic ? s.description_active : s.chapters_characteristic}
+                        onClick={() => {setDescriptionHandler(true, false, false)}}
+                   >
+                       Характеристики
+                   </div>
+                   <div className={isDetails ? s.description_active : s.chapters_details}
+                        onClick={() => {setDescriptionHandler(false, true, false)}}
+                   >
+                       Описание
+                   </div>
+                   <div className={isDelivery ? s.description_active : s.chapters_delivery}
+                        onClick={() => {setDescriptionHandler(false, false, true)}}
+                   >
+                       Доставка
+                   </div>
                </div>
                <div className={s.description_content}>
                    <div>

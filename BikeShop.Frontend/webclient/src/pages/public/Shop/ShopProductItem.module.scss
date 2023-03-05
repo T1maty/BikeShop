@@ -10,7 +10,6 @@
     > div {
         //border: 1px solid black;
         width: 100%;
-        margin-bottom: $defaultLargeMargin;
     }
 
     .cloudCategory {
@@ -19,6 +18,7 @@
         align-items: center;
         justify-content: flex-start;
         gap: 20px;
+        margin-bottom: $defaultLargeMargin;
 
         .cloudCategory_item {
             color: white;
@@ -30,7 +30,7 @@
     .product {
         @include flexOnlyBetween;
         gap: $defaultLargeMargin;
-        width: 100%;
+        margin-bottom: $defaultLargeMargin;
 
         .product_images {
             width: 50%;
@@ -77,9 +77,12 @@
         }
     }
     .description {
+        //background-color: white;
+        //padding-bottom: $defaultLargeMargin;
+
         .description_chapters {
             @include flexOnlyBetween;
-            margin-bottom: $defaultLargeMargin;
+            //padding-bottom: $defaultLargeMargin;
 
             > div {
                 border: 1px solid black;
@@ -87,14 +90,29 @@
                 text-align: center;
                 font-size: 24px;
                 font-weight: bold;
+                opacity: 50%;
 
                 &:hover {
                     cursor: pointer;
                 }
             }
+            .chapters_characteristic {
+
+            }
+            .chapters_details {
+
+            }
+            .chapters_delivery {
+
+            }
+            .description_active {
+                background-color: white;
+                opacity: 100%;
+            }
         }
         .description_content {
-
+            background-color: white;
+            padding: $defaultLargeMargin 0;
         }
     }
 }
