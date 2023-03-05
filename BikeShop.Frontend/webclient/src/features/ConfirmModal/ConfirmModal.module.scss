@@ -10,7 +10,7 @@
     }
     .confirmModal_buttons {
         display: flex;
-        gap: 40px;
+        gap: $defaultExtraLargeMargin;
 
         button {
             padding: $defaultSmallMargin;
