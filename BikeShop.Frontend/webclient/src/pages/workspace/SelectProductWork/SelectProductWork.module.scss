@@ -4,7 +4,7 @@
 .selectProduct_mainBox {
     padding: $defaultLargeMargin;
     background-color: $themeColorGray;
-    border-radius: $defaultBorderRadius;
+    border-radius: $largeBorderRadius;
     display: flex;
     gap: $defaultLargeMargin;
 
@@ -20,13 +20,13 @@
 
         .leftSide_header {
             background-color: $themeColorDark;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             margin-bottom: $defaultSmallMargin;
             height: 150px;
         }
         .leftSide_treeView {
             background-color: $themeColorDark;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             margin-bottom: $defaultSmallMargin;
             flex: 1 1 auto;
             //height: 500px;
@@ -57,7 +57,7 @@
         .rightSide_availableProducts {
             @include flexCenter;
             background-color: $themeColorDark;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             height: 300px;
         }
         .rightSide_infoRow {
@@ -86,7 +86,7 @@
         .rightSide_chosenProducts {
             @include flexCenter;
             background-color: $themeColorDark;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             height: 300px;
         }
     }

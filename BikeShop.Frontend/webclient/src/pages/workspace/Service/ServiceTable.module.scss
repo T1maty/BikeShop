@@ -33,7 +33,7 @@
 
     .tableBox_table {
         background-color: $themeColorGray;
-        border-radius: $defaultBorderRadius;
+        border-radius: $largeBorderRadius;
         padding: $defaultLargeMargin;
         @include flexColumn;
         height: 400px;

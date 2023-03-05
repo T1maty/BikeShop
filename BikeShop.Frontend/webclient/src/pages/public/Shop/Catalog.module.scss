@@ -31,7 +31,7 @@
             }
             .cloudCategory_content {
                 background-color: $themeColorDark;
-                border-radius: $defaultBorderRadius;
+                border-radius: $largeBorderRadius;
                 padding: $defaultLargeMargin;
                 color: white;
             }
@@ -52,7 +52,7 @@
                 .filter_item {
                     border: 2px solid $themeColorDark;
                     border-radius: $defaultLargeMargin;
-                    padding: 5px 10px;
+                    padding: $divButtonPadding;
 
                     &:hover {
                         background-color: $themeColorDark;

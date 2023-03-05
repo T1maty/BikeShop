@@ -14,7 +14,7 @@
             width: 25%;
 
             .leftSide_buttons {
-                border-radius: $defaultBorderRadius;
+                border-radius: $largeBorderRadius;
                 background-color: $themeColorDark;
                 padding: $defaultLargeMargin;
                 margin-bottom: $defaultLargeMargin;
@@ -37,7 +37,7 @@
                 }
 
                 .content_title {
-                    border-radius: $defaultBorderRadius;
+                    border-radius: $largeBorderRadius;
                     background-color: $themeColorGray;
                     padding: $defaultLargeMargin;
                     @include flexColumn;
@@ -69,7 +69,7 @@
 
             }
             .leftSide_content {
-                border-radius: $defaultBorderRadius;
+                border-radius: $largeBorderRadius;
                 background-color: $themeColorDark;
                 padding: $defaultLargeMargin;
                 @include widthHeightFull;
@@ -102,7 +102,7 @@
 
         .service_rightSide {
             @include flexColumn;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             background-color: $themeColorDark;
             padding: $defaultLargeMargin;
             width: 75%;

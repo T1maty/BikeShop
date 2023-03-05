@@ -1,4 +1,5 @@
 $themeColorWhite: white;
+$themeColorSomeWhite: #f8f8f8;
 $themeColorMilk: #C0C0C0;
 $themeColorGray: #5C636A;
 $themeColorDark: #33373B;
@@ -12,15 +13,16 @@ $containerShopPadding: 0 70px;
 $containerWidth: 1400px;
 
 $smallBorderRadius: 10px;
-$defaultBorderRadius: 20px;
+$largeBorderRadius: 20px;
 
 $defaultSmallMargin: 10px;
 $defaultLargeMargin: 20px;
 
 $smallButtonPadding: 10px 20px;
-$bigButtonPadding: 16px 20px;
+$largeButtonPadding: 16px 20px;
+$largeButtonHeight: 50px;
 
-$bigButtonHeight: 50px;
+$divButtonPadding: 5px 10px;
 
 $filterButtonWaitingColor: red;
 $filterButtonWaitingColorExtra: #ff9245;

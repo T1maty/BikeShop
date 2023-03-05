@@ -20,7 +20,7 @@
                 .header_leftSide_deal {
                     @include flexOnlyBetween;
                     flex-wrap: wrap;
-                    border-radius: $defaultBorderRadius;
+                    border-radius: $largeBorderRadius;
                     background-color: $themeColorDark;
                     margin-bottom: $defaultLargeMargin;
                     padding: $defaultLargeMargin;
@@ -32,7 +32,7 @@
                 .header_leftSide_info {
                     @include flexOnlyBetween;
                     flex-wrap: wrap;
-                    border-radius: $defaultBorderRadius;
+                    border-radius: $largeBorderRadius;
                     background-color: $themeColorDark;
                     padding: $defaultLargeMargin;
 
@@ -46,7 +46,7 @@
             .mainPage_header_rightSide {
                 @include flexCenter;
                 background-color: $themeColorDark;
-                border-radius: $defaultBorderRadius;
+                border-radius: $largeBorderRadius;
                 width: 30%;
             }
         }
@@ -57,7 +57,7 @@
 
             .content_leftSide {
                 background-color: $themeColorDark;
-                border-radius: $defaultBorderRadius;
+                border-radius: $largeBorderRadius;
                 width: 50%;
 
                 .leftSide_title {
@@ -71,7 +71,7 @@
                     background-color: $themeColorGray;
                     margin: $defaultLargeMargin;
                     padding: $defaultSmallMargin;
-                    border-radius: $defaultBorderRadius;
+                    border-radius: $largeBorderRadius;
 
                     .tasks_taskItem {
                         background-color: $themeColorWhite;
@@ -93,7 +93,7 @@
                     @include flexColumn;
                     justify-content: space-between;
                     background-color: $themeColorDark;
-                    border-radius: $defaultBorderRadius;
+                    border-radius: $largeBorderRadius;
                     padding: $defaultLargeMargin;
                     margin-bottom: 10px;
                     height: 60%;
@@ -123,7 +123,7 @@
                         height: 60%;
                         width: 100%;
                         background-color: $themeColorGray;
-                        border-radius: $defaultBorderRadius;
+                        border-radius: $largeBorderRadius;
                     }
                     .rightSide_top_result {
                         @include flexCenter;
@@ -147,7 +147,7 @@
                             @include flexCenter;
                             background-color: $themeColorGray;
                             border-radius: $smallBorderRadius;
-                            padding: $bigButtonPadding;
+                            padding: $largeButtonPadding;
                             height: 50px;
                         }
                         .result_payBtn {
@@ -160,7 +160,7 @@
                 .rightSide_bottom {
                     @include flexOnlyBetween;
                     background-color: $themeColorDark;
-                    border-radius: $defaultBorderRadius;
+                    border-radius: $largeBorderRadius;
                     padding: $defaultLargeMargin;
                     width: 100%;
                     height: 40%;

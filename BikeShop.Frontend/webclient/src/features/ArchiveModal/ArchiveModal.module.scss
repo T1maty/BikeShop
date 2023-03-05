@@ -18,7 +18,7 @@
 
         > div {
             background-color: $themeColorGray;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             padding: $defaultLargeMargin;
             @include flexColumn;
         }
@@ -29,7 +29,7 @@
             .serviceList_header {
                 margin-bottom: $defaultLargeMargin;
                 background-color: $themeColorDark;
-                border-radius: $defaultBorderRadius;
+                border-radius: $largeBorderRadius;
                 padding: $defaultLargeMargin;
                 @include flexColumn;
 

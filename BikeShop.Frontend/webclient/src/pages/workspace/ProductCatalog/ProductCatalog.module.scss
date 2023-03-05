@@ -15,7 +15,7 @@
 
         .leftSide_header {
             background-color: $themeColorDark;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             margin-bottom: $defaultLargeMargin;
             padding: $defaultLargeMargin;
             width: 100%;
@@ -24,7 +24,7 @@
 
         .leftSide_tree {
             background-color: $themeColorDark;
-            border-radius: $defaultBorderRadius;
+            border-radius: $largeBorderRadius;
             width: 100%;
             height: 80%;
             overflow: auto;
@@ -60,7 +60,7 @@
                 width: 100%;
 
                 button {
-                    padding: $bigButtonPadding;
+                    padding: $largeButtonPadding;
                 }
             }
 
@@ -68,7 +68,7 @@
                 width: 100%;
 
                 button {
-                    padding: $bigButtonPadding;
+                    padding: $largeButtonPadding;
                 }
             }
         }
