@@ -3,29 +3,29 @@
 
 .tableBox {
     border: 1px solid white;
-    @include widthHeightFull();
+    @include widthHeightFull;
     height: 100%;
 
     .tableBox_buttons {
-        @include flexBetween();
+        @include flexBetween;
         margin-bottom: $defaultSmallMargin;
 
         .buttons_editBtn {
 
         }
         .buttons_discountField {
-            @include flexColumn();
+            @include flexColumn;
 
             .discountField_title {
 
             }
             .discountField_value {
-                @include defaultFiledStyle();
+                @include defaultFiledStyle;
                 height: 30px;
             }
         }
         .buttons_resultField {
-            @include defaultFiledStyle();
+            @include defaultFiledStyle;
             width: 20%;
             height: 55px;
         }
@@ -35,7 +35,7 @@
         background-color: $themeColorGray;
         border-radius: $defaultBorderRadius;
         padding: $defaultLargeMargin;
-        @include flexColumn();
+        @include flexColumn;
         height: 400px;
         //overflow: auto;
         overflow-x: hidden;

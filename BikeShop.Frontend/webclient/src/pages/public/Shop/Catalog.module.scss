@@ -21,9 +21,7 @@
         > div {
             width: 100%;
         }
-        > div:not(:last-child) {
-            margin-bottom: $defaultLargeMargin;
-        }
+        @include divLargeMarginBottom;
 
         .right_cloudCategory {
 
@@ -47,10 +45,6 @@
                 align-items: center;
                 flex-wrap: wrap;
                 gap: $defaultLargeMargin;
-
-                //> div:not(:last-child) {
-                //    margin-right: $defaultLargeMargin;
-                //}
             }
 
             .filter_buttons {
@@ -96,7 +90,7 @@
                 @include flexColumn;
                 border: 1px solid black;
                 background-color: white;
-                //width: 300px;
+                min-width: 300px;
 
                 > div {
                     margin-bottom: $defaultLargeMargin;
@@ -133,6 +127,7 @@
             }
         }
         .right_paginator {
+            @include flexCenter;
             border: 1px solid black;
         }
     }

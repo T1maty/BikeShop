@@ -2,7 +2,7 @@
 @import '../../app/styles/variables/variables';
 
 .archiveModal_mainBox {
-    @include defaultModalStyle();
+    @include defaultModalStyle;
     width: 600px;
 
     .archiveModal_title {
@@ -12,7 +12,7 @@
         margin-bottom: $defaultLargeMargin;
     }
     .archiveModal_services {
-        @include flexOnlyBetween();
+        @include flexOnlyBetween;
         gap: $defaultLargeMargin;
         margin-bottom: $defaultLargeMargin;
 

@@ -10,7 +10,7 @@
 
     .selectProduct_mainBox_leftSide {
         border: 1px solid white;
-        @include flexColumn();
+        @include flexColumn;
         width: 30%;
         min-height: 700px;
 
@@ -32,14 +32,12 @@
             //height: 500px;
         }
         .leftSide_buttons {
-            //@include flexOnlyBetween();
+            //@include flexOnlyBetween;
             //gap: 5px;
             //flex-wrap: wrap;
             width: 100%;
 
-            > div:not(:last-child) {
-                margin-bottom: $defaultSmallMargin;
-            }
+            @include divSmallMarginBottom;
 
             button {
                 width: 100%;
@@ -49,7 +47,7 @@
 
     .selectProduct_mainBox_rightSide {
         border: 1px solid white;
-        @include flexColumn();
+        @include flexColumn;
         justify-content: space-between;
         width: 70%;
 
@@ -57,14 +55,14 @@
             width: 100%;
         }
         .rightSide_availableProducts {
-            @include flexCenter();
+            @include flexCenter;
             background-color: $themeColorDark;
             border-radius: $defaultBorderRadius;
             height: 300px;
         }
         .rightSide_infoRow {
             border: 1px solid white;
-            @include flexBetween();
+            @include flexBetween;
             height: 70px;
 
             //> div {
@@ -77,16 +75,16 @@
                 padding-right: $defaultLargeMargin;
             }
             .infoRow_result {
-                @include flexOnlyBetween();
+                @include flexOnlyBetween;
                 width: 40%;
 
                 > div {
-                    @include defaultFiledStyle();
+                    @include defaultFiledStyle;
                 }
             }
         }
         .rightSide_chosenProducts {
-            @include flexCenter();
+            @include flexCenter;
             background-color: $themeColorDark;
             border-radius: $defaultBorderRadius;
             height: 300px;

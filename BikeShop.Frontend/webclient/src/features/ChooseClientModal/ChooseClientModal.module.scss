@@ -2,10 +2,10 @@
 @import '../../app/styles/variables/variables';
 
 .clientModal_mainBox {
-    @include defaultModalStyle();
+    @include defaultModalStyle;
 
     .clientModal_searchBlock {
-        @include flexColumn();
+        @include flexColumn;
         margin-bottom: 30px;
 
         .clientModal_searchBlock_title {
@@ -18,7 +18,7 @@
         }
 
         .clientModal_searchBlock_textField {
-           @include flexColumn();
+           @include flexColumn;
             min-width: 100%;
             height: 100px;
             overflow: auto;
@@ -27,7 +27,7 @@
 
             .textField_contentItem {
                 //padding: 5px 0;
-                @include hoverItem();
+                @include hoverItem;
             }
             .textField_loader {
                 // надо сделать по центру
@@ -36,7 +36,7 @@
     }
 
     .clientModal_textFields > div {
-        @include flexColumn();
+        @include flexColumn;
         //margin-bottom: $defaultSmallMargin;
         width: 100%;
 
@@ -46,7 +46,7 @@
     }
 
     .clientModal_buttonsBlock {
-        @include flexOnlyBetween();
+        @include flexOnlyBetween;
 
         button {
             width: 200px;

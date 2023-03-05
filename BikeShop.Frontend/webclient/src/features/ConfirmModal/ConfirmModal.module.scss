@@ -2,8 +2,8 @@
 @import '../../app/styles/variables/variables';
 
 .confirmModal_mainBox {
-    @include defaultModalStyle();
-    @include flexColumn();
+    @include defaultModalStyle;
+    @include flexColumn;
 
     .confirmModal_title {
         margin-bottom: $defaultLargeMargin;

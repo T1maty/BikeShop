@@ -4,14 +4,11 @@
 .shop_footer {
     background-color: $themeShopColorDark;
     padding: 30px 200px;
-    @include flexBetween();
+    @include flexBetween;
 
     .footer_links {
-        @include flexOnlyBetween();
-
-        > div:not(:last-child) {
-            padding-right: 50px;
-        }
+        @include flexOnlyBetween;
+        gap: 50px;
 
         .links_column {
             .column_title {
@@ -20,9 +17,7 @@
             }
 
             .column_text {
-                > div:not(:last-child) {
-                    margin-bottom: 10px;
-                }
+                @include divSmallMarginBottom;
             }
         }
     }

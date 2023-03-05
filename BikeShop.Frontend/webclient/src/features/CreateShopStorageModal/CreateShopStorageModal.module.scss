@@ -2,8 +2,8 @@
 @import '../../app/styles/variables/variables';
 
 .shopStoreModal_mainBlock {
-    @include defaultModalStyle();
-    @include flexOnlyBetween();
+    @include defaultModalStyle;
+    @include flexOnlyBetween;
     gap: $defaultLargeMargin;
     min-width: 800px;
 
@@ -18,28 +18,24 @@
         width: 50%;
 
         form {
-            > div:not(:last-child) {
-                margin-bottom: $defaultLargeMargin;
-            }
+            @include divLargeMarginBottom;
 
             .shopStoreModal_inputFields {
                 background-color: $themeColorGray;
                 padding: $defaultLargeMargin;
                 border-radius: $smallBorderRadius;
 
-                > div:not(:last-child) {
-                    margin-bottom: $defaultSmallMargin;
-                }
+                @include divSmallMarginBottom;
 
                 .infoBlock_checkbox {
-                    @include flexColumn();
+                    @include flexColumn;
                     width: 100%;
                     padding: $defaultSmallMargin;
                     border: 2px solid $themeColorMilk;
                     border-radius: $smallBorderRadius;
 
                     .infoBlock_checkboxItem {
-                        @include flexCenter();
+                        @include flexCenter;
                     }
                 }
 
@@ -48,20 +44,20 @@
                     gap: $defaultLargeMargin;
 
                     button {
-                        @include defaultMediumButton();
+                        @include defaultMediumButton;
                     }
                 }
             }
 
             .shopStoreModal_createBtn {
                 button {
-                    @include defaultLargeButton();
+                    @include defaultLargeButton;
                 }
             }
 
             .shopStoreModal_exitBtn {
                 button {
-                    @include defaultLargeButton();
+                    @include defaultLargeButton;
                 }
             }
         }

@@ -2,16 +2,16 @@
 @import '../../../app/styles/variables/variables';
 
 //.productCatalogTableWrapper {
-//    @include defaultContainer();
+//    @include defaultContainer;
 
 .productCatalogTable_mainBlock {
-    @include wrapperMainBlock();
-    @include flexOnlyBetween();
+    @include wrapperMainBlock;
+    @include flexOnlyBetween;
     gap: $defaultLargeMargin;
 
     .productCatalogTable_leftSide {
         width: 30%;
-        @include flexColumn();
+        @include flexColumn;
 
         .leftSide_header {
             background-color: $themeColorDark;
@@ -34,12 +34,12 @@
     .productCatalogTable_rightSide {
         border: 1px solid white;
         width: 70%;
-        @include flexColumn();
+        @include flexColumn;
 
 
         .rightSide_searchRow {
             border: 1px solid white;
-            @include flexOnlyBetween();
+            @include flexOnlyBetween;
             margin-bottom: $defaultLargeMargin;
             width: 100%;
 

@@ -2,10 +2,10 @@
 @import '../../../app/styles/variables/variables';
 
 //.mainPageWrapper {
-//    @include defaultContainer();
+//    @include defaultContainer;
 
     .mainPageMainBlock {
-        @include wrapperMainBlock();
+        @include wrapperMainBlock;
 
         .mainPage_header {
             display: flex;
@@ -18,7 +18,7 @@
                 width: 70%;
 
                 .header_leftSide_deal {
-                    @include flexOnlyBetween();
+                    @include flexOnlyBetween;
                     flex-wrap: wrap;
                     border-radius: $defaultBorderRadius;
                     background-color: $themeColorDark;
@@ -30,21 +30,21 @@
                     }
                 }
                 .header_leftSide_info {
-                    @include flexOnlyBetween();
+                    @include flexOnlyBetween;
                     flex-wrap: wrap;
                     border-radius: $defaultBorderRadius;
                     background-color: $themeColorDark;
                     padding: $defaultLargeMargin;
 
                     button {
-                        @include flexCenter();
+                        @include flexCenter;
                         padding: 5px 10px;
                     }
                 }
             }
 
             .mainPage_header_rightSide {
-                @include flexCenter();
+                @include flexCenter;
                 background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
                 width: 30%;
@@ -61,7 +61,7 @@
                 width: 50%;
 
                 .leftSide_title {
-                    @include flexCenter();
+                    @include flexCenter;
                     margin-top: $defaultSmallMargin;
                 }
                 .leftSide_tasks {
@@ -87,10 +87,10 @@
 
             .content_rightSide {
                 width: 50%;
-                @include flexColumn();
+                @include flexColumn;
 
                 .rightSide_top {
-                    @include flexColumn();
+                    @include flexColumn;
                     justify-content: space-between;
                     background-color: $themeColorDark;
                     border-radius: $defaultBorderRadius;
@@ -100,7 +100,7 @@
                     width: 100%;
 
                     .rightSide_top_search {
-                        @include flexOnlyBetween();
+                        @include flexOnlyBetween;
                         width: 100%;
 
                         .search_searchButton {
@@ -110,7 +110,7 @@
                             }
                         }
                         .search_searchInput {
-                            @include flexCenter();
+                            @include flexCenter;
                             width: 100%;
                             padding: $defaultSmallMargin;
                             margin-left: $defaultLargeMargin;
@@ -119,14 +119,14 @@
                         }
                     }
                     .rightSide_top_info {
-                        @include flexCenter();
+                        @include flexCenter;
                         height: 60%;
                         width: 100%;
                         background-color: $themeColorGray;
                         border-radius: $defaultBorderRadius;
                     }
                     .rightSide_top_result {
-                        @include flexCenter();
+                        @include flexCenter;
                         justify-content: space-between;
                         width: 100%;
 
@@ -144,7 +144,7 @@
                             }
                         }
                         .result_span {
-                            @include flexCenter();
+                            @include flexCenter;
                             background-color: $themeColorGray;
                             border-radius: $smallBorderRadius;
                             padding: $bigButtonPadding;
@@ -158,7 +158,7 @@
                     }
                 }
                 .rightSide_bottom {
-                    @include flexOnlyBetween();
+                    @include flexOnlyBetween;
                     background-color: $themeColorDark;
                     border-radius: $defaultBorderRadius;
                     padding: $defaultLargeMargin;
@@ -167,7 +167,7 @@
                     margin-top: 10px;
 
                     .bottom_left {
-                        @include flexColumn();
+                        @include flexColumn;
                         justify-content: center;
                         background-color: $themeColorGray;
                         border-radius: $smallBorderRadius;
@@ -176,7 +176,7 @@
                         width: 70%;
                     }
                     .bottom_right {
-                        @include flexColumn();
+                        @include flexColumn;
                         justify-content: space-evenly;
                         width: 30%;
 
@@ -184,7 +184,7 @@
                             text-align: center;
                         }
                         .bottom_right_two {
-                            @include flexColumn();
+                            @include flexColumn;
 
                             .right_two_button {
                                 margin-bottom: $defaultLargeMargin;

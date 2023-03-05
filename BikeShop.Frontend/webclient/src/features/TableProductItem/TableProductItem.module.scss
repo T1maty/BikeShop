@@ -2,7 +2,7 @@
 @import '../../app/styles/variables/variables';
 
 .tableItem_box {
-    @include flexBetween();
+    @include flexBetween;
     width: 95%; // ?
     border: 2px solid $themeColorWhite;
     border-radius: $smallBorderRadius;
@@ -15,7 +15,7 @@
     }
 
     .tableItem_numbers {
-        @include flexCenter();
+        @include flexCenter;
 
         .tableItem_price {
             color: black;
@@ -24,7 +24,7 @@
             padding: $defaultSmallMargin;
             margin-right: $defaultSmallMargin;
             min-width: 80px;
-            @include flexCenter();
+            @include flexCenter;
         }
         .tableItem_sum {
             color: black;
@@ -32,7 +32,7 @@
             border-radius: $smallBorderRadius;
             padding: $defaultSmallMargin;
             min-width: 80px;
-            @include flexCenter();
+            @include flexCenter;
         }
     }
 }

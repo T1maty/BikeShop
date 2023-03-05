@@ -2,7 +2,7 @@
 @import '../../app/styles/variables/variables';
 
 .selectProductWorkModal_mainBox {
-    @include defaultModalStyle();
+    @include defaultModalStyle;
     width: 1200px;
     padding: 0;
 }

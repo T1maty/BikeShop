@@ -41,7 +41,7 @@
 // mixins for UI
 
 @mixin defaultFiledStyle() {
-    @include flexCenter();
+    @include flexCenter;
     max-width: 250px;
     padding: 10px;
     border: 2px solid $themeColorMilk;
@@ -90,5 +90,16 @@
     &:hover {
         cursor: pointer;
         background-color: $themeColorGray;
+    }
+}
+
+@mixin divSmallMarginBottom() {
+    > div:not(:last-child) {
+        margin-bottom: $defaultSmallMargin;
+    }
+}
+@mixin divLargeMarginBottom() {
+    > div:not(:last-child) {
+        margin-bottom: $defaultLargeMargin;
     }
 }

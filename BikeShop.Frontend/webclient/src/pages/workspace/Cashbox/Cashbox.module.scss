@@ -2,16 +2,16 @@
 @import '../../../app/styles/variables/variables';
 
 //.cashboxWrapper {
-//    @include defaultContainer();
+//    @include defaultContainer;
 
     .cashboxMainBlock {
-        @include wrapperMainBlock();
-        @include flexOnlyBetween();
+        @include wrapperMainBlock;
+        @include flexOnlyBetween;
         gap: $defaultLargeMargin;
 
         .cashboxMainBlock_leftSideWrapper {
             width: 30%;
-            @include flexColumn();
+            @include flexColumn;
 
             .leftSide_tables {
                 background-color: $themeColorDark;
@@ -33,12 +33,12 @@
                 border-radius: $defaultBorderRadius;
                 margin: $defaultLargeMargin 0;
                 padding: $defaultLargeMargin;
-                @include flexColumn();
+                @include flexColumn;
                 width: 100%;
                 height: 41%;
 
                 .leftSide_client_buttons {
-                    @include flexOnlyBetween();
+                    @include flexOnlyBetween;
                     flex-wrap: wrap;
                     margin: $defaultLargeMargin 0 0 0;
                     width: 100%;
@@ -62,7 +62,7 @@
             }
 
             .leftSide_discount {
-                @include flexColumn();
+                @include flexColumn;
                 justify-content: space-between;
                 background-color: $themeColorDark;
                 border-radius: $defaultBorderRadius;
@@ -75,17 +75,17 @@
                     border-radius: $defaultBorderRadius;
                     margin-bottom: $defaultLargeMargin;
                     padding: $defaultLargeMargin;
-                    @include widthHeightFull();
+                    @include widthHeightFull;
 
                     .discount_info {
-                        @include flexColumn();
+                        @include flexColumn;
 
                         .info_title {
                             margin-bottom: $defaultSmallMargin;
                             font-weight: bold;
                         }
                         .info_name {
-                            @include flexCenter();
+                            @include flexCenter;
                             margin-bottom: $defaultLargeMargin;
                             border: 2px solid #C0C0C0;
                             border-radius: 10px;
@@ -94,22 +94,22 @@
                         }
 
                         .info_types {
-                            @include flexBetween();
+                            @include flexBetween;
                             width: 100%;
 
                             .info_type {
-                                @include defaultFiledStyle();
+                                @include defaultFiledStyle;
                                 width: 30%;
                             }
                             .info_value {
-                                @include defaultFiledStyle();
+                                @include defaultFiledStyle;
                                 width: 65%;
                             }
                         }
                     }
                 }
                 .discount_buttons {
-                    @include flexOnlyBetween();
+                    @include flexOnlyBetween;
                     flex-wrap: wrap;
                     margin: 0 $defaultLargeMargin;
                     width: 100%;
@@ -134,7 +134,7 @@
         }
 
         .cashboxMainBlock_rightSideWrapper {
-            @include flexOnlyBetween();
+            @include flexOnlyBetween;
             flex-direction: column;
             background-color: $themeColorGray;
             border-radius: $defaultBorderRadius;
@@ -142,7 +142,7 @@
             width: 70%;
 
             .cashboxMainBlock_rightSideHeader {
-                @include flexOnlyBetween();
+                @include flexOnlyBetween;
                 margin-bottom: $defaultLargeMargin;
 
                 .header_chooseBtn {
@@ -158,7 +158,7 @@
             }
 
             .cashboxMainBlock_rightSideMiddle {
-                @include flexCenter();
+                @include flexCenter;
                 font-size: 20px;
                 height: 70%;
                 background-color: $themeColorDark;
@@ -169,11 +169,11 @@
             .cashboxMainBlock_rightSideBottom {
 
                 .rightSideBottom_buttonsBlock {
-                    @include flexOnlyBetween();
+                    @include flexOnlyBetween;
                     margin-bottom: $defaultLargeMargin;
 
                     .buttonsBlock_one {
-                        @include flexBetween();
+                        @include flexBetween;
 
                         > div {
                             margin-right: $defaultLargeMargin;
@@ -188,15 +188,15 @@
                             }
                         }
                         .one_noDiscount {
-                            @include defaultFiledStyle();
+                            @include defaultFiledStyle;
                         }
                         .one_discount {
-                            @include defaultFiledStyle();
+                            @include defaultFiledStyle;
                         }
                     }
 
                     .buttonsBlock_two {
-                        @include defaultFiledStyle();
+                        @include defaultFiledStyle;
                     }
                 }
 

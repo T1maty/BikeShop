@@ -2,7 +2,7 @@
 @import '../../../app/styles/variables/variables';
 
 .shop_wrapper {
-    @include defaultContainer();
+    @include defaultContainer;
 
     .shop_mainBox {
 
@@ -23,6 +23,11 @@
                 padding: $containerShopPadding;
                 color: black;
 
+                > div {
+                    @include flexBetween;
+                    gap: 40px;
+                }
+
                 img {
                     &:hover {
                         cursor: pointer;
@@ -30,18 +35,10 @@
                 }
 
                 .header_icons_left {
-                    @include flexBetween;
 
-                    > div:not(:last-child) {
-                        margin-right: 40px;
-                    }
                 }
                 .header_icons_right {
-                    @include flexBetween;
 
-                    > div:not(:last-child) {
-                        margin-right: 40px;
-                    }
                 }
             }
         }
@@ -50,7 +47,7 @@
             background-color: green;
 
             .menu {
-                @include flexBetween();
+                @include flexBetween;
                 background-color: $themeShopColorGray;
                 height: 80px;
                 padding: $containerShopPadding;
@@ -59,11 +56,9 @@
                 color: black;
 
                 .menu_items {
-                    @include flexBetween();
+                    @include flexBetween;
+                    gap: 50px;
 
-                    > div:not(:last-child) {
-                        padding-right: 50px;
-                    }
                     > div {
                         &:hover {
                             cursor: pointer;
@@ -73,8 +68,8 @@
 
                 .menu_social {
                     img {
-                        width: 63px;
-                        height: 63px;
+                        width: 60px;
+                        height: 60px;
                     }
                 }
             }
@@ -87,8 +82,8 @@
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr;
                     grid-template-rows: 1fr 1fr;
-                    gap: 20px;
-                    margin-bottom: 20px;
+                    gap: $defaultLargeMargin;
+                    margin-bottom: $defaultLargeMargin;
 
                     //> div {
                     //    position: relative;
@@ -123,7 +118,7 @@
                 .catalog_group2 {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
-                    gap: 20px;
+                    gap: $defaultLargeMargin;
 
                     .catalog_item {
 
@@ -135,41 +130,6 @@
         .map {
             img {
                 width: 1400px;
-            }
-        }
-
-        .footer {
-            background-color: $themeShopColorDark;
-            padding: 30px 200px;
-            @include flexBetween();
-
-            .footer_links {
-                @include flexOnlyBetween();
-
-                > div:not(:last-child) {
-                    padding-right: 50px;
-                }
-
-                .links_column {
-                    .column_title {
-                        font-weight: bold;
-                        margin-bottom: 20px;
-                    }
-
-                    .column_text {
-                        > div:not(:last-child) {
-                            margin-bottom: 10px;
-                        }
-                    }
-                }
-            }
-
-            .footer_social {
-
-                img {
-                    width: 20px;
-                    height: 20px;
-                }
             }
         }
     }

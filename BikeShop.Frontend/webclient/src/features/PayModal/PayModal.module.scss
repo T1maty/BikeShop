@@ -2,20 +2,17 @@
 @import '../../app/styles/variables/variables';
 
 .payModal_mainBox {
-    @include defaultModalStyle();
-
-    > div:not(:last-child) {
-        margin-bottom: $defaultLargeMargin;
-    }
+    @include defaultModalStyle;
+    @include divLargeMarginBottom;
 
     .payModal_header {
-        @include flexColumn();
+        @include flexColumn;
 
         .header_text {
 
         }
         .header_sum {
-            @include largeFontSize();
+            @include largeFontSize;
         }
     }
 
@@ -33,18 +30,18 @@
     }
 
     .payModal_cashValue {
-        @include defaultFiledStyle();
+        @include defaultFiledStyle;
         min-width: 100%;
     }
 
     .payModal_cashbackBlock {
-        @include flexColumn();
+        @include flexColumn;
 
         .cashbackBlock_text {
 
         }
         .cashbackBlock_value {
-            @include largeFontSize();
+            @include largeFontSize;
         }
         .cashbackBlock_buttons {
             width: 100%;
