@@ -1,6 +1,7 @@
 @import '../../../app/styles/variables/variables';
 
 .btn {
+    z-index: 20;
     position: relative;
     overflow: hidden;
     transition: background 400ms;
@@ -16,7 +17,7 @@
 }
 
 .btn:disabled {
-    background-color: var(--button-disabled-color);
+    background-color: var(--button-disabled-color, red);
 }
 .btn:hover {
     background-color: var(--button-hover-bgcolor);
@@ -52,12 +53,14 @@
 
 
 span.ripple {
+    z-index: 20;
     position: absolute;
     border-radius: 50%;
     transform: scale(0);
     animation: ripple 600ms linear;
     opacity: 0.7;
-    background-color: var(--primary-color);
+    //background-color: var(--primary-color, #fff);
+    background-color: #fff;
 }
 
 @keyframes ripple {

@@ -1,3 +1,3 @@
-import WorkCatalog from "./ui/WorkCatalog";
+export {WorkCatalog} from "./ui/WorkCatalog";
 
-export { WorkCatalog };
+

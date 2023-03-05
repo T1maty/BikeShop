@@ -1,0 +1,43 @@
+.wrapper {
+  user-select: none;
+
+  .parent {
+
+    .selected {
+      background-color: #5C636A;
+    }
+
+
+    .innerWrap {
+      display: flex;
+      flex-direction: row;
+
+
+      .toggle {
+        width: 25px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .content {
+        width: 100%
+      }
+    }
+
+  }
+
+  .parent:hover {
+    background-color: grey;
+  }
+
+  .child {
+    margin-left: 16px;
+  }
+
+
+
+}
+
+
+
+
