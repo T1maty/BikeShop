@@ -3,13 +3,23 @@ import cls from './CustomTagTreeView.module.scss'
 import {ContextMenu} from "../../../widgets/workspace/ContextMenu";
 
 interface CustomTagTreeView {
-    data: [],
+    data: Array<object>,
     selectId: (id: number) => void
     callBackData: (data: {} ) => void
+    contextData: Array<string>
 }
 
+
+/**
+ * @param data - Массив с объектом, каждый объект должен иметь parentId
+ * @param selectId - Возвращает выбранный id tag
+ * @param callBackData - Возвращает объект {data: данные выбранного tag, variant: вариант, что делать с этими данными}
+ * @param contextData - Массив string, для context
+ * @return Возвращает jsx с готовым TagTreeView
+ */
+
 export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
-    const {data, selectId, callBackData} = props
+    const {data, selectId, callBackData, contextData} = props
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
     const [select, setSelect] = useState<number>(0);
     const [state, setState] = useState({
@@ -26,8 +36,10 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
 
     const onCloseHandler = useCallback((variant?: string) => {
         setState({...state, isOpen: false})
-        const {children, ...data} : any = state.data
-        callBackData({data: data, variant: variant})
+        if(variant !== undefined){
+            const {children, ...data} : any = state.data
+            callBackData({data: data, variant: variant})
+        }
     }, [state])
 
     const handleExpand = (id: number) => {
@@ -39,8 +51,8 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
     };
 
 
-    function buildTree(data: [], parentId: number) {
-        const tree: any = [];
+    function buildTree(data: Array<object>, parentId: number) {
+        const tree: Array<object> = [];
 
         data.forEach((item: any) => {
             if (item.parentId === parentId) {
@@ -59,9 +71,10 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
         const isExpanded = expandedItems.includes(item.id);
         const hasChildren = item.children && item.children.length > 0;
 
-        const onContextMenuHandler = (e: MouseEvent<HTMLDivElement>) => {
+        const onContextMenuHandler = (e: MouseEvent<HTMLDivElement>, id: number) => {
             e.preventDefault()
             onOpenHandler(e.clientX, e.clientY, item)
+            onClickHandlerSelect(id)
         }
 
         const onClickHandlerCollapsed = () => {
@@ -77,25 +90,24 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
             setSelect(id)
             selectId(id)
         }
-
         return (
-            <div key={item.id} style={{userSelect: "none"}}>
+            <div key={item.id} className={cls.wrapper}>
                 <div style={{cursor: 'pointer'}}
-                     onContextMenu={onContextMenuHandler}
-                     className={cls.child}>
-                    <div className={select === item.id ? cls.selected : ''}
-                         style={{display: "flex", flexDirection: 'row'}}>
-                        <div style={{width: 25, display: 'flex', justifyContent: 'center'}}
+                     onContextMenu={(e) => onContextMenuHandler(e, item.id)}
+                     className={cls.parent}>
+                    <div className={select === item.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
+                        <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}>
                             {hasChildren && (isExpanded ? '\\/' : '>')}
                         </div>
-                        <div style={{width: '100%'}}
-                             onClick={() => onClickHandlerSelect(item.id)}
-                        >{item.name}</div>
+                        <div className={cls.content}
+                             onClick={() => onClickHandlerSelect(item.id)}>
+                            {item.name}
+                        </div>
                     </div>
                 </div>
                 {hasChildren && isExpanded && (
-                    <div style={{marginLeft: 16}}>
+                    <div className={cls.child}>
                         {item.children.map(renderItem)}
                     </div>
                 )}
@@ -107,7 +119,7 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
         <>
             <ContextMenu isOpen={state.isOpen}
                          onClose={onCloseHandler}
-                         settings={'work-catalog-categories'}
+                         settings={contextData}
                          left={state.left}
                          top={state.top}
             />

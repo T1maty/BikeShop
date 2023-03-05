@@ -4,15 +4,8 @@ import {Button} from "shared/ui";
 import {Portal} from "../../Portal/Portal";
 import clsx from "clsx";
 
-const settingsData = {
-    'work-catalog-categories': ['Редактировать', 'Создать в корне', 'Создать потомка', 'Переместить', 'Удалить'],
-    'work-catalog-table': ['Редактировать', 'Создать', 'Статистика']
-}
-
-type SettingsType = keyof typeof settingsData
-
 interface ContextMenuProps {
-    settings: SettingsType,
+    settings: String[],
     isOpen: boolean,
     onClose?: (variant?: string) => void,
     left?: number,
@@ -71,7 +64,7 @@ const ContextMenu = memo(({onClose, top, isOpen, left, settings}:ContextMenuProp
                          onClick={(e) => e.stopPropagation()}
                          style={{left: left, top: top}}
                     >
-                        {settingsData[settings].map((value, index) => (
+                        {settings.map((value, index) => (
                             <Button key={index}
                                     className={cls.button}
                                     onAnimate={false}

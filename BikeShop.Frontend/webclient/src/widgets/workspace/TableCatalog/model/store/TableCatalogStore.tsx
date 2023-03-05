@@ -2,10 +2,11 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "../../../../../shared";
+import {getGroups, Groups} from "../types/group";
 
 interface WorkCatalogStore {
     works: [],
-    group: [],
+    group: Groups[],
     isLoading: boolean,
     currencyId: number | undefined
     getWork: (id: number) => void,
@@ -17,9 +18,10 @@ interface WorkCatalogStore {
 
 export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer((set, get) => ({
     works: [],
-    group: [],
+    group: [] as Groups[],
     isLoading: false,
     currencyId: undefined,
+
     getWork(id: number) {
         set({isLoading: true})
         $api.get(`/work/getbygroupid/${id}`).then((data) => {
@@ -33,9 +35,9 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
             "name": "test",
             "description": "string",
             "price": 0,
-            "groupId": 1
+            "groupId": get().currencyId!
         }).then(() => {
-            get().getWork(1)
+            get().getWork(get().currencyId!)
         })
     },
 
@@ -45,15 +47,14 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
             "name": `Обновлено в ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
             "description": "string",
             "price": 0,
-            "currencyId": 2,
-            "groupId": 1
+            "groupId": get().currencyId!
         }).then(() => {
-            get().getWork(1)
+            get().getWork(get().currencyId!)
         })
     },
 
     getGroup() {
-        $api.get('/group/getbyshopid/1').then((data) => {
+        $api.get<getGroups>('/group/getbyshopid/1').then((data) => {
             set({group: data.data.workGroups})
         })
     },

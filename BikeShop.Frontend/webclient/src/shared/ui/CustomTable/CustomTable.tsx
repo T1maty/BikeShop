@@ -7,37 +7,43 @@ interface CustomTableProps {
     theadData: string[],
     tbodyData: object[],
     customClass?: string,
-    onContext: (data: any) => void
+    callBackData: (data: any) => void
     isLoading: boolean
+    contextData: Array<string>
 }
 
-interface TableHeadItemProps {
-    theadData: string[]
-}
-
-interface TableRowProps {
-    data: any,
-    onOpen: (left: any, top: any, data: any) => void,
+interface DataProps {
+    id: number
+    name: string
+    price: number
+    description: string
 }
 
 export const CustomTable = (props: CustomTableProps) => {
-        const {theadData, tbodyData, customClass, onContext, isLoading} = props
+        const {
+            theadData,
+            tbodyData,
+            customClass,
+            callBackData,
+            isLoading,
+            contextData
+        } = props
 
         const [state, setState] = useState({
             isOpen: false,
             left: 0,
             top: 0,
-            data: [],
+            data: {},
             variant: ''
         })
 
-        const onOpenHandler = useCallback((left: any, top: any, data: any) => {
+        const onOpenHandler = useCallback((left: number, top: number, data: DataProps) => {
             setState({...state, isOpen: true, left, top, data})
         }, [])
 
         const onCloseHandler = useCallback((variant?: string) => {
             setState({...state, isOpen: false, variant: variant || ''})
-            onContext({data: state.data, variant: variant})
+            callBackData({data: state.data, variant})
         }, [state])
 
         return (
@@ -47,18 +53,20 @@ export const CustomTable = (props: CustomTableProps) => {
                     <TableHeadItem theadData={theadData}/>
                     </thead>
                     <tbody className={cls.tbody}>
-                    {!isLoading?
+                    {!isLoading ?
                         tbodyData.map((item: any) => {
                             return <TableRow key={item.id} data={item} onOpen={onOpenHandler}/>;
                         })
-                        : <tr style={{height: 250, display: "flex", justifyContent: 'center'}}><td><Loader variant={"ellipsis"}/></td></tr>
+                        : <tr style={{height: 250, display: "flex", justifyContent: 'center'}}>
+                            <td><Loader variant={"ellipsis"}/></td>
+                        </tr>
                     }
-                    {tbodyData.length === 0 && !isLoading && <tr style={{height: 250, display: "flex", justifyContent: 'center'}}><td>Пусто</td></tr>}
+                    {tbodyData.length === 0 && !isLoading && <TableRow empty onOpen={onOpenHandler}/>}
                     </tbody>
                 </table>
                 <ContextMenu isOpen={state.isOpen}
                              onClose={onCloseHandler}
-                             settings={'work-catalog-table'}
+                             settings={contextData}
                              left={state.left}
                              top={state.top}
                 />
@@ -67,12 +75,13 @@ export const CustomTable = (props: CustomTableProps) => {
     }
 ;
 
+const TableHeadItem = memo((props: { theadData: string[] }) => {
+    const {theadData} = props
 
-const TableHeadItem: FC<TableHeadItemProps> = memo(({theadData}) => {
     return (
         <tr className={cls.head__items}>
             {
-                theadData.map((item: any, index) =>
+                theadData.map((item: string, index) =>
                     <td key={index} title={item} className={cls.head__item}>
                         {item}
                     </td>
@@ -83,8 +92,19 @@ const TableHeadItem: FC<TableHeadItemProps> = memo(({theadData}) => {
 });
 
 
-const TableRow = memo(({data, onOpen}: TableRowProps) => {
-    const arr = [data.id, data.name, data.price, data.description]
+interface TableRowProps {
+    data?: any,
+    onOpen: (left: number, top: number, data: DataProps) => void,
+    empty?: boolean
+}
+
+const TableRow = memo((props: TableRowProps) => {
+    const {data, onOpen, empty} = props
+
+    let arr = [data?.id, data?.name, data?.price, data?.description]
+
+    empty && (arr = ['Пусто'])
+
     const onContextHandler = (e: MouseEvent) => {
         e.preventDefault()
         onOpen(e.clientX, e.clientY, data)
