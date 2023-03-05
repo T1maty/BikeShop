@@ -20,13 +20,13 @@ public static class DependencyInjection
         {
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
             {
-                //options.UseSqlite(connectionConfiguration.Sqlite);
-                options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+                options.UseSqlite(connectionConfiguration.Sqlite);
+                //options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
             }
             else
             {
-                //options.UseSqlite(connectionConfiguration.Sqlite);
-                options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
+                options.UseSqlite(connectionConfiguration.Sqlite);
+                //options.UseMySql(connectionConfiguration.MySql, new MySqlServerVersion(connectionConfiguration.MySqlVersion));
             }
         });
 
