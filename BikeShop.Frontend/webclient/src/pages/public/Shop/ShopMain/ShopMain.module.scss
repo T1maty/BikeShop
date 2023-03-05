@@ -1,0 +1,136 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.shop_wrapper {
+    @include defaultContainer;
+
+    .shop_mainBox {
+
+        .header {
+            position: relative;
+
+            .header_slider {
+                img {
+                    width: 1400px;
+                    height: auto;
+                }
+            }
+            .header_icons {
+                position: absolute;
+                top: 50px;
+                @include flexOnlyBetween;
+                width: 100%;
+                padding: $containerShopPadding;
+                color: black;
+
+                > div {
+                    @include flexBetween;
+                    gap: $defaultExtraLargeMargin;
+                }
+
+                img {
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                .header_icons_left {
+
+                }
+                .header_icons_right {
+
+                }
+            }
+        }
+
+        .content {
+            background-color: green;
+
+            .menu {
+                @include flexBetween;
+                background-color: $themeShopColorGray;
+                height: 80px;
+                padding: $containerShopPadding;
+                font-size: 32px;
+                font-weight: bold;
+                color: black;
+
+                .menu_items {
+                    @include flexBetween;
+                    gap: 50px;
+
+                    > div {
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .menu_social {
+                    img {
+                        width: 60px;
+                        height: 60px;
+                    }
+                }
+            }
+
+            .catalog {
+                padding: 70px 70px 200px 70px;
+                display: grid;
+
+                .catalog_group1 {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    gap: $defaultLargeMargin;
+                    margin-bottom: $defaultLargeMargin;
+
+                    //> div {
+                    //    position: relative;
+                    //
+                    //    img {
+                    //        position: absolute;
+                    //        top: 0;
+                    //        left: 0;
+                    //        width: 100%;
+                    //        height: 100%;
+                    //        object-fit: cover;
+                    //    }
+                    //}
+
+                    .catalog_item1 {
+                        grid-row: span 2;
+                    }
+
+                    .catalog_item2 {
+                    }
+
+                    .catalog_item3 {
+                    }
+
+                    .catalog_item4 {
+                    }
+
+                    .catalog_item5 {
+                    }
+                }
+
+                .catalog_group2 {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: $defaultLargeMargin;
+
+                    .catalog_item {
+
+                    }
+                }
+            }
+        }
+
+        .map {
+            img {
+                width: 1400px;
+            }
+        }
+    }
+}

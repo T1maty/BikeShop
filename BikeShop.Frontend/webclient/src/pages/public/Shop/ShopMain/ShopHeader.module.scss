@@ -1,0 +1,25 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.shop_header {
+    height: var(--navbar-height);
+    background-color: $themeColorDark;
+    @include flexBetween;
+    padding: $containerShopPadding;
+
+    img {
+        filter: invert(100%);
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .shop_header_left {
+
+    }
+    .shop_header_right {
+        @include flexBetween;
+        gap: $defaultExtraLargeMargin;
+    }
+}
