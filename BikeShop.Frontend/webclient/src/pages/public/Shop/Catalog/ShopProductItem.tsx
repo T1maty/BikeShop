@@ -120,7 +120,7 @@ export const ShopProductItem = () => {
                        </div>
                        <div className={s.product_addToCart}>
                            <Button onClick={() => {}}>
-                               Добавить в корзину
+                               Добавить в корзину!
                            </Button>
                        </div>
                    </div>
