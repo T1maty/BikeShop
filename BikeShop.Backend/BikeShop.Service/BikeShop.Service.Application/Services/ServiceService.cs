@@ -92,7 +92,7 @@ public class ServiceService : IServiceService
     {
         //Достаем сущность ремонта и мапим ее в сущность для ответа
         var services = _context.Services.Where(n => n.ShopId == ShopId);
-        var servicesModel =await _mapper.ProjectTo<GetServiceDTO>(services).ToListAsync();
+        var servicesModel = await _mapper.ProjectTo<GetServiceDTO>(services).ToListAsync();
 
         var usersToFind = new List<string>();
 
@@ -105,10 +105,14 @@ public class ServiceService : IServiceService
         }
 
         var usersDitionary = await _identityClient.GetDictionary(usersToFind);
-        
+
+        var servicesIds = await services.Select(s => s.Id).ToListAsync();
+        var allWorks = await _context.ServiceWorks.Where(n => servicesIds.Contains(n.ServiceId)).ToListAsync();
+        var allProducts = await _context.ServiceProducts.Where(n => servicesIds.Contains(n.ServiceId)).ToListAsync();
+
         servicesModel.ForEach(service => {
-            service.Works = _context.ServiceWorks.Where(n => n.ServiceId == service.Id).ToList();
-            service.Products = _context.ServiceProducts.Where(n => n.ServiceId == service.Id).ToList();
+            service.Works = allWorks.Where(n=>n.ServiceId == service.Id).ToList();
+            service.Products = allProducts.Where(n=>n.ServiceId == service.Id).ToList();
 
             var clientId = services.Where(n => n.Id == service.Id).First().ClientId.ToString();
             service.Client = usersDitionary.ContainsKey(clientId) ? usersDitionary[clientId]:null;
