@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import s from './ShopProductItem.module.scss'
 import {Button} from "../../../shared/ui";
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import {UserResponse} from "../../../entities";
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -11,6 +13,10 @@ export const ShopProductItem = () => {
     const [isDetails, setIsDetails] = useState<boolean>(false)
     const [isDelivery, setIsDelivery] = useState<boolean>(false)
 
+    // тестовые данные
+    const [products, setProducts] = useState(['Велосипед-1', 'Велосипед-2', 'Велосипед-3'])
+    const amountOfProduct = 10
+
     const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
                                    isDetails: boolean, isDelivery: boolean) => {
 
@@ -18,6 +24,11 @@ export const ShopProductItem = () => {
         setIsCharacteristic(isCharacteristic)
         setIsDetails(isDetails)
         setIsDelivery(isDelivery)
+    }
+
+    const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
+        // setCurrentMasterId(event.target.value as string)
+        console.log('клик по селекту товара', event.target.value)
     }
 
     // useEffect(() => {
@@ -59,14 +70,61 @@ export const ShopProductItem = () => {
                        появляется более полное название и частичное описание товара.
                        А так же доступные...
                    </div>
-                   <div className={s.product_something}>Тут что-то будет</div>
-                   <div className={s.product_something}>Тут что-то будет</div>
-                   <div className={s.product_available}>Есть на складе</div>
-                   <div className={s.product_addToCart}>
-                       <Button onClick={() => {}}>
-                           Добавить в корзину
-                       </Button>
+                   <div className={s.product_select}>
+                       <FormControl fullWidth>
+                           <InputLabel id="product-select-label" style={{color: 'black'}}>Модель</InputLabel>
+                           <Select
+                               labelId="product-select-label"
+                               id="product-select"
+                               name={'productSelect'}
+                               value={'Велосипед-1'}
+                               label="productSelect"
+                               onChange={onChangeMUISelectHandler}
+
+                               sx={{
+                                   color: "black",
+                                   '.MuiOutlinedInput-notchedOutline': {
+                                       borderColor: 'black',
+                                   },
+                                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                       borderColor: 'black',
+                                   },
+                                   '&:hover .MuiOutlinedInput-notchedOutline': {
+                                       borderColor: 'black',
+                                   },
+                                   '.MuiSvgIcon-root ': {
+                                       fill: 'black',
+                                   }
+                               }}
+                           >
+                               {
+                                   products.map((p: any) => {
+                                       return (
+                                           <MenuItem key={p} value={p}>
+                                               {p}
+                                           </MenuItem>
+                                       )
+                                   })
+                               }
+                           </Select>
+                       </FormControl>
                    </div>
+                   <div className={s.product_buy}>
+                       <div className={s.product_available}>
+                           {
+                               amountOfProduct > 0 ?
+                                   <div className={s.isAvailable}>Есть на складе</div>
+                                   : <div className={s.notAvailable}>Товар закончился</div>
+                           }
+
+                       </div>
+                       <div className={s.product_addToCart}>
+                           <Button onClick={() => {}}>
+                               Добавить в корзину
+                           </Button>
+                       </div>
+                   </div>
+
                </div>
            </div>
            <div className={s.description}>
@@ -88,15 +146,25 @@ export const ShopProductItem = () => {
                    </div>
                </div>
                <div className={s.description_content}>
-                   <div>
-                       Описание характеристики Давно выяснено, что при оценке дизайна и
-                       композиции читаемый текст мешает сосредоточиться. Lorem Ipsum
-                       используют потому, что тот обеспечивает более или менее стандартное
-                       заполнение шаблона, а также реальное распределение букв и пробелов в
-                       абзацах, которое не получается при простой дубликации.
-                   </div>
-                   {/*<div></div>*/}
-                   {/*<div></div>*/}
+                   {
+                       isCharacteristic ?
+                       <div>
+                           Описание характеристики Давно выяснено, что при оценке дизайна и
+                           композиции читаемый текст мешает сосредоточиться. Lorem Ipsum
+                           используют потому, что тот обеспечивает более или менее стандартное
+                           заполнение шаблона, а также реальное распределение букв и пробелов в
+                           абзацах, которое не получается при простой дубликации.
+                       </div>
+                           : ''
+                   }
+
+                   {
+                       isDetails ? <div>Описание</div> : ''
+                   }
+
+                   {
+                       isDelivery ? <div>Доставка</div> : ''
+                   }
                </div>
            </div>
        </div>

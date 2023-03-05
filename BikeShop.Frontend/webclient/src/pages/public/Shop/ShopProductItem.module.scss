@@ -13,11 +13,11 @@
     }
 
     .cloudCategory {
-        padding-top: 10px;
+        padding: $defaultLargeMargin 0;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: 20px;
+        gap: $defaultLargeMargin;
         margin-bottom: $defaultLargeMargin;
 
         .cloudCategory_item {
@@ -29,11 +29,14 @@
     }
     .product {
         @include flexOnlyBetween;
-        gap: $defaultLargeMargin;
-        margin-bottom: $defaultLargeMargin;
+        gap: $defaultExtraLargeMargin;
+        margin-bottom: $defaultExtraLargeMargin;
 
         .product_images {
-            width: 50%;
+            width: 60%;
+            display: flex;
+            justify-content: flex-end;
+
             img {
                 max-width: 600px;
                 height: auto;
@@ -44,7 +47,7 @@
             //border: 1px solid black;
             @include flexColumn;
             @include divLargeMarginBottom;
-            width: 50%;
+            width: 40%;
 
             .product_title {
                 font-weight: bold;
@@ -58,20 +61,38 @@
             .product_description {
 
             }
-            .product_something {
+            .product_select {
+                width: 100%;
+                color: black;
+            }
+            .product_buy {
+                @include flexOnlyBetween;
+                align-items: center;
+                gap: $defaultExtraLargeMargin;
 
-            }
-            .product_available {
-                padding: $divButtonPadding;
-                background-color: $themeColorMilk;
-                border-radius: $smallBorderRadius;
-            }
-            .product_addToCart {
-                button {
-                    padding: 10px;
-                    background-color: #BF3B38;
-                    border-radius: $smallBorderRadius;
-                    font-weight: bold;
+                .product_available {
+                    .isAvailable {
+                        @include flexCenter;
+                        padding: $divButtonPadding;
+                        border-radius: $smallBorderRadius;
+
+                        background-color: $themeColorMilk;
+                    }
+                    .notAvailable {
+                        @include flexCenter;
+                        padding: $divButtonPadding;
+                        border-radius: $smallBorderRadius;
+
+                        background-color: $filterButtonWaitingColor;
+                    }
+                }
+                .product_addToCart {
+                    button {
+                        padding: 10px;
+                        background-color: #BF3B38;
+                        border-radius: $smallBorderRadius;
+                        font-weight: bold;
+                    }
                 }
             }
         }
@@ -126,6 +147,7 @@
         .description_content {
             background-color: white;
             padding: $defaultLargeMargin 0;
+            min-height: 150px;
         }
     }
 }

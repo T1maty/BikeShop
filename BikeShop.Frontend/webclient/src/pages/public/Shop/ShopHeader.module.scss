@@ -20,6 +20,6 @@
     }
     .shop_header_right {
         @include flexBetween;
-        gap: 40px;
+        gap: $defaultExtraLargeMargin;
     }
 }
