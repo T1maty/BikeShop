@@ -1,0 +1,153 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.shop_productItem_mainBox {
+    background-color: $themeColorSomeWhite;
+    padding: $containerShopPadding;
+    @include flexColumn;
+    color: black;
+
+    > div {
+        //border: 1px solid black;
+        width: 100%;
+    }
+
+    .cloudCategory {
+        padding: $defaultLargeMargin 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: $defaultLargeMargin;
+        margin-bottom: $defaultLargeMargin;
+
+        .cloudCategory_item {
+            color: white;
+            background-color: $themeColorGray;
+            border-radius: $smallBorderRadius;
+            padding: $divButtonPadding;
+        }
+    }
+    .product {
+        @include flexOnlyBetween;
+        gap: $defaultExtraLargeMargin;
+        margin-bottom: $defaultExtraLargeMargin;
+
+        .product_images {
+            width: 60%;
+            display: flex;
+            justify-content: flex-end;
+
+            img {
+                max-width: 600px;
+                height: auto;
+            }
+
+        }
+        .product_info {
+            //border: 1px solid black;
+            @include flexColumn;
+            @include divLargeMarginBottom;
+            width: 40%;
+
+            .product_title {
+                font-weight: bold;
+                font-size: 20px;
+            }
+            .product_price {
+                font-weight: bold;
+                font-size: 24px;
+                color: red;
+            }
+            .product_description {
+
+            }
+            .product_select {
+                width: 100%;
+                color: black;
+            }
+            .product_buy {
+                @include flexOnlyBetween;
+                align-items: center;
+                gap: $defaultExtraLargeMargin;
+
+                .product_available {
+                    .isAvailable {
+                        @include flexCenter;
+                        padding: $divButtonPadding;
+                        border-radius: $smallBorderRadius;
+
+                        background-color: $themeColorMilk;
+                    }
+                    .notAvailable {
+                        @include flexCenter;
+                        padding: $divButtonPadding;
+                        border-radius: $smallBorderRadius;
+
+                        background-color: $filterButtonWaitingColor;
+                    }
+                }
+                .product_addToCart {
+                    button {
+                        padding: 10px;
+                        background-color: #BF3B38;
+                        border-radius: $smallBorderRadius;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+    .description {
+
+        .description_chapters {
+            @include flexOnlyBetween;
+            align-items: center;
+
+            > div {
+                width: 100%;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                opacity: 50%;
+                padding: 10px 0;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            // универсальный стиль active
+            .description_active {
+                background-color: white;
+                border-bottom: 2px solid black;
+                opacity: 100%;
+            }
+
+            .chapters_characteristic {
+
+            }
+            .characteristic_active {
+                background-color: white;
+                opacity: 100%;
+            }
+            .chapters_details {
+                //border-right: 1px solid black;
+            }
+            .details_active {
+                background-color: white;
+                opacity: 100%;
+            }
+            .chapters_delivery {
+
+            }
+            .delivery_active {
+                background-color: white;
+                opacity: 100%;
+            }
+        }
+        .description_content {
+            background-color: white;
+            padding: $defaultLargeMargin 0;
+            min-height: 150px;
+        }
+    }
+}
