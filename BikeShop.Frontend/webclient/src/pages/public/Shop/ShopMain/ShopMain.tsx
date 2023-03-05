@@ -50,7 +50,7 @@ export const ShopMain = () => {
                         <div className={s.menu_items}>
                             <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG)}}>Каталог</div>
                             <div>Мастерская</div>
-                            <div>Фото</div>
+                            <div>Фото!</div>
                             <div>Контакты</div>
                         </div>
                         <div className={s.menu_social}>
