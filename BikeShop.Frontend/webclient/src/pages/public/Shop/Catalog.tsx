@@ -3,6 +3,7 @@ import s from './Catalog.module.scss'
 import SortThumbnails from '../../../shared/assets/shop/icons/sort-thumbnails.png'
 import SortList from '../../../shared/assets/shop/icons/sort-list.png'
 import cart from "../../../shared/assets/shop/icons/cart.png"
+import NoProductImage from '../../../shared/assets/shop/icons/bicycle-02.svg'
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -49,7 +50,7 @@ export const Catalog = () => {
         },
         {
             id: '2',
-            image: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            image: '',
             name: 'Specialized',
             price: 100500,
             addToCart: cart,
@@ -63,7 +64,7 @@ export const Catalog = () => {
         },
         {
             id: '4',
-            image: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            image: '',
             name: 'Specialized',
             price: 100500,
             addToCart: cart,
@@ -77,7 +78,7 @@ export const Catalog = () => {
         },
         {
             id: '6',
-            image: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            image: '',
             name: 'Specialized',
             price: 100500,
             addToCart: cart,
@@ -154,12 +155,22 @@ export const Catalog = () => {
                     {products.map(prod => (
                         <div key={prod.id} className={s.content_item}>
                             <div className={s.item_image}>
-                                <img src={prod.image} alt='product-image'/>
+                                {
+                                    prod.image === null || prod.image === '' ?
+                                        <div className={s.item_noImage}>
+                                            <div className={s.item_noImage_title}>Sorry, no photo!</div>
+                                            <div className={s.item_noImage_icon}>
+                                                <img src={NoProductImage} alt='no-product-image'/>
+                                            </div>
+                                        </div>
+                                        : <img src={prod.image} alt='product-image'/>
+                                }
+
                             </div>
                             <div className={s.item_title}>{prod.name}</div>
                             <div className={s.item_buy}>
                                 <div className={s.item_price}>{prod.price}</div>
-                                <div className={s.item_cart}>
+                                <div className={s.item_cart} onClick={() => {alert('added to cart')}}>
                                     <img src={prod.addToCart} alt='cart-logo'/>
                                 </div>
                             </div>

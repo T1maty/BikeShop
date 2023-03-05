@@ -97,11 +97,27 @@
                 }
 
                 .item_image {
+                    min-height: 190px;
+
                     img {
-                        width: 280px;
-                        height: auto;
+                        width: auto;
+                        height: 190px;
                     }
                 }
+                // заглушка, если нету фотографии
+                .item_noImage {
+                    @include flexColumn;
+
+                    .item_noImage_title {
+                        padding: 20px 0 10px 0;
+                    }
+
+                    img {
+                        width: auto;
+                        height: 120px;
+                    }
+                }
+
                 .item_title {
                     font-weight: bold;
                 }
@@ -118,6 +134,8 @@
                         font-weight: bold;
                     }
                     .item_cart {
+                        cursor: pointer;
+
                         img {
                             width: 20px;
                             height: 20px;
