@@ -4,6 +4,8 @@ import SortThumbnails from '../../../shared/assets/shop/icons/sort-thumbnails.pn
 import SortList from '../../../shared/assets/shop/icons/sort-list.png'
 import cart from "../../../shared/assets/shop/icons/cart.png"
 import NoProductImage from '../../../shared/assets/shop/icons/bicycle-02.svg'
+import {BikeShopPaths} from "../../../app/routes/paths";
+import {useNavigate} from "react-router-dom";
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -16,6 +18,8 @@ type ProductsType = {
 }
 
 export const Catalog = () => {
+
+    const navigate = useNavigate()
 
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
@@ -153,7 +157,10 @@ export const Catalog = () => {
 
                 <div className={s.right_content}>
                     {products.map(prod => (
-                        <div key={prod.id} className={s.content_item}>
+                        <div key={prod.id}
+                             className={s.content_item}
+                             onClick={() => {navigate(BikeShopPaths.SHOP.PRODUCT)}}
+                        >
                             <div className={s.item_image}>
                                 {
                                     prod.image === null || prod.image === '' ?

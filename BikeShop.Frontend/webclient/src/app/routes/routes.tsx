@@ -9,6 +9,7 @@ import {
     RegistrationPage,
     Service,
     Shop,
+    ShopProductItem,
     ShopWrapper
 } from "../../pages";
 import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} from "../../entities";
@@ -77,6 +78,12 @@ export const Routes = createBrowserRouter([
         path: '/shop/catalog',
         element: <ShopWrapper>
             <Catalog/>
+        </ShopWrapper>
+    },
+    {
+        path: '/shop/catalog/id',
+        element: <ShopWrapper>
+            <ShopProductItem/>
         </ShopWrapper>
     },
 

@@ -12,9 +12,9 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
     return (
         <div className={s.shop_wrapper}>
             <ShopHeader/>
-            {/*<div className={s.shop_main}>*/}
+            <div className={s.shop_main}>
                 {children}
-            {/*</div>*/}
+            </div>
             <ShopFooter/>
         </div>
     );

@@ -14,5 +14,6 @@ export const BikeShopPaths = {
     SHOP: {
         HOME: '/shop',
         CATALOG: '/shop/catalog',
+        PRODUCT: '/shop/catalog/id',
     }
 }

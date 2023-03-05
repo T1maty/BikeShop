@@ -4,7 +4,8 @@
 .catalog_mainBox {
     @include flexOnlyBetween;
     background-color: $themeShopColorGray;
-    flex: 1 1 auto; /*чтобы прибить футер к низу*/
+    // можно задать свойство в каждом children или в ShopWrapper
+    //flex: 1 1 auto; // чтобы прибить футер к низу
     padding: 20px 70px;
     color: black;
     gap: $defaultLargeMargin;
@@ -91,6 +92,10 @@
                 border: 1px solid black;
                 background-color: white;
                 min-width: 300px;
+
+                &:hover {
+                    cursor: pointer;
+                }
 
                 > div {
                     margin-bottom: $defaultLargeMargin;
