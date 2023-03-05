@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import s from './ShopHeader.module.scss'
-import burgerMenu from "../../../shared/assets/shop/icons/menu.png"
-import searchIcon from "../../../shared/assets/shop/icons/search.png"
-import cart from "../../../shared/assets/shop/icons/cart.png"
-import language from "../../../shared/assets/shop/icons/lang.png"
-import profile from "../../../shared/assets/shop/icons/profile.png"
+import burgerMenu from "../../../../shared/assets/shop/icons/menu.png"
+import searchIcon from "../../../../shared/assets/shop/icons/search.png"
+import cart from "../../../../shared/assets/shop/icons/cart.png"
+import language from "../../../../shared/assets/shop/icons/lang.png"
+import profile from "../../../../shared/assets/shop/icons/profile.png"
 import {TextField} from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@mui/icons-material/Search'

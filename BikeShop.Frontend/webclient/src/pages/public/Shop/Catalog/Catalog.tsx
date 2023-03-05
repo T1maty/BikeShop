@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import s from './Catalog.module.scss'
-import SortThumbnails from '../../../shared/assets/shop/icons/sort-thumbnails.png'
-import SortList from '../../../shared/assets/shop/icons/sort-list.png'
-import cart from "../../../shared/assets/shop/icons/cart.png"
-import NoProductImage from '../../../shared/assets/shop/icons/bicycle-02.svg'
-import {BikeShopPaths} from "../../../app/routes/paths";
+import SortThumbnails from '../../../../shared/assets/shop/icons/sort-thumbnails.png'
+import SortList from '../../../../shared/assets/shop/icons/sort-list.png'
+import cart from "../../../../shared/assets/shop/icons/cart.png"
+import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
+import {BikeShopPaths} from "../../../../app/routes/paths";
 import {useNavigate} from "react-router-dom";
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'

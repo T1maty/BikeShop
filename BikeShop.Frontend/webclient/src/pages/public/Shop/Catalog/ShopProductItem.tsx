@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import s from './ShopProductItem.module.scss'
-import {Button} from "../../../shared/ui";
+import {Button} from "../../../../shared/ui";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {UserResponse} from "../../../entities";
+import {UserResponse} from "../../../../entities";
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 

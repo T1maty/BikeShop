@@ -1,26 +1,26 @@
 import React from 'react'
-import s from './Shop.module.scss'
-import headerPhoto from '../../../shared/assets/shop/images/header_photo.png'
-import socialLogo from '../../../shared/assets/shop/icons/logo_instagram.png'
-import catalogBikes from '../../../shared/assets/shop/images/catalog-bikes.png'
-import catalogProtection from '../../../shared/assets/shop/images/catalog-protection.png'
-import catalogSpares from '../../../shared/assets/shop/images/catalog-spares.png'
-import catalogClothes from '../../../shared/assets/shop/images/catalog-clothes.png'
-import catalogChemistry from '../../../shared/assets/shop/images/catalog-chemistry.png'
-import catalogAccessories from '../../../shared/assets/shop/images/catalog-accessories.png'
-import catalogFood from '../../../shared/assets/shop/images/catalog-food.png'
-import map from '../../../shared/assets/shop/images/map-01.png'
-import burgerMenu from '../../../shared/assets/shop/icons/menu.png'
-import position from '../../../shared/assets/shop/icons/position.png'
-import search from '../../../shared/assets/shop/icons/search.png'
-import cart from '../../../shared/assets/shop/icons/cart.png'
-import language from '../../../shared/assets/shop/icons/lang.png'
-import profile from '../../../shared/assets/shop/icons/profile.png'
+import s from './ShopMain.module.scss'
+import headerPhoto from '../../../../shared/assets/shop/images/header_photo.png'
+import socialLogo from '../../../../shared/assets/shop/icons/logo_instagram.png'
+import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
+import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
+import catalogSpares from '../../../../shared/assets/shop/images/catalog-spares.png'
+import catalogClothes from '../../../../shared/assets/shop/images/catalog-clothes.png'
+import catalogChemistry from '../../../../shared/assets/shop/images/catalog-chemistry.png'
+import catalogAccessories from '../../../../shared/assets/shop/images/catalog-accessories.png'
+import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
+import map from '../../../../shared/assets/shop/images/map-01.png'
+import burgerMenu from '../../../../shared/assets/shop/icons/menu.png'
+import position from '../../../../shared/assets/shop/icons/position.png'
+import search from '../../../../shared/assets/shop/icons/search.png'
+import cart from '../../../../shared/assets/shop/icons/cart.png'
+import language from '../../../../shared/assets/shop/icons/lang.png'
+import profile from '../../../../shared/assets/shop/icons/profile.png'
 import {useNavigate} from 'react-router-dom'
-import {BikeShopPaths} from "../../../app/routes/paths";
+import {BikeShopPaths} from "../../../../app/routes/paths";
 import {ShopFooter} from "./ShopFooter";
 
-export const Shop = () => {
+export const ShopMain = () => {
 
     const navigate = useNavigate()
 

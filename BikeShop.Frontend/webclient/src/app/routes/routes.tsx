@@ -8,7 +8,7 @@ import {
     ProductCatalog,
     RegistrationPage,
     Service,
-    Shop,
+    ShopMain,
     ShopProductItem,
     ShopWrapper
 } from "../../pages";
@@ -69,10 +69,10 @@ export const Routes = createBrowserRouter([
             <Service/>
         </WorkspaceHeaderProvider>
     },
-    // для Shop
+    // для ShopMain
     {
         path: '/shop',
-        element: <Shop/>
+        element: <ShopMain/>
     },
     {
         path: '/shop/catalog',

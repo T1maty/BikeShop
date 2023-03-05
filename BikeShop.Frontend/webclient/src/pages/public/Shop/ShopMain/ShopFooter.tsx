@@ -1,6 +1,6 @@
 import React from 'react'
 import s from "./ShopFooter.module.scss";
-import socialLogoWhite from "../../../shared/assets/shop/icons/logo_instagram-white.png";
+import socialLogoWhite from "../../../../shared/assets/shop/icons/logo_instagram-white.png";
 
 export const ShopFooter = () => {
     return (
