@@ -2,15 +2,13 @@ import {createBrowserRouter} from "react-router-dom";
 import {Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog,
     RegistrationPage, Service, ShopMain, ShopProductItem, ShopWrapper, Profile
 } from "../../pages";
-import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} from "../../entities";
+import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider, CheckAuthRouteProvider} from "../../entities";
 import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
 import {BikeShopPaths} from "./paths";
 import {BarcodeScanerListenerProvider} from "../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider";
-import CheckAuthRoute from "../providers/RouteProviders/CheckAuthRoute";
-
 
 // @ts-ignore
-export const Routes = createBrowserRouter([
+export const routes = createBrowserRouter([
 
     ////                    ////
     ////    Авторизация     ////
@@ -45,49 +43,6 @@ export const Routes = createBrowserRouter([
             <Home/>
         </PublicHeaderProvider>
     },
-    // для Cashbox
-    {
-        path: BikeShopPaths.WORKSPACE.CASHBOX,
-        element: <WorkspaceHeaderProvider>
-            <Cashbox/>
-        </WorkspaceHeaderProvider>
-    },
-    // для Service
-    {
-        path: BikeShopPaths.WORKSPACE.SERVICE,
-        element: <WorkspaceHeaderProvider>
-            <Service/>
-        </WorkspaceHeaderProvider>
-    },
-    // для ShopMain
-    {
-        path: '/shop',
-        element: <ShopMain/>
-    },
-    {
-        path: '/shop/catalog',
-        element: <ShopWrapper>
-            <Catalog/>
-        </ShopWrapper>
-    },
-    {
-        path: '/shop/catalog/id',
-        element: <ShopWrapper>
-            <ShopProductItem/>
-        </ShopWrapper>
-    },
-    {
-        path: '/shop/profile',
-        element: <ShopWrapper>
-            <Profile/>
-        </ShopWrapper>
-    },
-    {
-        path: '/shop/order',
-        element: <ShopWrapper>
-            <Order/>
-        </ShopWrapper>
-    },
 
     ////                                        ////
     ////    Страницы только для залогиненых     ////
@@ -95,28 +50,73 @@ export const Routes = createBrowserRouter([
 
     {
         path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
-        element: <CheckAuthRoute>
+        element: <CheckAuthRouteProvider>
             <BarcodeScanerListenerProvider>
                 <WorkspaceHeaderProvider>
                     <MainPage/>
                 </WorkspaceHeaderProvider>
             </BarcodeScanerListenerProvider>
-        </CheckAuthRoute>
+        </CheckAuthRouteProvider>
     },
     {
         path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
-        element: <CheckAuthRoute>
+        element: <CheckAuthRouteProvider>
             <WorkspaceHeaderProvider>
                 <ProductCatalog/>
             </WorkspaceHeaderProvider>
-        </CheckAuthRoute>
+        </CheckAuthRouteProvider>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
-        element: <CheckAuthRoute>
+        element: <CheckAuthRouteProvider>
             <WorkspaceHeaderProvider>
                 <WorkCatalog/>
             </WorkspaceHeaderProvider>
-        </CheckAuthRoute>
+        </CheckAuthRouteProvider>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.CASHBOX,
+        element: <WorkspaceHeaderProvider>
+            <Cashbox/>
+        </WorkspaceHeaderProvider>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.SERVICE,
+        element: <WorkspaceHeaderProvider>
+            <Service/>
+        </WorkspaceHeaderProvider>
+    },
+
+    ////                                        ////
+    ////          Интернет-магазин              ////
+    ////                                        ////
+
+    {
+        path: BikeShopPaths.SHOP.HOME,
+        element: <ShopMain/>
+    },
+    {
+        path: BikeShopPaths.SHOP.CATALOG,
+        element: <ShopWrapper>
+            <Catalog/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.PRODUCT,
+        element: <ShopWrapper>
+            <ShopProductItem/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.PROFILE,
+        element: <ShopWrapper>
+            <Profile/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.ORDER,
+        element: <ShopWrapper>
+            <Order/>
+        </ShopWrapper>
     },
 ])

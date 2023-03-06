@@ -1,11 +1,11 @@
 import React, {FC, Suspense} from "react";
-import {createTheme, ThemeProvider} from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import {RouterProvider} from "react-router-dom";
-import {Routes} from "./routes/routes";
 import './styles/index.scss'
+import CssBaseline from "@mui/material/CssBaseline";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {RouterProvider} from "react-router-dom";
 import {SnackbarProvider} from "notistack";
 import Buttons from "../widgets/workspace/AdminMenu/ui/Buttons";
+import {routes} from './routes/routes';
 
 const darkTheme = createTheme({
     palette: {
@@ -13,15 +13,15 @@ const darkTheme = createTheme({
     }
 });
 
-const App: FC = () => {
+export const App = () => {
 
     return (
         <div className={`app`}>
             <ThemeProvider theme={darkTheme}>
                 <SnackbarProvider maxSnack={3}>
-                    <CssBaseline/>
+                    {/*<CssBaseline/>*/}
                     <Suspense>
-                        <RouterProvider router={Routes}/>
+                        <RouterProvider router={routes}/>
                     </Suspense>
                 </SnackbarProvider>
             </ThemeProvider>
@@ -29,5 +29,3 @@ const App: FC = () => {
         </div>
     );
 };
-
-export default App;

@@ -1,18 +1,15 @@
-import React from 'react';
-import {PublicHeader} from "../../../widgets";
+import React, {ReactElement} from 'react'
+import {PublicHeader} from '../../../widgets'
 
-interface props {
-    children: any
+interface PublicHeaderProviderProps {
+    children: ReactElement
 }
 
-const PublicHeaderProvider = (props: props) => {
+export const PublicHeaderProvider: React.FC<PublicHeaderProviderProps> = ({children}) => {
     return (
         <>
             <PublicHeader/>
-            {props.children}
+            {children}
         </>
     );
 };
-
-export default PublicHeaderProvider;
-

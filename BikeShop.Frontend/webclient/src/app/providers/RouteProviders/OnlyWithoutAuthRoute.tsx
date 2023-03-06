@@ -1,15 +1,15 @@
-import { BikeShopPaths } from 'app/routes/paths';
-import React from 'react';
-import {useNavigate} from "react-router-dom";
+import React, {useEffect} from 'react'
+import { BikeShopPaths } from 'app/routes/paths'
+import {useNavigate} from 'react-router-dom'
 
-interface props {
+interface OnlyWithoutAuthRouteProps {
     children: any
 }
 
-const OnlyWithoutAuthRoute = (props: props) => {
+export const OnlyWithoutAuthRoute: React.FC<OnlyWithoutAuthRouteProps> = ({children}) => {
     const navigate = useNavigate();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (localStorage.getItem('accessToken') != null) {
             navigate(BikeShopPaths.WORKSPACE.HOME)
         }
@@ -17,9 +17,7 @@ const OnlyWithoutAuthRoute = (props: props) => {
 
     return (
         <div>
-            {props.children}
+            {children}
         </div>
     );
 };
-
-export default OnlyWithoutAuthRoute;

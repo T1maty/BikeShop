@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import './app/_App.css';
-import App from './app/App';
+import {App} from './app/App';
 import 'shared/config/i18n/i18n';
 import {ThemeProvider} from "./app/providers/ThemeProvider";
 

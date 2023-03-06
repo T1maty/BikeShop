@@ -34,12 +34,11 @@ export type {GetUsersResponse} from './responses/GetUsersResponse'
 export type {UserResponse} from './responses/GetUsersResponse'
 export type {UserObj} from './responses/GetUsersResponse'
 
-export {default as OnlyWithoutAuthRoute} from '../app/providers/RouteProviders/OnlyWithoutAuthRoute'
-export {default as CheckAuthRoute} from '../app/providers/RouteProviders/CheckAuthRoute'
 
-export {default as PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeaderProvider'
+export {OnlyWithoutAuthRoute} from '../app/providers/RouteProviders/OnlyWithoutAuthRoute'
+export {CheckAuthRouteProvider} from '../app/providers/RouteProviders/CheckAuthRouteProvider'
+
+export {PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeaderProvider'
 export {WorkspaceHeaderProvider} from '../app/providers/HeaderProviders/WorkspaceHeaderProvider'
 
 export {EnumProductCheckStatus} from './enumerables/EnumProductCheckStatus'
-
-

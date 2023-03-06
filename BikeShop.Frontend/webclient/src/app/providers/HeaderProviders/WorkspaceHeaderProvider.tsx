@@ -1,18 +1,17 @@
-import React, {FC, ReactElement} from 'react';
+import React, {ReactElement} from 'react'
+import {Header} from '../../../widgets/workspace/Header'
 
-import {Header} from "../../../widgets/workspace/Header";
-
-interface WorkspaceHeaderProviderType {
+interface WorkspaceHeaderProviderProps {
     children: ReactElement
 }
 
-export const WorkspaceHeaderProvider: FC<WorkspaceHeaderProviderType> = (props) => {
+export const WorkspaceHeaderProvider: React.FC<WorkspaceHeaderProviderProps> = ({children}) => {
 
     return (
         <>
             <Header/>
             <div className='content'>
-                {props.children}
+                {children}
             </div>
         </>
     );

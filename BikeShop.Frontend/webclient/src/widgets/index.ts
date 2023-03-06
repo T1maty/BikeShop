@@ -1,4 +1,4 @@
-export {default as PublicHeader} from './public/Header/Header'
+export {PublicHeader} from './public/PublicHeader/PublicHeader'
 export {default as ProductCatalogTable} from './workspace/ProductCatalogTable/ProductCatalogTable'
 export {default as TagTreeView} from './workspace/TagTreeView/TagTreeView'
 export {default as ClientCard} from './workspace/ClientCard/ClientCard';
