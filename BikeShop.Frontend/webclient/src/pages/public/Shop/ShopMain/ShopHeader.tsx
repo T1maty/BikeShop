@@ -1,6 +1,5 @@
 import React from 'react'
 import s from './ShopHeader.module.scss'
-import burgerMenu from "../../../../shared/assets/shop/icons/menu.png"
 import cart from "../../../../shared/assets/shop/icons/cart.png"
 import language from "../../../../shared/assets/shop/icons/lang.png"
 import profile from "../../../../shared/assets/shop/icons/profile.png"
@@ -11,7 +10,7 @@ export const ShopHeader = () => {
     return (
         <div className={s.shop_header}>
             <div className={s.shop_header_left}>
-                <img src={burgerMenu} alt="burger-menu"/>
+                BikeShop
             </div>
             <div className={s.shop_header_right}>
                 <SearchProduct/>
