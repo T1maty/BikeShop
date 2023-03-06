@@ -89,7 +89,7 @@
                 .product_addToCart {
                     button {
                         padding: 10px;
-                        background-color: #BF3B38;
+                        background-color: $bgColorButtonConfirm;
                         border-radius: $smallBorderRadius;
                         font-weight: bold;
                     }
@@ -110,10 +110,7 @@
                 font-weight: bold;
                 opacity: 50%;
                 padding: 10px 0;
-
-                &:hover {
-                    cursor: pointer;
-                }
+                @include hoverCursorPointer;
             }
             // универсальный стиль active
             .description_active {

@@ -27,7 +27,7 @@ export const ShopMain = () => {
     const [search, setSearch] = useState<boolean>(false)
 
     const InputStyles = {
-        color: "black",
+        color: 'black',
         '.MuiOutlinedInput-notchedOutline': {
             borderColor: 'black',
         },

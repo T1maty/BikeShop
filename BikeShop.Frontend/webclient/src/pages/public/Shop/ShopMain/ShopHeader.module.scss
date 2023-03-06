@@ -9,10 +9,7 @@
 
     img {
         filter: invert(100%);
-
-        &:hover {
-            cursor: pointer;
-        }
+        @include hoverCursorPointer;
     }
 
     .shop_header_left {

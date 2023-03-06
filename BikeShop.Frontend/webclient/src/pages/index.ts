@@ -16,5 +16,7 @@ export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'
 export {ShopHeader} from './public/Shop/ShopMain/ShopHeader'
 export {ShopFooter} from './public/Shop/ShopMain/ShopFooter'
 export {SearchProduct} from './public/Shop/ShopMain/SearchProduct'
+
 export {Catalog} from './public/Shop/Catalog/Catalog'
 export {ShopProductItem} from './public/Shop/Catalog/ShopProductItem'
+export {Order} from './public/Shop/Order/Order'

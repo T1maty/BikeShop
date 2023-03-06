@@ -44,9 +44,7 @@
             }
 
             .leftSide_shopTitle {
-                &:hover {
-                    cursor: pointer;
-                }
+                @include hoverCursorPointer;
             }
         }
 

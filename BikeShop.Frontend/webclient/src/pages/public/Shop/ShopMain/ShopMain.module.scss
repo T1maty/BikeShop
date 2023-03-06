@@ -30,9 +30,7 @@
                 }
 
                 img {
-                    &:hover {
-                        cursor: pointer;
-                    }
+                    @include hoverCursorPointer;
                 }
 
                 .header_icons_left {
@@ -61,9 +59,7 @@
                     gap: 50px;
 
                     > div {
-                        &:hover {
-                            cursor: pointer;
-                        }
+                        @include hoverCursorPointer;
                     }
                 }
 

@@ -72,9 +72,7 @@
             }
             .filter_viewType {
                 .viewType_item {
-                    &:hover {
-                        cursor: pointer;
-                    }
+                    @include hoverCursorPointer;
                 }
             }
         }
@@ -92,10 +90,7 @@
                 border: 1px solid black;
                 background-color: white;
                 min-width: 300px;
-
-                &:hover {
-                    cursor: pointer;
-                }
+                @include hoverCursorPointer;
 
                 > div {
                     margin-bottom: $defaultLargeMargin;

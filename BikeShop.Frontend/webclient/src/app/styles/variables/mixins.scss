@@ -103,3 +103,9 @@
         margin-bottom: $defaultLargeMargin;
     }
 }
+
+@mixin hoverCursorPointer {
+    &:hover {
+        cursor: pointer;
+    }
+}
