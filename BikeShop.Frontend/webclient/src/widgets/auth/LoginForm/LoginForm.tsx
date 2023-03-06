@@ -10,7 +10,6 @@ const LoginForm = () => {
 
     const login = useAuthUser(s => s.login);
     const setUser = useAuthUser(s => s.setUser);
-    const user = useAuthUser(s => s.user);
     const loginToShop = useAuthUser(s => s.loginToShop);
 
 
@@ -36,8 +35,11 @@ const LoginForm = () => {
             setUser(r.data.user)
             if (r.data.user.shopId != 0) {
                 loginToShop(r.data.user.shopId)
+                navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+            } else {
+                navigate(BikeShopPaths.SHOP.PROFILE)
             }
-            navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+
 
         });
     };

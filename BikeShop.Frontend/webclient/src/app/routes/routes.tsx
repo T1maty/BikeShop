@@ -1,8 +1,19 @@
 import {createBrowserRouter} from "react-router-dom";
-import {Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog,
-    RegistrationPage, Service, ShopMain, ShopProductItem, ShopWrapper, Profile
+import {
+    Cashbox,
+    Catalog,
+    LoginPage,
+    MainPage,
+    Order,
+    ProductCatalog,
+    Profile,
+    RegistrationPage,
+    Service,
+    ShopMain,
+    ShopProductItem,
+    ShopWrapper
 } from "../../pages";
-import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} from "../../entities";
+import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from "../../entities";
 import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
 import {BikeShopPaths} from "./paths";
 import {BarcodeScanerListenerProvider} from "../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider";
@@ -33,18 +44,6 @@ export const Routes = createBrowserRouter([
     ////    Страницы без ограничения доступа    ////
     ////                                        ////
 
-    {
-        path: BikeShopPaths.WORKSPACE.HOME_NULL,
-        element: <PublicHeaderProvider>
-            <Home/>
-        </PublicHeaderProvider>
-    },
-    {
-        path: BikeShopPaths.WORKSPACE.HOME,
-        element: <PublicHeaderProvider>
-            <Home/>
-        </PublicHeaderProvider>
-    },
     // для Cashbox
     {
         path: BikeShopPaths.WORKSPACE.CASHBOX,
@@ -61,7 +60,11 @@ export const Routes = createBrowserRouter([
     },
     // для ShopMain
     {
-        path: '/shop',
+        path: BikeShopPaths.SHOP.HOME,
+        element: <ShopMain/>
+    },
+    {
+        path: BikeShopPaths.SHOP.HOME_NULL,
         element: <ShopMain/>
     },
     {
