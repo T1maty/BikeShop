@@ -2,10 +2,7 @@
 @import '../../../../app/styles/variables/variables';
 
 .shop_productItem_mainBox {
-    background-color: $themeColorSomeWhite;
-    padding: $containerShopPadding;
     @include flexColumn;
-    color: black;
 
     > div {
         //border: 1px solid black;
@@ -13,7 +10,6 @@
     }
 
     .cloudCategory {
-        padding: $defaultLargeMargin 0;
         display: flex;
         align-items: center;
         justify-content: flex-start;

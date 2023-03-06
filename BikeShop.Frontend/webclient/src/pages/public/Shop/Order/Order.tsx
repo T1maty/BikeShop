@@ -53,7 +53,6 @@ export const Order = () => {
     //     })
     // }
 
-
     return (
         <div className={s.order_mainBox}>
             <div className={s.order_title}>Оформление заказа</div>

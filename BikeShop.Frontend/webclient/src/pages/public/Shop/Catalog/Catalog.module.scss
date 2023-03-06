@@ -3,12 +3,9 @@
 
 .catalog_mainBox {
     @include flexOnlyBetween;
-    background-color: $themeShopColorGray;
+    gap: $defaultLargeMargin;
     // можно задать свойство в каждом children или в ShopWrapper
     //flex: 1 1 auto; // чтобы прибить футер к низу
-    padding: 20px 70px;
-    color: black;
-    gap: $defaultLargeMargin;
 
     .catalog_left {
         border: 1px solid black;

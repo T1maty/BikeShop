@@ -1,6 +1,6 @@
 import {createBrowserRouter} from "react-router-dom";
 import {Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog,
-    RegistrationPage, Service, ShopMain, ShopProductItem, ShopWrapper
+    RegistrationPage, Service, ShopMain, ShopProductItem, ShopWrapper, Profile
 } from "../../pages";
 import {OnlyWithoutAuthRoute, PublicHeaderProvider, WorkspaceHeaderProvider} from "../../entities";
 import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
@@ -74,6 +74,12 @@ export const Routes = createBrowserRouter([
         path: '/shop/catalog/id',
         element: <ShopWrapper>
             <ShopProductItem/>
+        </ShopWrapper>
+    },
+    {
+        path: '/shop/profile',
+        element: <ShopWrapper>
+            <Profile/>
         </ShopWrapper>
     },
     {

@@ -10,5 +10,8 @@
     // можно задать свойство здесь или в каждом children
     .shop_main {
         flex: 1 1 auto; /*чтобы прибить футер к низу*/
+        color: black;
+        background-color: $themeColorSomeWhite;
+        padding: $containerShopPadding;
     }
 }

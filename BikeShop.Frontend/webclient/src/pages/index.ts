@@ -19,4 +19,5 @@ export {SearchProduct} from './public/Shop/ShopMain/SearchProduct'
 
 export {Catalog} from './public/Shop/Catalog/Catalog'
 export {ShopProductItem} from './public/Shop/Catalog/ShopProductItem'
+export {Profile} from './public/Shop/Profile/Profile'
 export {Order} from './public/Shop/Order/Order'
