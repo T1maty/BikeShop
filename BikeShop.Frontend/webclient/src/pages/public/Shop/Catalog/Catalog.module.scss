@@ -16,7 +16,7 @@
     }
     .catalog_right {
         @include flexColumn;
-        border: 1px solid black;
+        //border: 1px solid black;
         width: 75%;
 
         > div {
@@ -81,7 +81,7 @@
 
         .right_content {
             //flex: 1 1 auto;
-            border: 1px solid black;
+            //border: 1px solid black;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
@@ -102,11 +102,11 @@
                 }
 
                 .item_image {
-                    min-height: 190px;
+                    min-height: 200px;
 
                     img {
                         width: auto;
-                        height: 190px;
+                        height: 200px;
                     }
                 }
                 // заглушка, если нету фотографии

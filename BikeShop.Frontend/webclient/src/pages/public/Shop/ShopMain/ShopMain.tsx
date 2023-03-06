@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import s from './ShopMain.module.scss'
 import headerPhoto from '../../../../shared/assets/shop/images/header_photo.png'
 import socialLogo from '../../../../shared/assets/shop/icons/logo_instagram.png'
@@ -12,17 +12,35 @@ import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
 import map from '../../../../shared/assets/shop/images/map-01.png'
 import burgerMenu from '../../../../shared/assets/shop/icons/menu.png'
 import position from '../../../../shared/assets/shop/icons/position.png'
-import search from '../../../../shared/assets/shop/icons/search.png'
+import searchIcon from '../../../../shared/assets/shop/icons/search.png'
 import cart from '../../../../shared/assets/shop/icons/cart.png'
 import language from '../../../../shared/assets/shop/icons/lang.png'
 import profile from '../../../../shared/assets/shop/icons/profile.png'
 import {useNavigate} from 'react-router-dom'
-import {BikeShopPaths} from "../../../../app/routes/paths";
-import {ShopFooter} from "./ShopFooter";
+import {BikeShopPaths} from "../../../../app/routes/paths"
+import {ShopFooter} from "./ShopFooter"
+import {SearchProduct} from './SearchProduct'
 
 export const ShopMain = () => {
 
     const navigate = useNavigate()
+    const [search, setSearch] = useState<boolean>(false)
+
+    const InputStyles = {
+        color: "black",
+        '.MuiOutlinedInput-notchedOutline': {
+            borderColor: 'black',
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'black',
+        },
+        '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'black',
+        },
+        '.MuiSvgIcon-root ': {
+            fill: 'black',
+        }
+    }
 
     return (
         <div className={s.shop_wrapper}>
@@ -37,7 +55,12 @@ export const ShopMain = () => {
                             <div><img src={position} alt="position-logo"/></div>
                         </div>
                         <div className={s.header_icons_right}>
-                            <div><img src={search} alt="search-logo"/></div>
+                            {
+                                search ? <SearchProduct sx={InputStyles}/> : ''
+                            }
+                            <div onClick={() => {setSearch(!search)}}>
+                                <img src={searchIcon} alt="search-logo"/>
+                            </div>
                             <div><img src={cart} alt="cart-logo"/></div>
                             <div><img src={language} alt="language-logo"/></div>
                             <div><img src={profile} alt="profile-logo"/></div>
@@ -50,7 +73,7 @@ export const ShopMain = () => {
                         <div className={s.menu_items}>
                             <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG)}}>Каталог</div>
                             <div>Мастерская</div>
-                            <div>Фото!</div>
+                            <div>Фото</div>
                             <div>Контакты</div>
                         </div>
                         <div className={s.menu_social}>
