@@ -8,10 +8,10 @@ import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClie
 import {BikeShopPaths} from "../../../app/routes/paths";
 import {IUser} from "../../../entities";
 import useMainPageStore from "./MainPageStore";
-import useService from '../Service/ServiceStore';
-import CreateShopModal from '../../../features/CreateShopStorageModal/CreateShopModal';
+import CreateProductModal from "../../../features/CreateProductModal/CreateProductModal";
 
 const MainPage = () => {
+
     const navigate = useNavigate();
 
     const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
@@ -74,6 +74,7 @@ const MainPage = () => {
                                 </Button>
                             </div>
                             <div>
+                                <CreateProductModal/>
                                 <Button onClick={() => {}}>
                                     Прокат
                                 </Button>

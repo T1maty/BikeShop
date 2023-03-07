@@ -48,6 +48,7 @@ const CreateProductModal = (props: CreateProductModalProps) => {
         boxShadow: 24,
         p: 4,
         borderRadius: 10,
+        color: 'white'
     };
 
     const onSubmit: SubmitHandler<ICreateProduct> = (data: ICreateProduct) => {
