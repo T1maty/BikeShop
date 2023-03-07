@@ -124,3 +124,16 @@
         cursor: pointer;
     }
 }
+
+@mixin editProfileButton {
+    button {
+        padding: 10px;
+        background-color: #32DA75;
+        border-radius: $smallBorderRadius;
+        font-weight: bold;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}

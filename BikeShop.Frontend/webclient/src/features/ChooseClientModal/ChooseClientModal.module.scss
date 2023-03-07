@@ -34,26 +34,33 @@
         }
     }
 
-    .clientModal_textFields {
+    .clientModal_addClient {
+        @include flexColumn;
+
         > div {
-            @include flexColumn;
             width: 100%;
         }
 
-        .textFields_title {
+        .addClient_title {
             @include titleCenter;
             margin-bottom: $defaultSmallMargin;
         }
-    }
+        .addClient_inputs {
+            > div {
+                width: 100%;
+                margin-bottom: $defaultSmallMargin;
+            }
+        }
+        .addClient_buttonsBlock {
+            @include flexOnlyBetween;
 
-    .clientModal_buttonsBlock {
-        @include flexOnlyBetween;
-
-        button {
-            width: 200px;
-            padding: $smallButtonPadding;
-            margin-top: $defaultSmallMargin;
+            button {
+                padding: $smallButtonPadding;
+                margin-top: $defaultSmallMargin;
+            }
         }
     }
+
+
 
 }

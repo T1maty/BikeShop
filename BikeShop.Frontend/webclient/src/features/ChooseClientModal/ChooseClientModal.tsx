@@ -77,7 +77,9 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
     return (
         <Modal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -90,15 +92,21 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                         <div className={s.clientModal_searchBlock_input}>
                             <Input placeholder={'Введите фамилию'} value={fio}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setFIO(e.currentTarget.value)}}
-                                   clearInputValue={() => {setFIO('')}}
+                                       setFIO(e.currentTarget.value)
+                                   }}
+                                   clearInputValue={() => {
+                                       setFIO('')
+                                   }}
                             />
                         </div>
                         <div className={s.clientModal_searchBlock_input}>
                             <Input placeholder={'Введите номер телефона'} value={phoneNumber}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setPhoneNumber(e.currentTarget.value)}}
-                                   clearInputValue={() => {setPhoneNumber('')}}
+                                       setPhoneNumber(e.currentTarget.value)
+                                   }}
+                                   clearInputValue={() => {
+                                       setPhoneNumber('')
+                                   }}
                             />
                         </div>
                         <div className={s.clientModal_searchBlock_textField}>
@@ -113,7 +121,9 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                                         users.map((u: any) => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}
-                                                    onClick={() => {userClickHandler(u.user)}}
+                                                     onClick={() => {
+                                                         userClickHandler(u.user)
+                                                     }}
                                                 >
                                                     {u.user.lastName} {u.user.firstName} {u.user.patronymic}
                                                 </div>
@@ -122,43 +132,52 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                             }
                         </div>
                     </div>
-                    <div className={s.clientModal_textFields}>
-                        <div className={s.textFields_title}>
+
+                    <div className={s.clientModal_addClient}>
+                        <div className={s.addClient_title}>
                             Создать клиента:
                         </div>
-                        <div>
-                            <ControlledInput name={'lastName'} label={'Фамилия'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
+                        <div className={s.addClient_inputs}>
+                            <div>
+                                <ControlledInput name={'lastName'} label={'Фамилия'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                            </div>
+                            <div>
+                                <ControlledInput name={'firstName'} label={'Имя'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                            </div>
+                            <div>
+                                <ControlledInput name={'patronymic'} label={'Отчество'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                            </div>
+                            <div>
+                                <ControlledInput name={'phone'} label={'Номер телефона'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <ControlledInput name={'firstName'} label={'Имя'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
-                        </div>
-                        <div>
-                            <ControlledInput name={'patronymic'} label={'Отчество'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
-                        </div>
-                        <div>
-                            <ControlledInput name={'phone'} label={'Номер телефона'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
+                        <div className={s.addClient_buttonsBlock}>
+                            <div>
+                                <Button type={'submit'}>
+                                    Добавить клиента
+                                </Button>
+                            </div>
+                            <div>
+                                <Button onClick={() => {setOpen(false)}}>
+                                    Отмена
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                    <div className={s.clientModal_buttonsBlock}>
-                        <Button type={'submit'}>
-                            Добавить клиента
-                        </Button>
-                        <Button onClick={() => {setOpen(false)}}>
-                            Отмена
-                        </Button>
-                    </div>
+
+
                 </div>
             </form>
         </Modal>

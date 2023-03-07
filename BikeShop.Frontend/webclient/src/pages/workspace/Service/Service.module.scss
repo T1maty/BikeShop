@@ -109,7 +109,7 @@
 
             .rightSide_stuffInput {
                 @include flexCenter;
-                //margin-bottom: $defaultSmallMargin;
+                margin-bottom: $defaultLargeMargin;
                 width: 100%;
             }
             .rightSide_infoFields {
