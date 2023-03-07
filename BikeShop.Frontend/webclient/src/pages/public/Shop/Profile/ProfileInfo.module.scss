@@ -43,10 +43,14 @@
                     }
 
                     .inputs_left {
-
+                        > div {
+                            margin-bottom: $defaultSmallMargin;
+                        }
                     }
                     .inputs_right {
-
+                        > div {
+                            margin-bottom: $defaultSmallMargin;
+                        }
                     }
                 }
             }
@@ -55,6 +59,8 @@
             .content_inputs {
                 @include flexBetween;
                 gap: $defaultLargeMargin;
+                margin-bottom: $defaultSmallMargin;
+
                 > div {
                     width: 100%;
                 }
