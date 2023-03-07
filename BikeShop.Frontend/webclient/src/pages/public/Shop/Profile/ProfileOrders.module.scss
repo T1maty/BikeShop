@@ -3,73 +3,144 @@
 
 .profileOrders_mainBox {
     .profileOrders_title {
+        margin-bottom: $defaultSmallMargin;
         font-size: 24px;
         font-weight: bold;
     }
+
     .profileOrders_content {
+
         .profileOrders_orderItem {
-            @include flexOnlyBetween;
-            align-items: center;
             padding: $defaultSmallMargin;
             background-color: $themeColorMilk;
             border-radius: $extraSmallBorderRadius;
-            height: 70px;
+            margin-bottom: $defaultSmallMargin;
+            min-height: 70px;
 
-            .orderItem_status {
-                @include flexCenter;
-                .status_color {
+            .orderItem_mainPart {
+                @include flexOnlyBetween;
+                align-items: center;
+                padding-bottom: $defaultSmallMargin;
+
+                .orderItem_status {
                     @include flexCenter;
-                    border-radius: $extraSmallBorderRadius;
-                    margin-right: $defaultSmallMargin;
-                    background-color: orange;
-                    width: 20px;
-                    height: 50px;
+
+                    .status_color {
+                        @include flexCenter;
+                        border-radius: $extraSmallBorderRadius;
+                        margin-right: $defaultSmallMargin;
+                        width: 20px;
+                        height: 50px;
+                        background-color: orange;
+                    }
+
+                    .status_data {
+                        @include flexColumn;
+                        gap: 5px;
+
+                        .status_data_date {
+
+                        }
+
+                        .status_data_text {
+                            font-size: 18px;
+                            font-weight: bold;
+                        }
+                    }
                 }
-                .status_data {
+
+                .orderItem_sum {
                     @include flexColumn;
                     gap: 5px;
 
-                    .status_data_date {
+                    .sum_price {
 
                     }
-                    .status_data_text {
-                        font-size: 18px;
-                        font-weight: bold;
+
+                    .sum_result {
+                        span {
+                            color: $bgColorButtonConfirm;
+                            font-size: 18px;
+                            font-weight: bold;
+                        }
                     }
                 }
-            }
-            .orderItem_sum {
-                @include flexColumn;
-                gap: 5px;
 
-                .sum_price {
-
-                }
-                .sum_result {
-                    span {
-                        color: red;
-                        font-size: 18px;
-                        font-weight: bold;
-                    }
-                }
-            }
-            .orderItem_icons {
-                @include flexCenter;
-                gap: $defaultSmallMargin;
-
-                > div {
+                .orderItem_icons {
                     @include flexCenter;
-                    color: white;
-                    background-color: $themeColorDark;
-                    border-radius: $extraSmallBorderRadius;
+                    gap: $defaultSmallMargin;
+
+                    > div {
+                        @include flexCenter;
+                        color: white;
+                        background-color: $themeColorDark;
+                        border-radius: $extraSmallBorderRadius;
+                    }
+
+                    .icons_image {
+                        img {
+                            width: 80px;
+                            height: auto;
+                        }
+                    }
+
+                    .icons_isCollapsed {
+                        padding: $defaultSmallMargin;
+                        @include hoverCursorPointer;
+                        width: 130px;
+                    }
                 }
-                .icons_one {
-                    width: 50px;
-                    height: 50px;
+            }
+
+            .orderItem_collapsedPart {
+                .collapsedPart_title {
+                    font-weight: bold;
+                    text-align: center;
+                    text-decoration: underline;
+                    margin-bottom: $defaultSmallMargin;
                 }
-                .icons_two {
-                    width: 30px;
-                    height: 30px;
+                .collapsedPart_deliveryType {
+                    margin-bottom: $defaultSmallMargin;
+                }
+                .collapsedPart_deliveryDetails {
+                    @include flexOnlyBetween;
+                    //gap: $defaultSmallMargin;
+                }
+                .collapsedPart_discount {
+                    padding: $defaultSmallMargin 0;
+                }
+                .collapsedPart_products {
+                    margin-bottom: $defaultSmallMargin;
+
+                    .products_title {
+                        margin-bottom: $defaultSmallMargin;
+                    }
+                    .products_list {
+                        margin-bottom: $defaultLargeMargin;
+
+                        > div {
+                            margin-bottom: $defaultSmallMargin;
+                            color: white;
+                        }
+                        .list_item {
+                            padding: $defaultSmallMargin;
+                            background-color: $themeColorDark;
+                            border-radius: $extraSmallBorderRadius;
+                        }
+                    }
+                }
+                .collapsedPart_sum {
+                    @include flexColumn;
+                    align-items: flex-end;
+
+                    > div {
+                        margin-bottom: $defaultSmallMargin;
+                    }
+                    >:last-child {
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+
                 }
             }
         }
