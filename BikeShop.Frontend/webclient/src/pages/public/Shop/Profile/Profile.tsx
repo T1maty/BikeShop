@@ -48,19 +48,22 @@ export const Profile = () => {
                          onClick={()=> {chooseMenuItemHandler('Orders',
                              false, true, false, false)}}
                     >
-                        Заказы
+                        <div className={s.listItem_icon}>I</div>
+                        <div className={s.listItem_title}>Заказы</div>
                     </div>
                     <div className={isActiveServices ? s.menu_listItem_active : s.menu_listItem}
                          onClick={()=> {chooseMenuItemHandler('Services',
                              false, false,true, false)}}
                     >
-                        Ремонты
+                        <div className={s.listItem_icon}>I</div>
+                        <div className={s.listItem_title}>Ремонты</div>
                     </div>
                     <div className={isActivePurchases ? s.menu_listItem_active : s.menu_listItem}
                          onClick={()=> {chooseMenuItemHandler('Purchases',
                              false, false, false, true)}}
                     >
-                        Покупки
+                        <div className={s.listItem_icon}>I</div>
+                        <div className={s.listItem_title}>Покупки</div>
                     </div>
                 </div>
             </div>

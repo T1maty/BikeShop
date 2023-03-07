@@ -36,6 +36,7 @@
                 .info_name {
                     border-bottom: 1px solid black;
                     font-size: 20px;
+                    padding-bottom: $defaultSmallMargin;
                 }
                 .info_text {
 
@@ -66,6 +67,7 @@
                 .info_name {
                     border-bottom: 1px solid black;
                     font-size: 20px;
+                    padding-bottom: $defaultSmallMargin;
                 }
                 .info_text {
 
@@ -78,15 +80,43 @@
         .menu_list {
             @include divExtraLargeMarginBottom;
             @include flexColumn;
+            align-items: flex-start;
             font-size: 24px;
             font-weight: bold;
+            padding-left: 100px;
 
             .menu_listItem {
                 @include hoverProfileMenuItem;
+                @include flexOnlyBetween;
+                align-items: center;
+                gap: 10px;
+
+                .listItem_icon {
+                    border: 1px solid black;
+                    width: 30px;
+                    height: 30px;
+                }
+                .listItem_title {
+
+                }
             }
+            // зарефакторить!!!
             .menu_listItem_active {
-                padding: $defaultSmallMargin 0;
                 color: orange;
+
+                @include hoverProfileMenuItem;
+                @include flexOnlyBetween;
+                align-items: center;
+                gap: 10px;
+
+                .listItem_icon {
+                    border: 1px solid black;
+                    width: 30px;
+                    height: 30px;
+                }
+                .listItem_title {
+
+                }
             }
         }
     }
