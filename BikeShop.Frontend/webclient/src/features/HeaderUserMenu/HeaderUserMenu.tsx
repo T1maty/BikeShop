@@ -15,7 +15,7 @@ interface iProps {
     lastName?: string
 }
 
-const HeaderUserMenu = (props: iProps) => {
+export const HeaderUserMenu = (props: iProps) => {
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -112,5 +112,3 @@ const HeaderUserMenu = (props: iProps) => {
         </div>
     );
 };
-
-export default HeaderUserMenu;

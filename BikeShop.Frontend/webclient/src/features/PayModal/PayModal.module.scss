@@ -37,12 +37,17 @@
     .payModal_cashbackBlock {
         @include flexColumn;
 
-        .cashbackBlock_text {
+        .cashbackBlock_info {
+            margin-bottom: $defaultSmallMargin;
 
+            .cashbackBlock_text {
+
+            }
+            .cashbackBlock_value {
+                @include largeFontSize;
+            }
         }
-        .cashbackBlock_value {
-            @include largeFontSize;
-        }
+
         .cashbackBlock_buttons {
             width: 100%;
 

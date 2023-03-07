@@ -3,10 +3,14 @@ import {Modal} from "@mui/material";
 import {Button} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import usePayModal from './PayModalStore';
+import {ClientCard} from "../../widgets";
+import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore";
 
 export const PayModal = () => {
+
     const open = usePayModal(s => s.payModal)
     const setOpen = usePayModal(s => s.setPayModal)
+    const user = useCashboxStore(s => s.user)
 
     const chooseButtonHandler = () => {
         // code here
@@ -30,7 +34,7 @@ export const PayModal = () => {
                     </div>
                 </div>
                 <div className={s.payModal_clientCard}>
-                    {/*<ClientCard/>*/}
+                    <ClientCard user={user}/>
                 </div>
                 <div className={s.payModal_payType}>
                     <Button onClick={() => {}}>
@@ -44,8 +48,10 @@ export const PayModal = () => {
                     Полученная сумма наличными
                 </div>
                 <div className={s.payModal_cashbackBlock}>
-                    <div className={s.cashbackBlock_text}>Сдача:</div>
-                    <div className={s.cashbackBlock_value}>410</div>
+                    <div className={s.cashbackBlock_info}>
+                        <div className={s.cashbackBlock_text}>Сдача:</div>
+                        <div className={s.cashbackBlock_value}>410</div>
+                    </div>
                     <div className={s.cashbackBlock_buttons}>
                         <Button onClick={chooseButtonHandler}>
                             Оплатить

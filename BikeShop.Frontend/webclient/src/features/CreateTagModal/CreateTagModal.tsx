@@ -36,6 +36,7 @@ const CreateTagModal = (props: props) => {
         boxShadow: 24,
         p: 4,
         borderRadius: 10,
+        color: 'white'
     };
 
 

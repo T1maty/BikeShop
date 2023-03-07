@@ -50,13 +50,13 @@ export const routes = createBrowserRouter([
 
     {
         path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
-        element: <CheckAuthRouteProvider>
+        element: // <CheckAuthRouteProvider>
             <BarcodeScanerListenerProvider>
                 <WorkspaceHeaderProvider>
                     <MainPage/>
                 </WorkspaceHeaderProvider>
             </BarcodeScanerListenerProvider>
-        </CheckAuthRouteProvider>
+        // </CheckAuthRouteProvider>
     },
     {
         path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,

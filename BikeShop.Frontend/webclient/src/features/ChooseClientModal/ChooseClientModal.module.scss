@@ -26,7 +26,6 @@
             padding: 10px;
 
             .textField_contentItem {
-                //padding: 5px 0;
                 @include hoverItem;
             }
             .textField_loader {
@@ -35,13 +34,15 @@
         }
     }
 
-    .clientModal_textFields > div {
-        @include flexColumn;
-        //margin-bottom: $defaultSmallMargin;
-        width: 100%;
+    .clientModal_textFields {
+        > div {
+            @include flexColumn;
+            width: 100%;
+        }
 
         .textFields_title {
             @include titleCenter;
+            margin-bottom: $defaultSmallMargin;
         }
     }
 
