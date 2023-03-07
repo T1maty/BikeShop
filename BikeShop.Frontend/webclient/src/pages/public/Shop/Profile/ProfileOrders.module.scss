@@ -2,5 +2,76 @@
 @import '../../../../app/styles/variables/variables';
 
 .profileOrders_mainBox {
+    .profileOrders_title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .profileOrders_content {
+        .profileOrders_orderItem {
+            @include flexOnlyBetween;
+            align-items: center;
+            padding: $defaultSmallMargin;
+            background-color: $themeColorMilk;
+            border-radius: $extraSmallBorderRadius;
+            height: 70px;
 
+            .orderItem_status {
+                @include flexCenter;
+                .status_color {
+                    @include flexCenter;
+                    border-radius: $extraSmallBorderRadius;
+                    margin-right: $defaultSmallMargin;
+                    background-color: orange;
+                    width: 20px;
+                    height: 50px;
+                }
+                .status_data {
+                    @include flexColumn;
+                    gap: 5px;
+
+                    .status_data_date {
+
+                    }
+                    .status_data_text {
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .orderItem_sum {
+                @include flexColumn;
+                gap: 5px;
+
+                .sum_price {
+
+                }
+                .sum_result {
+                    span {
+                        color: red;
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .orderItem_icons {
+                @include flexCenter;
+                gap: $defaultSmallMargin;
+
+                > div {
+                    @include flexCenter;
+                    color: white;
+                    background-color: $themeColorDark;
+                    border-radius: $extraSmallBorderRadius;
+                }
+                .icons_one {
+                    width: 50px;
+                    height: 50px;
+                }
+                .icons_two {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
 }
