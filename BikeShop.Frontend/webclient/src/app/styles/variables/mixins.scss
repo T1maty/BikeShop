@@ -94,6 +94,14 @@
     }
 }
 
+@mixin hoverProfileMenuItem() {
+    padding: $defaultSmallMargin 0;
+    &:hover {
+        cursor: pointer;
+        color: orange;
+    }
+}
+
 @mixin divSmallMarginBottom() {
     > div:not(:last-child) {
         margin-bottom: $defaultSmallMargin;
@@ -105,8 +113,27 @@
     }
 }
 
+@mixin divExtraLargeMarginBottom() {
+    > div:not(:last-child) {
+        margin-bottom: $defaultExtraLargeMargin;
+    }
+}
+
 @mixin hoverCursorPointer {
     &:hover {
         cursor: pointer;
+    }
+}
+
+@mixin editProfileButton {
+    button {
+        padding: 10px;
+        background-color: #32DA75;
+        border-radius: $smallBorderRadius;
+        font-weight: bold;
+
+        &:hover {
+            opacity: 0.7;
+        }
     }
 }

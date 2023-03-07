@@ -8,6 +8,7 @@ interface ControlledInputProps {
     label: string
     control: UseFormReturn<any>
     rules?: Omit<RegisterOptions<any, any>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
+    // style?: any
     sx?: any
     InputLabelProps?: any
 }
@@ -25,7 +26,7 @@ export const ControlledInput = (props: ControlledInputProps) => {
                            label={props.label}
                            error={!!props.control.formState.errors[props.name]}
                            helperText={props.control.formState.errors[props.name]?.message}
-                           style={{height: '80px'}}
+                           // style={{height: '80px'}}
                            sx={props.sx}
                            InputLabelProps={props.InputLabelProps}
                 />

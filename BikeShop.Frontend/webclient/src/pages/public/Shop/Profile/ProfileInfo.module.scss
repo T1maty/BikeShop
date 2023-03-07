@@ -1,0 +1,82 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.profileInfo_mainBox {
+    .profileInfo_balance {
+        @include flexOnlyBetween;
+        padding: $defaultSmallMargin;
+        background-color: $themeColorMilk;
+        border-radius: $smallBorderRadius;
+        margin-bottom: $defaultLargeMargin;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .profileInfo_forms {
+        > div {
+            margin-bottom: $defaultLargeMargin;
+            padding: $defaultLargeMargin;
+            border: 1px solid black;
+            border-radius: $smallBorderRadius;
+
+            .form_title {
+                font-weight: bold;
+                margin-bottom: $defaultSmallMargin;
+            }
+        }
+
+        > div {
+            .personal_editButton {
+                @include editProfileButton;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+
+        .profileInfo_personal {
+            .personal_content {
+                .content_inputs {
+                    @include flexBetween;
+                    gap: $defaultLargeMargin;
+                    > div {
+                        width: 100%;
+                    }
+
+                    .inputs_left {
+                        > div {
+                            margin-bottom: $defaultSmallMargin;
+                        }
+                    }
+                    .inputs_right {
+                        > div {
+                            margin-bottom: $defaultSmallMargin;
+                        }
+                    }
+                }
+            }
+        }
+        .profileInfo_contacts {
+            .content_inputs {
+                @include flexBetween;
+                gap: $defaultLargeMargin;
+                margin-bottom: $defaultSmallMargin;
+
+                > div {
+                    width: 100%;
+                }
+            }
+        }
+        .profileInfo_delivery {
+            .delivery_content {
+                .content_row {
+                    @include flexOnlyBetween;
+                    gap: $defaultSmallMargin;
+                    padding: $defaultSmallMargin;
+                    margin-bottom: $defaultLargeMargin;
+                    background-color: $themeColorMilk;
+                    border-radius: $smallBorderRadius;
+                }
+            }
+        }
+    }
+}
