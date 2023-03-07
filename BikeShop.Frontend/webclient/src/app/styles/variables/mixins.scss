@@ -94,6 +94,14 @@
     }
 }
 
+@mixin hoverProfileMenuItem() {
+    padding: $defaultSmallMargin 0;
+    &:hover {
+        cursor: pointer;
+        color: orange;
+    }
+}
+
 @mixin divSmallMarginBottom() {
     > div:not(:last-child) {
         margin-bottom: $defaultSmallMargin;
@@ -102,6 +110,12 @@
 @mixin divLargeMarginBottom() {
     > div:not(:last-child) {
         margin-bottom: $defaultLargeMargin;
+    }
+}
+
+@mixin divExtraLargeMarginBottom() {
+    > div:not(:last-child) {
+        margin-bottom: $defaultExtraLargeMargin;
     }
 }
 

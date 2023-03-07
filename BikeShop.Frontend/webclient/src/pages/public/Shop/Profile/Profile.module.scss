@@ -3,12 +3,24 @@
 
 .profile_mainBox {
     @include flexOnlyBetween;
+    width: 100%;
+    gap: $defaultExtraLargeMargin;
 
     .profile_menu {
+        //border-right: 1px solid black;
+        border: 1px solid black;
+        width: 30%;
+
         .menu_user {
             @include flexOnlyBetween;
             gap: $defaultLargeMargin;
             margin-bottom: $defaultExtraLargeMargin;
+            padding: $defaultLargeMargin;
+
+            &:hover {
+                background-color: $bgColorButtonConfirm;
+                cursor: pointer;
+            }
 
             .user_image {
                 @include flexCenter;
@@ -19,19 +31,67 @@
             }
             .user_info {
                 @include flexColumn;
-                //gap: $defaultSmallMargin;
+                gap: $defaultSmallMargin;
 
                 .info_name {
                     border-bottom: 1px solid black;
+                    font-size: 20px;
+                }
+                .info_text {
+
                 }
 
             }
         }
-        .menu_list {
+        // зарефакторить!!!
+        .menu_user_active {
+            @include flexOnlyBetween;
+            gap: $defaultLargeMargin;
+            margin-bottom: $defaultExtraLargeMargin;
+            padding: $defaultLargeMargin;
 
+            background-color: $bgColorButtonConfirm;
+
+            .user_image {
+                @include flexCenter;
+                background-color: orange;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+            }
+            .user_info {
+                @include flexColumn;
+                gap: $defaultSmallMargin;
+
+                .info_name {
+                    border-bottom: 1px solid black;
+                    font-size: 20px;
+                }
+                .info_text {
+
+                }
+
+            }
+        }
+
+
+        .menu_list {
+            @include divExtraLargeMarginBottom;
+            @include flexColumn;
+            font-size: 24px;
+            font-weight: bold;
+
+            .menu_listItem {
+                @include hoverProfileMenuItem;
+            }
+            .menu_listItem_active {
+                padding: $defaultSmallMargin 0;
+                color: orange;
+            }
         }
     }
     .profile_content {
-
+        border: 1px solid black;
+        width: 70%;
     }
 }
