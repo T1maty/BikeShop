@@ -10,6 +10,8 @@ export {ServiceTable} from './workspace/Service/ServiceTable'
 export {SelectProduct} from './workspace/SelectProductWork/SelectProduct'
 export {SelectWork} from './workspace/SelectProductWork/SelectWork'
 
+export {Home} from './public/Home/Home'
+
 export {ShopMain} from './public/Shop/ShopMain/ShopMain'
 export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'
 export {ShopHeader} from './public/Shop/ShopMain/ShopHeader'

@@ -1,5 +1,8 @@
 export const BikeShopPaths = {
     WORKSPACE: {
+        HOME_NULL: '/',
+        HOME: '/home',
+
         LOGIN: '/login',
         REGISTRATION: '/registration',
 
@@ -10,8 +13,7 @@ export const BikeShopPaths = {
         CASHBOX: '/cashbox',
     },
     SHOP: {
-        HOME_NULL: '/',
-        HOME: '/home',
+        HOME: '/shop',
         CATALOG: '/shop/catalog',
         PRODUCT: '/shop/catalog/id',
         PROFILE: '/shop/profile',
