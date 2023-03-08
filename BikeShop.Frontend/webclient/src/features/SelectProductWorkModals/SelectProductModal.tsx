@@ -3,13 +3,13 @@ import {Modal} from '@mui/material'
 import s from './SelectProductWorkModal.module.scss'
 import useSelectProductWorkModal from './SelectProductWorkModalStore'
 import {SelectProduct} from '../../pages'
-import {IProductExtended} from "../../entities";
+import {IProductExtended} from "../../entities"
 
-interface props {
+interface SelectProductModalProps {
     products: IProductExtended[]
 }
 
-export const SelectProductModal = (props: props) => {
+export const SelectProductModal: React.FC<SelectProductModalProps> = ({products}) => {
 
     const selectProductModal = useSelectProductWorkModal(s => s.selectProductModal)
     const setSelectProductModal = useSelectProductWorkModal(s => s.setSelectProductModal)
@@ -17,14 +17,12 @@ export const SelectProductModal = (props: props) => {
     return (
         <Modal
             open={selectProductModal}
-            onClose={() => {
-                setSelectProductModal(false)
-            }}
+            onClose={() => {setSelectProductModal(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <div className={s.selectProductWorkModal_mainBox}>
-                <SelectProduct products={props.products}/>
+                <SelectProduct products={products}/>
             </div>
         </Modal>
     );

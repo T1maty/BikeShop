@@ -482,14 +482,14 @@ const Service = () => {
                     <div className={s.rightSide_tables}>
                         <SelectProductModal products={products}/>
                         <ServiceTable data={currentProducts}
-                            // data={productsItems}
+                                        // data={productsItems}
                                       buttonTitle={'Редактор товаров'}
                                       serviceTableCallback={() => {
                                           setSelectProductModal(true)
                                       }}/>
                         <SelectWorkModal/>
                         <ServiceTable data={currentWorks}
-                            // data={worksItems}
+                                        // data={worksItems}
                                       buttonTitle={'Редактор услуг'}
                                       serviceTableCallback={() => {
                                           setSelectWorkModal(true)

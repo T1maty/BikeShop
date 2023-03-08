@@ -46,12 +46,12 @@ interface ServiceStore {
     currentWorks: ServiceWork[]
     setCurrentWorks: (works: ServiceWork[]) => void
 
+    products: IProductExtended[]
+
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
     updateService: (updateData: UpdateService) => any // надо исправить тип
     updateServiceStatus: (data: UpdateServiceStatus) => void
-
-    products: IProductExtended[]
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -97,6 +97,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     setCurrentWorks: (works) => set(state => {
         state.currentWorks = works
     }),
+
+    products: [],
 
     getAllServicesInfo: () => {
         set({isLoading: true})
@@ -193,7 +195,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 console.log('service status not updated', error)
             })
     },
-    products: [],
 })))/*, {
     name: "serviceStore",
     version: 1

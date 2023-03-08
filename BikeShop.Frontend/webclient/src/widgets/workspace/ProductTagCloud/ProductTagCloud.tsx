@@ -9,10 +9,10 @@ export const ProductTagCloud = () => {
 
     return (
         <div>
-            <span>Облако тегов   </span>
-            <Button onClick={() => {
-                clearTags()
-            }}>Очистить</Button>
+            <span>Облако тегов</span>
+            <Button onClick={() => {clearTags()}}>
+                Очистить
+            </Button>
 
             {tags.map((n) => {
                 return (<ProductTagCloudItem key={n.id} tag={n}/>)

@@ -5,12 +5,11 @@ import {IProductExtended} from "../../../entities";
 import SlaveTable from "./SlaveTable";
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
 
-interface props {
+interface SelectProductProps {
     products: IProductExtended[]
 }
 
-export const SelectProduct = (props: props) => {
-
+export const SelectProduct: React.FC<SelectProductProps> = ({products}) => {
 
     return (
         <div className={s.selectProduct_mainBox}>

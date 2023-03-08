@@ -22,19 +22,17 @@
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             margin-bottom: $defaultSmallMargin;
+            padding: $defaultSmallMargin;
             height: 150px;
         }
         .leftSide_treeView {
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             margin-bottom: $defaultSmallMargin;
+            padding: $defaultLargeMargin;
             flex: 1 1 auto;
-            //height: 500px;
         }
         .leftSide_buttons {
-            //@include flexOnlyBetween;
-            //gap: 5px;
-            //flex-wrap: wrap;
             width: 100%;
 
             @include divSmallMarginBottom;
@@ -65,12 +63,7 @@
             @include flexBetween;
             height: 70px;
 
-            //> div {
-            //    width: 100%;
-            //}
-
             .infoRow_searchField {
-                //width: 450px;
                 width: 60%;
                 padding-right: $defaultLargeMargin;
             }
