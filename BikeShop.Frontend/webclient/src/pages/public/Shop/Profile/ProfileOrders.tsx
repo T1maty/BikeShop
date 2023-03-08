@@ -23,7 +23,7 @@ export const ProfileOrders = () => {
         },
         {
             id: '2', status: 'Ожидает оплаты', sum: 1999, isPay: false, isCollapsed: true,
-            products: [{id: '2', product: 'Specialized', img: img02}]
+            products: [{id: '2', product: 'Specialized Pro', img: img02}]
         },
         {
             id: '3', status: 'Готов к выдаче', sum: 99, isPay: true, isCollapsed: false,
