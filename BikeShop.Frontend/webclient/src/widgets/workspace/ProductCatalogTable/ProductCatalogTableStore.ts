@@ -66,7 +66,7 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
             value = value.concat(n + '-')
         })
         value = value.slice(0, -1)
-        return $api.get<IProductExtended[]>('/product/getbytags/' + value + ',1')
+        return $api.get<IProductExtended[]>('/product/getbytags/' + value + '?storageId=1')
     },
     updateRow: (rowData) => {
         set(state => {

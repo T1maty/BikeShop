@@ -37,7 +37,10 @@ namespace BikeShop.Products.Application.Services
 
             foreach (var prod in products)
             {
-                res.Add(new ProductQuantityDTO { Product = prod , QuantityUnit = quantityUnits[prod.QuantityUnitId], Quantity = storage[prod.Id] });
+                res.Add(new ProductQuantityDTO { 
+                    Product = prod ,
+                    QuantityUnit = prod.QuantityUnitId==0?null:quantityUnits[prod.QuantityUnitId], 
+                    Quantity = storage.ContainsKey(prod.Id)?storage[prod.Id]:0 });
             }
 
             return res;

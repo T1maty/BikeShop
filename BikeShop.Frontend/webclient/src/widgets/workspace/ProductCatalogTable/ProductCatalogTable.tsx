@@ -61,7 +61,7 @@ const ProductCatalogTable = () => {
                             {rows
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => {
-                                    console.log('1')
+
                                     return (
                                         <div/>
                                     );
