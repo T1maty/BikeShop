@@ -40,7 +40,10 @@ const ProductCatalogTableRow = (props: props) => {
         >
             {columns.map((column) => {
 
-                const value = props.row.product[column.id];
+                let value
+                // @ts-ignore
+                props.row[column.id] ? value = props.row[column.id] : value = props.row.product[column.id]
+
                 return (
                     <TableCell key={column.id} align={column.align}>
                         {value}

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BikeShop.Products.Application.Services
@@ -29,7 +30,13 @@ namespace BikeShop.Products.Application.Services
         public async Task<List<ProductQuantityDTO>> GetProductsByTags(string tagsIds, int storageId)
         {
             var ids = ProductService.GetTagListFromString(tagsIds);
-            var products = await _context.Products.Where(n => ids.Contains(n.Id)).ToListAsync();
+
+            var productsIds = await _context.TagToProductBinds.Where(bind => ids.Contains(bind.ProductTagId))
+            .Select(bind => bind.ProductId).ToListAsync();
+
+            var products = await _context.Products.Where(product => productsIds.Contains(product.Id))
+            .ToListAsync();
+
             var quantityUnits = await _context.QuantityUnits.ToDictionaryAsync(n=>n.Id, n=>n);
             var storage = await _context.StorageProducts.Where(n => n.StorageId == storageId).Where(n => products.Select(j => j.Id).Contains(n.ProductId)).ToDictionaryAsync(n=>n.ProductId, n=>n.Quantity);
 

@@ -11,6 +11,7 @@ import {columns} from './ProductCatalogTableConfig';
 import useProductCatalogTableStore from './ProductCatalogTableStore';
 import s from "../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss";
 import {IProduct, IProductExtended} from "../../../entities";
+import ProductCatalogTableRow from "./ProductCatalogTableRow";
 
 const ProductCatalogTable = () => {
 
@@ -63,7 +64,7 @@ const ProductCatalogTable = () => {
                                 .map((row) => {
 
                                     return (
-                                        <div/>
+                                        <ProductCatalogTableRow key={row.product.id} row={row}/>
                                     );
                                 })}
                         </TableBody>
