@@ -246,12 +246,14 @@ const Service = () => {
         activeElement && setActiveId(ServiceItemObj.id)
 
         setIsServiceItemChosen(true) // флаг для кнопки Сохранить
+        setIsClientChosen(true) // длаг для кнопок Редактор
 
         // сетаем данные в стор при выборе сервиса
         console.log('клик по сервису', ServiceItemObj)
 
         setCurrentService(ServiceItemObj)
-        setCurrentUser(users?.find((u: IUser) => u.id === ServiceItemObj.client.id) || null)
+        setCurrentUser(ServiceItemObj.client)
+        // setCurrentUser(users.find((u: IUser) => u.id === ServiceItemObj.client.id) || null)
         setCurrentMasterId(ServiceItemObj.userMaster.id)
         // ?! setCurrentMasterId(masters.find((m: any) => m.user.id === ServiceItemObj.userMaster.id))
         setCurrentProducts(ServiceItemObj.products)
