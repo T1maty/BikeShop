@@ -24,8 +24,8 @@ export const ShopHeader = () => {
             </div>
             <div className={s.shop_header_right}>
                 <SearchProduct/>
-                <div><img src={cart} alt="cart-logo"/></div>
                 <div><img src={language} alt="language-logo"/></div>
+                <div><img src={cart} alt="cart-logo"/></div>
                 {
                     isAuth ?
                         <div className={s.right_userInfo}>

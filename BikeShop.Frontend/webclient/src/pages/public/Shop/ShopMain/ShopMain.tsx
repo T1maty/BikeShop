@@ -61,8 +61,8 @@ export const ShopMain = () => {
                             <div onClick={() => {setSearch(!search)}}>
                                 <img src={searchIcon} alt="search-logo"/>
                             </div>
-                            <div><img src={cart} alt="cart-logo"/></div>
                             <div><img src={language} alt="language-logo"/></div>
+                            <div><img src={cart} alt="cart-logo"/></div>
                             <div><img src={profile} alt="profile-logo"/></div>
                         </div>
                     </div>
