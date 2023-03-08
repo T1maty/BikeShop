@@ -62,12 +62,12 @@ const Service = () => {
     const currentWorks = useService(s => s.currentWorks)
     const setCurrentWorks = useService(s => s.setCurrentWorks)
 
+    const products = useService(s => s.products)
+
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
-
-    const products = useService(s => s.products)
 
     // стили //
     // для стилей кнопок фильтрации

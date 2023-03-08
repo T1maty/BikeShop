@@ -3,6 +3,7 @@ import {Button} from '../../../shared/ui';
 import s from './ServiceTable.module.scss';
 import {TableProductItem} from '../../../features';
 import {ServiceProductWork} from "../../../entities/requests/CreateService";
+import useService from './ServiceStore';
 
 type ServiceTableProps = {
     data: ServiceProductWork[]
@@ -12,6 +13,8 @@ type ServiceTableProps = {
 
 export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTableCallback}) => {
 
+    const isClientChosen = useService(s => s.isClientChosen)
+
     const userClickHandler = () => {
         serviceTableCallback()
     }
@@ -20,7 +23,7 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, se
         <div className={s.tableBox}>
             <div className={s.tableBox_buttons}>
                 <div className={s.buttons_editBtn}>
-                    <Button onClick={userClickHandler}>
+                    <Button onClick={userClickHandler} disabled={!isClientChosen}>
                         {buttonTitle}
                     </Button>
                 </div>

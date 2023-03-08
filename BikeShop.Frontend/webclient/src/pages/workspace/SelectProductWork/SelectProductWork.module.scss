@@ -53,7 +53,8 @@
             width: 100%;
         }
         .rightSide_availableProducts {
-            @include flexCenter;
+            display: flex;
+            justify-content: center;
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             height: 300px;
