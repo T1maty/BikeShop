@@ -10,15 +10,11 @@ interface SelectProductProps {
     products: IProductExtended[]
 }
 
-<<<<<<< Updated upstream
-export const SelectProduct: React.FC<SelectProductProps> = ({products}) => {
-=======
-export const SelectProduct = (props: props) => {
+export const SelectProduct = (props: SelectProductProps) => {
 
     const slaveTableRows = useSelectProduct(s => s.slaveTableRows);
     const addSlaveTableProduct = useSelectProduct(s => s.addProduct);
     const setSlaveTableProducts = useSelectProduct(s => s.setSlaveTableRows);
->>>>>>> Stashed changes
 
     return (
         <div className={s.selectProduct_mainBox}>
