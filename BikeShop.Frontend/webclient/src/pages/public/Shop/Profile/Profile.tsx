@@ -4,6 +4,7 @@ import {ProfileInfo} from "./ProfileInfo"
 import {ProfileOrders} from "./ProfileOrders"
 import {ProfilePurchases} from "./ProfilePurchases"
 import {ProfileServices} from "./ProfileServices"
+import {ProfileAvatar} from './ProfileAvatar';
 
 
 type MenuItemType = 'Profile' | 'Orders' | 'Services' | 'Purchases'
@@ -26,12 +27,12 @@ export const Profile = () => {
         setIsActivePurchases(isActivePurchases)
     }
 
-    const userLastName = 'Петров'
-    const userFirstName = 'Василий'
-
-    const generateAvatarName = (last: string, first: string) => {
-        return (last[0]+first[0]).toUpperCase()
-    }
+    // const userLastName = 'Петров'
+    // const userFirstName = 'Василий'
+    //
+    // const generateAvatarName = (lastName: string, firstName: string) => {
+    //     return (lastName[0]+firstName[0]).toUpperCase()
+    // }
 
     useEffect(() => {
         setIsActiveProfile(true)
@@ -44,7 +45,8 @@ export const Profile = () => {
                      onClick={()=> {chooseMenuItemHandler('Orders',
                          true, false,false, false)}}
                 >
-                    <div className={s.user_image}>{generateAvatarName(userLastName, userFirstName)}</div>
+                    {/*<div className={s.user_image}>{generateAvatarName(userLastName, userFirstName)}</div>*/}
+                    <ProfileAvatar lastName={'Петров'} firstName={'Василий'}/>
                     <div className={s.user_info}>
                         <div className={s.info_name}>Петров Василий Иванович</div>
                         <div className={s.info_text}>Здесь будет какая-то информация</div>

@@ -22,7 +22,7 @@ export const ProfileOrders = () => {
             products: [{id: '1', product: 'Merida', img: img01}]
         },
         {
-            id: '2', status: 'Ожидает оплаты', sum: 1999, isPay: false, isCollapsed: true,
+            id: '2', status: 'Ожидает оплаты', sum: 1999, isPay: false, isCollapsed: false,
             products: [{id: '2', product: 'Specialized Pro', img: img02}]
         },
         {
@@ -30,7 +30,7 @@ export const ProfileOrders = () => {
             products: [{id: '3', product: 'Sram', img: img03}]
         },
         {
-            id: '4', status: 'Отменён', sum: 99999, isPay: false, isCollapsed: true,
+            id: '4', status: 'Отменён', sum: 99999, isPay: false, isCollapsed: false,
             products: [{id: '4', product: 'Shimano', img: img04}, {id: '5', product: 'Author', img: img01}]
         },
     ])

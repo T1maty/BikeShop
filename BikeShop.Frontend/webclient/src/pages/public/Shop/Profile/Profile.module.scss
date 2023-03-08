@@ -22,13 +22,13 @@
                 cursor: pointer;
             }
 
-            .user_image {
-                @include flexCenter;
-                background-color: orange;
-                border-radius: 50%;
-                min-width: 50px;
-                height: 50px;
-            }
+            //.user_image {
+            //    @include flexCenter;
+            //    background-color: orange;
+            //    border-radius: 50%;
+            //    min-width: 50px;
+            //    height: 50px;
+            //}
             .user_info {
                 @include flexColumn;
                 gap: $defaultSmallMargin;
@@ -53,13 +53,13 @@
 
             background-color: $bgColorButtonConfirm;
 
-            .user_image {
-                @include flexCenter;
-                background-color: orange;
-                border-radius: 50%;
-                min-width: 50px;
-                height: 50px;
-            }
+            //.user_image {
+            //    @include flexCenter;
+            //    background-color: orange;
+            //    border-radius: 50%;
+            //    min-width: 50px;
+            //    height: 50px;
+            //}
             .user_info {
                 @include flexColumn;
                 gap: $defaultSmallMargin;
