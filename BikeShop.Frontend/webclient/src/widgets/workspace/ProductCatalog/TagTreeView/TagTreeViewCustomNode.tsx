@@ -38,11 +38,12 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
     const treeData = useTagTreeView(s => s.treeViewTags)
     const tagsCloud = useProductTagCloudStore(s => s.tags)
 
-    React.useEffect(() => {
-        setProductsToTableHandler()
-        console.log('effect')
-    }, [tagsCloud])
-
+    /*
+        React.useEffect(() => {
+            setProductsToTableHandler()
+            console.log('effect')
+        }, [tagsCloud])
+    */
     function setProductsToTableHandler() {
         let tags = tagsCloud.map((n) => {
             return n.id
