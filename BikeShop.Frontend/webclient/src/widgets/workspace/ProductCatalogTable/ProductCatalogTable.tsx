@@ -9,9 +9,8 @@ import {CreateProductModal, UpdateProductModal} from '../../../features';
 import ProductCatalogTableContextMenu from './ProductCatalogTableContextMenu';
 import {columns} from './ProductCatalogTableConfig';
 import useProductCatalogTableStore from './ProductCatalogTableStore';
-import ProductCatalogTablePagination from './ProductCatalogTablePagination';
-import ProductCatalogTableRow from './ProductCatalogTableRow';
 import s from "../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss";
+import {IProduct, IProductExtended} from "../../../entities";
 
 const ProductCatalogTable = () => {
 
@@ -21,10 +20,19 @@ const ProductCatalogTable = () => {
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
 
+    function createProductSuccessHandler(product: IProduct) {
+        let extProd: IProductExtended;
+        extProd = {} as IProductExtended
+        extProd.product = product
+        extProd.quantity = 0
+
+        addNewProduct(extProd)
+    }
+
     return (
         <>
             <ProductCatalogTableContextMenu/>
-            <CreateProductModal onSuccess={addNewProduct}/>
+            <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
             <div className={s.table_content}>
                 <TableContainer>
@@ -53,8 +61,9 @@ const ProductCatalogTable = () => {
                             {rows
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => {
+                                    console.log('1')
                                     return (
-                                        <ProductCatalogTableRow key={row.id} row={row}/>
+                                        <div/>
                                     );
                                 })}
                         </TableBody>
@@ -62,7 +71,7 @@ const ProductCatalogTable = () => {
                 </TableContainer>
             </div>
             <div className={s.table_pagination}>
-                <ProductCatalogTablePagination/>
+                {/*<ProductCatalogTablePagination/>*/}
             </div>
         </>
     );

@@ -3,25 +3,25 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {$api} from "shared";
-import {IProduct, IProductResponse, IUpdateProduct} from "../../../entities";
+import {IProductExtended, IUpdateProduct} from "../../../entities";
 
 interface productCatalogTableStore {
     contextMenuXY: { X: number, Y: number }
-    selectedRows: IProduct[]
+    selectedRows: IProductExtended[]
     rowsPerPage: number
     open: boolean
     page: number
-    rows: IProduct[]
+    rows: IProductExtended[]
 
     setOpen: (value: boolean, X: number, Y: number) => void
-    addNewProduct: (product: IProduct) => void
+    addNewProduct: (product: IProductExtended) => void
     updateRow: (rowData: IUpdateProduct) => void
     setSelectedRows: (ids: number[]) => void
     setRowsPerPage: (value: number) => void
     isRowSelected: (id: number) => boolean
     setPage: (value: number) => void
-    setRows: (data: IProduct[]) => void
-    getProducts: (tags: string[]) => Promise<AxiosResponse<IProductResponse>>
+    setRows: (data: IProductExtended[]) => void
+    getProducts: (tags: string[]) => Promise<AxiosResponse<IProductExtended[]>>
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
@@ -44,12 +44,12 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     }),
     setSelectedRows: (ids) => set({
         selectedRows: get().rows.filter(n => {
-            if (ids.includes(n.id)) return n
+            if (ids.includes(n.product.id)) return n
         })
     }),
     isRowSelected: (id) => {
         let inf = get().selectedRows.filter((n) => {
-            if (n.id == id) return n
+            if (n.product.id == id) return n
         })
         if (inf.length > 0) return true
         else return false
@@ -66,17 +66,17 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
             value = value.concat(n + '-')
         })
         value = value.slice(0, -1)
-        return $api.get<IProductResponse>('/product/getbytags/' + value)
+        return $api.get<IProductExtended[]>('/product/getbytags/' + value + ',1')
     },
     updateRow: (rowData) => {
         set(state => {
             let row = state.rows.filter((n) => {
-                if (n.id == rowData.id) return n
+                if (n.product.id == rowData.id) return n
             })[0]
-            row.name = rowData.name
-            row.manufacturerBarcode = rowData.manufacturerBarcode
-            row.b2BVisibility = rowData.b2BVisibility
-            row.retailVisibility = rowData.retailVisibility
+            row.product.name = rowData.name
+            row.product.manufacturerBarcode = rowData.manufacturerBarcode
+            row.product.b2BVisibility = rowData.b2BVisibility
+            row.product.retailVisibility = rowData.retailVisibility
         })
     },
     addNewProduct: (product) => {

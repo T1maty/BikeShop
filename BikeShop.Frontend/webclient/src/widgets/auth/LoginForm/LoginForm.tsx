@@ -12,7 +12,6 @@ const LoginForm = () => {
     const setUser = useAuthUser(s => s.setUser);
     const loginToShop = useAuthUser(s => s.loginToShop);
 
-
     const navigate = useNavigate();
 
     const {

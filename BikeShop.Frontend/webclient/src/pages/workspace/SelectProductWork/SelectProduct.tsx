@@ -1,25 +1,36 @@
 import React from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI} from '../../../shared/ui'
+import {IProductExtended} from "../../../entities";
+import SlaveTable from "./SlaveTable";
+import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
 
-export const SelectProduct = () => {
+interface props {
+    products: IProductExtended[]
+}
+
+export const SelectProduct = (props: props) => {
+
+
     return (
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
                 <div className={s.leftSide_header}>
-                    1
+                    <ProductTagCloud/>
                 </div>
                 <div className={s.leftSide_treeView}>
-                    2
+                    <TagTreeView/>
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Отмена
                         </Button>
                     </div>
@@ -28,11 +39,12 @@ export const SelectProduct = () => {
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
-                    Таблица доступных товаров
+                    <ProductCatalogTable/>
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
+                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {
+                        }}/>
                     </div>
                     <div className={s.infoRow_result}>
                         <div className={s.result_sum}>
@@ -47,7 +59,7 @@ export const SelectProduct = () => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    Таблица выбранных товаров
+                    <SlaveTable/>
                 </div>
             </div>
         </div>
