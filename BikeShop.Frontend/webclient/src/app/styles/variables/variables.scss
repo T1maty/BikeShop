@@ -27,7 +27,10 @@ $largeButtonHeight: 50px;
 $divButtonPadding: 5px 10px;
 $bgColorButtonConfirm: #BF3B38;
 
-$bgColorProfileStatusWaitingPayment: #FFA900;
+$bgColorProfileStatusWaitingPayment: #ffc259;
+$bgColorProfileStatusWaitingPackage: #FFA900;
+$bgColorProfileStatusReady: green;
+$bgColorProfileStatusCanceled: red;
 
 $filterButtonWaitingColor: red;
 $filterButtonWaitingColorExtra: #ff9245;

@@ -5,7 +5,8 @@ import {Button, ControlledInput} from '../../../../shared/ui';
 import {Errors} from '../../../../entities/errors/workspaceErrors';
 import {useForm} from 'react-hook-form';
 
-type ProfileOrderStatus = 'WaitingPayment' | 'WaitingPackage' | 'Ready' | 'Canceled'
+type ProfileOrderStatusEng = 'WaitingPayment' | 'WaitingPackage' | 'Ready' | 'Canceled'
+type ProfileOrderStatusRu = 'Ожидает оплаты' | 'Ожидает комплектации' | 'Готов к выдаче' | 'Отменён'
 
 export const ProfileOrders = () => {
 
@@ -17,20 +18,20 @@ export const ProfileOrders = () => {
 
     const [items, setItems] = useState([
         {
-            id: '1', status: 'Ожидает комплектации', sum: 999, isPay: true, img: img01, isCollapsed: false,
-            products: [{id: '1', product: 'Merida'}]
+            id: '1', status: 'Ожидает комплектации', sum: 999, isPay: true, isCollapsed: false,
+            products: [{id: '1', product: 'Merida', img: img01}]
         },
         {
-            id: '2', status: 'Ожидает оплаты', sum: 1999, isPay: false, img: img02, isCollapsed: true,
-            products: [{id: '2', product: 'Specialized'}]
+            id: '2', status: 'Ожидает оплаты', sum: 1999, isPay: false, isCollapsed: true,
+            products: [{id: '2', product: 'Specialized', img: img02}]
         },
         {
-            id: '3', status: 'Готов к выдаче', sum: 99, isPay: true, img: img03, isCollapsed: false,
-            products: [{id: '3', product: 'Sram'}]
+            id: '3', status: 'Готов к выдаче', sum: 99, isPay: true, isCollapsed: false,
+            products: [{id: '3', product: 'Sram', img: img03}]
         },
         {
-            id: '4', status: 'Отменён', sum: 99999, isPay: false, img: img04, isCollapsed: true,
-            products: [{id: '4', product: 'Shimano'}, {id: '5', product: 'Author'}]
+            id: '4', status: 'Отменён', sum: 99999, isPay: false, isCollapsed: true,
+            products: [{id: '4', product: 'Shimano', img: img04}, {id: '5', product: 'Author', img: img01}]
         },
     ])
 
@@ -87,7 +88,15 @@ export const ProfileOrders = () => {
 
                                 <div className={s.orderItem_mainPart}>
                                     <div className={s.orderItem_status}>
-                                        <div className={s.status_color}>i</div>
+                                        <div className={
+                                            // s.status_color
+                                            item.status === 'Ожидает оплаты' ? s.status_WaitingPayment :
+                                                item.status === 'Ожидает комплектации' ? s.status_WaitingPackage :
+                                                    item.status === 'Готов к выдаче' ? s.status_Ready :
+                                                        item.status === 'Отменён' ? s.status_Canceled : ''
+                                        }>
+                                            i
+                                        </div>
                                         <div className={s.status_data}>
                                             <div className={s.status_data_date}>№999 от 1 января 2023 года</div>
                                             <div className={s.status_data_text}>{item.status}</div>
@@ -101,7 +110,7 @@ export const ProfileOrders = () => {
                                     </div>
                                     <div className={s.orderItem_info}>
                                         <div className={s.info_image}>
-                                            <img src={item.img} alt='order-photo'/>
+                                            <img src={item.products[0].img} alt='order-photo'/>
                                         </div>
                                         <div className={s.info_isCollapsed}>
                                             <Button onClick={() => {collapseItem(item.id)}}>

@@ -24,9 +24,42 @@
                 .orderItem_status {
                     @include flexCenter;
 
+                    // надо зарефакторить!!!
                     .status_color {
                         @include flexCenter;
                         background-color: $bgColorProfileStatusWaitingPayment;
+                        border-radius: $extraSmallBorderRadius;
+                        margin-right: $defaultSmallMargin;
+                        width: 20px;
+                        height: 50px;
+                    }
+                    .status_WaitingPayment {
+                        @include flexCenter;
+                        background-color: $bgColorProfileStatusWaitingPayment;
+                        border-radius: $extraSmallBorderRadius;
+                        margin-right: $defaultSmallMargin;
+                        width: 20px;
+                        height: 50px;
+                    }
+                    .status_WaitingPackage {
+                        @include flexCenter;
+                        background-color: $bgColorProfileStatusWaitingPackage;
+                        border-radius: $extraSmallBorderRadius;
+                        margin-right: $defaultSmallMargin;
+                        width: 20px;
+                        height: 50px;
+                    }
+                    .status_Ready {
+                        @include flexCenter;
+                        background-color: $bgColorProfileStatusReady;
+                        border-radius: $extraSmallBorderRadius;
+                        margin-right: $defaultSmallMargin;
+                        width: 20px;
+                        height: 50px;
+                    }
+                    .status_Canceled {
+                        @include flexCenter;
+                        background-color: $bgColorProfileStatusCanceled;
                         border-radius: $extraSmallBorderRadius;
                         margin-right: $defaultSmallMargin;
                         width: 20px;
