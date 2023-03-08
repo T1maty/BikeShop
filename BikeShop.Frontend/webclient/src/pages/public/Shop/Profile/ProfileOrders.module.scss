@@ -20,18 +20,17 @@
             .orderItem_mainPart {
                 @include flexOnlyBetween;
                 align-items: center;
-                padding-bottom: $defaultSmallMargin;
 
                 .orderItem_status {
                     @include flexCenter;
 
                     .status_color {
                         @include flexCenter;
+                        background-color: $bgColorProfileStatusWaitingPayment;
                         border-radius: $extraSmallBorderRadius;
                         margin-right: $defaultSmallMargin;
                         width: 20px;
                         height: 50px;
-                        background-color: orange;
                     }
 
                     .status_data {
@@ -62,6 +61,7 @@
                             color: $bgColorButtonConfirm;
                             font-size: 18px;
                             font-weight: bold;
+                            //border: 1px solid $bgColorButtonConfirm;
                         }
                     }
                 }
@@ -92,6 +92,16 @@
             }
 
             .orderItem_collapsedPart {
+                padding-top: $defaultLargeMargin;
+
+                .collapsedPart_statusRow {
+                    background-color: $bgColorProfileStatusWaitingPayment;
+                    border-radius: $extraSmallBorderRadius;
+                    padding: $defaultSmallMargin;
+                    margin-bottom: $defaultSmallMargin;
+                    //@include flexCenter;
+                    text-align: center;
+                }
                 .collapsedPart_title {
                     font-weight: bold;
                     text-align: center;

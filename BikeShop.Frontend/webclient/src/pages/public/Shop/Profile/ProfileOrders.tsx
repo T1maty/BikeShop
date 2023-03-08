@@ -113,6 +113,15 @@ export const ProfileOrders = () => {
                                 {
                                     item.isCollapsed ?
                                         <div className={s.orderItem_collapsedPart}>
+
+                                            {
+                                                item.status === 'Ожидает оплаты' ?
+                                                    <div className={s.collapsedPart_statusRow}>
+                                                        Ожидаем вашу оплату, заказ будет обработан после оплаты
+                                                    </div>
+                                                    : ''
+                                            }
+
                                             <div className={s.collapsedPart_title}>Информация о заказе:</div>
                                             <div className={s.collapsedPart_deliveryType}>Способ получения: доставка</div>
                                             <div className={s.collapsedPart_deliveryDetails}>
