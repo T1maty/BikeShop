@@ -1,8 +1,9 @@
 import {IProduct} from "./Product";
+import {IQuantityUnit} from "./IQuantityUnit";
 
 export interface IProductExtended {
     product: IProduct
 
-    minorIncomePrice: number,
+    quantityUnit: IQuantityUnit
     quantity: number
 }

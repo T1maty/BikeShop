@@ -11,7 +11,7 @@ import useService, {ServiceListStatusType} from './ServiceStore'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import {ClientCard} from '../../../widgets'
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material'
-import {CreateService, IUser, ServiceItem, UpdateService, UserResponse} from '../../../entities'
+import {IUser, ServiceItem, UserResponse} from '../../../entities'
 import {ServiceStatusType} from "../../../entities/models/ServiceItem"
 import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore"
 
@@ -66,6 +66,8 @@ const Service = () => {
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
+
+    const products = useService(s => s.products)
 
     // стили //
     // для стилей кнопок фильтрации
@@ -478,16 +480,16 @@ const Service = () => {
                         </div>
                     </div>
                     <div className={s.rightSide_tables}>
-                        <SelectProductModal/>
+                        <SelectProductModal products={products}/>
                         <ServiceTable data={currentProducts}
-                                      // data={productsItems}
+                            // data={productsItems}
                                       buttonTitle={'Редактор товаров'}
                                       serviceTableCallback={() => {
                                           setSelectProductModal(true)
                                       }}/>
                         <SelectWorkModal/>
                         <ServiceTable data={currentWorks}
-                                      // data={worksItems}
+                            // data={worksItems}
                                       buttonTitle={'Редактор услуг'}
                                       serviceTableCallback={() => {
                                           setSelectWorkModal(true)

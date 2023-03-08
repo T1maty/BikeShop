@@ -34,7 +34,7 @@ const ProductCatalogTableContextMenu = () => {
             }
         >
             <MenuItem onClick={() => {
-                setOpenUpdateProductModal(true, selected[0])
+                setOpenUpdateProductModal(true, selected[0].product)
                 setContextVisible(false, 0, 0)
             }}
             >Редактировать

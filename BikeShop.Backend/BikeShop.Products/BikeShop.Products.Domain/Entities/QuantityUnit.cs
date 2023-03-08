@@ -10,7 +10,6 @@ namespace BikeShop.Products.Domain.Entities
     {
         public string Name { get; set; }
         public string FullName { get; set; }
-        public char Symbol { get; set; }
         public int GroupId { get; set; }
         public string GroupName { get; set; }
         public bool IsDefaultInGroup { get; set; }

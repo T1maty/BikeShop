@@ -1,5 +1,5 @@
 export interface Column {
-    id: 'id' | 'name' | 'incomePrice' | 'dealerPrice' | 'retailPrice' | 'catalogKey' | 'checkStatus';
+    id: 'id' | 'name' | 'quantity' | 'incomePrice' | 'dealerPrice' | 'retailPrice' | 'catalogKey' | 'checkStatus';
     label: string;
     minWidth?: number;
     align?: 'right';
@@ -18,12 +18,13 @@ export const columns: readonly Column[] = [
         minWidth: 70,
         align: 'right',
     },
-    /*{
-        id: 'store',
+    {
+        id: 'quantity',
         label: 'На складе',
         minWidth: 70,
         align: 'right',
     },
+    /*
     {
         id: 'unit',
         label: 'Ед.изм.',

@@ -5,6 +5,7 @@ using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.WebApi.Models.Product;
 using BikeShop.Products.WebApi.Models.Validation;
@@ -131,12 +132,9 @@ namespace BikeShop.Products.WebApi.Controllers
         [HttpGet("getbytags/{tagsIds}")]
         [ProducesResponseType(typeof(ProductsListModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ProductsListModel>> GetProductsByTags(string tagsIds)
+        public async Task<ActionResult<List<ProductQuantityDTO>>> GetProductsByTags(string tagsIds, int storageId)
         {
-            var query = new GetProductsByTagsQuery { TagsArrayStr = tagsIds };
-            var productsModel = await _mediator.Send(query);
-
-            return Ok(productsModel);
+            return Ok(await _productService.GetProductsByTags(tagsIds, storageId));
         }
 
         [HttpPost("getbyids")]
