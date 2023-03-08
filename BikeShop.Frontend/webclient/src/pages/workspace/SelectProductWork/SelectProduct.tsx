@@ -4,12 +4,21 @@ import {Button, InputUI} from '../../../shared/ui'
 import {IProductExtended} from "../../../entities";
 import SlaveTable from "./SlaveTable";
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
+import useSelectProduct from "./SelectProductStore";
 
 interface SelectProductProps {
     products: IProductExtended[]
 }
 
+<<<<<<< Updated upstream
 export const SelectProduct: React.FC<SelectProductProps> = ({products}) => {
+=======
+export const SelectProduct = (props: props) => {
+
+    const slaveTableRows = useSelectProduct(s => s.slaveTableRows);
+    const addSlaveTableProduct = useSelectProduct(s => s.addProduct);
+    const setSlaveTableProducts = useSelectProduct(s => s.setSlaveTableRows);
+>>>>>>> Stashed changes
 
     return (
         <div className={s.selectProduct_mainBox}>
@@ -23,6 +32,7 @@ export const SelectProduct: React.FC<SelectProductProps> = ({products}) => {
                 <div className={s.leftSide_buttons}>
                     <div>
                         <Button onClick={() => {
+                            setSlaveTableProducts([])
                         }}>
                             Подтвердить
                         </Button>
@@ -38,7 +48,7 @@ export const SelectProduct: React.FC<SelectProductProps> = ({products}) => {
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
-                    <ProductCatalogTable/>
+                    <ProductCatalogTable onRowDoubleClick={addSlaveTableProduct}/>
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
@@ -58,7 +68,7 @@ export const SelectProduct: React.FC<SelectProductProps> = ({products}) => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    <SlaveTable/>
+                    <SlaveTable rows={slaveTableRows}/>
                 </div>
             </div>
         </div>

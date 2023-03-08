@@ -1,11 +1,11 @@
 import React from 'react';
 import MenuItem from "@mui/material/MenuItem";
-import {IProductTag} from "../../../entities";
+import {IProductTag} from "../../../../entities";
 import {Menu} from "@mui/material";
-import useCreateTagModal from '../../../features/CreateTagModal/CreateTagModalStore';
+import useCreateTagModal from '../../../../features/CreateTagModal/CreateTagModalStore';
 import useTagTreeView from './TagTreeViewStore';
-import {useUpdateTagModal} from "../../../features";
-import useCreateProductModal from "../../../features/CreateProductModal/CreateProductModalStore";
+import {useUpdateTagModal} from "../../../../features";
+import useCreateProductModal from "../../../../features/CreateProductModal/CreateProductModalStore";
 
 const TagTreeViewContextMenu = () => {
     const contextMenuVisible = useTagTreeView(s => s.contextMenuVisible)

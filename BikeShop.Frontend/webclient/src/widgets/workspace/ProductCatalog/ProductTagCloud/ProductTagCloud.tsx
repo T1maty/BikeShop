@@ -1,7 +1,7 @@
 import React from 'react';
 import {ProductTagCloudItem} from "./ProductTagCloudItem";
 import useProductTagCloudStore from "./ProductTagCloudStore";
-import {Button} from "../../../shared/ui";
+import {Button} from "../../../../shared/ui";
 
 export const ProductTagCloud = () => {
     const tags = useProductTagCloudStore(s => s.tags)

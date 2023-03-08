@@ -1,5 +1,5 @@
 import React from 'react';
-import {IProductTag} from "../../../entities";
+import {IProductTag} from "../../../../entities";
 import s from './ProductTagItem.module.scss'
 import useProductTagCloudStore from "./ProductTagCloudStore";
 

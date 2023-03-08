@@ -1,9 +1,9 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {IProductTag, IProductTagResponse, IUpdateTag} from "../../../entities";
+import {IProductTag, IProductTagResponse, IUpdateTag} from "../../../../entities";
 import {AxiosResponse} from "axios";
-import {$api} from "../../../shared";
+import {$api} from "../../../../shared";
 
 interface tagTreeViewStore {
     treeViewTags: IProductTag[],

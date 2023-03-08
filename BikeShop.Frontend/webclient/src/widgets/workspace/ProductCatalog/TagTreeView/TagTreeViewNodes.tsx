@@ -1,5 +1,5 @@
 import React from 'react';
-import {IProductTag} from "../../../entities";
+import {IProductTag} from "../../../../entities";
 import TreeItem from "@mui/lab/TreeItem";
 import useTagTreeView from "./TagTreeViewStore";
 import {TagTreeViewCustomNode} from "./TagTreeViewCustomNode";

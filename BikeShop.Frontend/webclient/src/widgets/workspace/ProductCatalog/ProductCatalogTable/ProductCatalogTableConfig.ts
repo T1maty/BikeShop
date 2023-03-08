@@ -1,8 +1,8 @@
 export interface Column {
-    id: 'id' | 'name' | 'quantity' | 'incomePrice' | 'dealerPrice' | 'retailPrice' | 'catalogKey' | 'checkStatus';
+    id: 'id' | 'name' | 'quantity' | 'quantityUnitName' | 'incomePrice' | 'dealerPrice' | 'retailPrice' | 'catalogKey' | 'checkStatus';
     label: string;
     minWidth?: number;
-    align?: 'right';
+    align?: 'right' | 'left';
 }
 
 export const columns: readonly Column[] = [
@@ -23,6 +23,12 @@ export const columns: readonly Column[] = [
         label: 'На складе',
         minWidth: 70,
         align: 'right',
+    },
+    {
+        id: 'quantityUnitName',
+        label: 'Ед.Изм',
+        minWidth: 70,
+        align: 'left',
     },
     /*
     {

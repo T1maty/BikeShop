@@ -5,15 +5,19 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {CreateProductModal, UpdateProductModal} from '../../../features';
+import {CreateProductModal, UpdateProductModal} from '../../../../features';
 import ProductCatalogTableContextMenu from './ProductCatalogTableContextMenu';
 import {columns} from './ProductCatalogTableConfig';
 import useProductCatalogTableStore from './ProductCatalogTableStore';
-import s from "../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss";
-import {IProduct, IProductExtended} from "../../../entities";
+import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss";
+import {IProduct, IProductExtended} from "../../../../entities";
 import ProductCatalogTableRow from "./ProductCatalogTableRow";
 
-const ProductCatalogTable = () => {
+interface props {
+    onRowDoubleClick?: (product: IProductExtended) => void
+}
+
+const ProductCatalogTable = (props: props) => {
 
     const page = useProductCatalogTableStore(s => s.page)
     const rowsPerPage = useProductCatalogTableStore(s => s.rowsPerPage)
@@ -62,9 +66,9 @@ const ProductCatalogTable = () => {
                             {rows
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => {
-
                                     return (
-                                        <ProductCatalogTableRow key={row.product.id} row={row}/>
+                                        <ProductCatalogTableRow onRowDoubleClick={props.onRowDoubleClick}
+                                                                key={row.product.id} row={row}/>
                                     );
                                 })}
                         </TableBody>

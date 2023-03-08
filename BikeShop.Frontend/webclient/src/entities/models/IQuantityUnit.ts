@@ -1,9 +1,9 @@
 export interface IQuantityUnit {
-    Name: string,
-    FullName: string,
-    GroupId: number,
-    GroupName: string,
-    IsDefaultInGroup: boolean,
-    IsSwitchable: boolean,
-    BaseCoeficient: number
+    name: string,
+    fullName: string,
+    groupId: number,
+    groupName: string,
+    isDefaultInGroup: boolean,
+    isSwitchable: boolean,
+    baseCoeficient: number
 }

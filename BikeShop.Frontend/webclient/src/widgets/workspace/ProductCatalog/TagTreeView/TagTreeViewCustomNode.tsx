@@ -49,6 +49,7 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
         })
         tags.push(props.nodeId)
         setProductsToTable(tags).then((r) => {
+
             setRows(r.data)
         })
     }

@@ -3,10 +3,10 @@ import Box from "@mui/material/Box";
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import {IProductTag} from "../../../entities";
+import {IProductTag} from "../../../../entities";
 import TagTreeViewContextMenu from "./TagTreeViewContextMenu";
 import TagTreeViewNodes from "./TagTreeViewNodes";
-import {CreateTagModal, UpdateTagModal} from "../../../features";
+import {CreateTagModal, UpdateTagModal} from "../../../../features";
 import useTagTreeView from './TagTreeViewStore';
 
 const TagTreeView = () => {

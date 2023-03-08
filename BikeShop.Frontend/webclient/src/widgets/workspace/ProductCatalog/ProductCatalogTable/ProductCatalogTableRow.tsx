@@ -3,16 +3,16 @@ import TableRow from "@mui/material/TableRow";
 import {columns} from "./ProductCatalogTableConfig";
 import TableCell from "@mui/material/TableCell";
 import useProductCatalogTableStore from "./ProductCatalogTableStore";
-import {IProductExtended} from "../../../entities";
+import {IProductExtended} from "../../../../entities";
 
 interface props {
     row: IProductExtended
+    onRowDoubleClick?: (product: IProductExtended) => void
 }
 
 const ProductCatalogTableRow = (props: props) => {
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
-    const selected = useProductCatalogTableStore(s => s.selectedRows)
     const isSelected = useProductCatalogTableStore(s => s.isRowSelected)
     const setOpenContext = useProductCatalogTableStore(s => s.setOpen);
 
@@ -24,7 +24,7 @@ const ProductCatalogTableRow = (props: props) => {
             }}
 
             onDoubleClick={() => {
-                console.log(selected[0])
+                props.onRowDoubleClick ? props.onRowDoubleClick(props.row) : true
             }}
 
             selected={isSelected(props.row.product.id)}
@@ -38,14 +38,21 @@ const ProductCatalogTableRow = (props: props) => {
             tabIndex={-1}
             key={props.row.product.id}
         >
-            {columns.map((column) => {
 
+            {columns.map((column) => {
                 let value
                 // @ts-ignore
-                props.row[column.id] ? value = props.row[column.id] : value = props.row.product[column.id]
+                props.row[column.id] != null ? value = props.row[column.id] : value = props.row.product[column.id]
+
+                if (column.id === 'quantityUnitName') {
+
+                    value = props.row.quantityUnit != null ? props.row.quantityUnit.name : 'Error'
+                }
+
 
                 return (
                     <TableCell key={column.id} align={column.align}>
+
                         {value}
                     </TableCell>
                 );

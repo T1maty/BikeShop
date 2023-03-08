@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
 import {$api} from "shared";
-import {IProductExtended, IUpdateProduct} from "../../../entities";
+import {IProductExtended, IUpdateProduct} from "../../../../entities";
 
 interface productCatalogTableStore {
     contextMenuXY: { X: number, Y: number }
