@@ -13,7 +13,7 @@
     }
 
     .shop_header_left {
-
+        @include hoverCursorPointer;
     }
     .shop_header_right {
         @include flexBetween;

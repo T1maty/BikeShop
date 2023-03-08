@@ -19,7 +19,9 @@ export const ShopHeader = () => {
 
     return (
         <div className={s.shop_header}>
-            <div className={s.shop_header_left}>
+            <div className={s.shop_header_left}
+                 onClick={() => {navigate(BikeShopPaths.SHOP.HOME)}}
+            >
                 BikeShop
             </div>
             <div className={s.shop_header_right}>
