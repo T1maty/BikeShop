@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import s from './ProfileOrders.module.scss'
 import {MenuItem} from '@mui/material';
-import {ControlledInput} from '../../../../shared/ui';
+import {Button, ControlledInput} from '../../../../shared/ui';
 import {Errors} from '../../../../entities/errors/workspaceErrors';
 import {useForm} from 'react-hook-form';
 
 type ProfileOrderStatus = 'WaitingPayment' | 'WaitingPackage' | 'Ready' | 'Canceled'
 
 export const ProfileOrders = () => {
-
-    // const [isCollapsedItem, setIsCollapsedItem] = useState<boolean>(false)
 
     // тестовые данные
     const img01 = 'https://wallpapercave.com/wp/wp2118883.jpg'
@@ -75,8 +73,7 @@ export const ProfileOrders = () => {
     // }
 
     const collapseItem = (currentItemId: string) => {
-        console.log(currentItemId)
-        items.map(el => el.id === currentItemId ? {...el, isCollapsed: !el.isCollapsed} : el)
+        setItems(items.map(el => el.id === currentItemId ? {...el, isCollapsed: !el.isCollapsed} : el))
     }
 
     return (
@@ -102,12 +99,14 @@ export const ProfileOrders = () => {
                                             Оплата: <span>{item.isPay ? 'Оплачено' : 'Не оплачено'}</span>
                                         </div>
                                     </div>
-                                    <div className={s.orderItem_icons}>
-                                        <div className={s.icons_image}>
+                                    <div className={s.orderItem_info}>
+                                        <div className={s.info_image}>
                                             <img src={item.img} alt='order-photo'/>
                                         </div>
-                                        <div className={s.icons_isCollapsed} onClick={() => collapseItem(item.id)}>
-                                            {item.isCollapsed ? 'Свернуть <' : 'Развернуть >'}
+                                        <div className={s.info_isCollapsed}>
+                                            <Button onClick={() => {collapseItem(item.id)}}>
+                                                {item.isCollapsed ? 'Свернуть <' : 'Развернуть >'}
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>

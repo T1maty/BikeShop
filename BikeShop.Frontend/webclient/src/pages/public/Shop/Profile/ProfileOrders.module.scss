@@ -66,28 +66,27 @@
                     }
                 }
 
-                .orderItem_icons {
+                .orderItem_info {
                     @include flexCenter;
                     gap: $defaultSmallMargin;
 
-                    > div {
+                    .info_image {
                         @include flexCenter;
                         color: white;
                         background-color: $themeColorDark;
                         border-radius: $extraSmallBorderRadius;
-                    }
 
-                    .icons_image {
                         img {
                             width: 80px;
                             height: auto;
                         }
                     }
 
-                    .icons_isCollapsed {
-                        padding: $defaultSmallMargin;
-                        @include hoverCursorPointer;
-                        width: 130px;
+                    .info_isCollapsed {
+                        button {
+                            background-color: $themeColorDark;
+                            width: 130px;
+                        }
                     }
                 }
             }
