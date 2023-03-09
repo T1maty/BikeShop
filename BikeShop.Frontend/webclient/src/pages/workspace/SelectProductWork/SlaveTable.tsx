@@ -22,7 +22,6 @@ const SlaveTable = (props: props) => {
                     stickyHeader={true}
                     aria-label="sticky table"
                     size={'small'}
-
                 >
                     <TableHead>
                         <TableRow>

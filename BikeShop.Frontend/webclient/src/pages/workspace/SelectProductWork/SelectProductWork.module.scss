@@ -34,7 +34,6 @@
         }
         .leftSide_buttons {
             width: 100%;
-
             @include divSmallMarginBottom;
 
             button {
@@ -58,6 +57,7 @@
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             height: 300px;
+            overflow: auto;
         }
         .rightSide_infoRow {
             border: 1px solid white;
@@ -78,10 +78,12 @@
             }
         }
         .rightSide_chosenProducts {
-            @include flexCenter;
+            display: flex;
+            justify-content: center;
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             height: 300px;
+            overflow: auto;
         }
     }
 }
