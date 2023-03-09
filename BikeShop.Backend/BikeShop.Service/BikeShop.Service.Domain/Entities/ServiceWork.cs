@@ -8,7 +8,6 @@ public class ServiceWork : BaseEntity
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int Quantity { get; set; } = 0;
-    public int QuantityUnitId { get; set; } = 0;
     public decimal Price { get; set; } = 0;
     public decimal Discount { get; set; } = 0;
     public decimal Total { get; set; } = 0;
