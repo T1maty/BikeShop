@@ -10,7 +10,7 @@ export interface CreateService {
     name: string
     clientDescription: string
 
-    userMaster: IUser
+    userMasterId: string
     userCreatedId: string
 
     userMasterDescription: string

@@ -31,7 +31,7 @@ const ServiceForm = () => {
             name: '',
             client: {} as IUser,
             clientDescription: '',
-            userMaster: masters[0],
+            userMasterId: '',
 
             productDiscountId: 0,
             workDiscountId: 0,
@@ -47,7 +47,7 @@ const ServiceForm = () => {
         formControl.reset()
         formControl.setValue('name', currentService ? currentService.name : '')
         formControl.setValue('clientDescription', currentService ? currentService.clientDescription : '')
-        formControl.setValue('userMaster', currentService ? currentService.userMaster : {} as IUser)
+        formControl.setValue('userMasterId', currentService ? currentService.userMaster?.id : '')
         formControl.setValue('client', currentService ? currentService.client : {} as IUser)
     }, [currentService])
 
@@ -121,9 +121,11 @@ const ServiceForm = () => {
                                          className={s.content_detailsInput}
                                          disabled={currentService === null}
                         />
-                        <ControlledSelect control={formControl} name={'userMaster'} label={'Мастер'}
+                        <ControlledSelect control={formControl} name={'userMasterId'} label={'Мастер'}
                                           className={s.content_masterInput}
-                                          data={masters}
+                                          data={masters.map((n) => {
+                                              return {id: n.id, value: n.firstName}
+                                          })}
                         />
                         <div className={s.content_buttons}>
                             <div className={s.content_saveBtn}>
