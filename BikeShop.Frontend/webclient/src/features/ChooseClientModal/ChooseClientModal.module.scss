@@ -3,6 +3,7 @@
 
 .clientModal_mainBox {
     @include defaultModalStyle;
+    padding: $defaultLargeMargin;
 
     .clientModal_searchBlock {
         @include flexColumn;
@@ -54,9 +55,16 @@
         .addClient_buttonsBlock {
             @include flexOnlyBetween;
 
+            > div {
+                width: 100%;
+            }
+
             button {
                 padding: $smallButtonPadding;
-                margin-top: $defaultSmallMargin;
+            }
+
+            .buttonsBlock_cancelButton {
+                width: 100%;
             }
         }
     }

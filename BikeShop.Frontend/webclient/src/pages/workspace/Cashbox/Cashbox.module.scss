@@ -34,6 +34,7 @@
                 margin: $defaultLargeMargin 0;
                 padding: $defaultLargeMargin;
                 @include flexColumn;
+                justify-content: center;
                 width: 100%;
                 height: 41%;
 
@@ -144,6 +145,7 @@
             .cashboxMainBlock_rightSideHeader {
                 @include flexOnlyBetween;
                 margin-bottom: $defaultLargeMargin;
+                gap: 20px;
 
                 .header_chooseBtn {
                     button {
@@ -153,7 +155,7 @@
                 }
                 .header_searchInput {
                     width: 100%;
-                    padding-left: $defaultLargeMargin;
+                    //padding-left: $defaultLargeMargin;
                 }
             }
 

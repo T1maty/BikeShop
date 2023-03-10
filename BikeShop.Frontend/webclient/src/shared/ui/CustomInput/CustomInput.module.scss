@@ -58,9 +58,8 @@
 .searchInput {
     // вставка иконки
     composes: superInput;
-    background: transparent url("/shared/assets/workspace/magnifying-glass-white.svg") no-repeat 5px center;
-    // иконка отмены
-    //background: transparent url("/shared/assets/workspace/cancel-icon-white.svg") no-repeat center right 15px;
+    background: url("/shared/assets/workspace/magnifying-glass-white.svg") no-repeat 10px center;
+    //url("/shared/assets/workspace/cancel-icon-white.svg") no-repeat center right 15px; // иконка отмены
     background-size: 25px;
     padding: 15px 20px 15px 40px;
 }
@@ -74,12 +73,19 @@
     padding: 15px 20px 15px 40px;
 }
 
+//.cancelIcon {
+//    background: url("/shared/assets/workspace/cancel-icon-white.svg") no-repeat center;
+//}
 
 // стили для ошибок
 .errorWrapper {
     padding-top: 5px;
     padding-left: 10px;
     font-size: 14px;
+    color: red;
+}
+.errorHelperText {
+    composes: errorWrapper;
 }
 .error {
     color: red;

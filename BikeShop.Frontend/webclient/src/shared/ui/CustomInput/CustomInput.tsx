@@ -15,6 +15,7 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     onEnter?: () => void
     error?: ReactNode
     spanClassName?: string
+    helperText?: string
 }
 
 export const CustomInput: React.FC<SuperInputTextPropsType> = (
@@ -27,6 +28,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
         className,
         spanClassName,
         id,
+        helperText, // для Controlled Input (React Hook Forms)
 
         ...restProps // все остальные пропсы попадут в объект restProps
     }
@@ -63,9 +65,14 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
                 className={finalInputClassName}
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
+            {/*<span className={s.cancelIcon}></span>*/}
             <div className={s.errorWrapper}>
                 {error && <span className={finalSpanClassName}>{error}</span>}
             </div>
+            <div className={s.errorHelperText}>
+                {helperText && helperText}
+            </div>
+
             {/*вариант строки с id*/}
             {/*<span*/}
             {/*    id={id ? id + '-span' : undefined}*/}

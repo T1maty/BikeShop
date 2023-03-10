@@ -1,14 +1,14 @@
 import React, {useEffect, ChangeEvent} from 'react';
 import {Modal} from '@mui/material';
-import {Button, ControlledCustomInput, ControlledInput, CustomInput} from '../../shared/ui';
+import {Button, ControlledCustomInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {CreateUser, IUser} from '../../entities';
 import {useSnackbar} from 'notistack';
-import {useDebounce} from "../../shared/hooks/useDebounce";
+import {useDebounce} from '../../shared/hooks/useDebounce';
 import useChooseClientModal from './ChooseClientModalStore';
-import {Errors} from "../../entities/errors/workspaceErrors";
+import {Errors} from '../../entities/errors/workspaceErrors';
 
 interface ChooseClientModalProps {
     extraCallback: (user: IUser) => void
@@ -117,7 +117,6 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                                     :
                                     isLoading
                                         ? <div>Поиск...</div> :
-                                        // ? <div className={s.textField_loader}><Loader/></div> :
                                         users.map((u: any) => {
                                             return (
                                                 <div className={s.textField_contentItem} key={u.user.id}
@@ -149,36 +148,51 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                             {/*                     rules={{required: Errors[0].name}}*/}
                             {/*    />*/}
                             {/*</div>*/}
-                            <div>
-                                <ControlledInput name={'firstName'} label={'Имя'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div>
-                                <ControlledInput name={'patronymic'} label={'Отчество'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div>
-                                <ControlledInput name={'phone'} label={'Номер телефона'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
+                            <ControlledCustomInput name={'firstName'}
+                                                   placeholder={'Имя'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
+                            />
+                            {/*<div>*/}
+                            {/*    <ControlledInput name={'firstName'} label={'Имя'}*/}
+                            {/*                     control={formControl}*/}
+                            {/*                     rules={{required: Errors[0].name}}*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                            <ControlledCustomInput name={'patronymic'}
+                                                   placeholder={'Отчество'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
+                            />
+                            {/*    <ControlledInput name={'patronymic'} label={'Отчество'}*/}
+                            {/*                     control={formControl}*/}
+                            {/*                     rules={{required: Errors[0].name}}*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                            <ControlledCustomInput name={'phone'}
+                                                   placeholder={'Номер телефона'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
+                            />
+                            {/*    <ControlledInput name={'phone'} label={'Номер телефона'}*/}
+                            {/*                     control={formControl}*/}
+                            {/*                     rules={{required: Errors[0].name}}*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                         </div>
                         <div className={s.addClient_buttonsBlock}>
-                            <div>
-                                <Button type={'submit'}>
-                                    Добавить клиента
-                                </Button>
-                            </div>
-                            <div>
-                                <Button onClick={() => {setOpen(false)}}>
-                                    Отмена
-                                </Button>
-                            </div>
+                            <Button type={'submit'}>
+                                Добавить клиента
+                            </Button>
+                            <Button className={s.buttonsBlock_cancelButton}
+                                    onClick={() => {
+                                        setOpen(false)
+                                    }}
+                            >
+                                Отмена
+                            </Button>
                         </div>
                     </div>
 

@@ -1,8 +1,7 @@
-import React from 'react';
-import {TextField} from "@mui/material";
-import {Controller, UseFormReturn} from "react-hook-form";
-import {RegisterOptions} from "react-hook-form/dist/types/validator";
-import {CustomInput} from '../CustomInput/CustomInput';
+import React from 'react'
+import {Controller, UseFormReturn} from "react-hook-form"
+import {RegisterOptions} from "react-hook-form/dist/types/validator"
+import {CustomInput} from '../CustomInput/CustomInput'
 
 interface ControlledCustomInputProps {
     name: string
