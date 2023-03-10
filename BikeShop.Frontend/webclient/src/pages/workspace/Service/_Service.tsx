@@ -1,3 +1,4 @@
+/*
 import React, {useEffect, useState} from 'react'
 import s from './Service.module.scss'
 import style from '../../../shared/ui/Button/Button.module.scss'
@@ -505,3 +506,6 @@ const Service = () => {
     );
 };
 export default Service;
+*/
+
+export default {}

@@ -1,3 +1,4 @@
+/*
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
 import {immer} from 'zustand/middleware/immer';
@@ -54,7 +55,7 @@ interface ServiceStore {
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
-const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useService = create<ServiceStore>()(/!*persist(*!/devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
     isClientChosen: false,
@@ -195,9 +196,11 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 console.log('service status not updated', error)
             })
     },
-})))/*, {
+})))/!*, {
     name: "serviceStore",
     version: 1
-})*/);
+})*!/);
 
-export default useService;
+export default useService;*/
+
+export default {}
