@@ -1,6 +1,6 @@
 import React, {useEffect, ChangeEvent} from 'react';
 import {Modal} from '@mui/material';
-import {Button, ControlledInput, CustomInput} from '../../shared/ui';
+import {Button, ControlledCustomInput, ControlledInput, CustomInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {SubmitHandler, useForm} from 'react-hook-form';
@@ -138,12 +138,17 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                             Создать клиента:
                         </div>
                         <div className={s.addClient_inputs}>
-                            <div>
-                                <ControlledInput name={'lastName'} label={'Фамилия'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
+                            <ControlledCustomInput name={'lastName'}
+                                                   placeholder={'Фамилия'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
+                            />
+                            {/*<div>*/}
+                            {/*    <ControlledInput name={'lastName'} label={'Фамилия'}*/}
+                            {/*                     control={formControl}*/}
+                            {/*                     rules={{required: Errors[0].name}}*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                             <div>
                                 <ControlledInput name={'firstName'} label={'Имя'}
                                                  control={formControl}

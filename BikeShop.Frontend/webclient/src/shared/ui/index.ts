@@ -8,4 +8,5 @@ export {default as Checkbox} from './Checkbox/Checkbox'
 export {UniTable} from './Table/UniTable'
 
 export {ControlledInput} from './Controlled/ControlledInput'
+export {ControlledCustomInput} from './Controlled/ControlledCustomInput'
 export {ControlledCheckbox} from './Controlled/ControlledCheckbox'
