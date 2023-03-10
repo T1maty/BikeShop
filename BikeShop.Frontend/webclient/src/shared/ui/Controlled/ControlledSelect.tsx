@@ -1,6 +1,7 @@
 import React from 'react';
 import {Controller, UseFormReturn} from "react-hook-form";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import {IUser} from "../../../entities";
 
 interface props {
     control: UseFormReturn<any>
@@ -9,7 +10,7 @@ interface props {
     className?: any
     disabled?: boolean
 
-    data: any
+    data: IUser[]
     onChangeSelect?: (event: SelectChangeEvent) => void
 }
 
@@ -26,16 +27,17 @@ export const ControlledSelect = (props: props) => {
                             disabled={props.disabled ? props.disabled : false}
                             value={field.value}
                             label={props.name}
-                            onChange={(event, child) => {
-                                props.onChangeSelect ? props.onChangeSelect(event) : true
+                            onChange={(event) => {
                                 field.onChange(event.target.value)
                             }}
                         >
                             {
-                                props.data.map((m: any) => {
+                                props.data.map((m) => {
+
                                     return (
-                                        <MenuItem key={m.id} value={m.id}>
-                                            {m.value}
+                                        // @ts-ignore
+                                        <MenuItem key={m.id} value={m}>
+                                            {m.firstName}
                                         </MenuItem>
                                     )
                                 })

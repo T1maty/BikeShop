@@ -8,7 +8,6 @@ import {
     GetUsersResponse,
     IUser,
     ServiceItem,
-    UpdateService,
     UpdateServiceStatus
 } from '../../../entities';
 
@@ -41,7 +40,7 @@ interface ServiceStore {
 
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
-    updateService: (updateData: UpdateService) => any // надо исправить тип
+    updateService: (updateData: CreateService) => any // надо исправить тип
     updateServiceStatus: (data: UpdateServiceStatus) => void
 
     mode: string,
@@ -144,7 +143,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             console.log('service not created', error)
         })
     },
-    updateService: (updateData: UpdateService) => {
+    updateService: (updateData) => {
 
         return $api.put('/service/updateservice', updateData).then(res => {
             $api.get('/service/getbyshopid/1').then(res => {

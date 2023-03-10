@@ -1,15 +1,16 @@
 import {ServiceItemProduct, ServiceItemWork} from "../models/ServiceItem";
+import {IUser} from "../models/IUser";
 
 export interface CreateService {
     id: number
 
     shopId: number
 
-    clientId: string
+    client: IUser,
     name: string
     clientDescription: string
 
-    userMasterId: string
+    userMaster: IUser
     userCreatedId: string
 
     userMasterDescription: string
