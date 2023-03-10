@@ -14,7 +14,7 @@ const CreateStorageModal = () => {
     const navigate = useNavigate()
 
     const open = useCreateStorageModal(s => s.createStorageModal)
-    const setOpen = useCreateStorageModal(s => s.setCreateStorageModal)
+    const setOpen = useCreateStorageModal(s => s.setOpenCreateStorageModal)
     const storageName = useCreateStorageModal(s => s.storageName)
     const storageWaiting = useCreateStorageModal(s => s.storageWaiting)
     const addNewStorage = useCreateStorageModal(s => s.addNewStorage)

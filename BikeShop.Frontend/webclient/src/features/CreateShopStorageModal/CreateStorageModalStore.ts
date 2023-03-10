@@ -6,7 +6,7 @@ import {AxiosResponse} from "axios";
 
 interface CreateStorageModalStore {
     createStorageModal: boolean
-    setCreateStorageModal: (value: boolean) => void
+    setOpenCreateStorageModal: (value: boolean) => void
 
     storageName: string
     setStorageName: (value: string) => void
@@ -17,8 +17,8 @@ interface CreateStorageModalStore {
 }
 
 const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    createStorageModal: true,
-    setCreateStorageModal: (value: boolean) => set({createStorageModal: value}),
+    createStorageModal: false,
+    setOpenCreateStorageModal: (value: boolean) => set({createStorageModal: value}),
 
     storageName: '',
     setStorageName: (value: string) => set({storageName: value}),

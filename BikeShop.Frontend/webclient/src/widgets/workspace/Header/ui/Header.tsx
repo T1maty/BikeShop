@@ -9,13 +9,20 @@ import {MenuIcon} from "../../../../shared/ui/IconButtons/MenuIcon";
 import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon";
 import {Badge} from "../../../../shared/ui/Badge/Badge";
 import {BikeShopPaths} from "../../../../app/routes/paths";
+import useCreateStorageModal from "../../../../features/CreateShopStorageModal/CreateStorageModalStore";
+import useCreateShopModal from "../../../../features/CreateShopStorageModal/CreateShopModalStore";
+import CreateShopModal from 'features/CreateShopStorageModal/CreateShopModal';
+import CreateStorageModal from 'features/CreateShopStorageModal/CreateStorageModal';
 
 export const Header: FC = () => {
 
+    const {t} = useTranslation()
     const navigate = useNavigate()
+
     const user = useAuthUser(s => s.user)
     const shop = useAuthUser(s => s.shop)
-    const {t} = useTranslation()
+    const openShopModal = useCreateShopModal(s => s.setOpenCreateShopModal)
+    const openStorageModal = useCreateStorageModal(s => s.setOpenCreateStorageModal)
 
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
@@ -44,15 +51,12 @@ export const Header: FC = () => {
     const [menuItems2, setMenuItems2] = useState([
         {
             title: 'Магазины',
-            func: () => {
-                //
-            }
+            func: () => {openShopModal(true); setIsMenuOpen(false)}
+
         },
         {
             title: 'Склады',
-            func: () => {
-                //
-            }
+            func: () => {openStorageModal(true); setIsMenuOpen(false)}
         },
         {
             title: 'Валюты',
@@ -118,6 +122,9 @@ export const Header: FC = () => {
 
     return (
         <div className={cls.appBar}>
+            <CreateShopModal/>
+            <CreateStorageModal/>
+
             <div className={cls.content}>
                 <div className={cls.leftSide}>
                     <div className={cls.leftSide_burgerMenu}>

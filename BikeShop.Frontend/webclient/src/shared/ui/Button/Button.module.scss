@@ -14,6 +14,7 @@
     border-radius: 0.25rem;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    height: 100%; // добавил, чтобы кнопка была по высоте блока
 }
 
 .btn:disabled {

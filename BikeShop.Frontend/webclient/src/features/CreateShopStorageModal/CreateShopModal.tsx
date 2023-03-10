@@ -15,7 +15,7 @@ const CreateShopModal = () => {
     const navigate = useNavigate()
 
     const open = useCreateShopModal(s => s.createShopModal)
-    const setOpen = useCreateShopModal(s => s.setCreateShopModal)
+    const setOpen = useCreateShopModal(s => s.setOpenCreateShopModal)
     const addNewShop = useCreateShopModal(s => s.addNewShop)
 
     const formControl = useForm({

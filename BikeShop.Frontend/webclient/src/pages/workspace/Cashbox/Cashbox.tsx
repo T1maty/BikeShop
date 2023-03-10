@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './Cashbox.module.scss'
 import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal} from '../../../features'
-import {Button, InputUI} from '../../../shared/ui'
+import {Button, CustomInput, InputUI} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore'
 import usePayModal from '../../../features/PayModal/PayModalStore'
@@ -9,8 +9,6 @@ import useChooseProductModal from '../../../features/ChooseProductModal/ChoosePr
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
 import {IUser} from '../../../entities'
-import CreateShopModal from '../../../features/CreateShopStorageModal/CreateShopModal'
-import CreateStorageModal from '../../../features/CreateShopStorageModal/CreateStorageModal'
 
 const Cashbox = () => {
 
@@ -33,8 +31,6 @@ const Cashbox = () => {
     return (
         // <div className={s.cashboxWrapper}>
             <div className={s.cashboxMainBlock}>
-                {/*<CreateShopModal/>*/}
-                {/*<CreateStorageModal/>*/}
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
                         <Button onClick={() => {}} disabled={!isActiveTable}>
@@ -102,14 +98,17 @@ const Cashbox = () => {
                 <div className={s.cashboxMainBlock_rightSideWrapper}>
                     <div className={s.cashboxMainBlock_rightSideHeader}>
                         <ChooseProductModal/>
-                        <div className={s.header_chooseBtn}>
-                            <Button onClick={() => {setChooseProductModal(true)}}>
+                        {/*<div className={s.header_chooseBtn}>*/}
+                            <Button buttonDivWrapper={s.header_chooseBtn}
+                                    onClick={() => {setChooseProductModal(true)}}
+                            >
                                 Выбрать товары
                             </Button>
-                        </div>
-                        <div className={s.header_searchInput}>
-                            <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
-                        </div>
+                        {/*</div>*/}
+                        <CustomInput placeholder={'Поиск...'}/>
+                        {/*<div className={s.header_searchInput}>*/}
+                        {/*    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
+                        {/*</div>*/}
                     </div>
 
                     <div className={s.cashboxMainBlock_rightSideMiddle}>

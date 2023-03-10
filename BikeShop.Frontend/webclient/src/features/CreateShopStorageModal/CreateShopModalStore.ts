@@ -7,7 +7,7 @@ import {CreateShopSubmit} from '../../entities';
 
 interface CreateShopModalStore {
     createShopModal: boolean
-    setCreateShopModal: (value: boolean) => void
+    setOpenCreateShopModal: (value: boolean) => void
     isLoading: boolean
     setIsLoading: (value: boolean) => void
 
@@ -26,8 +26,8 @@ interface CreateShopModalStore {
 }
 
 const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    createShopModal: true,
-    setCreateShopModal: (value: boolean) => set({createShopModal: value}),
+    createShopModal: false,
+    setOpenCreateShopModal: (value: boolean) => set({createShopModal: value}),
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
 

@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     // variant?: string
     onAnimate?: boolean
     viewAnimate?: Animate
+    buttonDivWrapper?: any
 }
 
 /**
@@ -23,6 +24,7 @@ export const Button: FC<ButtonProps> = (
         onClick,
         viewAnimate,
         onAnimate = true,
+        buttonDivWrapper,
         ...otherProps
     }
 ) => {
@@ -33,14 +35,16 @@ export const Button: FC<ButtonProps> = (
     }
 
     return (
-        <button
-            type='button'
-            onClick={onClickHandler}
-            className={clsx(cls.btn, className)}
-            {...otherProps}
-        >
-            {children}
-        </button>
+        <div className={buttonDivWrapper}>
+            <button
+                type='button'
+                onClick={onClickHandler}
+                className={clsx(cls.btn, className)}
+                {...otherProps}
+            >
+                {children}
+            </button>
+        </div>
     )
 }
 

@@ -1,6 +1,6 @@
 import React, {useEffect, ChangeEvent} from 'react';
 import {Modal} from '@mui/material';
-import {Button, ControlledInput} from '../../shared/ui';
+import {Button, ControlledInput, CustomInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {SubmitHandler, useForm} from 'react-hook-form';
@@ -176,7 +176,6 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                             </div>
                         </div>
                     </div>
-
 
                 </div>
             </form>
