@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from "./Service.module.scss";
 import {Button, ControlledClientCard, ControlledInput, ControlledSelect} from "../../../shared/ui";
 import {Errors} from "../../../entities/errors/workspaceErrors";
@@ -24,6 +24,8 @@ const ServiceForm = () => {
     const updateService = useService(s => s.updateService)
     const addServiceProduct = useService(s => s.addServiceProduct)
 
+    const [isCreating, setIsCreating] = useState(false);
+
     const formControl = useForm<CreateService>({
         defaultValues: {
             id: 0,
@@ -45,6 +47,7 @@ const ServiceForm = () => {
 
     React.useEffect(() => {
         formControl.reset()
+        formControl.setValue('id', currentService ? currentService.id : 0)
         formControl.setValue('name', currentService ? currentService.name : '')
         formControl.setValue('clientDescription', currentService ? currentService.clientDescription : '')
         formControl.setValue('userMasterId', currentService ? currentService.userMaster?.id : '')
@@ -54,17 +57,18 @@ const ServiceForm = () => {
 
     const onSubmit: SubmitHandler<CreateService> = (data: CreateService) => {
         // создание сервиса
-        if (currentService === null) {
+        if (isCreating) {
             console.log('create IF works, new data =', data)
-
-            data.id = 0
+            
+            data.shopId = 1
 
             data.serviceWorks = []
             data.serviceProducts = []
 
             addNewService(data).then((res: any) => {
-
+                clearAllServiceInfo()
                 enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
                 formControl.setError('name', {type: 'serverError', message: message})
@@ -74,12 +78,8 @@ const ServiceForm = () => {
         }
 
         // обновление сервиса
-        if (currentService != null) {
-            data.id = currentService.id
+        if (!isCreating) {
             console.log('update IF works, updateData = ', data)
-
-            data.serviceWorks = currentService.works
-            data.serviceProducts = currentService.products
 
 
             updateService(data).then((res: any) => {
@@ -99,6 +99,7 @@ const ServiceForm = () => {
     const clearAllServiceInfo = () => {
         formControl.reset()
         setCurrentService(null)
+        setIsCreating(false)
     }
 
     return (
@@ -110,7 +111,7 @@ const ServiceForm = () => {
                                  control={formControl}
                                  rules={{required: Errors[0].name}}
                                  className={s.rightSide_stuffInput}
-                                 disabled={currentService === null}
+                                 disabled={currentService === null && !isCreating}
                 />
                 <div className={s.rightSide_infoFields}>
                     <div className={s.infoFields_content}>
@@ -119,33 +120,33 @@ const ServiceForm = () => {
                                          control={formControl}
                                          rules={{required: Errors[0].name}}
                                          className={s.content_detailsInput}
-                                         disabled={currentService === null}
+                                         disabled={currentService === null && !isCreating}
                         />
                         <ControlledSelect control={formControl} name={'userMasterId'} label={'Мастер'}
                                           className={s.content_masterInput}
+                                          disabled={currentService === null && !isCreating}
                                           data={masters.map((n) => {
                                               return {id: n.id, value: n.firstName}
                                           })}
                         />
                         <div className={s.content_buttons}>
                             <div className={s.content_saveBtn}>
-                                {currentService != null ?
-                                    <Button className={s.content_saveBtn} type={'submit'}
-                                            disabled={!formControl.formState.isDirty}>
-                                        {currentService.id === 0 ?
-                                            'Сохранить'
+
+                                {
+                                    isCreating ?
+                                        <Button className={s.content_saveBtn} type={'submit'}
+                                                disabled={!formControl.formState.isDirty}>Сохранить</Button>
+                                        :
+                                        formControl.getValues('id') > 0 ?
+                                            <Button className={s.content_saveBtn} type={'submit'}
+                                                    disabled={!formControl.formState.isDirty}>Обновить</Button>
                                             :
-                                            'Обновить'
-                                        }
-                                    </Button>
-                                    :
-                                    <Button className={s.content_saveBtn} onClick={() => {
-                                        formControl.reset()
-                                    }
-                                    }>
-                                        Создать
-                                    </Button>
+                                            <Button onClick={() => {
+                                                formControl.reset()
+                                                setIsCreating(true)
+                                            }} className={s.content_saveBtn}>Создать</Button>
                                 }
+
                             </div>
                             <div className={s.content_sumField}> Сумма</div>
                         </div>
@@ -153,7 +154,7 @@ const ServiceForm = () => {
 
                     <ControlledClientCard control={formControl} name={'client'} className={s.infoFields_clientCard}/>
 
-                    <Button disabled={currentService === null}
+                    <Button disabled={currentService === null && !isCreating}
                             onClick={clearAllServiceInfo}>
                         Отмена
                     </Button>
