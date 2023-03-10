@@ -1,5 +1,6 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode,} from 'react'
 import s from './CustomInput.module.scss'
+import {Button} from "../Button/Button";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
@@ -72,15 +73,8 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
             {/*    {error}*/}
             {/*</span>*/}
 
-            {/*иконки-кнопки*/}
-            {/*<div>*/}
-            {/*    <SuperButton*/}
-            {/*        type={'submit'}*/}
-            {/*        className={styles.findButton}>*/}
-            {/*        Найти*/}
-            {/*    </SuperButton>*/}
-            {/*</div>*/}
-            {/*<div className={styles.clearInput} onClick={clearSearchHandler}>*/}
+            {/*иконки*/}
+            {/*<div className={s.clearInput} onClick={() => {alert('очистка поля')}}>*/}
             {/*    X*/}
             {/*</div>*/}
         </div>
