@@ -1,6 +1,6 @@
 import {ServiceStatusType} from "../models/ServiceItem";
 import {IUser} from "../models/IUser";
-import {ServiceProduct, ServiceWork} from "../requests/CreateService";
+
 
 export interface CreateServiceResponse {
     shopId: number
@@ -34,8 +34,8 @@ export interface CreateServiceResponse {
     discount: number
     total: number
 
-    products: ServiceProduct[]
-    works: ServiceWork[]
+    //products: ServiceProduct[]
+    //works: ServiceWork[]
 }
 
 // export interface ProductWorkItem {

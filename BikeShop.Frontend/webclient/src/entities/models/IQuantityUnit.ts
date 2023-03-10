@@ -1,4 +1,5 @@
 export interface IQuantityUnit {
+    id: number
     name: string,
     fullName: string,
     groupId: number,

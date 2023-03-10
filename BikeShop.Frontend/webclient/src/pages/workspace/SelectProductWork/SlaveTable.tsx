@@ -3,15 +3,14 @@ import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {columns} from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableConfig";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import ProductCatalogTableRow
-    from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableRow";
-import {IProductExtended} from "../../../entities";
+import {ServiceItemProduct} from "../../../entities/models/ServiceItem";
+import {columns} from "./SlaveTableConfig";
+import SlaveTableRow from "./SlaveTableRow";
 
 interface props {
-    rows: IProductExtended[]
+    rows: ServiceItemProduct[]
 }
 
 const SlaveTable = (props: props) => {
@@ -42,7 +41,8 @@ const SlaveTable = (props: props) => {
                         {props.rows
                             .map((row) => {
                                 return (
-                                    <ProductCatalogTableRow key={row.product.id} row={row}/>
+                                    <SlaveTableRow key={row.id} row={row}
+                                    />
                                 );
                             })}
                     </TableBody>

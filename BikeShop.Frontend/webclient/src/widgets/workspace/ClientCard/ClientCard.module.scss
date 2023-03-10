@@ -2,22 +2,32 @@
 @import '../../../app/styles/variables/variables';
 
 .clientCard_background {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: $themeColorGray;
-    border-radius: $largeBorderRadius;
-    padding: $defaultLargeMargin;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $themeColorGray;
+  border-radius: $largeBorderRadius;
+  padding: $defaultLargeMargin;
 
-    h3 {
-        text-align: center;
-        margin: 0 0 5px 0;
-    }
-    p {
-        margin: 7px 0;
+  h3 {
+    text-align: center;
+    margin: 0 0 5px 0;
+  }
 
-        span {
-            text-decoration: underline;
-        }
+  p {
+    margin: 7px 0;
+
+    span {
+      text-decoration: underline;
     }
+  }
+}
+
+.clientCard_background:hover {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #272727;
+  border-radius: $largeBorderRadius;
+  padding: $defaultLargeMargin;
 }

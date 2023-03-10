@@ -1,20 +1,20 @@
 import React from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI} from '../../../shared/ui'
-import {IProductExtended} from "../../../entities";
 import SlaveTable from "./SlaveTable";
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
 import useSelectProduct from "./SelectProductStore";
+import {ServiceItemProduct} from "../../../entities/models/ServiceItem";
 
 interface SelectProductProps {
-    products: IProductExtended[]
+    products: ServiceItemProduct[]
+    addProduct: (product: ServiceItemProduct) => void
 }
 
 export const SelectProduct = (props: SelectProductProps) => {
 
-    const slaveTableRows = useSelectProduct(s => s.slaveTableRows);
-    const addSlaveTableProduct = useSelectProduct(s => s.addProduct);
-    const setSlaveTableProducts = useSelectProduct(s => s.setSlaveTableRows);
+
+    const conv = useSelectProduct(s => s.convert);
 
     return (
         <div className={s.selectProduct_mainBox}>
@@ -28,7 +28,7 @@ export const SelectProduct = (props: SelectProductProps) => {
                 <div className={s.leftSide_buttons}>
                     <div>
                         <Button onClick={() => {
-                            setSlaveTableProducts([])
+
                         }}>
                             Подтвердить
                         </Button>
@@ -44,7 +44,9 @@ export const SelectProduct = (props: SelectProductProps) => {
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
-                    <ProductCatalogTable onRowDoubleClick={addSlaveTableProduct}/>
+                    <ProductCatalogTable onRowDoubleClick={(product) => {
+                        props.addProduct(conv(product))
+                    }}/>
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
@@ -64,7 +66,7 @@ export const SelectProduct = (props: SelectProductProps) => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    <SlaveTable rows={slaveTableRows}/>
+                    <SlaveTable rows={props.products}/>
                 </div>
             </div>
         </div>

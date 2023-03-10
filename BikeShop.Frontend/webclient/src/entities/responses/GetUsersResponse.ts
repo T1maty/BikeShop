@@ -1,15 +1,16 @@
+import {IUser} from "../models/IUser";
+
 export interface GetUsersResponse {
     users: [
         {
-            user: UserObj,
+            user: IUser,
             userRoles: string[]
         }
     ]
 }
 
 export interface UserResponse {
-    user: UserObj
-    userRoles: string[]
+    users: GetUsersResponse[]
 }
 
 export interface UserObj {

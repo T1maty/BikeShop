@@ -42,3 +42,4 @@ export {PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeade
 export {WorkspaceHeaderProvider} from '../app/providers/HeaderProviders/WorkspaceHeaderProvider'
 
 export {EnumProductCheckStatus} from './enumerables/EnumProductCheckStatus'
+export {EnumServiceStatus} from './enumerables/EnumServiceStatus'

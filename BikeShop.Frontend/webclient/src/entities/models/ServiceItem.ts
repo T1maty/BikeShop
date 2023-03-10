@@ -52,7 +52,7 @@ export type ServiceItemProductWork = {
     enabled: boolean
     name: string
     quantity: number
-    quantityUnitId: number
+
     price: number
     discount: number
     total: number
@@ -63,8 +63,11 @@ export type ServiceItemProductWork = {
 export type ServiceItemProduct = ServiceItemProductWork & {
     catalogKey: string
     serialNumber: string
+    quantityUnitId: number
+    quantityUnitName: string
 }
 
 export type ServiceItemWork = ServiceItemProductWork & {
     description: string
+
 }

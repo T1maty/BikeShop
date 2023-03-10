@@ -3,13 +3,16 @@ import s from "./ClientCard.module.scss";
 import {IUser} from "../../../entities";
 
 interface ClientCardProps {
-    user: IUser | null
+    user?: IUser
+    onDoubleClick?: () => void
 }
 
-const ClientCard: React.FC<ClientCardProps> = ({user}) => {
+const ClientCard: React.FC<ClientCardProps> = ({user, onDoubleClick}) => {
 
     return (
-        <div className={s.clientCard_background}>
+        <div className={s.clientCard_background} onDoubleClick={() => {
+            onDoubleClick ? onDoubleClick() : true
+        }}>
             <h3>Клиент</h3>
             <p>
                 <span>ФИО:</span> {''}

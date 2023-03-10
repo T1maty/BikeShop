@@ -1,3 +1,5 @@
+import {IUser} from "../models/IUser";
+
 export default interface UserResponse {
-    id: number
+    users: IUser[]
 }

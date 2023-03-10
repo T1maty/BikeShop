@@ -12,6 +12,7 @@ interface ControlledInputProps {
     sx?: any
     InputLabelProps?: any
     className?: any
+    disabled?: boolean
 }
 
 export const ControlledInput = (props: ControlledInputProps) => {
@@ -24,6 +25,7 @@ export const ControlledInput = (props: ControlledInputProps) => {
                 render={({field}: any) =>
                     <TextField {...field}
                                fullWidth={true}
+                               disabled={props.disabled ? props.disabled : false}
                                variant="outlined"
                                label={props.label}
                                error={!!props.control.formState.errors[props.name]}

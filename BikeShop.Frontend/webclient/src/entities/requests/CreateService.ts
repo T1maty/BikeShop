@@ -1,4 +1,8 @@
+import {ServiceItemProduct, ServiceItemWork} from "../models/ServiceItem";
+
 export interface CreateService {
+    id: number
+
     shopId: number
 
     clientId: string
@@ -8,28 +12,13 @@ export interface CreateService {
     userMasterId: string
     userCreatedId: string
 
+    userMasterDescription: string
+    userCreatedDescription: string
+
     productDiscountId: number
     workDiscountId: number
 
-    serviceProducts: ServiceProduct[]
-    serviceWorks: ServiceWork[]
+    serviceProducts: ServiceItemProduct[]
+    serviceWorks: ServiceItemWork[]
 }
 
-export type ServiceProductWork = {
-    name: string
-    quantity: number
-    quantityUnitId: number
-    price: number
-    discount: number
-    total: number
-    userId: string
-}
-
-export type ServiceProduct = ServiceProductWork & {
-    catalogKey: string
-    serialNumber: string
-}
-
-export type ServiceWork = ServiceProductWork & {
-    description: string
-}

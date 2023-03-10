@@ -1,5 +1,4 @@
 import {ServiceStatusType} from "../models/ServiceItem";
-import {ServiceProduct, ServiceWork} from "./CreateService";
 
 export interface UpdateService {
     id: number
@@ -13,8 +12,8 @@ export interface UpdateService {
     productDiscountId: number
     workDiscountId: number
 
-    serviceProducts: ServiceProduct[]
-    serviceWorks: ServiceWork[]
+    //serviceProducts: ServiceProduct[]
+    //serviceWorks: ServiceWork[]
 }
 
 export interface UpdateServiceStatus {
