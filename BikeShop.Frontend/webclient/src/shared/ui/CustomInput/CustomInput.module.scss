@@ -4,9 +4,10 @@
 // инпут
 .inputWrapper {
     width: 100%;
+    //display: flex;
 }
 .input {
-
+    //flex: 1;
 }
 .input:focus {
 
@@ -27,7 +28,7 @@
     opacity: 70%;
 }
 
-// дефолтный инпут
+// дефолтный инпут белого цвета
 .superInput {
     composes: superInputDefault;
     border: 1px solid gray;
@@ -44,34 +45,34 @@
     border: 1px solid black;
     color: black;
 }
+.superInputBlack::placeholder {
+    color: black;
+}
 .superInputBlack:focus-visible {
     border: 1px solid black;
     outline: none;
 }
 
-// стили для иконок внутри инпута
-.superInputWithIcons {
-    // вставка иконок
-    // background: transparent url("/src/shared/assets/workspace/magnifying-glass.svg") no-repeat 5px center;
-     background-size: 25px;
+
+// инпут c белой иконкой внутри
+.searchInput {
+    // вставка иконки
+    composes: superInput;
+    //background: transparent url("/shared/assets/workspace/magnifying-glass-white.svg") no-repeat 5px center;
+    background: transparent url("/shared/assets/workspace/cancel-icon-white.svg") no-repeat center right 15px;
+    background-size: 25px;
+    padding: 15px 20px 15px 40px;
 }
-.clearInput {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    cursor: pointer;
-    margin-left: 15px;
-    color: white;
-    background-color: red;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    padding-bottom: 2px;
+
+// инпут c чёрной иконкой внутри
+.searchInputBlack {
+    // вставка иконки
+    composes: superInputBlack;
+    background: transparent url("/shared/assets/workspace/magnifying-glass-black.svg") no-repeat 5px center;
+    background-size: 25px;
+    padding: 15px 20px 15px 40px;
 }
-.clearInput:hover {
-    opacity: 0.5;
-}
+
 
 // стили для ошибок
 .errorWrapper {

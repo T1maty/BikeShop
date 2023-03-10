@@ -1,6 +1,7 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode,} from 'react'
 import s from './CustomInput.module.scss'
 import {Button} from "../Button/Button";
+import CancelIcon from '../../assets/workspace/cancel-icon-white.svg'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
@@ -74,9 +75,9 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
             {/*</span>*/}
 
             {/*иконки*/}
-            {/*<div className={s.clearInput} onClick={() => {alert('очистка поля')}}>*/}
-            {/*    X*/}
-            {/*</div>*/}
+            {/*<button onClick={() => {alert('очистка поля')}}>*/}
+            {/*    <img src={CancelIcon} alt="cancel-icon"/>*/}
+            {/*</button>*/}
         </div>
     )
 }
