@@ -11,26 +11,29 @@ interface ControlledInputProps {
     // style?: any
     sx?: any
     InputLabelProps?: any
+    className?: any
 }
 
 export const ControlledInput = (props: ControlledInputProps) => {
     return (
-        <Controller
-            name={props.name}
-            control={props.control.control}
-            rules={props.rules}
-            render={({field}: any) =>
-                <TextField {...field}
-                           fullWidth={true}
-                           variant="outlined"
-                           label={props.label}
-                           error={!!props.control.formState.errors[props.name]}
-                           helperText={props.control.formState.errors[props.name]?.message}
-                           // style={{height: '80px'}}
-                           sx={props.sx}
-                           InputLabelProps={props.InputLabelProps}
-                />
-            }
-        />
+        <div className={props.className}>
+            <Controller
+                name={props.name}
+                control={props.control.control}
+                rules={props.rules}
+                render={({field}: any) =>
+                    <TextField {...field}
+                               fullWidth={true}
+                               variant="outlined"
+                               label={props.label}
+                               error={!!props.control.formState.errors[props.name]}
+                               helperText={props.control.formState.errors[props.name]?.message}
+                        // style={{height: '80px'}}
+                               sx={props.sx}
+                               InputLabelProps={props.InputLabelProps}
+                    />
+                }
+            />
+        </div>
     );
 };
