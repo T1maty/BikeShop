@@ -1,8 +1,9 @@
 // Здесь происходят экспорты во внешний мир, то есть внешний API для других слоев
 
-export {Button} from './Button/Button';
-export {default as InputUI} from './Input/Input';
-export {default as Checkbox} from './Checkbox/Checkbox';
+export {Button} from './Button/Button'
+export {CustomInput} from './CustomInput/CustomInput'
+export {default as InputUI} from './Input/Input'
+export {default as Checkbox} from './Checkbox/Checkbox'
 
 export {UniTable} from './Table/UniTable'
 
