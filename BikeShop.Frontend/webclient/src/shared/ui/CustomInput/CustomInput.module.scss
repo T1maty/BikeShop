@@ -15,7 +15,7 @@
 
 
 // дефолтные стили для инпута
-.superInputDefault {
+.customInputDefault {
     width: 100%;
     height: 100%;
     background-color: transparent;
@@ -23,32 +23,32 @@
     padding: 15px 20px;
     font-size: 16px;
 }
-.superInputDefault::placeholder {
+.customInputDefault::placeholder {
     color: white;
     opacity: 70%;
 }
 
 // дефолтный инпут белого цвета
-.superInput {
-    composes: superInputDefault;
+.customInput {
+    composes: customInputDefault;
     border: 1px solid gray;
     color: white;
 }
-.superInput:focus-visible {
+.customInput:focus-visible {
     border: 1px solid white;
     outline: none;
 }
 
 // дефолтный инпут чёрного цвета
-.superInputBlack {
-    composes: superInputDefault;
+.customInputBlack {
+    composes: customInputDefault;
     border: 1px solid black;
     color: black;
 }
-.superInputBlack::placeholder {
+.customInputBlack::placeholder {
     color: black;
 }
-.superInputBlack:focus-visible {
+.customInputBlack:focus-visible {
     border: 1px solid black;
     outline: none;
 }
@@ -57,7 +57,7 @@
 // инпут c белой иконкой внутри
 .searchInput {
     // вставка иконки
-    composes: superInput;
+    composes: customInput;
     background: url("/shared/assets/workspace/magnifying-glass-white.svg") no-repeat 10px center;
     //url("/shared/assets/workspace/cancel-icon-white.svg") no-repeat center right 15px; // иконка отмены
     background-size: 25px;
@@ -67,7 +67,7 @@
 // инпут c чёрной иконкой внутри
 .searchInputBlack {
     // вставка иконки
-    composes: superInputBlack;
+    composes: customInputBlack;
     background: transparent url("/shared/assets/workspace/magnifying-glass-black.svg") no-repeat 5px center;
     background-size: 25px;
     padding: 15px 20px 15px 40px;

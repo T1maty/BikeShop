@@ -28,7 +28,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
         className,
         spanClassName,
         id,
-        helperText, // для Controlled Input (React Hook Forms)
+        helperText, // error для Controlled Input (React Hook Forms)
 
         ...restProps // все остальные пропсы попадут в объект restProps
     }
@@ -53,7 +53,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
     //     + (error ? ' ' + s.errorInput : ' ' + s.superInput)
     //     + (className ? ' ' + s.className : '') // смешивание классов
     const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${error ? s.errorInput : ''} ${className ? className : s.superInput}`
+    const finalInputClassName = `${error ? s.errorInput : ''} ${className ? className : s.customInput}`
 
     return (
         <div className={s.inputWrapper}>
