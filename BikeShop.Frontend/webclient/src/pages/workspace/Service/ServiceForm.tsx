@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from "./Service.module.scss";
 import {Button, ControlledClientCard, ControlledInput, ControlledSelect} from "../../../shared/ui";
 import {Errors} from "../../../entities/errors/workspaceErrors";
@@ -24,6 +24,7 @@ const ServiceForm = () => {
     const addServiceProduct = useService(s => s.addServiceProduct)
 
     const [isCreating, setIsCreating] = useState(false);
+    const [openClientModal, setOpenClientModal] = useState(false)
 
     const formControl = useForm<CreateService>({
         defaultValues: {
@@ -55,7 +56,7 @@ const ServiceForm = () => {
             data.serviceProducts = []
 
             addNewService(data).then((res: any) => {
-                clearAllServiceInfo()
+                setIsCreating(false)
                 enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
 
             }).catch((error: any) => {
@@ -71,7 +72,7 @@ const ServiceForm = () => {
             console.log('update IF works, updateData = ', data)
 
             updateService(data).then((res: any) => {
-                clearAllServiceInfo()
+
                 enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
@@ -137,9 +138,11 @@ const ServiceForm = () => {
                                                     disabled={!formControl.formState.isDirty}>Обновить</Button>
                                             :
                                             <Button className={s.content_saveBtn}
-                                                onClick={() => {
-                                                formControl.reset()
-                                                setIsCreating(true)}}
+                                                    onClick={() => {
+                                                        formControl.reset()
+                                                        setIsCreating(true)
+                                                        setOpenClientModal(true)
+                                                    }}
                                             >
                                                 Создать
                                             </Button>
@@ -150,7 +153,9 @@ const ServiceForm = () => {
                     </div>
 
                     <div className={s.infoFields_clientCard}>
-                        <ControlledClientCard name={'client'} control={formControl}/>
+                        <ControlledClientCard name={'client'} control={formControl} disabled={!isCreating}
+                                              state={openClientModal} setState={setOpenClientModal}
+                                              rules={{required: Errors[0].name}}/>
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}
                                 onClick={clearAllServiceInfo}>

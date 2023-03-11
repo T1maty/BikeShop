@@ -139,6 +139,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     serv.status === 'Waiting' || serv.status === 'WaitingSupply')
             })
             set({isLoading: false})
+            set({currentService: res.data})
         }).catch((error: any) => {
             console.log('service not created', error)
         })

@@ -1,4 +1,4 @@
-import React, {useEffect, ChangeEvent} from 'react';
+import React, {ChangeEvent, useEffect} from 'react';
 import {Modal} from '@mui/material';
 import {Button, ControlledCustomInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
@@ -12,9 +12,12 @@ import {Errors} from '../../entities/errors/workspaceErrors';
 
 interface ChooseClientModalProps {
     extraCallback: (user: IUser) => void
+
+    state?: boolean
+    setState?: (state: boolean) => void
 }
 
-export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback}) => {
+export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallback, state, setState}) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -43,7 +46,9 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
     });
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
         addNewUser(data).then((response) => {
-            setOpen(false)
+
+            setState ? setState(false) : setOpen(false)////
+
             formControl.reset()
             enqueueSnackbar('Клиент добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error) => {
@@ -76,9 +81,9 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
 
     return (
         <Modal
-            open={open}
+            open={state ? state : open}
             onClose={() => {
-                setOpen(false)
+                setState ? setState(false) : setOpen(false)
             }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -164,7 +169,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                             </Button>
                             <Button className={s.buttonsBlock_cancelButton}
                                     onClick={() => {
-                                        setOpen(false)
+                                        setState ? setState(false) : setOpen(false)
                                     }}
                             >
                                 Отмена
