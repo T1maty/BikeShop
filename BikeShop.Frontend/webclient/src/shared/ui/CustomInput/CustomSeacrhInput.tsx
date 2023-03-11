@@ -86,7 +86,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
 
             <div>
                 <button className={s.clearButton}
-                        onClick={onClear}
+                        onClick={() => onClear()}
                 >
                     <img src={color === 'black' ? CancelIconBlack : CancelIcon} alt="cancel-icon"/>
                 </button>
