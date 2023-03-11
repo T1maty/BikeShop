@@ -8,6 +8,7 @@
   background-color: $themeColorGray;
   border-radius: $largeBorderRadius;
   padding: $defaultLargeMargin;
+  @include hoverCursorPointer;
 
   h3 {
     text-align: center;

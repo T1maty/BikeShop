@@ -32,6 +32,11 @@
     align-items: center;
 }
 
+@mixin flexColumnOnly() {
+    display: flex;
+    flex-direction: column;
+}
+
 @mixin flexColumn() {
     display: flex;
     flex-direction: column;

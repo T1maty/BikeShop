@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import s from './Service.module.scss'
 import ServiceNavigation from "./ServiceNavigation";
 import ServiceForm from "./ServiceForm";
@@ -9,7 +9,7 @@ const Service = () => {
     const getMasters = useService(s => s.getMasters)
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
 
-    React.useEffect(() => {
+    useEffect(() => {
         getMasters()
         getAllServicesInfo()
     }, [])
@@ -21,4 +21,5 @@ const Service = () => {
         </div>
     );
 };
+
 export default Service;

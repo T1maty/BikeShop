@@ -8,9 +8,9 @@ import {EnumServiceStatus} from "../../../entities";
 
 const ServiceNavigation = () => {
 
-    const currentService = useService(s => s.currentService)
     const isLoading = useService(s => s.isLoading)
     const services = useService(s => s.services)
+    const currentService = useService(s => s.currentService)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const chooseServiceItem = useService(s => s.setCurrentService)
@@ -30,7 +30,6 @@ const ServiceNavigation = () => {
         console.log('отфильтрованные сервисы', filteredServices)
     }
 
-
     const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
         updateServiceStatus({id: currentService?.id || -1, status: newStatus})
     }
@@ -39,50 +38,43 @@ const ServiceNavigation = () => {
         <div className={s.service_leftSide}>
             <div className={s.leftSide_buttons}>
                 <div className={s.buttons_filter}>
-                    <div>
-                        <Button
-                            className={(EnumServiceStatus.Waiting === mode || EnumServiceStatus.WaitingSupply === mode) ? style.waiting : ''}
+                    <Button
+                        className={(EnumServiceStatus.Waiting === mode || EnumServiceStatus.WaitingSupply === mode) ? style.waiting : ''}
+                        onClick={() => {
+                            filterServicesUniversalHandler('Waiting',
+                                true, false, false,
+                                'WaitingSupply')
+                        }}
+                    >
+                        Ожидают
+                    </Button>
+                    <Button className={mode === EnumServiceStatus.InProcess ? style.process : ''}
                             onClick={() => {
-                                filterServicesUniversalHandler('Waiting',
-                                    true, false, false,
-                                    'WaitingSupply')
+                                filterServicesUniversalHandler('InProcess',
+                                    false, true, false)
                             }}
-                        >
-                            Ожидают
-                        </Button>
-                    </div>
-                    <div>
-                        <Button className={mode === EnumServiceStatus.InProcess ? style.process : ''}
-                                onClick={() => {
-                                    filterServicesUniversalHandler('InProcess',
-                                        false, true, false)
-                                }}
-                        >
-                            В ремонте
-                        </Button>
-                    </div>
-                    <div>
-                        <Button className={mode === EnumServiceStatus.Ready ? style.ready : ''}
-                                onClick={() => {
-                                    filterServicesUniversalHandler('Ready',
-                                        false, false, true)
-                                }}
-                        >
-                            Готово
-                        </Button>
-                    </div>
+                    >
+                        В ремонте
+                    </Button>
+                    <Button className={mode === EnumServiceStatus.Ready ? style.ready : ''}
+                            onClick={() => {
+                                filterServicesUniversalHandler('Ready',
+                                    false, false, true)
+                            }}
+                    >
+                        Готово
+                    </Button>
                 </div>
                 <div className={s.content_title}>
                     {
                         (EnumServiceStatus.Waiting === mode || EnumServiceStatus.WaitingSupply === mode) &&
-                        <div className={s.content_startBtn}>
-                            <Button disabled={currentService === null}
+                            <Button buttonDivWrapper={s.content_startBtn}
+                                disabled={currentService === null}
                                     onClick={() => {
                                         updateServiceStatusHandler('InProcess')
                                     }}>
                                 Начать ремонт
                             </Button>
-                        </div>
                     }
                     {
                         mode === EnumServiceStatus.InProcess &&
