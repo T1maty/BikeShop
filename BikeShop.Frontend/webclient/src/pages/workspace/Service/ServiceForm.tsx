@@ -5,7 +5,7 @@ import {Errors} from "../../../entities/errors/workspaceErrors";
 import {CreateService, IUser} from "../../../entities";
 import {SelectProductModal, SelectWorkModal} from "../../../features";
 import {ServiceTable} from "./ServiceTable";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import useService from "./ServiceStore";
 import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore";
 import {useSnackbar} from "notistack";
@@ -21,7 +21,7 @@ const ServiceForm = () => {
 
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
-    const addServiceProduct = useService(s => s.addServiceProduct)
+    const setSelectWorkModal = useSelectProductWorkModal(s => s.setSelectWorkModal)
 
     const [isCreating, setIsCreating] = useState(false);
     const [openClientModal, setOpenClientModal] = useState(false)
@@ -97,6 +97,9 @@ const ServiceForm = () => {
         formControl.setValue('clientDescription', currentService ? currentService.clientDescription : '')
         formControl.setValue('userMasterId', currentService ? currentService.userMaster?.id : '')
         formControl.setValue('client', currentService ? currentService.client : {} as IUser)
+
+        formControl.setValue('serviceProducts', currentService ? currentService.products : [])
+        formControl.setValue('serviceWorks', currentService ? currentService.works : [])
     }, [currentService])
 
     return (
@@ -155,7 +158,7 @@ const ServiceForm = () => {
                     <div className={s.infoFields_clientCard}>
                         <ControlledClientCard name={'client'} control={formControl} disabled={!isCreating}
                                               state={openClientModal} setState={setOpenClientModal}
-                                              rules={{required: Errors[0].name}}/>
+                                              rules={{validate: (value: IUser) => value.id != null}}/>
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}
                                 onClick={clearAllServiceInfo}>
@@ -164,24 +167,41 @@ const ServiceForm = () => {
                     </div>
                 </div>
 
-                <div className={s.rightSide_tables}>
-                    <SelectProductModal products={currentService?.products ? currentService?.products : []}
-                                        addProduct={addServiceProduct}
-                    />
-                    <ServiceTable data={currentService ? currentService.products : null}
-                                  buttonTitle={'Редактор товаров'}
-                                  serviceTableCallback={() => {
-                                      setSelectProductModal(true)
-                                  }}
-                    />
 
-                    <SelectWorkModal/>
-                    <ServiceTable data={currentService?.works ? currentService?.works : []}
-                                  buttonTitle={'Редактор услуг'}
-                                  serviceTableCallback={() => {
-                                  }}
-                    />
-                </div>
+                <Controller
+                    name={'serviceProducts'}
+                    control={formControl.control}
+                    render={({field}: any) =>
+                        <div className={s.rightSide_tables}>
+                            <ServiceTable data={field.value}
+                                          buttonTitle={'Редактор товаров'}
+                                          serviceTableCallback={() => {
+                                              setSelectProductModal(true)
+                                          }}
+                            />
+                            <SelectProductModal products={field.value}
+                                                setProducts={field.onChange}/>
+                        </div>
+                    }
+                />
+
+                <Controller
+                    name={'serviceWorks'}
+                    control={formControl.control}
+                    render={({field}: any) =>
+                        <div className={s.rightSide_tables}>
+                            <ServiceTable data={field.value}
+                                          buttonTitle={'Редактор услуг'}
+                                          serviceTableCallback={() => {
+                                              setSelectWorkModal(true)
+                                          }}
+                            />
+                            <SelectWorkModal works={field.value} setWorks={field.onChange}/>
+                        </div>
+                    }
+                />
+
+
             </form>
         </div>
     );

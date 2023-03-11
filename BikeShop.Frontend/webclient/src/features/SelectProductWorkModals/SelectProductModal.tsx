@@ -7,7 +7,7 @@ import {ServiceItemProduct} from "../../entities/models/ServiceItem";
 
 interface SelectProductModalProps {
     products: ServiceItemProduct[]
-    addProduct: (product: ServiceItemProduct) => void
+    setProducts: (product: ServiceItemProduct[]) => void
 }
 
 export const SelectProductModal: React.FC<SelectProductModalProps> = (props: SelectProductModalProps) => {
@@ -25,7 +25,7 @@ export const SelectProductModal: React.FC<SelectProductModalProps> = (props: Sel
             aria-describedby="modal-modal-description"
         >
             <div className={s.selectProductWorkModal_mainBox}>
-                <SelectProduct products={props.products} addProduct={props.addProduct}/>
+                <SelectProduct products={props.products} setProducts={props.setProducts}/>
             </div>
         </Modal>
     );

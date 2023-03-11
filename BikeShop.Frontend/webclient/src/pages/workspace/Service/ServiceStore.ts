@@ -11,8 +11,6 @@ import {
     UpdateServiceStatus
 } from '../../../entities';
 
-import {ServiceItemProduct, ServiceItemWork} from "../../../entities/models/ServiceItem";
-
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
 interface ServiceStore {
@@ -25,18 +23,10 @@ interface ServiceStore {
     masters: IUser[]
     getMasters: () => void
 
-    setServiceMaster: (user: IUser | undefined) => void
-    setServiceClient: (user: IUser | undefined) => void
-
     services: ServiceItem[]
     setServices: (services: ServiceItem[]) => void
     filteredServices: ServiceItem[]
-
     setFilteredServices: (filteredServices: ServiceItem[]) => void
-
-    addServiceProduct: (product: ServiceItemProduct) => void
-
-    setCurrentWorks: (works: ServiceItemWork[]) => void
 
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
@@ -48,7 +38,6 @@ interface ServiceStore {
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
-
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
 
@@ -57,26 +46,12 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         set({mode: mode})
     },
 
-    setServiceMaster: (user) => {
-        set(state => {
-            state.currentService ? state.currentService.userMaster = user === undefined ? {} as IUser : user : true
-        })
-    },
-
-    setServiceClient: (user) => {
-        set(state => {
-            state.currentService ? state.currentService.client = user === undefined ? {} as IUser : user : true
-        })
-    },
-
-    addServiceProduct: (product) => {
-        set(state => {
-            state.currentService?.products.push(product)
-        })
-    },
-
     currentService: null,
-    setCurrentService: (service) => set({currentService: service}),
+    setCurrentService: (service) => {
+
+        set({currentService: service})
+
+    },
 
     masters: [],
     getMasters: () => {
@@ -104,11 +79,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         state.filteredServices = filteredServices
     }),
 
-    setCurrentWorks: (works) => set(state => {
-
-        state.currentService ? state.currentService.works = works : true
-    }),
-
     getAllServicesInfo: () => {
         set({isLoading: true})
 
@@ -118,10 +88,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 state.filteredServices = res.data
                     .filter((item) =>
                         item.status === 'Waiting' || item.status === 'WaitingSupply')
-
-
-                console.log('все сервисы', state.services)
-                console.log('отфильтрованные сервисы - ожидание', state.filteredServices)
             })
             set({isLoading: false})
         })
@@ -144,6 +110,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             console.log('service not created', error)
         })
     },
+
     updateService: (updateData) => {
 
         return $api.put('/service/updateservice', updateData).then(res => {
@@ -171,6 +138,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             console.log('service not updated', error)
         })
     },
+
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true})
 

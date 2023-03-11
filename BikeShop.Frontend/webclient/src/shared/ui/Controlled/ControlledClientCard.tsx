@@ -17,7 +17,6 @@ interface props {
 }
 
 export const ControlledClientCard = (props: props) => {
-
     return (
         <div>
             <Controller
@@ -26,6 +25,11 @@ export const ControlledClientCard = (props: props) => {
                 rules={props.rules}
                 render={({field}: any) =>
                     <div>
+                        {!!props.control.formState.errors[props.name] ?
+                            <div>Выбирите клиента</div>
+                            : true
+                        }
+
                         <ClientCard user={field.value} onDoubleClick={() => {
                             if (!props.disabled) props.setState(true)
                         }}/>

@@ -8,7 +8,7 @@ import {ServiceItemProduct} from "../../../entities/models/ServiceItem";
 
 interface SelectProductProps {
     products: ServiceItemProduct[]
-    addProduct: (product: ServiceItemProduct) => void
+    setProducts: (product: ServiceItemProduct[]) => void
 }
 
 export const SelectProduct = (props: SelectProductProps) => {
@@ -45,7 +45,9 @@ export const SelectProduct = (props: SelectProductProps) => {
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
                     <ProductCatalogTable onRowDoubleClick={(product) => {
-                        props.addProduct(conv(product))
+                        let prods = props.products
+                        prods.push(conv(product))
+                        props.setProducts(prods)
                     }}/>
                 </div>
                 <div className={s.rightSide_infoRow}>

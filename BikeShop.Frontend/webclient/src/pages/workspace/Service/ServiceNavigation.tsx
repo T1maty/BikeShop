@@ -68,13 +68,13 @@ const ServiceNavigation = () => {
                 <div className={s.content_title}>
                     {
                         (EnumServiceStatus.Waiting === mode || EnumServiceStatus.WaitingSupply === mode) &&
-                            <Button buttonDivWrapper={s.content_startBtn}
+                        <Button buttonDivWrapper={s.content_startBtn}
                                 disabled={currentService === null}
-                                    onClick={() => {
-                                        updateServiceStatusHandler('InProcess')
-                                    }}>
-                                Начать ремонт
-                            </Button>
+                                onClick={() => {
+                                    updateServiceStatusHandler('InProcess')
+                                }}>
+                            Начать ремонт
+                        </Button>
                     }
                     {
                         mode === EnumServiceStatus.InProcess &&
