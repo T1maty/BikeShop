@@ -22,7 +22,8 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     searchInput?: 'white' | 'black'
 }
 
-export const CustomInput: React.FC<SuperInputTextPropsType> = (
+// @ts-ignore
+export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
     {
         onChange,
         onChangeText,
@@ -38,7 +39,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
         id,
 
         ...restProps // все остальные пропсы попадут в объект restProps
-    }
+    }, forwardRef
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange // если есть пропс onChange
@@ -94,4 +95,4 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
             {/*</span>*/}
         </div>
     )
-}
+})

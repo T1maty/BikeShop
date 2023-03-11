@@ -82,9 +82,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
     return (
         <Modal
             open={state ? state : open}
-            onClose={() => {
-                setState ? setState(false) : setOpen(false)
-            }}
+            onClose={() => {setState ? setState(false) : setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >

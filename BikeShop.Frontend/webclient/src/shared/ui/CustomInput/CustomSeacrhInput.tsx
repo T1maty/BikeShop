@@ -19,7 +19,7 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     onChangeText?: (value: string) => void
     onEnter?: () => void
     clearInputValue: () => void
-    error?: ReactNode
+    // error?: ReactNode
     helperText?: string
     divClassName?: string
     spanClassName?: string
@@ -33,7 +33,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         onKeyPress,
         onEnter,
         clearInputValue,
-        error,
+        // error,
         helperText, // error для Controlled Input (React Hook Forms)
         className,
         divClassName,
@@ -41,7 +41,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         color,
         id,
         ...restProps // все остальные пропсы попадут в объект restProps
-    },
+    }
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange // если есть пропс onChange
@@ -61,11 +61,11 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         `${divClassName ? divClassName : s.inputWrapper}
         ${color === 'black' ? s.inputWrapperBlack : ''}`
 
-    const finalInputClassName = `${error ? s.errorInput : ''} 
-        ${className ? className : s.customSearchInput}
+    const finalInputClassName = //${error ? s.errorInput : ''}
+        `${className ? className : s.customSearchInput}
         ${color === 'black' ? s.customSearchInputBlack : ''}`
 
-    const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
+    // const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
 
     return (
         <div className={finalInputDivWrapperClassName}>
