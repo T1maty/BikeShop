@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {ChangeEvent, useEffect, useRef} from 'react';
 import {Modal} from '@mui/material';
 import {Button, ControlledCustomInput, CustomSearchInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
@@ -94,9 +94,11 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                         <div className={s.clientModal_searchBlock_title}>
                             Найти клиента:
                         </div>
-                        <CustomSearchInput onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        <CustomSearchInput placeholder={'Введите фамилию'}
+                                           value={fio}
+                                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                                setFIO(e.currentTarget.value)}}
-                                           onClear={() => {setFIO('')}}
+                                           clearInputValue={() => {setFIO('')}}
                         />
                         {/*<div className={s.clientModal_searchBlock_input}>*/}
                         {/*    <Input placeholder={'Введите фамилию'} value={fio}*/}
@@ -108,9 +110,11 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                         {/*           }}*/}
                         {/*    />*/}
                         {/*</div>*/}
-                        <CustomSearchInput onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                           setPhoneNumber(e.currentTarget.value)}}
-                                           onClear={() => {setPhoneNumber('')}}
+                        <CustomSearchInput placeholder={'Введите номер телефона'}
+                                           value={phoneNumber}
+                                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                               setPhoneNumber(e.currentTarget.value)}}
+                                           clearInputValue={() => {setPhoneNumber('')}}
                         />
                         {/*<div className={s.clientModal_searchBlock_input}>*/}
                         {/*    <Input placeholder={'Введите номер телефона'} value={phoneNumber}*/}

@@ -18,7 +18,7 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
-    onClear: () => void
+    clearInputValue: () => void
     error?: ReactNode
     helperText?: string
     divClassName?: string
@@ -32,7 +32,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         onChangeText,
         onKeyPress,
         onEnter,
-        onClear,
+        clearInputValue,
         error,
         helperText, // error для Controlled Input (React Hook Forms)
         className,
@@ -40,9 +40,8 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         spanClassName,
         color,
         id,
-
         ...restProps // все остальные пропсы попадут в объект restProps
-    }
+    },
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange // если есть пропс onChange
@@ -86,7 +85,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
 
             <div>
                 <button className={s.clearButton}
-                        onClick={() => onClear()}
+                        onClick={clearInputValue}
                 >
                     <img src={color === 'black' ? CancelIconBlack : CancelIcon} alt="cancel-icon"/>
                 </button>
