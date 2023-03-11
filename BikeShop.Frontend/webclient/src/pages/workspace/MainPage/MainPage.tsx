@@ -46,7 +46,7 @@ const MainPage = () => {
     const createServiceHandler = () => {
         setChooseClientModal(true)
     }
-
+    // update commit
     return (
         // <div className={s.mainPageWrapper}>
         <div className={s.mainPageMainBlock}>
