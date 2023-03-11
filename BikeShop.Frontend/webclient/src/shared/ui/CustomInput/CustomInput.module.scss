@@ -4,10 +4,9 @@
 // инпут
 .inputWrapper {
     width: 100%;
-    //display: flex;
 }
 .input {
-    //flex: 1;
+
 }
 .input:focus {
 
@@ -20,7 +19,7 @@
     height: 100%;
     background-color: transparent;
     border-radius: $extraSmallBorderRadius;
-    padding: 15px 20px;
+    padding: 10px 20px;
     font-size: 16px;
 }
 .customInputDefault::placeholder {
@@ -61,7 +60,7 @@
     background: url("/shared/assets/workspace/magnifying-glass-white.svg") no-repeat 10px center;
     //url("/shared/assets/workspace/cancel-icon-white.svg") no-repeat center right 15px; // иконка отмены
     background-size: 25px;
-    padding: 15px 20px 15px 40px;
+    padding: 10px 20px 10px 40px;
 }
 
 // инпут c чёрной иконкой внутри
@@ -70,7 +69,7 @@
     composes: customInputBlack;
     background: transparent url("/shared/assets/workspace/magnifying-glass-black.svg") no-repeat 5px center;
     background-size: 25px;
-    padding: 15px 20px 15px 40px;
+    padding: 10px 20px 10px 40px;
 }
 
 //.cancelIcon {

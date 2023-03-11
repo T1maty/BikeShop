@@ -1,4 +1,5 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode,} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes,
+    KeyboardEvent, ReactNode} from 'react'
 import s from './CustomInput.module.scss'
 import {Button} from "../Button/Button";
 import CancelIcon from '../../assets/workspace/cancel-icon-white.svg'
@@ -14,8 +15,11 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     onChangeText?: (value: string) => void
     onEnter?: () => void
     error?: ReactNode
-    spanClassName?: string
     helperText?: string
+    divClassName?: string
+    spanClassName?: string
+    color?: 'black'
+    searchInput?: 'white' | 'black'
 }
 
 export const CustomInput: React.FC<SuperInputTextPropsType> = (
@@ -25,10 +29,13 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
         onKeyPress,
         onEnter,
         error,
-        className,
-        spanClassName,
-        id,
         helperText, // error для Controlled Input (React Hook Forms)
+        className,
+        divClassName,
+        spanClassName,
+        color,
+        searchInput,
+        id,
 
         ...restProps // все остальные пропсы попадут в объект restProps
     }
@@ -47,16 +54,21 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
         && onEnter() // то вызвать его
     }
 
-    // const finalSpanClassName = s.error
-    //     + (spanClassName ? ' ' + spanClassName : '')
-    // const finalInputClassName = s.input
-    //     + (error ? ' ' + s.errorInput : ' ' + s.superInput)
-    //     + (className ? ' ' + s.className : '') // смешивание классов
+    // чтобы изменить инпут на чёрный цвет, необходимо передать className={customInputBlack}
+    // чтобы изменить инпут на поисковый, необходимо передать className={searchInput}
+    // чтобы изменить стандартный див инпута, необходимо передать divClassName={your_className}
+    const finalInputDivWrapperClassName = `${divClassName ? divClassName : s.inputWrapper}`
+
+    const finalInputClassName = `${error ? s.errorInput : ''} 
+        ${className ? className : s.customInput}
+        ${color === 'black' ? s.customInputBlack : ''}
+        ${searchInput === 'white' ? s.searchInput : ''}
+        ${searchInput === 'black' ? s.searchInputBlack : ''}`
+
     const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${error ? s.errorInput : ''} ${className ? className : s.customInput}`
 
     return (
-        <div className={s.inputWrapper}>
+        <div className={finalInputDivWrapperClassName}>
             <input
                 id={id}
                 type={'text'}

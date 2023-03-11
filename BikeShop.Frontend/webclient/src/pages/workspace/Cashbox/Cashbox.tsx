@@ -1,6 +1,5 @@
 import React from 'react'
 import s from './Cashbox.module.scss'
-import s2 from '../../../shared/ui/CustomInput/CustomInput.module.scss'
 import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal} from '../../../features'
 import {Button, CustomInput, InputUI} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
@@ -52,16 +51,16 @@ const Cashbox = () => {
                         <ClientCard user={user}/>
                         <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                         <div className={s.leftSide_client_buttons}>
-                            <div className={s.client_buttons_choose}>
-                                <Button onClick={() => setChooseClientModal(true)}>
+                                <Button buttonDivWrapper={s.client_buttons_choose}
+                                        onClick={() => setChooseClientModal(true)}
+                                >
                                     Выбрать клиента
                                 </Button>
-                            </div>
-                            <div className={s.client_buttons_cancel}>
-                                <Button onClick={() => {}}>
+                                <Button buttonDivWrapper={s.client_buttons_cancel}
+                                        onClick={() => {}}
+                                >
                                     X
                                 </Button>
-                            </div>
                         </div>
                     </div>
 
@@ -82,16 +81,16 @@ const Cashbox = () => {
                         </div>
                         <div className={s.discount_buttons}>
                             <ChooseDiscountModal/>
-                            <div className={s.buttons_choose}>
-                                <Button onClick={() => setChooseDiscountModal(true)}>
+                                <Button buttonDivWrapper={s.buttons_choose}
+                                        onClick={() => setChooseDiscountModal(true)}
+                                >
                                     Выбрать скидку для клиента
                                 </Button>
-                            </div>
-                            <div className={s.buttons_cancel}>
-                                <Button onClick={() => {}}>
+                                <Button buttonDivWrapper={s.buttons_cancel}
+                                        onClick={() => {}}
+                                >
                                     X
                                 </Button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,14 +98,12 @@ const Cashbox = () => {
                 <div className={s.cashboxMainBlock_rightSideWrapper}>
                     <div className={s.cashboxMainBlock_rightSideHeader}>
                         <ChooseProductModal/>
-                        {/*<div className={s.header_chooseBtn}>*/}
                             <Button buttonDivWrapper={s.header_chooseBtn}
                                     onClick={() => {setChooseProductModal(true)}}
                             >
                                 Выбрать товары
                             </Button>
-                        {/*</div>*/}
-                        <CustomInput placeholder={'Поиск...'} className={s2.searchInput}/>
+                        <CustomInput placeholder={'Поиск...'} searchInput={'white'}/>
                         {/*<div className={s.header_searchInput}>*/}
                         {/*    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
                         {/*</div>*/}

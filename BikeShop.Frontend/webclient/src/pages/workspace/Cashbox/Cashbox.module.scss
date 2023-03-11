@@ -24,7 +24,6 @@
                 gap: 20px;
 
                 button {
-                    //margin: 10px;
                     padding: 10px 40px;
                 }
             }
@@ -45,9 +44,8 @@
                     width: 100%;
 
                     .client_buttons_choose {
-
                         button {
-                            width: 250px;
+                            min-width: 300px;
                             padding: $largeButtonPadding;
                         }
                     }
@@ -117,7 +115,7 @@
 
                     .buttons_choose {
                         button {
-                            max-width: 300px;
+                            min-width: 300px;
                             padding: $largeButtonPadding;
 
                         }
@@ -149,14 +147,12 @@
 
                 .header_chooseBtn {
                     button {
-                        width: 200px;
-                        padding: 16px 0;
+                        min-width: 200px;
                     }
                 }
-                .header_searchInput {
-                    width: 100%;
-                    //padding-left: $defaultLargeMargin;
-                }
+                //.header_searchInput {
+                //    width: 100%;
+                //}
             }
 
             .cashboxMainBlock_rightSideMiddle {
