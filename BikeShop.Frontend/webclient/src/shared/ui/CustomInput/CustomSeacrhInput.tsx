@@ -1,8 +1,10 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes,
-    KeyboardEvent, ReactNode} from 'react'
-import s from './CustomInput.module.scss'
-import {Button} from "../Button/Button";
+import React, {
+    ChangeEvent, DetailedHTMLProps, InputHTMLAttributes,
+    KeyboardEvent, ReactNode
+} from 'react'
+import s from './CustomSearchInput.module.scss'
 import CancelIcon from '../../assets/workspace/cancel-icon-white.svg'
+import GlassIcon from '../../assets/workspace/magnifying-glass-white.svg'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
@@ -19,10 +21,9 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     divClassName?: string
     spanClassName?: string
     color?: 'black'
-    searchInput?: 'white' | 'black'
 }
 
-export const CustomInput: React.FC<SuperInputTextPropsType> = (
+export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
     {
         onChange,
         onChangeText,
@@ -34,7 +35,6 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
         divClassName,
         spanClassName,
         color,
-        searchInput,
         id,
 
         ...restProps // все остальные пропсы попадут в объект restProps
@@ -54,36 +54,44 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = (
         && onEnter() // то вызвать его
     }
 
-    // чтобы изменить инпут на чёрный цвет, необходимо передать className={customInputBlack}
-    // чтобы изменить инпут на поисковый, необходимо передать className={searchInput}
-    // чтобы изменить стандартный див инпута, необходимо передать divClassName={your_className}
     const finalInputDivWrapperClassName = `${divClassName ? divClassName : s.inputWrapper}`
 
     const finalInputClassName = `${error ? s.errorInput : ''} 
         ${className ? className : s.customInput}
-        ${color === 'black' ? s.customInputBlack : ''}
-        ${searchInput === 'white' ? s.searchInput : ''}
-        ${searchInput === 'black' ? s.searchInputBlack : ''}`
+        ${color === 'black' ? s.customInputBlack : ''}`
 
     const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
 
     return (
         <div className={finalInputDivWrapperClassName}>
-            <input
-                id={id}
-                type={'text'}
-                onChange={onChangeCallback}
-                onKeyPress={onKeyPressCallback}
-                className={finalInputClassName}
-                {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-            />
-            {/*<span className={s.cancelIcon}></span>*/}
-            <div className={s.errorWrapper}>
-                {error && <span className={finalSpanClassName}>{error}</span>}
+            <div className={s.glassIcon}>
+                <img src={GlassIcon} alt="glass-icon"/>
             </div>
-            <div className={s.errorHelperText}>
-                {helperText && helperText}
+            <div className={s.inputMainBox}>
+                <input
+                    id={id}
+                    type={'text'}
+                    onChange={onChangeCallback}
+                    onKeyPress={onKeyPressCallback}
+                    className={finalInputClassName}
+                    {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+                />
             </div>
+
+            <div>
+                <button className={s.clearButton}
+                        onClick={() => {alert('очистка поля')}}
+                >
+                    <img src={CancelIcon} alt="cancel-icon"/>
+                </button>
+            </div>
+
+            {/*<div className={s.errorWrapper}>*/}
+            {/*    {error && <span className={finalSpanClassName}>{error}</span>}*/}
+            {/*</div>*/}
+            {/*<div className={s.errorHelperText}>*/}
+            {/*    {helperText && helperText}*/}
+            {/*</div>*/}
 
             {/*вариант строки с id*/}
             {/*<span*/}

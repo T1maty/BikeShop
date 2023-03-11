@@ -2,6 +2,7 @@
 
 export {Button} from './Button/Button'
 export {CustomInput} from './CustomInput/CustomInput'
+export {CustomSearchInput} from './CustomInput/CustomSeacrhInput'
 export {default as InputUI} from './Input/Input'
 export {default as Checkbox} from './Checkbox/Checkbox'
 

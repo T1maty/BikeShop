@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './Cashbox.module.scss'
 import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal} from '../../../features'
-import {Button, CustomInput, InputUI} from '../../../shared/ui'
+import {Button, CustomSearchInput} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore'
 import usePayModal from '../../../features/PayModal/PayModalStore'
@@ -103,7 +103,7 @@ const Cashbox = () => {
                             >
                                 Выбрать товары
                             </Button>
-                        <CustomInput placeholder={'Поиск...'} searchInput={'white'}/>
+                        <CustomSearchInput placeholder={'Поиск...'}/>
                         {/*<div className={s.header_searchInput}>*/}
                         {/*    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
                         {/*</div>*/}
