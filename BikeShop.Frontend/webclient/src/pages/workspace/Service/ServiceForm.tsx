@@ -52,9 +52,6 @@ const ServiceForm = () => {
 
             data.shopId = 1
 
-            data.serviceWorks = []
-            data.serviceProducts = []
-
             addNewService(data).then((res: any) => {
                 setIsCreating(false)
                 enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
@@ -126,7 +123,7 @@ const ServiceForm = () => {
                                           className={s.content_masterInput}
                                           disabled={currentService === null && !isCreating}
                                           data={masters.map((n) => {
-                                              return {id: n.id, value: n.firstName}
+                                              return {id: n.id, value: n.firstName ? n.firstName : 'нет имени'}
                                           })}
                         />
                         <div className={s.content_buttons}>

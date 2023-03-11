@@ -57,13 +57,14 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     getMasters: () => {
         return $api.get<GetUsersResponse>('/user/find').then(res => {
 
+            console.log(res.data)
             let users = res.data.users.map(n => {
                 if (n.user.shopId != 0) return n.user
             })
 
             set(state => {
                 // @ts-ignore
-                state.masters = users
+                state.masters = users.filter(n => n != undefined)
                 console.log('все мастера', state.masters)
             })
         })
