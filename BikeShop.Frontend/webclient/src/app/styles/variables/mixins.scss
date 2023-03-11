@@ -1,6 +1,6 @@
 @import 'variables';
 
-// default mixins
+// container mixins
 
 @mixin defaultContainer() {
     //border: 1px solid white;
@@ -13,7 +13,7 @@
     padding: $defaultLargeMargin;
 }
 
-// common mixins
+// flex mixins
 
 @mixin flexCenter() {
     display: flex;
@@ -44,7 +44,7 @@
 }
 
 // mixins for UI
-
+// textField size
 @mixin defaultFiledStyle() {
     @include flexCenter;
     max-width: 250px;
@@ -58,6 +58,7 @@
     height: 100%;
 }
 
+// default modal-window styles
 @mixin defaultModalStyle() {
     position: absolute;
     top: 50%;
@@ -71,6 +72,7 @@
     //box-shadow: 24;
 }
 
+// title styles
 @mixin largeFontSize() {
     font-size: 40px;
     font-weight: bold;
@@ -81,6 +83,7 @@
     margin-bottom: $defaultSmallMargin;
 }
 
+// button styles
 @mixin defaultMediumButton() {
     width: 100%;
     padding: $defaultSmallMargin 0;
@@ -89,6 +92,12 @@
 @mixin defaultLargeButton() {
     width: 100%;
     padding: $defaultLargeMargin 0;
+}
+
+@mixin hoverCursorPointer {
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 @mixin hoverItem() {
@@ -107,6 +116,20 @@
     }
 }
 
+@mixin editProfileButton {
+    button {
+        padding: 10px;
+        background-color: #32DA75;
+        border-radius: $smallBorderRadius;
+        font-weight: bold;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
+
+// div styles
 @mixin divSmallMarginBottom() {
     > div:not(:last-child) {
         margin-bottom: $defaultSmallMargin;
@@ -121,24 +144,5 @@
 @mixin divExtraLargeMarginBottom() {
     > div:not(:last-child) {
         margin-bottom: $defaultExtraLargeMargin;
-    }
-}
-
-@mixin hoverCursorPointer {
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-@mixin editProfileButton {
-    button {
-        padding: 10px;
-        background-color: #32DA75;
-        border-radius: $smallBorderRadius;
-        font-weight: bold;
-
-        &:hover {
-            opacity: 0.7;
-        }
     }
 }
