@@ -3,18 +3,18 @@ import {ClientCard} from "../../../widgets";
 import {ChooseClientModal} from "../../../features";
 import {IUser} from "../../../entities";
 import {Controller, UseFormReturn} from "react-hook-form";
-import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 
 interface props {
     control: UseFormReturn<any>
     name: string
     className?: any
     disabled?: boolean
+
+    state: boolean,
+    setState: (state: boolean) => void
 }
 
 export const ControlledClientCard = (props: props) => {
-
-    const setOpen = useChooseClientModal(s => s.setChooseClientModal)
 
     return (
         <div>
@@ -24,12 +24,15 @@ export const ControlledClientCard = (props: props) => {
                 render={({field}: any) =>
                     <div>
                         <ClientCard user={field.value} onDoubleClick={() => {
-                            setOpen(true)
+                            if (!props.disabled) props.setState(true)
                         }}/>
                         <ChooseClientModal extraCallback={(user: IUser) => {
                             field.onChange(user)
-                            setOpen(false)
-                        }}/>
+                            props.setState(false)
+                        }}
+                                           state={props.state}
+                                           setState={props.setState}
+                        />
                     </div>
                 }
             />

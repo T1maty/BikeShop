@@ -30,6 +30,8 @@ public class ServiceService : IServiceService
     {
         var service = _mapper.Map<CreateServiceDTO>(model);
 
+        service.ClientId = model.Client.id;
+
         var serviceWorks = _mapper.ProjectTo<ServiceWorkModel>(model.ServiceWorks.AsQueryable()).ToList();
         var serviceProducts = _mapper.ProjectTo<ServiceProductModel>(model.ServiceProducts.AsQueryable()).ToList();
 
