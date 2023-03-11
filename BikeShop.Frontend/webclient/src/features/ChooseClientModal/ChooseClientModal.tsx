@@ -142,45 +142,21 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                                                    control={formControl}
                                                    rules={{required: Errors[0].name}}
                             />
-                            {/*<div>*/}
-                            {/*    <ControlledInput name={'lastName'} label={'Фамилия'}*/}
-                            {/*                     control={formControl}*/}
-                            {/*                     rules={{required: Errors[0].name}}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <ControlledCustomInput name={'firstName'}
                                                    placeholder={'Имя'}
                                                    control={formControl}
                                                    rules={{required: Errors[0].name}}
                             />
-                            {/*<div>*/}
-                            {/*    <ControlledInput name={'firstName'} label={'Имя'}*/}
-                            {/*                     control={formControl}*/}
-                            {/*                     rules={{required: Errors[0].name}}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
                             <ControlledCustomInput name={'patronymic'}
                                                    placeholder={'Отчество'}
                                                    control={formControl}
                                                    rules={{required: Errors[0].name}}
                             />
-                            {/*    <ControlledInput name={'patronymic'} label={'Отчество'}*/}
-                            {/*                     control={formControl}*/}
-                            {/*                     rules={{required: Errors[0].name}}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
                             <ControlledCustomInput name={'phone'}
                                                    placeholder={'Номер телефона'}
                                                    control={formControl}
                                                    rules={{required: Errors[0].name}}
                             />
-                            {/*    <ControlledInput name={'phone'} label={'Номер телефона'}*/}
-                            {/*                     control={formControl}*/}
-                            {/*                     rules={{required: Errors[0].name}}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                         </div>
                         <div className={s.addClient_buttonsBlock}>
                             <Button type={'submit'}>

@@ -103,10 +103,10 @@
                         @include flexOnlyBetween;
                         width: 100%;
 
-                        .search_searchButton {
+                        .search_chooseClientButton {
                             button {
                                 width: 200px;
-                                padding: 16px 0;
+                                height: $largeButtonHeight;
                             }
                         }
                         .search_searchInput {
@@ -130,9 +130,10 @@
                         justify-content: space-between;
                         width: 100%;
 
-                        .result_closeBtn {
+                        .result_chooseCashboxBtn {
                             button {
-                                height: 50px;
+                                height: $largeButtonHeight;
+                                width: 200px;
                             }
                         }
                         .result_cancelBtn {
@@ -148,11 +149,13 @@
                             background-color: $themeColorGray;
                             border-radius: $smallBorderRadius;
                             padding: $largeButtonPadding;
-                            height: 50px;
+                            height: $largeButtonHeight;
+                            width: 200px;
                         }
                         .result_payBtn {
                             button {
-                                height: 50px;
+                                height: $largeButtonHeight;
+                                width: 150px;
                             }
                         }
                     }
@@ -188,8 +191,9 @@
 
                             .right_two_button {
                                 margin-bottom: $defaultLargeMargin;
+
                                 button {
-                                    padding: $smallButtonPadding;
+                                    height: $largeButtonHeight;
                                 }
                             }
                             .right_two_span {
