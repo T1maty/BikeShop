@@ -25,7 +25,7 @@ export const SelectWorkModal = (props: props) => {
             aria-describedby="modal-modal-description"
         >
             <div className={s.selectProductWorkModal_mainBox}>
-                <SelectWork/>
+                <SelectWork setWorks={props.setWorks} works={props.works}/>
             </div>
         </Modal>
     );

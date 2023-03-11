@@ -1,4 +1,4 @@
-import React, {FC, memo, MouseEvent, useCallback, useEffect, useState} from "react";
+import React, {memo, MouseEvent, useCallback, useState} from "react";
 import cls from './CustomTable.module.scss'
 import {ContextMenu} from "../../../widgets/workspace/ContextMenu";
 import {Loader} from "../Loader/Loader";
@@ -10,6 +10,8 @@ interface CustomTableProps {
     callBackData: (data: any) => void
     isLoading: boolean
     contextData: Array<string>
+    onRowDoubleClick?: (row: object) => void
+
 }
 
 interface DataProps {
@@ -26,7 +28,8 @@ export const CustomTable = (props: CustomTableProps) => {
             customClass,
             callBackData,
             isLoading,
-            contextData
+            contextData,
+            onRowDoubleClick
         } = props
 
         const [state, setState] = useState({
@@ -55,7 +58,8 @@ export const CustomTable = (props: CustomTableProps) => {
                     <tbody className={cls.tbody}>
                     {!isLoading ?
                         tbodyData.map((item: any) => {
-                            return <TableRow key={item.id} data={item} onOpen={onOpenHandler}/>;
+                            return <TableRow key={item.id} data={item} onOpen={onOpenHandler}
+                                             onRowDoubleClick={onRowDoubleClick}/>;
                         })
                         : <tr style={{height: 250, display: "flex", justifyContent: 'center'}}>
                             <td><Loader variant={"ellipsis"}/></td>
@@ -96,6 +100,7 @@ interface TableRowProps {
     data?: any,
     onOpen: (left: number, top: number, data: DataProps) => void,
     empty?: boolean
+    onRowDoubleClick?: (row: object) => void
 }
 
 const TableRow = memo((props: TableRowProps) => {
@@ -110,10 +115,15 @@ const TableRow = memo((props: TableRowProps) => {
         onOpen(e.clientX, e.clientY, data)
     }
     return (
-        <tr className={cls.body__items} onContextMenu={(e) => onContextHandler(e)}>
+        <tr className={cls.body__items}
+            onDoubleClick={() => {
+                props.onRowDoubleClick ? props.onRowDoubleClick(props.data) : true
+            }} onContextMenu={(e) => onContextHandler(e)}
+        >
             {arr.map((item, index) => {
                 return <td key={index} className={cls.body__item}>{item}</td>;
             })}
+
         </tr>
     );
 });
