@@ -1,7 +1,6 @@
 @import 'variables';
 
 // container mixins
-
 @mixin defaultContainer() {
     //border: 1px solid white;
     max-width: 1400px;
@@ -14,7 +13,6 @@
 }
 
 // flex mixins
-
 @mixin flexCenter() {
     display: flex;
     justify-content: center;
@@ -43,6 +41,21 @@
     align-items: center;
 }
 
+// default modal-window styles
+@mixin defaultModalStyle() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    padding: $defaultLargeMargin;
+    transform: translate(-50%, -50%);
+    background-color: $themeColorDark;
+    border-radius: $largeBorderRadius;
+    border: 1px solid white;
+    color: white;
+    //box-shadow: 24;
+}
+
 // mixins for UI
 // textField size
 @mixin defaultFiledStyle() {
@@ -56,20 +69,6 @@
 @mixin widthHeightFull() {
     width: 100%;
     height: 100%;
-}
-
-// default modal-window styles
-@mixin defaultModalStyle() {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 450px;
-    padding: $defaultLargeMargin;
-    transform: translate(-50%, -50%);
-    background-color: $themeColorDark;
-    border-radius: $largeBorderRadius;
-    color: white;
-    //box-shadow: 24;
 }
 
 // title styles

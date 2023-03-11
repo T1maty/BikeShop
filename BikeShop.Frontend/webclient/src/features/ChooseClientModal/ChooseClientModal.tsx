@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect} from 'react';
 import {Modal} from '@mui/material';
-import {Button, ControlledCustomInput} from '../../shared/ui';
+import {Button, ControlledCustomInput, CustomSearchInput} from '../../shared/ui';
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {SubmitHandler, useForm} from 'react-hook-form';
@@ -94,26 +94,34 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                         <div className={s.clientModal_searchBlock_title}>
                             Найти клиента:
                         </div>
-                        <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите фамилию'} value={fio}
-                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setFIO(e.currentTarget.value)
-                                   }}
-                                   clearInputValue={() => {
-                                       setFIO('')
-                                   }}
-                            />
-                        </div>
-                        <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите номер телефона'} value={phoneNumber}
-                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setPhoneNumber(e.currentTarget.value)
-                                   }}
-                                   clearInputValue={() => {
-                                       setPhoneNumber('')
-                                   }}
-                            />
-                        </div>
+                        <CustomSearchInput onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                               setFIO(e.currentTarget.value)}}
+                                           onClear={() => {setFIO('')}}
+                        />
+                        {/*<div className={s.clientModal_searchBlock_input}>*/}
+                        {/*    <Input placeholder={'Введите фамилию'} value={fio}*/}
+                        {/*           onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
+                        {/*               setFIO(e.currentTarget.value)*/}
+                        {/*           }}*/}
+                        {/*           clearInputValue={() => {*/}
+                        {/*               setFIO('')*/}
+                        {/*           }}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
+                        <CustomSearchInput onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                           setPhoneNumber(e.currentTarget.value)}}
+                                           onClear={() => {setPhoneNumber('')}}
+                        />
+                        {/*<div className={s.clientModal_searchBlock_input}>*/}
+                        {/*    <Input placeholder={'Введите номер телефона'} value={phoneNumber}*/}
+                        {/*           onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
+                        {/*               setPhoneNumber(e.currentTarget.value)*/}
+                        {/*           }}*/}
+                        {/*           clearInputValue={() => {*/}
+                        {/*               setPhoneNumber('')*/}
+                        {/*           }}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                         <div className={s.clientModal_searchBlock_textField}>
                             {
                                 users.length === 0
