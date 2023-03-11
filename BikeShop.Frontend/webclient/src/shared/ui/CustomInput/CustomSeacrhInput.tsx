@@ -4,7 +4,9 @@ import React, {
 } from 'react'
 import s from './CustomSearchInput.module.scss'
 import CancelIcon from '../../assets/workspace/cancel-icon-white.svg'
+import CancelIconBlack from '../../assets/workspace/cancel-icon-black.svg'
 import GlassIcon from '../../assets/workspace/magnifying-glass-white.svg'
+import GlassIconBlack from '../../assets/workspace/magnifying-glass-black.svg'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
@@ -16,7 +18,8 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
-    error?: ReactNode
+    clearInputValue: () => void
+    // error?: ReactNode
     helperText?: string
     divClassName?: string
     spanClassName?: string
@@ -29,14 +32,14 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         onChangeText,
         onKeyPress,
         onEnter,
-        error,
+        clearInputValue,
+        // error,
         helperText, // error для Controlled Input (React Hook Forms)
         className,
         divClassName,
         spanClassName,
         color,
         id,
-
         ...restProps // все остальные пропсы попадут в объект restProps
     }
 ) => {
@@ -54,18 +57,20 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         && onEnter() // то вызвать его
     }
 
-    const finalInputDivWrapperClassName = `${divClassName ? divClassName : s.inputWrapper}`
+    const finalInputDivWrapperClassName =
+        `${divClassName ? divClassName : s.inputWrapper}
+        ${color === 'black' ? s.inputWrapperBlack : ''}`
 
-    const finalInputClassName = `${error ? s.errorInput : ''} 
-        ${className ? className : s.customInput}
-        ${color === 'black' ? s.customInputBlack : ''}`
+    const finalInputClassName = //${error ? s.errorInput : ''}
+        `${className ? className : s.customSearchInput}
+        ${color === 'black' ? s.customSearchInputBlack : ''}`
 
-    const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
+    // const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
 
     return (
         <div className={finalInputDivWrapperClassName}>
             <div className={s.glassIcon}>
-                <img src={GlassIcon} alt="glass-icon"/>
+                <img src={color === 'black' ? GlassIconBlack : GlassIcon} alt="glass-icon"/>
             </div>
             <div className={s.inputMainBox}>
                 <input
@@ -80,9 +85,9 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
 
             <div>
                 <button className={s.clearButton}
-                        onClick={() => {alert('очистка поля')}}
+                        onClick={clearInputValue}
                 >
-                    <img src={CancelIcon} alt="cancel-icon"/>
+                    <img src={color === 'black' ? CancelIconBlack : CancelIcon} alt="cancel-icon"/>
                 </button>
             </div>
 

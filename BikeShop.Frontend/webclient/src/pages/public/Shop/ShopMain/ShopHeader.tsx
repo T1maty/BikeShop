@@ -7,6 +7,7 @@ import {SearchProduct} from './SearchProduct'
 import {BikeShopPaths} from '../../../../app/routes/paths';
 import {useNavigate} from 'react-router-dom';
 import {ProfileAvatar} from '../Profile/ProfileAvatar';
+import {CustomSearchInput} from '../../../../shared/ui';
 
 export const ShopHeader = () => {
 
@@ -25,7 +26,8 @@ export const ShopHeader = () => {
                 BikeShop
             </div>
             <div className={s.shop_header_right}>
-                <SearchProduct/>
+                {/*<SearchProduct/>*/}
+                <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
                 <div><img src={language} alt="language-logo"/></div>
                 <div><img src={cart} alt="cart-logo"/></div>
                 {
