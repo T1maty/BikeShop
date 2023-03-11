@@ -154,7 +154,8 @@ const ServiceForm = () => {
 
                     <div className={s.infoFields_clientCard}>
                         <ControlledClientCard name={'client'} control={formControl} disabled={!isCreating}
-                                              state={openClientModal} setState={setOpenClientModal}/>
+                                              state={openClientModal} setState={setOpenClientModal}
+                                              rules={{required: Errors[0].name}}/>
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}
                                 onClick={clearAllServiceInfo}>

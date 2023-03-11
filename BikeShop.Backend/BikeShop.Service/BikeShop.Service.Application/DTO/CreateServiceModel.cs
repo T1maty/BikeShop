@@ -6,7 +6,7 @@ public class CreateServiceModel
 {
     public string Name { get; set; }
     public int ShopId { get; set; }
-    public UserDTO Client { get; set; } 
+    public ClientId Client { get; set; } 
     public string ClientDescription { get; set; }
     public Guid UserCreatedId { get; set; }
     public Guid UserMasterId { get; set; }
