@@ -57,8 +57,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         && onEnter() // то вызвать его
     }
 
-    const finalInputDivWrapperClassName =
-        `${divClassName ? divClassName : s.inputWrapper}
+    const finalInputWrapperClassName = `${s.inputWrapper} 
         ${color === 'black' ? s.inputWrapperBlack : ''}`
 
     const finalInputClassName = //${error ? s.errorInput : ''}
@@ -68,7 +67,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
     // const finalSpanClassName = `${error ? s.error : ''} ${spanClassName ? spanClassName : ''}`
 
     return (
-        <div className={finalInputDivWrapperClassName}>
+        <div className={finalInputWrapperClassName}>
             <div className={s.glassIcon}>
                 <img src={color === 'black' ? GlassIconBlack : GlassIcon} alt="glass-icon"/>
             </div>

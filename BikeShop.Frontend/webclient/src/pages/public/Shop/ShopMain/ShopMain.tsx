@@ -20,6 +20,7 @@ import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import {ShopFooter} from "./ShopFooter"
 import {SearchProduct} from './SearchProduct'
+import { CustomSearchInput } from 'shared/ui'
 
 export const ShopMain = () => {
 
@@ -56,7 +57,11 @@ export const ShopMain = () => {
                         </div>
                         <div className={s.header_icons_right}>
                             {
-                                search ? <SearchProduct sx={InputStyles}/> : ''
+                                // search ? <SearchProduct sx={InputStyles}/> : ''
+                                search ? <CustomSearchInput placeholder={'Поиск товара'}
+                                                            color={'black'}
+                                                            clearInputValue={() => {}}/>
+                                    : ''
                             }
                             <div onClick={() => {setSearch(!search)}}>
                                 <img src={searchIcon} alt="search-logo"/>

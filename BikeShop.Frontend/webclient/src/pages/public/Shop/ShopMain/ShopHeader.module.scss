@@ -2,15 +2,10 @@
 @import '../../../../app/styles/variables/variables';
 
 .shop_header {
-    height: var(--navbar-height);
+    height: var(--navbar-shop-height);
     background-color: $themeColorDark;
     @include flexBetween;
     padding: $containerShopPadding;
-
-    img {
-        filter: invert(100%);
-        @include hoverCursorPointer;
-    }
 
     .shop_header_left {
         @include hoverCursorPointer;
@@ -18,6 +13,13 @@
     .shop_header_right {
         @include flexBetween;
         gap: $defaultExtraLargeMargin;
+
+        > div:not(:first-child) {
+            img {
+                filter: invert(100%);
+                @include hoverCursorPointer;
+            }
+        }
 
         .right_loginBlock {
             @include flexOnlyBetween;

@@ -12,12 +12,18 @@
 .inputWrapper:hover {
     opacity: 1;
 }
+.inputWrapper:focus-visible {
+
+}
 .inputWrapperBlack {
     border: 1px solid black;
 }
+
 .input {
+
 }
 .input:focus {
+
 }
 .inputMainBox {
     width: 100%;
@@ -41,7 +47,7 @@
 }
 .customSearchInput::placeholder {
     color: white;
-    opacity: 70%;
+    opacity: 0.7;
 }
 .customSearchInput:focus-visible {
     border: none;
@@ -55,7 +61,7 @@
 }
 .customSearchInputBlack::placeholder {
     color: black;
-    opacity: 70%;
+    opacity: 0.7;
 }
 .customSearchInputBlack:focus-visible {
     border: none;
