@@ -25,7 +25,7 @@ export const CreateShopModal = () => {
 
     const formControl = useForm<UpdateShop>({
         defaultValues: {
-            id: 0,
+            id: useCreateShopModal.getState().currentShop?.id,
             name: '',
             address: '',
             phone: '',
@@ -49,7 +49,6 @@ export const CreateShopModal = () => {
         }
 
         if (currentShop !== null) {
-            // data.id = currentShop.id
             updateShopInfo(data).then((res: any) => {
                 getShops()
                 enqueueSnackbar('Магазин обновлён', {variant: 'success', autoHideDuration: 3000})
