@@ -23,6 +23,18 @@
                 border: 1px solid white;
                 padding: 10px;
                 color: black;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: $themeColorDark;
+                    color: white;
+                }
+            }
+            .shop_item_active {
+                background-color: $themeColorDark;
+                border: 1px solid white;
+                padding: 10px;
+                color: white;
             }
         }
     }
@@ -56,6 +68,14 @@
                         @include defaultMediumButton;
                     }
                 }
+                .infoBlock_cancelBtn {
+                    display: flex;
+                    gap: $defaultLargeMargin;
+
+                    button {
+                        @include defaultMediumButton;
+                    }
+                }
             }
 
             .footer_buttons {
@@ -66,7 +86,8 @@
                     width: 100%;
                 }
                 button {
-                    padding: 10px 0;
+                    //padding: 10px 0;
+                    padding: 20px;
                     width: 100%;
                 }
 

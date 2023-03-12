@@ -12,21 +12,12 @@ interface CreateShopModalStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
 
+    currentShop: CreateShopResponse | null
+    setCurrentShop: (shop: CreateShopResponse | null) => void
     shops: CreateShopResponse[]
     getShops: () => void
     addNewShop: (data: CreateShop) => any
-    // updateShopInfo: (data: CreateShopSubmit) => any
-
-    // name: string
-    // setName: (value: string) => void
-    // address: string
-    // setAddress: (value: string) => void
-    // phone: string
-    // setPhone: (value: string) => void
-    // storageId: number | null
-    // setStorageId: (value: number | null) => void
-    // isShopWorking: boolean
-    // setIsShopWorking: (value: boolean) => void
+    updateShopInfo: (data: CreateShop) => any
 }
 
 const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -35,17 +26,8 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
 
-    // name: '',
-    // setName: (value: string) => set({name: value}),
-    // address: '',
-    // setAddress: (value: string) => set({address: value}),
-    // phone: '',
-    // setPhone: (value: string) => set({phone: value}),
-    // storageId: 0,
-    // setStorageId: (value: number | null) => set({storageId: value}),
-    // isShopWorking: true,
-    // setIsShopWorking: (value: boolean) => set({isShopWorking: value}),
-
+    currentShop: null,
+    setCurrentShop: (shop) => {set({currentShop: shop})},
     shops: [],
     getShops: () => {
         return $api.get<CreateShopResponse[]>('/shop/getall').then(res => {
@@ -66,9 +48,15 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
             console.log('магазин не создан')
         })
     },
-    // updateShopInfo: (data) => {
-    //     return $api.post<CreateShopSubmit>('/shop/create', data)
-    // },
+    updateShopInfo: (data) => {
+        return $api.post('/shop/update', data).then(res => {
+            // set(state => {
+            //     state.shops.push(res.data)
+            // })
+        }).catch((error: any) => {
+            console.log('магазин не обновлён')
+        })
+    },
 })))/*, {
     name: "createShopModal",
     version: 1

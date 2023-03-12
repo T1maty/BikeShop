@@ -23,7 +23,7 @@ const ServiceForm = () => {
     const updateService = useService(s => s.updateService)
     const setSelectWorkModal = useSelectProductWorkModal(s => s.setSelectWorkModal)
 
-    const [isCreating, setIsCreating] = useState(false);
+    const [isCreating, setIsCreating] = useState(false)
     const [openClientModal, setOpenClientModal] = useState(false)
 
     const formControl = useForm<CreateService>({
@@ -49,7 +49,6 @@ const ServiceForm = () => {
         // создание сервиса
         if (isCreating) {
             console.log('create IF works, new data =', data)
-
             data.shopId = 1
 
             addNewService(data).then((res: any) => {
@@ -67,7 +66,6 @@ const ServiceForm = () => {
         // обновление сервиса
         if (!isCreating) {
             console.log('update IF works, updateData = ', data)
-
             updateService(data).then((res: any) => {
 
                 enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
@@ -155,7 +153,7 @@ const ServiceForm = () => {
                     <div className={s.infoFields_clientCard}>
                         <ControlledClientCard name={'client'} control={formControl} disabled={!isCreating}
                                               state={openClientModal} setState={setOpenClientModal}
-                                              rules={{validate: (value: IUser) => value.id != null}}/>
+                                              rules={{validate: (value: IUser) => value.id !== null}}/>
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}
                                 onClick={clearAllServiceInfo}>

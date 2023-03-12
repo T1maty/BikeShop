@@ -13,9 +13,9 @@ const ServiceNavigation = () => {
     const setServiceListStatus = useService(s => s.setServiceListStatus)
     const services = useService(s => s.services)
     const currentService = useService(s => s.currentService)
+    const chooseServiceItem = useService(s => s.setCurrentService)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
-    const chooseServiceItem = useService(s => s.setCurrentService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
 
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
@@ -39,7 +39,8 @@ const ServiceNavigation = () => {
             <div className={s.leftSide_buttons}>
                 <div className={s.buttons_filter}>
                     <Button
-                        className={(EnumServiceStatus.Waiting === serviceListStatus || EnumServiceStatus.WaitingSupply === serviceListStatus) ? style.waiting : ''}
+                        className={(serviceListStatus === EnumServiceStatus.Waiting ||
+                            serviceListStatus === EnumServiceStatus.WaitingSupply) ? style.waiting : ''}
                         onClick={() => {
                             filterServicesUniversalHandler('Waiting',
                                 true, false, false,
@@ -67,7 +68,8 @@ const ServiceNavigation = () => {
                 </div>
                 <div className={s.content_title}>
                     {
-                        (EnumServiceStatus.Waiting === serviceListStatus || EnumServiceStatus.WaitingSupply === serviceListStatus) &&
+                        (serviceListStatus === EnumServiceStatus.Waiting
+                            || serviceListStatus === EnumServiceStatus.WaitingSupply) &&
                         <Button buttonDivWrapper={s.content_startBtn}
                                 disabled={currentService === null}
                                 onClick={() => {

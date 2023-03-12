@@ -19,37 +19,41 @@ interface ServiceStore {
 
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
-
-    masters: IUser[]
-    getMasters: () => void
-
+    serviceListStatus: string,
+    setServiceListStatus: (serviceListStatus: string) => void
     services: ServiceItem[]
     setServices: (services: ServiceItem[]) => void
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
 
+    masters: IUser[]
+    getMasters: () => void
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
     updateService: (updateData: CreateService) => any // надо исправить тип
     updateServiceStatus: (data: UpdateServiceStatus) => void
-
-    serviceListStatus: string,
-    setServiceListStatus: (serviceListStatus: string) => void
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
 
-    serviceListStatus: EnumServiceStatus.Waiting,
-    setServiceListStatus: (serviceListStatus) => {
-        set({serviceListStatus: serviceListStatus})
-    },
-
     currentService: null,
     setCurrentService: (service) => {
         set({currentService: service})
     },
+    serviceListStatus: EnumServiceStatus.Waiting,
+    setServiceListStatus: (serviceListStatus) => {
+        set({serviceListStatus: serviceListStatus})
+    },
+    services: [],
+    setServices: (services) => set(state => {
+        state.services = services
+    }),
+    filteredServices: [],
+    setFilteredServices: (filteredServices) => set(state => {
+        state.filteredServices = filteredServices
+    }),
 
     masters: [],
     getMasters: () => {
@@ -62,22 +66,11 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
 
             set(state => {
                 // @ts-ignore
-                state.masters = users.filter(n => n != undefined)
+                state.masters = users.filter(n => n !== undefined)
                 console.log('все мастера', state.masters)
             })
         })
     },
-
-    services: [],
-    setServices: (services) => set(state => {
-        state.services = services
-    }),
-
-    filteredServices: [],
-    setFilteredServices: (filteredServices) => set(state => {
-        state.filteredServices = filteredServices
-    }),
-
     getAllServicesInfo: () => {
         set({isLoading: true})
 
@@ -91,7 +84,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         })
     },
-
     addNewService: (data: CreateService) => {
         return $api.post('/service/create', data).then(res => {
             set(state => {
@@ -107,7 +99,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             console.log('service not created', error)
         })
     },
-
     updateService: (updateData) => {
         return $api.put('/service/updateservice', updateData).then(res => {
             $api.get('/service/getbyshopid/1').then(res => {
@@ -134,7 +125,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             console.log('service not updated', error)
         })
     },
-
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true})
 
