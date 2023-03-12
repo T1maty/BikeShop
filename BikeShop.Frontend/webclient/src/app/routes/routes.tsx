@@ -1,11 +1,15 @@
-import {createBrowserRouter} from "react-router-dom";
-import {Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog, RegistrationPage,
-    Service, ShopMain, ShopProductItem, ShopWrapper, Profile, ArrivalOfProducts} from "../../pages";
-import {OnlyWithoutAuthRoute, PublicHeaderProvider,
-    WorkspaceHeaderProvider, CheckAuthRouteProvider} from "../../entities";
-import {WorkCatalog} from "../../pages/workspace/WorkCatalog";
-import {BikeShopPaths} from "./paths";
-import {BarcodeScanerListenerProvider} from "../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider";
+import {createBrowserRouter} from 'react-router-dom';
+import {
+    Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog, RegistrationPage, Service,
+    ShopMain, ShopProductItem, ShopWrapper, Profile, ProductsWrapper, ArrivalOfProducts, InventoryOfProducts
+} from '../../pages';
+import {
+    OnlyWithoutAuthRoute, PublicHeaderProvider,
+    WorkspaceHeaderProvider, CheckAuthRouteProvider
+} from '../../entities';
+import {WorkCatalog} from '../../pages/workspace/WorkCatalog';
+import {BikeShopPaths} from './paths';
+import {BarcodeScanerListenerProvider} from '../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider';
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -87,9 +91,19 @@ export const routes = createBrowserRouter([
         </WorkspaceHeaderProvider>
     },
     {
-        path: BikeShopPaths.WORKSPACE.NEW_PRODUCTS,
+        path: BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS,
         element: <WorkspaceHeaderProvider>
-            <ArrivalOfProducts/>
+            <ProductsWrapper title={'Новый акт прихода товара'} isUploadFile={true}>
+                <ArrivalOfProducts/>
+            </ProductsWrapper>
+        </WorkspaceHeaderProvider>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS,
+        element: <WorkspaceHeaderProvider>
+            <ProductsWrapper title={'Новый акт инвентаризации'} isUploadFile={false}>
+                <InventoryOfProducts/>
+            </ProductsWrapper>
         </WorkspaceHeaderProvider>
     },
 

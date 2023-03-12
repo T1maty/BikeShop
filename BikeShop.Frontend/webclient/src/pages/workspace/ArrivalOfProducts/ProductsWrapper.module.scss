@@ -73,10 +73,31 @@
         }
     }
 
+    // стили для прихода товаров
     .arrivalOfProducts_rightSide {
+        width: 70%;
         background-color: $themeColorDark;
         border-radius: $largeBorderRadius;
         padding: $defaultLargeMargin;
+    }
+    // стили для инвентаризации товаров
+    .inventoryOfProducts_rightSide {
         width: 70%;
+        @include flexColumn;
+        gap: $defaultLargeMargin;
+
+        > div {
+            width: 100%;
+            height: 100%;
+            background-color: $themeColorDark;
+            border-radius: $largeBorderRadius;
+            padding: $defaultLargeMargin;
+        }
+        .rightSide_top {
+
+        }
+        .rightSide_bottom {
+
+        }
     }
 }

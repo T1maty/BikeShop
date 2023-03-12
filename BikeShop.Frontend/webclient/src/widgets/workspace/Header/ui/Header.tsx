@@ -35,13 +35,14 @@ export const Header: FC = () => {
         {
             title: 'Архив сервисов',
             func: () => {
-                //
+                navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                setIsMenuOpen(false)
             }
         },
         {
             title: 'Архив чеков',
             func: () => {
-                navigate(BikeShopPaths.WORKSPACE.NEW_PRODUCTS)
+                navigate(BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS)
                 setIsMenuOpen(false)
             }
         },
