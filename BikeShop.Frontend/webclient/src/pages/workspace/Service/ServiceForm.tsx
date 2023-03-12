@@ -107,7 +107,6 @@ const ServiceForm = () => {
                                  divClassName={s.rightSide_stuffInput}
                                  disabled={currentService === null && !isCreating}
                 />
-
                 <div className={s.rightSide_infoFields}>
                     <div className={s.infoFields_content}>
                         <ControlledInput name={'clientDescription'}
@@ -121,7 +120,7 @@ const ServiceForm = () => {
                                           className={s.content_masterInput}
                                           disabled={currentService === null && !isCreating}
                                           data={masters.map((n) => {
-                                              return {id: n.id, value: n.firstName ? n.firstName : 'нет имени'}
+                                              return {id: n.id, value: n.firstName ? n.firstName : 'Нет имени'}
                                           })}
                         />
                         <div className={s.content_buttons}>
@@ -149,7 +148,6 @@ const ServiceForm = () => {
                             <div className={s.content_sumField}>Сумма</div>
                         </div>
                     </div>
-
                     <div className={s.infoFields_clientCard}>
                         <ControlledClientCard name={'client'} control={formControl} disabled={!isCreating}
                                               state={openClientModal} setState={setOpenClientModal}
@@ -179,7 +177,6 @@ const ServiceForm = () => {
                         </div>
                     }
                 />
-
                 <Controller
                     name={'serviceWorks'}
                     control={formControl.control}
@@ -195,8 +192,6 @@ const ServiceForm = () => {
                         </div>
                     }
                 />
-
-
             </form>
         </div>
     );

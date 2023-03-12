@@ -49,7 +49,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
         })
     },
     updateStorageInfo: (updateData) => {
-        return $api.post('/storagecrud/create', updateData).then(res => {
+        return $api.post('/storagecrud/update', updateData).then(res => {
             // set(state => {
             //     state.storages.push(res.data)
             // })

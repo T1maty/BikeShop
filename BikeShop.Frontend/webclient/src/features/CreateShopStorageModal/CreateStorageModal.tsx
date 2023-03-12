@@ -1,6 +1,6 @@
 import {useSnackbar} from 'notistack';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Modal} from '@mui/material';
 import s from './CreateShopStorageModal.module.scss';
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
@@ -24,6 +24,7 @@ export const CreateStorageModal = () => {
 
     const formControl = useForm<UpdateStorage>({
         defaultValues: {
+            id: 0,
             name: '',
             supplyDelay: '',
             isOutsource: true,
@@ -43,10 +44,23 @@ export const CreateStorageModal = () => {
                 console.error(error.response.data)
             })
         }
+
+        if (currentStorage !== null) {
+            updateStorageInfo(data).then((response: any) => {
+                getStorages()
+                enqueueSnackbar('Склад обновлён', {variant: 'success', autoHideDuration: 3000})
+            }).catch((error: any) => {
+                let message = error(error.response.data.errorDescription).toString()
+                formControl.setError('name', {type: 'serverError', message: message})
+                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+                console.error(error.response.data)
+            })
+        }
     }
 
     useEffect(() => {
         formControl.reset()
+        formControl.setValue('id', currentStorage ? currentStorage.id : 0)
         formControl.setValue('name', currentStorage ? currentStorage.name : '')
         formControl.setValue('supplyDelay', currentStorage ? currentStorage.supplyDelay : '')
         formControl.setValue('isOutsource', currentStorage ? currentStorage.isOutsource : true)
@@ -60,9 +74,7 @@ export const CreateStorageModal = () => {
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -73,8 +85,8 @@ export const CreateStorageModal = () => {
                             <div key={storage.id}
                                  className={storage.id === currentStorage?.id ? s.shop_item_active : s.shop_item}
                                  onClick={() => {
-                                     setCurrentStorage(storage);
-                                     console.log(storage)
+                                     setCurrentStorage(storage)
+                                     console.log('выбранный склад', storage)
                                  }}
                             >
                                 <div><span>ID:</span> {storage.id}</div>

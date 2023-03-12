@@ -13,7 +13,7 @@ const ServiceNavigation = () => {
     const setServiceListStatus = useService(s => s.setServiceListStatus)
     const services = useService(s => s.services)
     const currentService = useService(s => s.currentService)
-    const chooseServiceItem = useService(s => s.setCurrentService)
+    const setCurrentService = useService(s => s.setCurrentService)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
@@ -129,7 +129,7 @@ const ServiceNavigation = () => {
                                              className={service.id === currentService?.id ? s.serviceItem_active :
                                                  service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
                                              onClick={() => {
-                                                 chooseServiceItem(service)
+                                                 setCurrentService(service)
                                              }}
                                         >
                                             {service.name}
