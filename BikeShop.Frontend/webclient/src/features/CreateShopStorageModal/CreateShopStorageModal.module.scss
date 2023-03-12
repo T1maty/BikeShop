@@ -1,19 +1,19 @@
 @import '../../app/styles/variables/mixins';
 @import '../../app/styles/variables/variables';
 
-.shopStoreModal_mainBlock {
+.shopStorageModal_mainBlock {
     @include defaultModalStyle;
     @include flexOnlyBetween;
     gap: $defaultLargeMargin;
     min-width: 800px;
 
-    .shopStoreModal_shops {
+    .shopStorageModal_shops {
         background-color: $themeColorMilk;
         padding: $defaultLargeMargin;
         border-radius: $smallBorderRadius;
         width: 50%;
 
-        .shopStoreModal_shopList {
+        .shopStorageModal_shopList {
             @include divSmallMarginBottom;
             padding-right: $defaultSmallMargin;
             overflow-y: auto;
@@ -31,6 +31,12 @@
                     background-color: $themeColorDark;
                     color: white;
                 }
+
+                > div {
+                    span {
+                        font-weight: bold;
+                    }
+                }
             }
             .shop_item_active {
                 @include divSmallMarginBottom;
@@ -39,17 +45,23 @@
                 border: 1px solid white;
                 padding: 10px;
                 color: white;
+
+                > div {
+                    span {
+                        font-weight: bold;
+                    }
+                }
             }
         }
     }
 
-    .shopStoreModal_createBlock {
+    .shopStorageModal_createBlock {
         width: 50%;
 
         form {
             @include divLargeMarginBottom;
 
-            .shopStoreModal_inputFields {
+            .shopStorageModal_inputFields {
                 background-color: $themeColorGray;
                 padding: $defaultLargeMargin;
                 border-radius: $smallBorderRadius;
@@ -62,15 +74,6 @@
                     padding: $defaultSmallMargin;
                     border: 2px solid $themeColorMilk;
                     border-radius: $smallBorderRadius;
-                }
-
-                .infoBlock_updateBtn {
-                    display: flex;
-                    gap: $defaultLargeMargin;
-
-                    button {
-                        @include defaultMediumButton;
-                    }
                 }
                 .infoBlock_cancelBtn {
                     display: flex;
@@ -93,14 +96,6 @@
                     //padding: 10px 0;
                     padding: 20px;
                     width: 100%;
-                }
-
-                //.shopStoreModal_createBtn {
-                //}
-                .shopStoreModal_exitBtn {
-                    button {
-                        width: 100%;
-                    }
                 }
             }
         }

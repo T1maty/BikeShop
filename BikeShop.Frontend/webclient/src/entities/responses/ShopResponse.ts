@@ -1,7 +1,7 @@
 import {CreateShop} from "../requests/CreateShop";
 
 export interface CreateShopResponse extends CreateShop {
-    id: 1
+    id: number
     enabled: boolean
     createdAt: string
     updatedAt: string

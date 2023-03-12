@@ -16,6 +16,7 @@ export const CreateShopModal = () => {
 
     const open = useCreateShopModal(s => s.createShopModal)
     const setOpen = useCreateShopModal(s => s.setOpenCreateShopModal)
+
     const currentShop = useCreateShopModal(s => s.currentShop)
     const setCurrentShop = useCreateShopModal(s => s.setCurrentShop)
     const shops = useCreateShopModal(s => s.shops)
@@ -25,7 +26,8 @@ export const CreateShopModal = () => {
 
     const formControl = useForm<UpdateShop>({
         defaultValues: {
-            id: useCreateShopModal.getState().currentShop?.id,
+            // id: useCreateShopModal.getState().currentShop?.id,
+            id: 0,
             name: '',
             address: '',
             phone: '',
@@ -62,8 +64,6 @@ export const CreateShopModal = () => {
     }
 
     useEffect(() => {
-        getShops()
-
         formControl.reset()
         formControl.setValue('id', currentShop ? currentShop.id : 0)
         formControl.setValue('name', currentShop ? currentShop.name : '')
@@ -74,6 +74,10 @@ export const CreateShopModal = () => {
         formControl.setValue('enabled', currentShop ? currentShop.enabled : true)
     }, [currentShop])
 
+    useEffect(() => {
+        getShops()
+    }, [])
+
     return (
         <Modal
             open={open}
@@ -83,29 +87,31 @@ export const CreateShopModal = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <div className={s.shopStoreModal_mainBlock}>
-                <div className={s.shopStoreModal_shops}>
-                    <div className={s.shopStoreModal_shopList}>
+            <div className={s.shopStorageModal_mainBlock}>
+                <div className={s.shopStorageModal_shops}>
+                    <div className={s.shopStorageModal_shopList}>
                         {shops.map(shop => (
                             <div key={shop.id}
                                  className={shop.id === currentShop?.id ? s.shop_item_active : s.shop_item}
-                                 onClick={() => {setCurrentShop(shop); console.log(shop)}}
+                                 onClick={() => {
+                                     setCurrentShop(shop);
+                                     console.log(shop)
+                                 }}
                             >
-                                <div>ID: {shop.id}</div>
-                                <div>Название: {shop.name}</div>
-                                <div>Адрес: {shop.address}</div>
-                                <div>Телефон: {shop.phone}</div>
-                                <div>Склад: {shop.storageId}</div>
-                                <div>Активен: {shop.enabled ? 'Да' : 'Нет'}</div>
+                                <div><span>ID:</span> {shop.id}</div>
+                                <div><span>Название:</span> {shop.name}</div>
+                                <div><span>Адрес:</span> {shop.address}</div>
+                                <div><span>Телефон:</span> {shop.phone}</div>
+                                <div><span>Склад:</span> {shop.storageId}</div>
+                                <div><span>Активен:</span> {shop.enabled ? 'Да' : 'Нет'}</div>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className={s.shopStoreModal_createBlock}>
+                <div className={s.shopStorageModal_createBlock}>
                     <form onSubmit={formControl.handleSubmit(onSubmit)}>
-
-                        <div className={s.shopStoreModal_inputFields}>
+                        <div className={s.shopStorageModal_inputFields}>
                             <ControlledInput name={'name'}
                                              label={'Название магазина'}
                                              control={formControl}
@@ -136,29 +142,17 @@ export const CreateShopModal = () => {
                                                 control={formControl}
                                                 divClassName={s.infoBlock_checkbox}
                             />
-                            {/*<Button buttonDivWrapper={s.infoBlock_updateBtn}*/}
-                            {/*        disabled={currentShop === null}*/}
-                            {/*        onClick={() => {}}*/}
-                            {/*>*/}
-                            {/*    Сохранить*/}
-                            {/*</Button>*/}
                             <Button buttonDivWrapper={s.infoBlock_cancelBtn}
-                                disabled={currentShop === null}
-                                onClick={() => {setCurrentShop(null)}}
+                                    disabled={currentShop === null}
+                                    onClick={() => {setCurrentShop(null)}}
                             >
                                 Отмена
                             </Button>
                         </div>
-
                         <div className={s.footer_buttons}>
                             <Button type={'submit'}>
                                 {currentShop === null ? 'Создать магазин' : 'Обновить данные'}
                             </Button>
-                            {/*<Button buttonDivWrapper={s.shopStoreModal_exitBtn}*/}
-                            {/*        onClick={() => {setOpen(false)}}*/}
-                            {/*>*/}
-                            {/*    Выйти*/}
-                            {/*</Button>*/}
                         </div>
                     </form>
                 </div>

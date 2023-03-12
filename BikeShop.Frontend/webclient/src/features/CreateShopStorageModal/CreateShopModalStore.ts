@@ -40,7 +40,7 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
         })
     },
     addNewShop: (data) => {
-        return $api.post<CreateShop>('/shop/create', data).then(res => {
+        return $api.post('/shop/create', data).then(res => {
             // set(state => {
             //     state.shops.push(res.data)
             // })
@@ -49,7 +49,7 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
         })
     },
     updateShopInfo: (updateData) => {
-        return $api.post('/shop/update', updateData).then(res => {
+        return $api.put('/shop/update', updateData).then(res => {
             // set(state => {
             //     state.shops.push(res.data)
             // })
