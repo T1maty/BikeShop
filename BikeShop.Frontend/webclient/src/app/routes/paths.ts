@@ -11,6 +11,7 @@ export const BikeShopPaths = {
         WORK_CATALOG: '/workCatalog',
         SERVICE: '/service',
         CASHBOX: '/cashbox',
+        NEW_PRODUCTS: '/arrival-of-products',
     },
     SHOP: {
         HOME: '/shop',

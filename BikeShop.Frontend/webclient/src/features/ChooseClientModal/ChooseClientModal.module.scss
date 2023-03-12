@@ -55,21 +55,15 @@
         }
         .addClient_buttonsBlock {
             @include flexOnlyBetween;
+            gap: $defaultLargeMargin;
 
             > div {
                 width: 100%;
-            }
-
-            button {
-                padding: $smallButtonPadding;
-            }
-
-            .buttonsBlock_cancelButton {
-                width: 100%;
+                button {
+                    width: 100%;
+                    padding: $smallButtonPadding;
+                }
             }
         }
     }
-
-
-
 }

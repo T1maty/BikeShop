@@ -177,11 +177,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                             <Button type={'submit'}>
                                 Добавить клиента
                             </Button>
-                            <Button className={s.buttonsBlock_cancelButton}
-                                    onClick={() => {
-                                        setState ? setState(false) : setOpen(false)
-                                    }}
-                            >
+                            <Button onClick={() => {setState ? setState(false) : setOpen(false)}}>
                                 Отмена
                             </Button>
                         </div>

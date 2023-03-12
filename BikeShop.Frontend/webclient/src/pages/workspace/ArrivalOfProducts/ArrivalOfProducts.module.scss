@@ -1,0 +1,82 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.arrivalOfProducts_mainBlock {
+    @include wrapperMainBlock;
+    @include flexOnlyBetween;
+    gap: $defaultLargeMargin;
+
+    .arrivalOfProducts_leftSide {
+        background-color: $themeColorDark;
+        border-radius: $largeBorderRadius;
+        padding: $defaultLargeMargin;
+        @include flexColumn;
+        @include divExtraLargeMarginBottom;
+        width: 30%;
+
+        > div {
+            //border: 1px solid white;
+            width: 100%;
+        }
+
+        .leftSide_title {
+            text-align: center;
+            font-size: 20px;
+        }
+        .leftSide_uploadFile {
+            @include flexCenter;
+        }
+        .leftSide_info {
+            @include flexCenter;
+            padding: 10px;
+            border: 2px solid $themeColorMilk;
+            border-radius: $smallBorderRadius;
+            height: 150px;
+        }
+        .button_chooseItem {
+            button {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+        .leftSide_delivery {
+            @include flexBetween;
+            gap: $defaultLargeMargin;
+            > div {
+               @include defaultFiledStyle;
+                width: 100%;
+            }
+        }
+        .leftSide_metrika {
+            background-color: $themeColorGray;
+            border-radius: $smallBorderRadius;
+            padding: $defaultLargeMargin;
+            @include flexColumn;
+            @include divSmallMarginBottom;
+
+            .metrika_title {
+                font-weight: bold;
+                text-decoration: underline;
+            }
+        }
+        .leftSide_footerButtons {
+            @include flexOnlyBetween;
+            gap: $defaultLargeMargin;
+
+            > div {
+                width: 100%;
+                button {
+                    width: 100%;
+                    padding: $smallButtonPadding;
+                }
+            }
+        }
+    }
+
+    .arrivalOfProducts_rightSide {
+        background-color: $themeColorDark;
+        border-radius: $largeBorderRadius;
+        padding: $defaultLargeMargin;
+        width: 70%;
+    }
+}

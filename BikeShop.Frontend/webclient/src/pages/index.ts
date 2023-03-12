@@ -9,6 +9,7 @@ export {ProductCatalog} from './workspace/ProductCatalog/ProductCatalog'
 export {ServiceTable} from './workspace/Service/ServiceTable'
 export {SelectProduct} from './workspace/SelectProductWork/SelectProduct'
 export {SelectWork} from './workspace/SelectProductWork/SelectWork'
+export {ArrivalOfProducts} from './workspace/ArrivalOfProducts/ArrivalOfProducts'
 
 export {Home} from './public/Home/Home'
 

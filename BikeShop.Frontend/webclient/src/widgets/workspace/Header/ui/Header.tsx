@@ -41,7 +41,8 @@ export const Header: FC = () => {
         {
             title: 'Архив чеков',
             func: () => {
-                //
+                navigate(BikeShopPaths.WORKSPACE.NEW_PRODUCTS)
+                setIsMenuOpen(false)
             }
         },
     ])
