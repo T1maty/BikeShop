@@ -16,6 +16,8 @@ export const CreateShopModal = () => {
 
     const open = useCreateShopModal(s => s.createShopModal)
     const setOpen = useCreateShopModal(s => s.setOpenCreateShopModal)
+    const shops = useCreateShopModal(s => s.shops)
+    const getShops = useCreateShopModal(s => s.getShops)
     const addNewShop = useCreateShopModal(s => s.addNewShop)
 
     const formControl = useForm({
@@ -23,6 +25,7 @@ export const CreateShopModal = () => {
             name: '',
             address: '',
             phone: '',
+            secret: '',
             storageId: '',
             isShopWorking: true,
         }
@@ -37,6 +40,7 @@ export const CreateShopModal = () => {
             formControl.setValue('name', '')
             formControl.setValue('address', '')
             formControl.setValue('phone', '')
+            formControl.setValue('secret', '')
             formControl.setValue('storageId', '')
             // formControl.setValue('isShopWorking', '')
 
@@ -49,6 +53,10 @@ export const CreateShopModal = () => {
         })
     }
 
+    useEffect(() => {
+        getShops()
+    }, [])
+
     return (
         <Modal
             open={open}
@@ -59,8 +67,17 @@ export const CreateShopModal = () => {
             aria-describedby="modal-modal-description"
         >
             <div className={s.shopStoreModal_mainBlock}>
-                <div className={s.shopStoreModal_infoBlock}>
-                    Shop
+                <div className={s.shopStoreModal_shops}>
+                    {shops.map(shop => (
+                        <div className={s.shop_item} key={shop.id}>
+                            <div>ID: {shop.id}</div>
+                            <div>Название: {shop.name}</div>
+                            <div>Адрес: {shop.address}</div>
+                            <div>Телефон: {shop.phone}</div>
+                            <div>Склад: {shop.storageId}</div>
+                            <div>Активен: {shop.enabled ? 'Да' : 'Нет'}</div>
+                        </div>
+                    ))}
                 </div>
 
                 <div className={s.shopStoreModal_createBlock}>
@@ -79,6 +96,11 @@ export const CreateShopModal = () => {
                             />
                             <ControlledInput name={'phone'}
                                              label={'Телефон магазина'}
+                                             control={formControl}
+                                             rules={{required: Errors[0].name}}
+                            />
+                            <ControlledInput name={'secret'}
+                                             label={'Пароль'}
                                              control={formControl}
                                              rules={{required: Errors[0].name}}
                             />

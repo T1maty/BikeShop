@@ -7,11 +7,18 @@
     gap: $defaultLargeMargin;
     min-width: 800px;
 
-    .shopStoreModal_infoBlock {
+    .shopStoreModal_shops {
         background-color: $themeColorMilk;
         padding: $defaultLargeMargin;
         border-radius: $smallBorderRadius;
         width: 50%;
+        @include divSmallMarginBottom;
+
+        .shop_item {
+            border: 1px solid white;
+            padding: 10px;
+            color: black;
+        }
     }
 
     .shopStoreModal_createBlock {
@@ -47,12 +54,14 @@
 
             .footer_buttons {
                 @include flexOnlyBetween;
+                gap: $defaultLargeMargin;
 
                 > div {
                     width: 100%;
                 }
                 button {
-                    padding: $smallButtonPadding;
+                    padding: 10px 0;
+                    width: 100%;
                 }
 
                 //.shopStoreModal_createBtn {
