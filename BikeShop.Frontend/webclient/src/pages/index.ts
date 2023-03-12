@@ -9,9 +9,9 @@ export {ProductCatalog} from './workspace/ProductCatalog/ProductCatalog'
 export {ServiceTable} from './workspace/Service/ServiceTable'
 export {SelectProduct} from './workspace/SelectProductWork/SelectProduct'
 export {SelectWork} from './workspace/SelectProductWork/SelectWork'
-export {ProductsWrapper} from './workspace/ArrivalOfProducts/ProductsWrapper'
-export {ArrivalOfProducts} from './workspace/ArrivalOfProducts/ArrivalOfProducts'
-export {InventoryOfProducts} from './workspace/ArrivalOfProducts/InventoryOfProducts'
+export {ProductsWrapper} from './workspace/ProductsCount/ProductsWrapper'
+export {ArrivalOfProducts} from './workspace/ProductsCount/ArrivalOfProducts'
+export {InventoryOfProducts} from './workspace/ProductsCount/InventoryOfProducts'
 
 export {Home} from './public/Home/Home'
 
