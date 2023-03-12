@@ -6,7 +6,8 @@ import s from './CreateShopStorageModal.module.scss';
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
 import useCreateShopModal from './CreateShopModalStore';
-import {CreateShop, IUser} from '../../entities';
+import {CreateShop, IUser, UpdateShop} from '../../entities';
+import useAuth from '../../entities/globalStores/useAuthUser';
 
 export const CreateShopModal = () => {
 
@@ -22,17 +23,18 @@ export const CreateShopModal = () => {
     const addNewShop = useCreateShopModal(s => s.addNewShop)
     const updateShopInfo = useCreateShopModal(s => s.updateShopInfo)
 
-    const formControl = useForm({
+    const formControl = useForm<UpdateShop>({
         defaultValues: {
+            id: 0,
             name: '',
             address: '',
             phone: '',
             secret: '',
             storageId: 0,
-            // enabled: true,
+            enabled: true,
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: CreateShop) => {
+    const onSubmit: SubmitHandler<UpdateShop> = (data: UpdateShop) => {
         if (currentShop === null) {
             addNewShop(data).then((res: any) => {
                 formControl.reset()
@@ -47,8 +49,8 @@ export const CreateShopModal = () => {
         }
 
         if (currentShop !== null) {
+            // data.id = currentShop.id
             updateShopInfo(data).then((res: any) => {
-                formControl.reset()
                 getShops()
                 enqueueSnackbar('Магазин обновлён', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
@@ -64,12 +66,13 @@ export const CreateShopModal = () => {
         getShops()
 
         formControl.reset()
+        formControl.setValue('id', currentShop ? currentShop.id : 0)
         formControl.setValue('name', currentShop ? currentShop.name : '')
         formControl.setValue('address', currentShop ? currentShop.address : '')
         formControl.setValue('phone', currentShop ? currentShop.phone : '')
         formControl.setValue('secret', currentShop ? currentShop.secret : '')
         formControl.setValue('storageId', currentShop ? currentShop.storageId : 0)
-        // formControl.setValue('enabled', currentShop ? currentShop.enabled : true)
+        formControl.setValue('enabled', currentShop ? currentShop.enabled : true)
     }, [currentShop])
 
     return (
@@ -85,7 +88,10 @@ export const CreateShopModal = () => {
                 <div className={s.shopStoreModal_shops}>
                     <div className={s.shopStoreModal_shopList}>
                         {shops.map(shop => (
-                            <div className={shop.id === currentShop?.id ? s.shop_item_active : s.shop_item} key={shop.id} onClick={() => {setCurrentShop(shop); console.log(shop)}}>
+                            <div key={shop.id}
+                                 className={shop.id === currentShop?.id ? s.shop_item_active : s.shop_item}
+                                 onClick={() => {setCurrentShop(shop); console.log(shop)}}
+                            >
                                 <div>ID: {shop.id}</div>
                                 <div>Название: {shop.name}</div>
                                 <div>Адрес: {shop.address}</div>

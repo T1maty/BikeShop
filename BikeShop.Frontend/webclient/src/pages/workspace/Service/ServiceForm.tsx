@@ -28,8 +28,8 @@ const ServiceForm = () => {
 
     const formControl = useForm<CreateService>({
         defaultValues: {
-            id: 0,
             shopId: useAuth.getState().shop?.id,
+            id: 0,
             name: '',
             client: {} as IUser,
             clientDescription: '',
@@ -66,8 +66,8 @@ const ServiceForm = () => {
         // обновление сервиса
         if (!isCreating) {
             console.log('update IF works, updateData = ', data)
-            updateService(data).then((res: any) => {
 
+            updateService(data).then((res: any) => {
                 enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()

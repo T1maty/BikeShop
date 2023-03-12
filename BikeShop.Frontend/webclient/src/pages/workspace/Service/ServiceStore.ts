@@ -84,7 +84,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         })
     },
-    addNewService: (data: CreateService) => {
+    addNewService: (data) => {
         return $api.post('/service/create', data).then(res => {
             set(state => {
                 state.services.push(res.data)

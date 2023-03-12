@@ -20,6 +20,8 @@
             max-height: 500px;
 
             .shop_item {
+                @include divSmallMarginBottom;
+                border-radius: $smallBorderRadius;
                 border: 1px solid white;
                 padding: 10px;
                 color: black;
@@ -31,6 +33,8 @@
                 }
             }
             .shop_item_active {
+                @include divSmallMarginBottom;
+                border-radius: $smallBorderRadius;
                 background-color: $themeColorDark;
                 border: 1px solid white;
                 padding: 10px;

@@ -6,7 +6,7 @@ export interface CreateService {
 
     shopId: number
 
-    client: IUser,
+    client: IUser
     name: string
     clientDescription: string
 
