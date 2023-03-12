@@ -31,7 +31,7 @@ export const CreateShopModal = () => {
             address: '',
             phone: '',
             secret: '',
-            storageId: 0,
+            storageId: 1,
             enabled: true,
         }
     });
@@ -69,7 +69,7 @@ export const CreateShopModal = () => {
         formControl.setValue('address', currentShop ? currentShop.address : '')
         formControl.setValue('phone', currentShop ? currentShop.phone : '')
         formControl.setValue('secret', currentShop ? currentShop.secret : '')
-        formControl.setValue('storageId', currentShop ? currentShop.storageId : 0)
+        formControl.setValue('storageId', currentShop ? currentShop.storageId : 1)
         formControl.setValue('enabled', currentShop ? currentShop.enabled : true)
     }, [currentShop])
 
