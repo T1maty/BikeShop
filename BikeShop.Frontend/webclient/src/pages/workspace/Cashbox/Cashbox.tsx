@@ -103,7 +103,7 @@ const Cashbox = () => {
                             >
                                 Выбрать товары
                             </Button>
-                        <CustomInput placeholder={'Поиск...'} searchInput={'white'}/>
+                        <CustomSearchInput placeholder={'Поиск...'} clearInputValue={() => {}}/>
                         {/*<div className={s.header_searchInput}>*/}
                         {/*    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
                         {/*</div>*/}

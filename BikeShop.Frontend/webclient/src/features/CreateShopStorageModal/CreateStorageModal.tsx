@@ -8,7 +8,7 @@ import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
 import useCreateStorageModal from "./CreateStorageModalStore";
 
-const CreateStorageModal = () => {
+export const CreateStorageModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -118,5 +118,3 @@ const CreateStorageModal = () => {
         </Modal>
     );
 };
-
-export default CreateStorageModal;

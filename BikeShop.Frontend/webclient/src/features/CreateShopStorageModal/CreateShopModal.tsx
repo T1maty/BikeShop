@@ -9,7 +9,7 @@ import {Errors} from '../../entities/errors/workspaceErrors';
 import useCreateShopModal from './CreateShopModalStore';
 import {CreateShopSubmit} from '../../entities';
 
-const CreateShopModal = () => {
+export const CreateShopModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -33,7 +33,6 @@ const CreateShopModal = () => {
         addNewShop(data).then((res: any) => {
             console.log(data)
             // setOpen(false)
-            // navigate(BikeShopPaths.WORKSPACE.SERVICE)
 
             formControl.setValue('name', '')
             formControl.setValue('address', '')
@@ -53,7 +52,9 @@ const CreateShopModal = () => {
     return (
         <Modal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -66,57 +67,43 @@ const CreateShopModal = () => {
                     <form onSubmit={formControl.handleSubmit(onSubmit)}>
 
                         <div className={s.shopStoreModal_inputFields}>
-                            <div>
-                                <ControlledInput name={'name'}
-                                                 label={'Название магазина'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div>
-                                <ControlledInput name={'address'}
-                                                 label={'Адрес магазина'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div>
-                                <ControlledInput name={'phone'}
-                                                 label={'Телефон магазина'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div>
-                                <ControlledInput name={'storageId'}
-                                                 label={'Склад'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div className={s.infoBlock_checkbox}>
-                                <div className={s.infoBlock_checkboxItem}>
-                                    <div>
-                                        <ControlledCheckbox name={'isShopWorking'}
-                                                            label={'Магазин работает'}
-                                                            control={formControl}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={s.infoBlock_updateBtn}>
-                                <Button onClick={() => {}}>
-                                    Сохранить
-                                </Button>
-                            </div>
+                            <ControlledInput name={'name'}
+                                             label={'Название магазина'}
+                                             control={formControl}
+                                             rules={{required: Errors[0].name}}
+                            />
+                            <ControlledInput name={'address'}
+                                             label={'Адрес магазина'}
+                                             control={formControl}
+                                             rules={{required: Errors[0].name}}
+                            />
+                            <ControlledInput name={'phone'}
+                                             label={'Телефон магазина'}
+                                             control={formControl}
+                                             rules={{required: Errors[0].name}}
+                            />
+                            <ControlledInput name={'storageId'}
+                                             label={'Склад'}
+                                             control={formControl}
+                                             rules={{required: Errors[0].name}}
+                            />
+                            <ControlledCheckbox name={'isShopWorking'}
+                                                label={'Магазин работает'}
+                                                control={formControl}
+                                                divClassName={s.infoBlock_checkbox}
+                            />
+                            <Button onClick={() => {}} buttonDivWrapper={s.infoBlock_updateBtn}>
+                                Сохранить
+                            </Button>
                         </div>
-                        <div className={s.shopStoreModal_createBtn}>
+
+                        <div className={s.footer_buttons}>
                             <Button type={'submit'}>
                                 Создать магазин
                             </Button>
-                        </div>
-                        <div className={s.shopStoreModal_exitBtn}>
-                            <Button onClick={() => {setOpen(false)}}>
+                            <Button onClick={() => {setOpen(false)}}
+                                    buttonDivWrapper={s.shopStoreModal_exitBtn}
+                            >
                                 Выйти
                             </Button>
                         </div>
@@ -126,5 +113,3 @@ const CreateShopModal = () => {
         </Modal>
     );
 };
-
-export default CreateShopModal;

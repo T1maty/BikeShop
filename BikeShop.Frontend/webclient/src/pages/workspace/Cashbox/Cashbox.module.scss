@@ -158,7 +158,8 @@
             .cashboxMainBlock_rightSideMiddle {
                 @include flexCenter;
                 font-size: 20px;
-                height: 70%;
+                //height: 70%;
+                height: 100%;
                 background-color: $themeColorDark;
                 border-radius: $largeBorderRadius;
                 margin-bottom: $defaultLargeMargin;

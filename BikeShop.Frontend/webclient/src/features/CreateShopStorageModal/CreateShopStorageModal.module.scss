@@ -33,10 +33,6 @@
                     padding: $defaultSmallMargin;
                     border: 2px solid $themeColorMilk;
                     border-radius: $smallBorderRadius;
-
-                    .infoBlock_checkboxItem {
-                        @include flexCenter;
-                    }
                 }
 
                 .infoBlock_updateBtn {
@@ -49,15 +45,22 @@
                 }
             }
 
-            .shopStoreModal_createBtn {
-                button {
-                    @include defaultLargeButton;
-                }
-            }
+            .footer_buttons {
+                @include flexOnlyBetween;
 
-            .shopStoreModal_exitBtn {
+                > div {
+                    width: 100%;
+                }
                 button {
-                    @include defaultLargeButton;
+                    padding: $smallButtonPadding;
+                }
+
+                //.shopStoreModal_createBtn {
+                //}
+                .shopStoreModal_exitBtn {
+                    button {
+                        width: 100%;
+                    }
                 }
             }
         }

@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import {useAuthUser} from "../../../../entities";
-import {HeaderUserMenu} from "../../../../features";
+import {CreateShopModal, CreateStorageModal, HeaderUserMenu} from "../../../../features";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import cls from './Header.module.scss'
@@ -11,8 +11,6 @@ import {Badge} from "../../../../shared/ui/Badge/Badge";
 import {BikeShopPaths} from "../../../../app/routes/paths";
 import useCreateStorageModal from "../../../../features/CreateShopStorageModal/CreateStorageModalStore";
 import useCreateShopModal from "../../../../features/CreateShopStorageModal/CreateShopModalStore";
-import CreateShopModal from 'features/CreateShopStorageModal/CreateShopModal';
-import CreateStorageModal from 'features/CreateShopStorageModal/CreateStorageModal';
 
 export const Header: FC = () => {
 

@@ -33,24 +33,22 @@ interface ServiceStore {
     updateService: (updateData: CreateService) => any // надо исправить тип
     updateServiceStatus: (data: UpdateServiceStatus) => void
 
-    mode: string,
-    setMode: (mode: string) => void
+    serviceListStatus: string,
+    setServiceListStatus: (serviceListStatus: string) => void
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
 
-    mode: EnumServiceStatus.Waiting,
-    setMode: (mode) => {
-        set({mode: mode})
+    serviceListStatus: EnumServiceStatus.Waiting,
+    setServiceListStatus: (serviceListStatus) => {
+        set({serviceListStatus: serviceListStatus})
     },
 
     currentService: null,
     setCurrentService: (service) => {
-
         set({currentService: service})
-
     },
 
     masters: [],
@@ -95,8 +93,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     },
 
     addNewService: (data: CreateService) => {
-
-
         return $api.post('/service/create', data).then(res => {
             set(state => {
                 state.services.push(res.data)
@@ -113,10 +109,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     },
 
     updateService: (updateData) => {
-
         return $api.put('/service/updateservice', updateData).then(res => {
             $api.get('/service/getbyshopid/1').then(res => {
-                const currentListStatus = useService.getState().mode
+                const currentListStatus = useService.getState().serviceListStatus
 
                 set(state => {
                     state.services = res.data
@@ -145,7 +140,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
 
         return $api.put(`/service/updateservicestatus?id=${data.id}&status=${data.status}`)
             .then(res => {
-                const currentListStatus = useService.getState().mode
+                const currentListStatus = useService.getState().serviceListStatus
 
                 if (currentListStatus) {
                     set(state => {

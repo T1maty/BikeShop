@@ -9,14 +9,14 @@ import {EnumServiceStatus} from "../../../entities";
 const ServiceNavigation = () => {
 
     const isLoading = useService(s => s.isLoading)
+    const serviceListStatus = useService(s => s.serviceListStatus)
+    const setServiceListStatus = useService(s => s.setServiceListStatus)
     const services = useService(s => s.services)
     const currentService = useService(s => s.currentService)
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const chooseServiceItem = useService(s => s.setCurrentService)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
-    const mode = useService(s => s.mode)
-    const setMode = useService(s => s.setMode)
 
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
@@ -24,9 +24,9 @@ const ServiceNavigation = () => {
 
         setFilteredServices(services.filter(serv => serv.status === filterName || serv.status === extraFilterName))
 
-        isButtonWaitingOn ? setMode(EnumServiceStatus.Waiting) : true
-        isButtonInProcessOn ? setMode(EnumServiceStatus.InProcess) : true
-        isButtonReadyOn ? setMode(EnumServiceStatus.Ready) : true
+        isButtonWaitingOn ? setServiceListStatus(EnumServiceStatus.Waiting) : true
+        isButtonInProcessOn ? setServiceListStatus(EnumServiceStatus.InProcess) : true
+        isButtonReadyOn ? setServiceListStatus(EnumServiceStatus.Ready) : true
         console.log('отфильтрованные сервисы', filteredServices)
     }
 
@@ -39,7 +39,7 @@ const ServiceNavigation = () => {
             <div className={s.leftSide_buttons}>
                 <div className={s.buttons_filter}>
                     <Button
-                        className={(EnumServiceStatus.Waiting === mode || EnumServiceStatus.WaitingSupply === mode) ? style.waiting : ''}
+                        className={(EnumServiceStatus.Waiting === serviceListStatus || EnumServiceStatus.WaitingSupply === serviceListStatus) ? style.waiting : ''}
                         onClick={() => {
                             filterServicesUniversalHandler('Waiting',
                                 true, false, false,
@@ -48,7 +48,7 @@ const ServiceNavigation = () => {
                     >
                         Ожидают
                     </Button>
-                    <Button className={mode === EnumServiceStatus.InProcess ? style.process : ''}
+                    <Button className={serviceListStatus === EnumServiceStatus.InProcess ? style.process : ''}
                             onClick={() => {
                                 filterServicesUniversalHandler('InProcess',
                                     false, true, false)
@@ -56,7 +56,7 @@ const ServiceNavigation = () => {
                     >
                         В ремонте
                     </Button>
-                    <Button className={mode === EnumServiceStatus.Ready ? style.ready : ''}
+                    <Button className={serviceListStatus === EnumServiceStatus.Ready ? style.ready : ''}
                             onClick={() => {
                                 filterServicesUniversalHandler('Ready',
                                     false, false, true)
@@ -67,7 +67,7 @@ const ServiceNavigation = () => {
                 </div>
                 <div className={s.content_title}>
                     {
-                        (EnumServiceStatus.Waiting === mode || EnumServiceStatus.WaitingSupply === mode) &&
+                        (EnumServiceStatus.Waiting === serviceListStatus || EnumServiceStatus.WaitingSupply === serviceListStatus) &&
                         <Button buttonDivWrapper={s.content_startBtn}
                                 disabled={currentService === null}
                                 onClick={() => {
@@ -77,7 +77,7 @@ const ServiceNavigation = () => {
                         </Button>
                     }
                     {
-                        mode === EnumServiceStatus.InProcess &&
+                        serviceListStatus === EnumServiceStatus.InProcess &&
                         <div className={s.content_inProcessButtons}>
                             <Button disabled={currentService === null}
                                     onClick={() => {
@@ -95,7 +95,7 @@ const ServiceNavigation = () => {
                     }
 
                     {
-                        mode === EnumServiceStatus.Ready &&
+                        serviceListStatus === EnumServiceStatus.Ready &&
                         <div className={s.content_doneButtons}>
                             <Button disabled={currentService === null}
                                     onClick={() => {

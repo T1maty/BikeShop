@@ -8,25 +8,29 @@ interface ControlledCheckboxProps {
     label: string
     control: UseFormReturn<any>
     rules?: Omit<RegisterOptions<any, any>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
+    divClassName?: any
 }
 
 export const ControlledCheckbox = (props: ControlledCheckboxProps) => {
+
     return (
-        <Controller
-            name={props.name}
-            control={props.control.control}
-            render={({field}) => (
-                <FormControlLabel
-                    label={props.label}
-                    value={field.value}
-                    control={
-                        <Checkbox
-                            checked={field.value}
-                            onChange={(event, value) => {
-                                field.onChange(value)
-                            }}
-                        />
-                    }/>
-            )}/>
+        <div className={props.divClassName}>
+            <Controller
+                name={props.name}
+                control={props.control.control}
+                render={({field}) => (
+                    <FormControlLabel
+                        label={props.label}
+                        value={field.value}
+                        control={
+                            <Checkbox
+                                checked={field.value}
+                                onChange={(event, value) => {
+                                    field.onChange(value)
+                                }}
+                            />
+                        }/>
+                )}/>
+        </div>
     );
 };

@@ -12,6 +12,8 @@ export {ArchiveModal} from './ArchiveModal/ArchiveModal'
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 export {SelectProductModal} from './SelectProductWorkModals/SelectProductModal'
 export {SelectWorkModal} from './SelectProductWorkModals/SelectWorkModal'
+export {CreateShopModal} from './CreateShopStorageModal/CreateShopModal'
+export {CreateStorageModal} from './CreateShopStorageModal/CreateStorageModal'
 
 export {TableProductItem} from './TableProductItem/TableProductItem'
 

@@ -106,7 +106,7 @@ const ServiceForm = () => {
                                  label={'Техника'}
                                  control={formControl}
                                  rules={{required: Errors[0].name}}
-                                 className={s.rightSide_stuffInput}
+                                 divClassName={s.rightSide_stuffInput}
                                  disabled={currentService === null && !isCreating}
                 />
 
@@ -116,7 +116,7 @@ const ServiceForm = () => {
                                          label={'Детальное описание'}
                                          control={formControl}
                                          rules={{required: Errors[0].name}}
-                                         className={s.content_detailsInput}
+                                         divClassName={s.content_detailsInput}
                                          disabled={currentService === null && !isCreating}
                         />
                         <ControlledSelect control={formControl} name={'userMasterId'} label={'Мастер'}

@@ -11,13 +11,14 @@ interface ControlledInputProps {
     // style?: any
     sx?: any
     InputLabelProps?: any
-    className?: any
+    divClassName?: any
     disabled?: boolean
 }
 
 export const ControlledInput = (props: ControlledInputProps) => {
+
     return (
-        <div className={props.className}>
+        <div className={props.divClassName}>
             <Controller
                 name={props.name}
                 control={props.control.control}
