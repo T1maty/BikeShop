@@ -1,10 +1,7 @@
-export interface CreateShopResponse {
+import {CreateShop} from "../requests/CreateShop";
+
+export interface CreateShopResponse extends CreateShop {
     id: 1
-    name: string
-    address: string
-    phone: string
-    secret: string
-    storageId: number
     enabled: boolean
     createdAt: string
     updatedAt: string

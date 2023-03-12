@@ -12,12 +12,18 @@
         padding: $defaultLargeMargin;
         border-radius: $smallBorderRadius;
         width: 50%;
-        @include divSmallMarginBottom;
 
-        .shop_item {
-            border: 1px solid white;
-            padding: 10px;
-            color: black;
+        .shopStoreModal_shopList {
+            @include divSmallMarginBottom;
+            padding-right: $defaultSmallMargin;
+            overflow-y: auto;
+            max-height: 500px;
+
+            .shop_item {
+                border: 1px solid white;
+                padding: 10px;
+                color: black;
+            }
         }
     }
 

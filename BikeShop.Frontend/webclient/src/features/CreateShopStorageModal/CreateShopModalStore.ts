@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
-import {CreateShopSubmit} from '../../entities';
+import {CreateShop} from '../../entities';
 import {CreateShopResponse} from "../../entities/responses/ShopResponse";
 
 interface CreateShopModalStore {
@@ -14,7 +14,7 @@ interface CreateShopModalStore {
 
     shops: CreateShopResponse[]
     getShops: () => void
-    addNewShop: (data: CreateShopSubmit) => any
+    addNewShop: (data: CreateShop) => any
     // updateShopInfo: (data: CreateShopSubmit) => any
 
     // name: string
@@ -58,8 +58,10 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
         })
     },
     addNewShop: (data) => {
-        return $api.post<CreateShopSubmit>('/shop/create', data).then(res => {
-            // code
+        return $api.post<CreateShop>('/shop/create', data).then(res => {
+            // set(state => {
+            //     state.shops.push(res.data)
+            // })
         }).catch((error: any) => {
             console.log('магазин не создан')
         })

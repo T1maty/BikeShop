@@ -7,7 +7,7 @@ import s from './CreateShopStorageModal.module.scss';
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
 import useCreateShopModal from './CreateShopModalStore';
-import {CreateShopSubmit} from '../../entities';
+import {CreateShop} from '../../entities';
 
 export const CreateShopModal = () => {
 
@@ -30,20 +30,10 @@ export const CreateShopModal = () => {
             isShopWorking: true,
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: CreateShopSubmit) => {
-        // alert('Магазин создан')
-
+    const onSubmit: SubmitHandler<any> = (data: CreateShop) => {
         addNewShop(data).then((res: any) => {
-            console.log(data)
-            // setOpen(false)
-
-            formControl.setValue('name', '')
-            formControl.setValue('address', '')
-            formControl.setValue('phone', '')
-            formControl.setValue('secret', '')
-            formControl.setValue('storageId', '')
-            // formControl.setValue('isShopWorking', '')
-
+            formControl.reset()
+            getShops()
             enqueueSnackbar('Магазин создан', {variant: 'success', autoHideDuration: 3000})
         }).catch((error: any) => {
             let message = error(error.response.data.errorDescription).toString()
@@ -68,6 +58,7 @@ export const CreateShopModal = () => {
         >
             <div className={s.shopStoreModal_mainBlock}>
                 <div className={s.shopStoreModal_shops}>
+                    <div className={s.shopStoreModal_shopList}>
                     {shops.map(shop => (
                         <div className={s.shop_item} key={shop.id}>
                             <div>ID: {shop.id}</div>
@@ -78,6 +69,7 @@ export const CreateShopModal = () => {
                             <div>Активен: {shop.enabled ? 'Да' : 'Нет'}</div>
                         </div>
                     ))}
+                    </div>
                 </div>
 
                 <div className={s.shopStoreModal_createBlock}>

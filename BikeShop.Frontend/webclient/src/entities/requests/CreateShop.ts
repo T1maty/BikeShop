@@ -12,11 +12,3 @@ export interface UpdateShop extends CreateShop {
     cashboxCash: number
     cashboxTerminal: number
 }
-
-export interface CreateShopSubmit {
-    name: string
-    address: string
-    phone: string
-    storageId: number
-    isShopWorking: boolean
-}
