@@ -11,6 +11,7 @@ namespace BikeShop.Service.Application.DTO
 {
     public class ServiceProductDTO : IMappable
     {
+        public int ProductId { get; set; }
         public string CatalogKey { get; set; } = string.Empty;
         public string SerialNumber { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;

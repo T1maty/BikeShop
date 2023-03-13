@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <Folder Include="CQRS" />
+      <Folder Include="DTO\UpdateService\" />
     </ItemGroup>
 
     <ItemGroup>

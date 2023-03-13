@@ -61,6 +61,7 @@ export type ServiceItemProductWork = {
 }
 
 export type ServiceItemProduct = ServiceItemProductWork & {
+    productId: number
     catalogKey: string
     serialNumber: string
     quantityUnitId: number
@@ -68,6 +69,7 @@ export type ServiceItemProduct = ServiceItemProductWork & {
 }
 
 export type ServiceItemWork = ServiceItemProductWork & {
+    workId: number
     description: string
 
 }

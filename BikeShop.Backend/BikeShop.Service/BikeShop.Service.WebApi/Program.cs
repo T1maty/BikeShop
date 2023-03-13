@@ -31,6 +31,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddRefitClient<IIdentityClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Identity"]));
 
+builder.Services.AddRefitClient<IProductsClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
+
 // Регистрация конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>
 {

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BikeShop.Service.Application.Common.Exceptions;
 using BikeShop.Service.Application.DTO;
-using BikeShop.Service.Application.DTO.UpdateService;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
 using BikeShop.Service.Domain.Entities;
@@ -18,12 +17,14 @@ public class ServiceService : IServiceService
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IIdentityClient _identityClient;
+    private readonly IProductsClient _productsClient;
 
-    public ServiceService(IApplicationDbContext context, IMapper mapper, IIdentityClient identityClient)
+    public ServiceService(IApplicationDbContext context, IMapper mapper, IIdentityClient identityClient, IProductsClient productsClient)
     {
         _context = context;
         _mapper = mapper;
         _identityClient = identityClient;
+        _productsClient = productsClient;
     }
 
     public async Task<GetServiceDTO> CreateService(CreateServiceModel model, CancellationToken cancellationToken)
@@ -32,8 +33,8 @@ public class ServiceService : IServiceService
 
         service.ClientId = model.Client.Id;
 
-        var serviceWorks = _mapper.ProjectTo<ServiceWorkModel>(model.ServiceWorks.AsQueryable()).ToList();
-        var serviceProducts = _mapper.ProjectTo<ServiceProductModel>(model.ServiceProducts.AsQueryable()).ToList();
+        var serviceWorks = _mapper.ProjectTo<ServiceWork>(model.ServiceWorks.AsQueryable()).ToList();
+        var serviceProducts = _mapper.ProjectTo<ServiceProduct>(model.ServiceProducts.AsQueryable()).ToList();
 
         await _context.Services.AddAsync(service);
         await _context.SaveChangesAsync(cancellationToken);
@@ -134,7 +135,7 @@ public class ServiceService : IServiceService
         return servicesModel;
     }
 
-    public async Task Update(UpdateServiceDTO dto)
+    public async Task Update(UpdateServiceDTO dto, int storageId)
     {
         var serviceCont = await _context.Services.FindAsync(dto.Id);
 
@@ -146,8 +147,11 @@ public class ServiceService : IServiceService
         serviceCont.ProductDiscountId = dto.ProductDiscountId;
         serviceCont.WorkDiscountId = dto.WorkDiscountId;
 
-        var serviceWorks = _mapper.ProjectTo<ServiceWorkModel>(dto.ServiceWorks.AsQueryable()).ToList();
-        var serviceProducts = _mapper.ProjectTo<ServiceProductModel>(dto.ServiceProducts.AsQueryable()).ToList();
+        var serviceWorks = _mapper.ProjectTo<ServiceWork>(dto.ServiceWorks.AsQueryable()).ToList();
+        var serviceProducts = _mapper.ProjectTo<ServiceProduct>(dto.ServiceProducts.AsQueryable()).ToList();
+
+        var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToListAsync();
+        await UpdateReservation(oldServiceProducts, serviceProducts, storageId);
 
         _context.ServiceWorks.RemoveRange(_context.ServiceWorks.Where(n => n.ServiceId == dto.Id));
         _context.ServiceProducts.RemoveRange(_context.ServiceProducts.Where(n => n.ServiceId == dto.Id));
@@ -173,5 +177,10 @@ public class ServiceService : IServiceService
         {
             throw new NotFoundException($"Status {status} not found");
         }
+    }
+
+    private async Task UpdateReservation(List<ServiceProduct> OldProducts, List<ServiceProduct> NewProducts, int storageId)
+    {
+        _productsClient.UpdateReservationProducts();
     }
 }
