@@ -1,6 +1,7 @@
-import React, {ReactNode} from 'react'
+import React, {ReactNode, ChangeEvent} from 'react'
 import s from './ProductsWrapper.module.scss'
 import {Button} from '../../../shared/ui'
+import UploadIcon from '../../../shared/assets/workspace/upload-file-icon.svg'
 
 type ProductsWrapperProps = {
     title: string
@@ -10,6 +11,13 @@ type ProductsWrapperProps = {
 
 export const ProductsWrapper: React.FC<ProductsWrapperProps> = ({title, isUploadFile, children}) => {
 
+    const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length) {
+            const file = e.target.files[0]
+            console.log('file: ', file)
+        }
+    }
+
     return (
         <div className={s.arrivalOfProducts_mainBlock}>
             <div className={s.arrivalOfProducts_leftSide}>
@@ -17,7 +25,7 @@ export const ProductsWrapper: React.FC<ProductsWrapperProps> = ({title, isUpload
                 {
                     isUploadFile ?
                     <div className={s.leftSide_uploadFile}>
-                        <input type="file"/>
+                        <input type='file' id='file' onChange={uploadHandler} className={s.inputFile}/>
                     </div>
                         : ''
                 }
