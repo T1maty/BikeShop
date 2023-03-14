@@ -103,4 +103,11 @@ public class ShopController : ControllerBase
         }
         
     }
+
+    [HttpGet("getstorageid")]
+    public async Task<int> GetStorageId(int ShopId)
+    {
+        return await _getAllServices.GetStorageId(ShopId);
+
+    }
 }

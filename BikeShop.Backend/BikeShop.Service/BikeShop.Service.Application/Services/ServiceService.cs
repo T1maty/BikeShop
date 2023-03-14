@@ -19,16 +19,18 @@ public class ServiceService : IServiceService
     private readonly IMapper _mapper;
     private readonly IIdentityClient _identityClient;
     private readonly IProductsClient _productsClient;
+    private readonly IShopClient _shopClient;
 
-    public ServiceService(IApplicationDbContext context, IMapper mapper, IIdentityClient identityClient, IProductsClient productsClient)
+    public ServiceService(IApplicationDbContext context, IMapper mapper, IIdentityClient identityClient, IProductsClient productsClient, IShopClient shopClient)
     {
         _context = context;
         _mapper = mapper;
         _identityClient = identityClient;
         _productsClient = productsClient;
+        _shopClient = shopClient;
     }
 
-    public async Task<GetServiceDTO> CreateService(CreateServiceModel model, int storageId)
+    public async Task<GetServiceDTO> CreateService(CreateServiceModel model)
     {
         var service = _mapper.Map<Domain.Entities.Service>(model);
 
@@ -37,7 +39,7 @@ public class ServiceService : IServiceService
         var serviceWorks = _mapper.ProjectTo<ServiceWork>(model.ServiceWorks.AsQueryable()).ToList();
         var serviceProducts = _mapper.ProjectTo<ServiceProduct>(model.ServiceProducts.AsQueryable()).ToList();
 
-        await UpdateReservation(new List<ServiceProduct>(), serviceProducts, storageId);
+        await UpdateReservation(new List<ServiceProduct>(), serviceProducts, await _shopClient.GetStorageId(model.ShopId));
 
         await _context.Services.AddAsync(service);
         await _context.SaveChangesAsync(new CancellationToken());
@@ -138,7 +140,7 @@ public class ServiceService : IServiceService
         return servicesModel;
     }
 
-    public async Task Update(UpdateServiceDTO dto, int storageId)
+    public async Task Update(UpdateServiceDTO dto)
     {
         var serviceCont = await _context.Services.FindAsync(dto.Id);
 
@@ -154,7 +156,7 @@ public class ServiceService : IServiceService
         var serviceProducts = _mapper.ProjectTo<ServiceProduct>(dto.ServiceProducts.AsQueryable()).ToList();
 
         var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToListAsync();
-        await UpdateReservation(oldServiceProducts, serviceProducts, storageId);
+        await UpdateReservation(oldServiceProducts, serviceProducts, await _shopClient.GetStorageId(serviceCont.ShopId));
 
         _context.ServiceWorks.RemoveRange(_context.ServiceWorks.Where(n => n.ServiceId == dto.Id));
         _context.ServiceProducts.RemoveRange(_context.ServiceProducts.Where(n => n.ServiceId == dto.Id));

@@ -27,6 +27,15 @@ public class GetAllService : IGetAllServices
         return dto;
     }
 
+    public async Task<int> GetStorageId(int ShopId)
+    {
+        var ent = await _context.Shops.FindAsync(ShopId);
+        if (ent == null)
+            return 0;
+        else
+        return ent.StorageId;
+    }
+
     public async Task<bool> Login(LoginDTO dto)
     {
         var shop = await _context.Shops.FindAsync(dto.ShopId);
