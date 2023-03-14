@@ -130,5 +130,35 @@ namespace BikeShop.Products.Application.Services
             return new StorageProductsDTO { Storage = storage, AvailableProducts = productQuantityDTOAvailable, ReservedProducts = productQuantityDTOReserved };
 
         }
+
+        public async Task UpdateReservationProducts(List<ProductQuantitySmplDTO> OldReservationProducts, List<ProductQuantitySmplDTO> NewReservationProducts, int storageId)
+        {
+            var Reservation = await _context.ProductReservations.Where(n => n.StorageId == storageId).ToDictionaryAsync(n=>n.ProductId, n=>n);
+            var quantitySum = new Dictionary<int, decimal>();
+            var reservationToAdd = new List<ProductReservation>();
+
+            if(OldReservationProducts != null)
+            foreach (var product in OldReservationProducts)
+            {
+                if(quantitySum.ContainsKey(product.ProductId)) { quantitySum[product.ProductId] -= product.Quantity; }
+                else { quantitySum.Add(product.ProductId, product.Quantity * -1);}
+            }
+
+            if (NewReservationProducts != null)
+                foreach (var product in NewReservationProducts)
+            {
+                if (quantitySum.ContainsKey(product.ProductId)) { quantitySum[product.ProductId] += product.Quantity; }
+                else { quantitySum.Add(product.ProductId, product.Quantity); }
+            }
+            
+            foreach (var res in quantitySum) 
+            {
+                if (Reservation.ContainsKey(res.Key)) { Reservation[res.Key].Quantity += res.Value; Reservation[res.Key].UpdatedAt = DateTime.Now; }
+                else { reservationToAdd.Add(new ProductReservation { Quantity = res.Value, ProductId = res.Key, StorageId = storageId }); }
+            }
+
+            await _context.ProductReservations.AddRangeAsync(reservationToAdd);
+            await _context.SaveChangesAsync(new CancellationToken());
+        }
     }
 }

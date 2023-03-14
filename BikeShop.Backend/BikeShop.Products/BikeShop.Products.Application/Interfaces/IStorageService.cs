@@ -14,5 +14,7 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<StorageProductsDTO> GetByStorage(int storageId);
 
         public Task AddProductsToStorage(List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId);
+
+        public Task UpdateReservationProducts(List<ProductQuantitySmplDTO> OldReservationProducts, List<ProductQuantitySmplDTO> NewReservationProducts, int storageId);
     }
 }

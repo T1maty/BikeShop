@@ -2,6 +2,7 @@
 using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace BikeShop.Products.WebApi.Controllers
 {
@@ -33,6 +34,12 @@ namespace BikeShop.Products.WebApi.Controllers
         public async Task AddProductsToStorage([FromBody] List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId)
         {
             await _storageService.AddProductsToStorage(products,storageId,source,sourceId);
+        }
+
+        [HttpPost("updatereservation")]
+        public async Task UpdateReservationProducts([FromBody] UpdateReservationProductsDTO dto, int storageId)
+        {
+            await _storageService.UpdateReservationProducts(dto.OldReservationProducts, dto.NewReservationProducts, storageId);
         }
 
     }
