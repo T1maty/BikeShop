@@ -96,21 +96,6 @@
       "SwaggerKey": "products"
     },
 	{
-      "UpstreamPathTemplate": "/api/storage/updatereservationproducts",
-      "UpstreamHttpMethod": [
-        "Post"
-      ],
-      "DownstreamPathTemplate": "/storage/updatereservationproducts",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "bikeshop.products",
-          "Port": 80
-        }
-      ],
-      "SwaggerKey": "products"
-    },
-	{
       "UpstreamPathTemplate": "/api/storagecrud/getall",
       "UpstreamHttpMethod": [
         "Get"
@@ -162,6 +147,22 @@
         "Post"
       ],
       "DownstreamPathTemplate": "/storage/addproductstostorage",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	
+	{
+      "UpstreamPathTemplate": "/api/storage/updatereservationproducts",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/storage/updatereservationproducts",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
