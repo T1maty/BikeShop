@@ -10,7 +10,7 @@ namespace BikeShop.Service.Application.RefitClients
 {
     public interface IProductsClient
     {
-        [Post("/storage/updatereservationproducts")]
+        [Post("/storage/updatereservation")]
         public Task UpdateReservationProducts(UpdateReservationProductsDTO dto, int storageId);
     }
 }

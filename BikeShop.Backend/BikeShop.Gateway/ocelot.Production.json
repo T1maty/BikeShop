@@ -158,11 +158,11 @@
     },
 	
 	{
-      "UpstreamPathTemplate": "/api/storage/updatereservationproducts",
+      "UpstreamPathTemplate": "/api/storage/updatereservation",
       "UpstreamHttpMethod": [
         "Post"
       ],
-      "DownstreamPathTemplate": "/storage/updatereservationproducts",
+      "DownstreamPathTemplate": "/storage/updatereservation",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
