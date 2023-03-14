@@ -5,6 +5,7 @@ using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.Domain.Enums;
+using BikeShop.Service.Domain.RefitDTO;
 using BikeShop.Service.WebApi.Models.Service;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -27,17 +28,19 @@ public class ServiceService : IServiceService
         _productsClient = productsClient;
     }
 
-    public async Task<GetServiceDTO> CreateService(CreateServiceModel model, CancellationToken cancellationToken)
+    public async Task<GetServiceDTO> CreateService(CreateServiceModel model, int storageId)
     {
-        var service = _mapper.Map<CreateServiceDTO>(model);
+        var service = _mapper.Map<Domain.Entities.Service>(model);
 
         service.ClientId = model.Client.Id;
 
         var serviceWorks = _mapper.ProjectTo<ServiceWork>(model.ServiceWorks.AsQueryable()).ToList();
         var serviceProducts = _mapper.ProjectTo<ServiceProduct>(model.ServiceProducts.AsQueryable()).ToList();
 
+        await UpdateReservation(new List<ServiceProduct>(), serviceProducts, storageId);
+
         await _context.Services.AddAsync(service);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(new CancellationToken());
 
         serviceWorks.ForEach(n => n.ServiceId = service.Id);
         serviceProducts.ForEach(n => n.ServiceId = service.Id);
@@ -45,7 +48,7 @@ public class ServiceService : IServiceService
         await _context.ServiceWorks.AddRangeAsync(serviceWorks);
         await _context.ServiceProducts.AddRangeAsync(serviceProducts);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(new CancellationToken());
 
         var r = await GetServiceById(service.Id);
 
@@ -181,6 +184,9 @@ public class ServiceService : IServiceService
 
     private async Task UpdateReservation(List<ServiceProduct> OldProducts, List<ServiceProduct> NewProducts, int storageId)
     {
-        _productsClient.UpdateReservationProducts();
+        var data = new UpdateReservationProductsDTO();
+        data.OldReservationProducts = _mapper.ProjectTo<ProductQuantitySmplDTO>(OldProducts.AsQueryable()).ToList();
+        data.NewReservationProducts = _mapper.ProjectTo<ProductQuantitySmplDTO>(NewProducts.AsQueryable()).ToList();
+        await _productsClient.UpdateReservationProducts(data, storageId);
     }
 }

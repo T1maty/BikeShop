@@ -61,12 +61,12 @@ public class ServiceController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateService([FromBody] UpdateServiceDTO model)
+    public async Task<IActionResult> UpdateService([FromBody] UpdateServiceDTO model, int storageId)
     {
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
-        await _serviceService.Update(model);
+        await _serviceService.Update(model, storageId);
 
         return Ok();
     }
@@ -100,10 +100,10 @@ public class ServiceController : ControllerBase
     }
     
     [HttpPost("create")]
-    public async Task<GetServiceDTO> Create([FromBody] CreateServiceModel model)
+    public async Task<GetServiceDTO> Create([FromBody] CreateServiceModel model, int storageId)
     {
 
-        return await _serviceService.CreateService(model, new CancellationTokenSource().Token);
+        return await _serviceService.CreateService(model, storageId);
     }
 
     [HttpGet("getbyid")]

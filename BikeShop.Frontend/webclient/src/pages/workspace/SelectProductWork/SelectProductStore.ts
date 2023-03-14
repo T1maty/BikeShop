@@ -15,7 +15,8 @@ const useSelectProduct = create<selectProductStore>()(persist(devtools(immer((se
 
 
         let newProduct: ServiceItemProduct = {
-            id: product.product.id,
+            id: 0,
+            productId: product.product.id,
             createdAt: product.product.createdAt,
             updatedAt: product.product.updatedAt,
             enabled: product.product.enabled,
