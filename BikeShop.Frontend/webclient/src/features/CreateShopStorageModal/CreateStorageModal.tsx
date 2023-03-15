@@ -22,6 +22,15 @@ export const CreateStorageModal = () => {
     const addNewStorage = useCreateStorageModal(s => s.addNewStorage)
     const updateStorageInfo = useCreateStorageModal(s => s.updateStorageInfo)
 
+    // для тестирования вёрстки
+    // const storages = [
+    //     {id: 1, name: '1', supplyDelay: true, enabled: true},
+    //     {id: 2, name: '2', supplyDelay: true, enabled: false},
+    //     {id: 3, name: '3', supplyDelay: false, enabled: true},
+    //     {id: 4, name: '4', supplyDelay: true, enabled: false},
+    //     {id: 5, name: '5', supplyDelay: false, enabled: true},
+    // ]
+
     const formControl = useForm<UpdateStorage>({
         defaultValues: {
             id: 0,
