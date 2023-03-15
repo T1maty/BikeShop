@@ -24,6 +24,14 @@ public interface IApplicationDbContext
     DbSet<QuantityUnitGroup> QuantityUnitGroup { get; set; }
     DbSet<PriceHistory> PriceHistories { get; set; }
 
+    DbSet<ProductSpecification> ProductSpecifications { get; set; }
+    DbSet<Specification> Specifications { get; set; }
+
+    DbSet<Option> Options { get; set; }
+    DbSet<OptionVariant> OptionVariants { get; set; }
+    DbSet<ProductOptionVariantBind> ProductOptionVariantBinds { get; set; }
+
+
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

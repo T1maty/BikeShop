@@ -1,0 +1,18 @@
+﻿using BikeShop.Products.Domain.DTO.Responses;
+using BikeShop.Products.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BikeShop.Products.Application.Interfaces
+{
+    public interface IPublicService
+    {
+        public Task<List<ProductTag>> GetTags();
+        public Task<List<ProductCardDTO>> DefaultProducts(int Quantity);
+        public Task Serch();
+        public Task<List<ProductCardDTO>> GetProducts(List<int> ids);
+    }
+}

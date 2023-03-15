@@ -23,6 +23,13 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<QuantityUnitGroup> QuantityUnitGroup { get; set; }
     public DbSet<PriceHistory> PriceHistories { get; set; }
 
+    public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+    public DbSet<Specification> Specifications { get; set; }
+
+    public DbSet<Option> Options { get; set; }
+    public DbSet<OptionVariant> OptionVariants { get; set; }
+    public DbSet<ProductOptionVariantBind> ProductOptionVariantBinds { get; set; }
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         // Позволяет не конвертировать время в UTC для postgresql

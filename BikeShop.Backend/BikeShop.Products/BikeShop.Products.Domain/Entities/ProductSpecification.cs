@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Products.Domain.Entities
 {
-    public class ProductCard : BaseEntity
+    public class ProductSpecification : BaseEntity
     {
         public int ProductId { get; set; }
-        public string ImgCompressed { get; set; }
-        public string DescriptionShort { get; set; }
+        public int SpecificationId { get; set; }
+        public int SortOrder { get; set; }
         public string Description { get; set; }
+        public string Name { get; set; }
     }
 }
