@@ -1,13 +1,12 @@
 import {useSnackbar} from 'notistack';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Modal} from '@mui/material';
 import s from './CreateShopStorageModal.module.scss';
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
 import {Errors} from '../../entities/errors/workspaceErrors';
 import useCreateShopModal from './CreateShopModalStore';
-import {CreateShop, IUser, UpdateShop} from '../../entities';
-import useAuth from '../../entities/globalStores/useAuthUser';
+import {CreateShop, UpdateShop} from '../../entities';
 
 export const CreateShopModal = () => {
 
