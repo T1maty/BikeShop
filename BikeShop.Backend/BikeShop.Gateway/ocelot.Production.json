@@ -172,6 +172,38 @@
       ],
       "SwaggerKey": "products"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/public/gettags",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/public/gettags",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	
+	{
+      "UpstreamPathTemplate": "/api/public/defaultproducts",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/public/defaultproducts",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
 
     {
       "UpstreamPathTemplate": "/api/tag/getall",

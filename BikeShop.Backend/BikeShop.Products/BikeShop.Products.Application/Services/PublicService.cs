@@ -1,6 +1,7 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
+using BikeShop.Products.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace BikeShop.Products.Application.Services
             
             var products = await _context.Products.Where(n => n.Enabled == true)
                                                   .Where(n=>n.RetailVisibility == true)
+                                                  .Where(n=>n.CheckStatus != ProductCheckStatus.Get(ProductCheckStatusEnum.JustCreatedByScript))
                                                   .Take(Quantity)
                                                   .ToListAsync();
             return await getCards(products);
