@@ -21,7 +21,7 @@ public interface IApplicationDbContext
     DbSet<ProductReservation> ProductReservations { get; set; }
     DbSet<ProductSerialNumber> ProductSerialNumbers { get; set; }
     DbSet<QuantityUnit> QuantityUnits { get; set; }
-    DbSet<QuantityUnitGroup> QuantityUnitGroup { get; set; }
+    DbSet<QuantityUnitGroup> QuantityUnitGroups { get; set; }
     DbSet<PriceHistory> PriceHistories { get; set; }
 
     DbSet<ProductSpecification> ProductSpecifications { get; set; }

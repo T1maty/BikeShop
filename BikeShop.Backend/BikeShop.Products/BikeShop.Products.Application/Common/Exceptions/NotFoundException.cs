@@ -6,7 +6,7 @@ public sealed class NotFoundException : Exception, IException
     public string ErrorDescription { get; set; }
     public string? ReasonField { get; set; }
 
-    public NotFoundException(string message) : base(message)
+    public NotFoundException(string message = "") : base(message)
     {
     }
 }

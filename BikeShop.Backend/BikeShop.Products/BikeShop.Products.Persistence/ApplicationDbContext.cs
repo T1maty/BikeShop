@@ -20,7 +20,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ProductReservation> ProductReservations { get; set; }
     public DbSet<ProductSerialNumber> ProductSerialNumbers { get; set; }
     public DbSet<QuantityUnit> QuantityUnits { get; set; }
-    public DbSet<QuantityUnitGroup> QuantityUnitGroup { get; set; }
+    public DbSet<QuantityUnitGroup> QuantityUnitGroups { get; set; }
     public DbSet<PriceHistory> PriceHistories { get; set; }
 
     public DbSet<ProductSpecification> ProductSpecifications { get; set; }
