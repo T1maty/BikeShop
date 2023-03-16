@@ -9,12 +9,12 @@ namespace BikeShop.Products.Domain.Enums
     public enum ProductCheckStatusEnum
     {
         JustCreatedByUser,
-JustCreatedByScript,
-PartialyFilledByUser,
-PartialyFilledByScript,
-FilledByUser,
-FilledByScript,
-Confirmed
+        JustCreatedByScript,
+        PartialyFilledByUser,
+        PartialyFilledByScript,
+        FilledByUser,
+        FilledByScript,
+        Confirmed
     }
 
 
@@ -50,3 +50,4 @@ Confirmed
             return b.Where(n => n.Value == value).First().Key;
         }
     }
+}
