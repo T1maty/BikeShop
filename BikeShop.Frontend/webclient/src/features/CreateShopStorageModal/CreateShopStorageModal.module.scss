@@ -17,7 +17,7 @@
             @include divSmallMarginBottom;
             padding-right: $defaultSmallMargin;
             overflow-y: auto;
-            max-height: 500px;
+            max-height: 550px;
 
             .shop_item {
                 @include divSmallMarginBottom;
@@ -65,13 +65,14 @@
                 background-color: $themeColorGray;
                 padding: $defaultLargeMargin;
                 border-radius: $smallBorderRadius;
-
                 @include divSmallMarginBottom;
 
+                .infoBlock_input {
+                    //
+                }
                 .infoBlock_checkbox {
-                    @include flexColumn;
-                    width: 100%;
-                    padding: $defaultSmallMargin;
+                    @include flexCenter;
+                    height: 50px;
                     border: 2px solid $themeColorMilk;
                     border-radius: $smallBorderRadius;
                 }

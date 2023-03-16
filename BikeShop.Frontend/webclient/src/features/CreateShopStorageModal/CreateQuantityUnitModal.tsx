@@ -23,9 +23,9 @@ export const CreateQuantityUnitModal = () => {
 
     // для тестирования вёрстки
     const quantityUnits = [
-        {id: 1, name: 'Рубль', fullName: 'RU', coefficient: 1, isDefault: true, isConvert: true, enabled: true },
-        {id: 2, name: 'Рубль', fullName: 'RU', coefficient: 1, isDefault: true, isConvert: true, enabled: true },
-        {id: 3, name: 'Рубль', fullName: 'RU', coefficient: 1, isDefault: true, isConvert: true, enabled: true },
+        {id: 1, name: 'Рубль', fullName: 'RU', coefficient: 1, isDefault: true, isDivide: true, isConvert: true, enabled: true },
+        {id: 2, name: 'Рубль', fullName: 'RU', coefficient: 1, isDefault: true, isDivide: true, isConvert: true, enabled: true },
+        {id: 3, name: 'Рубль', fullName: 'RU', coefficient: 1, isDefault: true, isDivide: true, isConvert: true, enabled: true },
     ]
 
     const formControl = useForm<any>({
@@ -35,6 +35,7 @@ export const CreateQuantityUnitModal = () => {
             fullName: '',
             coefficient: 1,
             isDefault: true,
+            isDivide: true,
             isConvert: true,
             enabled: true,
         }
@@ -70,9 +71,11 @@ export const CreateQuantityUnitModal = () => {
         formControl.reset()
         formControl.setValue('id', currentQuantityUnit ? currentQuantityUnit.id : 0)
         formControl.setValue('name', currentQuantityUnit ? currentQuantityUnit.name : '')
-        formControl.setValue('symbol', currentQuantityUnit ? currentQuantityUnit.symbol : '')
+        formControl.setValue('fullName', currentQuantityUnit ? currentQuantityUnit.fullName : '')
         formControl.setValue('coefficient', currentQuantityUnit ? currentQuantityUnit.coefficient : 1)
-        formControl.setValue('baseCurrency', currentQuantityUnit ? currentQuantityUnit.baseCurrency : true)
+        formControl.setValue('isDefault', currentQuantityUnit ? currentQuantityUnit.isDefault : true)
+        formControl.setValue('isDivide', currentQuantityUnit ? currentQuantityUnit.isDivide : true)
+        formControl.setValue('isConvert', currentQuantityUnit ? currentQuantityUnit.isConvert : true)
         formControl.setValue('enabled', currentQuantityUnit ? currentQuantityUnit.enabled : true)
     }, [currentQuantityUnit])
 
@@ -103,6 +106,7 @@ export const CreateQuantityUnitModal = () => {
                                 <div><span>Полное название:</span> {qu.fullName}</div>
                                 <div><span>Коэффициент:</span> {qu.coefficient}</div>
                                 <div><span>По умолчанию:</span> {qu.isDefault ? 'Да' : 'Нет'}</div>
+                                <div><span>Делимость:</span> {qu.isDivide ? 'Да' : 'Нет'}</div>
                                 <div><span>Конвертируемость:</span> {qu.isConvert ? 'Да' : 'Нет'}</div>
                                 <div><span>Включена:</span> {qu.enabled ? 'Да' : 'Нет'}</div>
                             </div>
@@ -130,6 +134,11 @@ export const CreateQuantityUnitModal = () => {
                             />
                             <ControlledCheckbox name={'isDefault'}
                                                 label={'По умолчанию'}
+                                                control={formControl}
+                                                divClassName={s.infoBlock_checkbox}
+                            />
+                            <ControlledCheckbox name={'isDivide'}
+                                                label={'Делимость'}
                                                 control={formControl}
                                                 divClassName={s.infoBlock_checkbox}
                             />
