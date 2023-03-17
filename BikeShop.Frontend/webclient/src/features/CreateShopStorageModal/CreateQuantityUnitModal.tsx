@@ -2,7 +2,7 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import React, {useEffect, useState} from 'react'
 import {Modal} from '@mui/material'
-import s from './CreateShopStorageModal.module.scss'
+import s from './CreateQuantityUnitModal.module.scss'
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui'
 import {Errors} from '../../entities/errors/workspaceErrors'
 import useCreateQuantityUnitModal from "./CreateQuantityUnitModalStore";

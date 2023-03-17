@@ -145,3 +145,102 @@
         margin-bottom: $defaultExtraLargeMargin;
     }
 }
+
+// CreateShopStorageModal
+@mixin createShopStorageModal($itemsColumnHeight, $columnWidth2, $columnWidth3) {
+    .shopStorageModal_shops {
+        background-color: $themeColorMilk;
+        padding: $defaultLargeMargin;
+        border-radius: $smallBorderRadius;
+        width: $columnWidth2; // высота колонки со скроллом
+
+        // вторая колонка
+        .shopStorageModal_shopList {
+            @include divSmallMarginBottom;
+            padding-right: $defaultSmallMargin;
+            overflow-y: auto;
+            max-height: $itemsColumnHeight; // высота колонки с элементами
+
+            .shop_item {
+                @include divSmallMarginBottom;
+                border-radius: $smallBorderRadius;
+                border: 1px solid white;
+                padding: 10px;
+                color: black;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: $themeColorDark;
+                    color: white;
+                }
+
+                > div {
+                    span {
+                        font-weight: bold;
+                    }
+                }
+            }
+            .shop_item_active {
+                @include divSmallMarginBottom;
+                border-radius: $smallBorderRadius;
+                background-color: $themeColorDark;
+                border: 1px solid white;
+                padding: 10px;
+                color: white;
+
+                > div {
+                    span {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+
+    // третья колонка
+    .shopStorageModal_createBlock {
+        width: $columnWidth3; // высота колонки с формами
+
+        form {
+            @include divLargeMarginBottom;
+
+            .shopStorageModal_inputFields {
+                background-color: $themeColorGray;
+                padding: $defaultLargeMargin;
+                border-radius: $smallBorderRadius;
+                @include divSmallMarginBottom;
+
+                .infoBlock_input {
+                    //
+                }
+                .infoBlock_checkbox {
+                    @include flexCenter;
+                    height: 50px;
+                    border: 2px solid $themeColorMilk;
+                    border-radius: $smallBorderRadius;
+                }
+                .infoBlock_cancelBtn {
+                    display: flex;
+                    gap: $defaultLargeMargin;
+
+                    button {
+                        @include defaultMediumButton;
+                    }
+                }
+            }
+
+            .footer_buttons {
+                @include flexOnlyBetween;
+                gap: $defaultLargeMargin;
+
+                > div {
+                    width: 100%;
+                }
+                button {
+                    padding: 20px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
