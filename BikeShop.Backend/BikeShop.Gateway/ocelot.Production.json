@@ -3,6 +3,26 @@
     "BaseUrl": "http://bikeshop.gateway:80"
   },
   "Routes": [
+
+    {
+      "UpstreamPathTemplate": "/api/image/avatar",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/image/avatar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.fileservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "fileservice"
+    },
+
+
+
+
     {
       "UpstreamPathTemplate": "/api/product/getbytags/{tagsIds}",
       "UpstreamHttpMethod": [
@@ -79,8 +99,8 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	{
+
+    {
       "UpstreamPathTemplate": "/api/storage/getbystorage",
       "UpstreamHttpMethod": [
         "Get"
@@ -95,7 +115,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/storagecrud/getall",
       "UpstreamHttpMethod": [
         "Get"
@@ -110,7 +130,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/storagecrud/create",
       "UpstreamHttpMethod": [
         "Post"
@@ -125,7 +145,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/storagecrud/update",
       "UpstreamHttpMethod": [
         "Post"
@@ -140,8 +160,8 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	{
+
+    {
       "UpstreamPathTemplate": "/api/storage/addproductstostorage",
       "UpstreamHttpMethod": [
         "Post"
@@ -156,8 +176,8 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	{
+
+    {
       "UpstreamPathTemplate": "/api/storage/updatereservation",
       "UpstreamHttpMethod": [
         "Post"
@@ -172,8 +192,8 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	{
+
+    {
       "UpstreamPathTemplate": "/api/public/gettags",
       "UpstreamHttpMethod": [
         "Get"
@@ -188,8 +208,8 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	{
+
+    {
       "UpstreamPathTemplate": "/api/public/defaultproducts",
       "UpstreamHttpMethod": [
         "Get"
@@ -250,11 +270,11 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	
-	
-	
-	{
+
+
+
+
+    {
       "UpstreamPathTemplate": "/api/quantityunit/getall",
       "UpstreamHttpMethod": [
         "Get"
@@ -269,7 +289,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/quantityunit/create",
       "UpstreamHttpMethod": [
         "Post"
@@ -284,7 +304,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/quantityunit/update",
       "UpstreamHttpMethod": [
         "Put"
@@ -299,7 +319,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/quantityunit/getallgroups",
       "UpstreamHttpMethod": [
         "Get"
@@ -314,7 +334,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/quantityunit/creatgroup",
       "UpstreamHttpMethod": [
         "Post"
@@ -329,7 +349,7 @@
       ],
       "SwaggerKey": "products"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/quantityunit/updategroup",
       "UpstreamHttpMethod": [
         "Put"
@@ -344,8 +364,8 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	
+
+
 
     {
       "UpstreamPathTemplate": "/api/group/getbyshopid/{id}",
@@ -637,8 +657,8 @@
       ],
       "SwaggerKey": "identity"
     },
-	
-	 {
+
+    {
       "UpstreamPathTemplate": "/api/user/changeshop",
       "UpstreamHttpMethod": [
         "post"
@@ -653,8 +673,8 @@
       ],
       "SwaggerKey": "identity"
     },
-	
-	{
+
+    {
       "UpstreamPathTemplate": "/api/user/getdictionary",
       "UpstreamHttpMethod": [
         "post"
@@ -746,7 +766,7 @@
       ],
       "SwaggerKey": "shop"
     },
-	{
+    {
       "UpstreamPathTemplate": "/api/shop/getstorageid",
       "UpstreamHttpMethod": [
         "Get"
