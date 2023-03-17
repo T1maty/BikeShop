@@ -1,12 +1,12 @@
-import {useSnackbar} from 'notistack';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import React, {useEffect, useState} from 'react';
-import {Modal} from '@mui/material';
-import s from './CreateStorageModal.module.scss';
-import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
-import {Errors} from '../../entities/errors/workspaceErrors';
-import useCreateStorageModal from './CreateStorageModalStore';
-import {UpdateStorage} from '../../entities/requests/CreateStorage';
+import React, {useEffect} from 'react'
+import {useSnackbar} from 'notistack'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {Modal} from '@mui/material'
+import s from './CreateStorageModal.module.scss'
+import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui'
+import {Errors} from '../../entities/errors/workspaceErrors'
+import useCreateStorageModal from './CreateStorageModalStore'
+import {UpdateStorage} from '../../entities/requests/CreateStorage'
 
 export const CreateStorageModal = () => {
 
@@ -21,15 +21,6 @@ export const CreateStorageModal = () => {
     const getStorages = useCreateStorageModal(s => s.getStorages)
     const addNewStorage = useCreateStorageModal(s => s.addNewStorage)
     const updateStorageInfo = useCreateStorageModal(s => s.updateStorageInfo)
-
-    // для тестирования вёрстки
-    // const storages = [
-    //     {id: 1, name: '1', supplyDelay: true, enabled: true},
-    //     {id: 2, name: '2', supplyDelay: true, enabled: false},
-    //     {id: 3, name: '3', supplyDelay: false, enabled: true},
-    //     {id: 4, name: '4', supplyDelay: true, enabled: false},
-    //     {id: 5, name: '5', supplyDelay: false, enabled: true},
-    // ]
 
     const formControl = useForm<UpdateStorage>({
         defaultValues: {

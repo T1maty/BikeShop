@@ -1,8 +1,9 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {$api} from "../../shared";
-import {AxiosResponse} from "axios";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {$api} from "../../shared"
+import {AxiosResponse} from "axios"
+import {GetQuantityUnitResponse} from "../../entities"
 
 interface CreateQuantityUnitModalStore {
     openQuantityUnitModal: boolean
@@ -10,12 +11,13 @@ interface CreateQuantityUnitModalStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
 
-    currentQuantityUnit: any // CreateShopResponse | null
-    setCurrentQuantityUnit: (quantityUnit: any) => void
-    quantityUnits: any[]
-    // getShops: () => void
-    // addNewShop: (data: CreateShop) => any
-    // updateShopInfo: (updateData: UpdateShop) => any
+    quantityUnits: GetQuantityUnitResponse[]
+    currentQuantityUnit: GetQuantityUnitResponse | null
+    setCurrentQuantityUnit: (quantityUnit: GetQuantityUnitResponse | null) => void
+
+    getQuantityUnits: () => void
+    // addQuantityUnit: (data: any) => any
+    // updateQuantityUnit: (updateData: any) => any
 }
 
 const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -27,32 +29,32 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
     currentQuantityUnit: null,
     setCurrentQuantityUnit: (quantityUnit) => {set({currentQuantityUnit: quantityUnit})},
     quantityUnits: [],
-    // getShops: () => {
-    //     return $api.get<CreateShopResponse[]>('/shop/getall').then(res => {
-    //         set(state => {
-    //             state.shops = res.data
-    //             console.log('все магазины', state.shops)
-    //         })
-    //     }).catch((error: any) => {
-    //         console.log('магазины не получены')
-    //     })
-    // },
-    // addNewShop: (data) => {
-    //     return $api.post('/shop/create', data).then(res => {
+    getQuantityUnits: () => {
+        return $api.get<GetQuantityUnitResponse[]>('/quantityunit/getall').then(res => {
+            set(state => {
+                state.quantityUnits = res.data
+                console.log('все валюты', state.quantityUnits)
+            })
+        }).catch((error: any) => {
+            console.log('валюты не получены')
+        })
+    },
+    // addQuantityUnit: (data) => {
+    //     return $api.post('/quantityunit/create', data).then(res => {
     //         // set(state => {
-    //         //     state.shops.push(res.data)
+    //         //     state.quantityUnits.push(res.data)
     //         // })
     //     }).catch((error: any) => {
-    //         console.log('магазин не создан', error)
+    //         console.log('валюта не создана', error)
     //     })
     // },
-    // updateShopInfo: (updateData) => {
-    //     return $api.put('/shop/update', updateData).then(res => {
+    // updateQuantityUnit: (updateData) => {
+    //     return $api.put('/quantityunit/update', updateData).then(res => {
     //         // set(state => {
-    //         //     state.shops.push(res.data)
+    //         //     state.quantityUnits.push(res.data)
     //         // })
     //     }).catch((error: any) => {
-    //         console.log('магазин не обновлён', error)
+    //         console.log('валюта не обновлена', error)
     //     })
     // },
 })))/*, {

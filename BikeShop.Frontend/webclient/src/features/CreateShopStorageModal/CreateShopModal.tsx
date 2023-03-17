@@ -1,17 +1,16 @@
-import {useSnackbar} from 'notistack';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import React, {useEffect} from 'react';
-import {Modal} from '@mui/material';
-import s from './CreateShopModal.module.scss';
-import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui';
-import {Errors} from '../../entities/errors/workspaceErrors';
-import useCreateShopModal from './CreateShopModalStore';
-import {CreateShop, UpdateShop} from '../../entities';
+import React, {useEffect} from 'react'
+import {useSnackbar} from 'notistack'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {Modal} from '@mui/material'
+import s from './CreateShopModal.module.scss'
+import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui'
+import {Errors} from '../../entities/errors/workspaceErrors'
+import useCreateShopModal from './CreateShopModalStore'
+import {CreateShop, UpdateShop} from '../../entities'
 
 export const CreateShopModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
-    // const [isCreating, setIsCreating] = useState(false)
 
     const open = useCreateShopModal(s => s.createShopModal)
     const setOpen = useCreateShopModal(s => s.setOpenCreateShopModal)

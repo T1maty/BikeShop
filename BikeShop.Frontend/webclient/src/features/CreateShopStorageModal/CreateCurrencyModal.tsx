@@ -1,6 +1,6 @@
+import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import React, {useEffect, useState} from 'react'
 import {Modal} from '@mui/material'
 import s from './CreateCurrencyModal.module.scss'
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui'
