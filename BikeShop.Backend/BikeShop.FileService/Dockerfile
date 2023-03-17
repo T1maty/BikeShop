@@ -7,7 +7,7 @@ WORKDIR /src
 COPY ["BikeShop.FileService.Domain/BikeShop.FileService.Domain.csproj", "BikeShop.FileService.Domain/BikeShop.FileService.Domain.csproj"]
 COPY ["BikeShop.FileService.Application/BikeShop.FileService.Application.csproj", "BikeShop.FileService.Application/BikeShop.FileService.Application.csproj"]
 COPY ["BikeShop.FileService.Persistence/BikeShop.FileService.Persistence.csproj", "BikeShop.FileService.Persistence/BikeShop.FileService.Persistence.csproj"]
-COPY ["BikeShop.FileService.WebApi/BikeShop.FileService.Api.csproj", "BikeShop.FileService.WebApi/BikeShop.FileService.Api.csproj"]
+COPY ["BikeShop.FileService.Api/BikeShop.FileService.Api.csproj", "BikeShop.FileService.WebApi/BikeShop.FileService.Api.csproj"]
 
 COPY . .
 WORKDIR "/src/BikeShop.FileService.Api"
