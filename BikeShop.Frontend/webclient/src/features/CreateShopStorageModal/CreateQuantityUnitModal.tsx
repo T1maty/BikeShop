@@ -19,18 +19,8 @@ export const CreateQuantityUnitModal = () => {
     const setCurrentQuantityUnit = useCreateQuantityUnitModal(s => s.setCurrentQuantityUnit)
 
     const getQuantityUnits = useCreateQuantityUnitModal(s => s.getQuantityUnits)
-    // const addNewShop = useCreateQuantityUnitModal(s => s.addNewShop)
-    // const updateShopInfo = useCreateQuantityUnitModal(s => s.updateShopInfo)
-
-    // для тестирования вёрстки
-    // const quantityUnits = [
-    //     {id: 1, name: 'Рубль', fullName: 'RU', baseCoeficient: 1, isDefaultInGroup: true,
-    //         isSplittable: true, isSwitchable: true, enable: true },
-    //     {id: 2, name: 'Рубль', fullName: 'RU', baseCoeficient: 1, isDefaultInGroup: true,
-    //         isSplittable: true, isSwitchable: true, enable: true },
-    //     {id: 3, name: 'Рубль', fullName: 'RU', baseCoeficient: 1, isDefaultInGroup: true,
-    //         isSplittable: true, isSwitchable: true, enable: true },
-    // ]
+    const addQuantityUnit = useCreateQuantityUnitModal(s => s.addQuantityUnit)
+    const updateQuantityUnit = useCreateQuantityUnitModal(s => s.updateQuantityUnit)
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -42,47 +32,57 @@ export const CreateQuantityUnitModal = () => {
             isDefaultInGroup: true,
             isSwitchable: true,
             isSplittable: true,
-            enable: true,
+            enabled: true,
         }
     });
     const onSubmit: SubmitHandler<any> = (data: any) => {
-        // if (currentQuantityUnit === null) {
-        //     addQuantityUnit(data).then((res: any) => {
-        //         formControl.reset()
-        //         getQuantityUnits()
-        //         enqueueSnackbar('Валюта создана', {variant: 'success', autoHideDuration: 3000})
-        //     }).catch((error: any) => {
-        //         let message = error(error.response.data.errorDescription).toString()
-        //         formControl.setError('name', {type: 'serverError', message: message})
-        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //         console.error(error.response.data)
-        //     })
-        // }
-        //
-        // if (currentQuantityUnit !== null) {
-        //     updateQuantityUnit(data).then((res: any) => {
-        //         getShops()
-        //         enqueueSnackbar('Валюта обновлена', {variant: 'success', autoHideDuration: 3000})
-        //     }).catch((error: any) => {
-        //         let message = error(error.response.data.errorDescription).toString()
-        //         formControl.setError('name', {type: 'serverError', message: message})
-        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //         console.error(error.response.data)
-        //     })
-        // }
+        if (currentQuantityUnit === null) {
+            addQuantityUnit(data).then((res: any) => {
+                formControl.reset()
+                getQuantityUnits()
+                enqueueSnackbar('Валюта создана', {variant: 'success', autoHideDuration: 3000})
+            }).catch((error: any) => {
+                let message = error(error.response.data.errorDescription).toString()
+                formControl.setError('name', {type: 'serverError', message: message})
+                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+                console.error(error.response.data)
+            })
+        }
+
+        if (currentQuantityUnit !== null) {
+            updateQuantityUnit(data).then((res: any) => {
+                getQuantityUnits()
+                enqueueSnackbar('Валюта обновлена', {variant: 'success', autoHideDuration: 3000})
+            }).catch((error: any) => {
+                let message = error(error.response.data.errorDescription).toString()
+                formControl.setError('name', {type: 'serverError', message: message})
+                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+                console.error(error.response.data)
+            })
+        }
     }
 
     useEffect(() => {
         formControl.reset()
-        formControl.setValue('id', currentQuantityUnit ? currentQuantityUnit.id : 0)
-        formControl.setValue('name', currentQuantityUnit ? currentQuantityUnit.name : '')
-        formControl.setValue('fullName', currentQuantityUnit ? currentQuantityUnit.fullName : '')
-        formControl.setValue('groupId', currentQuantityUnit ? currentQuantityUnit.groupId : 0)
-        formControl.setValue('baseCoeficient', currentQuantityUnit ? currentQuantityUnit.baseCoeficient : 1)
-        formControl.setValue('isDefaultInGroup', currentQuantityUnit ? currentQuantityUnit.isDefaultInGroup : true)
-        formControl.setValue('isSwitchable', currentQuantityUnit ? currentQuantityUnit.isSwitchable : true)
-        formControl.setValue('isSplittable', currentQuantityUnit ? currentQuantityUnit.isSplittable : true)
-        formControl.setValue('enabled', currentQuantityUnit ? currentQuantityUnit.enable : true)
+
+        formControl.setValue('id', currentQuantityUnit ?
+            currentQuantityUnit.id : 0)
+        formControl.setValue('name', currentQuantityUnit ?
+            currentQuantityUnit.name : '')
+        formControl.setValue('fullName', currentQuantityUnit ?
+            currentQuantityUnit.fullName : '')
+        formControl.setValue('groupId', currentQuantityUnit ?
+            currentQuantityUnit.groupId : 0)
+        formControl.setValue('baseCoeficient', currentQuantityUnit ?
+            currentQuantityUnit.baseCoeficient : 1)
+        formControl.setValue('isDefaultInGroup', currentQuantityUnit ?
+            currentQuantityUnit.isDefaultInGroup : true)
+        formControl.setValue('isSwitchable', currentQuantityUnit ?
+            currentQuantityUnit.isSwitchable : true)
+        formControl.setValue('isSplittable', currentQuantityUnit ?
+            currentQuantityUnit.isSplittable : true)
+        formControl.setValue('enabled', currentQuantityUnit ?
+            currentQuantityUnit.enabled : true)
     }, [currentQuantityUnit])
 
     useEffect(() => {
@@ -117,7 +117,7 @@ export const CreateQuantityUnitModal = () => {
                                 <div><span>По умолчанию:</span> {qu.isDefaultInGroup ? 'Да' : 'Нет'}</div>
                                 <div><span>Конвертируемость:</span> {qu.isSwitchable ? 'Да' : 'Нет'}</div>
                                 <div><span>Делимость:</span> {qu.isSplittable ? 'Да' : 'Нет'}</div>
-                                <div><span>Включена:</span> {qu.enable ? 'Да' : 'Нет'}</div>
+                                <div><span>Включена:</span> {qu.enabled ? 'Да' : 'Нет'}</div>
                             </div>
                         ))}
                     </div>
@@ -156,8 +156,8 @@ export const CreateQuantityUnitModal = () => {
                                                 control={formControl}
                                                 divClassName={s.infoBlock_checkbox}
                             />
-                            <ControlledCheckbox name={'enable'}
-                                                label={'Валюта включена'}
+                            <ControlledCheckbox name={'enabled'}
+                                                label={'Включена'}
                                                 control={formControl}
                                                 divClassName={s.infoBlock_checkbox}
                             />

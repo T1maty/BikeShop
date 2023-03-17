@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {$api} from "../../shared"
 import {AxiosResponse} from "axios"
-import {GetQuantityUnitResponse} from "../../entities"
+import {CreateQuantityUnit, GetQuantityUnitResponse, UpdateQuantityUnit} from "../../entities"
 
 interface CreateQuantityUnitModalStore {
     openQuantityUnitModal: boolean
@@ -16,8 +16,8 @@ interface CreateQuantityUnitModalStore {
     setCurrentQuantityUnit: (quantityUnit: GetQuantityUnitResponse | null) => void
 
     getQuantityUnits: () => void
-    // addQuantityUnit: (data: any) => any
-    // updateQuantityUnit: (updateData: any) => any
+    addQuantityUnit: (data: CreateQuantityUnit) => any
+    updateQuantityUnit: (updateData: UpdateQuantityUnit) => any
 }
 
 const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -39,24 +39,24 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
             console.log('валюты не получены')
         })
     },
-    // addQuantityUnit: (data) => {
-    //     return $api.post('/quantityunit/create', data).then(res => {
-    //         // set(state => {
-    //         //     state.quantityUnits.push(res.data)
-    //         // })
-    //     }).catch((error: any) => {
-    //         console.log('валюта не создана', error)
-    //     })
-    // },
-    // updateQuantityUnit: (updateData) => {
-    //     return $api.put('/quantityunit/update', updateData).then(res => {
-    //         // set(state => {
-    //         //     state.quantityUnits.push(res.data)
-    //         // })
-    //     }).catch((error: any) => {
-    //         console.log('валюта не обновлена', error)
-    //     })
-    // },
+    addQuantityUnit: (data) => {
+        return $api.post('/quantityunit/create', data).then(res => {
+            // set(state => {
+            //     state.quantityUnits.push(res.data)
+            // })
+        }).catch((error: any) => {
+            console.log('валюта не создана', error)
+        })
+    },
+    updateQuantityUnit: (updateData) => {
+        return $api.put('/quantityunit/update', updateData).then(res => {
+            // set(state => {
+            //     state.quantityUnits.push(res.data)
+            // })
+        }).catch((error: any) => {
+            console.log('валюта не обновлена', error)
+        })
+    },
 })))/*, {
     name: "createQuantityUnitModal",
     version: 1

@@ -1,15 +1,16 @@
-import {createBrowserRouter} from 'react-router-dom';
+import {BikeShopPaths} from './paths'
+import {createBrowserRouter} from 'react-router-dom'
 import {
     Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog, RegistrationPage, Service,
     ShopMain, ShopProductItem, ShopWrapper, Profile, ProductsWrapper, ArrivalOfProducts, InventoryOfProducts
-} from '../../pages';
+} from '../../pages'
 import {
     OnlyWithoutAuthRoute, PublicHeaderProvider,
     WorkspaceHeaderProvider, CheckAuthRouteProvider
-} from '../../entities';
-import {WorkCatalog} from '../../pages/workspace/WorkCatalog';
-import {BikeShopPaths} from './paths';
-import {BarcodeScanerListenerProvider} from '../providers/BarcodeScanerListenerProvider/BarcodeScanerListenerProvider';
+} from '../../entities'
+import {WorkCatalog} from '../../pages/workspace/WorkCatalog'
+import {BarcodeScannerListenerProvider}
+    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -55,11 +56,11 @@ export const routes = createBrowserRouter([
     {
         path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
         element: // <CheckAuthRouteProvider>
-            <BarcodeScanerListenerProvider>
+            <BarcodeScannerListenerProvider>
                 <WorkspaceHeaderProvider>
                     <MainPage/>
                 </WorkspaceHeaderProvider>
-            </BarcodeScanerListenerProvider>
+            </BarcodeScannerListenerProvider>
         // </CheckAuthRouteProvider>
     },
     {

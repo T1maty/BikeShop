@@ -10,5 +10,5 @@ export interface CreateQuantityUnit {
 
 export interface UpdateQuantityUnit extends CreateQuantityUnit {
     id: number
-    enable: boolean
+    enabled: boolean
 }
