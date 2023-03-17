@@ -73,8 +73,10 @@ namespace BikeShop.Products.Application.Services
         {
             var ent = await _context.QuantityUnits.FindAsync(dto.Id);
 
-            if (_context.QuantityUnits.Select(n => n.Name.ToLower()).Contains(dto.Name.ToLower())) throw Errors.DuplicateQuantityUnitName;
-            if (_context.QuantityUnits.Select(n => n.FullName.ToLower()).Contains(dto.FullName.ToLower())) throw Errors.DuplicateQuantityUnitFullName;
+            if (ent == null) throw Errors.IdNotFound;
+
+            if (_context.QuantityUnits.Select(n => n.Name.ToLower()).Contains(dto.Name.ToLower()) && ent.Name != dto.Name) throw Errors.DuplicateQuantityUnitName;
+            if (_context.QuantityUnits.Select(n => n.FullName.ToLower()).Contains(dto.FullName.ToLower()) && ent.FullName != dto.FullName) throw Errors.DuplicateQuantityUnitFullName;
 
             ent.Name = dto.Name;
             ent.FullName = dto.FullName;
@@ -93,6 +95,7 @@ namespace BikeShop.Products.Application.Services
         public async Task<QuantityUnitGroup> UpdateGroup(UpdateUnitGroupDTO dto)
         {
             var ent = await _context.QuantityUnitGroups.FindAsync(dto.Id);
+            if (ent == null) throw Errors.IdNotFound;
             if (_context.QuantityUnitGroups.Select(n => n.Name.ToLower()).Contains(dto.Name.ToLower())) throw Errors.DuplicateQuantityGroupName;
             ent.UpdatedAt = DateTime.Now;
             ent.Name=dto.Name;

@@ -53,5 +53,18 @@ namespace BikeShop.Products.Application.Common.Errors
                 };
             }
         }
+
+        public static BaseError IdNotFound
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "id",
+                    Error = "id not found",
+                    ErrorDescription = "Specified id was not found"
+                };
+            }
+        }
     }
 }
