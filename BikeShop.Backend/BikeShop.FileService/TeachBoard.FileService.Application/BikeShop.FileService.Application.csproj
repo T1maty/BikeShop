@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TeachBoard.FileService.Domain\Bikeshop.FileService.Domain.csproj" />
+      <ProjectReference Include="..\TeachBoard.FileService.Domain\BikeShop.FileService.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>

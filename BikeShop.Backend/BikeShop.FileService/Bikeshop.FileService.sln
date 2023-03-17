@@ -9,13 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{D1442E38-AB04-470D-8C12-212D937447A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikeshop.FileService.Domain", "TeachBoard.FileService.Domain\Bikeshop.FileService.Domain.csproj", "{88B2959E-71D3-4540-8A59-FCB0F83C7B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.FileService.Domain", "TeachBoard.FileService.Domain\BikeShop.FileService.Domain.csproj", "{88B2959E-71D3-4540-8A59-FCB0F83C7B8E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikeshop.FileService.Application", "TeachBoard.FileService.Application\Bikeshop.FileService.Application.csproj", "{208A5BE6-BBBB-4E73-9F68-9FCA42235656}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.FileService.Application", "TeachBoard.FileService.Application\BikeShop.FileService.Application.csproj", "{208A5BE6-BBBB-4E73-9F68-9FCA42235656}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikeshop.FileService.Persistence", "TeachBoard.FileService.Persistence\Bikeshop.FileService.Persistence.csproj", "{DAAB62BA-F8F0-4565-8D95-B5F59D9C4F8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.FileService.Persistence", "TeachBoard.FileService.Persistence\BikeShop.FileService.Persistence.csproj", "{DAAB62BA-F8F0-4565-8D95-B5F59D9C4F8C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikeshop.FileService.Api", "TeachBoard.FileService.Api\Bikeshop.FileService.Api.csproj", "{6BFE4E05-17BF-40CA-B097-6178E22A7BAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.FileService.Api", "TeachBoard.FileService.Api\BikeShop.FileService.Api.csproj", "{6BFE4E05-17BF-40CA-B097-6178E22A7BAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

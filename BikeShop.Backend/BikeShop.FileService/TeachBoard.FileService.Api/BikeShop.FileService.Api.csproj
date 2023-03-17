@@ -15,9 +15,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TeachBoard.FileService.Application\Bikeshop.FileService.Application.csproj" />
-      <ProjectReference Include="..\TeachBoard.FileService.Domain\Bikeshop.FileService.Domain.csproj" />
-      <ProjectReference Include="..\TeachBoard.FileService.Persistence\Bikeshop.FileService.Persistence.csproj" />
+      <ProjectReference Include="..\TeachBoard.FileService.Application\BikeShop.FileService.Application.csproj" />
+      <ProjectReference Include="..\TeachBoard.FileService.Domain\BikeShop.FileService.Domain.csproj" />
+      <ProjectReference Include="..\TeachBoard.FileService.Persistence\BikeShop.FileService.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
