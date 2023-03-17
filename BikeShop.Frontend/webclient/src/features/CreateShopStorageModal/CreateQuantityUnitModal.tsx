@@ -91,6 +91,9 @@ export const CreateQuantityUnitModal = () => {
             aria-describedby="modal-modal-description"
         >
             <div className={s.shopStorageModal_mainBlock}>
+                <div className={s.shopStorageModal_tree}>
+                    TreeView
+                </div>
                 <div className={s.shopStorageModal_shops}>
                     <div className={s.shopStorageModal_shopList}>
                         {quantityUnits.map(qu => (

@@ -5,7 +5,15 @@
     @include defaultModalStyle;
     @include flexOnlyBetween;
     gap: $defaultLargeMargin;
-    min-width: 800px;
+    min-width: 1000px;
+
+    .shopStorageModal_tree {
+        background-color: $themeColorMilk;
+        padding: $defaultLargeMargin;
+        border-radius: $smallBorderRadius;
+        width: 20%;
+        color: black;
+    }
 
     .shopStorageModal_shops {
         background-color: $themeColorMilk;
