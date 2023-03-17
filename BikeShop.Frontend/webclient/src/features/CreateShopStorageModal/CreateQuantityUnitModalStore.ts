@@ -41,18 +41,18 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
     },
     addQuantityUnit: (data) => {
         return $api.post('/quantityunit/create', data).then(res => {
-            // set(state => {
-            //     state.quantityUnits.push(res.data)
-            // })
+            set(state => {
+                state.quantityUnits.push(res.data)
+            })
         }).catch((error: any) => {
             console.log('валюта не создана', error)
         })
     },
     updateQuantityUnit: (updateData) => {
         return $api.put('/quantityunit/update', updateData).then(res => {
-            // set(state => {
-            //     state.quantityUnits.push(res.data)
-            // })
+            set(state => {
+                state.quantityUnits.push(res.data)
+            })
         }).catch((error: any) => {
             console.log('валюта не обновлена', error)
         })

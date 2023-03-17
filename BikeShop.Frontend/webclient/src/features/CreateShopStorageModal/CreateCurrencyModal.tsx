@@ -14,12 +14,12 @@ export const CreateCurrencyModal = () => {
     const open = useCreateCurrencyModal(s => s.openCurrencyModal)
     const setOpen = useCreateCurrencyModal(s => s.setOpenCreateCurrencyModal)
 
+    // const currencies = useCreateCurrencyModal(s => s.currencies)
     const currentCurrency = useCreateCurrencyModal(s => s.currentCurrency)
     const setCurrentCurrency = useCreateCurrencyModal(s => s.setCurrentCurrency)
-    // const currencies = useCreateCurrencyModal(s => s.currencies)
-    // const getShops = useCreateCurrencyModal(s => s.getShops)
-    // const addNewShop = useCreateCurrencyModal(s => s.addNewShop)
-    // const updateShopInfo = useCreateCurrencyModal(s => s.updateShopInfo)
+    // const getСurrencies = useCreateCurrencyModal(s => s.getСurrencies)
+    // const addCurrency = useCreateCurrencyModal(s => s.addCurrency)
+    // const updateCurrency = useCreateCurrencyModal(s => s.updateCurrency)
 
     // для тестирования вёрстки
     const currencies = [
@@ -41,9 +41,8 @@ export const CreateCurrencyModal = () => {
     });
     const onSubmit: SubmitHandler<any> = (data: any) => {
         // if (currentShop === null) {
-        //     addNewShop(data).then((res: any) => {
+        //     addCurrency(data).then((res: any) => {
         //         formControl.reset()
-        //         getShops()
         //         enqueueSnackbar('Магазин создан', {variant: 'success', autoHideDuration: 3000})
         //     }).catch((error: any) => {
         //         let message = error(error.response.data.errorDescription).toString()
@@ -54,8 +53,7 @@ export const CreateCurrencyModal = () => {
         // }
         //
         // if (currentShop !== null) {
-        //     updateShopInfo(data).then((res: any) => {
-        //         getShops()
+        //     updateCurrency(data).then((res: any) => {
         //         enqueueSnackbar('Магазин обновлён', {variant: 'success', autoHideDuration: 3000})
         //     }).catch((error: any) => {
         //         let message = error(error.response.data.errorDescription).toString()
@@ -77,7 +75,7 @@ export const CreateCurrencyModal = () => {
     }, [currentCurrency])
 
     useEffect(() => {
-        // getShops()
+        // getСurrencies()
     }, [])
 
     return (

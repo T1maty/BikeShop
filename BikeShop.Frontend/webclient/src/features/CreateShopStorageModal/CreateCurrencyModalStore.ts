@@ -1,8 +1,8 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {$api} from "../../shared";
-import {AxiosResponse} from "axios";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {$api} from "../../shared"
+import {AxiosResponse} from "axios"
 
 interface CreateCurrencyModalStore {
     openCurrencyModal: boolean
@@ -13,9 +13,9 @@ interface CreateCurrencyModalStore {
     currentCurrency: any // CreateShopResponse | null
     setCurrentCurrency: (currency: any) => void
     currencies: any[]
-    // getShops: () => void
-    // addNewShop: (data: CreateShop) => any
-    // updateShopInfo: (updateData: UpdateShop) => any
+    // getСurrencies: () => void
+    // addCurrency: (data: CreateShop) => any
+    // updateCurrency: (updateData: UpdateShop) => any
 }
 
 const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -27,7 +27,7 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
     currentCurrency: null,
     setCurrentCurrency: (currency) => {set({currentCurrency: currency})},
     currencies: [],
-    // getShops: () => {
+    // getСurrencies: () => {
     //     return $api.get<CreateShopResponse[]>('/shop/getall').then(res => {
     //         set(state => {
     //             state.shops = res.data
@@ -37,7 +37,7 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
     //         console.log('магазины не получены')
     //     })
     // },
-    // addNewShop: (data) => {
+    // addCurrency: (data) => {
     //     return $api.post('/shop/create', data).then(res => {
     //         // set(state => {
     //         //     state.shops.push(res.data)
@@ -46,7 +46,7 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
     //         console.log('магазин не создан', error)
     //     })
     // },
-    // updateShopInfo: (updateData) => {
+    // updateCurrency: (updateData) => {
     //     return $api.put('/shop/update', updateData).then(res => {
     //         // set(state => {
     //         //     state.shops.push(res.data)

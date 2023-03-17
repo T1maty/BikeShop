@@ -27,7 +27,7 @@ export const CreateQuantityUnitModal = () => {
             id: 0,
             name: '',
             fullName: '',
-            groupId: 0,
+            groupId: 1,
             baseCoeficient: 1,
             isDefaultInGroup: true,
             isSwitchable: true,
@@ -39,7 +39,6 @@ export const CreateQuantityUnitModal = () => {
         if (currentQuantityUnit === null) {
             addQuantityUnit(data).then((res: any) => {
                 formControl.reset()
-                getQuantityUnits()
                 enqueueSnackbar('Валюта создана', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
@@ -51,7 +50,6 @@ export const CreateQuantityUnitModal = () => {
 
         if (currentQuantityUnit !== null) {
             updateQuantityUnit(data).then((res: any) => {
-                getQuantityUnits()
                 enqueueSnackbar('Валюта обновлена', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
@@ -72,7 +70,7 @@ export const CreateQuantityUnitModal = () => {
         formControl.setValue('fullName', currentQuantityUnit ?
             currentQuantityUnit.fullName : '')
         formControl.setValue('groupId', currentQuantityUnit ?
-            currentQuantityUnit.groupId : 0)
+            currentQuantityUnit.groupId : 1)
         formControl.setValue('baseCoeficient', currentQuantityUnit ?
             currentQuantityUnit.baseCoeficient : 1)
         formControl.setValue('isDefaultInGroup', currentQuantityUnit ?
