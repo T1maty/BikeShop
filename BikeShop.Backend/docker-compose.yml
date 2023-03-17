@@ -44,7 +44,18 @@ services:
     ports:
       - 5004:80
     restart: on-failure  
-
+    
+    bikeshop.fileservice:
+    container_name: bikeshop-shop
+    build:
+      context: BikeShop.FileService
+      dockerfile: Dockerfile
+    image: kpssnik/bikeshop.shop
+    hostname: bikeshop.FileService
+    ports:
+      - 5005:80
+    restart: on-failure  
+    
   bikeshop.gateway:
     container_name: bikeshop-gateway
     build:

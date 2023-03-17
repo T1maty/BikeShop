@@ -56,8 +56,9 @@ namespace BikeShop.Products.Application.Services
             var response = new List<ProductCardDTO>();
 
             var productCards = await _context.ProductsCards.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).ToDictionaryAsync(n => n.ProductId, n => n);
-            var productSpecifications = await _context.ProductSpecifications.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).ToListAsync();
-            var productOptions = await _context.ProductOptionVariantBinds.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).ToListAsync();
+            var productSpecifications = await _context.ProductSpecifications.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).OrderBy(n => n.SortOrder).ToListAsync();
+            var productOptions = await _context.ProductOptionVariantBinds.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).OrderBy(n => n.SortOrder).ToListAsync();
+            var productImages = await _context.ProductImgs.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).OrderBy(n=>n.SortOrder).ToListAsync();
 
             foreach (var product in products)
             {
@@ -65,10 +66,9 @@ namespace BikeShop.Products.Application.Services
                 {
                     product = product,
                     productCard = productCards.ContainsKey(product.Id) ? productCards[product.Id] : null,
-                    productOptions = productOptions.Where(n => n.ProductId == product.Id)
-                                                   .OrderBy(n => n.SortOrder).ToList(),
-                    productSpecifications = productSpecifications.Where(n => n.ProductId == product.Id)
-                                                                 .OrderBy(n => n.SortOrder).ToList()
+                    productOptions = productOptions.Where(n => n.ProductId == product.Id).ToList(),
+                    productSpecifications = productSpecifications.Where(n => n.ProductId == product.Id).ToList(),
+                    productImages = productImages.Where(n => n.ProductId == product.Id).ToList()
                 });
             }
 

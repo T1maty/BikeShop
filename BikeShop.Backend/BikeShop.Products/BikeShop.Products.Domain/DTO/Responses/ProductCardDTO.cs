@@ -13,5 +13,6 @@ namespace BikeShop.Products.Domain.DTO.Responses
         public ProductCard? productCard { get; set; }
         public List<ProductSpecification> productSpecifications { get; set; }
         public List<ProductOptionVariantBind> productOptions { get; set; }
+        public List<ProductImg> productImages { get; set; }
     }
 }
