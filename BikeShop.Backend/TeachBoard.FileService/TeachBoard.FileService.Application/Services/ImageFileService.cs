@@ -45,7 +45,7 @@ public class ImageFileService : IImageFileService
         {
             File = new FileDescription(file.FileName, stream), // (nameOfTheFile, its content in stream);
             Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face"),
-            PublicId = publicId,
+            PublicId = publicId
         };
 
         var uploadResult = await _cloudinary.UploadAsync(uploadParams);
