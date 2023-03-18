@@ -10,10 +10,11 @@ namespace BikeShop.Products.Application.RefitClients
 {
     public interface IFileServiceClient
     {
-        [Post("image/upload")]
-        public Task<string> AddImageToCloud(int imgId, IFormFile imageFile);
+        [Multipart]
+        [Post("/image/upload/{imgId}")]
+        public Task<string> AddImageToCloud(int imgId, [AliasAs("imageFile")] StreamPart stream);
 
-        [Get("image/getlink")]
+        [Get("/image/getlink")]
         public Task<string> GetImageLink(string imgId);
     }
 }

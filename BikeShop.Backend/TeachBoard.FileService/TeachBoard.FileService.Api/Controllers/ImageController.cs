@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+
 using TeachBoard.FileService.Application.Interfaces;
 
 namespace TeachBoard.FileService.Api.Controllers;
@@ -14,7 +15,7 @@ public class ImageController : ControllerBase
         _imageFileService = imageFileService;
     }
 
-    [HttpPost("upload")]
+    [HttpPost("upload/{imgId:int}")]
     public async Task<string> AddToProduct(int imgId,
         [FromForm] IFormFile imageFile)
     {

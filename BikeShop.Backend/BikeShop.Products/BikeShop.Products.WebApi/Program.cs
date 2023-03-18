@@ -46,8 +46,6 @@ builder.Services.AddControllers()
         };
     });
 
-
-
 builder.Services.AddRefitClient<IFileServiceClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:FileService"]));
 

@@ -5,6 +5,7 @@ using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,7 +99,11 @@ namespace BikeShop.Products.Application.Services
             var img = new ProductImg() { ProductId = productId, SortOrder = 0 };
             await _context.ProductImgs.AddAsync(img);
             await _context.SaveChangesAsync(new CancellationToken());
-            var url = await _fileServiceClient.AddImageToCloud( img.Id, imageFile);
+
+            var stream = imageFile.OpenReadStream();
+            var streamPart = new StreamPart(stream, imageFile.FileName, "image/jpeg");
+
+            var url = await _fileServiceClient.AddImageToCloud( img.Id, streamPart);
             img.Url = url;
             await _context.SaveChangesAsync(new CancellationToken());
             return img;
