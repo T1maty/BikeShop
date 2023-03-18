@@ -15,6 +15,6 @@ namespace BikeShop.Products.Domain.DTO.Requestes.QuantityUnit
         public bool IsSwitchable { get; set; }
         public bool IsSplittable { get; set; }
         public decimal BaseCoeficient { get; set; }
-        public bool Enable { get; set; }
+        public bool Enabled { get; set; }
     }
 }

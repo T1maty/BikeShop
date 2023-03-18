@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using TeachBoard.FileService.Api.Models;
 using TeachBoard.FileService.Application.Interfaces;
 
 namespace TeachBoard.FileService.Api.Controllers;
@@ -15,22 +14,22 @@ public class ImageController : ControllerBase
         _imageFileService = imageFileService;
     }
 
-    [HttpPost("avatar")]
-    public async Task<ActionResult<ImageUploadResponseModel>> SetUserAvatarImage(int userId,
+    [HttpPost("upload")]
+    public async Task<string> AddToProduct(int imgId,
         [FromForm] IFormFile imageFile)
     {
-        var imagePublicName = "user_avatar_" + userId;
+        var imagePublicName = "product_img_" + imgId;
         var result = await _imageFileService.UploadImageAsync(imageFile, imagePublicName);
 
-        return new WebApiResult(new ImageUploadResponseModel { Url = result });
+        return result;
     }
 
-    [HttpGet("avatarget")]
-    public async Task<ActionResult<string>> GetUserAvatarImageLink(string userId)
+    [HttpGet("getlink")]
+    public async Task<string> GetLink(string imgId)
     {
-        var imagePublicId = "user_avatar_" + userId;
+        var imagePublicId = "product_img_" + imgId;
         var link = _imageFileService.GetImageLink(imagePublicId);
 
-        return new WebApiResult(link);
+        return link;
     }
 }

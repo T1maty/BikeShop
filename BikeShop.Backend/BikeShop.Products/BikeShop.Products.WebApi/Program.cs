@@ -5,10 +5,12 @@ using BikeShop.Products.Application;
 using BikeShop.Products.Application.Common.Configurations;
 using BikeShop.Products.Application.Common.Mappings;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Application.RefitClients;
 using BikeShop.Products.Persistence;
 using BikeShop.Products.WebApi.Middleware;
 using BikeShop.Products.WebApi.Models.Validation;
 using Microsoft.Extensions.Options;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +46,10 @@ builder.Services.AddControllers()
         };
     });
 
+
+
+builder.Services.AddRefitClient<IFileServiceClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:FileService"]));
 
 // Инъекция сервисов из слоя Application и Persistence
 builder.Services.AddApplication();

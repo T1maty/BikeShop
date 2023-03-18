@@ -5,11 +5,11 @@
   "Routes": [
 
     {
-      "UpstreamPathTemplate": "/api/image/avatar",
+      "UpstreamPathTemplate": "/api/image/upload",
       "UpstreamHttpMethod": [
         "Post"
       ],
-      "DownstreamPathTemplate": "/image/avatar",
+      "DownstreamPathTemplate": "/image/upload",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -20,6 +20,21 @@
       "SwaggerKey": "fileservice"
     },
 
+    {
+      "UpstreamPathTemplate": "/api/image/getlink",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/image/getlink",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.fileservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "fileservice"
+    },
 
 
 

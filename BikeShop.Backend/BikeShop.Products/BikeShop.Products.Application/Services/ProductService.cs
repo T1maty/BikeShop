@@ -1,7 +1,9 @@
 ﻿using BikeShop.Products.Application.Common.Exceptions;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Application.RefitClients;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,11 +17,12 @@ namespace BikeShop.Products.Application.Services
     public class ProductService : IProductService
     {
         private readonly IApplicationDbContext _context;
+        private readonly IFileServiceClient _fileServiceClient;
 
-        public ProductService(IApplicationDbContext context)
+        public ProductService(IApplicationDbContext context, IFileServiceClient fileServiceClient)
         {
             _context = context;
-
+            _fileServiceClient = fileServiceClient;
         }
 
         public async Task<List<Product>> GetProductsByIdsArray(List<int> Ids)
@@ -88,6 +91,17 @@ namespace BikeShop.Products.Application.Services
 
             // Если все ок - возвращаю лист
             return tagList;
+        }
+
+        public async Task<ProductImg> AddImageToProduct(int productId, IFormFile imageFile)
+        {
+            var img = new ProductImg() { ProductId = productId, SortOrder = 0 };
+            await _context.ProductImgs.AddAsync(img);
+            await _context.SaveChangesAsync(new CancellationToken());
+            var url = await _fileServiceClient.AddImageToCloud( img.Id, imageFile);
+            img.Url = url;
+            await _context.SaveChangesAsync(new CancellationToken());
+            return img;
         }
     }
 }

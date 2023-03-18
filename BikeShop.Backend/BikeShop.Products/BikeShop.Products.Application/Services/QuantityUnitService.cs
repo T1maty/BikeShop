@@ -84,7 +84,7 @@ namespace BikeShop.Products.Application.Services
             ent.IsSwitchable = dto.IsSwitchable;
             ent.IsSplittable = dto.IsSplittable;
             ent.BaseCoeficient = dto.BaseCoeficient;
-            ent.Enabled = dto.Enable;
+            ent.Enabled = dto.Enabled;
             ent.UpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync(new CancellationToken());

@@ -142,5 +142,11 @@ namespace BikeShop.Products.WebApi.Controllers
         {
             return await _productService.GetProductsByIdsArray(Ids);
         }
+
+        [HttpPost("addimagetoproduct")]
+        public async Task<ProductImg> AddImageToProduct(IFormFile imageFile)
+        {
+            return await _productService.AddImageToProduct(1, imageFile);
+        }
     }
 }
