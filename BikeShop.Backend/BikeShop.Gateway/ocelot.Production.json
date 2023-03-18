@@ -41,7 +41,7 @@
 {
       "UpstreamPathTemplate": "/api/product/addimagetoproduct",
       "UpstreamHttpMethod": [
-        "Get"
+        "Post"
       ],
       "DownstreamPathTemplate": "/product/addimagetoproduct",
       "DownstreamScheme": "http",
