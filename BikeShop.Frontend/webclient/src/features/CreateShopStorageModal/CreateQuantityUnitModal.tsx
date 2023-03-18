@@ -40,7 +40,7 @@ export const CreateQuantityUnitModal = () => {
         if (currentQuantityUnit === null) {
             addQuantityUnit(data).then((res: any) => {
                 formControl.reset()
-                enqueueSnackbar('Валюта создана', {variant: 'success', autoHideDuration: 3000})
+                enqueueSnackbar('Ед.измерения создана', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
                 formControl.setError('name', {type: 'serverError', message: message})
@@ -54,7 +54,7 @@ export const CreateQuantityUnitModal = () => {
                 formControl.reset()
                 setCurrentQuantityUnit(null)
                 getQuantityUnits()
-                enqueueSnackbar('Валюта обновлена', {variant: 'success', autoHideDuration: 3000})
+                enqueueSnackbar('Ед.измерения обновлена', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
                 formControl.setError('name', {type: 'serverError', message: message})
