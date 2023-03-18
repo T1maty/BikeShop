@@ -50,9 +50,7 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
     },
     updateQuantityUnit: (updateData) => {
         return $api.put('/quantityunit/update', updateData).then(res => {
-            set(state => {
-                state.quantityUnits.push(res.data)
-            })
+           //
         }).catch((error: any) => {
             console.log('валюта не обновлена', error)
         })

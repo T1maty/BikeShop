@@ -6,7 +6,7 @@ import s from './CreateShopModal.module.scss'
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui'
 import {Errors} from '../../entities/errors/workspaceErrors'
 import useCreateShopModal from './CreateShopModalStore'
-import {CreateShop, UpdateShop} from '../../entities'
+import {UpdateShop} from '../../entities'
 
 export const CreateShopModal = () => {
 
