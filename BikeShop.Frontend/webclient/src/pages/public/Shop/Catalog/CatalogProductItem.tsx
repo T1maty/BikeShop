@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import s from './ShopProductItem.module.scss'
-import {Button} from "../../../../shared/ui";
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {UserResponse} from "../../../../entities";
+import s from './CatalogProductItem.module.scss'
+import {Button} from "../../../../shared/ui"
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
-export const ShopProductItem = () => {
+export const CatalogProductItem = () => {
 
     // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')
     const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)

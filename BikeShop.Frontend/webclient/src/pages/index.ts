@@ -22,7 +22,7 @@ export {ShopFooter} from './public/Shop/ShopMain/ShopFooter'
 export {SearchProduct} from './public/Shop/ShopMain/SearchProduct'
 
 export {Catalog} from './public/Shop/Catalog/Catalog'
-export {ShopProductItem} from './public/Shop/Catalog/ShopProductItem'
+export {CatalogProductItem} from './public/Shop/Catalog/CatalogProductItem'
 export {Order} from './public/Shop/Order/Order'
 export {Profile} from './public/Shop/Profile/Profile'
 export {ProfileAvatar} from './public/Shop/Profile/ProfileAvatar'

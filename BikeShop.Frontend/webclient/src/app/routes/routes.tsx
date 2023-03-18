@@ -2,7 +2,7 @@ import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
     Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog, RegistrationPage, Service,
-    ShopMain, ShopProductItem, ShopWrapper, Profile, ProductsWrapper, ArrivalOfProducts, InventoryOfProducts
+    ShopMain, CatalogProductItem, ShopWrapper, Profile, ProductsWrapper, ArrivalOfProducts, InventoryOfProducts
 } from '../../pages'
 import {
     OnlyWithoutAuthRoute, PublicHeaderProvider,
@@ -125,7 +125,7 @@ export const routes = createBrowserRouter([
     {
         path: BikeShopPaths.SHOP.PRODUCT,
         element: <ShopWrapper>
-            <ShopProductItem/>
+            <CatalogProductItem/>
         </ShopWrapper>
     },
     {
