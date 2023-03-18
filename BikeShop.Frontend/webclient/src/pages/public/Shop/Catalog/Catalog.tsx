@@ -4,8 +4,9 @@ import SortThumbnails from '../../../../shared/assets/shop/icons/sort-thumbnails
 import SortList from '../../../../shared/assets/shop/icons/sort-list.png'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
-import {BikeShopPaths} from "../../../../app/routes/paths";
-import {useNavigate} from "react-router-dom";
+import {BikeShopPaths} from "../../../../app/routes/paths"
+import {useNavigate} from "react-router-dom"
+import useCatalog from "./CatalogStore"
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -20,6 +21,11 @@ type ProductsType = {
 export const Catalog = () => {
 
     const navigate = useNavigate()
+
+    const tags = useCatalog(s => s.tags)
+    const getTags = useCatalog(s => s.getTags)
+    const defaultProducts = useCatalog(s => s.defaultProducts)
+    const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
 
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
@@ -44,6 +50,7 @@ export const Catalog = () => {
         },
     ])
 
+    // тестовые данные
     const [products, setProducts] = useState<ProductsType[]>([
         {
             id: '1',
@@ -103,6 +110,8 @@ export const Catalog = () => {
 
     useEffect(() => {
         setActiveFilter1(true)
+        // getTags()
+        // getDefaultProducts()
     }, [])
 
     return (

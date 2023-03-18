@@ -33,10 +33,10 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
         return $api.get<GetQuantityUnitResponse[]>('/quantityunit/getall').then(res => {
             set(state => {
                 state.quantityUnits = res.data
-                console.log('все валюты', state.quantityUnits)
+                console.log('все ед.измерения', state.quantityUnits)
             })
         }).catch((error: any) => {
-            console.log('валюты не получены')
+            console.log('ед.измерения не получены')
         })
     },
     addQuantityUnit: (data) => {
@@ -45,16 +45,14 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
                 state.quantityUnits.push(res.data)
             })
         }).catch((error: any) => {
-            console.log('валюта не создана', error)
+            console.log('ед.измерения не создана', error)
         })
     },
     updateQuantityUnit: (updateData) => {
         return $api.put('/quantityunit/update', updateData).then(res => {
-            set(state => {
-                state.quantityUnits.push(res.data)
-            })
+           //
         }).catch((error: any) => {
-            console.log('валюта не обновлена', error)
+            console.log('ед.измерения не обновлена', error)
         })
     },
 })))/*, {

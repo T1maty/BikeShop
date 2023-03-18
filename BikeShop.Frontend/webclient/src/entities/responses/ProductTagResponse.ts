@@ -1,4 +1,4 @@
-import {IProductTag} from "../index";
+import {IProductTag} from "../index"
 
 export default interface ProductTagResponse {
     tags: IProductTag[]

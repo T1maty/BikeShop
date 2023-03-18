@@ -81,6 +81,7 @@
                     grid-template-rows: 1fr 1fr;
                     gap: $defaultLargeMargin;
                     margin-bottom: $defaultLargeMargin;
+                    @include hoverCursorPointerOpacity;
 
                     //> div {
                     //    position: relative;
@@ -116,6 +117,7 @@
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     gap: $defaultLargeMargin;
+                    @include hoverCursorPointerOpacity;
 
                     .catalog_item {
 

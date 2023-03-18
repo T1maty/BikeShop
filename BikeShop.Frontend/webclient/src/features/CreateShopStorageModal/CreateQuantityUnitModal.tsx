@@ -6,6 +6,7 @@ import s from './CreateQuantityUnitModal.module.scss'
 import {Button, ControlledCheckbox, ControlledInput} from '../../shared/ui'
 import {Errors} from '../../entities/errors/workspaceErrors'
 import useCreateQuantityUnitModal from "./CreateQuantityUnitModalStore"
+import {UpdateQuantityUnit} from "../../entities";
 
 export const CreateQuantityUnitModal = () => {
 
@@ -35,11 +36,11 @@ export const CreateQuantityUnitModal = () => {
             enabled: true,
         }
     });
-    const onSubmit: SubmitHandler<any> = (data: any) => {
+    const onSubmit: SubmitHandler<UpdateQuantityUnit> = (data: UpdateQuantityUnit) => {
         if (currentQuantityUnit === null) {
             addQuantityUnit(data).then((res: any) => {
                 formControl.reset()
-                enqueueSnackbar('Валюта создана', {variant: 'success', autoHideDuration: 3000})
+                enqueueSnackbar('Ед.измерения создана', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
                 formControl.setError('name', {type: 'serverError', message: message})
@@ -50,7 +51,10 @@ export const CreateQuantityUnitModal = () => {
 
         if (currentQuantityUnit !== null) {
             updateQuantityUnit(data).then((res: any) => {
-                enqueueSnackbar('Валюта обновлена', {variant: 'success', autoHideDuration: 3000})
+                formControl.reset()
+                setCurrentQuantityUnit(null)
+                getQuantityUnits()
+                enqueueSnackbar('Ед.измерения обновлена', {variant: 'success', autoHideDuration: 3000})
             }).catch((error: any) => {
                 let message = error(error.response.data.errorDescription).toString()
                 formControl.setError('name', {type: 'serverError', message: message})

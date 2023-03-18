@@ -57,11 +57,11 @@ export const ShopMain = () => {
                         </div>
                         <div className={s.header_icons_right}>
                             {
-                                // search ? <SearchProduct sx={InputStyles}/> : ''
-                                search ? <CustomSearchInput placeholder={'Поиск товара'}
-                                                            color={'black'}
-                                                            clearInputValue={() => {}}/>
-                                    : ''
+                                search ? <SearchProduct sx={InputStyles}/> : ''
+                                // search ? <CustomSearchInput placeholder={'Поиск товара'}
+                                //                             color={'black'}
+                                //                             clearInputValue={() => {}}/>
+                                //     : ''
                             }
                             <div onClick={() => {setSearch(!search)}}>
                                 <img src={searchIcon} alt="search-logo"/>

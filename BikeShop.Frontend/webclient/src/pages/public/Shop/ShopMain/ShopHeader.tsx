@@ -26,8 +26,8 @@ export const ShopHeader = () => {
                 BikeShop
             </div>
             <div className={s.shop_header_right}>
-                {/*<SearchProduct/>*/}
-                <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
+                <SearchProduct/>
+                {/*<CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>*/}
                 <div><img src={language} alt="language-logo"/></div>
                 <div><img src={cart} alt="cart-logo"/></div>
                 {
