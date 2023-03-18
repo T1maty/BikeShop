@@ -5,11 +5,11 @@
   "Routes": [
 
     {
-      "UpstreamPathTemplate": "/api/image/upload",
+      "UpstreamPathTemplate": "/api/image/upload/{imgId}",
       "UpstreamHttpMethod": [
         "Post"
       ],
-      "DownstreamPathTemplate": "/image/upload",
+      "DownstreamPathTemplate": "/image/upload/{imgId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -37,6 +37,22 @@
     },
 
 
+
+{
+      "UpstreamPathTemplate": "/api/product/addimagetoproduct",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/product/addimagetoproduct",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
 
     {
       "UpstreamPathTemplate": "/api/product/getbytags/{tagsIds}",
