@@ -103,7 +103,7 @@ export const EditProductCardModal = () => {
                                                                           name={'optionVersion'}
                                                                           label={'Разновидность опции'}
                                                                           className={s.options_search}
-                                                                          data={options.map((el: any) => {
+                                                                          data={opt.optionsArray.map((el: any) => {
                                                                               return {id: el.id, value: el.name ? el.name : 'Нет имени'}
                                                                           })}
                                                         />
