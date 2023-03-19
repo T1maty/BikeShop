@@ -8,6 +8,7 @@ interface props {
     label: string
     className?: any
     disabled?: boolean
+    sx?: any
 
     data: any
     onChangeSelect?: (event: SelectChangeEvent) => void
@@ -30,6 +31,7 @@ export const ControlledSelect = (props: props) => {
                             onChange={(event) => {
                                 field.onChange(event.target.value)
                             }}
+                            sx={props.sx}
                         >
                             {
                                 props.data.map((m: any) => {
