@@ -35,10 +35,10 @@ export const ControlledSelect = (props: props) => {
                         >
                             {
                                 props.data.map((m: any) => {
-
                                     return (
-
-                                        <MenuItem key={m.id} value={m.id}>
+                                        <MenuItem key={m.id}
+                                                  value={m.id}
+                                        >
                                             {m.value}
                                         </MenuItem>
                                     )

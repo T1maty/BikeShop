@@ -12,8 +12,8 @@ export const EditProductCardModal = () => {
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
 
     const [options, setOptions] = useState([
-        {id: '1', name: 'Размер шлема', options: [{id: '1', name: 'S'}, {id: '1', name: 'M'}, {id: '1', name: 'L'}]},
-        {id: '2', name: 'Цвет шлема', options: [{id: '1', name: 'Red'}, {id: '1', name: 'Blue'}, {id: '1', name: 'White'}]},
+        {id: '1', name: 'Размер шлема', optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]},
+        {id: '2', name: 'Цвет шлема', optionsArray: [{id: '7', name: 'Red'}, {id: '8', name: 'Blue'}, {id: '9', name: 'White'}]},
     ])
 
     const [details, setDetails] = useState([
@@ -33,7 +33,7 @@ export const EditProductCardModal = () => {
         setOptions(options.filter(el => el.id !== optionsItem.id))
     }
     const deleteOptionHandler = (listId: string, optionId: string) => {
-        setOptions(options.map(el => el.id === listId ? {...el, options: el.options.filter(opt => opt.id !== optionId)} : el))
+        setOptions(options.map(el => el.id === listId ? {...el, optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)} : el))
     }
 
     const deleteDetailsListHandler = (detailsItem: any) => {
@@ -83,7 +83,7 @@ export const EditProductCardModal = () => {
                                                             Удалить
                                                         </div>
                                                         {
-                                                            opt.options.map(el => {
+                                                            opt.optionsArray.map(el => {
                                                                 return (
                                                                     <div className={s.item_content} key={el.id}>
                                                                         <div className={s.item_title}>{el.name}</div>
@@ -104,9 +104,7 @@ export const EditProductCardModal = () => {
                                                                           label={'Разновидность опции'}
                                                                           className={s.options_search}
                                                                           data={options.map((el: any) => {
-                                                                              return {
-                                                                                  id: el.id, value: el.name ? el.name : 'Нет опции'
-                                                                              }
+                                                                              return {id: el.id, value: el.name ? el.name : 'Нет имени'}
                                                                           })}
                                                         />
                                                     </div>

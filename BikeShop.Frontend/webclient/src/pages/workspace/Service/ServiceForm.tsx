@@ -116,7 +116,9 @@ const ServiceForm = () => {
                                          divClassName={s.content_detailsInput}
                                          disabled={currentService === null && !isCreating}
                         />
-                        <ControlledSelect control={formControl} name={'userMasterId'} label={'Мастер'}
+                        <ControlledSelect control={formControl}
+                                          name={'userMasterId'}
+                                          label={'Мастер'}
                                           className={s.content_masterInput}
                                           disabled={currentService === null && !isCreating}
                                           data={masters.map((n) => {
@@ -149,9 +151,13 @@ const ServiceForm = () => {
                         </div>
                     </div>
                     <div className={s.infoFields_clientCard}>
-                        <ControlledClientCard name={'client'} control={formControl} disabled={!isCreating}
-                                              state={openClientModal} setState={setOpenClientModal}
-                                              rules={{validate: (value: IUser) => value.id !== null}}/>
+                        <ControlledClientCard name={'client'}
+                                              control={formControl}
+                                              disabled={!isCreating}
+                                              state={openClientModal}
+                                              setState={setOpenClientModal}
+                                              rules={{validate: (value: IUser) => value.id !== null}}
+                        />
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}
                                 onClick={clearAllServiceInfo}>
