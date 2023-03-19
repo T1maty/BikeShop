@@ -273,6 +273,9 @@
     }
 
     .productOptions_optionsList {
+        overflow-y: auto;
+        max-height: 180px;
+
         .optionsList_item {
             margin-bottom: $defaultSmallMargin;
 

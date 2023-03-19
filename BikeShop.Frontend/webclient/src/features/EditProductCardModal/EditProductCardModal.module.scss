@@ -79,9 +79,7 @@
         }
 
         .rightSide_productDetails {
-           @include selectOptionsBlock;
+            @include selectOptionsBlock;
         }
     }
 }
-
-
