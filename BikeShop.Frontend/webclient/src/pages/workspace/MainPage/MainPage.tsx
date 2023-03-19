@@ -9,6 +9,8 @@ import {BikeShopPaths} from "../../../app/routes/paths";
 import {IUser} from "../../../entities";
 import useMainPageStore from "./MainPageStore";
 import CreateProductModal from "../../../features/CreateProductModal/CreateProductModal";
+import {EditProductCardModal} from "../../../features/EditProductCardModal/EditProductCardModal";
+import useEditProductCardModal from "../../../features/EditProductCardModal/EditProductCardModalStore";
 
 const MainPage = () => {
 
@@ -17,6 +19,7 @@ const MainPage = () => {
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const setOpenPayModal = usePayModal(s => s.setOpenPayModal)
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
+    const setOpenEditProductCardModal = useEditProductCardModal(s => s.setOpenEditProductCardModal)
 
     // const setServiceUser = useService(s => s.setCurrentUser)
     const user = useMainPageStore(s => s.user)
@@ -51,10 +54,11 @@ const MainPage = () => {
         // <div className={s.mainPageWrapper}>
         <div className={s.mainPageMainBlock}>
             <CreateProductModal/>
+            <EditProductCardModal/>
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {setOpenEditProductCardModal(true)}}>
                             Создать заказ
                         </Button>
                         <Button onClick={() => {}}>

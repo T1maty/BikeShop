@@ -16,7 +16,15 @@ export const EditProductCardModal = () => {
             aria-describedby="modal-modal-description"
         >
             <div className={s.editProductCardModal_mainBlock}>
-
+                <div className={s.editProductCardModal_leftSide}>
+                    <div className={s.leftSide_imageGallery}>1</div>
+                    <div className={s.leftSide_descriptionEditor}>2</div>
+                </div>
+                <div className={s.editProductCardModal_rightSide}>
+                    <div className={s.rightSide_tagEditor}>1</div>
+                    <div className={s.rightSide_productOptions}>2</div>
+                    <div className={s.rightSide_productDetails}>3</div>
+                </div>
             </div>
         </Modal>
     )

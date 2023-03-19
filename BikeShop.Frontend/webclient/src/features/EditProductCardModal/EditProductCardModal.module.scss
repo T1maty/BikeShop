@@ -3,6 +3,43 @@
 
 .editProductCardModal_mainBlock {
     @include defaultModalStyle;
+    @include flexOnlyBetween;
+    gap: $defaultLargeMargin;
+    min-width: 1000px;
+    min-height: 600px;
 
+    .editProductCardModal_leftSide {
+        @include flexColumn;
+        gap: $defaultLargeMargin;
+        width: 100%;
+
+        .leftSide_imageGallery {
+            @include defaultBlockStyles($themeColorMilk);
+            height: 50%;
+        }
+        .leftSide_descriptionEditor {
+            @include defaultBlockStyles($themeColorMilk);
+            height: 50%;
+        }
+    }
+    .editProductCardModal_rightSide {
+        @include flexColumn;
+        gap: $defaultLargeMargin;
+        width: 100%;
+
+        .rightSide_tagEditor {
+            @include defaultBlockStyles($themeColorMilk);
+            height: 20%;
+        }
+        .rightSide_productOptions {
+            @include defaultBlockStyles($themeColorGray);
+            height: 40%;
+        }
+        .rightSide_productDetails {
+            @include defaultBlockStyles($themeColorGray);
+            height: 40%;
+        }
+    }
 }
+
 

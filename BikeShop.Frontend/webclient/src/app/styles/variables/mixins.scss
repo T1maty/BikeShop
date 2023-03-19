@@ -56,7 +56,7 @@
     //box-shadow: 24;
 }
 
-// mixins for UI
+// mixins for UI components
 // textField size
 @mixin defaultFiledStyle() {
     @include flexCenter;
@@ -69,6 +69,14 @@
 @mixin widthHeightFull() {
     width: 100%;
     height: 100%;
+}
+
+// block styles
+@mixin defaultBlockStyles($bgColor) {
+    background-color: $bgColor;
+    padding: $defaultLargeMargin;
+    border-radius: $smallBorderRadius;
+    width: 100%;
 }
 
 // title styles
