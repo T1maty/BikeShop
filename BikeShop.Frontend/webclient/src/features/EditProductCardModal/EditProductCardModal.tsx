@@ -4,7 +4,7 @@ import {Modal} from "@mui/material"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Button, ControlledInput, ControlledSelect} from "../../shared/ui"
 import {useForm} from "react-hook-form"
-import {Errors} from "../../entities/errors/workspaceErrors";
+import {Errors} from "../../entities/errors/workspaceErrors"
 
 export const EditProductCardModal = () => {
 
@@ -12,8 +12,8 @@ export const EditProductCardModal = () => {
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
 
     const [options, setOptions] = useState([
-        {id: '1', name: 'Размер шлема', options: ['S', 'M', 'L']},
-        {id: '2', name: 'Цвет шлема', options: []},
+        {id: '1', name: 'Размер шлема', options: [{id: '1', name: 'S'}, {id: '1', name: 'M'}, {id: '1', name: 'L'}]},
+        {id: '2', name: 'Цвет шлема', options: [{id: '1', name: 'Red'}, {id: '1', name: 'Blue'}, {id: '1', name: 'White'}]},
     ])
 
     const [details, setDetails] = useState([
@@ -25,12 +25,15 @@ export const EditProductCardModal = () => {
     const formControl = useForm<any>({
         defaultValues: {
             option: '',
-            details: '',
+            detail: '',
         }
     })
 
-    const deleteOptionsListHandler = (detailsItem: any) => {
-        setDetails(details.filter(el => el.id !== detailsItem.id))
+    const deleteOptionsListHandler = (optionsItem: any) => {
+        setOptions(options.filter(el => el.id !== optionsItem.id))
+    }
+    const deleteOptionHandler = (listId: string, optionId: string) => {
+        setOptions(options.map(el => el.id === listId ? {...el, options: el.options.filter(opt => opt.id !== optionId)} : el))
     }
 
     const deleteDetailsListHandler = (detailsItem: any) => {
@@ -74,13 +77,21 @@ export const EditProductCardModal = () => {
                                                 <legend>{opt.name}</legend>
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
-                                                        <div className={s.item_deleteFullItem}>Удалить</div>
+                                                        <div className={s.item_deleteFullItem}
+                                                             onClick={() => {deleteOptionsListHandler(opt)}}
+                                                        >
+                                                            Удалить
+                                                        </div>
                                                         {
                                                             opt.options.map(el => {
                                                                 return (
-                                                                    <div className={s.item_content}>
-                                                                        <div className={s.item_title}>{el}</div>
-                                                                        <div className={s.item_delete}>X</div>
+                                                                    <div className={s.item_content} key={el.id}>
+                                                                        <div className={s.item_title}>{el.name}</div>
+                                                                        <div className={s.item_delete}
+                                                                             onClick={() => {deleteOptionHandler(opt.id, el.id)}}
+                                                                        >
+                                                                            X
+                                                                        </div>
                                                                     </div>
                                                                 )
                                                             })
@@ -88,12 +99,13 @@ export const EditProductCardModal = () => {
                                                     </div>
                                                     <div className={s.rowItems_chooseItem}>
                                                         <Button buttonDivWrapper={s.options_button}>+</Button>
-                                                        <ControlledSelect control={formControl} name={'option'} label={'Опция'}
+                                                        <ControlledSelect control={formControl}
+                                                                          name={'optionVersion'}
+                                                                          label={'Разновидность опции'}
                                                                           className={s.options_search}
-                                                                          data={options.map((el) => {
+                                                                          data={options.map((el: any) => {
                                                                               return {
-                                                                                  id: el.id,
-                                                                                  value: el.name ? el.name : 'Нет опции'
+                                                                                  id: el.id, value: el.name ? el.name : 'Нет опции'
                                                                               }
                                                                           })}
                                                         />
@@ -107,7 +119,9 @@ export const EditProductCardModal = () => {
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}>+</Button>
-                            <ControlledSelect control={formControl} name={'option'} label={'Опция'}
+                            <ControlledSelect control={formControl}
+                                              name={'option'}
+                                              label={'Опция'}
                                               className={s.options_search}
                                               data={options.map((el) => {
                                                   return {id: el.id, value: el.name ? el.name : 'Нет опции'}
@@ -145,7 +159,7 @@ export const EditProductCardModal = () => {
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}>+</Button>
-                            <ControlledInput name={'details'}
+                            <ControlledInput name={'detail'}
                                              label={'Характеристика'}
                                              control={formControl}
                                              rules={{required: Errors[0].name}}
