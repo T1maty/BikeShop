@@ -18,6 +18,7 @@
             @include defaultBlockStyles($themeColorMilk);
             height: 50%;
         }
+
         .leftSide_descriptionEditor {
             @include defaultBlockStyles($themeColorMilk);
             @include flexColumnOnly;
@@ -28,6 +29,7 @@
                 font-size: 18px;
                 margin-bottom: $defaultSmallMargin;
             }
+
             .descriptionEditor_textarea {
                 height: 100%;
 
@@ -50,6 +52,7 @@
 
         }
     }
+
     .editProductCardModal_rightSide {
         @include flexColumn;
         gap: $defaultLargeMargin;
@@ -65,123 +68,18 @@
                 font-size: 18px;
                 margin-bottom: $defaultSmallMargin;
             }
+
             .tagEditor_tags {
 
             }
         }
+
         .rightSide_productOptions {
-            @include defaultBlockStyles($themeColorGray);
-            height: 100%;
-
-            > div:not(:last-child) {
-                @include flexColumnOnly;
-                margin-bottom: $defaultSmallMargin;
-            }
-
-            // !!! надо рефакторить !!!
-            .productOptions_options {
-                .options_box {
-                    border-radius: $smallBorderRadius;
-
-                    .options_rowItems {
-                        > div {
-                            margin: $defaultSmallMargin 0;
-                        }
-
-                        .options_chooseItem {
-                            @include flexBetween;
-                            gap: $defaultLargeMargin;
-
-                            .options_button {
-                                button {
-                                    @include flexCenter;
-                                    width: 40px;
-                                    height: 40px;
-                                    font-size: 40px;
-                                }
-                            }
-                            .options_select {
-                                width: 100%;
-                            }
-                        }
-                    }
-                }
-            }
-            .productOptions_select {
-                .options_chooseItem {
-                    @include flexBetween;
-                    gap: $defaultLargeMargin;
-
-                    .options_button {
-                        button {
-                            @include flexCenter;
-                            width: 40px;
-                            height: 40px;
-                            font-size: 40px;
-                        }
-                    }
-                    .options_select {
-                        width: 100%;
-                    }
-                }
-            }
+            @include selectOptionsBlock;
         }
+
         .rightSide_productDetails {
-            @include defaultBlockStyles($themeColorGray);
-            height: 100%;
-
-            > div:not(:last-child) {
-                @include flexColumnOnly;
-                margin-bottom: $defaultSmallMargin;
-            }
-
-            // !!! надо рефакторить !!!
-            .productOptions_options {
-                .options_box {
-                    border-radius: $smallBorderRadius;
-
-                    .options_rowItems {
-                        > div {
-                            margin: $defaultSmallMargin 0;
-                        }
-
-                        .options_chooseItem {
-                            @include flexBetween;
-                            gap: $defaultLargeMargin;
-
-                            .options_button {
-                                button {
-                                    @include flexCenter;
-                                    width: 40px;
-                                    height: 40px;
-                                    font-size: 40px;
-                                }
-                            }
-                            .options_select {
-                                width: 100%;
-                            }
-                        }
-                    }
-                }
-            }
-            .productOptions_select {
-                .options_chooseItem {
-                    @include flexBetween;
-                    gap: $defaultLargeMargin;
-
-                    .options_button {
-                        button {
-                            @include flexCenter;
-                            width: 40px;
-                            height: 40px;
-                            font-size: 40px;
-                        }
-                    }
-                    .options_textFiled {
-                        width: 100%;
-                    }
-                }
-            }
+           @include selectOptionsBlock;
         }
     }
 }

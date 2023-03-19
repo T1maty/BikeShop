@@ -27,7 +27,9 @@ export const EditProductCardModal = () => {
     return (
         <Modal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -50,59 +52,81 @@ export const EditProductCardModal = () => {
 
                     </div>
 
-                    <div className={s.rightSide_productOptions}>
-                        <div className={s.productOptions_options}>
-                            <fieldset className={s.options_box}>
-                                <legend>Название опции</legend>
-                                <div className={s.options_rowItems}>
-                                    <div>Вариант опции</div>
-                                    <div className={s.options_chooseItem}>
-                                        <Button buttonDivWrapper={s.options_button}>+</Button>
-                                        <ControlledSelect control={formControl} name={'option'} label={'Опция'}
-                                                          className={s.options_select}
-                                                          data={options.map((el) => {
-                                                              return {id: el.id, value: el.name ? el.name : 'Нет опции'}
-                                                          })}
-                                        />
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
 
-                        <div className={s.productOptions_select}>
-                            <div className={s.options_chooseItem}>
-                                <Button buttonDivWrapper={s.options_button}>+</Button>
-                                <ControlledSelect control={formControl} name={'option'} label={'Опция'}
-                                                  className={s.options_select}
-                                                  data={options.map((el) => {
-                                                      return {id: el.id, value: el.name ? el.name : 'Нет опции'}
-                                                  })}
-                                />
+                    <div className={s.rightSide_productOptions}>
+                        <div className={s.productOptions_optionsList}>
+                            <div className={s.optionsList_item}>
+                                <fieldset className={s.options_box}>
+                                    <legend>Название опции</legend>
+                                    <div className={s.options_rowItems}>
+                                        <div className={s.rowItems_item}>
+                                            <div className={s.item_deleteFullItem}>Удалить</div>
+                                            <div className={s.item_content}>
+                                                <div className={s.item_title}>Вариант опции</div>
+                                                <div className={s.item_delete}>X</div>
+                                            </div>
+                                            <div className={s.item_content}>
+                                                <div className={s.item_title}>Вариант опции</div>
+                                                <div className={s.item_delete}>X</div>
+                                            </div>
+                                        </div>
+                                        <div className={s.rowItems_chooseItem}>
+                                            <Button buttonDivWrapper={s.options_button}>+</Button>
+                                            <ControlledSelect control={formControl} name={'option'} label={'Опция'}
+                                                              className={s.options_search}
+                                                              data={options.map((el) => {
+                                                                  return {
+                                                                      id: el.id,
+                                                                      value: el.name ? el.name : 'Нет опции'
+                                                                  }
+                                                              })}
+                                            />
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
+
+                        <div className={s.productOptions_selectRow}>
+                            <Button buttonDivWrapper={s.options_button}>+</Button>
+                            <ControlledSelect control={formControl} name={'option'} label={'Опция'}
+                                              className={s.options_search}
+                                              data={options.map((el) => {
+                                                  return {id: el.id, value: el.name ? el.name : 'Нет опции'}
+                                              })}
+                            />
+                        </div>
                     </div>
+
 
                     <div className={s.rightSide_productDetails}>
-                        <div className={s.productOptions_options}>
-                            <fieldset className={s.options_box}>
-                                <legend>Характеристика</legend>
-                                <div className={s.options_rowItems}>
-                                    <div>Описание</div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div className={s.productOptions_select}>
-                            <div className={s.options_chooseItem}>
-                                <Button buttonDivWrapper={s.options_button}>+</Button>
-                                <ControlledInput name={'details'}
-                                                 label={'Характеристика'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                                 divClassName={s.options_textFiled}
-                                />
+                        <div className={s.productOptions_optionsList}>
+                            <div className={s.optionsList_item}>
+                                <fieldset className={s.options_box}>
+                                    <legend>Название характеристики</legend>
+                                    <div className={s.options_rowItems}>
+                                        <div className={s.rowItems_item}>
+                                            <div className={s.item_deleteFullItem}>Удалить</div>
+                                            <div className={s.item_content}>
+                                                Характеристика
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
+
+                        <div className={s.productOptions_selectRow}>
+                            <Button buttonDivWrapper={s.options_button}>+</Button>
+                            <ControlledInput name={'details'}
+                                             label={'Характеристика'}
+                                             control={formControl}
+                                             rules={{required: Errors[0].name}}
+                                             divClassName={s.options_search}
+                            />
+                        </div>
                     </div>
+
                 </div>
             </div>
         </Modal>

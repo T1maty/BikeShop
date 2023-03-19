@@ -261,3 +261,97 @@
         }
     }
 }
+
+// EditProductCardModal
+@mixin selectOptionsBlock() {
+    @include defaultBlockStyles($themeColorGray);
+    height: 100%;
+
+    > div:not(:last-child) {
+        @include flexColumnOnly;
+        margin-bottom: $defaultSmallMargin;
+    }
+
+    .productOptions_optionsList {
+        .optionsList_item {
+            margin-bottom: $defaultSmallMargin;
+
+            .options_box {
+                border-radius: $smallBorderRadius;
+
+                .options_rowItems {
+                    > div {
+                        margin: $defaultSmallMargin 0;
+                    }
+
+                    .rowItems_item {
+                        .item_deleteFullItem {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            @include hoverCursorPointer;
+                            margin-bottom: $defaultSmallMargin;
+                            padding: 5px;
+                            border: 1px solid white;
+                            border-radius: $extraSmallBorderRadius;
+                            background-color: red;
+                            color: white;
+
+                        }
+                        .item_content {
+                            @include flexBetween;
+                            margin-bottom: $defaultSmallMargin;
+
+                            .item_title {
+
+                            }
+                            .item_delete {
+                                padding: 5px;
+                                background-color: red;
+                                border: 1px solid white;
+                                border-radius: $extraSmallBorderRadius;
+                                color: white;
+                                @include hoverCursorPointer;
+                            }
+                        }
+                    }
+                    .rowItems_chooseItem {
+                        @include flexBetween;
+                        gap: $defaultLargeMargin;
+
+                        .options_button {
+                            button {
+                                @include flexCenter;
+                                width: 40px;
+                                height: 40px;
+                                font-size: 40px;
+                            }
+                        }
+
+                        .options_search {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .productOptions_selectRow {
+        @include flexBetween;
+        gap: $defaultLargeMargin;
+
+        .options_button {
+            button {
+                @include flexCenter;
+                width: 40px;
+                height: 40px;
+                font-size: 40px;
+            }
+        }
+
+        .options_search {
+            width: 100%;
+        }
+    }
+}
