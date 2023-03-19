@@ -14,8 +14,8 @@ const MainPage = () => {
 
     const navigate = useNavigate();
 
-    const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
-    const setPayModal = usePayModal(s => s.setPayModal)
+    const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
+    const setOpenPayModal = usePayModal(s => s.setOpenPayModal)
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
 
     // const setServiceUser = useService(s => s.setCurrentUser)
@@ -39,12 +39,12 @@ const MainPage = () => {
         // setServiceUser(user)
         setUser(user)
         setIsClientChosen(true)
-        setChooseClientModal(false)
+        setOpenClientModal(false)
         console.log('MainPage click user', user)
     }
 
     const createServiceHandler = () => {
-        setChooseClientModal(true)
+        setOpenClientModal(true)
     }
     // update commit
     return (
@@ -122,7 +122,7 @@ const MainPage = () => {
                             }}/>
                             <Button buttonDivWrapper={s.search_chooseClientButton}
                                     onClick={() => {
-                                        setChooseClientModal(true)
+                                        setOpenClientModal(true)
                                     }}
                             >
                                 Выбрать клиента
@@ -150,7 +150,7 @@ const MainPage = () => {
                             </div>
                             <PayModal/>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {setPayModal(true)}}>
+                                    onClick={() => {setOpenPayModal(true)}}>
                                 К оплате
                             </Button>
                         </div>

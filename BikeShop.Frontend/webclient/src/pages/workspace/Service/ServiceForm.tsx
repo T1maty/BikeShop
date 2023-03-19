@@ -14,14 +14,14 @@ import useAuth from "../../../entities/globalStores/useAuthUser";
 const ServiceForm = () => {
     const {enqueueSnackbar} = useSnackbar()
 
-    const setSelectProductModal = useSelectProductWorkModal(s => s.setSelectProductModal)
+    const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
     const masters = useService(s => s.masters)
     const currentService = useService(s => s.currentService)
     const setCurrentService = useService(s => s.setCurrentService)
 
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
-    const setSelectWorkModal = useSelectProductWorkModal(s => s.setSelectWorkModal)
+    const setOpenSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
 
     const [isCreating, setIsCreating] = useState(false)
     const [openClientModal, setOpenClientModal] = useState(false)
@@ -169,7 +169,7 @@ const ServiceForm = () => {
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор товаров'}
                                           serviceTableCallback={() => {
-                                              setSelectProductModal(true)
+                                              setOpenSelectProductModal(true)
                                           }}
                             />
                             <SelectProductModal products={field.value}
@@ -185,7 +185,7 @@ const ServiceForm = () => {
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор услуг'}
                                           serviceTableCallback={() => {
-                                              setSelectWorkModal(true)
+                                              setOpenSelectWorkModal(true)
                                           }}
                             />
                             <SelectWorkModal works={field.value} setWorks={field.onChange}/>

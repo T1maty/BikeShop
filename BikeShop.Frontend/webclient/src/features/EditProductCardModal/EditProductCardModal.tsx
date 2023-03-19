@@ -1,5 +1,5 @@
 import React from 'react'
-import s from "../CreateQuantityUnitModal/CreateQuantityUnitModal.module.scss"
+import s from "./EditProductCardModal.module.scss"
 import {Modal} from "@mui/material"
 import useEditProductCardModal from "./EditProductCardModalStore"
 

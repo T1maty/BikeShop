@@ -14,17 +14,17 @@ const Cashbox = () => {
 
     const isActiveTable = true
 
-    const setChooseClientModal = useChooseClientModal(s => s.setChooseClientModal)
-    const setChooseDiscountModal = useChooseDiscountModal(s => s.setChooseDiscountModal)
-    const setChooseProductModal = useChooseProductModal(s => s.setChooseProductModal)
-    const setPayModal = usePayModal(s => s.setPayModal)
+    const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
+    const setOpenDiscountModal = useChooseDiscountModal(s => s.setOpenDiscountModal)
+    const setOpenProductModal = useChooseProductModal(s => s.setOpenProductModal)
+    const setOpenPayModal = usePayModal(s => s.setOpenPayModal)
 
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
 
     const chooseClientHandler = (user: IUser) => {
         setUser(user)
-        setChooseClientModal(false)
+        setOpenClientModal(false)
         console.log('Cashbox click user', user)
     }
 
@@ -52,7 +52,7 @@ const Cashbox = () => {
                         <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
                         <div className={s.leftSide_client_buttons}>
                                 <Button buttonDivWrapper={s.client_buttons_choose}
-                                        onClick={() => setChooseClientModal(true)}
+                                        onClick={() => setOpenClientModal(true)}
                                 >
                                     Выбрать клиента
                                 </Button>
@@ -82,7 +82,7 @@ const Cashbox = () => {
                         <div className={s.discount_buttons}>
                             <ChooseDiscountModal/>
                                 <Button buttonDivWrapper={s.buttons_choose}
-                                        onClick={() => setChooseDiscountModal(true)}
+                                        onClick={() => setOpenDiscountModal(true)}
                                 >
                                     Выбрать скидку для клиента
                                 </Button>
@@ -99,7 +99,7 @@ const Cashbox = () => {
                     <div className={s.cashboxMainBlock_rightSideHeader}>
                         <ChooseProductModal/>
                             <Button buttonDivWrapper={s.header_chooseBtn}
-                                    onClick={() => {setChooseProductModal(true)}}
+                                    onClick={() => {setOpenProductModal(true)}}
                             >
                                 Выбрать товары
                             </Button>
@@ -135,7 +135,7 @@ const Cashbox = () => {
 
                         <div className={s.rightSideBottom_payBlock}>
                             <PayModal/>
-                            <Button onClick={() => {setPayModal(true)}}>
+                            <Button onClick={() => {setOpenPayModal(true)}}>
                                 К оплате
                             </Button>
                         </div>

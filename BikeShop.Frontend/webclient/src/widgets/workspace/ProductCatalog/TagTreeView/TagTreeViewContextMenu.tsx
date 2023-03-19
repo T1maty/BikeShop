@@ -10,7 +10,7 @@ import useCreateProductModal from "../../../../features/CreateProductModal/Creat
 const TagTreeViewContextMenu = () => {
     const contextMenuVisible = useTagTreeView(s => s.contextMenuVisible)
     const contextXY = useTagTreeView(s => s.contextMenuXY)
-    const setCreateTagModal = useCreateTagModal(s => s.setCreateTagModal)
+    const setOpenCreateTagModal = useCreateTagModal(s => s.setOpenCreateTagModal)
     const setParentNode = useCreateTagModal(s => s.setParentNode)
     const setContextVisible = useTagTreeView(s => s.setContextMenuVisible)
     const treeViewData = useTagTreeView(s => s.treeViewTags)
@@ -43,30 +43,44 @@ const TagTreeViewContextMenu = () => {
                     return n.id == selected
                 })[0]
                 openCreateProduct(tag)
-            }}>Добавить товар с выбранным тегом</MenuItem>
+            }}
+            >
+                Добавить товар с выбранным тегом
+            </MenuItem>
+
             <MenuItem onClick={() => {
                 setContextVisible(false, 0, 0)
                 let tag = treeViewData.filter((n) => {
                     return n.id == selected
                 })[0]
                 openUpdateTag(tag)
-            }}>Редактировать</MenuItem>
+            }}
+            >
+                Редактировать
+            </MenuItem>
+
             <MenuItem onClick={() => {
                 setContextVisible(false, 0, 0)
                 setParentNode({} as IProductTag)
-                setCreateTagModal(true)
-            }}>Создать в корне</MenuItem>
+                setOpenCreateTagModal(true)
+            }}
+            >
+                Создать в корне
+            </MenuItem>
+
             <MenuItem onClick={() => {
                 setContextVisible(false, 0, 0)
                 setParentNode(treeViewData.filter((n) => {
                     return n.id == selected
                 })[0])
-                setCreateTagModal(true)
-            }}>Создать потомка</MenuItem>
-            <MenuItem>Переместить</MenuItem>
-            <MenuItem onClick={() => {
+                setOpenCreateTagModal(true)
+            }}
+            >
+                Создать потомка
+            </MenuItem>
 
-            }}>Удалить</MenuItem>
+            <MenuItem>Переместить</MenuItem>
+            <MenuItem onClick={() => {}}>Удалить</MenuItem>
         </Menu>
     );
 };
