@@ -1,0 +1,8 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.editProductCardModal_mainBlock {
+    @include defaultModalStyle;
+
+}
+

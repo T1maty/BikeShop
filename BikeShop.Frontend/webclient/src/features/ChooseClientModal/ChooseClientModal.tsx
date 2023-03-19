@@ -21,8 +21,8 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
 
     const {enqueueSnackbar} = useSnackbar()
 
-    const open = useChooseClientModal(s => s.chooseClientModal)
-    const setOpen = useChooseClientModal(s => s.setChooseClientModal)
+    const open = useChooseClientModal(s => s.openClientModal)
+    const setOpen = useChooseClientModal(s => s.setOpenClientModal)
     const isLoading = useChooseClientModal(s => s.isLoading)
 
     const users = useChooseClientModal(s => s.users)

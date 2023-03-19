@@ -12,7 +12,7 @@ export const CreateStorageModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
-    const open = useCreateStorageModal(s => s.createStorageModal)
+    const open = useCreateStorageModal(s => s.openCreateStorageModal)
     const setOpen = useCreateStorageModal(s => s.setOpenCreateStorageModal)
 
     const currentStorage = useCreateStorageModal(s => s.currentStorage)

@@ -1,19 +1,19 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
 
 interface SelectProductWorkModalStore {
-    selectProductModal: boolean
-    setSelectProductModal: (value: boolean) => void
-    selectWorkModal: boolean
-    setSelectWorkModal: (value: boolean) => void
+    openSelectProductModal: boolean
+    setOpenSelectProductModal: (value: boolean) => void
+    openSelectWorkModal: boolean
+    setOpenSelectWorkModal: (value: boolean) => void
 }
 
 const useSelectProductWorkModal = create<SelectProductWorkModalStore>()(/*persist(*/devtools(immer((set) => ({
-    selectProductModal: false,
-    setSelectProductModal: (value) => set({selectProductModal: value}),
-    selectWorkModal: false,
-    setSelectWorkModal: (value) => set({selectWorkModal: value})
+    openSelectProductModal: false,
+    setOpenSelectProductModal: (value) => set({openSelectProductModal: value}),
+    openSelectWorkModal: false,
+    setOpenSelectWorkModal: (value) => set({openSelectWorkModal: value})
 })))/*, {
     name: "selectProductWorkModalStore",
     version: 1

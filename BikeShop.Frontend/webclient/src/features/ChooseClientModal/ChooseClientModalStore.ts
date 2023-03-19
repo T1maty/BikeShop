@@ -11,8 +11,8 @@ interface SearchClient {
 }
 
 interface ChooseClientModalStore {
-    chooseClientModal: boolean
-    setChooseClientModal: (value: boolean) => void
+    openClientModal: boolean
+    setOpenClientModal: (value: boolean) => void
     isLoading: boolean
     // isClientChosen: boolean
     // setIsClientChosen: (value: boolean) => void
@@ -27,8 +27,8 @@ interface ChooseClientModalStore {
 }
 
 const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtools(immer((set) => ({
-    chooseClientModal: false,
-    setChooseClientModal: (value) => set({chooseClientModal: value}),
+    openClientModal: false,
+    setOpenClientModal: (value) => set({openClientModal: value}),
     isLoading: false,
     // isClientChosen: false,
     // setIsClientChosen: (value) => set({isClientChosen: value}),

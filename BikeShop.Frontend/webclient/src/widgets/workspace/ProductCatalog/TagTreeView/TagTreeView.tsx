@@ -40,8 +40,8 @@ const TagTreeView = () => {
                  event.preventDefault()
              }}
         >
-            <UpdateTagModal onSeccuss={updateTag}/>
-            <CreateTagModal onSeccuss={addTag}/>
+            <UpdateTagModal onSuccess={updateTag}/>
+            <CreateTagModal onSuccess={addTag}/>
             <TagTreeViewContextMenu/>
             <TreeView
                 aria-label="controlled"

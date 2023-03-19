@@ -1,13 +1,13 @@
-import {create} from 'zustand';
-import {devtools, persist} from 'zustand/middleware';
-import {immer} from 'zustand/middleware/immer';
-import {AxiosResponse} from 'axios';
-import {CreateServiceResponse, ServiceItem} from "../../entities";
-import {$api} from "../../shared";
+import {create} from 'zustand'
+import {devtools, persist} from 'zustand/middleware'
+import {immer} from 'zustand/middleware/immer'
+import {AxiosResponse} from 'axios'
+import {CreateServiceResponse, ServiceItem} from "../../entities"
+import {$api} from "../../shared"
 
 interface ArchiveModalStore {
-    chooseArchiveModal: boolean
-    setArchiveModal: (value: boolean) => void
+    openArchiveModal: boolean
+    setOpenArchiveModal: (value: boolean) => void
     isLoading: boolean
 
     currentService: ServiceItem | null
@@ -21,8 +21,8 @@ interface ArchiveModalStore {
 }
 
 const useArchiveModal = create<ArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    chooseArchiveModal: true,
-    setArchiveModal: (value) => set({chooseArchiveModal: value}),
+    openArchiveModal: true,
+    setOpenArchiveModal: (value) => set({openArchiveModal: value}),
     isLoading: false,
 
     currentService: null,

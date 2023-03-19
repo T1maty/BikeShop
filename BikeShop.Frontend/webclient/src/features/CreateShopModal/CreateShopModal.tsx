@@ -12,7 +12,7 @@ export const CreateShopModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
-    const open = useCreateShopModal(s => s.createShopModal)
+    const open = useCreateShopModal(s => s.openCreateShopModal)
     const setOpen = useCreateShopModal(s => s.setOpenCreateShopModal)
 
     const currentShop = useCreateShopModal(s => s.currentShop)

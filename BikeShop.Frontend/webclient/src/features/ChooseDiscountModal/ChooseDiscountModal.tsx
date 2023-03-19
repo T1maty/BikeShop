@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {Box, FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent} from '@mui/material';
-import {Button} from '../../shared/ui';
+import React, {useState} from 'react'
+import {Box, FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent} from '@mui/material'
+import {Button} from '../../shared/ui'
 import s from './ChooseDiscountModal.module.scss'
-import useChooseDiscountModal from './ChooseDiscountModalStore';
+import useChooseDiscountModal from './ChooseDiscountModalStore'
 
 export const ChooseDiscountModal = () => {
-    const open = useChooseDiscountModal(s => s.chooseDiscountModal)
-    const setOpen = useChooseDiscountModal(s => s.setChooseDiscountModal)
+    const open = useChooseDiscountModal(s => s.openDiscountModal)
+    const setOpen = useChooseDiscountModal(s => s.setOpenDiscountModal)
 
     const [age, setAge] = useState<string>('')
 

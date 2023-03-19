@@ -6,19 +6,19 @@ import {AxiosResponse} from "axios";
 import {$api} from "../../shared";
 
 interface createProductModalStore {
-    open: boolean,
-    product: IProduct,
-    setOpen: (value: boolean, product: IProduct) => void,
+    open: boolean
+    setOpen: (value: boolean, product: IProduct) => void
+    product: IProduct
     update: (data: IUpdateProduct) => Promise<AxiosResponse>
 }
 
 export const useUpdateProductModal = create<createProductModalStore>()(persist(devtools(immer((set) => ({
     open: false,
-    product: {} as IProduct,
     setOpen: (value, product) => {
         set({open: value})
         set({product: product})
     },
+    product: {} as IProduct,
     update: (data) => {
         return $api.put<IUpdateProduct>('/product/update', data)
     }

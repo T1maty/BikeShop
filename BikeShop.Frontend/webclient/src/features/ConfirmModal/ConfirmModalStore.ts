@@ -1,17 +1,15 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
 
 interface ConfirmModalStore {
-    confirmModal: boolean
-    setConfirmModal: (value: boolean) => void
+    openConfirmModal: boolean
+    setOpenConfirmModal: (value: boolean) => void
 }
 
 const useConfirmModal = create<ConfirmModalStore>()(persist(devtools(immer((set) => ({
-    confirmModal: false,
-    setConfirmModal: (value) => set({
-        confirmModal: value
-    }),
+    openConfirmModal: false,
+    setOpenConfirmModal: (value) => set({openConfirmModal: value}),
 }))), {
     name: "confirmModalStore",
     version: 1

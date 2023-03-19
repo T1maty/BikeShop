@@ -12,10 +12,10 @@ import {MenuIcon} from "../../../../shared/ui/IconButtons/MenuIcon"
 import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon"
 import {Badge} from "../../../../shared/ui/Badge/Badge"
 import {BikeShopPaths} from "../../../../app/routes/paths"
-import useCreateStorageModal from "../../../../features/CreateShopStorageModal/CreateStorageModalStore"
-import useCreateShopModal from "../../../../features/CreateShopStorageModal/CreateShopModalStore"
-import useCreateCurrencyModal from "../../../../features/CreateShopStorageModal/CreateCurrencyModalStore"
-import useCreateQuantityUnitModal from "../../../../features/CreateShopStorageModal/CreateQuantityUnitModalStore"
+import useCreateStorageModal from "../../../../features/CreateStorageModal/CreateStorageModalStore"
+import useCreateShopModal from "../../../../features/CreateShopModal/CreateShopModalStore"
+import useCreateCurrencyModal from "../../../../features/CreateCurrencyModal/CreateCurrencyModalStore"
+import useCreateQuantityUnitModal from "../../../../features/CreateQuantityUnitModal/CreateQuantityUnitModalStore"
 
 export const Header: FC = () => {
 

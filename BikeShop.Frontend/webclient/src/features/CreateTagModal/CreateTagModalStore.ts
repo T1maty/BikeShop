@@ -6,8 +6,8 @@ import {AxiosResponse} from 'axios';
 import {$api} from "../../shared";
 
 interface createTagModalStore {
-    createTagModal: boolean
-    setCreateTagModal: (value: boolean) => void
+    openCreateTagModal: boolean
+    setOpenCreateTagModal: (value: boolean) => void
 
     parentNode: IProductTag,
     setParentNode: (node: IProductTag) => void
@@ -16,16 +16,12 @@ interface createTagModalStore {
 }
 
 const useCreateTagModal = create<createTagModalStore>()(persist(devtools(immer((set) => ({
-    createTagModal: false,
+    openCreateTagModal: false,
+    setOpenCreateTagModal: (value) => set({openCreateTagModal: value}),
+
     parentNode: {} as IProductTag,
+    setParentNode: (node) => set({parentNode: node}),
 
-    setCreateTagModal: (value) => set({
-        createTagModal: value
-    }),
-
-    setParentNode: (node) => set({
-        parentNode: node
-    }),
     createTag: (tag) => {
         return $api.post<IProductTag>('/tag/create', tag)
     }

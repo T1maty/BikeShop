@@ -3,16 +3,13 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 
 interface ChooseDiscountModalStore {
-    chooseDiscountModal: boolean
-    setChooseDiscountModal: (value: boolean) => void
+    openDiscountModal: boolean
+    setOpenDiscountModal: (value: boolean) => void
 }
 
 const useChooseDiscountModal = create<ChooseDiscountModalStore>()(persist(devtools(immer((set) => ({
-    chooseDiscountModal: false,
-
-    setChooseDiscountModal: (value) => set({
-        chooseDiscountModal: value
-    }),
+    openDiscountModal: false,
+    setOpenDiscountModal: (value) => set({openDiscountModal: value}),
 }))), {
     name: "chooseDiscountModalStore",
     version: 1

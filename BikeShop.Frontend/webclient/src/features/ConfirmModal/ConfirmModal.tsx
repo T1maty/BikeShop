@@ -1,20 +1,20 @@
-import React from 'react';
-import {Modal} from "@mui/material";
-import {Button} from '../../shared/ui'
-import useConfirmModal from './ConfirmModalStore';
+import React from 'react'
 import s from './ConfirmModal.module.scss'
+import {Modal} from "@mui/material"
+import {Button} from '../../shared/ui'
+import useConfirmModal from './ConfirmModalStore'
 
 interface ConfirmModalProps {
     extraCallback: () => void
 }
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({extraCallback}) => {
-    const open = useConfirmModal(s => s.confirmModal)
-    const setOpen = useConfirmModal(s => s.setConfirmModal)
+    const open = useConfirmModal(s => s.openConfirmModal)
+    const setOpen = useConfirmModal(s => s.setOpenConfirmModal)
 
     const confirmButtonHandler = () => {
-        extraCallback();
-        setOpen(false);
+        extraCallback()
+        setOpen(false)
     }
 
     return (

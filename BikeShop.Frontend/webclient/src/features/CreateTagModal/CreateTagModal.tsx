@@ -6,12 +6,12 @@ import {ICreateTag, IProductTag} from "../../entities";
 import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
 
 interface props {
-    onSeccuss?: (tag: IProductTag) => void
+    onSuccess?: (tag: IProductTag) => void
 }
 
 const CreateTagModal = (props: props) => {
-    const open = useCreateTagModal(s => s.createTagModal)
-    const setOpen = useCreateTagModal(s => s.setCreateTagModal)
+    const open = useCreateTagModal(s => s.openCreateTagModal)
+    const setOpen = useCreateTagModal(s => s.setOpenCreateTagModal)
     const parentNode = useCreateTagModal(s => s.parentNode)
     const createTag = useCreateTagModal(s => s.createTag)
 
@@ -44,7 +44,7 @@ const CreateTagModal = (props: props) => {
         data.parentId = parentNode.id
         createTag(data).then(r => {
             setOpen(false)
-            props.onSeccuss ? props.onSeccuss(r.data) : true
+            props.onSuccess ? props.onSuccess(r.data) : true
             
             control.setValue('name', '')
             control.setValue('sortOrder', 0)

@@ -7,7 +7,7 @@ import {CreateStorageResponse} from '../../entities/responses/StorageResponse';
 import {CreateStorage, UpdateStorage} from '../../entities/requests/CreateStorage';
 
 interface CreateStorageModalStore {
-    createStorageModal: boolean
+    openCreateStorageModal: boolean
     setOpenCreateStorageModal: (value: boolean) => void
     isLoading: boolean
     setIsLoading: (value: boolean) => void
@@ -21,8 +21,8 @@ interface CreateStorageModalStore {
 }
 
 const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    createStorageModal: false,
-    setOpenCreateStorageModal: (value: boolean) => set({createStorageModal: value}),
+    openCreateStorageModal: false,
+    setOpenCreateStorageModal: (value: boolean) => set({openCreateStorageModal: value}),
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
 

@@ -8,13 +8,13 @@ import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore";
 
 export const PayModal = () => {
 
-    const open = usePayModal(s => s.payModal)
-    const setOpen = usePayModal(s => s.setPayModal)
+    const open = usePayModal(s => s.openPayModal)
+    const setOpen = usePayModal(s => s.setOpenPayModal)
     const user = useCashboxStore(s => s.user)
 
     const chooseButtonHandler = () => {
         // code here
-        setOpen(false);
+        setOpen(false)
     }
 
     return (

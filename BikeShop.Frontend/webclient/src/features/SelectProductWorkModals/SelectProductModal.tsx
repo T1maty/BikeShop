@@ -3,7 +3,7 @@ import {Modal} from '@mui/material'
 import s from './SelectProductWorkModal.module.scss'
 import useSelectProductWorkModal from './SelectProductWorkModalStore'
 import {SelectProduct} from '../../pages'
-import {ServiceItemProduct} from "../../entities/models/ServiceItem";
+import {ServiceItemProduct} from "../../entities/models/ServiceItem"
 
 interface SelectProductModalProps {
     products: ServiceItemProduct[]
@@ -12,8 +12,8 @@ interface SelectProductModalProps {
 
 export const SelectProductModal: React.FC<SelectProductModalProps> = (props: SelectProductModalProps) => {
 
-    const selectProductModal = useSelectProductWorkModal(s => s.selectProductModal)
-    const setSelectProductModal = useSelectProductWorkModal(s => s.setSelectProductModal)
+    const selectProductModal = useSelectProductWorkModal(s => s.openSelectProductModal)
+    const setSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
 
     return (
         <Modal

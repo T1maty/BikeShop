@@ -12,8 +12,8 @@ interface props {
 
 export const SelectWorkModal = (props: props) => {
 
-    const selectWorkModal = useSelectProductWorkModal(s => s.selectWorkModal)
-    const setSelectWorkModal = useSelectProductWorkModal(s => s.setSelectWorkModal)
+    const selectWorkModal = useSelectProductWorkModal(s => s.openSelectWorkModal)
+    const setSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
 
     return (
         <Modal

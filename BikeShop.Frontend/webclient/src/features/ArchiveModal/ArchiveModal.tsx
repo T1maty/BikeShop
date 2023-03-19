@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {Modal} from '@mui/material';
+import React, {useEffect, useState} from 'react'
+import {Modal} from '@mui/material'
 import s from './ArchiveModal.module.scss'
-import {ServiceItem} from '../../entities';
-import useArchiveModal from "./ArchiveModalStore";
-import {Button} from "../../shared/ui";
-import style from "../../shared/ui/Button/Button.module.scss";
+import {ServiceItem} from '../../entities'
+import useArchiveModal from "./ArchiveModalStore"
+import {Button} from "../../shared/ui"
+import style from "../../shared/ui/Button/Button.module.scss"
 
 type ArchiveModalStatusType = 'Ended' | 'Canceled' | 'Deleted'
 
 export const ArchiveModal = () => {
 
-    const open = useArchiveModal(s => s.chooseArchiveModal)
-    const setOpen = useArchiveModal(s => s.setArchiveModal)
+    const open = useArchiveModal(s => s.openArchiveModal)
+    const setOpen = useArchiveModal(s => s.setOpenArchiveModal)
     const isLoading = useArchiveModal(s => s.isLoading)
 
     const services = useArchiveModal(s => s.services)

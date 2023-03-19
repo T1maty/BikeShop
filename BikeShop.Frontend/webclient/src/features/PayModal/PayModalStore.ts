@@ -3,15 +3,13 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 
 interface PayModalStore {
-    payModal: boolean
-    setPayModal: (value: boolean) => void
+    openPayModal: boolean
+    setOpenPayModal: (value: boolean) => void
 }
 
 const usePayModal = create<PayModalStore>()(persist(devtools(immer((set) => ({
-    payModal: false,
-    setPayModal: (value) => set({
-        payModal: value
-    }),
+    openPayModal: false,
+    setOpenPayModal: (value) => set({openPayModal: value}),
 }))), {
     name: "choosePayModalStore",
     version: 1

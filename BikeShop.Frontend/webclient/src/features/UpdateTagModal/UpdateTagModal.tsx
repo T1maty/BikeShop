@@ -7,7 +7,7 @@ import {useUpdateTagModal} from "./UpdateTagModalStore";
 import {useSnackbar} from "notistack";
 
 interface props {
-    onSeccuss?: (tag: IUpdateTag) => void
+    onSuccess?: (tag: IUpdateTag) => void
 }
 
 const UpdateTagModal = (props: props) => {
@@ -57,7 +57,7 @@ const UpdateTagModal = (props: props) => {
     const onSubmit: SubmitHandler<IUpdateTag> = (data: IUpdateTag) => {
         update(data).then((r) => {
             setClose()
-            props.onSeccuss ? props.onSeccuss(data) : true
+            props.onSuccess ? props.onSuccess(data) : true
             enqueueSnackbar('Тег изменен', {variant: 'success', autoHideDuration: 10000})
         }).catch((r) => {
             enqueueSnackbar(r.response.data.errorDescription, {variant: 'error', autoHideDuration: 10000})

@@ -1,13 +1,13 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {$api} from "../../shared";
-import {AxiosResponse} from "axios";
-import {CreateShop, UpdateShop} from '../../entities';
-import {CreateShopResponse} from "../../entities/responses/ShopResponse";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {$api} from "../../shared"
+import {AxiosResponse} from "axios"
+import {CreateShop, UpdateShop} from '../../entities'
+import {CreateShopResponse} from "../../entities/responses/ShopResponse"
 
 interface CreateShopModalStore {
-    createShopModal: boolean
+    openCreateShopModal: boolean
     setOpenCreateShopModal: (value: boolean) => void
     isLoading: boolean
     setIsLoading: (value: boolean) => void
@@ -21,8 +21,8 @@ interface CreateShopModalStore {
 }
 
 const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    createShopModal: false,
-    setOpenCreateShopModal: (value: boolean) => set({createShopModal: value}),
+    openCreateShopModal: false,
+    setOpenCreateShopModal: (value: boolean) => set({openCreateShopModal: value}),
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
 
