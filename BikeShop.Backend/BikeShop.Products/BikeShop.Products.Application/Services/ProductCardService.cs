@@ -99,6 +99,12 @@ namespace BikeShop.Products.Application.Services
                     list.Add(src);
                     variants.Remove(variant.id);
                 }
+                else
+                {
+                    var newEnt = new OptionVariant { Enabled = variant.enabled, Name = variant.name, OptionId = ent.Id, OptionName = ent.Name };
+                    list.Add(newEnt);
+                    await _context.OptionVariants.AddAsync(newEnt);
+                }
             }
 
             _context.OptionVariants.RemoveRange(variants.Select(n => n.Value));
