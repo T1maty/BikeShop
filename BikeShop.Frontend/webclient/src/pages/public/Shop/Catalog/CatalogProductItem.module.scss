@@ -65,7 +65,7 @@
                 color: red;
             }
             .product_description {
-
+                line-height: 1.3;
             }
             .product_select {
                 width: 100%;
@@ -151,6 +151,7 @@
             background-color: white;
             padding: $defaultLargeMargin;
             min-height: 150px;
+            line-height: 1.3;
         }
     }
 }

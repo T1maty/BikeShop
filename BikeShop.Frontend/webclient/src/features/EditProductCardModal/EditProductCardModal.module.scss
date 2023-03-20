@@ -21,9 +21,15 @@
         //}
         .leftSide_imageGallery {
             @include defaultBlockStyles($themeColorMilk);
-            @include flexCenter;
+            @include flexColumn;
+            justify-content: center;
             height: 50%;
-            //height: 500px;
+
+            .imageGallery_sortButtons {
+                margin-top: $defaultExtraLargeMargin;
+                @include flexOnlyBetween;
+                gap: $defaultLargeMargin;
+            }
         }
 
         .leftSide_descriptionEditor {

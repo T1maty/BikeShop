@@ -136,10 +136,14 @@ export const EditProductCardModal = () => {
                         <ImageGallery items={images}
                                       showPlayButton={false}
                                       showFullscreenButton={false}
+                                      showNav={false}
                                       showIndex={true}
-                                      // showNav={false}
                                       thumbnailPosition={'left'}
                         />
+                        <div className={s.imageGallery_sortButtons}>
+                            <div>Переместить назад</div>
+                            <div>Переместить вперёд</div>
+                        </div>
                     </div>
                     <div className={s.leftSide_descriptionEditor}>
                         <div className={s.descriptionEditor_title}>Описание товара:</div>

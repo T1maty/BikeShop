@@ -10,9 +10,17 @@
             position: relative;
 
             .header_slider {
+                width: 1400px;
+                height: 800px;
+                overflow: hidden;
+
                 img {
+                    //width: 1400px;
+                    //height: auto;
+
                     width: 1400px;
-                    height: auto;
+                    height: 800px;
+                    object-fit: cover;
                 }
             }
             .header_icons {
@@ -31,6 +39,7 @@
 
                 img {
                     @include hoverCursorPointer;
+                    filter: invert(100%);
                 }
 
                 .header_icons_left {
