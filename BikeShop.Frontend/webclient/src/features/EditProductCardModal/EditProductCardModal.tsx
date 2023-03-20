@@ -141,8 +141,10 @@ export const EditProductCardModal = () => {
                                       thumbnailPosition={'left'}
                         />
                         <div className={s.imageGallery_sortButtons}>
-                            <div>Переместить назад</div>
-                            <div>Переместить вперёд</div>
+                            {/*<div>Переместить назад</div>*/}
+                            <Button onClick={() => {alert('назад')}}>Переместить назад</Button>
+                            {/*<div>Переместить вперёд</div>*/}
+                            <Button onClick={() => {alert('вперёд')}}>Переместить вперёд</Button>
                         </div>
                     </div>
                     <div className={s.leftSide_descriptionEditor}>
