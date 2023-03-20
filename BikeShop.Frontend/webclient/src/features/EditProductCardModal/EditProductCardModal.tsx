@@ -3,7 +3,7 @@ import s from "./EditProductCardModal.module.scss"
 import {Modal} from "@mui/material"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Button, ControlledInput, ControlledSelect} from "../../shared/ui"
-import {useForm} from "react-hook-form"
+import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from "../../entities/errors/workspaceErrors"
 
 export const EditProductCardModal = () => {
@@ -28,6 +28,27 @@ export const EditProductCardModal = () => {
             detail: '',
         }
     })
+
+    const onSubmit: SubmitHandler<any> = (data: any) => {
+        const newDetail = {id: '555', name: 'New Characteristic', description: data.detail}
+        setDetails([newDetail, ...details])
+
+        // добавление характеристики
+        // if (isCreating) {
+        //     data.shopId = 1
+        //
+        //     addNewService(data).then((res: any) => {
+        //         setIsCreating(false)
+        //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+        //
+        //     }).catch((error: any) => {
+        //         let message = error(error.response.data.errorDescription).toString()
+        //         formControl.setError('name', {type: 'serverError', message: message})
+        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+        //         console.error(error.response.data)
+        //     })
+        // }
+    }
 
     const deleteOptionsListHandler = (optionsItem: any) => {
         setOptions(options.filter(el => el.id !== optionsItem.id))
@@ -70,25 +91,29 @@ export const EditProductCardModal = () => {
                     <div className={s.rightSide_productOptions}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                options.map(opt => {
+                                options.map(option => {
                                     return (
-                                        <div className={s.optionsList_item} key={opt.id}>
+                                        <div className={s.optionsList_item}
+                                             key={option.id}
+                                        >
                                             <fieldset className={s.options_box}>
-                                                <legend>{opt.name}</legend>
+                                                <legend>{option.name}</legend>
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
                                                         <div className={s.item_deleteFullItem}
-                                                             onClick={() => {deleteOptionsListHandler(opt)}}
+                                                             onClick={() => {deleteOptionsListHandler(option)}}
                                                         >
                                                             Удалить
                                                         </div>
                                                         {
-                                                            opt.optionsArray.map(el => {
+                                                            option.optionsArray.map(el => {
                                                                 return (
-                                                                    <div className={s.item_content} key={el.id}>
+                                                                    <div className={s.item_content}
+                                                                         key={el.id}
+                                                                    >
                                                                         <div className={s.item_title}>{el.name}</div>
                                                                         <div className={s.item_delete}
-                                                                             onClick={() => {deleteOptionHandler(opt.id, el.id)}}
+                                                                             onClick={() => {deleteOptionHandler(option.id, el.id)}}
                                                                         >
                                                                             X
                                                                         </div>
@@ -103,7 +128,7 @@ export const EditProductCardModal = () => {
                                                                           name={'optionVersion'}
                                                                           label={'Разновидность опции'}
                                                                           className={s.options_search}
-                                                                          data={opt.optionsArray.map((el: any) => {
+                                                                          data={option.optionsArray.map((el: any) => {
                                                                               return {id: el.id, value: el.name ? el.name : 'Нет имени'}
                                                                           })}
                                                         />
@@ -132,20 +157,22 @@ export const EditProductCardModal = () => {
                     <div className={s.rightSide_productDetails}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                details.map(det => {
+                                details.map(detail => {
                                     return (
-                                        <div className={s.optionsList_item} key={det.id}>
+                                        <div className={s.optionsList_item}
+                                             key={detail.id}
+                                        >
                                             <fieldset className={s.options_box}>
-                                                <legend>{det.name}</legend>
+                                                <legend>{detail.name}</legend>
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
                                                         <div className={s.item_deleteFullItem}
-                                                             onClick={() => deleteDetailsListHandler(det)}
+                                                             onClick={() => deleteDetailsListHandler(detail)}
                                                         >
                                                             Удалить
                                                         </div>
                                                         <div className={s.item_content}>
-                                                            {det.description}
+                                                            {detail.description}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -155,8 +182,9 @@ export const EditProductCardModal = () => {
                                 })
                             }
                         </div>
+                        <form onSubmit={formControl.handleSubmit(onSubmit)}>
                         <div className={s.productOptions_selectRow}>
-                            <Button buttonDivWrapper={s.options_button}>+</Button>
+                            <Button type={'submit'} buttonDivWrapper={s.options_button}>+</Button>
                             <ControlledInput name={'detail'}
                                              label={'Характеристика'}
                                              control={formControl}
@@ -164,6 +192,7 @@ export const EditProductCardModal = () => {
                                              divClassName={s.options_search}
                             />
                         </div>
+                        </form>
                     </div>
 
                 </div>
