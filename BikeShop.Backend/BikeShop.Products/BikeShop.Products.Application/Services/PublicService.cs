@@ -50,7 +50,7 @@ namespace BikeShop.Products.Application.Services
             throw new NotImplementedException();
         }
 
-        private async Task<List<ProductCardDTO>> getCards(List<Product> products)
+        public async Task<List<ProductCardDTO>> getCards(List<Product> products)
         {
             var productIds = products.Select(n => n.Id).ToList();
             var response = new List<ProductCardDTO>();
@@ -59,6 +59,7 @@ namespace BikeShop.Products.Application.Services
             var productSpecifications = await _context.ProductSpecifications.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).OrderBy(n => n.SortOrder).ToListAsync();
             var productOptions = await _context.ProductOptionVariantBinds.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).OrderBy(n => n.SortOrder).ToListAsync();
             var productImages = await _context.ProductImgs.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).OrderBy(n=>n.SortOrder).ToListAsync();
+            var productTags = await _context.TagToProductBinds.Where(n => n.Enabled == true).Where(n => productIds.Contains(n.ProductId)).Include(n=>n.ProductTag).ToListAsync();
 
             foreach (var product in products)
             {
@@ -68,8 +69,9 @@ namespace BikeShop.Products.Application.Services
                     productCard = productCards.ContainsKey(product.Id) ? productCards[product.Id] : null,
                     productOptions = productOptions.Where(n => n.ProductId == product.Id).ToList(),
                     productSpecifications = productSpecifications.Where(n => n.ProductId == product.Id).ToList(),
-                    productImages = productImages.Where(n => n.ProductId == product.Id).ToList()
-                });
+                    productImages = productImages.Where(n => n.ProductId == product.Id).ToList(),
+                    productTags = productTags.Where(n=>n.ProductId == product.Id).Select(n=>n.ProductTag).ToList()
+                });;
             }
 
             return response;
