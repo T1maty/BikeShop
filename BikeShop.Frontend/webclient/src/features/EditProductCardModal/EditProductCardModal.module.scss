@@ -14,9 +14,16 @@
         width: 100%;
         color: black;
 
+        // тестировочный стиль
+        //.leftSide_imageGallery {
+        //    @include defaultBlockStyles($themeColorMilk);
+        //    height: 50%;
+        //}
         .leftSide_imageGallery {
             @include defaultBlockStyles($themeColorMilk);
+            @include flexCenter;
             height: 50%;
+            //height: 500px;
         }
 
         .leftSide_descriptionEditor {

@@ -28,16 +28,26 @@
         gap: $defaultExtraLargeMargin;
         margin-bottom: $defaultExtraLargeMargin;
 
+        // тестировочный стиль
+        //.product_images {
+        //    width: 60%;
+        //    display: flex;
+        //    justify-content: flex-end;
+        //
+        //    img {
+        //        max-width: 600px;
+        //        height: auto;
+        //    }
+        //}
         .product_images {
             width: 60%;
             display: flex;
             justify-content: flex-end;
 
-            img {
-                max-width: 600px;
-                height: auto;
-            }
-
+            //img {
+            //    max-width: 600px;
+            //    height: auto;
+            //}
         }
         .product_info {
             //border: 1px solid black;

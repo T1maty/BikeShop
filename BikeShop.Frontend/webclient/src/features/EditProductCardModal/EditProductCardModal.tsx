@@ -9,11 +9,16 @@ import {Editor} from 'react-draft-wysiwyg'
 import {EditorState, convertToRaw} from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
+import ImageGallery from 'react-image-gallery'
+import 'react-image-gallery/styles/css/image-gallery.css'
 
 export const EditProductCardModal = () => {
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
+
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     const [options, setOptions] = useState([
         {
@@ -34,8 +39,44 @@ export const EditProductCardModal = () => {
         {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
     ])
 
-    const [editorState, setEditorState] = useState(EditorState.createEmpty())
-    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
+    const [images, setImages] = useState([
+        {
+            original: 'https://picsum.photos/id/1018/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1015/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1015/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1019/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1019/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1018/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1015/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1015/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1019/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1019/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1018/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1015/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1015/250/150/',
+        },
+        {
+            original: 'https://picsum.photos/id/1019/1000/600/',
+            thumbnail: 'https://picsum.photos/id/1019/250/150/',
+        },
+    ])
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -70,9 +111,7 @@ export const EditProductCardModal = () => {
     }
     const deleteOptionHandler = (listId: string, optionId: string) => {
         setOptions(options.map(el => el.id === listId ? {
-            ...el,
-            optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)
-        } : el))
+            ...el, optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)} : el))
     }
 
     const deleteDetailsListHandler = (detailsItem: any) => {
@@ -90,7 +129,18 @@ export const EditProductCardModal = () => {
         >
             <div className={s.editProductCardModal_mainBlock}>
                 <div className={s.editProductCardModal_leftSide}>
-                    <div className={s.leftSide_imageGallery}>Фотографии</div>
+                    {/*<div className={s.leftSide_imageGallery}>*/}
+                    {/*    Фотографии*/}
+                    {/*</div>*/}
+                    <div className={s.leftSide_imageGallery}>
+                        <ImageGallery items={images}
+                                      showPlayButton={false}
+                                      showFullscreenButton={false}
+                                      showIndex={true}
+                                      // showNav={false}
+                                      thumbnailPosition={'left'}
+                        />
+                    </div>
                     <div className={s.leftSide_descriptionEditor}>
                         <div className={s.descriptionEditor_title}>Описание товара:</div>
                         {/*<div className={s.descriptionEditor_textarea}>*/}
