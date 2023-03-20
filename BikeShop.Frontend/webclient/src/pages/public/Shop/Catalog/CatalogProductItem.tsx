@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import s from './CatalogProductItem.module.scss'
 import {Button} from "../../../../shared/ui"
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
+import ImageGallery from 'react-image-gallery'
+import 'react-image-gallery/styles/css/image-gallery.css'
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -15,6 +17,34 @@ export const CatalogProductItem = () => {
     // тестовые данные
     const [products, setProducts] = useState(['Велосипед-1', 'Велосипед-2', 'Велосипед-3'])
     const amountOfProduct = 10
+
+    const [images, setImages] = useState([
+        {
+            original: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            thumbnail: 'https://wallpapercave.com/wp/wp2118883.jpg',
+            // thumbnail: 'https://i.pinimg.com/736x/ea/37/bb/ea37bb261a973425d867b2bcb156861d--bike-wallpaper-super-bikes.jpg',
+        },
+        {
+            original: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+            thumbnail: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+        },
+        {
+            original: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
+            thumbnail: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
+        },
+        {
+            original: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
+            thumbnail: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
+        },
+        {
+            original: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
+            thumbnail: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
+        },
+        {
+            original: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
+            thumbnail: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
+        },
+    ])
 
     const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
                                    isDetails: boolean, isDelivery: boolean) => {
@@ -54,17 +84,26 @@ export const CatalogProductItem = () => {
                </div>
            </div>
            <div className={s.product}>
+               {/*<div className={s.product_images}>*/}
+               {/*    <img src='https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg'*/}
+               {/*         alt='product-image'*/}
+               {/*    />*/}
+               {/*</div>*/}
                <div className={s.product_images}>
-                   <img src='https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg'
-                        alt='product-image'
+                   <ImageGallery items={images}
+                                 showPlayButton={false}
+                                 // showFullscreenButton={false}
+                                 showIndex={true}
+                                 // showNav={false}
+                                 thumbnailPosition={'left'}
                    />
                </div>
                <div className={s.product_info}>
                    <div className={s.product_title}>Merida</div>
                    <div className={s.product_price}>$ 1350</div>
                    <div className={s.product_description}>
-                       Описание товара с ограничением в 7 строк,
-                       эта карточка показывает реакцию при наведении курсора на товар.
+                       Описание товара с ограничением в 7 строк.
+                       Эта карточка показывает реакцию при наведении курсора на товар.
                        Карточка расширяется с анимашкой и перекрывает карточки ниже,
                        появляется более полное название и частичное описание товара.
                        А так же доступные...
@@ -79,7 +118,6 @@ export const CatalogProductItem = () => {
                                value={'Велосипед-1'}
                                label="productSelect"
                                onChange={onChangeMUISelectHandler}
-
                                sx={{
                                    color: "black",
                                    '.MuiOutlinedInput-notchedOutline': {
@@ -148,7 +186,7 @@ export const CatalogProductItem = () => {
                    {
                        isCharacteristic ?
                        <div>
-                           Описание характеристики Давно выяснено, что при оценке дизайна и
+                           Описание характеристики. Давно выяснено, что при оценке дизайна и
                            композиции читаемый текст мешает сосредоточиться. Lorem Ipsum
                            используют потому, что тот обеспечивает более или менее стандартное
                            заполнение шаблона, а также реальное распределение букв и пробелов в

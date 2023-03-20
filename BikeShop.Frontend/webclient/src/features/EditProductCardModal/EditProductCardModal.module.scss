@@ -6,7 +6,7 @@
     @include flexOnlyBetween;
     gap: $defaultLargeMargin;
     min-width: 1000px;
-    min-height: 600px;
+    min-height: 700px;
 
     .editProductCardModal_leftSide {
         @include flexColumn;
@@ -14,9 +14,22 @@
         width: 100%;
         color: black;
 
+        // тестировочный стиль
+        //.leftSide_imageGallery {
+        //    @include defaultBlockStyles($themeColorMilk);
+        //    height: 50%;
+        //}
         .leftSide_imageGallery {
             @include defaultBlockStyles($themeColorMilk);
+            @include flexColumn;
+            justify-content: center;
             height: 50%;
+
+            .imageGallery_sortButtons {
+                margin-top: $defaultExtraLargeMargin;
+                @include flexOnlyBetween;
+                gap: $defaultLargeMargin;
+            }
         }
 
         .leftSide_descriptionEditor {
@@ -28,6 +41,16 @@
                 font-weight: bold;
                 font-size: 18px;
                 margin-bottom: $defaultSmallMargin;
+            }
+
+            .descriptionEditor_editorTextarea {
+                //min-height: 200px;
+                //overflow-y: auto;
+
+                .editorClassName {
+                    max-height: 150px;
+                    overflow-y: auto;
+                }
             }
 
             .descriptionEditor_textarea {

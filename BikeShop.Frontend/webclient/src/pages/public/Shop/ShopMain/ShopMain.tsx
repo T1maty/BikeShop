@@ -20,12 +20,29 @@ import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import {ShopFooter} from "./ShopFooter"
 import {SearchProduct} from './SearchProduct'
-import { CustomSearchInput } from 'shared/ui'
+import {CustomSearchInput} from 'shared/ui'
+import ImageGallery from 'react-image-gallery'
+import 'react-image-gallery/styles/css/image-gallery.css'
 
 export const ShopMain = () => {
 
     const navigate = useNavigate()
     const [search, setSearch] = useState<boolean>(false)
+
+    const [images, setImages] = useState([
+        {
+            original: headerPhoto,
+            thumbnail: '',
+        },
+        {
+            original: 'https://s3.amazonaws.com/images.gearjunkie.com/uploads/2018/10/red-bull-rampage-rugged-terrain.jpg',
+            thumbnail: '',
+        },
+        {
+            original: 'https://picsum.photos/id/1018/1000/600/',
+            thumbnail: '',
+        },
+    ])
 
     const InputStyles = {
         color: 'black',
@@ -47,8 +64,17 @@ export const ShopMain = () => {
         <div className={s.shop_wrapper}>
             <div className={s.shop_mainBox}>
                 <div className={s.header}>
+                    {/*<div className={s.header_slider}>*/}
+                    {/*    <img src={headerPhoto} alt="header-photo"/>*/}
+                    {/*</div>*/}
                     <div className={s.header_slider}>
-                        <img src={headerPhoto} alt="header-photo"/>
+                        <ImageGallery items={images}
+                                      showPlayButton={false}
+                                      showFullscreenButton={false}
+                                      showThumbnails={false}
+                                      autoPlay={true}
+                                      slideDuration={3000}
+                        />
                     </div>
                     <div className={s.header_icons}>
                         <div className={s.header_icons_left}>
