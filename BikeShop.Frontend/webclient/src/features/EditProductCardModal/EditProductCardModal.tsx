@@ -1,10 +1,14 @@
 import React, {useState} from 'react'
-import s from "./EditProductCardModal.module.scss"
-import {Modal} from "@mui/material"
-import useEditProductCardModal from "./EditProductCardModalStore"
-import {Button, ControlledInput, ControlledSelect} from "../../shared/ui"
+import s from './EditProductCardModal.module.scss'
+import {Modal} from '@mui/material'
+import useEditProductCardModal from './EditProductCardModalStore'
+import {Button, ControlledInput, ControlledSelect} from '../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {Errors} from "../../entities/errors/workspaceErrors"
+import {Errors} from '../../entities/errors/workspaceErrors'
+import {Editor} from 'react-draft-wysiwyg'
+import {EditorState, convertToRaw} from 'draft-js'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+// import draftToHtml from 'draftjs-to-html'
 
 export const EditProductCardModal = () => {
 
@@ -12,8 +16,16 @@ export const EditProductCardModal = () => {
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
 
     const [options, setOptions] = useState([
-        {id: '1', name: 'Размер шлема', optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]},
-        {id: '2', name: 'Цвет шлема', optionsArray: [{id: '7', name: 'Red'}, {id: '8', name: 'Blue'}, {id: '9', name: 'White'}]},
+        {
+            id: '1',
+            name: 'Размер шлема',
+            optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]
+        },
+        {
+            id: '2',
+            name: 'Цвет шлема',
+            optionsArray: [{id: '7', name: 'Red'}, {id: '8', name: 'Blue'}, {id: '9', name: 'White'}]
+        },
     ])
 
     const [details, setDetails] = useState([
@@ -21,6 +33,9 @@ export const EditProductCardModal = () => {
         {id: '2', name: 'Характеристика 2', description: 'Описание 2'},
         {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
     ])
+
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -54,7 +69,10 @@ export const EditProductCardModal = () => {
         setOptions(options.filter(el => el.id !== optionsItem.id))
     }
     const deleteOptionHandler = (listId: string, optionId: string) => {
-        setOptions(options.map(el => el.id === listId ? {...el, optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)} : el))
+        setOptions(options.map(el => el.id === listId ? {
+            ...el,
+            optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)
+        } : el))
     }
 
     const deleteDetailsListHandler = (detailsItem: any) => {
@@ -75,8 +93,18 @@ export const EditProductCardModal = () => {
                     <div className={s.leftSide_imageGallery}>Фотографии</div>
                     <div className={s.leftSide_descriptionEditor}>
                         <div className={s.descriptionEditor_title}>Описание товара:</div>
-                        <div className={s.descriptionEditor_textarea}>
-                            <textarea/>
+                        {/*<div className={s.descriptionEditor_textarea}>*/}
+                        {/*    <textarea/>*/}
+                        {/*</div>*/}
+                        <div className={s.descriptionEditor_editorTextarea}>
+                            <Editor
+                                editorState={editorState}
+                                toolbarClassName="toolbarClassName"
+                                wrapperClassName="wrapperClassName"
+                                editorClassName={s.editorClassName}
+                                // editorClassName="editorClassName"
+                                onEditorStateChange={(editorState) => {setEditorState(editorState)}}
+                            />
                         </div>
                     </div>
                 </div>
@@ -101,7 +129,9 @@ export const EditProductCardModal = () => {
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
                                                         <div className={s.item_deleteFullItem}
-                                                             onClick={() => {deleteOptionsListHandler(option)}}
+                                                             onClick={() => {
+                                                                 deleteOptionsListHandler(option)
+                                                             }}
                                                         >
                                                             Удалить
                                                         </div>
@@ -113,7 +143,9 @@ export const EditProductCardModal = () => {
                                                                     >
                                                                         <div className={s.item_title}>{el.name}</div>
                                                                         <div className={s.item_delete}
-                                                                             onClick={() => {deleteOptionHandler(option.id, el.id)}}
+                                                                             onClick={() => {
+                                                                                 deleteOptionHandler(option.id, el.id)
+                                                                             }}
                                                                         >
                                                                             X
                                                                         </div>
@@ -129,7 +161,10 @@ export const EditProductCardModal = () => {
                                                                           label={'Разновидность опции'}
                                                                           className={s.options_search}
                                                                           data={option.optionsArray.map((el: any) => {
-                                                                              return {id: el.id, value: el.name ? el.name : 'Нет имени'}
+                                                                              return {
+                                                                                  id: el.id,
+                                                                                  value: el.name ? el.name : 'Нет имени'
+                                                                              }
                                                                           })}
                                                         />
                                                     </div>
@@ -183,15 +218,15 @@ export const EditProductCardModal = () => {
                             }
                         </div>
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                        <div className={s.productOptions_selectRow}>
-                            <Button type={'submit'} buttonDivWrapper={s.options_button}>+</Button>
-                            <ControlledInput name={'detail'}
-                                             label={'Характеристика'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             divClassName={s.options_search}
-                            />
-                        </div>
+                            <div className={s.productOptions_selectRow}>
+                                <Button type={'submit'} buttonDivWrapper={s.options_button}>+</Button>
+                                <ControlledInput name={'detail'}
+                                                 label={'Характеристика'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                                 divClassName={s.options_search}
+                                />
+                            </div>
                         </form>
                     </div>
 

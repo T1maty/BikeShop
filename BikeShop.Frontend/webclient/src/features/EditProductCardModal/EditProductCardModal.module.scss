@@ -6,7 +6,7 @@
     @include flexOnlyBetween;
     gap: $defaultLargeMargin;
     min-width: 1000px;
-    min-height: 600px;
+    min-height: 700px;
 
     .editProductCardModal_leftSide {
         @include flexColumn;
@@ -28,6 +28,16 @@
                 font-weight: bold;
                 font-size: 18px;
                 margin-bottom: $defaultSmallMargin;
+            }
+
+            .descriptionEditor_editorTextarea {
+                //min-height: 200px;
+                //overflow-y: auto;
+
+                .editorClassName {
+                    max-height: 150px;
+                    overflow-y: auto;
+                }
             }
 
             .descriptionEditor_textarea {
