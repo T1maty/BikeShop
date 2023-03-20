@@ -52,30 +52,6 @@ export const EditProductCardModal = () => {
             original: 'https://picsum.photos/id/1019/1000/600/',
             thumbnail: 'https://picsum.photos/id/1019/250/150/',
         },
-        {
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1015/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1019/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1015/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1019/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        },
     ])
 
     const formControl = useForm<any>({
@@ -118,6 +94,62 @@ export const EditProductCardModal = () => {
         setDetails(details.filter(el => el.id !== detailsItem.id))
     }
 
+    // ----------------------------------- //
+
+    const [imagesDiv, setImagesDiv] = useState([
+        {
+            id: '1',
+            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+        },
+        {
+            id: '2',
+            thumbnail: 'https://picsum.photos/id/1015/250/150/',
+        },
+        {
+            id: '3',
+            thumbnail: 'https://picsum.photos/id/1019/250/150/',
+        },
+    ])
+
+    const [currentImage, setCurrentImage] = useState('')
+
+    const setImageHandler = (imgId: string) => {
+        setCurrentImage(imgId)
+        console.log('image ID =', imgId)
+        console.log('currentImage', imgId)
+    }
+
+    const moveBackwardHandler = () => {
+        //
+    }
+    const moveForwardHandler = () => {
+
+        // setImagesDiv(imagesDiv.filter(el => el.id === currentImage
+        //     ? ''
+        //     : ''
+        // ))
+    }
+
+    const moveElement = (array: any, fromIndex: number, toIndex: number) => {
+        const arrayCopy = [...array]
+        const element = arrayCopy.splice(fromIndex, 1)[0]
+
+        // console.log(element)
+
+        arrayCopy.splice(toIndex, 0, element)
+        return arrayCopy
+    }
+
+    const moveImg = (array: any, oldIndex: number, newIndex: number) => {
+        if (newIndex >= array.length) {
+            newIndex = array.length - 1
+        }
+        array.splice(newIndex, 0, array.splice(oldIndex, 1)[0])
+        return array
+    }
+
+    // ----------------------------------- //
+
     return (
         <Modal
             open={open}
@@ -132,21 +164,39 @@ export const EditProductCardModal = () => {
                     {/*<div className={s.leftSide_imageGallery}>*/}
                     {/*    Фотографии*/}
                     {/*</div>*/}
+
+                    {/*<div className={s.leftSide_imageGallery}>*/}
+                    {/*    <ImageGallery items={images}*/}
+                    {/*                  showPlayButton={false}*/}
+                    {/*                  showFullscreenButton={false}*/}
+                    {/*                  showNav={false}*/}
+                    {/*                  showIndex={true}*/}
+                    {/*                  thumbnailPosition={'left'}*/}
+                    {/*    />*/}
+                    {/*    <div className={s.imageGallery_sortButtons}>*/}
+                    {/*        /!*<div>Переместить назад</div>*!/*/}
+                    {/*        <Button onClick={() => {alert('назад')}}>Переместить назад</Button>*/}
+                    {/*        /!*<div>Переместить вперёд</div>*!/*/}
+                    {/*        <Button onClick={() => {alert('вперёд')}}>Переместить вперёд</Button>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
                     <div className={s.leftSide_imageGallery}>
-                        <ImageGallery items={images}
-                                      showPlayButton={false}
-                                      showFullscreenButton={false}
-                                      showNav={false}
-                                      showIndex={true}
-                                      thumbnailPosition={'left'}
-                        />
+                        <div style={{display: 'flex', gap: '10px'}}>
+                            {imagesDiv.map(img => {
+                                return (
+                                    <div key={img.id} onClick={() => {setImageHandler(img.id)}}>
+                                        <img src={img.thumbnail} alt="img" width={150}/>
+                                    </div>
+                                )
+                            })}
+                        </div>
                         <div className={s.imageGallery_sortButtons}>
-                            {/*<div>Переместить назад</div>*/}
-                            <Button onClick={() => {alert('назад')}}>Переместить назад</Button>
-                            {/*<div>Переместить вперёд</div>*/}
-                            <Button onClick={() => {alert('вперёд')}}>Переместить вперёд</Button>
+                            <Button onClick={() => {}}>Переместить назад</Button>
+                            <Button onClick={moveForwardHandler}>Переместить вперёд</Button>
                         </div>
                     </div>
+
                     <div className={s.leftSide_descriptionEditor}>
                         <div className={s.descriptionEditor_title}>Описание товара:</div>
                         {/*<div className={s.descriptionEditor_textarea}>*/}
