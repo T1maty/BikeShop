@@ -31,6 +31,6 @@ export {ProfileInfo} from './public/Shop/Profile/ProfileInfo'
 export {ProfileServices} from './public/Shop/Profile/ProfileServices'
 export {ProfilePurchases} from './public/Shop/Profile/ProfilePurchases'
 
-export {LoginForm} from './public/Shop/LoginForm/LoginForm'
+export {RegistrationForm} from './public/Shop/LoginForm/RegistrationForm'
 
 

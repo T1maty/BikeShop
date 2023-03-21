@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import s from './ShopMain.module.scss'
+
 import headerPhoto from '../../../../shared/assets/shop/images/header_photo.png'
 import socialLogo from '../../../../shared/assets/shop/icons/logo_instagram.png'
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
@@ -16,6 +17,7 @@ import searchIcon from '../../../../shared/assets/shop/icons/search.png'
 import cart from '../../../../shared/assets/shop/icons/cart.png'
 import language from '../../../../shared/assets/shop/icons/lang.png'
 import profile from '../../../../shared/assets/shop/icons/profile.png'
+
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import {ShopFooter} from "./ShopFooter"
@@ -23,7 +25,8 @@ import {SearchProduct} from './SearchProduct'
 import {CustomSearchInput} from 'shared/ui'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
-import {LoginForm} from "../LoginForm/LoginForm";
+import {RegistrationForm} from "../LoginForm/RegistrationForm"
+import {LoginBlock} from '../LoginBlock/LoginBlock'
 
 export const ShopMain = () => {
 
@@ -61,6 +64,11 @@ export const ShopMain = () => {
         }
     }
 
+    // тестовые данные
+    const isAuth = false
+    const userLastName = 'Петров'
+    const userFirstName = 'Василий'
+
     return (
         <div className={s.shop_wrapper}>
             <div className={s.shop_mainBox}>
@@ -93,9 +101,11 @@ export const ShopMain = () => {
                             <div onClick={() => {setSearch(!search)}}>
                                 <img src={searchIcon} alt="search-logo"/>
                             </div>
+
                             <div><img src={language} alt="language-logo"/></div>
                             <div><img src={cart} alt="cart-logo"/></div>
-                            <div><img src={profile} alt="profile-logo"/></div>
+
+                            <LoginBlock isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>
                         </div>
                     </div>
                 </div>
@@ -145,7 +155,7 @@ export const ShopMain = () => {
 
                 <div className={s.map}>
                     <img src={map} alt="map"/>
-                    <LoginForm/>
+                    <RegistrationForm/>
                 </div>
 
                 <ShopFooter/>

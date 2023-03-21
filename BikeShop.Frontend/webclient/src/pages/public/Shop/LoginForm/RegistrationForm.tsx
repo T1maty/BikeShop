@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './LoginForm.module.scss'
+import s from './RegistrationForm.module.scss'
 import {Button, ControlledCustomInput, ControlledInput} from '../../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from '../../../../entities/errors/workspaceErrors'
@@ -9,7 +9,7 @@ import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import useAuthUser from '../../../auth/useAuthUser'
 
-export const LoginForm = () => {
+export const RegistrationForm = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()

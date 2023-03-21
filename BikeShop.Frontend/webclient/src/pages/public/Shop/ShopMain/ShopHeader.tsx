@@ -2,21 +2,20 @@ import React from 'react'
 import s from './ShopHeader.module.scss'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
 import language from "../../../../shared/assets/shop/icons/lang.png"
-import profile from "../../../../shared/assets/shop/icons/profile.png"
 import {SearchProduct} from './SearchProduct'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
-import {ProfileAvatar} from '../Profile/ProfileAvatar'
-import {CustomSearchInput} from '../../../../shared/ui'
+import {LoginBlock} from '../LoginBlock/LoginBlock'
 
-export const ShopHeader = () => {
+interface ShopHeaderProps {
+    isAuth: boolean
+    userLastName: string
+    userFirstName: string
+}
+
+export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, userFirstName}) => {
 
     const navigate = useNavigate()
-
-    // тестовые данные
-    const isAuth = false
-    const userLastName = 'Петров'
-    const userFirstName = 'Василий'
 
     return (
         <div className={s.shop_header}>
@@ -30,29 +29,7 @@ export const ShopHeader = () => {
                 {/*<CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>*/}
                 <div><img src={language} alt="language-logo"/></div>
                 <div><img src={cart} alt="cart-logo"/></div>
-                {
-                    isAuth ?
-                        <div className={s.right_userInfo}>
-                            <ProfileAvatar lastName={userLastName} firstName={userFirstName}/>
-                            <div>{userLastName} {''} {userFirstName}</div>
-                        </div>
-                        :
-                        <div className={s.right_loginBlock}>
-                            <div className={s.loginBlock_profileIcon}>
-                                <img src={profile} alt="profile-logo"/>
-                            </div>
-                            <div className={s.loginBlock_enter}
-                                 onClick={() => {navigate(BikeShopPaths.COMMON.LOGIN)}}
-                            >
-                                Вход
-                            </div>
-                            <div className={s.loginBlock_registration}
-                                 onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
-                            >
-                                Регистрация
-                            </div>
-                        </div>
-                }
+                <LoginBlock isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>
             </div>
         </div>
     );

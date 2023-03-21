@@ -20,31 +20,5 @@
                 @include hoverCursorPointer;
             }
         }
-
-        .right_loginBlock {
-            @include flexOnlyBetween;
-            align-items: center;
-            min-width: 250px;
-            > div {
-                @include hoverCursorPointer;
-            }
-
-            .loginBlock_profileIcon {
-                margin-right: $defaultSmallMargin;
-            }
-            .loginBlock_enter {
-                margin-right: $defaultExtraLargeMargin;
-            }
-            .loginBlock_registration {
-
-            }
-        }
-        .right_userInfo {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: $defaultSmallMargin;
-            min-width: 250px;
-        }
     }
 }

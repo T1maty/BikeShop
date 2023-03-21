@@ -11,7 +11,7 @@ type ShopWrapperProps = {
 export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
     return (
         <div className={s.shop_wrapper}>
-            <ShopHeader/>
+            <ShopHeader isAuth={true} userLastName={'Петров'} userFirstName={'Василий'}/>
             <div className={s.shop_main}>
                 {children}
             </div>
