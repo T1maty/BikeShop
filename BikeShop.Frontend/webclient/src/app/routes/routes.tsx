@@ -65,19 +65,19 @@ export const routes = createBrowserRouter([
     },
     {
         path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
-        element: <CheckAuthRouteProvider>
+        element: //<CheckAuthRouteProvider>
             <WorkspaceHeaderProvider>
                 <ProductCatalog/>
             </WorkspaceHeaderProvider>
-        </CheckAuthRouteProvider>
+        //</CheckAuthRouteProvider>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
-        element: <CheckAuthRouteProvider>
+        element: //<CheckAuthRouteProvider>
             <WorkspaceHeaderProvider>
                 <WorkCatalog/>
             </WorkspaceHeaderProvider>
-        </CheckAuthRouteProvider>
+        //</CheckAuthRouteProvider>
     },
     {
         path: BikeShopPaths.WORKSPACE.CASHBOX,
