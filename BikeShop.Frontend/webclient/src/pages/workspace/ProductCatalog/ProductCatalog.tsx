@@ -1,7 +1,8 @@
-import React from 'react';
-import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
-import {Button, InputUI} from '../../../shared/ui';
-import s from './ProductCatalog.module.scss';
+import React from 'react'
+import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
+import {Button, InputUI} from '../../../shared/ui'
+import s from './ProductCatalog.module.scss'
+import {EditProductCardModal} from '../../../features/EditProductCardModal/EditProductCardModal'
 
 export const ProductCatalog = () => {
     return (
@@ -42,11 +43,7 @@ export const ProductCatalog = () => {
                     </div>
                 </div>
 
-                <div className={s.rightSide_table}
-                     onContextMenu={(event) => {
-                         event.preventDefault()
-                     }}
-                >
+                <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
                     <ProductCatalogTable/>
                 </div>
             </div>

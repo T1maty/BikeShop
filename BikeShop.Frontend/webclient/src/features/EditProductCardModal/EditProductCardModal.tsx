@@ -10,8 +10,19 @@ import {EditorState, convertToRaw} from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
 import RemoveIcon from '../../shared/assets/workspace/remove-icon.svg'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+import Select from 'react-select/base'
 
-export const EditProductCardModal = () => {
+// interface AutocompleteOption {
+//     name: string
+// }
+
+interface EditProductCardModalProps {
+    productCardData?: any
+}
+
+export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({productCardData}) => {
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
@@ -32,6 +43,21 @@ export const EditProductCardModal = () => {
         {id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
         {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
     ])
+
+    // const [selectedOptions, setSelectedOptions] = useState<any>()
+    // const [inputValue, setInputValue] = useState('')
+    //
+    // const optionList = [
+    //     { value: "red", label: "Red" },
+    //     { value: "green", label: "Green" },
+    //     { value: "yellow", label: "Yellow" },
+    //     { value: "blue", label: "Blue" },
+    //     { value: "white", label: "White" }
+    // ]
+    //
+    // function handleSelect(data: any) {
+    //     setSelectedOptions(data)
+    // }
 
     const [options, setOptions] = useState([
         {
@@ -259,7 +285,7 @@ export const EditProductCardModal = () => {
                 <div className={s.editProductCardModal_rightSide}>
                     <div className={s.rightSide_tagEditor}>
                         <div className={s.tagEditor_title}>Редактор тегов товара</div>
-                        <div className={s.tagEditor_tags}>Здесь будут теги</div>
+                        <div className={s.tagEditor_tags}>{productCardData}</div>
                     </div>
 
                     <div className={s.rightSide_productStatus}>
@@ -326,12 +352,32 @@ export const EditProductCardModal = () => {
                             <Button buttonDivWrapper={s.options_button}>+</Button>
                             <ControlledSelect control={formControl}
                                               name={'option'}
-                                              label={'Опция'}
+                                              label={'Опции'}
                                               className={s.options_search}
                                               data={options.map((el) => {
                                                   return {id: el.id, value: el.name ? el.name : 'Нет опции'}
                                               })}
                             />
+
+                            {/*<Autocomplete*/}
+                            {/*    disablePortal*/}
+                            {/*    id="combo-box-demo"*/}
+                            {/*    options={options}*/}
+                            {/*    sx={{ width: 300 }}*/}
+                            {/*    renderInput={(params) => <TextField {...params} label="Опции" />}*/}
+                            {/*/>*/}
+
+                            {/*<Select*/}
+                            {/*    options={optionList}*/}
+                            {/*    placeholder="Опции"*/}
+                            {/*    isSearchable={true}*/}
+                            {/*    value={selectedOptions}*/}
+                            {/*    onChange={handleSelect}*/}
+                            {/*    inputValue={inputValue}*/}
+                            {/*    onInputChange={handleSelect}*/}
+                            {/*    onMenuOpen={() => {}}*/}
+                            {/*    onMenuClose={() => {}}*/}
+                            {/*/>*/}
                         </div>
                     </div>
 

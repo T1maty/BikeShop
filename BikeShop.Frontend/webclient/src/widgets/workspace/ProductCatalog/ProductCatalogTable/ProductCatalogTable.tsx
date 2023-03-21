@@ -12,6 +12,7 @@ import useProductCatalogTableStore from './ProductCatalogTableStore'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {IProduct, IProductExtended} from "../../../../entities"
 import {ProductCatalogTableRow} from "./ProductCatalogTableRow"
+import {EditProductCardModal} from '../../../../features/EditProductCardModal/EditProductCardModal'
 
 interface props {
     onRowDoubleClick?: (product: IProductExtended) => void
@@ -30,7 +31,6 @@ export const ProductCatalogTable = (props: props) => {
         extProd = {} as IProductExtended
         extProd.product = product
         extProd.quantity = 0
-
         addNewProduct(extProd)
     }
 
@@ -39,6 +39,7 @@ export const ProductCatalogTable = (props: props) => {
             <ProductCatalogTableContextMenu/>
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
+            <EditProductCardModal productCardData={'Здесь будут теги!'}/>
             <div className={s.table_content}>
                 <TableContainer>
                     <Table
@@ -59,17 +60,19 @@ export const ProductCatalogTable = (props: props) => {
                                 ))}
                             </TableRow>
                         </TableHead>
-                        <TableBody
 
-                        >
-                            {rows
+                        <TableBody>
+                            {
+                                rows
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => {
                                     return (
                                         <ProductCatalogTableRow onRowDoubleClick={props.onRowDoubleClick}
-                                                                key={row.product.id} row={row}/>
-                                    );
-                                })}
+                                                                key={row.product.id} row={row}
+                                        />
+                                    )
+                                })
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>

@@ -18,7 +18,6 @@ export const MainPage = () => {
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const setOpenPayModal = usePayModal(s => s.setOpenPayModal)
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
-    const setOpenEditProductCardModal = useEditProductCardModal(s => s.setOpenEditProductCardModal)
 
     // const setServiceUser = useService(s => s.setCurrentUser)
     const user = useMainPageStore(s => s.user)
@@ -57,7 +56,7 @@ export const MainPage = () => {
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {setOpenEditProductCardModal(true)}}>
+                        <Button onClick={() => {}}>
                             Создать заказ
                         </Button>
                         <Button onClick={() => {}}>
