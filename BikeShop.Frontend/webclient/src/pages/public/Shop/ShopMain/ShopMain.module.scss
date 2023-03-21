@@ -11,7 +11,7 @@
 
             .header_slider {
                 width: 1400px;
-                height: 800px;
+                //height: 800px;
                 overflow: hidden;
 
                 img {
@@ -136,6 +136,7 @@
         }
 
         .map {
+            position: relative;
             img {
                 width: 1400px;
             }

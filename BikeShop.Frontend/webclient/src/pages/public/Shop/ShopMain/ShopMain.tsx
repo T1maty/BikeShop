@@ -23,13 +23,14 @@ import {SearchProduct} from './SearchProduct'
 import {CustomSearchInput} from 'shared/ui'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
+import {LoginForm} from "../LoginForm/LoginForm";
 
 export const ShopMain = () => {
 
     const navigate = useNavigate()
     const [search, setSearch] = useState<boolean>(false)
 
-    const [images, setImages] = useState([
+    const [sliderImages, setSliderImages] = useState([
         {
             original: headerPhoto,
             thumbnail: '',
@@ -68,7 +69,7 @@ export const ShopMain = () => {
                     {/*    <img src={headerPhoto} alt="header-photo"/>*/}
                     {/*</div>*/}
                     <div className={s.header_slider}>
-                        <ImageGallery items={images}
+                        <ImageGallery items={sliderImages}
                                       showPlayButton={false}
                                       showFullscreenButton={false}
                                       showThumbnails={false}
@@ -111,6 +112,7 @@ export const ShopMain = () => {
                             <img src={socialLogo} alt="social-logo"/>
                         </div>
                     </div>
+
                     <div className={s.catalog}>
                         <div className={s.catalog_group1}>
                             <div className={s.catalog_item1}>
@@ -140,9 +142,12 @@ export const ShopMain = () => {
 
                     </div>
                 </div>
+
                 <div className={s.map}>
                     <img src={map} alt="map"/>
+                    <LoginForm/>
                 </div>
+
                 <ShopFooter/>
             </div>
         </div>
