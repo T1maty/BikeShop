@@ -47,30 +47,29 @@
                 width: 100%;
             }
 
-            .searchRow_chooseBtn {
-
-            }
-
+            //.searchRow_chooseBtn {
+            //    button {
+            //        padding: $largeButtonPadding;
+            //    }
+            //}
             .searchRow_searchInput {
                 width: 100%;
                 padding: 0 20px;
             }
-
             .searchRow_allProductsBtn {
-                width: 100%;
+                width: 50%;
+                margin-right: 20px;
 
                 button {
                     padding: $largeButtonPadding;
                 }
             }
-
-            .header_notSortedBtn {
-                width: 100%;
-
-                button {
-                    padding: $largeButtonPadding;
-                }
-            }
+            //.header_notSortedBtn {
+            //    width: 100%;
+            //    button {
+            //        padding: $largeButtonPadding;
+            //    }
+            //}
         }
 
         .rightSide_table {

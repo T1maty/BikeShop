@@ -19,28 +19,22 @@ export const ProductCatalog = () => {
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
-                    <div className={s.searchRow_chooseBtn}>
-                        <Button onClick={() => {
-                        }}>
+                    {/*<div className={s.searchRow_chooseBtn}>*/}
+                        <Button onClick={() => {}}>
                             Отображение
                         </Button>
-                    </div>
+                    {/*</div>*/}
                     <div className={s.searchRow_searchInput}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {
-                        }}/>
+                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
                     </div>
-                    <div className={s.searchRow_allProductsBtn}>
-                        <Button onClick={() => {
-                        }}>
+                        <Button buttonDivWrapper={s.searchRow_allProductsBtn} onClick={() => {}}>
                             Все товары
                         </Button>
-                    </div>
-                    <div className={s.header_notSortedBtn}>
-                        <Button onClick={() => {
-                        }}>
+                    {/*<div className={s.header_notSortedBtn}>*/}
+                        <Button onClick={() => {}}>
                             Неотсортированные
                         </Button>
-                    </div>
+                    {/*</div>*/}
                 </div>
 
                 <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
