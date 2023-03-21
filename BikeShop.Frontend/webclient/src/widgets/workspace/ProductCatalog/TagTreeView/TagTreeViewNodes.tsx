@@ -1,12 +1,10 @@
-import React from 'react';
-import {IProductTag} from "../../../../entities";
-import TreeItem from "@mui/lab/TreeItem";
-import useTagTreeView from "./TagTreeViewStore";
-import {TagTreeViewCustomNode} from "./TagTreeViewCustomNode";
+import React from 'react'
+import {IProductTag} from "../../../../entities"
+import TreeItem from "@mui/lab/TreeItem"
+import useTagTreeView from "./TagTreeViewStore"
+import {TagTreeViewCustomNode} from "./TagTreeViewCustomNode"
 
-
-const TagTreeViewNodes = () => {
-
+export const TagTreeViewNodes = () => {
 
     const treeViewData = useTagTreeView(s => s.treeViewTags)
 
@@ -37,7 +35,5 @@ const TagTreeViewNodes = () => {
         <div>
             {createTree()}
         </div>
-    );
-};
-
-export default TagTreeViewNodes;
+    )
+}

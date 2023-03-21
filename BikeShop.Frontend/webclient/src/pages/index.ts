@@ -1,9 +1,9 @@
-export {default as LoginPage} from './auth/LoginPage/LoginPage'
-export {default as RegistrationPage} from './auth/RegistrationPage/RegistrationPage'
+export {LoginPage} from './auth/LoginPage/LoginPage'
+export {RegistrationPage} from './auth/RegistrationPage/RegistrationPage'
 
-export {default as MainPage} from './workspace/MainPage/MainPage'
-export {default as Cashbox} from './workspace/Cashbox/Cashbox'
-export {default as Service} from './workspace/Service/Service'
+export {MainPage} from './workspace/MainPage/MainPage'
+export {Cashbox} from './workspace/Cashbox/Cashbox'
+export {Service} from './workspace/Service/Service'
 
 export {ProductCatalog} from './workspace/ProductCatalog/ProductCatalog'
 export {ServiceTable} from './workspace/Service/ServiceTable'
@@ -13,7 +13,7 @@ export {ProductsWrapper} from './workspace/ProductsCount/ProductsWrapper'
 export {ArrivalOfProducts} from './workspace/ProductsCount/ArrivalOfProducts'
 export {InventoryOfProducts} from './workspace/ProductsCount/InventoryOfProducts'
 
-export {Home} from './public/Home/Home'
+// export {_Home} from './public/Home/_Home'
 
 export {ShopMain} from './public/Shop/ShopMain/ShopMain'
 export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'

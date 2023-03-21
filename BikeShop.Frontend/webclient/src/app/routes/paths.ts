@@ -1,18 +1,8 @@
 export const BikeShopPaths = {
-    WORKSPACE: {
-        HOME_NULL: '/',
-        HOME: '/home',
-
+    COMMON: {
         LOGIN: '/login',
         REGISTRATION: '/registration',
-
-        MAIN_PAGE: '/mainPage',
-        PRODUCT_CATALOG: '/productCatalog',
-        WORK_CATALOG: '/workCatalog',
-        SERVICE: '/service',
-        CASHBOX: '/cashbox',
-        ARRIVAL_OF_PRODUCTS: '/arrival-of-products',
-        INVENTORY_OF_PRODUCTS: '/inventory-of-products',
+        ERROR404: 'error404', // надо сделать
     },
     SHOP: {
         HOME: '/shop',
@@ -20,5 +10,14 @@ export const BikeShopPaths = {
         PRODUCT: '/shop/catalog/id',
         PROFILE: '/shop/profile',
         ORDER: '/shop/order',
-    }
+    },
+    WORKSPACE: {
+        MAIN_PAGE: '/workspace/mainPage',
+        SERVICE: '/workspace/service',
+        CASHBOX: '/workspace/cashbox',
+        PRODUCT_CATALOG: '/workspace/productCatalog',
+        WORK_CATALOG: '/workspace/workCatalog',
+        ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
+        INVENTORY_OF_PRODUCTS: '/workspace/inventory-of-products',
+    },
 }

@@ -1,13 +1,13 @@
 import React from 'react'
-import s from "./ClientCard.module.scss";
-import {IUser} from "../../../entities";
+import s from "./ClientCard.module.scss"
+import {IUser} from "../../../entities"
 
 interface ClientCardProps {
     user?: IUser
     onDoubleClick?: () => void
 }
 
-const ClientCard: React.FC<ClientCardProps> = ({user, onDoubleClick}) => {
+export const ClientCard: React.FC<ClientCardProps> = ({user, onDoubleClick}) => {
 
     return (
         <div className={s.clientCard_background} onDoubleClick={() => {
@@ -27,5 +27,3 @@ const ClientCard: React.FC<ClientCardProps> = ({user, onDoubleClick}) => {
         </div>
     )
 }
-
-export default ClientCard;

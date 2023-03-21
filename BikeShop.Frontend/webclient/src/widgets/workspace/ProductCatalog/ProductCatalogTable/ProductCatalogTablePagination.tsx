@@ -1,8 +1,8 @@
-import React from 'react';
-import TablePagination from "@mui/material/TablePagination";
-import useProductCatalogTableStore from "./ProductCatalogTableStore";
+import React from 'react'
+import TablePagination from "@mui/material/TablePagination"
+import useProductCatalogTableStore from "./ProductCatalogTableStore"
 
-const ProductCatalogTablePagination = () => {
+export const ProductCatalogTablePagination = () => {
 
     const rows = useProductCatalogTableStore(s => s.rows)
     const setPage = useProductCatalogTableStore(s => s.setPage)
@@ -27,5 +27,3 @@ const ProductCatalogTablePagination = () => {
         />
     );
 };
-
-export default ProductCatalogTablePagination;

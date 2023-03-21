@@ -1,5 +1,3 @@
-export {default as useAuthUser} from './globalStores/useAuthUser'
-
 export type {default as IGroup} from './models/Group'
 export type {default as ILoginData} from './models/LoginData'
 export type {default as IRegistrationData} from './models/RegistrationData'

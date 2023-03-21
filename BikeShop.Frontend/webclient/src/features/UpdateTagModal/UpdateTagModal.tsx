@@ -1,21 +1,24 @@
-import React from 'react';
-import {SubmitHandler, useForm} from "react-hook-form";
-import {IUpdateTag} from "../../entities";
-import {Box, Button, Modal, Typography} from "@mui/material";
-import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
-import {useUpdateTagModal} from "./UpdateTagModalStore";
-import {useSnackbar} from "notistack";
+import React, {useEffect} from 'react'
+import {SubmitHandler, useForm} from "react-hook-form"
+import {IUpdateTag} from "../../entities"
+import {Box, Button, Modal, Typography} from "@mui/material"
+import {ControlledCheckbox, ControlledInput} from "../../shared/ui"
+import {useSnackbar} from "notistack"
+import useUpdateTagModal from './UpdateTagModalStore'
 
 interface props {
     onSuccess?: (tag: IUpdateTag) => void
 }
 
-const UpdateTagModal = (props: props) => {
+export const UpdateTagModal = (props: props) => {
+
+    const {enqueueSnackbar} = useSnackbar()
+
     const open = useUpdateTagModal(s => s.open)
     const tag = useUpdateTagModal(s => s.targetTag)
     const setClose = useUpdateTagModal(s => s.closeTagModal)
     const update = useUpdateTagModal(s => s.updateTag)
-    const {enqueueSnackbar} = useSnackbar()
+
     const control = useForm<IUpdateTag>({
         defaultValues: {
             name: "",
@@ -25,9 +28,9 @@ const UpdateTagModal = (props: props) => {
             isUniversal: false,
             id: '0'
         }
-    });
+    })
 
-    React.useEffect(() => {
+    useEffect(() => {
         control.setValue('id', tag.id)
         control.setValue('name', tag.name)
         control.setValue('sortOrder', tag.sortOrder)
@@ -106,7 +109,5 @@ const UpdateTagModal = (props: props) => {
 
             </Box>
         </Modal>
-    );
-};
-
-export default UpdateTagModal;
+    )
+}

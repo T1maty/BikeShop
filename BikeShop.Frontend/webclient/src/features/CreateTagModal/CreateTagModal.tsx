@@ -1,15 +1,15 @@
-import React from 'react';
-import {Box, Button, Modal, Typography} from "@mui/material";
-import useCreateTagModal from "./CreateTagModalStore";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {ICreateTag, IProductTag} from "../../entities";
-import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
+import React from 'react'
+import {Box, Button, Modal, Typography} from "@mui/material"
+import useCreateTagModal from "./CreateTagModalStore"
+import {SubmitHandler, useForm} from "react-hook-form"
+import {ICreateTag, IProductTag} from "../../entities"
+import {ControlledCheckbox, ControlledInput} from "../../shared/ui"
 
 interface props {
     onSuccess?: (tag: IProductTag) => void
 }
 
-const CreateTagModal = (props: props) => {
+export const CreateTagModal = (props: props) => {
     const open = useCreateTagModal(s => s.openCreateTagModal)
     const setOpen = useCreateTagModal(s => s.setOpenCreateTagModal)
     const parentNode = useCreateTagModal(s => s.parentNode)
@@ -89,7 +89,5 @@ const CreateTagModal = (props: props) => {
 
             </Box>
         </Modal>
-    );
-};
-
-export default CreateTagModal;
+    )
+}

@@ -11,7 +11,7 @@ export const CheckAuthRouteProvider: React.FC<CheckAuthRouteProps> = ({children}
 
     useEffect(() => {
         if (localStorage.getItem('accessToken') === null) {
-            navigate(BikeShopPaths.WORKSPACE.LOGIN, {replace: true})
+            navigate(BikeShopPaths.COMMON.LOGIN, {replace: true})
         }
     }, [])
 

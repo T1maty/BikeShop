@@ -1,13 +1,11 @@
-import {Container} from "@mui/material";
-import {RegistrationForm} from "../../../widgets/index";
+import {Container} from "@mui/material"
+import RegistrationForm from './RegistrationForm'
 
 
-const RegistrationPage = () => {
+export const RegistrationPage = () => {
     return (
         <Container>
             <RegistrationForm/>
         </Container>
     );
-};
-
-export default RegistrationPage;
+}

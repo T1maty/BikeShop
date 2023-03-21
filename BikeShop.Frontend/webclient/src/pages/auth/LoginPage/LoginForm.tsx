@@ -1,38 +1,46 @@
-import React from "react";
-import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {NavLink, useNavigate} from "react-router-dom";
-import {IRegistrationData, useAuthUser} from "../../../entities";
-import {BikeShopPaths} from "../../../app/routes/paths";
+import React from "react"
+import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material"
+import {Controller, SubmitHandler, useForm} from "react-hook-form"
+import {NavLink, useNavigate} from "react-router-dom"
+import {ILoginData} from "../../../entities"
+import {BikeShopPaths} from "../../../app/routes/paths"
+import useAuthUser from '../useAuthUser'
 
-const RegistrationForm = () => {
+export const LoginForm = () => {
 
-    const register = useAuthUser(s => s.register);
-    const navigate = useNavigate();
+    const login = useAuthUser(s => s.login)
+    const setUser = useAuthUser(s => s.setUser)
+    const loginToShop = useAuthUser(s => s.loginToShop)
 
-    const {
-        control,
-        formState: {
-            errors
-        },
-        handleSubmit
-    } = useForm<IRegistrationData>({
+    const navigate = useNavigate()
+
+    const {control, formState: {errors}, handleSubmit} = useForm<ILoginData>({
         defaultValues: {
-            phone: "",
-            password: ""
+            phone: '',
+            password: '',
         }
     });
 
-    const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
-        register(data).then(() => {
-            navigate(BikeShopPaths.WORKSPACE.LOGIN)
+    const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
+        login(data).then((r) => {
+
+            localStorage.setItem('accessToken', r.data.accessToken)
+            setUser(r.data.user)
+            if (r.data.user.shopId != 0) {
+                loginToShop(r.data.user.shopId)
+                navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+            } else {
+                navigate(BikeShopPaths.SHOP.PROFILE)
+            }
+
+
         })
-    };
+    }
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={{height: "100vh"}}>
             <Container maxWidth="sm">
-                <Typography variant="h4">Registration</Typography>
+                <Typography variant="h4">Login</Typography>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <Controller
                         name="phone"
@@ -48,10 +56,10 @@ const RegistrationForm = () => {
                         render={({field}: any) => <TextField {...field}
                                                              error={!!errors.phone}
                                                              helperText={errors.phone ? errors.phone?.message : ""}
-                                                             label="Phone number" variant="outlined"
+                                                             label="Phone number"
+                                                             variant="outlined"
                                                              fullWidth margin="dense"/>}
                     />
-
                     <Controller
                         name="password"
                         control={control}
@@ -65,13 +73,12 @@ const RegistrationForm = () => {
                                                              margin="dense"/>}
                     />
 
-                    <Button type="submit" variant="contained" sx={{mt: 2}}>Register</Button>
+                    <Button type="submit" variant="contained" sx={{mt: 2}}>Login</Button>
                 </Box>
-                <br/>
-                <NavLink to="/login">Login</NavLink><br/>
+                <NavLink to="/registration">Registration</NavLink><br/>
+                <NavLink to="/main">main page</NavLink><br/>
+                <NavLink to="/workcatalog">workcatalog</NavLink><br/>
             </Container>
         </Stack>
-    );
-};
-
-export default RegistrationForm;
+    )
+}

@@ -1,7 +1,7 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    Cashbox, Catalog, Home, LoginPage, MainPage, Order, ProductCatalog, RegistrationPage, Service,
+    Cashbox, Catalog, LoginPage, MainPage, Order, ProductCatalog, RegistrationPage, Service,
     ShopMain, CatalogProductItem, ShopWrapper, Profile, ProductsWrapper, ArrivalOfProducts, InventoryOfProducts
 } from '../../pages'
 import {
@@ -20,34 +20,68 @@ export const routes = createBrowserRouter([
     ////                    ////
 
     {
-        path: BikeShopPaths.WORKSPACE.LOGIN,
+        path: BikeShopPaths.COMMON.LOGIN,
         element: <OnlyWithoutAuthRoute>
             <LoginPage/>
         </OnlyWithoutAuthRoute>
     },
     {
-        path: BikeShopPaths.WORKSPACE.REGISTRATION,
+        path: BikeShopPaths.COMMON.REGISTRATION,
         element: <OnlyWithoutAuthRoute>
             <RegistrationPage/>
         </OnlyWithoutAuthRoute>
     },
 
     ////                                        ////
-    ////    Страницы без ограничения доступа    ////
+    ////          Интернет-магазин              ////
     ////                                        ////
 
     {
-        path: BikeShopPaths.WORKSPACE.HOME_NULL,
-        element: <PublicHeaderProvider>
-            <Home/>
-        </PublicHeaderProvider>
+        path: '/',
+        element: <ShopMain/>
+
     },
     {
-        path: BikeShopPaths.WORKSPACE.HOME,
-        element: <PublicHeaderProvider>
-            <Home/>
-        </PublicHeaderProvider>
+        path: BikeShopPaths.SHOP.HOME,
+        element: <ShopMain/>
     },
+    {
+        path: BikeShopPaths.SHOP.CATALOG,
+        element: <ShopWrapper>
+            <Catalog/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.PRODUCT,
+        element: <ShopWrapper>
+            <CatalogProductItem/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.PROFILE,
+        element: <ShopWrapper>
+            <Profile/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.ORDER,
+        element: <ShopWrapper>
+            <Order/>
+        </ShopWrapper>
+    },
+
+    // {
+    //     path: BikeShopPaths.WORKSPACE.HOME_NULL,
+    //     element: <PublicHeaderProvider>
+    //         <_Home/>
+    //     </PublicHeaderProvider>
+    // },
+    // {
+    //     path: BikeShopPaths.WORKSPACE.HOME,
+    //     element: <PublicHeaderProvider>
+    //         <_Home/>
+    //     </PublicHeaderProvider>
+    // },
 
     ////                                        ////
     ////    Страницы только для залогиненых     ////
@@ -106,38 +140,5 @@ export const routes = createBrowserRouter([
                 <InventoryOfProducts/>
             </ProductsWrapper>
         </WorkspaceHeaderProvider>
-    },
-
-    ////                                        ////
-    ////          Интернет-магазин              ////
-    ////                                        ////
-
-    {
-        path: BikeShopPaths.SHOP.HOME,
-        element: <ShopMain/>
-    },
-    {
-        path: BikeShopPaths.SHOP.CATALOG,
-        element: <ShopWrapper>
-            <Catalog/>
-        </ShopWrapper>
-    },
-    {
-        path: BikeShopPaths.SHOP.PRODUCT,
-        element: <ShopWrapper>
-            <CatalogProductItem/>
-        </ShopWrapper>
-    },
-    {
-        path: BikeShopPaths.SHOP.PROFILE,
-        element: <ShopWrapper>
-            <Profile/>
-        </ShopWrapper>
-    },
-    {
-        path: BikeShopPaths.SHOP.ORDER,
-        element: <ShopWrapper>
-            <Order/>
-        </ShopWrapper>
     },
 ])

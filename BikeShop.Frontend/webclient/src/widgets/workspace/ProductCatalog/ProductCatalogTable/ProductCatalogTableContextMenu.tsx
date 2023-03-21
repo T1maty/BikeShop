@@ -1,12 +1,13 @@
-import React from 'react';
-import MenuItem from "@mui/material/MenuItem";
-import {Menu} from "@mui/material";
-import useProductCatalogTableStore from "./ProductCatalogTableStore";
-import useCreateProductModal from '../../../../features/CreateProductModal/CreateProductModalStore';
-import {useUpdateProductModal} from "../../../../features";
-import useTagTreeView from "../TagTreeView/TagTreeViewStore";
+import React from 'react'
+import MenuItem from '@mui/material/MenuItem'
+import {Menu} from '@mui/material'
+import useProductCatalogTableStore from './ProductCatalogTableStore'
+import useCreateProductModal from '../../../../features/CreateProductModal/CreateProductModalStore'
+import useTagTreeView from '../TagTreeView/TagTreeViewStore'
+import useUpdateProductModal from '../../../../features/UpdateProductModal/UpdateProductModalStore'
 
-const ProductCatalogTableContextMenu = () => {
+export const ProductCatalogTableContextMenu = () => {
+
     const selected = useProductCatalogTableStore(s => s.selectedRows)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
     const contextMenuVisible = useProductCatalogTableStore(s => s.open)
@@ -60,5 +61,3 @@ const ProductCatalogTableContextMenu = () => {
         </Menu>
     );
 };
-
-export default ProductCatalogTableContextMenu;

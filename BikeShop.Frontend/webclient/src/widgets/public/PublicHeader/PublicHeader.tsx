@@ -8,7 +8,7 @@ export const PublicHeader = () => {
 
     return (
         <AppBar position="static" color="primary" style={{height: 'var(--navbar-height)', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-            <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.LOGIN)}}>
+            <Button onClick={() => {navigate(BikeShopPaths.COMMON.LOGIN)}}>
                 Вход
             </Button>
             <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}>

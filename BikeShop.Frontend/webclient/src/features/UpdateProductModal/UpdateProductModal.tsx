@@ -1,8 +1,8 @@
-import React from 'react';
-import {Box, Button, Checkbox, FormControlLabel, Modal, TextField} from "@mui/material";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {IProduct, IUpdateProduct} from "../../entities";
-import {useUpdateProductModal} from "./UpdateProductModalStore";
+import React, {useEffect} from 'react'
+import {Box, Button, Checkbox, FormControlLabel, Modal, TextField} from "@mui/material"
+import {Controller, SubmitHandler, useForm} from "react-hook-form"
+import {IProduct, IUpdateProduct} from "../../entities"
+import useUpdateProductModal from './UpdateProductModalStore'
 
 interface props {
     onSuccess?: (updateData: IUpdateProduct) => void
@@ -32,7 +32,7 @@ export const UpdateProductModal = (props: props) => {
         }
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         setValue('id', product.id)
         setValue('name', product.name)
         setValue('catalogKey', product.catalogKey)
@@ -47,7 +47,6 @@ export const UpdateProductModal = (props: props) => {
         setValue('b2BVisibility', product.b2BVisibility)
     }, [product])
 
-
     const style = {
         position: 'absolute',
         top: '50%',
@@ -60,8 +59,7 @@ export const UpdateProductModal = (props: props) => {
         p: 4,
         borderRadius: 10,
         color: 'white'
-    };
-
+    }
 
     const onSubmit: SubmitHandler<IUpdateProduct> = (data: IUpdateProduct) => {
         update(data).then((r) => {
@@ -70,7 +68,7 @@ export const UpdateProductModal = (props: props) => {
         }).catch((r => {
 
         }))
-    };
+    }
 
     return (
         <Modal
@@ -149,5 +147,5 @@ export const UpdateProductModal = (props: props) => {
                 }}>Отмена</Button>
             </Box>
         </Modal>
-    );
-};
+    )
+}

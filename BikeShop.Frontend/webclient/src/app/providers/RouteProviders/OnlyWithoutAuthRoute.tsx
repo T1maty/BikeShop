@@ -7,11 +7,12 @@ interface OnlyWithoutAuthRouteProps {
 }
 
 export const OnlyWithoutAuthRoute: React.FC<OnlyWithoutAuthRouteProps> = ({children}) => {
-    const navigate = useNavigate();
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (localStorage.getItem('accessToken') != null) {
-            navigate(BikeShopPaths.WORKSPACE.HOME)
+            navigate(BikeShopPaths.SHOP.HOME)
         }
     }, [])
 

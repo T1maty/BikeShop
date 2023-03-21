@@ -1,10 +1,9 @@
-import {create} from "zustand";
-import {immer} from "zustand/middleware/immer";
-import {devtools, persist} from "zustand/middleware";
-
-import {ILoginData, ILoginResponse, IRegistrationData, IShop, IUser} from "../index";
-import {$api} from "../../shared";
-import {AxiosResponse} from "axios";
+import {create} from "zustand"
+import {immer} from "zustand/middleware/immer"
+import {devtools, persist} from "zustand/middleware"
+import {ILoginData, ILoginResponse, IRegistrationData, IShop, IUser} from "../../entities"
+import {$api} from "../../shared"
+import {AxiosResponse} from "axios"
 
 
 interface authState {
@@ -36,7 +35,7 @@ const useAuth = create<authState>()(persist(devtools(immer((set) => ({
     logout: () => set(state => {
         state.user = {} as IUser
         state.shop = {} as IShop
-        $api.post('auth/logout')
+        $api.post('auth/logout').then(res => {})
         localStorage.removeItem('accessToken')
     }),
 

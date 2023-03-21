@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
-import s from "./MainPage.module.scss";
-import {Button} from '../../../shared/ui';
-import {ChooseClientModal, PayModal} from '../../../features';
-import usePayModal from '../../../features/PayModal/PayModalStore';
-import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
-import {BikeShopPaths} from "../../../app/routes/paths";
-import {IUser} from "../../../entities";
-import useMainPageStore from "./MainPageStore";
-import CreateProductModal from "../../../features/CreateProductModal/CreateProductModal";
-import {EditProductCardModal} from "../../../features/EditProductCardModal/EditProductCardModal";
-import useEditProductCardModal from "../../../features/EditProductCardModal/EditProductCardModalStore";
+import React, {useState} from 'react'
+import {useNavigate} from "react-router-dom"
+import s from "./MainPage.module.scss"
+import {Button} from '../../../shared/ui'
+import {ChooseClientModal, CreateProductModal, PayModal} from '../../../features'
+import usePayModal from '../../../features/PayModal/PayModalStore'
+import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
+import {BikeShopPaths} from "../../../app/routes/paths"
+import {IUser} from "../../../entities"
+import useMainPageStore from "./MainPageStore"
+import {EditProductCardModal} from "../../../features/EditProductCardModal/EditProductCardModal"
+import useEditProductCardModal from "../../../features/EditProductCardModal/EditProductCardModalStore"
 
-const MainPage = () => {
+export const MainPage = () => {
 
     const navigate = useNavigate();
 
@@ -188,7 +187,5 @@ const MainPage = () => {
 
         </div>
         // </div>
-    );
-};
-
-export default MainPage;
+    )
+}

@@ -1,5 +1,4 @@
-import React, {FC, useState} from 'react'
-import {useAuthUser} from "../../../../entities"
+import React, {useState} from 'react'
 import {
     CreateCurrencyModal, CreateQuantityUnitModal,
     CreateShopModal, CreateStorageModal,
@@ -16,8 +15,9 @@ import useCreateStorageModal from "../../../../features/CreateStorageModal/Creat
 import useCreateShopModal from "../../../../features/CreateShopModal/CreateShopModalStore"
 import useCreateCurrencyModal from "../../../../features/CreateCurrencyModal/CreateCurrencyModalStore"
 import useCreateQuantityUnitModal from "../../../../features/CreateQuantityUnitModal/CreateQuantityUnitModalStore"
+import useAuthUser from '../../../../pages/auth/useAuthUser'
 
-export const Header: FC = () => {
+export const Header = () => {
 
     const {t} = useTranslation()
     const navigate = useNavigate()

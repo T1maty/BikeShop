@@ -1,16 +1,16 @@
-import React from 'react';
-import TableRow from "@mui/material/TableRow";
-import {columns} from "./ProductCatalogTableConfig";
-import TableCell from "@mui/material/TableCell";
-import useProductCatalogTableStore from "./ProductCatalogTableStore";
-import {IProductExtended} from "../../../../entities";
+import React from 'react'
+import TableRow from "@mui/material/TableRow"
+import {columns} from "./ProductCatalogTableConfig"
+import TableCell from "@mui/material/TableCell"
+import useProductCatalogTableStore from "./ProductCatalogTableStore"
+import {IProductExtended} from "../../../../entities"
 
 interface props {
     row: IProductExtended
     onRowDoubleClick?: (product: IProductExtended) => void
 }
 
-const ProductCatalogTableRow = (props: props) => {
+export const ProductCatalogTableRow = (props: props) => {
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
     const isSelected = useProductCatalogTableStore(s => s.isRowSelected)
@@ -58,7 +58,5 @@ const ProductCatalogTableRow = (props: props) => {
                 );
             })}
         </TableRow>
-    );
-};
-
-export default ProductCatalogTableRow;
+    )
+}

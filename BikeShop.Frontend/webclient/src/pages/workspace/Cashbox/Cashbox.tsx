@@ -10,7 +10,7 @@ import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
 import {IUser} from '../../../entities'
 
-const Cashbox = () => {
+export const Cashbox = () => {
 
     const isActiveTable = true
 
@@ -144,7 +144,5 @@ const Cashbox = () => {
 
             </div>
         // </div>
-    );
-};
-
-export default Cashbox;
+    )
+}

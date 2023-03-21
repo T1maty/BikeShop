@@ -1,10 +1,10 @@
-import React from "react";
-import {TreeItemContentProps, useTreeItem} from "@mui/lab";
-import {Typography} from "@mui/material";
-import clsx from 'clsx';
-import useTagTreeView from "./TagTreeViewStore";
-import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore";
-import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore";
+import React from "react"
+import {TreeItemContentProps, useTreeItem} from "@mui/lab"
+import {Typography} from "@mui/material"
+import clsx from 'clsx'
+import useTagTreeView from "./TagTreeViewStore"
+import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore"
+import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore"
 
 export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
     props: TreeItemContentProps,
@@ -38,12 +38,6 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
     const treeData = useTagTreeView(s => s.treeViewTags)
     const tagsCloud = useProductTagCloudStore(s => s.tags)
 
-    /*
-        React.useEffect(() => {
-            setProductsToTableHandler()
-            console.log('effect')
-        }, [tagsCloud])
-    */
     function setProductsToTableHandler() {
         let tags = tagsCloud.map((n) => {
             return n.id
@@ -91,5 +85,5 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
                 {label}
             </Typography>
         </div>
-    );
-});
+    )
+})

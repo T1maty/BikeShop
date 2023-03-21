@@ -4,10 +4,10 @@ import cart from "../../../../shared/assets/shop/icons/cart.png"
 import language from "../../../../shared/assets/shop/icons/lang.png"
 import profile from "../../../../shared/assets/shop/icons/profile.png"
 import {SearchProduct} from './SearchProduct'
-import {BikeShopPaths} from '../../../../app/routes/paths';
-import {useNavigate} from 'react-router-dom';
-import {ProfileAvatar} from '../Profile/ProfileAvatar';
-import {CustomSearchInput} from '../../../../shared/ui';
+import {BikeShopPaths} from '../../../../app/routes/paths'
+import {useNavigate} from 'react-router-dom'
+import {ProfileAvatar} from '../Profile/ProfileAvatar'
+import {CustomSearchInput} from '../../../../shared/ui'
 
 export const ShopHeader = () => {
 
@@ -42,12 +42,12 @@ export const ShopHeader = () => {
                                 <img src={profile} alt="profile-logo"/>
                             </div>
                             <div className={s.loginBlock_enter}
-                                 onClick={() => {navigate(BikeShopPaths.WORKSPACE.LOGIN)}}
+                                 onClick={() => {navigate(BikeShopPaths.COMMON.LOGIN)}}
                             >
                                 Вход
                             </div>
                             <div className={s.loginBlock_registration}
-                                 onClick={() => {navigate(BikeShopPaths.WORKSPACE.REGISTRATION)}}
+                                 onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
                             >
                                 Регистрация
                             </div>

@@ -1,15 +1,15 @@
-import React from 'react';
-import Box from "@mui/material/Box";
-import TreeView from "@mui/lab/TreeView";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import {IProductTag} from "../../../../entities";
-import TagTreeViewContextMenu from "./TagTreeViewContextMenu";
-import TagTreeViewNodes from "./TagTreeViewNodes";
-import {CreateTagModal, UpdateTagModal} from "../../../../features";
-import useTagTreeView from './TagTreeViewStore';
+import React, {useEffect} from 'react'
+import Box from "@mui/material/Box"
+import TreeView from "@mui/lab/TreeView"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import {IProductTag} from "../../../../entities"
+import TagTreeViewContextMenu from "./TagTreeViewContextMenu"
+import {TagTreeViewNodes} from "./TagTreeViewNodes"
+import {CreateTagModal, UpdateTagModal} from "../../../../features"
+import useTagTreeView from './TagTreeViewStore'
 
-const TagTreeView = () => {
+export const TagTreeView = () => {
 
     const setTreeViewData = useTagTreeView(s => s.setTreeViewTags)
     const expanded = useTagTreeView(s => s.expandedTags)
@@ -18,11 +18,8 @@ const TagTreeView = () => {
     const addTag = useTagTreeView(s => s.addNewTag)
     const updateTag = useTagTreeView(s => s.updateTag)
 
-
-    React.useEffect(() => {
-        fetchTags().then((r) => {
-            setTreeViewData(r.data.tags as IProductTag[])
-        })
+    useEffect(() => {
+        fetchTags().then((r) => {setTreeViewData(r.data.tags as IProductTag[])})
     }, [])
 
 
@@ -53,7 +50,5 @@ const TagTreeView = () => {
                 <TagTreeViewNodes/>
             </TreeView>
         </Box>
-    );
-};
-
-export default TagTreeView;
+    )
+}

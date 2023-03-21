@@ -1,17 +1,17 @@
-import React from 'react';
-import {Box, Button, Modal, Typography} from "@mui/material";
-import useCreateProductModal from "./CreateProductModalStore";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {EnumProductCheckStatus, ICreateProduct, IProduct} from "../../entities";
-import {useSnackbar} from "notistack";
-import {useTranslation} from "react-i18next";
-import {ControlledCheckbox, ControlledInput} from "../../shared/ui";
+import React from 'react'
+import {Box, Button, Modal, Typography} from "@mui/material"
+import useCreateProductModal from "./CreateProductModalStore"
+import {SubmitHandler, useForm} from "react-hook-form"
+import {EnumProductCheckStatus, ICreateProduct, IProduct} from "../../entities"
+import {useSnackbar} from "notistack"
+import {useTranslation} from "react-i18next"
+import {ControlledCheckbox, ControlledInput} from "../../shared/ui"
 
 interface CreateProductModalProps {
     onSuccess?: (data: IProduct) => void
 }
 
-const CreateProductModal = (props: CreateProductModalProps) => {
+export const CreateProductModal = (props: CreateProductModalProps) => {
     const error = useTranslation('errors').t
 
     const {enqueueSnackbar} = useSnackbar()
@@ -128,7 +128,5 @@ const CreateProductModal = (props: CreateProductModalProps) => {
                 }}>Отмена</Button>
             </Box>
         </Modal>
-    );
-};
-
-export default CreateProductModal;
+    )
+}

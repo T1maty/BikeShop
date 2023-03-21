@@ -1,9 +1,9 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {IProduct, IUpdateProduct} from "../../entities";
-import {AxiosResponse} from "axios";
-import {$api} from "../../shared";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {IProduct, IUpdateProduct} from "../../entities"
+import {AxiosResponse} from "axios"
+import {$api} from "../../shared"
 
 interface createProductModalStore {
     open: boolean
@@ -12,7 +12,7 @@ interface createProductModalStore {
     update: (data: IUpdateProduct) => Promise<AxiosResponse>
 }
 
-export const useUpdateProductModal = create<createProductModalStore>()(persist(devtools(immer((set) => ({
+const useUpdateProductModal = create<createProductModalStore>()(persist(devtools(immer((set) => ({
     open: false,
     setOpen: (value, product) => {
         set({open: value})
@@ -26,3 +26,5 @@ export const useUpdateProductModal = create<createProductModalStore>()(persist(d
     name: "creatUpdateModalStore",
     version: 1
 }));
+
+export default useUpdateProductModal;

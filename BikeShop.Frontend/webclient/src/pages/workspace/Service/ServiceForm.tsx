@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import s from "./Service.module.scss";
-import {Button, ControlledClientCard, ControlledInput, ControlledSelect} from "../../../shared/ui";
-import {Errors} from "../../../entities/errors/workspaceErrors";
-import {CreateService, IUser} from "../../../entities";
-import {SelectProductModal, SelectWorkModal} from "../../../features";
-import {ServiceTable} from "./ServiceTable";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import useService from "./ServiceStore";
-import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore";
-import {useSnackbar} from "notistack";
-import useAuth from "../../../entities/globalStores/useAuthUser";
+import React, {useEffect, useState} from 'react'
+import s from "./Service.module.scss"
+import {Button, ControlledClientCard, ControlledInput, ControlledSelect} from "../../../shared/ui"
+import {Errors} from "../../../entities/errors/workspaceErrors"
+import {CreateService, IUser} from "../../../entities"
+import {SelectProductModal, SelectWorkModal} from "../../../features"
+import {ServiceTable} from "./ServiceTable"
+import {Controller, SubmitHandler, useForm} from "react-hook-form"
+import useService from "./ServiceStore"
+import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore"
+import {useSnackbar} from "notistack"
+import useAuth from "../../auth/useAuthUser"
 
 const ServiceForm = () => {
+
     const {enqueueSnackbar} = useSnackbar()
 
     const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)

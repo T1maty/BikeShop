@@ -1,10 +1,10 @@
-import React from 'react';
-import s from "./Service.module.scss";
-import {Button} from "../../../shared/ui";
-import style from "../../../shared/ui/Button/Button.module.scss";
-import useService, {ServiceListStatusType} from "./ServiceStore";
-import {ServiceStatusType} from "../../../entities/models/ServiceItem";
-import {EnumServiceStatus} from "../../../entities";
+import React from 'react'
+import s from "./Service.module.scss"
+import {Button} from "../../../shared/ui"
+import style from "../../../shared/ui/Button/Button.module.scss"
+import useService, {ServiceListStatusType} from "./ServiceStore"
+import {ServiceStatusType} from "../../../entities/models/ServiceItem"
+import {EnumServiceStatus} from "../../../entities"
 
 const ServiceNavigation = () => {
 
