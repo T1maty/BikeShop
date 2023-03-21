@@ -50,13 +50,17 @@
                 overflow-y: auto;
 
                 .imageList_item {
-                    @include hoverCursorPointer;
+                    &:hover {
+                        cursor: pointer;
+                        opacity: 0.5;
+                    }
 
                     img {
                         width: 140px;
                     }
                     .active_image {
                         opacity: 0.5;
+                        border: 1px solid white;
                     }
                 }
             }
