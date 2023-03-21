@@ -25,8 +25,8 @@ import {SearchProduct} from './SearchProduct'
 import {CustomSearchInput} from 'shared/ui'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
-import {RegistrationForm} from "../LoginForm/RegistrationForm"
 import {LoginBlock} from '../LoginBlock/LoginBlock'
+import {RegistrationForm} from '../RegistrationForm/RegistrationForm'
 
 export const ShopMain = () => {
 
