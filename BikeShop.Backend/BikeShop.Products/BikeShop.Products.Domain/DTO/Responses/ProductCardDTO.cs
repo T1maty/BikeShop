@@ -14,5 +14,7 @@ namespace BikeShop.Products.Domain.DTO.Responses
         public List<ProductSpecification> productSpecifications { get; set; }
         public List<ProductOptionVariantBind> productOptions { get; set; }
         public List<ProductImg> productImages { get; set; }
+
+        public List<ProductTag> productTags { get; set; }
     }
 }
