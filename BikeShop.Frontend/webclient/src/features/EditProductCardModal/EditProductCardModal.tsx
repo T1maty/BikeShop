@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, ChangeEvent} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
@@ -9,7 +9,7 @@ import {Editor} from 'react-draft-wysiwyg'
 import {EditorState, convertToRaw} from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
-import RemoveIcon from '../../shared/assets/workspace/remove-icon.png'
+import RemoveIcon from '../../shared/assets/workspace/remove-icon.svg'
 
 export const EditProductCardModal = () => {
 
@@ -22,15 +22,15 @@ export const EditProductCardModal = () => {
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
 
     const [galleryImages, setGalleryImages] = useState([
-        { id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/' },
-        { id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/' },
-        { id: '3', thumbnail: 'https://picsum.photos/id/1019/250/150/' },
-        { id: '4', thumbnail: 'https://picsum.photos/id/1018/250/150/' },
-        { id: '5', thumbnail: 'https://picsum.photos/id/1015/250/150/' },
-        { id: '6', thumbnail: 'https://picsum.photos/id/1019/250/150/' },
-        { id: '7', thumbnail: 'https://picsum.photos/id/1018/250/150/' },
-        { id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/' },
-        { id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/' },
+        {id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+        {id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+        {id: '3', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+        {id: '4', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+        {id: '5', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+        {id: '6', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+        {id: '7', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+        {id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+        {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
     ])
 
     const [options, setOptions] = useState([
@@ -62,26 +62,23 @@ export const EditProductCardModal = () => {
     })
 
     const onSubmit: SubmitHandler<any> = (data: any) => {
+        // тестовые данные
         const newDetail = {id: '555', name: 'New Characteristic', description: data.detail}
         setDetails([newDetail, ...details])
 
-        // добавление характеристики
-        // if (isCreating) {
-        //     data.shopId = 1
-        //
+        // добавление карточки
         //     addNewService(data).then((res: any) => {
         //         setIsCreating(false)
         //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-        //
         //     }).catch((error: any) => {
         //         let message = error(error.response.data.errorDescription).toString()
         //         formControl.setError('name', {type: 'serverError', message: message})
         //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
         //         console.error(error.response.data)
         //     })
-        // }
     }
 
+    // функции для селектов
     const deleteOptionsListHandler = (optionsItem: any) => {
         setOptions(options.filter(el => el.id !== optionsItem.id))
     }
@@ -96,10 +93,35 @@ export const EditProductCardModal = () => {
 
     // ----------------------------------- //
 
+    // загрузка изображения
+    const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length) {
+            const file = e.target.files[0]
+            console.log('file: ', file)
+
+            // перепроверить максимальный размер файла
+            if (file.size < 4000000) {
+                convertFileToBase64(file, (file64: string) => {
+                    console.log('file64: ', file64)
+                })
+            } else {
+                console.error('Error: ', 'Файл слишком большого размера')
+            }
+        }
+    }
+
+    const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const file64 = reader.result as string
+            callBack(file64)
+        }
+        reader.readAsDataURL(file)
+    }
+
+    // функции для изображения
     const setImageHandler = (imgKey: number) => {
         setCurrentImageKey(imgKey)
-        // console.log('image key =', imgKey)
-        // console.log('currentImageKey', currentImageKey)
     }
 
     const deleteImageHandler = (imgId: string) => {
@@ -172,14 +194,14 @@ export const EditProductCardModal = () => {
                             {galleryImages.map((img, key) => {
                                 return (
                                     <div key={img.id}
-                                         onClick={() => {setImageHandler(key)}}
+                                         onDoubleClick={() => {setImageHandler(key)}}
                                          className={s.imageList_item}
                                     >
                                         <img className={currentImageKey === key ? s.active_image : ''}
                                              src={img.thumbnail} alt="img"
                                         />
                                         <div className={s.imageList_imageCount}>
-                                            {key+1}/{galleryImages.length}
+                                            {key + 1}/{galleryImages.length}
                                         </div>
                                         <img src={RemoveIcon} alt="remove-icon"
                                              className={s.imageList_deleteItem}
@@ -196,16 +218,19 @@ export const EditProductCardModal = () => {
                                 >
                                     Переместить назад
                                 </Button>
-                                <Button disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
-                                        onClick={() => {onMoveForwardHandler(currentImageKey)}}
+                                <Button
+                                    disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
+                                    onClick={() => {onMoveForwardHandler(currentImageKey)}}
                                 >
                                     Переместить вперёд
                                 </Button>
                             </div>
                             <div className={s.imageGallery_addImage}>
-                                <Button onClick={() => {}}>
-                                    Добавить фото
-                                </Button>
+                                <input type="file" id="file"
+                                       accept="image/png, image/jpeg"
+                                       onChange={uploadHandler}
+                                       className={s.inputFile}
+                                />
                             </div>
 
                         </div>
@@ -235,7 +260,10 @@ export const EditProductCardModal = () => {
                     <div className={s.rightSide_tagEditor}>
                         <div className={s.tagEditor_title}>Редактор тегов товара</div>
                         <div className={s.tagEditor_tags}>Здесь будут теги</div>
+                    </div>
 
+                    <div className={s.rightSide_productStatus}>
+                        Статус товара
                     </div>
 
                     <div className={s.rightSide_productOptions}>
@@ -251,26 +279,23 @@ export const EditProductCardModal = () => {
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
                                                         <div className={s.item_deleteFullItem}
-                                                             onClick={() => {
-                                                                 deleteOptionsListHandler(option)
-                                                             }}
+                                                             onClick={() => {deleteOptionsListHandler(option)}}
                                                         >
-                                                            Удалить
+                                                            Удалить опцию
                                                         </div>
                                                         {
                                                             option.optionsArray.map(el => {
                                                                 return (
-                                                                    <div className={s.item_content}
-                                                                         key={el.id}
-                                                                    >
+                                                                    <div className={s.item_content} key={el.id} style={{marginBottom: '5px'}}>
                                                                         <div className={s.item_title}>{el.name}</div>
-                                                                        <div className={s.item_delete}
-                                                                             onClick={() => {
-                                                                                 deleteOptionHandler(option.id, el.id)
-                                                                             }}
-                                                                        >
-                                                                            X
-                                                                        </div>
+                                                                        {/*<div className={s.item_delete}*/}
+                                                                        {/*     onClick={() => {deleteOptionHandler(option.id, el.id)}}*/}
+                                                                        {/*>*/}
+                                                                        {/*    X*/}
+                                                                        {/*</div>*/}
+                                                                        <img src={RemoveIcon} alt="remove-icon"
+                                                                             onClick={() => {deleteOptionHandler(option.id, el.id)}}
+                                                                        />
                                                                     </div>
                                                                 )
                                                             })
@@ -323,13 +348,20 @@ export const EditProductCardModal = () => {
                                                 <legend>{detail.name}</legend>
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
-                                                        <div className={s.item_deleteFullItem}
-                                                             onClick={() => deleteDetailsListHandler(detail)}
-                                                        >
-                                                            Удалить
-                                                        </div>
-                                                        <div className={s.item_content}>
-                                                            {detail.description}
+                                                        {/*<div className={s.item_deleteFullItem}*/}
+                                                        {/*     onClick={() => deleteDetailsListHandler(detail)}*/}
+                                                        {/*>*/}
+                                                        {/*    Удалить*/}
+                                                        {/*</div>*/}
+                                                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                                                            <div className={s.item_content}>
+                                                                {detail.description}
+                                                            </div>
+                                                            <div className={s.item_deleteDetailsItem}>
+                                                                <img src={RemoveIcon} alt="remove-icon"
+                                                                     onClick={() => {deleteDetailsListHandler(detail)}}
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -350,6 +382,18 @@ export const EditProductCardModal = () => {
                                 />
                             </div>
                         </form>
+                    </div>
+
+                    <div className={s.rightSide_mainButtons}>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Отмена
+                        </Button>
+                        <Button onClick={() => {
+                        }}>
+                            Сохранить
+                        </Button>
                     </div>
 
                 </div>

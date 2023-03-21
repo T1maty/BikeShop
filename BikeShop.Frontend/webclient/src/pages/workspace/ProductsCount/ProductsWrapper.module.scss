@@ -25,31 +25,7 @@
             font-size: 20px;
         }
         .leftSide_uploadFile {
-            @include flexCenter;
-
-            .inputFile {
-                width: 100%;
-                max-width: 100%;
-                padding: 15px;
-                border-radius: 10px;
-                border: 1px solid white;
-                font: inherit;
-                //color: #444;
-                //background: #fff;
-            }
-            .inputFile::file-selector-button {
-                border: none;
-                border-radius: 5px;
-                margin-right: 20px;
-                padding: 10px 20px;
-                background: $headerColor;
-                color: #fff;
-                cursor: pointer;
-                transition: background .2s ease-in-out;
-            }
-            .inputFile::file-selector-button:hover {
-                background: $headerColorHover;
-            }
+            @include inputTypeFile($themeColorMilk);
         }
         .leftSide_info {
             @include flexCenter;

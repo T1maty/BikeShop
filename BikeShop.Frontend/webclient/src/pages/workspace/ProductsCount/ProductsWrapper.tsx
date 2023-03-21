@@ -1,7 +1,6 @@
 import React, {ReactNode, ChangeEvent} from 'react'
 import s from './ProductsWrapper.module.scss'
 import {Button} from '../../../shared/ui'
-import UploadIcon from '../../../shared/assets/workspace/upload-file-icon.svg'
 
 type ProductsWrapperProps = {
     title: string

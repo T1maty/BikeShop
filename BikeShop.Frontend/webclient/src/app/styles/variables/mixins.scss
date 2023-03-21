@@ -163,6 +163,33 @@
     }
 }
 
+// input type File styles
+@mixin inputTypeFile($borderColor) {
+    @include flexCenter;
+
+    .inputFile {
+        width: 100%;
+        max-width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid $borderColor;
+        font: inherit;
+    }
+    .inputFile::file-selector-button {
+        border: none;
+        border-radius: 5px;
+        margin-right: 20px;
+        padding: 10px 20px;
+        background: $headerColor;
+        color: #fff;
+        cursor: pointer;
+        transition: background .2s ease-in-out;
+    }
+    .inputFile::file-selector-button:hover {
+        background: $headerColorHover;
+    }
+}
+
 // CreateShopModal
 @mixin createShopStorageModal($itemsColumnHeight, $columnWidth2, $columnWidth3) {
     .shopStorageModal_shops {
@@ -275,9 +302,11 @@
     .productOptions_optionsList {
         overflow-y: auto;
         max-height: 180px;
+        //width: 380px;
 
         .optionsList_item {
             margin-bottom: $defaultSmallMargin;
+            padding-right: 10px;
 
             .options_box {
                 border-radius: $smallBorderRadius;
@@ -297,13 +326,18 @@
                             padding: 5px;
                             border: 1px solid white;
                             border-radius: $extraSmallBorderRadius;
-                            background-color: red;
+                            background-color: #ff6b6b;
                             color: white;
 
+                            &:hover {
+                                background-color: red;
+                            }
+
                         }
+
                         .item_content {
                             @include flexBetween;
-                            margin-bottom: $defaultSmallMargin;
+                            //margin-bottom: $defaultSmallMargin;
 
                             .item_title {
 
@@ -315,6 +349,19 @@
                                 border-radius: $extraSmallBorderRadius;
                                 color: white;
                                 @include hoverCursorPointer;
+                            }
+                            img {
+                                @include hoverCursorPointer;
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
+                        .item_deleteDetailsItem {
+                            @include hoverCursorPointer;
+
+                            img {
+                                width: 25px;
+                                height: 25px;
                             }
                         }
                     }

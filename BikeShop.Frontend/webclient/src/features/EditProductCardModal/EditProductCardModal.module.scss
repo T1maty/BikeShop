@@ -72,8 +72,6 @@
                         margin: 5px;
                         padding: 2px 5px;
                         background-color: white;
-                        //width: 20px;
-                        //height: 20px;
                     }
                     .imageList_deleteItem {
                         position: absolute;
@@ -93,6 +91,7 @@
                 }
                 .imageGallery_addImage {
                     margin-top: $defaultLargeMargin;
+                    @include inputTypeFile($themeColorGray);
                 }
             }
 
@@ -163,12 +162,32 @@
             }
         }
 
+        .rightSide_productStatus {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid $themeColorMilk;
+            border-radius: $smallBorderRadius;
+            text-align: center;
+        }
+
         .rightSide_productOptions {
             @include selectOptionsBlock;
         }
 
         .rightSide_productDetails {
             @include selectOptionsBlock;
+        }
+
+        .rightSide_mainButtons {
+            @include flexOnlyBetween;
+            gap: $defaultLargeMargin;
+            width: 100%;
+
+            button {
+                flex: auto;
+                padding: 10px;
+                flex-grow: 1; // this one line tells button to stretch across all available width
+            }
         }
     }
 }
