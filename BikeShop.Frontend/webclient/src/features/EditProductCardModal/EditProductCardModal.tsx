@@ -9,6 +9,7 @@ import {Editor} from 'react-draft-wysiwyg'
 import {EditorState, convertToRaw} from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
+import RemoveIcon from '../../shared/assets/workspace/remove-icon.png'
 
 export const EditProductCardModal = () => {
 
@@ -101,6 +102,11 @@ export const EditProductCardModal = () => {
         // console.log('currentImageKey', currentImageKey)
     }
 
+    const deleteImageHandler = (imgId: string) => {
+        setGalleryImages(galleryImages.filter(img => img.id !== imgId))
+        setCurrentImageKey(null)
+    }
+
     const onMoveBackwardHandler = (imgKey: number) => {
         if (imgKey === 0) return
         const items = [...galleryImages]
@@ -172,21 +178,36 @@ export const EditProductCardModal = () => {
                                         <img className={currentImageKey === key ? s.active_image : ''}
                                              src={img.thumbnail} alt="img"
                                         />
+                                        <div className={s.imageList_imageCount}>
+                                            {key+1}/{galleryImages.length}
+                                        </div>
+                                        <img src={RemoveIcon} alt="remove-icon"
+                                             className={s.imageList_deleteItem}
+                                             onClick={() => {deleteImageHandler(img.id)}}
+                                        />
                                     </div>
                                 )
                             })}
                         </div>
-                        <div className={s.imageGallery_sortButtons}>
-                            <Button disabled={currentImageKey === null || currentImageKey === 0}
-                                    onClick={() => {onMoveBackwardHandler(currentImageKey)}}
-                            >
-                                Переместить назад
-                            </Button>
-                            <Button disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
-                                    onClick={() => {onMoveForwardHandler(currentImageKey)}}
-                            >
-                                Переместить вперёд
-                            </Button>
+                        <div className={s.imageGallery_buttons}>
+                            <div className={s.imageGallery_sortButtons}>
+                                <Button disabled={currentImageKey === null || currentImageKey === 0}
+                                        onClick={() => {onMoveBackwardHandler(currentImageKey)}}
+                                >
+                                    Переместить назад
+                                </Button>
+                                <Button disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
+                                        onClick={() => {onMoveForwardHandler(currentImageKey)}}
+                                >
+                                    Переместить вперёд
+                                </Button>
+                            </div>
+                            <div className={s.imageGallery_addImage}>
+                                <Button onClick={() => {}}>
+                                    Добавить фото
+                                </Button>
+                            </div>
+
                         </div>
                     </div>
 
