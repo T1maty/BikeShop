@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
@@ -9,8 +9,6 @@ import {Editor} from 'react-draft-wysiwyg'
 import {EditorState, convertToRaw} from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
-import ImageGallery from 'react-image-gallery'
-import 'react-image-gallery/styles/css/image-gallery.css'
 
 export const EditProductCardModal = () => {
 
@@ -19,6 +17,20 @@ export const EditProductCardModal = () => {
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
+
+    const [currentImageKey, setCurrentImageKey] = useState<any>(null)
+
+    const [galleryImages, setGalleryImages] = useState([
+        { id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/' },
+        { id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/' },
+        { id: '3', thumbnail: 'https://picsum.photos/id/1019/250/150/' },
+        { id: '4', thumbnail: 'https://picsum.photos/id/1018/250/150/' },
+        { id: '5', thumbnail: 'https://picsum.photos/id/1015/250/150/' },
+        { id: '6', thumbnail: 'https://picsum.photos/id/1019/250/150/' },
+        { id: '7', thumbnail: 'https://picsum.photos/id/1018/250/150/' },
+        { id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/' },
+        { id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/' },
+    ])
 
     const [options, setOptions] = useState([
         {
@@ -39,20 +51,7 @@ export const EditProductCardModal = () => {
         {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
     ])
 
-    const [images, setImages] = useState([
-        {
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1015/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1019/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        },
-    ])
+    // ----------------------------------- //
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -87,68 +86,49 @@ export const EditProductCardModal = () => {
     }
     const deleteOptionHandler = (listId: string, optionId: string) => {
         setOptions(options.map(el => el.id === listId ? {
-            ...el, optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)} : el))
+            ...el, optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)
+        } : el))
     }
-
     const deleteDetailsListHandler = (detailsItem: any) => {
         setDetails(details.filter(el => el.id !== detailsItem.id))
     }
 
     // ----------------------------------- //
 
-    const [imagesDiv, setImagesDiv] = useState([
-        {
-            id: '1',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-            id: '2',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-            id: '3',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        },
-    ])
-
-    const [currentImage, setCurrentImage] = useState('')
-
-    const setImageHandler = (imgId: string) => {
-        setCurrentImage(imgId)
-        console.log('image ID =', imgId)
-        console.log('currentImage', imgId)
+    const setImageHandler = (imgKey: number) => {
+        setCurrentImageKey(imgKey)
+        // console.log('image key =', imgKey)
+        // console.log('currentImageKey', currentImageKey)
     }
 
-    const moveBackwardHandler = () => {
-        //
-    }
-    const moveForwardHandler = () => {
-
-        // setImagesDiv(imagesDiv.filter(el => el.id === currentImage
-        //     ? ''
-        //     : ''
-        // ))
-    }
-
-    const moveElement = (array: any, fromIndex: number, toIndex: number) => {
-        const arrayCopy = [...array]
-        const element = arrayCopy.splice(fromIndex, 1)[0]
-
-        // console.log(element)
-
-        arrayCopy.splice(toIndex, 0, element)
-        return arrayCopy
+    const onMoveBackwardHandler = (imgKey: number) => {
+        if (imgKey === 0) return
+        const items = [...galleryImages]
+        const index = imgKey - 1
+        const itemAbove = items[index]
+        items[imgKey - 1] = items[imgKey]
+        items[imgKey] = itemAbove
+        console.log(items)
+        setGalleryImages(items)
+        setCurrentImageKey(null)
     }
 
-    const moveImg = (array: any, oldIndex: number, newIndex: number) => {
-        if (newIndex >= array.length) {
-            newIndex = array.length - 1
-        }
-        array.splice(newIndex, 0, array.splice(oldIndex, 1)[0])
-        return array
+    const onMoveForwardHandler = (imgKey: number) => {
+        const items = [...galleryImages]
+        if (imgKey === items.length - 1) return
+        const index = imgKey + 1
+        const itemBelow = items[index]
+        items[imgKey + 1] = items[imgKey]
+        items[imgKey] = itemBelow
+        setGalleryImages(items)
+        setCurrentImageKey(null)
     }
 
     // ----------------------------------- //
+
+    useEffect(() => {
+
+    }, [])
 
     return (
         <Modal
@@ -182,18 +162,31 @@ export const EditProductCardModal = () => {
                     {/*</div>*/}
 
                     <div className={s.leftSide_imageGallery}>
-                        <div style={{display: 'flex', gap: '10px'}}>
-                            {imagesDiv.map(img => {
+                        <div className={s.imageGallery_imageList}>
+                            {galleryImages.map((img, key) => {
                                 return (
-                                    <div key={img.id} onClick={() => {setImageHandler(img.id)}}>
-                                        <img src={img.thumbnail} alt="img" width={150}/>
+                                    <div key={img.id}
+                                         onClick={() => {setImageHandler(key)}}
+                                         className={s.imageList_item}
+                                    >
+                                        <img className={currentImageKey === key ? s.active_image : ''}
+                                             src={img.thumbnail} alt="img"
+                                        />
                                     </div>
                                 )
                             })}
                         </div>
                         <div className={s.imageGallery_sortButtons}>
-                            <Button onClick={() => {}}>Переместить назад</Button>
-                            <Button onClick={moveForwardHandler}>Переместить вперёд</Button>
+                            <Button disabled={currentImageKey === null || currentImageKey === 0}
+                                    onClick={() => {onMoveBackwardHandler(currentImageKey)}}
+                            >
+                                Переместить назад
+                            </Button>
+                            <Button disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
+                                    onClick={() => {onMoveForwardHandler(currentImageKey)}}
+                            >
+                                Переместить вперёд
+                            </Button>
                         </div>
                     </div>
 
@@ -209,7 +202,9 @@ export const EditProductCardModal = () => {
                                 wrapperClassName="wrapperClassName"
                                 editorClassName={s.editorClassName}
                                 // editorClassName="editorClassName"
-                                onEditorStateChange={(editorState) => {setEditorState(editorState)}}
+                                onEditorStateChange={(editorState) => {
+                                    setEditorState(editorState)
+                                }}
                             />
                         </div>
                     </div>

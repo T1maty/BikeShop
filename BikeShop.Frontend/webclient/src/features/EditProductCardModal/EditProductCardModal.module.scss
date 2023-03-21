@@ -19,12 +19,47 @@
         //    @include defaultBlockStyles($themeColorMilk);
         //    height: 50%;
         //}
+
+        // вариант со слайдером
+        //.leftSide_imageGallery {
+        //    @include defaultBlockStyles($themeColorMilk);
+        //    @include flexColumn;
+        //    justify-content: center;
+        //    height: 50%;
+        //
+        //    .imageGallery_sortButtons {
+        //        margin-top: $defaultExtraLargeMargin;
+        //        @include flexOnlyBetween;
+        //        gap: $defaultLargeMargin;
+        //    }
+        //}
+
+        // итоговый вариант
         .leftSide_imageGallery {
             @include defaultBlockStyles($themeColorMilk);
             @include flexColumn;
             justify-content: center;
             height: 50%;
+            width: 510px;
 
+            .imageGallery_imageList {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                max-height: 300px;
+                overflow-y: auto;
+
+                .imageList_item {
+                    @include hoverCursorPointer;
+
+                    img {
+                        width: 140px;
+                    }
+                    .active_image {
+                        opacity: 0.5;
+                    }
+                }
+            }
             .imageGallery_sortButtons {
                 margin-top: $defaultExtraLargeMargin;
                 @include flexOnlyBetween;
