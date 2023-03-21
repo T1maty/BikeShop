@@ -198,7 +198,7 @@ export const EditProductCardModal = () => {
                                          className={s.imageList_item}
                                     >
                                         <img className={currentImageKey === key ? s.active_image : ''}
-                                             src={img.thumbnail} alt="img"
+                                             src={img.thumbnail} alt="img-thumbnail"
                                         />
                                         <div className={s.imageList_imageCount}>
                                             {key + 1}/{galleryImages.length}

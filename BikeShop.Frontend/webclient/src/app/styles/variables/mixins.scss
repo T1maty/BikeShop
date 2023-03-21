@@ -302,11 +302,12 @@
     .productOptions_optionsList {
         overflow-y: auto;
         max-height: 180px;
-        //width: 380px;
+        width: 380px;
 
         .optionsList_item {
             margin-bottom: $defaultSmallMargin;
             padding-right: 10px;
+            width: 360px;
 
             .options_box {
                 border-radius: $smallBorderRadius;
@@ -351,17 +352,24 @@
                                 @include hoverCursorPointer;
                             }
                             img {
-                                @include hoverCursorPointer;
                                 width: 20px;
                                 height: 20px;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    filter: contrast(3);
+                                }
                             }
                         }
                         .item_deleteDetailsItem {
-                            @include hoverCursorPointer;
-
                             img {
                                 width: 25px;
                                 height: 25px;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    filter: contrast(3);
+                                }
                             }
                         }
                     }
