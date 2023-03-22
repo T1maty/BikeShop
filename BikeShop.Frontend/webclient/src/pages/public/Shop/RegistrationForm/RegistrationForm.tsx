@@ -42,16 +42,20 @@ export const RegistrationForm = () => {
             </div>
             <div className={s.loginForm_form}>
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                    <ControlledCustomInput name={'phone'}
-                                           placeholder={'Номер телефона'}
-                                           control={formControl}
-                                           rules={{required: Errors[0].name}}
-                    />
-                    <ControlledCustomInput name={'password'}
-                                           placeholder={'Пароль'}
-                                           control={formControl}
-                                           rules={{required: Errors[0].name}}
-                    />
+                    <div>
+                        <ControlledCustomInput name={'phone'}
+                                               placeholder={'Номер телефона'}
+                                               control={formControl}
+                                               rules={{required: Errors[0].name}}
+                        />
+                    </div>
+                    <div>
+                        <ControlledCustomInput name={'password'}
+                                               placeholder={'Пароль'}
+                                               control={formControl}
+                                               rules={{required: Errors[0].name}}
+                        />
+                    </div>
 
                     {/*<ControlledInput name={'phone'}*/}
                     {/*                 label={'Номер телефона'}*/}

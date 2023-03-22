@@ -22,6 +22,12 @@
     }
     .loginForm_form {
         margin-bottom: $defaultSmallMargin;
+
+        form {
+            > div {
+                margin-bottom: $defaultSmallMargin;
+            }
+        }
     }
     .loginForm_submitButton {
         width: 240px;
