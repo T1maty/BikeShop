@@ -44,13 +44,15 @@ export const ProductCatalogTable = (props: props) => {
             <EditProductCardModal productCardData={'Здесь будут теги!'}/>
 
             <div className={s.table_content}>
-                <UniTable rows={data} columns={columns}
+                <UniTable rows={data}
+                          columns={columns}
                           rowOnDoubleClick={(row, event) => {
                               props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
                           }}
                           rowOnContext={(row, event) => {
                               setContextVisible(true, event.clientX, event.clientY)
-                          }}/>
+                          }}
+                />
             </div>
         </>
     )

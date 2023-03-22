@@ -215,6 +215,15 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     {/*    </div>*/}
                     {/*</div>*/}
 
+                    <div className={s.rightSide_tagEditor}>
+                        <div className={s.tagEditor_title}>Редактор тегов товара</div>
+                        <div className={s.tagEditor_tags}>{productCardData}</div>
+                    </div>
+
+                    <div className={s.rightSide_productStatus}>
+                        Статус товара
+                    </div>
+
                     <div className={s.leftSide_imageGallery}>
                         <div className={s.imageGallery_imageList}>
                             {galleryImages.map((img, key) => {
@@ -262,35 +271,54 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         </div>
                     </div>
 
-                    <div className={s.leftSide_descriptionEditor}>
-                        <div className={s.descriptionEditor_title}>Описание товара:</div>
-                        {/*<div className={s.descriptionEditor_textarea}>*/}
-                        {/*    <textarea/>*/}
-                        {/*</div>*/}
-                        <div className={s.descriptionEditor_editorTextarea}>
-                            <Editor
-                                editorState={editorState}
-                                toolbarClassName="toolbarClassName"
-                                wrapperClassName="wrapperClassName"
-                                editorClassName={s.editorClassName}
-                                // editorClassName="editorClassName"
-                                onEditorStateChange={(editorState) => {
-                                    setEditorState(editorState)
-                                }}
-                            />
-                        </div>
+                    {/*<div className={s.leftSide_descriptionEditor}>*/}
+                    {/*    <div className={s.descriptionEditor_title}>Описание товара:</div>*/}
+                    {/*    /!*<div className={s.descriptionEditor_textarea}>*!/*/}
+                    {/*    /!*    <textarea/>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    <div className={s.descriptionEditor_editorTextarea}>*/}
+                    {/*        <Editor*/}
+                    {/*            editorState={editorState}*/}
+                    {/*            toolbarClassName="toolbarClassName"*/}
+                    {/*            wrapperClassName="wrapperClassName"*/}
+                    {/*            editorClassName={s.editorClassName}*/}
+                    {/*            // editorClassName="editorClassName"*/}
+                    {/*            onEditorStateChange={(editorState) => {*/}
+                    {/*                setEditorState(editorState)*/}
+                    {/*            }}*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                </div>
+
+                <div className={s.leftSide_descriptionEditor}>
+                    <div className={s.descriptionEditor_title}>Описание товара:</div>
+                    {/*<div className={s.descriptionEditor_textarea}>*/}
+                    {/*    <textarea/>*/}
+                    {/*</div>*/}
+                    <div className={s.descriptionEditor_editorTextarea}>
+                        <Editor
+                            editorState={editorState}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName={s.editorClassName}
+                            // editorClassName="editorClassName"
+                            onEditorStateChange={(editorState) => {
+                                setEditorState(editorState)
+                            }}
+                        />
                     </div>
                 </div>
 
                 <div className={s.editProductCardModal_rightSide}>
-                    <div className={s.rightSide_tagEditor}>
-                        <div className={s.tagEditor_title}>Редактор тегов товара</div>
-                        <div className={s.tagEditor_tags}>{productCardData}</div>
-                    </div>
+                    {/*<div className={s.rightSide_tagEditor}>*/}
+                    {/*    <div className={s.tagEditor_title}>Редактор тегов товара</div>*/}
+                    {/*    <div className={s.tagEditor_tags}>{productCardData}</div>*/}
+                    {/*</div>*/}
 
-                    <div className={s.rightSide_productStatus}>
-                        Статус товара
-                    </div>
+                    {/*<div className={s.rightSide_productStatus}>*/}
+                    {/*    Статус товара*/}
+                    {/*</div>*/}
 
                     <div className={s.rightSide_productOptions}>
                         <div className={s.productOptions_optionsList}>
@@ -431,13 +459,10 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     </div>
 
                     <div className={s.rightSide_mainButtons}>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
+                        <Button onClick={() => {setOpen(false)}}>
                             Отмена
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Сохранить
                         </Button>
                     </div>
