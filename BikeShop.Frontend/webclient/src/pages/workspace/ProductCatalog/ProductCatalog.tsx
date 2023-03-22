@@ -2,8 +2,11 @@ import React from 'react'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
 import {Button, InputUI} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
+import useEditProductCardModal from "../../../features/EditProductCardModal/EditProductCardModalStore"
 
 export const ProductCatalog = () => {
+
+    const setOpenEditProductCardModal = useEditProductCardModal(s => s.setOpenEditProductCardModal)
 
     return (
         // <div className={s.productCatalogTableWrapper}>
@@ -38,7 +41,7 @@ export const ProductCatalog = () => {
                 </div>
 
                 <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
-                    <ProductCatalogTable/>
+                    <ProductCatalogTable onRowDoubleClick={() => {setOpenEditProductCardModal(true)}}/>
                 </div>
             </div>
         </div>

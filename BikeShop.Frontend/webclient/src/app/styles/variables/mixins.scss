@@ -387,9 +387,10 @@
                                 font-size: 40px;
                             }
                         }
-
+                        // селект разновидность опции
                         .options_search {
                             width: 100%;
+                            color: black;
                         }
                     }
                 }
@@ -400,6 +401,7 @@
     .productOptions_selectRow {
         @include flexBetween;
         gap: $defaultLargeMargin;
+        height: 50px;
 
         .options_button {
             button {
@@ -409,9 +411,10 @@
                 font-size: 40px;
             }
         }
-
+        // селект опции
         .options_search {
             width: 100%;
+            color: black;
         }
     }
 }

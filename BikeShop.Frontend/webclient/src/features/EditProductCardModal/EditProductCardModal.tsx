@@ -2,7 +2,7 @@ import React, {useState, useEffect, ChangeEvent} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
-import {Button, ControlledInput, ControlledSelect} from '../../shared/ui'
+import {Button, ControlledCustomInput, ControlledInput, ControlledSelect} from '../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from '../../entities/errors/workspaceErrors'
 import {Editor} from 'react-draft-wysiwyg'
@@ -12,11 +12,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import RemoveIcon from '../../shared/assets/workspace/remove-icon.svg'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import Select from 'react-select/base'
-
-// interface AutocompleteOption {
-//     name: string
-// }
+import Select from 'react-select'
 
 interface EditProductCardModalProps {
     productCardData?: any
@@ -44,21 +40,28 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
     ])
 
-    // const [selectedOptions, setSelectedOptions] = useState<any>()
-    // const [inputValue, setInputValue] = useState('')
+    // ----------------------------------- //
+
+    const optionsList = [
+        { value: "red", label: "Red" },
+        { value: "green", label: "Green" },
+        { value: "yellow", label: "Yellow" },
+        { value: "blue", label: "Blue" },
+        { value: "white", label: "White" },
+    ]
+
+    const [selectedOption, setSelectedOption] = useState(null)
+    // const [inputValue, setInputValue] = useState()
+
+    // const getSelectValue = () => {
+    //     return selectedOption ? optionsList.find(el => el.value === selectedOption) : ''
+    // }
     //
-    // const optionList = [
-    //     { value: "red", label: "Red" },
-    //     { value: "green", label: "Green" },
-    //     { value: "yellow", label: "Yellow" },
-    //     { value: "blue", label: "Blue" },
-    //     { value: "white", label: "White" }
-    // ]
-    //
-    // function handleSelect(data: any) {
-    //     setSelectedOptions(data)
+    // const onChangeSelect = (newValue: any) => {
+    //     setSelectedOption(newValue.value)
     // }
 
+    // тестовые данные
     const [options, setOptions] = useState([
         {
             id: '1',
@@ -357,16 +360,25 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                     </div>
                                                     <div className={s.rowItems_chooseItem}>
                                                         <Button buttonDivWrapper={s.options_button}>+</Button>
-                                                        <ControlledSelect control={formControl}
-                                                                          name={'optionVersion'}
-                                                                          label={'Разновидность опции'}
-                                                                          className={s.options_search}
-                                                                          data={option.optionsArray.map((el: any) => {
-                                                                              return {
-                                                                                  id: el.id,
-                                                                                  value: el.name ? el.name : 'Нет имени'
-                                                                              }
-                                                                          })}
+                                                        {/*<ControlledSelect control={formControl}*/}
+                                                        {/*                  name={'optionVersion'}*/}
+                                                        {/*                  label={'Разновидность опции'}*/}
+                                                        {/*                  className={s.options_search}*/}
+                                                        {/*                  data={option.optionsArray.map((el: any) => {*/}
+                                                        {/*                      return {*/}
+                                                        {/*                          id: el.id,*/}
+                                                        {/*                          value: el.name ? el.name : 'Нет имени'*/}
+                                                        {/*                      }*/}
+                                                        {/*                  })}*/}
+                                                        {/*/>*/}
+
+                                                        <Select
+                                                            className={s.options_search}
+                                                            options={optionsList}
+                                                            placeholder="Разновидность опции"
+                                                            isSearchable={true}
+                                                            value={selectedOption}
+                                                            onChange={(value: any) => {setSelectedOption(value)}}
                                                         />
                                                     </div>
                                                 </div>
@@ -377,15 +389,19 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             }
                         </div>
                         <div className={s.productOptions_selectRow}>
-                            <Button buttonDivWrapper={s.options_button}>+</Button>
-                            <ControlledSelect control={formControl}
-                                              name={'option'}
-                                              label={'Опции'}
-                                              className={s.options_search}
-                                              data={options.map((el) => {
-                                                  return {id: el.id, value: el.name ? el.name : 'Нет опции'}
-                                              })}
-                            />
+                            <Button buttonDivWrapper={s.options_button}
+                                    onClick={() => {console.log(selectedOption)}}
+                            >
+                                +
+                            </Button>
+                            {/*<ControlledSelect control={formControl}*/}
+                            {/*                  name={'option'}*/}
+                            {/*                  label={'Опции'}*/}
+                            {/*                  className={s.options_search}*/}
+                            {/*                  data={options.map((el) => {*/}
+                            {/*                      return {id: el.id, value: el.name ? el.name : 'Нет опции'}*/}
+                            {/*                  })}*/}
+                            {/*/>*/}
 
                             {/*<Autocomplete*/}
                             {/*    disablePortal*/}
@@ -395,17 +411,14 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             {/*    renderInput={(params) => <TextField {...params} label="Опции" />}*/}
                             {/*/>*/}
 
-                            {/*<Select*/}
-                            {/*    options={optionList}*/}
-                            {/*    placeholder="Опции"*/}
-                            {/*    isSearchable={true}*/}
-                            {/*    value={selectedOptions}*/}
-                            {/*    onChange={handleSelect}*/}
-                            {/*    inputValue={inputValue}*/}
-                            {/*    onInputChange={handleSelect}*/}
-                            {/*    onMenuOpen={() => {}}*/}
-                            {/*    onMenuClose={() => {}}*/}
-                            {/*/>*/}
+                            <Select
+                                className={s.options_search}
+                                options={optionsList}
+                                placeholder="Опции"
+                                isSearchable={true}
+                                value={selectedOption}
+                                onChange={(value: any) => {setSelectedOption(value)}}
+                            />
                         </div>
                     </div>
 
@@ -448,11 +461,18 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
                             <div className={s.productOptions_selectRow}>
                                 <Button type={'submit'} buttonDivWrapper={s.options_button}>+</Button>
-                                <ControlledInput name={'detail'}
-                                                 label={'Характеристика'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                                 divClassName={s.options_search}
+                                {/*<ControlledInput name={'detail'}*/}
+                                {/*                 label={'Характеристика'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*                 divClassName={s.options_search}*/}
+                                {/*/>*/}
+
+                                <ControlledCustomInput name={'detail'}
+                                                       placeholder={'Характеристика'}
+                                                       control={formControl}
+                                                       // rules={{required: Errors[0].name}}
+                                                       // divClassName={s.options_search}
                                 />
                             </div>
                         </form>

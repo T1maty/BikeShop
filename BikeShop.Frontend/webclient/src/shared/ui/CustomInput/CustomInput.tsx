@@ -79,12 +79,22 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
             {/*<span className={s.cancelIcon}></span>*/}
-            <div className={s.errorWrapper}>
-                {error && <span className={finalSpanClassName}>{error}</span>}
-            </div>
-            <div className={s.errorHelperText}>
-                {helperText && helperText}
-            </div>
+
+            {
+                error ?
+                    <div className={s.errorWrapper}>
+                        {error && <span className={finalSpanClassName}>{error}</span>}
+                    </div>
+                    : ''
+            }
+
+            {
+                helperText ?
+                    <div className={s.errorHelperText}>
+                        {helperText && helperText}
+                    </div>
+                    : ''
+            }
 
             {/*вариант строки с id*/}
             {/*<span*/}

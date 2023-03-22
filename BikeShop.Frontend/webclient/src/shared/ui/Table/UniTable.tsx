@@ -87,10 +87,10 @@ const TableRow = memo((props: TableRowProps) => {
 
     return (
         <tr className={`${[props.selected].includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
-            // onDoubleClick={(event) => {
-            //     props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
-            // }}
-            onDoubleClick={() => {setOpenEditProductCardModal(true)}}
+            onDoubleClick={(event) => {
+                props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
+            }}
+            // onDoubleClick={() => {setOpenEditProductCardModal(true)}}
 
             onContextMenu={(event) => {
                 props.setSelected(props.row)

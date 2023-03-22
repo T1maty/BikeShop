@@ -17,10 +17,9 @@ export const ProductCatalogTable = (props: props) => {
     const rows = useProductCatalogTableStore(s => s.rows)
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
-
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
 
-    function createProductSuccessHandler(product: IProduct) {
+    const createProductSuccessHandler = (product: IProduct) => {
         let extProd: IProductExtended;
         extProd = {} as IProductExtended
         extProd.product = product
