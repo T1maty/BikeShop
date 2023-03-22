@@ -38,15 +38,10 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
     const treeData = useTagTreeView(s => s.treeViewTags)
     const tagsCloud = useProductTagCloudStore(s => s.tags)
 
-    function setProductsToTableHandler() {
-        let tags = tagsCloud.map((n) => {
-            return n.id
-        })
+    const setProductsToTableHandler = () => {
+        let tags = tagsCloud.map((n) => {return n.id})
         tags.push(props.nodeId)
-        setProductsToTable(tags).then((r) => {
-
-            setRows(r.data)
-        })
+        setProductsToTable(tags).then((r) => {setRows(r.data)})
     }
 
     return (
@@ -59,9 +54,7 @@ export const TagTreeViewCustomNode = React.forwardRef(function CustomContent(
             })}
             ref={ref as React.Ref<HTMLDivElement>}
         >
-            <div onClick={() => {
-                handleExpanded(props.nodeId)
-            }} className={classes.iconContainer}>
+            <div onClick={() => {handleExpanded(props.nodeId)}} className={classes.iconContainer}>
                 {icon}
             </div>
             <Typography

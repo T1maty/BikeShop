@@ -2,9 +2,9 @@ import React from 'react'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
 import {Button, InputUI} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
-import {EditProductCardModal} from '../../../features/EditProductCardModal/EditProductCardModal'
 
 export const ProductCatalog = () => {
+
     return (
         // <div className={s.productCatalogTableWrapper}>
         <div className={s.productCatalogTable_mainBlock}>

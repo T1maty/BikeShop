@@ -22,7 +22,6 @@ export const TagTreeView = () => {
         fetchTags().then((r) => {setTreeViewData(r.data.tags as IProductTag[])})
     }, [])
 
-
     return (
         <Box sx={{
             flexGrow: 1,

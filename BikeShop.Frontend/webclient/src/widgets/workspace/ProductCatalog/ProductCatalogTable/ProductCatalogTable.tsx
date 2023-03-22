@@ -5,8 +5,8 @@ import useProductCatalogTableStore from './ProductCatalogTableStore'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {IProduct, IProductExtended} from "../../../../entities"
 import {EditProductCardModal} from '../../../../features/EditProductCardModal/EditProductCardModal'
-import {UniTable} from "../../../../shared/ui";
-import {columns} from "./ProductCatalogTableConfig";
+import {UniTable} from "../../../../shared/ui"
+import {columns} from "./ProductCatalogTableConfig"
 
 interface props {
     onRowDoubleClick?: (product: any) => void

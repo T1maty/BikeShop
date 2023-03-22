@@ -67,7 +67,6 @@ export const UniTable = (props: ITableProps) => {
 const TableHeadItem = memo((props: { theadData: Column[] }) => {
 
     const {theadData} = props
-    const setOpenEditProductCardModal = useEditProductCardModal(s => s.setOpenEditProductCardModal)
 
     return (
         <tr className={cls.head__items}>
