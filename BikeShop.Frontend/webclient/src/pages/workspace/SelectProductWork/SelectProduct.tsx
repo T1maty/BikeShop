@@ -1,10 +1,10 @@
 import React from 'react'
 import s from './SelectProductWork.module.scss'
-import {Button, InputUI} from '../../../shared/ui'
-import SlaveTable from "./SlaveTable";
+import {Button, InputUI, UniTable} from '../../../shared/ui'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
 import useSelectProduct from "./SelectProductStore";
 import {ServiceItemProduct} from "../../../entities/models/ServiceItem";
+import {columns} from "./SlaveTableConfig";
 
 interface SelectProductProps {
     products: ServiceItemProduct[]
@@ -45,8 +45,16 @@ export const SelectProduct = (props: SelectProductProps) => {
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
                     <ProductCatalogTable onRowDoubleClick={(product) => {
+                        console.log(product)
                         let prods = props.products
-                        prods.push(conv(product))
+                        let actual = prods.find(n => n.productId === product.id)
+                        if (actual != undefined) {
+                            actual.quantity++
+                        } else {
+                            let item = conv(product)
+                            item.quantity = 1
+                            prods.push(item)
+                        }
                         props.setProducts(prods)
                     }}/>
                 </div>
@@ -68,7 +76,7 @@ export const SelectProduct = (props: SelectProductProps) => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    <SlaveTable rows={props.products}/>
+                    <UniTable rows={props.products} columns={columns}/>
                 </div>
             </div>
         </div>

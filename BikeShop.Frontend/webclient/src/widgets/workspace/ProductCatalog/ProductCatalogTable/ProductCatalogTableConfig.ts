@@ -5,7 +5,7 @@ export interface Column {
     align?: 'right' | 'left';
 }
 
-export const columns: readonly Column[] = [
+export const columns: Column[] = [
     {
         id: 'id',
         label: 'Артикул',

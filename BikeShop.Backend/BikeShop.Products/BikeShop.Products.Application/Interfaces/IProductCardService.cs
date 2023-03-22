@@ -1,5 +1,6 @@
 ﻿using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Requestes.Option;
+using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.DTO.Responses.Option;
 using BikeShop.Products.Domain.Entities;
@@ -14,7 +15,7 @@ namespace BikeShop.Products.Application.Interfaces
     public interface IProductCardService
     {
         public Task<ProductCardDTO> GetProductCard(int productId);
-        public Task<ProductCardDTO> UpdateProductCard();
+        public Task<ProductCardDTO> UpdateProductCard(UpdateProductCardDTO dto);
 
         public Task<List<OptionDTO>> GetAllOptions();
         public Task<OptionDTO> CreateOption(CreateOptionDTO dto);

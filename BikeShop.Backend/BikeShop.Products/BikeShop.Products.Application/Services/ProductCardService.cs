@@ -1,6 +1,7 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Requestes.Option;
+using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.DTO.Responses.Option;
 using BikeShop.Products.Domain.Entities;
@@ -113,9 +114,9 @@ namespace BikeShop.Products.Application.Services
             return new OptionDTO { option = ent, optionVariants = list };
         }
 
-        public Task<ProductCardDTO> UpdateProductCard()
+        public async Task<ProductCardDTO> UpdateProductCard(UpdateProductCardDTO dto)
         {
-            throw new NotImplementedException();
+            return new ProductCardDTO();
         }
 
         public async Task<Specification> UpdateSpecification(UpdateSpecificationDTO dto)

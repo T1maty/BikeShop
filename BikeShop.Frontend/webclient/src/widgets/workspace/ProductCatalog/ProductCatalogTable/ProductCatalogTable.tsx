@@ -1,30 +1,24 @@
 import React from 'react'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import {CreateProductModal, UpdateProductModal} from '../../../../features'
 import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
-import {columns} from './ProductCatalogTableConfig'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {IProduct, IProductExtended} from "../../../../entities"
-import {ProductCatalogTableRow} from "./ProductCatalogTableRow"
 import {EditProductCardModal} from '../../../../features/EditProductCardModal/EditProductCardModal'
+import {UniTable} from "../../../../shared/ui";
+import {columns} from "./ProductCatalogTableConfig";
 
 interface props {
-    onRowDoubleClick?: (product: IProductExtended) => void
+    onRowDoubleClick?: (product: any) => void
 }
 
 export const ProductCatalogTable = (props: props) => {
 
-    const page = useProductCatalogTableStore(s => s.page)
-    const rowsPerPage = useProductCatalogTableStore(s => s.rowsPerPage)
     const rows = useProductCatalogTableStore(s => s.rows)
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
+
+    const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
 
     function createProductSuccessHandler(product: IProduct) {
         let extProd: IProductExtended;
@@ -34,51 +28,29 @@ export const ProductCatalogTable = (props: props) => {
         addNewProduct(extProd)
     }
 
+    let data = rows.map((item) => {
+        return {
+            ...item.product,
+            quantity: item.quantity,
+            quantityUnitName: item.quantityUnit?.name ? item.quantityUnit?.name : "Error"
+        }
+    })
+
     return (
         <>
             <ProductCatalogTableContextMenu/>
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
             <EditProductCardModal productCardData={'Здесь будут теги!'}/>
-            <div className={s.table_content}>
-                <TableContainer>
-                    <Table
-                        stickyHeader={true}
-                        aria-label="sticky table"
-                        size={'small'}
-                    >
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{minWidth: column.minWidth}}
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
 
-                        <TableBody>
-                            {
-                                rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
-                                    return (
-                                        <ProductCatalogTableRow onRowDoubleClick={props.onRowDoubleClick}
-                                                                key={row.product.id} row={row}
-                                        />
-                                    )
-                                })
-                            }
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
-            <div className={s.table_pagination}>
-                {/*<ProductCatalogTablePagination/>*/}
+            <div className={s.table_content}>
+                <UniTable rows={data} columns={columns}
+                          rowOnDoubleClick={(row, event) => {
+                              props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
+                          }}
+                          rowOnContext={(row, event) => {
+                              setContextVisible(true, event.clientX, event.clientY)
+                          }}/>
             </div>
         </>
     )

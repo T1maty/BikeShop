@@ -1,6 +1,7 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Requestes.Option;
+using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.DTO.Responses.Option;
 using BikeShop.Products.Domain.Entities;
@@ -28,9 +29,9 @@ namespace BikeShop.Products.WebApi.Controllers
 
 
         [HttpPut("updateproductcard")]
-        public async Task<ProductCardDTO> UpdateProductCard()
+        public async Task<ProductCardDTO> UpdateProductCard(UpdateProductCardDTO dto)
         {
-            return await _productCardService.UpdateProductCard();
+            return await _productCardService.UpdateProductCard(dto);
         }
 
         //Options
