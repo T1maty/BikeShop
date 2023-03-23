@@ -2,8 +2,10 @@ import React, {useState, useEffect, ChangeEvent} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
-import {Button, ControlledCustomInput, ControlledInput,
-    ControlledSelect, CustomInput} from '../../../shared/ui'
+import {
+    Button, ControlledCustomInput, ControlledInput,
+    ControlledSelect, CustomInput
+} from '../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import {Editor} from 'react-draft-wysiwyg'
@@ -57,37 +59,18 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     // ----------------------------------- //
 
-    const optionsList = [
-        {value: "red", label: "Red"},
-        {value: "green", label: "Green"},
-        {value: "yellow", label: "Yellow"},
-        {value: "blue", label: "Blue"},
-        {value: "white", label: "White"},
-    ]
+    // тестовые данные
+    // const [options, setOptions] = useState<any>([
+    //     // {
+    //     //     id: '1',
+    //     //     name: 'Размер шлема',
+    //     //     optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]
+    //     // },
+    // ])
 
     const [selectedOption, setSelectedOption] = useState(null)
     const [selectedOptionVariant, setSelectedOptionVariant] = useState(null)
     const [selectedSpecification, setSelectedSpecification] = useState(null)
-
-    // тестовые данные
-    const [options, setOptions] = useState<any>([
-        // {
-        //     id: '1',
-        //     name: 'Размер шлема',
-        //     optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]
-        // },
-        // {
-        //     id: '2',
-        //     name: 'Цвет шлема',
-        //     optionsArray: [{id: '7', name: 'Red'}, {id: '8', name: 'Blue'}, {id: '9', name: 'White'}]
-        // },
-    ])
-
-    // const [specifications1, setSpecifications1] = useState<any>([
-    //     {id: '1', name: 'Характеристика 1', description: 'Описание 1'},
-    //     // {id: '2', name: 'Характеристика 2', description: 'Описание 2'},
-    //     // {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
-    // ])
 
     // const [specificationInput, setSpecificationInput] = useState<string>('')
     //
@@ -124,15 +107,15 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     // функции для селектов
     const deleteOptionsListHandler = (optionsItem: any) => {
-        setOptions(options.filter((el: any) => el.id !== optionsItem.id))
+        // setOptions(options.filter((el: any) => el.id !== optionsItem.id))
     }
     const deleteOptionHandler = (listId: number, optionId: number) => {
-        setOptions(options.map((el: any) => el.id === listId ? {
-            ...el, optionsArray: el.optionsArray.filter((opt: any) => opt.id !== optionId)
-        } : el))
+        // setOptions(options.map((el: any) => el.id === listId ? {
+        //     ...el, optionsArray: el.optionsArray.filter((opt: any) => opt.id !== optionId)
+        // } : el))
     }
-    const deleteDetailsListHandler = (detailsItem: any) => {
-        // setSpecifications1(specifications.filter((el: any) => el.id !== detailsItem.id))
+    const deleteDetailsListHandler = (specItem: any) => {
+        // setSpecifications1(specifications.filter((el: any) => el.id !== specItem.id))
     }
 
     // ----------------------------------- //
@@ -206,34 +189,12 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <div className={s.editProductCardModal_mainBlock}>
                 <div className={s.editProductCardModal_leftSide}>
-                    {/*<div className={s.leftSide_imageGallery}>*/}
-                    {/*    Фотографии*/}
-                    {/*</div>*/}
-
-                    {/*<div className={s.leftSide_imageGallery}>*/}
-                    {/*    <ImageGallery items={images}*/}
-                    {/*                  showPlayButton={false}*/}
-                    {/*                  showFullscreenButton={false}*/}
-                    {/*                  showNav={false}*/}
-                    {/*                  showIndex={true}*/}
-                    {/*                  thumbnailPosition={'left'}*/}
-                    {/*    />*/}
-                    {/*    <div className={s.imageGallery_sortButtons}>*/}
-                    {/*        /!*<div>Переместить назад</div>*!/*/}
-                    {/*        <Button onClick={() => {alert('назад')}}>Переместить назад</Button>*/}
-                    {/*        /!*<div>Переместить вперёд</div>*!/*/}
-                    {/*        <Button onClick={() => {alert('вперёд')}}>Переместить вперёд</Button>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
                     <div className={s.rightSide_tagEditor}>
                         <div className={s.tagEditor_title}>Редактор тегов товара</div>
                         <div className={s.tagEditor_tags}>{productCardData}</div>
@@ -249,28 +210,24 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                 galleryImages.length === 0 ? <div>Фотографий нет</div> :
 
                                     galleryImages.map((img: any, key: number) => {
-                                            return (
-                                                <div key={img.id}
-                                                     onDoubleClick={() => {
-                                                         setImageHandler(key)
-                                                     }}
-                                                     className={s.imageList_item}
-                                                >
-                                                    <img className={currentImageKey === key ? s.active_image : ''}
-                                                         src={img.thumbnail} alt="img-thumbnail"
-                                                    />
-                                                    <div className={s.imageList_imageCount}>
-                                                        {key + 1}/{galleryImages.length}
-                                                    </div>
-                                                    <img src={RemoveIcon} alt="remove-icon"
-                                                         className={s.imageList_deleteItem}
-                                                         onClick={() => {
-                                                             deleteImageHandler(img.id)
-                                                         }}
-                                                    />
+                                        return (
+                                            <div key={img.id}
+                                                 onDoubleClick={() => {setImageHandler(key)}}
+                                                 className={s.imageList_item}
+                                            >
+                                                <img className={currentImageKey === key ? s.active_image : ''}
+                                                     src={img.thumbnail} alt="img-thumbnail"
+                                                />
+                                                <div className={s.imageList_imageCount}>
+                                                    {key + 1}/{galleryImages.length}
                                                 </div>
-                                            )
-                                        })
+                                                <img src={RemoveIcon} alt="remove-icon"
+                                                     className={s.imageList_deleteItem}
+                                                     onClick={() => {deleteImageHandler(img.id)}}
+                                                />
+                                            </div>
+                                        )
+                                    })
                             }
                         </div>
                         <div className={s.imageGallery_buttons}>
@@ -294,28 +251,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                        className={s.inputFile}
                                 />
                             </div>
-
                         </div>
                     </div>
-
-                    {/*<div className={s.leftSide_descriptionEditor}>*/}
-                    {/*    <div className={s.descriptionEditor_title}>Описание товара:</div>*/}
-                    {/*    /!*<div className={s.descriptionEditor_textarea}>*!/*/}
-                    {/*    /!*    <textarea/>*!/*/}
-                    {/*    /!*</div>*!/*/}
-                    {/*    <div className={s.descriptionEditor_editorTextarea}>*/}
-                    {/*        <Editor*/}
-                    {/*            editorState={editorState}*/}
-                    {/*            toolbarClassName="toolbarClassName"*/}
-                    {/*            wrapperClassName="wrapperClassName"*/}
-                    {/*            editorClassName={s.editorClassName}*/}
-                    {/*            // editorClassName="editorClassName"*/}
-                    {/*            onEditorStateChange={(editorState) => {*/}
-                    {/*                setEditorState(editorState)*/}
-                    {/*            }}*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </div>
 
                 <div className={s.leftSide_descriptionEditor}>
@@ -330,91 +267,92 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             wrapperClassName="wrapperClassName"
                             editorClassName={s.editorClassName}
                             // editorClassName="editorClassName"
-                            onEditorStateChange={(editorState) => {setEditorState(editorState)}}
+                            onEditorStateChange={(editorState) => {
+                                setEditorState(editorState)
+                            }}
                         />
                     </div>
                 </div>
 
                 <div className={s.editProductCardModal_rightSide}>
-                    {/*<div className={s.rightSide_tagEditor}>*/}
-                    {/*    <div className={s.tagEditor_title}>Редактор тегов товара</div>*/}
-                    {/*    <div className={s.tagEditor_tags}>{productCardData}</div>*/}
-                    {/*</div>*/}
-
-                    {/*<div className={s.rightSide_productStatus}>*/}
-                    {/*    Статус товара*/}
-                    {/*</div>*/}
-
                     <div className={s.rightSide_productOptions}>
                         <div className={s.productOptions_optionsList}>
                             {
                                 cardOptions.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте опции</div> :
 
                                     cardOptions.map((option: ProductCardOption) => {
-                                    return (
-                                        <div className={s.optionsList_item}
-                                             key={option.option.id}
-                                        >
-                                            <fieldset className={s.options_box}>
-                                                <legend>{option.option.name}</legend>
-                                                <div className={s.options_rowItems}>
-                                                    <div className={s.rowItems_item}>
-                                                        <div className={s.item_deleteFullItem}
-                                                             onClick={() => {deleteOptionsListHandler(option)}}
-                                                        >
-                                                            Удалить опцию
-                                                        </div>
-                                                        {
-                                                            option.optionVariants.map((variant: ProductCardOptionVariant) => {
-                                                                return (
-                                                                    <div className={s.item_content}
-                                                                         style={{marginBottom: '5px'}}
-                                                                         key={variant.id}
-                                                                    >
-                                                                        <div className={s.item_title}>
-                                                                            {variant.name}
+                                        return (
+                                            <div className={s.optionsList_item}
+                                                 key={option.option.id}
+                                            >
+                                                <fieldset className={s.options_box}>
+                                                    <legend>{option.option.name}</legend>
+                                                    <div className={s.options_rowItems}>
+                                                        <div className={s.rowItems_item}>
+                                                            <div className={s.item_deleteFullItem}
+                                                                 onClick={() => {
+                                                                     deleteOptionsListHandler(option)
+                                                                 }}
+                                                            >
+                                                                Удалить опцию
+                                                            </div>
+                                                            {
+                                                                option.optionVariants.map((variant: ProductCardOptionVariant) => {
+                                                                    return (
+                                                                        <div className={s.item_content}
+                                                                             style={{marginBottom: '5px'}}
+                                                                             key={variant.id}
+                                                                        >
+                                                                            <div className={s.item_title}>
+                                                                                {variant.name}
+                                                                            </div>
+                                                                            <img src={RemoveIcon} alt="remove-icon"
+                                                                                 onClick={() => {
+                                                                                     deleteOptionHandler(option.option.id, variant.id)
+                                                                                 }}
+                                                                            />
                                                                         </div>
-                                                                        <img src={RemoveIcon} alt="remove-icon"
-                                                                             onClick={() => {deleteOptionHandler(option.option.id, variant.id)}}
-                                                                        />
-                                                                    </div>
-                                                                )
-                                                            })
-                                                        }
-                                                    </div>
-                                                    <div className={s.rowItems_chooseItem}>
-                                                        <Button buttonDivWrapper={s.options_button}>+</Button>
-                                                        {/*<ControlledSelect control={formControl}*/}
-                                                        {/*                  name={'optionVersion'}*/}
-                                                        {/*                  label={'Разновидность опции'}*/}
-                                                        {/*                  className={s.options_search}*/}
-                                                        {/*                  data={option.optionsArray.map((el: any) => {*/}
-                                                        {/*                      return {*/}
-                                                        {/*                          id: el.id,*/}
-                                                        {/*                          value: el.name ? el.name : 'Нет имени'*/}
-                                                        {/*                      }*/}
-                                                        {/*                  })}*/}
-                                                        {/*/>*/}
+                                                                    )
+                                                                })
+                                                            }
+                                                        </div>
+                                                        <div className={s.rowItems_chooseItem}>
+                                                            <Button buttonDivWrapper={s.options_button}>+</Button>
+                                                            {/*<ControlledSelect control={formControl}*/}
+                                                            {/*                  name={'optionVersion'}*/}
+                                                            {/*                  label={'Разновидность опции'}*/}
+                                                            {/*                  className={s.options_search}*/}
+                                                            {/*                  data={option.optionsArray.map((el: any) => {*/}
+                                                            {/*                      return {*/}
+                                                            {/*                          id: el.id,*/}
+                                                            {/*                          value: el.name ? el.name : 'Нет имени'*/}
+                                                            {/*                      }*/}
+                                                            {/*                  })}*/}
+                                                            {/*/>*/}
 
-                                                        <Select
-                                                            className={s.options_search}
-                                                            options={option.optionVariants}
-                                                            placeholder="Разновидность опции"
-                                                            // isSearchable={true}
-                                                            value={selectedOptionVariant}
-                                                            onChange={(value: any) => {setSelectedOptionVariant(value)}}
-                                                        />
+                                                            <Select
+                                                                className={s.options_search}
+                                                                options={option.optionVariants}
+                                                                placeholder="Разновидность опции"
+                                                                // isSearchable={true}
+                                                                value={selectedOptionVariant}
+                                                                onChange={(value: any) => {
+                                                                    setSelectedOptionVariant(value)
+                                                                }}
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    )
-                                })
+                                                </fieldset>
+                                            </div>
+                                        )
+                                    })
                             }
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {console.log(selectedOption)}}
+                                    onClick={() => {
+                                        console.log(selectedOption)
+                                    }}
                             >
                                 +
                             </Button>
@@ -434,7 +372,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
-                                onChange={(value: any) => {setSelectedOption(value)}}
+                                onChange={(value: any) => {
+                                    setSelectedOption(value)
+                                }}
                                 getOptionLabel={label => label!.option.name}
                                 getOptionValue={value => value!.option.name}
                                 noOptionsMessage={() => 'Опция не найдена'}
@@ -442,90 +382,76 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         </div>
                     </div>
 
-
                     <div className={s.rightSide_productDetails}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                currentSpecifications.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
+                                currentSpecifications.length === 0 ?
+                                    <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
 
                                     currentSpecifications.map((spec: ProductCardSpecification) => {
-                                    return (
-                                        <div className={s.optionsList_item}
-                                             key={spec.id}
-                                        >
-                                            <fieldset className={s.options_box}>
-                                                <legend>{spec.name}</legend>
-                                                <div className={s.options_rowItems}>
-                                                    <div className={s.rowItems_item}>
-                                                        <div style={{
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'space-between'
-                                                        }}>
-                                                            <div className={s.item_content}>
-                                                                Здесь будет редактор текста
-                                                            </div>
-                                                            <div className={s.item_deleteDetailsItem}>
-                                                                <img src={RemoveIcon} alt="remove-icon"
-                                                                     onClick={() => {deleteDetailsListHandler(spec)}}
-                                                                />
+                                        return (
+                                            <div className={s.optionsList_item}
+                                                 key={spec.id}
+                                            >
+                                                <fieldset className={s.options_box}>
+                                                    <legend>{spec.name}</legend>
+                                                    <div className={s.options_rowItems}>
+                                                        <div className={s.rowItems_item}>
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'space-between'
+                                                            }}>
+                                                                <div className={s.item_content}>
+                                                                    Здесь будет редактор текста
+                                                                </div>
+                                                                <div className={s.item_deleteDetailsItem}>
+                                                                    <img src={RemoveIcon} alt="remove-icon"
+                                                                         onClick={() => {
+                                                                             deleteDetailsListHandler(spec)
+                                                                         }}
+                                                                    />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    )
-                                })
+                                                </fieldset>
+                                            </div>
+                                        )
+                                    })
                             }
                         </div>
                         {/*<form onSubmit={formControl.handleSubmit(onSubmit)}>*/}
-                            <div className={s.productOptions_selectRow}>
-                                <Button buttonDivWrapper={s.options_button}
-                                        onClick={addNewSpecification}
-                                >
-                                    +
-                                </Button>
-                                {/*<ControlledInput name={'specification'}*/}
-                                {/*                 label={'Характеристика'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*                 divClassName={s.options_search}*/}
-                                {/*/>*/}
-
-                                {/*<ControlledCustomInput name={'specification'}*/}
-                                {/*                       placeholder={'Характеристика'}*/}
-                                {/*                       control={formControl}*/}
-                                {/*                       // rules={{required: Errors[0].name}}*/}
-                                {/*                       // divClassName={s.options_search}*/}
-                                {/*/>*/}
-                                {/*<CustomInput placeholder={'Характеристика'}*/}
-                                {/*             value={specificationInput}*/}
-                                {/*             onChangeText={setSpecificationInput}*/}
-                                {/*/>*/}
-
-                                <Select
-                                    className={s.options_search}
-                                    options={specifications}
-                                    placeholder={'Характеристика'}
-                                    isSearchable={true}
-                                    value={selectedSpecification}
-                                    onChange={(value: any) => {setSelectedSpecification(value)}}
-                                    getOptionLabel={label => label!.name}
-                                    getOptionValue={value => value!.name}
-                                    noOptionsMessage={() => 'Характеристика не найдена'}
-                                />
-                                {/*<AsyncSelect*/}
-                                {/*    className={s.options_search}*/}
-                                {/*    loadOptions={getSpecifications}*/}
-                                {/*    placeholder={'Характеристика'}*/}
-                                {/*    isSearchable={true}*/}
-                                {/*    value={selectedSpecification}*/}
-                                {/*    onChange={(value: any) => {setSelectedSpecification(value)}}*/}
-                                {/*    getOptionLabel={label => label.name}*/}
-                                {/*    getOptionValue={value => value.name}*/}
-                                {/*/>*/}
-                            </div>
+                        <div className={s.productOptions_selectRow}>
+                            <Button buttonDivWrapper={s.options_button}
+                                    onClick={addNewSpecification}
+                            >
+                                +
+                            </Button>
+                            <Select
+                                className={s.options_search}
+                                options={specifications}
+                                placeholder={'Характеристика'}
+                                isSearchable={true}
+                                value={selectedSpecification}
+                                onChange={(value: any) => {
+                                    setSelectedSpecification(value)
+                                }}
+                                getOptionLabel={label => label!.name}
+                                getOptionValue={value => value!.name}
+                                noOptionsMessage={() => 'Характеристика не найдена'}
+                            />
+                            {/*<AsyncSelect*/}
+                            {/*    className={s.options_search}*/}
+                            {/*    loadOptions={getSpecifications}*/}
+                            {/*    placeholder={'Характеристика'}*/}
+                            {/*    isSearchable={true}*/}
+                            {/*    value={selectedSpecification}*/}
+                            {/*    onChange={(value: any) => {setSelectedSpecification(value)}}*/}
+                            {/*    getOptionLabel={label => label.name}*/}
+                            {/*    getOptionValue={value => value.name}*/}
+                            {/*/>*/}
+                        </div>
                         {/*</form>*/}
                     </div>
 
@@ -537,7 +463,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             Сохранить
                         </Button>
                     </div>
-
                 </div>
             </div>
         </Modal>
