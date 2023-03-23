@@ -10,8 +10,6 @@ import {EditorState, convertToRaw} from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
 import Select from 'react-select'
 
 interface EditProductCardModalProps {
