@@ -3,6 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
 import {AxiosResponse} from "axios"
+import {CardOption} from "../../../entities/models/CardOption"
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -12,8 +13,8 @@ interface EditProductCardModalStore {
 
     // currentCurrency: any // CreateShopResponse | null
     // setCurrentCurrency: (currency: any) => void
-    // currencies: any[]
-    // getСurrencies: () => void
+    cardOptions: CardOption[]
+    getCardOptions: () => void
     // addCurrency: (data: CreateShop) => any
     // updateCurrency: (updateData: UpdateShop) => any
 }
@@ -26,17 +27,17 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
 
     // currentCurrency: null,
     // setCurrentCurrency: (currency) => {set({currentCurrency: currency})},
-    // currencies: [],
-    // getСurrencies: () => {
-    //     return $api.get<CreateShopResponse[]>('/shop/getall').then(res => {
-    //         set(state => {
-    //             state.shops = res.data
-    //             console.log('все магазины', state.shops)
-    //         })
-    //     }).catch((error: any) => {
-    //         console.log('магазины не получены')
-    //     })
-    // },
+    cardOptions: [],
+    getCardOptions: () => {
+        return $api.get<CardOption[]>('/productcard/getalloptions').then(res => {
+            set(state => {
+                state.cardOptions = res.data
+                console.log('все опции', state.cardOptions)
+            })
+        }).catch((error: any) => {
+            console.log('магазины не получены')
+        })
+    },
     // addCurrency: (data) => {
     //     return $api.post('/shop/create', data).then(res => {
     //         // set(state => {

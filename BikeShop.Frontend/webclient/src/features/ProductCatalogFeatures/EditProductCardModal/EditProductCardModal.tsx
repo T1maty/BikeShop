@@ -22,6 +22,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
+    const cardOptions = useEditProductCardModal(s => s.cardOptions)
+    const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
@@ -184,7 +186,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // ----------------------------------- //
 
     useEffect(() => {
-
+        getCardOptions()
     }, [])
 
     return (
@@ -434,9 +436,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
-                                onChange={(value: any) => {
-                                    setSelectedOption(value)
-                                }}
+                                onChange={(value: any) => {setSelectedOption(value)}}
                             />
                         </div>
                     </div>

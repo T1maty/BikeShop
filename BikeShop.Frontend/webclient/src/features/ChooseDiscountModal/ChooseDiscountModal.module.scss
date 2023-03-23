@@ -7,9 +7,15 @@
 
     .discountModal_selectBlock {
         margin-bottom: $defaultLargeMargin;
+
+        .select_box {
+            color: black;
+        }
     }
     .discountModal_buttonsBlock {
         @include flexColumn;
+        position: relative;
+        z-index: -100;
 
         button {
             width: 170px;

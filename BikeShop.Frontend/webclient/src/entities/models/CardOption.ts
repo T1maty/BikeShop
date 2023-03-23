@@ -1,29 +1,29 @@
 export interface CardOption {
-    "option": {
-        "name": "123",
-        "id": 1,
-        "createdAt": "2023-03-09T22:03:08",
-        "updatedAt": "2023-03-16T22:03:08",
-        "enabled": true
+    option: {
+        name: string
+        id: number
+        createdAt: string
+        updatedAt: string
+        enabled: boolean
     },
-    "optionVariants": [
+    optionVariants: [
         {
-            "optionId": 1,
-            "name": "321",
-            "optionName": "123",
-            "id": 1,
-            "createdAt": "2023-03-15T22:07:03",
-            "updatedAt": "2023-03-04T22:07:03",
-            "enabled": true
+            optionId: boolean
+            name: string
+            optionName: string
+            id: boolean
+            createdAt: string
+            updatedAt: string
+            enabled: boolean
         },
         {
-            "optionId": 1,
-            "name": "dfg",
-            "optionName": "gfd",
-            "id": 2,
-            "createdAt": "2023-03-15T01:05:33",
-            "updatedAt": "2023-03-16T01:05:33",
-            "enabled": true
+            optionId: boolean
+            name: string
+            optionName: string
+            id: boolean
+            createdAt: string
+            updatedAt: string
+            enabled: boolean
         }
     ]
 }
