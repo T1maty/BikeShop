@@ -1,22 +1,6 @@
 export interface ProductCardOption {
-    option: {
-        id: number
-        name: string
-        createdAt: string
-        updatedAt: string
-        enabled: boolean
-    },
-    optionVariants: [
-        {
-            optionId: boolean
-            optionName: string
-            id: boolean
-            name: string
-            createdAt: string
-            updatedAt: string
-            enabled: boolean
-        },
-    ]
+    option: ProductCardSpecification
+    optionVariants: ProductCardOptionVariant[]
 }
 
 export interface ProductCardSpecification {
@@ -25,4 +9,19 @@ export interface ProductCardSpecification {
     createdAt: string
     updatedAt: string
     enabled: boolean
+}
+
+export interface ProductCardOptionVariant {
+    optionId: number
+    optionName: string
+    id: number
+    name: string
+    createdAt: string
+    updatedAt: string
+    enabled: boolean
+}
+
+export interface ProductCardUserSpecification {
+    id: number
+    name: string
 }

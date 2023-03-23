@@ -5,6 +5,7 @@ export {default as InputUI} from './Input/Input'
 export {UniTable} from './Table/UniTable'
 
 export {Button} from './Button/Button'
+export {EditableSpan} from './EditableSpan/EditableSpan'
 
 export {CustomInput} from './CustomInput/CustomInput'
 export {CustomSearchInput} from './CustomInput/CustomSeacrhInput'
