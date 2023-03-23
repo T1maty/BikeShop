@@ -66,23 +66,23 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // }
 
     // тестовые данные
-    const [options, setOptions] = useState([
-        {
-            id: '1',
-            name: 'Размер шлема',
-            optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]
-        },
-        {
-            id: '2',
-            name: 'Цвет шлема',
-            optionsArray: [{id: '7', name: 'Red'}, {id: '8', name: 'Blue'}, {id: '9', name: 'White'}]
-        },
+    const [options, setOptions] = useState<any>([
+        // {
+        //     id: '1',
+        //     name: 'Размер шлема',
+        //     optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]
+        // },
+        // {
+        //     id: '2',
+        //     name: 'Цвет шлема',
+        //     optionsArray: [{id: '7', name: 'Red'}, {id: '8', name: 'Blue'}, {id: '9', name: 'White'}]
+        // },
     ])
 
-    const [details, setDetails] = useState([
-        {id: '1', name: 'Характеристика 1', description: 'Описание 1'},
-        {id: '2', name: 'Характеристика 2', description: 'Описание 2'},
-        {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
+    const [details, setDetails] = useState<any>([
+        // {id: '1', name: 'Характеристика 1', description: 'Описание 1'},
+        // {id: '2', name: 'Характеристика 2', description: 'Описание 2'},
+        // {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
     ])
 
     // ----------------------------------- //
@@ -113,15 +113,15 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     // функции для селектов
     const deleteOptionsListHandler = (optionsItem: any) => {
-        setOptions(options.filter(el => el.id !== optionsItem.id))
+        setOptions(options.filter((el: any) => el.id !== optionsItem.id))
     }
     const deleteOptionHandler = (listId: string, optionId: string) => {
-        setOptions(options.map(el => el.id === listId ? {
-            ...el, optionsArray: el.optionsArray.filter(opt => opt.id !== optionId)
+        setOptions(options.map((el: any) => el.id === listId ? {
+            ...el, optionsArray: el.optionsArray.filter((opt: any) => opt.id !== optionId)
         } : el))
     }
     const deleteDetailsListHandler = (detailsItem: any) => {
-        setDetails(details.filter(el => el.id !== detailsItem.id))
+        setDetails(details.filter((el: any) => el.id !== detailsItem.id))
     }
 
     // ----------------------------------- //
@@ -336,7 +336,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     <div className={s.rightSide_productOptions}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                options.map(option => {
+                                options.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте опции</div> :
+
+                                options.map((option: any) => {
                                     return (
                                         <div className={s.optionsList_item}
                                              key={option.id}
@@ -351,7 +353,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                             Удалить опцию
                                                         </div>
                                                         {
-                                                            option.optionsArray.map(el => {
+                                                            option.optionsArray.map((el: any) => {
                                                                 return (
                                                                     <div className={s.item_content}
                                                                          style={{marginBottom: '5px'}}
@@ -429,7 +431,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     <div className={s.rightSide_productDetails}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                details.map(detail => {
+                                details.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
+
+                                details.map((detail: any) => {
                                     return (
                                         <div className={s.optionsList_item}
                                              key={detail.id}
@@ -438,11 +442,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                 <legend>{detail.name}</legend>
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
-                                                        {/*<div className={s.item_deleteFullItem}*/}
-                                                        {/*     onClick={() => deleteDetailsListHandler(detail)}*/}
-                                                        {/*>*/}
-                                                        {/*    Удалить*/}
-                                                        {/*</div>*/}
                                                         <div style={{
                                                             display: 'flex',
                                                             alignItems: 'center',
