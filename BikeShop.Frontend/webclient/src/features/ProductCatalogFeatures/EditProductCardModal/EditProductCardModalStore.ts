@@ -6,7 +6,7 @@ import {AxiosResponse} from "axios"
 import {
     ProductCardOption,
     ProductCardOptionVariant,
-    ProductCardSpecification
+    ProductCardSpecification, ProductCardUserSpecification
 } from '../../../entities/models/ProductCardModels'
 
 interface EditProductCardModalStore {
@@ -22,8 +22,8 @@ interface EditProductCardModalStore {
 
     specifications: ProductCardSpecification[]
     getSpecifications: () => void
-    currentSpecifications: any[] // ProductCardSpecification[]
-    setCurrentSpecification: (spec: any) => void
+    currentSpecifications: ProductCardUserSpecification[]
+    setCurrentSpecification: (spec: ProductCardUserSpecification) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -40,7 +40,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
                 console.log('все опции', state.cardOptions)
             })
         }).catch((error: any) => {
-            console.log('магазины не получены')
+            console.log('опции не получены')
         })
     },
     currentCardOptions: [],
@@ -56,7 +56,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
                 console.log('все спецификации', state.specifications)
             })
         }).catch((error: any) => {
-            console.log('магазины не получены')
+            console.log('спецификации не получены')
         })
     },
     currentSpecifications: [],

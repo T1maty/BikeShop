@@ -20,3 +20,8 @@ export interface ProductCardOptionVariant {
     updatedAt: string
     enabled: boolean
 }
+
+export interface ProductCardUserSpecification {
+    id: number
+    name: string
+}
