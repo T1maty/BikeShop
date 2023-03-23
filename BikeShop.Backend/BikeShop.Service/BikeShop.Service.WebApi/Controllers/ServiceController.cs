@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using BikeShop.Service.Application.Common.Exceptions;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.WebApi.Models.Service;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Service.WebApi.Controllers;
@@ -14,13 +12,11 @@ namespace BikeShop.Service.WebApi.Controllers;
 public class ServiceController : ControllerBase
 {
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
     private readonly IServiceService _serviceService;
 
-    public ServiceController(IMapper mapper, IMediator mediator, IServiceService serviceService)
+    public ServiceController(IMapper mapper, IServiceService serviceService)
     {
         _mapper = mapper;
-        _mediator = mediator;
         _serviceService = serviceService;
     }
 
@@ -59,7 +55,6 @@ public class ServiceController : ControllerBase
     [HttpPut("updateservice")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> UpdateService([FromBody] UpdateServiceDTO model)
     {
@@ -87,7 +82,6 @@ public class ServiceController : ControllerBase
     [HttpPut("updateservicestatus")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> UpdateServiceStatus([FromQuery] string status, int id)
     {

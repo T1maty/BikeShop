@@ -1,11 +1,12 @@
 import React, {memo, MouseEvent, useCallback, useState} from 'react';
 import cls from './CustomTagTreeView.module.scss'
 import {ContextMenu} from "../../../widgets/workspace/ContextMenu";
+import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
 
 interface CustomTagTreeView {
     data: Array<object>,
     selectId: (id: number) => void
-    callBackData: (data: {} ) => void
+    callBackData: (data: {}) => void
     contextData: Array<string>
 }
 
@@ -21,7 +22,9 @@ interface CustomTagTreeView {
 export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
     const {data, selectId, callBackData, contextData} = props
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
-    const [select, setSelect] = useState<number>(0);
+
+    const {selected, setSelected} = useWorkCatalog(state => state);
+
     const [state, setState] = useState({
         isOpen: false,
         left: 0,
@@ -36,8 +39,8 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
 
     const onCloseHandler = useCallback((variant?: string) => {
         setState({...state, isOpen: false})
-        if(variant !== undefined){
-            const {children, ...data} : any = state.data
+        if (variant !== undefined) {
+            const {children, ...data}: any = state.data
             callBackData({data: data, variant: variant})
         }
     }, [state])
@@ -87,7 +90,7 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
             }
         }
         const onClickHandlerSelect = (id: number) => {
-            setSelect(id)
+            setSelected(id)
             selectId(id)
         }
         return (
@@ -95,7 +98,7 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
                 <div style={{cursor: 'pointer'}}
                      onContextMenu={(e) => onContextMenuHandler(e, item.id)}
                      className={cls.parent}>
-                    <div className={select === item.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
+                    <div className={selected === item.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}>
                             {hasChildren && (isExpanded ? '\\/' : '>')}

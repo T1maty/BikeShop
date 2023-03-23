@@ -1,7 +1,6 @@
 import React from 'react';
 import {Button} from '../../../shared/ui';
 import s from './ServiceTable.module.scss';
-import useService from './ServiceStore';
 import {ServiceItemProductWork} from "../../../entities/models/ServiceItem";
 import {TableProductItem} from "../../../features";
 
@@ -9,11 +8,15 @@ type ServiceTableProps = {
     data: ServiceItemProductWork[] | null
     buttonTitle: string
     serviceTableCallback: () => void
+    disabledButton: boolean
 }
 
-export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTableCallback}) => {
-
-    const service = useService(s => s.currentService)
+export const ServiceTable: React.FC<ServiceTableProps> = ({
+                                                              data,
+                                                              buttonTitle,
+                                                              serviceTableCallback,
+                                                              disabledButton
+                                                          }) => {
 
     const userClickHandler = () => {
         serviceTableCallback()
@@ -23,7 +26,7 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, se
         <div className={s.tableBox}>
             <div className={s.tableBox_buttons}>
                 <div className={s.buttons_editBtn}>
-                    <Button onClick={userClickHandler} disabled={service === null}>
+                    <Button onClick={userClickHandler} disabled={disabledButton}>
                         {buttonTitle}
                     </Button>
                 </div>
@@ -42,12 +45,12 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, se
             <div className={s.tableBox_table}>
                 {
                     (data != null) && (data.length != 0) ?
-                        data.map(item => {
+                        data.map((item, index) => {
                             return (
-                                <TableProductItem key={item.id}
+                                <TableProductItem key={index}
                                                   name={item.name}
                                                   price={item.price}
-                                                  count={1}
+                                                  count={item.quantity}
                                 />
                             )
                         })

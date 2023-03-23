@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using BikeShop.Service.Application.CQRS.Commands.Work.CreateWork;
-using BikeShop.Service.Application.CQRS.Commands.Work.UpdateWork;
-using BikeShop.Service.Application.CQRS.Queries.Work.GetWorksByGroupId;
+﻿using BikeShop.Service.Application.Interfaces;
+using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.Work;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Service.WebApi.Controllers;
@@ -13,14 +10,13 @@ namespace BikeShop.Service.WebApi.Controllers;
 [Route("work")]
 public class WorkController : ControllerBase
 {
-    private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
+    private readonly IWorkService _workService;
 
-    public WorkController(IMediator mediator, IMapper mapper)
+    public WorkController(IWorkService workService)
     {
-        _mediator = mediator;
-        _mapper = mapper;
+        _workService = workService;
     }
+
 
     /// <summary>
     /// Получение списка всех услуг по id группы услуг
@@ -32,11 +28,9 @@ public class WorkController : ControllerBase
     /// <response code="200">Успех. Возвращает массив услуг</response>
     [HttpGet("getbygroupid/{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WorkListModel>> GetWorksByGroupId(int id)
+    public async Task<List<Work>> GetWorksByGroupId(int id)
     {
-        var query = new GetWorksByGroupIdQuery { GroupId = id };
-
-        return await _mediator.Send(query);
+        return await _workService.GetWorksByGroupId(id);
     }
 
 
@@ -54,20 +48,9 @@ public class WorkController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> CreateWork([FromBody] CreateWorkModel model)
+    public async Task<Work> CreateWork([FromBody] CreateWorkModel model)
     {
-        // Если модель невалидная - возвращаю ошибку о невалидности
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        // Маплю модель на cqrs команду
-        var createWorkCommand = _mapper.Map<CreateWorkCommand>(model);
-
-        // Отправляю команду на исполнение
-        await _mediator.Send(createWorkCommand);
-
-        // Если дожило до этого момента - все ок
-        return Ok();
+        return await _workService.CreateWork(model);
     }
 
     /// <summary>
@@ -84,19 +67,8 @@ public class WorkController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateWork([FromBody] UpdateWorkModel model)
+    public async Task<Work> UpdateWork([FromBody] UpdateWorkModel model)
     {
-        // Если модель невалидная - возвращаю ошибку о невалидности
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        // Маплю модель на cqrs команду
-        var updateWorkCommand = _mapper.Map<UpdateWorkCommand>(model);
-
-        // Отправляю команду на исполнение
-        await _mediator.Send(updateWorkCommand);
-
-        // Если дожило до этого момента - все ок
-        return Ok();
+        return await _workService.UpdateWork(model);
     }
 }

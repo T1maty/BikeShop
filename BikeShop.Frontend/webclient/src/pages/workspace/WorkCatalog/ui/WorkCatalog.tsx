@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from './WorkCatalog.module.scss'
-import {Catalog} from "../../../../widgets/workspace/TableCatalog";
+import {Catalog} from "../../../../widgets/workspace/WorkCatalog/Catalog";
 
 export const WorkCatalog = () => {
     return (

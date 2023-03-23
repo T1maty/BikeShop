@@ -1,0 +1,19 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.shopStorageModal_mainBlock {
+  @include defaultModalStyle;
+  @include flexOnlyBetween;
+  gap: $defaultLargeMargin;
+  min-width: 900px;
+
+  .shopStorageModal_tree {
+    background-color: $themeColorMilk;
+    padding: $defaultLargeMargin;
+    border-radius: $smallBorderRadius;
+    width: 30%;
+    color: black;
+  }
+
+  @include createShopStorageModal(550px, 35%, 35%);
+}

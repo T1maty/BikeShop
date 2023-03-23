@@ -4,7 +4,9 @@ import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {IProduct, IProductExtended} from "../../../../entities"
-import {EditProductCardModal} from '../../../../features/EditProductCardModal/EditProductCardModal'
+import {
+    EditProductCardModal
+} from '../../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
 

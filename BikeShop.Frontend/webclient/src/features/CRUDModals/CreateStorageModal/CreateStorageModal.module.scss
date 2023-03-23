@@ -1,0 +1,11 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.shopStorageModal_mainBlock {
+  @include defaultModalStyle;
+  @include flexOnlyBetween;
+  gap: $defaultLargeMargin;
+  min-width: 700px;
+
+  @include createShopStorageModal(390px, 50%, 50%);
+}

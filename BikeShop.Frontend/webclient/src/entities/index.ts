@@ -9,6 +9,11 @@ export type {IProduct} from './models/Product'
 export type {ServiceItem} from './models/ServiceItem'
 export type {IProductExtended} from './models/IProductExtended'
 
+
+///////////////////////////////////
+//          Requests             //
+///////////////////////////////////
+
 export type {CreateUser} from './requests/CreateUser'
 export type {CreateService} from './requests/CreateService'
 export type {UpdateService} from './requests/UpdateService'
@@ -21,7 +26,12 @@ export type {IUpdateTag} from './requests/UpdateTag'
 export type {ICreateProduct} from './requests/CreateProduct'
 export type {IUpdateProduct} from './requests/UpdateProduct'
 export type {UpdateServiceStatus} from './requests/UpdateService'
+export type {CreateWork} from './requests/CreateWork'
 
+
+///////////////////////////////////
+//          Responses            //
+///////////////////////////////////
 export type {default as IGroupResponse} from './responses/GroupResponse'
 export type {default as ILoginResponse} from './responses/LoginResponse'
 export type {default as IRefreshResponse} from './responses/RefreshResponse'

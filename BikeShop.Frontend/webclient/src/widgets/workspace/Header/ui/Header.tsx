@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import {
     CreateCurrencyModal, CreateQuantityUnitModal,
     CreateShopModal, CreateStorageModal,
-    HeaderUserMenu} from "../../../../features"
+    HeaderUserMenu
+} from "../../../../features"
 import {useNavigate} from "react-router-dom"
 import {useTranslation} from "react-i18next"
 import cls from './Header.module.scss'
@@ -11,10 +12,11 @@ import {MenuIcon} from "../../../../shared/ui/IconButtons/MenuIcon"
 import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon"
 import {Badge} from "../../../../shared/ui/Badge/Badge"
 import {BikeShopPaths} from "../../../../app/routes/paths"
-import useCreateStorageModal from "../../../../features/CreateStorageModal/CreateStorageModalStore"
-import useCreateShopModal from "../../../../features/CreateShopModal/CreateShopModalStore"
-import useCreateCurrencyModal from "../../../../features/CreateCurrencyModal/CreateCurrencyModalStore"
-import useCreateQuantityUnitModal from "../../../../features/CreateQuantityUnitModal/CreateQuantityUnitModalStore"
+import useCreateStorageModal from "../../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore"
+import useCreateShopModal from "../../../../features/CRUDModals/CreateShopModal/CreateShopModalStore"
+import useCreateCurrencyModal from "../../../../features/CRUDModals/CreateCurrencyModal/CreateCurrencyModalStore"
+import useCreateQuantityUnitModal
+    from "../../../../features/CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModalStore"
 import useAuthUser from '../../../../pages/auth/useAuthUser'
 
 export const Header = () => {
@@ -58,20 +60,32 @@ export const Header = () => {
     const [menuItems2, setMenuItems2] = useState([
         {
             title: 'Магазины',
-            func: () => {openShopModal(true); setIsMenuOpen(false)}
+            func: () => {
+                openShopModal(true);
+                setIsMenuOpen(false)
+            }
 
         },
         {
             title: 'Склады',
-            func: () => {openStorageModal(true); setIsMenuOpen(false)}
+            func: () => {
+                openStorageModal(true);
+                setIsMenuOpen(false)
+            }
         },
         {
             title: 'Валюты',
-            func: () => {openCurrencyModal(true); setIsMenuOpen(false)}
+            func: () => {
+                openCurrencyModal(true);
+                setIsMenuOpen(false)
+            }
         },
         {
             title: 'Ед. измерения',
-            func: () => {openQuantityUnitModal(true); setIsMenuOpen(false)}
+            func: () => {
+                openQuantityUnitModal(true);
+                setIsMenuOpen(false)
+            }
         },
     ])
 
@@ -134,11 +148,13 @@ export const Header = () => {
                 <div className={cls.leftSide}>
                     <div className={cls.leftSide_burgerMenu}>
                         <div className={cls.burgerMenu_iconButton}>
-                            <MenuIcon onClick={() => {setIsMenuOpen(!isMenuOpen)}}/>
+                            <MenuIcon onClick={() => {
+                                setIsMenuOpen(!isMenuOpen)
+                            }}/>
                         </div>
                         {
                             isMenuOpen ?
-                                <div className={cls.burgerMenu_menuList} >
+                                <div className={cls.burgerMenu_menuList}>
                                     {menuItems1.map(item => (
                                         <div className={cls.menuList_item}
                                              key={item.title}
@@ -183,7 +199,9 @@ export const Header = () => {
                         }
                     </div>
                     <div className={cls.leftSide_shopTitle}
-                         onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
+                         onClick={() => {
+                             navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+                         }}
                     >
                         {shop ? shop.name : 'Магазин не выбран'}
                     </div>

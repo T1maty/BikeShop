@@ -45,7 +45,6 @@ export const SelectProduct = (props: SelectProductProps) => {
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
                     <ProductCatalogTable onRowDoubleClick={(product) => {
-                        console.log(product)
                         let prods = props.products
                         let actual = prods.find(n => n.productId === product.id)
                         if (actual != undefined) {

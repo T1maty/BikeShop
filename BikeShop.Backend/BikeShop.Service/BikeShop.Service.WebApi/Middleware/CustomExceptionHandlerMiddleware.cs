@@ -1,5 +1,6 @@
+using BikeShop.Products.Application.Common.Errors;
+using System;
 using System.Net;
-using BikeShop.Service.Application.Common.Exceptions;
 
 namespace BikeShop.Service.WebApi.Middleware;
 
@@ -31,17 +32,9 @@ public class CustomExceptionHandlerMiddleware
 
         switch (exception)
         {
-            case NotFoundException notFoundException:
-                statusCode = HttpStatusCode.NotFound;
-                result = notFoundException;
-                break;
-            case AlreadyExistsException alreadyExistsException:
+            case BaseError baseError:
                 statusCode = HttpStatusCode.BadRequest;
-                result = alreadyExistsException;
-                break;
-            case InvalidFormatException invalidFormatException:
-                statusCode = HttpStatusCode.BadRequest;
-                result = invalidFormatException;
+                result = baseError;
                 break;
             default:
                 Console.WriteLine(exception);
