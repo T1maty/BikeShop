@@ -13,6 +13,11 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 import Select from 'react-select'
 import AsyncSelect from 'react-select/async'
+import {
+    ProductCardOption,
+    ProductCardOptionVariant,
+    ProductCardSpecification
+} from '../../../entities/models/ProductCardModels';
 
 interface EditProductCardModalProps {
     productCardData?: any
@@ -22,12 +27,16 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
+
     const cardOptions = useEditProductCardModal(s => s.cardOptions)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
-    // const galleryImages = useEditProductCardModal(s => s.galleryImages)
-    // const getGalleryImages = useEditProductCardModal(s => s.getGalleryImages)
+    const currentCardOptions = useEditProductCardModal(s => s.currentCardOptions)
+    const setCurrentCardOption = useEditProductCardModal(s => s.setCurrentCardOption)
+
     const specifications = useEditProductCardModal(s => s.specifications)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
+    const currentSpecifications = useEditProductCardModal(s => s.currentSpecifications)
+    const setCurrentSpecification = useEditProductCardModal(s => s.setCurrentSpecification)
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
@@ -57,6 +66,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     ]
 
     const [selectedOption, setSelectedOption] = useState(null)
+    const [selectedOptionVariant, setSelectedOptionVariant] = useState(null)
     const [selectedSpecification, setSelectedSpecification] = useState(null)
 
     // тестовые данные
@@ -73,18 +83,18 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         // },
     ])
 
-    const [specifications1, setSpecifications1] = useState<any>([
-        {id: '1', name: 'Характеристика 1', description: 'Описание 1'},
-        // {id: '2', name: 'Характеристика 2', description: 'Описание 2'},
-        // {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
-    ])
+    // const [specifications1, setSpecifications1] = useState<any>([
+    //     {id: '1', name: 'Характеристика 1', description: 'Описание 1'},
+    //     // {id: '2', name: 'Характеристика 2', description: 'Описание 2'},
+    //     // {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
+    // ])
 
     // const [specificationInput, setSpecificationInput] = useState<string>('')
     //
-    // const addNewSpecification = () => {
-    //     const newSpecification = {id: 1, name: specificationInput}
-    //     setSpecification(newSpecification)
-    // }
+    const addNewSpecification = () => {
+        const newSpecification = {id: 1, name: selectedSpecification}
+        setCurrentSpecification(newSpecification)
+    }
 
     // ----------------------------------- //
 
@@ -116,7 +126,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const deleteOptionsListHandler = (optionsItem: any) => {
         setOptions(options.filter((el: any) => el.id !== optionsItem.id))
     }
-    const deleteOptionHandler = (listId: string, optionId: string) => {
+    const deleteOptionHandler = (listId: number, optionId: number) => {
         setOptions(options.map((el: any) => el.id === listId ? {
             ...el, optionsArray: el.optionsArray.filter((opt: any) => opt.id !== optionId)
         } : el))
@@ -338,15 +348,15 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     <div className={s.rightSide_productOptions}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                options.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте опции</div> :
+                                cardOptions.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте опции</div> :
 
-                                options.map((option: any) => {
+                                    cardOptions.map((option: ProductCardOption) => {
                                     return (
                                         <div className={s.optionsList_item}
-                                             key={option.id}
+                                             key={option.option.id}
                                         >
                                             <fieldset className={s.options_box}>
-                                                <legend>{option.name}</legend>
+                                                <legend>{option.option.name}</legend>
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
                                                         <div className={s.item_deleteFullItem}
@@ -355,17 +365,17 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                             Удалить опцию
                                                         </div>
                                                         {
-                                                            option.optionsArray.map((el: any) => {
+                                                            option.optionVariants.map((variant: ProductCardOptionVariant) => {
                                                                 return (
                                                                     <div className={s.item_content}
                                                                          style={{marginBottom: '5px'}}
-                                                                         key={el.id}
+                                                                         key={variant.id}
                                                                     >
                                                                         <div className={s.item_title}>
-                                                                            {el.name}
+                                                                            {variant.name}
                                                                         </div>
                                                                         <img src={RemoveIcon} alt="remove-icon"
-                                                                             onClick={() => {deleteOptionHandler(option.id, el.id)}}
+                                                                             onClick={() => {deleteOptionHandler(option.option.id, variant.id)}}
                                                                         />
                                                                     </div>
                                                                 )
@@ -388,11 +398,11 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
                                                         <Select
                                                             className={s.options_search}
-                                                            options={optionsList}
+                                                            options={option.optionVariants}
                                                             placeholder="Разновидность опции"
-                                                            isSearchable={true}
-                                                            value={selectedOption}
-                                                            onChange={(value: any) => {setSelectedOption(value)}}
+                                                            // isSearchable={true}
+                                                            value={selectedOptionVariant}
+                                                            onChange={(value: any) => {setSelectedOptionVariant(value)}}
                                                         />
                                                     </div>
                                                 </div>
@@ -420,11 +430,13 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
                             <Select
                                 className={s.options_search}
-                                options={optionsList}
+                                options={cardOptions}
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
                                 onChange={(value: any) => {setSelectedOption(value)}}
+                                getOptionLabel={label => label!.option.name}
+                                getOptionValue={value => value!.option.name}
                                 noOptionsMessage={() => 'Опция не найдена'}
                             />
                         </div>
@@ -434,15 +446,15 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     <div className={s.rightSide_productDetails}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                specifications1.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
+                                currentSpecifications.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
 
-                                specifications1.map((detail: any) => {
+                                    currentSpecifications.map((spec: ProductCardSpecification) => {
                                     return (
                                         <div className={s.optionsList_item}
-                                             key={detail.id}
+                                             key={spec.id}
                                         >
                                             <fieldset className={s.options_box}>
-                                                <legend>{detail.name}</legend>
+                                                <legend>{spec.name}</legend>
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
                                                         <div style={{
@@ -451,11 +463,11 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                             justifyContent: 'space-between'
                                                         }}>
                                                             <div className={s.item_content}>
-                                                                {detail.description}
+                                                                Здесь будет редактор текста
                                                             </div>
                                                             <div className={s.item_deleteDetailsItem}>
                                                                 <img src={RemoveIcon} alt="remove-icon"
-                                                                     onClick={() => {deleteDetailsListHandler(detail)}}
+                                                                     onClick={() => {deleteDetailsListHandler(spec)}}
                                                                 />
                                                             </div>
                                                         </div>
@@ -470,7 +482,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         {/*<form onSubmit={formControl.handleSubmit(onSubmit)}>*/}
                             <div className={s.productOptions_selectRow}>
                                 <Button buttonDivWrapper={s.options_button}
-                                        // onClick={addNewSpecification}
+                                        onClick={addNewSpecification}
                                 >
                                     +
                                 </Button>
