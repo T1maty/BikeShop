@@ -24,6 +24,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const cardOptions = useEditProductCardModal(s => s.cardOptions)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
+    // const galleryImages = useEditProductCardModal(s => s.galleryImages)
+    // const getGalleryImages = useEditProductCardModal(s => s.getGalleryImages)
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
@@ -156,7 +158,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     }
 
     const deleteImageHandler = (imgId: string) => {
-        setGalleryImages(galleryImages.filter(img => img.id !== imgId))
+        setGalleryImages(galleryImages.filter((img: any) => img.id !== imgId))
         setCurrentImageKey(null)
     }
 
@@ -231,44 +233,44 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
                     <div className={s.leftSide_imageGallery}>
                         <div className={s.imageGallery_imageList}>
-                            {galleryImages.map((img, key) => {
-                                return (
-                                    <div key={img.id}
-                                         onDoubleClick={() => {
-                                             setImageHandler(key)
-                                         }}
-                                         className={s.imageList_item}
-                                    >
-                                        <img className={currentImageKey === key ? s.active_image : ''}
-                                             src={img.thumbnail} alt="img-thumbnail"
-                                        />
-                                        <div className={s.imageList_imageCount}>
-                                            {key + 1}/{galleryImages.length}
-                                        </div>
-                                        <img src={RemoveIcon} alt="remove-icon"
-                                             className={s.imageList_deleteItem}
-                                             onClick={() => {
-                                                 deleteImageHandler(img.id)
-                                             }}
-                                        />
-                                    </div>
-                                )
-                            })}
+                            {
+                                galleryImages.length === 0 ? <div>Фотографий нет</div> :
+
+                                    galleryImages.map((img: any, key: number) => {
+                                            return (
+                                                <div key={img.id}
+                                                     onDoubleClick={() => {
+                                                         setImageHandler(key)
+                                                     }}
+                                                     className={s.imageList_item}
+                                                >
+                                                    <img className={currentImageKey === key ? s.active_image : ''}
+                                                         src={img.thumbnail} alt="img-thumbnail"
+                                                    />
+                                                    <div className={s.imageList_imageCount}>
+                                                        {key + 1}/{galleryImages.length}
+                                                    </div>
+                                                    <img src={RemoveIcon} alt="remove-icon"
+                                                         className={s.imageList_deleteItem}
+                                                         onClick={() => {
+                                                             deleteImageHandler(img.id)
+                                                         }}
+                                                    />
+                                                </div>
+                                            )
+                                        })
+                            }
                         </div>
                         <div className={s.imageGallery_buttons}>
                             <div className={s.imageGallery_sortButtons}>
                                 <Button disabled={currentImageKey === null || currentImageKey === 0}
-                                        onClick={() => {
-                                            onMoveBackwardHandler(currentImageKey)
-                                        }}
+                                        onClick={() => {onMoveBackwardHandler(currentImageKey)}}
                                 >
                                     Переместить назад
                                 </Button>
                                 <Button
                                     disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
-                                    onClick={() => {
-                                        onMoveForwardHandler(currentImageKey)
-                                    }}
+                                    onClick={() => {onMoveForwardHandler(currentImageKey)}}
                                 >
                                     Переместить вперёд
                                 </Button>
@@ -316,9 +318,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             wrapperClassName="wrapperClassName"
                             editorClassName={s.editorClassName}
                             // editorClassName="editorClassName"
-                            onEditorStateChange={(editorState) => {
-                                setEditorState(editorState)
-                            }}
+                            onEditorStateChange={(editorState) => {setEditorState(editorState)}}
                         />
                     </div>
                 </div>
@@ -346,27 +346,22 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                 <div className={s.options_rowItems}>
                                                     <div className={s.rowItems_item}>
                                                         <div className={s.item_deleteFullItem}
-                                                             onClick={() => {
-                                                                 deleteOptionsListHandler(option)
-                                                             }}
+                                                             onClick={() => {deleteOptionsListHandler(option)}}
                                                         >
                                                             Удалить опцию
                                                         </div>
                                                         {
                                                             option.optionsArray.map(el => {
                                                                 return (
-                                                                    <div className={s.item_content} key={el.id}
-                                                                         style={{marginBottom: '5px'}}>
-                                                                        <div className={s.item_title}>{el.name}</div>
-                                                                        {/*<div className={s.item_delete}*/}
-                                                                        {/*     onClick={() => {deleteOptionHandler(option.id, el.id)}}*/}
-                                                                        {/*>*/}
-                                                                        {/*    X*/}
-                                                                        {/*</div>*/}
+                                                                    <div className={s.item_content}
+                                                                         style={{marginBottom: '5px'}}
+                                                                         key={el.id}
+                                                                    >
+                                                                        <div className={s.item_title}>
+                                                                            {el.name}
+                                                                        </div>
                                                                         <img src={RemoveIcon} alt="remove-icon"
-                                                                             onClick={() => {
-                                                                                 deleteOptionHandler(option.id, el.id)
-                                                                             }}
+                                                                             onClick={() => {deleteOptionHandler(option.id, el.id)}}
                                                                         />
                                                                     </div>
                                                                 )
@@ -393,9 +388,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                             placeholder="Разновидность опции"
                                                             isSearchable={true}
                                                             value={selectedOption}
-                                                            onChange={(value: any) => {
-                                                                setSelectedOption(value)
-                                                            }}
+                                                            onChange={(value: any) => {setSelectedOption(value)}}
                                                         />
                                                     </div>
                                                 </div>
@@ -460,9 +453,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                             </div>
                                                             <div className={s.item_deleteDetailsItem}>
                                                                 <img src={RemoveIcon} alt="remove-icon"
-                                                                     onClick={() => {
-                                                                         deleteDetailsListHandler(detail)
-                                                                     }}
+                                                                     onClick={() => {deleteDetailsListHandler(detail)}}
                                                                 />
                                                             </div>
                                                         </div>
@@ -495,13 +486,10 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     </div>
 
                     <div className={s.rightSide_mainButtons}>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
+                        <Button onClick={() => {setOpen(false)}}>
                             Отмена
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Сохранить
                         </Button>
                     </div>

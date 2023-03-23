@@ -13,6 +13,8 @@ interface EditProductCardModalStore {
 
     // currentCurrency: any // CreateShopResponse | null
     // setCurrentCurrency: (currency: any) => void
+    galleryImages: any[]
+    getGalleryImages: () => void
     cardOptions: CardOption[]
     getCardOptions: () => void
 }
@@ -25,6 +27,17 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
 
     // currentCurrency: null,
     // setCurrentCurrency: (currency) => {set({currentCurrency: currency})},
+    galleryImages: [],
+    getGalleryImages: () => {
+        return $api.get('/productcard/getalloptions').then(res => {
+            // set(state => {
+            //     state.cardOptions = res.data
+            //     console.log('все опции', state.cardOptions)
+            // })
+        }).catch((error: any) => {
+            console.log('фото не получены')
+        })
+    },
     cardOptions: [],
     getCardOptions: () => {
         return $api.get<CardOption[]>('/productcard/getalloptions').then(res => {
