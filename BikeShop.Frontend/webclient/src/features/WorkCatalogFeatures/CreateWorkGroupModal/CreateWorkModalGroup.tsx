@@ -3,10 +3,10 @@ import {Box, Button, Modal} from "@mui/material";
 import {ControlledCheckbox, ControlledInput} from "../../../shared/ui";
 import {useSnackbar} from "notistack";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {CreateWorkGroup, Work} from "../../../entities";
+import {CreateWorkGroup, Work, WorkGroup} from "../../../entities";
 import {$api} from "../../../shared";
 
-const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (value: boolean) => void }) => {
+const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (value: boolean) => void, parent: WorkGroup }) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -61,6 +61,9 @@ const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (valu
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
 
+                <div>
+                    {parent.name != undefined ? parent.name : "Создаем в корне"}
+                </div>
                 <ControlledInput name={"name"} label={"Название услуги"} control={formControl}
                                  rules={{required: "Обязательное поле"}}/>
 

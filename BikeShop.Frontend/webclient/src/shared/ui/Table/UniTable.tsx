@@ -18,6 +18,9 @@ interface ITableProps {
     rowOnClick?: (row: object) => object
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     rowOnDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
+
+    selected?: any
+    setSelected?: (value: any) => void
 }
 
 interface TableRowProps {
@@ -48,8 +51,8 @@ export const UniTable = (props: ITableProps) => {
                                              columns={props.columns}
                                              onRowDoubleClick={props.rowOnDoubleClick}
                                              rowOnContext={props.rowOnContext}
-                                             selected={selected}
-                                             setSelected={setSelected}
+                                             selected={props.selected ? props.selected : selected}
+                                             setSelected={props.setSelected ? props.setSelected : setSelected}
                             />
                         })
                         : <tr style={{height: 250, display: "flex", justifyContent: 'center'}}>

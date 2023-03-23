@@ -6,7 +6,7 @@ import {useWorkCatalog} from "./TableCatalogStore";
 
 export const WorkCatalogTable = () => {
 
-    const {works, isLoading} = useWorkCatalog(state => state)
+    const {works, isLoading, selectedRow, setSelectedRow} = useWorkCatalog(state => state)
 
     const [XY, setXY] = useState({x: 0, y: 0})
     const [visibility, setVisibility] = useState(false)
@@ -19,7 +19,8 @@ export const WorkCatalogTable = () => {
                 setVisibility(true)
                 setXY({x: event.clientX, y: event.clientY})
             }
-            }/>
+            }
+                      selected={selectedRow} setSelected={setSelectedRow}/>
         </div>
     );
 };

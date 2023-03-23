@@ -3,7 +3,7 @@ export interface Work {
     name: string,
     description: string
     price: number
-    groupId: number
+    workGroupId: number
     createdAt: string
     updatedAt: string
     enabled: boolean

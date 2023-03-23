@@ -8,7 +8,11 @@ interface WorkCatalogStore {
     selected: WorkGroup,
     setSelected: (value: WorkGroup) => void
 
+    selectedRow: Work,
+    setSelectedRow: (value: Work) => void
+
     works: Work[],
+    setWorks: (value: Work[]) => void,
     group: WorkGroup[],
     isLoading: boolean,
     currencyId: number | undefined
@@ -21,6 +25,12 @@ interface WorkCatalogStore {
 }
 
 export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer((set, get) => ({
+    selectedRow: {} as Work,
+    setSelectedRow: (value) => {
+        set({selectedRow: value})
+    },
+
+
     selected: {} as WorkGroup,
     setSelected: (value) => {
         set({selected: value})
@@ -30,13 +40,17 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
         set({
             works: [...get().works, work]
         })
-        console.log(work)
+        set({selectedRow: work})
     },
 
     works: [],
     group: [] as WorkGroup[],
     isLoading: false,
     currencyId: undefined,
+
+    setWorks: (value) => {
+        set({works: value})
+    },
 
     getWork(id: number) {
         set({isLoading: true})

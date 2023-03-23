@@ -20,13 +20,13 @@ export const columns: Column[] = [
     },
     {
         id: 'price',
-        label: 'На складе',
+        label: 'Цена',
         minWidth: 70,
         align: 'right',
     },
     {
         id: 'description',
-        label: 'Ед.Изм',
+        label: 'Описание',
         minWidth: 70,
         align: 'left',
     },
