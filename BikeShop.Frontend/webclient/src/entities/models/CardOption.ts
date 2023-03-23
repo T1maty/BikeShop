@@ -1,7 +1,7 @@
 export interface CardOption {
     option: {
-        name: string
         id: number
+        name: string
         createdAt: string
         updatedAt: string
         enabled: boolean
@@ -9,21 +9,12 @@ export interface CardOption {
     optionVariants: [
         {
             optionId: boolean
-            name: string
             optionName: string
             id: boolean
+            name: string
             createdAt: string
             updatedAt: string
             enabled: boolean
         },
-        {
-            optionId: boolean
-            name: string
-            optionName: string
-            id: boolean
-            createdAt: string
-            updatedAt: string
-            enabled: boolean
-        }
     ]
 }

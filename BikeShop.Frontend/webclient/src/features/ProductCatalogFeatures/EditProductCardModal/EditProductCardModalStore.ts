@@ -15,8 +15,6 @@ interface EditProductCardModalStore {
     // setCurrentCurrency: (currency: any) => void
     cardOptions: CardOption[]
     getCardOptions: () => void
-    // addCurrency: (data: CreateShop) => any
-    // updateCurrency: (updateData: UpdateShop) => any
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -38,24 +36,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('магазины не получены')
         })
     },
-    // addCurrency: (data) => {
-    //     return $api.post('/shop/create', data).then(res => {
-    //         // set(state => {
-    //         //     state.shops.push(res.data)
-    //         // })
-    //     }).catch((error: any) => {
-    //         console.log('магазин не создан', error)
-    //     })
-    // },
-    // updateCurrency: (updateData) => {
-    //     return $api.put('/shop/update', updateData).then(res => {
-    //         // set(state => {
-    //         //     state.shops.push(res.data)
-    //         // })
-    //     }).catch((error: any) => {
-    //         console.log('магазин не обновлён', error)
-    //     })
-    // },
 })))/*, {
     name: "editProductCardModal",
     version: 1

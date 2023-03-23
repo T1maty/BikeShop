@@ -407,12 +407,11 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {
-                                        console.log(selectedOption)
-                                    }}
+                                    onClick={() => {console.log(selectedOption)}}
                             >
                                 +
                             </Button>
+
                             {/*<ControlledSelect control={formControl}*/}
                             {/*                  name={'option'}*/}
                             {/*                  label={'Опции'}*/}
@@ -420,14 +419,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             {/*                  data={options.map((el) => {*/}
                             {/*                      return {id: el.id, value: el.name ? el.name : 'Нет опции'}*/}
                             {/*                  })}*/}
-                            {/*/>*/}
-
-                            {/*<Autocomplete*/}
-                            {/*    disablePortal*/}
-                            {/*    id="combo-box-demo"*/}
-                            {/*    options={options}*/}
-                            {/*    sx={{ width: 300 }}*/}
-                            {/*    renderInput={(params) => <TextField {...params} label="Опции" />}*/}
                             {/*/>*/}
 
                             <Select
