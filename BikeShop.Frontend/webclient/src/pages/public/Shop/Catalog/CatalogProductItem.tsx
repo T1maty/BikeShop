@@ -4,6 +4,8 @@ import {Button} from "../../../../shared/ui"
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
+import NoProductImage from "../../../../shared/assets/shop/icons/bicycle-02.svg"
+import SorryNoImage from "../../../../shared/assets/shop/images/sorryNoImage.jpg"
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -94,8 +96,10 @@ export const CatalogProductItem = () => {
                                  showPlayButton={false}
                                  // showFullscreenButton={false}
                                  showIndex={true}
-                                 // showNav={false}
+                                 showNav={false}
                                  thumbnailPosition={'left'}
+                                 onErrorImageURL={SorryNoImage}
+                                 // additionalClass={s.imageGallery}
                    />
                </div>
                <div className={s.product_info}>

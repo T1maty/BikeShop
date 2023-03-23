@@ -4,14 +4,14 @@ import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../../shared"
 import {AxiosResponse} from "axios"
 import ProductTag from "../../../../entities/models/ProductTag"
-import {CatalogProduct} from "../../../../entities/models/CatalogProduct"
+import {CatalogProductItem} from "../../../../entities/models/CatalogProductItem"
 
 interface UseCatalogStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     tags: ProductTag[]
     getTags: () => void
-    defaultProducts: CatalogProduct[]
+    defaultProducts: CatalogProductItem[]
     getDefaultProducts: () => void
 }
 
@@ -32,7 +32,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
     },
     defaultProducts: [],
     getDefaultProducts: () => {
-        return $api.get<CatalogProduct[]>('/public/gettags').then(res => {
+        return $api.get<CatalogProductItem[]>('/public/gettags').then(res => {
             set(state => {
                 state.defaultProducts = res.data
                 console.log('все дефолтные товары', state.defaultProducts)

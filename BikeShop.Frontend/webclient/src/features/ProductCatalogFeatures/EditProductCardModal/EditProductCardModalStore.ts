@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
 import {AxiosResponse} from "axios"
-import {CardOption} from "../../../entities/models/CardOption"
+import {ProductCardOption, ProductCardSpecification} from "../../../entities/models/ProductCardModels"
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -15,15 +15,19 @@ interface EditProductCardModalStore {
     // setCurrentCurrency: (currency: any) => void
     galleryImages: any[]
     getGalleryImages: () => void
-    cardOptions: CardOption[]
+    cardOptions: ProductCardOption[]
     getCardOptions: () => void
+    specifications: ProductCardSpecification[]
+    getSpecifications: () => void
+    // specifications: ProductCardSpecification[]
+    // setSpecification: (spec: ProductCardSpecification) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openEditProductCardModal: false,
-    setOpenEditProductCardModal: (value: boolean) => set({openEditProductCardModal: value}),
+    setOpenEditProductCardModal: (value) => set({openEditProductCardModal: value}),
     isLoading: false,
-    setIsLoading: (value: boolean) => set({isLoading: value}),
+    setIsLoading: (value) => set({isLoading: value}),
 
     // currentCurrency: null,
     // setCurrentCurrency: (currency) => {set({currentCurrency: currency})},
@@ -40,7 +44,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     },
     cardOptions: [],
     getCardOptions: () => {
-        return $api.get<CardOption[]>('/productcard/getalloptions').then(res => {
+        return $api.get<ProductCardOption[]>('/productcard/getalloptions').then(res => {
             set(state => {
                 state.cardOptions = res.data
                 console.log('все опции', state.cardOptions)
@@ -49,6 +53,21 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('магазины не получены')
         })
     },
+    specifications: [],
+    getSpecifications: () => {
+        return $api.get<ProductCardSpecification[]>('/productcard/getallspecifications').then(res => {
+            set(state => {
+                state.specifications = res.data
+                console.log('все спецификации', state.specifications)
+            })
+        }).catch((error: any) => {
+            console.log('магазины не получены')
+        })
+    },
+    // specifications: [],
+    // setSpecification: (spec) => set(state => {
+    //     return {specifications: [spec, ...state.specifications]}
+    // }),
 })))/*, {
     name: "editProductCardModal",
     version: 1

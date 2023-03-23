@@ -1,4 +1,4 @@
-export interface CardOption {
+export interface ProductCardOption {
     option: {
         id: number
         name: string
@@ -17,4 +17,12 @@ export interface CardOption {
             enabled: boolean
         },
     ]
+}
+
+export interface ProductCardSpecification {
+    id: number
+    name: string
+    createdAt: string
+    updatedAt: string
+    enabled: boolean
 }

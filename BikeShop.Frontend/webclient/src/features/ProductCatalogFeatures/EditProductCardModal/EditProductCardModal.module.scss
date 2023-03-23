@@ -227,9 +227,10 @@
       @include flexOnlyBetween;
       gap: $defaultLargeMargin;
       width: 100%;
+      position: relative;
+      z-index: -100;
 
       button {
-        //padding: 10px;
         width: 200px;
       }
     }

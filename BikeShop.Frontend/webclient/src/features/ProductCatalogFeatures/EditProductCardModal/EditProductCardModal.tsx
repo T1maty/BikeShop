@@ -2,7 +2,8 @@ import React, {useState, useEffect, ChangeEvent} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
-import {Button, ControlledCustomInput, ControlledInput, ControlledSelect} from '../../../shared/ui'
+import {Button, ControlledCustomInput, ControlledInput,
+    ControlledSelect, CustomInput} from '../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import {Editor} from 'react-draft-wysiwyg'
@@ -11,6 +12,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 import Select from 'react-select'
+import AsyncSelect from 'react-select/async'
 
 interface EditProductCardModalProps {
     productCardData?: any
@@ -24,6 +26,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     // const galleryImages = useEditProductCardModal(s => s.galleryImages)
     // const getGalleryImages = useEditProductCardModal(s => s.getGalleryImages)
+    const specifications = useEditProductCardModal(s => s.specifications)
+    const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
@@ -53,15 +57,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     ]
 
     const [selectedOption, setSelectedOption] = useState(null)
-    // const [inputValue, setInputValue] = useState()
-
-    // const getSelectValue = () => {
-    //     return selectedOption ? optionsList.find(el => el.value === selectedOption) : ''
-    // }
-    //
-    // const onChangeSelect = (newValue: any) => {
-    //     setSelectedOption(newValue.value)
-    // }
+    const [selectedSpecification, setSelectedSpecification] = useState(null)
 
     // тестовые данные
     const [options, setOptions] = useState<any>([
@@ -77,37 +73,44 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         // },
     ])
 
-    const [details, setDetails] = useState<any>([
-        // {id: '1', name: 'Характеристика 1', description: 'Описание 1'},
+    const [specifications1, setSpecifications1] = useState<any>([
+        {id: '1', name: 'Характеристика 1', description: 'Описание 1'},
         // {id: '2', name: 'Характеристика 2', description: 'Описание 2'},
         // {id: '3', name: 'Характеристика 3', description: 'Описание 3'},
     ])
 
+    // const [specificationInput, setSpecificationInput] = useState<string>('')
+    //
+    // const addNewSpecification = () => {
+    //     const newSpecification = {id: 1, name: specificationInput}
+    //     setSpecification(newSpecification)
+    // }
+
     // ----------------------------------- //
 
-    const formControl = useForm<any>({
-        defaultValues: {
-            option: '',
-            detail: '',
-        }
-    })
-
-    const onSubmit: SubmitHandler<any> = (data: any) => {
-        // тестовые данные
-        const newDetail = {id: '555', name: 'New Characteristic', description: data.detail}
-        setDetails([newDetail, ...details])
-
-        // добавление карточки
-        //     addNewService(data).then((res: any) => {
-        //         setIsCreating(false)
-        //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-        //     }).catch((error: any) => {
-        //         let message = error(error.response.data.errorDescription).toString()
-        //         formControl.setError('name', {type: 'serverError', message: message})
-        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //         console.error(error.response.data)
-        //     })
-    }
+    // const formControl = useForm<any>({
+    //     defaultValues: {
+    //         option: '',
+    //         specification: '',
+    //     }
+    // })
+    //
+    // const onSubmit: SubmitHandler<any> = (data: any) => {
+    //     // тестовые данные
+    //     const newDetail = {id: '555', name: 'New Characteristic', description: data.detail}
+    //     setSpecifications([newDetail, ...specifications])
+    //
+    //     // добавление карточки
+    //     //     addNewService(data).then((res: any) => {
+    //     //         setIsCreating(false)
+    //     //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+    //     //     }).catch((error: any) => {
+    //     //         let message = error(error.response.data.errorDescription).toString()
+    //     //         formControl.setError('name', {type: 'serverError', message: message})
+    //     //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+    //     //         console.error(error.response.data)
+    //     //     })
+    // }
 
     // функции для селектов
     const deleteOptionsListHandler = (optionsItem: any) => {
@@ -119,7 +122,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         } : el))
     }
     const deleteDetailsListHandler = (detailsItem: any) => {
-        setDetails(details.filter((el: any) => el.id !== detailsItem.id))
+        // setSpecifications1(specifications.filter((el: any) => el.id !== detailsItem.id))
     }
 
     // ----------------------------------- //
@@ -187,6 +190,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     useEffect(() => {
         getCardOptions()
+        getSpecifications()
     }, [])
 
     return (
@@ -421,6 +425,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                 isSearchable={true}
                                 value={selectedOption}
                                 onChange={(value: any) => {setSelectedOption(value)}}
+                                noOptionsMessage={() => 'Опция не найдена'}
                             />
                         </div>
                     </div>
@@ -429,9 +434,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     <div className={s.rightSide_productDetails}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                details.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
+                                specifications1.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
 
-                                details.map((detail: any) => {
+                                specifications1.map((detail: any) => {
                                     return (
                                         <div className={s.optionsList_item}
                                              key={detail.id}
@@ -462,24 +467,54 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                 })
                             }
                         </div>
-                        <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                        {/*<form onSubmit={formControl.handleSubmit(onSubmit)}>*/}
                             <div className={s.productOptions_selectRow}>
-                                <Button type={'submit'} buttonDivWrapper={s.options_button}>+</Button>
-                                {/*<ControlledInput name={'detail'}*/}
+                                <Button buttonDivWrapper={s.options_button}
+                                        // onClick={addNewSpecification}
+                                >
+                                    +
+                                </Button>
+                                {/*<ControlledInput name={'specification'}*/}
                                 {/*                 label={'Характеристика'}*/}
                                 {/*                 control={formControl}*/}
                                 {/*                 rules={{required: Errors[0].name}}*/}
                                 {/*                 divClassName={s.options_search}*/}
                                 {/*/>*/}
 
-                                <ControlledCustomInput name={'detail'}
-                                                       placeholder={'Характеристика'}
-                                                       control={formControl}
-                                    // rules={{required: Errors[0].name}}
-                                    // divClassName={s.options_search}
+                                {/*<ControlledCustomInput name={'specification'}*/}
+                                {/*                       placeholder={'Характеристика'}*/}
+                                {/*                       control={formControl}*/}
+                                {/*                       // rules={{required: Errors[0].name}}*/}
+                                {/*                       // divClassName={s.options_search}*/}
+                                {/*/>*/}
+                                {/*<CustomInput placeholder={'Характеристика'}*/}
+                                {/*             value={specificationInput}*/}
+                                {/*             onChangeText={setSpecificationInput}*/}
+                                {/*/>*/}
+
+                                <Select
+                                    className={s.options_search}
+                                    options={specifications}
+                                    placeholder={'Характеристика'}
+                                    isSearchable={true}
+                                    value={selectedSpecification}
+                                    onChange={(value: any) => {setSelectedSpecification(value)}}
+                                    getOptionLabel={label => label!.name}
+                                    getOptionValue={value => value!.name}
+                                    noOptionsMessage={() => 'Характеристика не найдена'}
                                 />
+                                {/*<AsyncSelect*/}
+                                {/*    className={s.options_search}*/}
+                                {/*    loadOptions={getSpecifications}*/}
+                                {/*    placeholder={'Характеристика'}*/}
+                                {/*    isSearchable={true}*/}
+                                {/*    value={selectedSpecification}*/}
+                                {/*    onChange={(value: any) => {setSelectedSpecification(value)}}*/}
+                                {/*    getOptionLabel={label => label.name}*/}
+                                {/*    getOptionValue={value => value.name}*/}
+                                {/*/>*/}
                             </div>
-                        </form>
+                        {/*</form>*/}
                     </div>
 
                     <div className={s.rightSide_mainButtons}>
