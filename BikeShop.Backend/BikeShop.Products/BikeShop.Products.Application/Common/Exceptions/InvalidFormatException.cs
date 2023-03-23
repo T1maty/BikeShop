@@ -1,3 +1,5 @@
+using BikeShop.Products.Application.Common.Errors;
+
 namespace BikeShop.Products.Application.Common.Exceptions
 {
     public class InvalidFormatException : Exception, IException

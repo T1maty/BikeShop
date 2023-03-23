@@ -1,5 +1,5 @@
 using AutoMapper;
-using BikeShop.Products.Application.Common.Exceptions;
+using BikeShop.Products.Application.Common.Errors;
 using BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;

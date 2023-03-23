@@ -1,5 +1,5 @@
 using AutoMapper;
-using BikeShop.Products.Application.Common.Exceptions;
+using BikeShop.Products.Application.Common.Errors;
 using BikeShop.Products.Application.CQRS.Commands.Tag.CreateTag;
 using BikeShop.Products.Application.CQRS.Commands.Tag.UpdateTag;
 using BikeShop.Products.Application.CQRS.Queries.Tag.GetAllTags;

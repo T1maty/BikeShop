@@ -1,4 +1,6 @@
-﻿namespace BikeShop.Products.Application.Common.Exceptions;
+﻿using BikeShop.Products.Application.Common.Errors;
+
+namespace BikeShop.Products.Application.Common.Exceptions;
 
 public sealed class AlreadyExistsException : Exception, IException
 {

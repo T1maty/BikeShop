@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using BikeShop.Service.Application.Common.Exceptions;
-using BikeShop.Service.Application.CQRS.Commands.WorkGroup.CreateWorkGroup;
-using BikeShop.Service.Application.CQRS.Commands.WorkGroup.UpdateWorkGroup;
-using BikeShop.Service.Application.CQRS.Queries.WorkGroup.GetWorkGroupByShopId;
+﻿using BikeShop.Service.Application.Interfaces;
+using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.WorkGroup;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Service.WebApi.Controllers;
@@ -13,14 +9,13 @@ namespace BikeShop.Service.WebApi.Controllers;
 [Route("group")]
 public class GroupController : ControllerBase
 {
-    private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
+    private readonly IWorkGroupService _workGroupService;
 
-    public GroupController(IMapper mapper, IMediator mediator)
+    public GroupController(IWorkGroupService workGroupService)
     {
-        _mapper = mapper;
-        _mediator = mediator;
+        _workGroupService = workGroupService;
     }
+
 
     /// <summary>
     /// Получение всех групп услуг по айди магазина
@@ -32,15 +27,9 @@ public class GroupController : ControllerBase
     /// <response code="200">Успех. Возвращает массив групп услуг.</response>
     [HttpGet("getbyshopid/{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WorkGroupListModel>> GetWorkGroupsByShopId(int id)
+    public async Task<List<WorkGroup>> GetWorkGroupsByShopId(int id)
     {
-        // Создаю запрос
-        var query = new GetWorkGroupByShopIdQuery { ShopId = id };
-
-        // Посылаю запрос и получаю модель с листом групп услуг
-        var result = await _mediator.Send(query);
-
-        return Ok(result);
+        return await _workGroupService.GetWorkGroupsByShopId(id);
     }
 
     /// <summary>
@@ -56,22 +45,10 @@ public class GroupController : ControllerBase
     /// <response code="422">Невалидная модель</response>
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IException),StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> CreateWorkGroup([FromBody] CreateWorkGroupModel model)
+    public async Task<WorkGroup> CreateWorkGroup([FromBody] CreateWorkGroupModel model)
     {
-        // Если не валидная модель
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        // Маплю модель в cqrs команду
-        var command = _mapper.Map<CreateWorkGroupCommand>(model);
-
-        // Кидаю команду на добавление на исполнение
-        await _mediator.Send(command);
-
-        return Ok();
+        return await _workGroupService.CreateWorkGroup(model);
     }
 
     /// <summary>
@@ -87,21 +64,9 @@ public class GroupController : ControllerBase
     /// <response code="422">Невалидная модель</response>
     [HttpPut("update")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateWorkGroup([FromBody] UpdateWorkGroupModel model)
+    public async Task<WorkGroup> UpdateWorkGroup([FromBody] UpdateWorkGroupModel model)
     {
-        // Проверяю модель на валидность
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(model);
-
-        // Модель в cqrs команду
-        var command = _mapper.Map<UpdateWorkGroupCommand>(model);
-
-        // Отправляю на исполнение
-        await _mediator.Send(command);
-
-        return Ok();
+        return await _workGroupService.UpdateWorkGroup(model);
     }
 }

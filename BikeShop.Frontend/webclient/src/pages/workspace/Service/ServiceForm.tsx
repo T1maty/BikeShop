@@ -7,7 +7,8 @@ import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, useForm} from "react-hook-form"
 import useService from "./ServiceStore"
-import useSelectProductWorkModal from "../../../features/SelectProductWorkModals/SelectProductWorkModalStore"
+import useSelectProductWorkModal
+    from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {useSnackbar} from "notistack"
 import useAuth from "../../auth/useAuthUser"
 
@@ -178,6 +179,7 @@ const ServiceForm = () => {
                                           serviceTableCallback={() => {
                                               setOpenSelectProductModal(true)
                                           }}
+                                          disabledButton={(currentService === null && !isCreating)}
                             />
                             <SelectProductModal products={field.value}
                                                 setProducts={field.onChange}/>
@@ -194,6 +196,7 @@ const ServiceForm = () => {
                                           serviceTableCallback={() => {
                                               setOpenSelectWorkModal(true)
                                           }}
+                                          disabledButton={(currentService === null && !isCreating)}
                             />
                             <SelectWorkModal works={field.value} setWorks={field.onChange}/>
                         </div>

@@ -72,6 +72,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         var newBarcode = GenerateUniqueBarcode(newProduct.Id, barcodes);
         newProduct.Barcode = newBarcode;
 
+        await _context.ProductsCards.AddAsync(new ProductCard { ProductId = newProduct.Id, Description ="", DescriptionShort = "" });
 
         // // В бинде продукта к тэгам создаю записи, привязываю продукт ко всем тэгам
         foreach (var id in request.TagsIds)

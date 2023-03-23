@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BikeShop.Service.Application.Common.Exceptions;
+using BikeShop.Products.Application.Common.Errors;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
@@ -7,7 +7,6 @@ using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.Domain.Enums;
 using BikeShop.Service.Domain.RefitDTO;
 using BikeShop.Service.WebApi.Models.Service;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -180,7 +179,7 @@ public class ServiceService : IServiceService
         }
         else
         {
-            throw new NotFoundException($"Status {status} not found");
+            throw Errors.StatusNotFound;
         }
     }
 

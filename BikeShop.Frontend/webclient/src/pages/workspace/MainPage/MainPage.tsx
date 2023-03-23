@@ -8,8 +8,9 @@ import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClie
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {IUser} from "../../../entities"
 import useMainPageStore from "./MainPageStore"
-import {EditProductCardModal} from "../../../features/EditProductCardModal/EditProductCardModal"
-import useEditProductCardModal from "../../../features/EditProductCardModal/EditProductCardModalStore"
+import {EditProductCardModal} from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal"
+import useEditProductCardModal
+    from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
 
 export const MainPage = () => {
 
@@ -56,19 +57,25 @@ export const MainPage = () => {
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Создать заказ
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Добавить горячего клиента
                         </Button>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                        }}>
                             Ремонты
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Прокат
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Внести на счёт
                         </Button>
                     </div>
@@ -76,19 +83,24 @@ export const MainPage = () => {
                         <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                             Каталог товаров
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Чеки
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Заказы
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Прокаты
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Счета клиентов
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Перемещение
                         </Button>
                     </div>
@@ -140,11 +152,14 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_top_result}>
                             <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                    onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
+                                    onClick={() => {
+                                        navigate(BikeShopPaths.WORKSPACE.CASHBOX)
+                                    }}>
                                 Выбрать кассу
                             </Button>
                             <Button buttonDivWrapper={s.result_cancelBtn}
-                                    onClick={() => {}}>
+                                    onClick={() => {
+                                    }}>
                                 X
                             </Button>
                             <div className={s.result_span}>
@@ -152,7 +167,9 @@ export const MainPage = () => {
                             </div>
                             <PayModal/>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {setOpenPayModal(true)}}>
+                                    onClick={() => {
+                                        setOpenPayModal(true)
+                                    }}>
                                 К оплате
                             </Button>
                         </div>
@@ -172,7 +189,8 @@ export const MainPage = () => {
                             </div>
                             <div className={s.bottom_right_two}>
                                 <Button buttonDivWrapper={s.right_two_button}
-                                        onClick={() => {}}>
+                                        onClick={() => {
+                                        }}>
                                     Закончить смену
                                 </Button>
                                 <div className={s.right_two_span}>

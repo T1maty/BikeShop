@@ -6,3 +6,5 @@ export {TagTreeView} from './workspace/ProductCatalog/TagTreeView/TagTreeView'
 export {ProductTagCloud} from './workspace/ProductCatalog/ProductTagCloud/ProductTagCloud'
 
 export {BarcodeScannerListener} from './workspace/BarcodeScannerListener/BarcodeScannerListener'
+
+export {WorkCatalogTable} from './workspace/WorkCatalog/WorkCatalogTable'

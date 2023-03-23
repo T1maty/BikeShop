@@ -2,9 +2,11 @@ import React from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import {Menu} from '@mui/material'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
-import useCreateProductModal from '../../../../features/CreateProductModal/CreateProductModalStore'
+import useCreateProductModal
+    from '../../../../features/ProductCatalogFeatures/CreateProductModal/CreateProductModalStore'
 import useTagTreeView from '../TagTreeView/TagTreeViewStore'
-import useUpdateProductModal from '../../../../features/UpdateProductModal/UpdateProductModalStore'
+import useUpdateProductModal
+    from '../../../../features/ProductCatalogFeatures/UpdateProductModal/UpdateProductModalStore'
 
 export const ProductCatalogTableContextMenu = () => {
 

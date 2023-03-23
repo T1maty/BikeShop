@@ -2,9 +2,8 @@ import React, {useEffect} from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI} from "../../../shared/ui"
 import {CustomTagTreeView} from "../../../shared/ui/CustomTagTreeView/CustomTagTreeView";
-import {useWorkCatalog} from "../../../widgets/workspace/TableCatalog/model/store/TableCatalogStore";
-import useCreateWorkTagModal from "../../../features/WorkCatalogModal/model/CreateTagModalStore";
-import {CreateTagModal} from "../../../features/WorkCatalogModal";
+import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
+
 import {CustomTable} from "../../../shared/ui/CustomTable/CustomTable";
 import {ServiceItemWork} from "../../../entities/models/ServiceItem";
 
@@ -15,7 +14,6 @@ interface props {
 
 export const SelectWork = (props: props) => {
     const {works, group, getWork, getGroup, chooseMethod, isLoading} = useWorkCatalog(state => state)
-    const setOpenId = useCreateWorkTagModal(state => state.setOpen)
     const contextDataTreeView = ['Редактировать', 'Создать в корне', 'Создать потомка', 'Переместить', 'Удалить']
     const contextDataTable = ['Редактировать', 'Создать', 'Статистика']
     const theadData = ["Артикул", "Название", "Цена", "Описание"]
@@ -28,13 +26,12 @@ export const SelectWork = (props: props) => {
         chooseMethod(data)
     }
     const callBackDataTreeView = (data: object) => {
-        setOpenId(data)
+
     }
     return (
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
                 <div className={s.leftSide_treeView}>
-                    <CreateTagModal onSuccess={(data: any) => console.log(data)}/>
                     <CustomTagTreeView data={group}
                                        selectId={getWork}
                                        callBackData={callBackDataTreeView}
@@ -59,6 +56,7 @@ export const SelectWork = (props: props) => {
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
+
                     <CustomTable tbodyData={works}
                                  theadData={theadData}
                                  callBackData={callBackDataTable}

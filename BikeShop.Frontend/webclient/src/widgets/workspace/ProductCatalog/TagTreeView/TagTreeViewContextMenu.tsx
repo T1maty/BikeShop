@@ -2,10 +2,11 @@ import React from 'react'
 import MenuItem from "@mui/material/MenuItem"
 import {IProductTag} from "../../../../entities"
 import {Menu} from "@mui/material"
-import useCreateTagModal from '../../../../features/CreateTagModal/CreateTagModalStore'
+import useCreateTagModal from '../../../../features/ProductCatalogFeatures/CreateTagModal/CreateTagModalStore'
 import useTagTreeView from './TagTreeViewStore'
-import useCreateProductModal from "../../../../features/CreateProductModal/CreateProductModalStore"
-import useUpdateTagModal from '../../../../features/UpdateTagModal/UpdateTagModalStore';
+import useCreateProductModal
+    from "../../../../features/ProductCatalogFeatures/CreateProductModal/CreateProductModalStore"
+import useUpdateTagModal from '../../../../features/ProductCatalogFeatures/UpdateTagModal/UpdateTagModalStore';
 
 const TagTreeViewContextMenu = () => {
 
@@ -81,7 +82,8 @@ const TagTreeViewContextMenu = () => {
             </MenuItem>
 
             <MenuItem>Переместить</MenuItem>
-            <MenuItem onClick={() => {}}>Удалить</MenuItem>
+            <MenuItem onClick={() => {
+            }}>Удалить</MenuItem>
         </Menu>
     );
 };
