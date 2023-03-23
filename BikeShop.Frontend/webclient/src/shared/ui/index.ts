@@ -16,4 +16,6 @@ export {ControlledCheckbox} from './Controlled/ControlledCheckbox'
 export {ControlledSelect} from './Controlled/ControlledSelect'
 export {ControlledReactSelect} from './Controlled/ControlledReactSelect'
 
+export {UniTreeView} from './CustomTagTreeView/UniTreeView'
+
 

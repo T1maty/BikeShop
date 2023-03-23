@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI} from "../../../shared/ui"
-import {CustomTagTreeView} from "../../../shared/ui/CustomTagTreeView/CustomTagTreeView";
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
 
 import {CustomTable} from "../../../shared/ui/CustomTable/CustomTable";
@@ -32,11 +31,7 @@ export const SelectWork = (props: props) => {
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
                 <div className={s.leftSide_treeView}>
-                    <CustomTagTreeView data={group}
-                                       selectId={getWork}
-                                       callBackData={callBackDataTreeView}
-                                       contextData={contextDataTreeView}
-                    />
+                    
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>

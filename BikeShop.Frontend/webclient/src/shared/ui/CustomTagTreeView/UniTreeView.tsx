@@ -1,29 +1,21 @@
-import React, {memo, MouseEvent, useCallback, useState} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import cls from './CustomTagTreeView.module.scss'
-import {ContextMenu} from "../../../widgets/workspace/ContextMenu";
-import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
 
-interface CustomTagTreeView {
+interface UniTreeView {
     data: Array<object>,
-    selectId: (id: number) => void
-    callBackData: (data: {}) => void
-    contextData: Array<string>
+    selected: any
+    setSelected: (node: any) => void
+    onNodeContext?: (node: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+    onNodeClick?: (node: any) => void
 }
 
-
 /**
- * @param data - Массив с объектом, каждый объект должен иметь parentId
- * @param selectId - Возвращает выбранный id tag
- * @param callBackData - Возвращает объект {data: данные выбранного tag, variant: вариант, что делать с этими данными}
- * @param contextData - Массив string, для context
- * @return Возвращает jsx с готовым TagTreeView
+ * @param data - Массив с объектом, каждый объект должен иметь parentId и id
  */
 
-export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
-    const {data, selectId, callBackData, contextData} = props
+export const UniTreeView = memo((props: UniTreeView) => {
+    const {data, selected, setSelected, onNodeContext, onNodeClick} = props
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
-
-    const {selected, setSelected} = useWorkCatalog(state => state);
 
     const [state, setState] = useState({
         isOpen: false,
@@ -41,7 +33,6 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
         setState({...state, isOpen: false})
         if (variant !== undefined) {
             const {children, ...data}: any = state.data
-            callBackData({data: data, variant: variant})
         }
     }, [state])
 
@@ -74,12 +65,6 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
         const isExpanded = expandedItems.includes(item.id);
         const hasChildren = item.children && item.children.length > 0;
 
-        const onContextMenuHandler = (e: MouseEvent<HTMLDivElement>, id: number) => {
-            e.preventDefault()
-            onOpenHandler(e.clientX, e.clientY, item)
-            onClickHandlerSelect(id)
-        }
-
         const onClickHandlerCollapsed = () => {
             if (hasChildren && isExpanded) {
                 handleCollapse(item.id)
@@ -89,26 +74,38 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
                 handleExpand(item.id)
             }
         }
-        const onClickHandlerSelect = (id: number) => {
-            setSelected(id)
-            selectId(id)
-        }
+
+
         return (
-            <div key={item.id} className={cls.wrapper}>
+            <div key={item.id} className={cls.wrapper} onContextMenu={(e) => {
+                e.preventDefault()
+            }}>
                 <div style={{cursor: 'pointer'}}
-                     onContextMenu={(e) => onContextMenuHandler(e, item.id)}
+
                      className={cls.parent}>
-                    <div className={selected === item.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
+
+                    <div className={selected.id === item.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
+
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}>
                             {hasChildren && (isExpanded ? '\\/' : '>')}
                         </div>
+
                         <div className={cls.content}
-                             onClick={() => onClickHandlerSelect(item.id)}>
+                             onClick={() => {
+                                 setSelected(item)
+                                 onNodeClick ? onNodeClick(item) : true
+                             }}
+                             onContextMenu={(event) => {
+                                 onNodeContext ? onNodeContext(item, event) : true
+                             }}
+                        >
                             {item.name}
                         </div>
+
                     </div>
                 </div>
+
                 {hasChildren && isExpanded && (
                     <div className={cls.child}>
                         {item.children.map(renderItem)}
@@ -120,12 +117,6 @@ export const CustomTagTreeView = memo((props: CustomTagTreeView) => {
 
     return (
         <>
-            <ContextMenu isOpen={state.isOpen}
-                         onClose={onCloseHandler}
-                         settings={contextData}
-                         left={state.left}
-                         top={state.top}
-            />
             {buildTree(data, 0).map(renderItem)}
         </>
     )

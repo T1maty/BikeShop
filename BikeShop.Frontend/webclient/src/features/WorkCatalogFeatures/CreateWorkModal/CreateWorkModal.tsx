@@ -1,6 +1,6 @@
 import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
-import {CreateWork} from "../../../entities";
+import {CreateWork, Work} from "../../../entities";
 import {Box, Button, Modal} from "@mui/material";
 import {ControlledInput} from "../../../shared/ui";
 import {$api} from "../../../shared";
@@ -10,6 +10,7 @@ import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalo
 export const CreateWorkModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void }) => {
 
     const selected = useWorkCatalog(s => s.selected)
+    const addWork = useWorkCatalog(s => s.addWork)
 
     const {enqueueSnackbar} = useSnackbar()
     const formControl = useForm<CreateWork>({
@@ -24,11 +25,14 @@ export const CreateWorkModal = (props: { visibility: boolean, setVisibility: (va
 
     const onSubmit: SubmitHandler<CreateWork> = (data: CreateWork) => {
 
-        data.groupId = selected
+        data.groupId = selected.id
         console.log('submitData', data)
 
-        $api.post('/work/create', data).then((r) => {
+        $api.post<Work>('/work/create', data).then((r) => {
+            console.log(r)
+            addWork(r.data)
             formControl.reset()
+            props.setVisibility(false)
             enqueueSnackbar('Услуга создана', {variant: 'success', autoHideDuration: 10000})
         }).catch((r) => {
             console.log(r)

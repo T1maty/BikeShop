@@ -1,0 +1,26 @@
+export interface WorkGroup {
+    createdAt
+        :
+        string
+    enabled
+        :
+        boolean
+    id
+        :
+        number
+    isCollapsed
+        :
+        boolean
+    name
+        :
+        string
+    parentId
+        :
+        number
+    shopId
+        :
+        number
+    updatedAt
+        :
+        string
+}

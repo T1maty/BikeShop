@@ -1,3 +1,6 @@
+///////////////////////////////////
+//          Entities             //
+///////////////////////////////////
 export type {default as IGroup} from './models/Group'
 export type {default as ILoginData} from './models/LoginData'
 export type {default as IRegistrationData} from './models/RegistrationData'
@@ -8,6 +11,8 @@ export type {default as IShop} from './models/Shop'
 export type {IProduct} from './models/Product'
 export type {ServiceItem} from './models/ServiceItem'
 export type {IProductExtended} from './models/IProductExtended'
+export type {Work} from './models/Work'
+export type {WorkGroup} from './models/WorkGroup'
 
 
 ///////////////////////////////////
@@ -27,6 +32,7 @@ export type {ICreateProduct} from './requests/CreateProduct'
 export type {IUpdateProduct} from './requests/UpdateProduct'
 export type {UpdateServiceStatus} from './requests/UpdateService'
 export type {CreateWork} from './requests/CreateWork'
+export type {CreateWorkGroup} from './requests/CreateWorkGroup'
 
 
 ///////////////////////////////////
