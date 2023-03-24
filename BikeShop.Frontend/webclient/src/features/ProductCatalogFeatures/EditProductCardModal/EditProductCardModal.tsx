@@ -29,6 +29,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const currentCardOptions = useEditProductCardModal(s => s.currentCardOptions)
     const setCurrentCardOptions = useEditProductCardModal(s => s.setCurrentCardOptions)
     const addCurrentCardOption = useEditProductCardModal(s => s.addCurrentCardOption)
+    const currentOptionVariants = useEditProductCardModal(s => s.currentOptionVariants)
+    const setCurrentOptionsVariants = useEditProductCardModal(s => s.setCurrentOptionsVariants)
+    const addCurrentOptionVariant = useEditProductCardModal(s => s.addCurrentOptionVariant)
 
     const specifications = useEditProductCardModal(s => s.specifications)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
@@ -102,7 +105,15 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const deleteOptionsListHandler = (optionsItem: ProductCardOption) => {
         setCurrentCardOptions(currentCardOptions.filter(el => el.option.id !== optionsItem.option.id))
     }
-    const deleteOptionHandler = (optionId: number, variantId: number) => {
+
+    const addNewOptionVariantHandler = () => {
+        const newOptionVariant = currentCardOptions.find(el => el.optionVariants.find(variant => variant.id === selectedOptionVariant.id))
+        // @ts-ignore
+        addCurrentOptionVariant(newOptionVariant!)
+        console.log('разновидность', currentCardOptions)
+
+    }
+    const deleteOptionVariantHandler = (optionId: number, variantId: number) => {
         setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ? {
             ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId)
         } : el))
@@ -312,7 +323,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                                 Удалить опцию
                                                             </div>
                                                             {
-                                                                currentOption.optionVariants.map((variant: ProductCardOptionVariant) => {
+                                                                currentOptionVariants.map((variant: ProductCardOptionVariant) => {
                                                                     return (
                                                                         <div className={s.item_content}
                                                                              style={{marginBottom: '5px'}}
@@ -322,7 +333,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                                                 {variant.name}
                                                                             </div>
                                                                             <img src={RemoveIcon} alt="remove-icon"
-                                                                                 onClick={() => {deleteOptionHandler(currentOption.option.id, variant.id)}}
+                                                                                 onClick={() => {deleteOptionVariantHandler(currentOption.option.id, variant.id)}}
                                                                             />
                                                                         </div>
                                                                     )
@@ -330,14 +341,23 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                             }
                                                         </div>
                                                         <div className={s.rowItems_chooseItem}>
-                                                            <Button buttonDivWrapper={s.options_button}>+</Button>
+                                                            <Button buttonDivWrapper={s.options_button}
+                                                                    onClick={addNewOptionVariantHandler}
+                                                                    // onClick={() => {console.log(currentOption.optionVariants)}}
+                                                                    disabled={selectedOptionVariant === null}
+                                                            >
+                                                                +
+                                                            </Button>
                                                             <Select
                                                                 className={s.options_search}
                                                                 options={currentOption.optionVariants}
                                                                 placeholder="Разновидность опции"
-                                                                // isSearchable={true}
+                                                                isSearchable={true}
                                                                 value={selectedOptionVariant}
                                                                 onChange={(value: any) => {setSelectedOptionVariant(value)}}
+                                                                getOptionLabel={label => label!.name}
+                                                                getOptionValue={value => value!.name}
+                                                                noOptionsMessage={() => 'Опция не найдена'}
                                                             />
                                                         </div>
                                                     </div>

@@ -19,6 +19,9 @@ interface EditProductCardModalStore {
     currentCardOptions: ProductCardOption[]
     setCurrentCardOptions: (currentCardOptions: ProductCardOption[]) => void
     addCurrentCardOption: (option: ProductCardOption) => void
+    currentOptionVariants: ProductCardOptionVariant[]
+    setCurrentOptionsVariants: (currentOptionVariants: ProductCardOptionVariant[]) => void
+    addCurrentOptionVariant: (variant: ProductCardOptionVariant) => void
 
     specifications: ProductCardSpecification[]
     getSpecifications: () => void
@@ -50,6 +53,13 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     }),
     addCurrentCardOption: (option) => set(state => {
         return {currentCardOptions: [option, ...state.currentCardOptions]}
+    }),
+    currentOptionVariants: [],
+    setCurrentOptionsVariants: (currentOptionVariants) => set(state => {
+        state.currentOptionVariants = currentOptionVariants
+    }),
+    addCurrentOptionVariant: (variant) => set(state => {
+        return {currentOptionVariants: [variant, ...state.currentOptionVariants]}
     }),
 
     specifications: [],
