@@ -1,37 +1,33 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './SelectProductWork.module.scss'
-import {Button, InputUI} from "../../../shared/ui"
+import {Button, InputUI, UniTable} from "../../../shared/ui"
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
-
-import {CustomTable} from "../../../shared/ui/CustomTable/CustomTable";
 import {ServiceItemWork} from "../../../entities/models/ServiceItem";
+import {WorkCatalogTreeView} from "../../../widgets/workspace/WorkCatalog/WorkCatalogTreeView";
+import {columns} from "./SlaveTableConfig";
+import {WorkCatalogTable} from "../../../widgets";
 
 interface props {
     works: ServiceItemWork[]
-    setWorks: (product: ServiceItemWork[]) => void
+    setWorks: (work: ServiceItemWork[]) => void
 }
 
 export const SelectWork = (props: props) => {
-    const {works, group, getWork, getGroup, chooseMethod, isLoading} = useWorkCatalog(state => state)
-    const contextDataTreeView = ['Редактировать', 'Создать в корне', 'Создать потомка', 'Переместить', 'Удалить']
-    const contextDataTable = ['Редактировать', 'Создать', 'Статистика']
-    const theadData = ["Артикул", "Название", "Цена", "Описание"]
+
+    const {getGroup} = useWorkCatalog(state => state)
+
+    const [selected, setSelected] = useState({})
+
 
     useEffect(() => {
         getGroup()
     }, [])
 
-    const callBackDataTable = (data: object) => {
-        chooseMethod(data)
-    }
-    const callBackDataTreeView = (data: object) => {
-
-    }
     return (
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
                 <div className={s.leftSide_treeView}>
-                    
+                    <WorkCatalogTreeView/>
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
@@ -52,15 +48,24 @@ export const SelectWork = (props: props) => {
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
 
-                    <CustomTable tbodyData={works}
-                                 theadData={theadData}
-                                 callBackData={callBackDataTable}
-                                 isLoading={isLoading}
-                                 contextData={contextDataTable}
-                                 onRowDoubleClick={(row) => {
-                                     props.setWorks([...props.works, row as ServiceItemWork])
-                                 }}
-                    />
+
+                    <WorkCatalogTable onRowDoubleClick={(row) => {
+                        let works = props.works
+                        let exist = works.find(n => n.id === row.id)
+
+                        if (exist != undefined) {
+                            exist.quantity++
+                            props.setWorks(works)
+
+                        } else {
+                            let work = row as ServiceItemWork
+                            work.quantity = 1
+                            works.push(work)
+                            props.setWorks(works)
+
+                        }
+                    }}/>
+
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
@@ -80,14 +85,7 @@ export const SelectWork = (props: props) => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    <CustomTable tbodyData={props.works}
-                                 theadData={theadData}
-                                 callBackData={() => {
-                                 }}
-                                 isLoading={isLoading}
-                                 contextData={contextDataTable}
-
-                    />
+                    <UniTable rows={props.works} columns={columns} selected={selected} setSelected={setSelected}/>
                 </div>
             </div>
         </div>

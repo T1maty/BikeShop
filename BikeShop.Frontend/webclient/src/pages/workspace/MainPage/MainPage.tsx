@@ -9,8 +9,6 @@ import {BikeShopPaths} from "../../../app/routes/paths"
 import {IUser} from "../../../entities"
 import useMainPageStore from "./MainPageStore"
 import {EditProductCardModal} from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal"
-import useEditProductCardModal
-    from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
 
 export const MainPage = () => {
 
@@ -84,8 +82,9 @@ export const MainPage = () => {
                             Каталог товаров
                         </Button>
                         <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
                         }}>
-                            Чеки
+                            Каталог услуг
                         </Button>
                         <Button onClick={() => {
                         }}>

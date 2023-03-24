@@ -4,6 +4,7 @@ export {RegistrationPage} from './auth/RegistrationPage/RegistrationPage'
 export {MainPage} from './workspace/MainPage/MainPage'
 export {Cashbox} from './workspace/Cashbox/Cashbox'
 export {Service} from './workspace/Service/Service'
+export {WorkCatalog} from './workspace/WorkCatalog/WorkCatalog'
 
 export {ProductCatalog} from './workspace/ProductCatalog/ProductCatalog'
 export {ServiceTable} from './workspace/Service/ServiceTable'

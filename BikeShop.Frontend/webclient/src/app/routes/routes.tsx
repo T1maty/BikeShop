@@ -1,16 +1,27 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    Cashbox, Catalog, LoginPage, MainPage, Order, ProductCatalog, RegistrationPage, Service,
-    ShopMain, CatalogProductItem, ShopWrapper, Profile, ProductsWrapper, ArrivalOfProducts, InventoryOfProducts
+    ArrivalOfProducts,
+    Cashbox,
+    Catalog,
+    CatalogProductItem,
+    InventoryOfProducts,
+    LoginPage,
+    MainPage,
+    Order,
+    ProductCatalog,
+    ProductsWrapper,
+    Profile,
+    RegistrationPage,
+    Service,
+    ShopMain,
+    ShopWrapper
 } from '../../pages'
+import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
 import {
-    OnlyWithoutAuthRoute, PublicHeaderProvider,
-    WorkspaceHeaderProvider, CheckAuthRouteProvider
-} from '../../entities'
-import {WorkCatalog} from '../../pages/workspace/WorkCatalog'
-import {BarcodeScannerListenerProvider}
-    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+    BarcodeScannerListenerProvider
+} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+import {WorkCatalog} from '../../pages/index'
 
 // @ts-ignore
 export const routes = createBrowserRouter([

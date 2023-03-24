@@ -4,7 +4,7 @@ import {columns} from "./WorkCatalogTableConfig";
 import {UniTable} from "../../../shared/ui";
 import {useWorkCatalog} from "./TableCatalogStore";
 
-export const WorkCatalogTable = () => {
+export const WorkCatalogTable = (props: { onRowDoubleClick?: (row: any) => void }) => {
 
     const {works, isLoading, selectedRow, setSelectedRow} = useWorkCatalog(state => state)
 
@@ -13,13 +13,16 @@ export const WorkCatalogTable = () => {
 
     return (
         <div>
-            <WorkCatalogTableContextMenu x={XY.x} y={XY.y} visibility={visibility} setVisibility={setVisibility}/>
+            <WorkCatalogTableContextMenu x={XY.x + 5} y={XY.y + 5} visibility={visibility}
+                                         setVisibility={setVisibility}/>
             <UniTable rows={works} columns={columns} isLoading={isLoading} rowOnContext={(row, event) => {
                 event.preventDefault()
                 setVisibility(true)
                 setXY({x: event.clientX, y: event.clientY})
             }
+
             }
+                      rowOnDoubleClick={props.onRowDoubleClick}
                       selected={selectedRow} setSelected={setSelectedRow}/>
         </div>
     );

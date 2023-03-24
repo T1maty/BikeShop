@@ -24,7 +24,7 @@ interface ITableProps {
 }
 
 interface TableRowProps {
-    row: any
+    row?: any
     columns: Column[]
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
@@ -59,7 +59,6 @@ export const UniTable = (props: ITableProps) => {
                             <td><Loader variant={"ellipsis"}/></td>
                         </tr>
                 }
-                {/*{props.rows.length === 0 && !props.isLoading && <TableRow/>}*/}
                 </tbody>
             </table>
         </div>
