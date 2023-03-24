@@ -4,8 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
 import {AxiosResponse} from "axios"
 import {
-    ProductCardOption,
-    ProductCardOptionVariant,
+    ProductCardOption, ProductCardOptionVariant,
     ProductCardSpecification, ProductCardUserSpecification
 } from '../../../entities/models/ProductCardModels'
 
@@ -17,13 +16,19 @@ interface EditProductCardModalStore {
 
     cardOptions: ProductCardOption[]
     getCardOptions: () => void
-    currentCardOptions: ProductCardOptionVariant[]
-    setCurrentCardOption: (option: ProductCardOptionVariant) => void
+    currentCardOptions: ProductCardOption[]
+    setCurrentCardOptions: (currentCardOptions: ProductCardOption[]) => void
+    addCurrentCardOption: (option: ProductCardOption) => void
+
+    currentOptionVariants: ProductCardOptionVariant[]
+    setCurrentOptionsVariants: (currentOptionVariants: ProductCardOptionVariant[]) => void
+    addCurrentOptionVariant: (variant: ProductCardOptionVariant) => void
 
     specifications: ProductCardSpecification[]
     getSpecifications: () => void
     currentSpecifications: ProductCardUserSpecification[]
-    setCurrentSpecification: (spec: ProductCardUserSpecification) => void
+    setCurrentSpecifications: (currentSpecifications: ProductCardUserSpecification[]) => void
+    addCurrentSpecification: (spec: ProductCardUserSpecification) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -44,8 +49,18 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
     currentCardOptions: [],
-    setCurrentCardOption: (option) => set(state => {
+    setCurrentCardOptions: (currentCardOptions) => set(state => {
+        state.currentCardOptions = currentCardOptions
+    }),
+    addCurrentCardOption: (option) => set(state => {
         return {currentCardOptions: [option, ...state.currentCardOptions]}
+    }),
+    currentOptionVariants: [],
+    setCurrentOptionsVariants: (currentOptionVariants) => set(state => {
+        state.currentOptionVariants = currentOptionVariants
+    }),
+    addCurrentOptionVariant: (variant) => set(state => {
+        return {currentOptionVariants: [variant, ...state.currentOptionVariants]}
     }),
 
     specifications: [],
@@ -60,7 +75,10 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
     currentSpecifications: [],
-    setCurrentSpecification: (spec) => set(state => {
+    setCurrentSpecifications: (currentSpecifications) => set(state => {
+        state.currentSpecifications = currentSpecifications
+    }),
+    addCurrentSpecification: (spec) => set(state => {
         return {currentSpecifications: [spec, ...state.currentSpecifications]}
     }),
 })))/*, {

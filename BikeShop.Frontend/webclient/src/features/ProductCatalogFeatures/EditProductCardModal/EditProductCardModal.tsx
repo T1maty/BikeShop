@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, ChangeEvent} from 'react'
+import React, {useState, useEffect, ChangeEvent} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
@@ -12,10 +12,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 import Select from 'react-select'
 import AsyncSelect from 'react-select/async'
-import {
-    ProductCardOption, ProductCardOptionVariant,
-    ProductCardSpecification, ProductCardUserSpecification
-} from '../../../entities/models/ProductCardModels'
+import {ProductCardOption, ProductCardOptionVariant,
+    ProductCardUserSpecification} from '../../../entities/models/ProductCardModels'
 
 interface EditProductCardModalProps {
     productCardData?: any
@@ -29,18 +27,22 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const cardOptions = useEditProductCardModal(s => s.cardOptions)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const currentCardOptions = useEditProductCardModal(s => s.currentCardOptions)
-    const setCurrentCardOption = useEditProductCardModal(s => s.setCurrentCardOption)
+    const setCurrentCardOptions = useEditProductCardModal(s => s.setCurrentCardOptions)
+    const addCurrentCardOption = useEditProductCardModal(s => s.addCurrentCardOption)
+    const currentOptionVariants = useEditProductCardModal(s => s.currentOptionVariants)
+    const setCurrentOptionsVariants = useEditProductCardModal(s => s.setCurrentOptionsVariants)
+    const addCurrentOptionVariant = useEditProductCardModal(s => s.addCurrentOptionVariant)
 
     const specifications = useEditProductCardModal(s => s.specifications)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
-    // const currentSpecifications = useEditProductCardModal(s => s.currentSpecifications)
-    // const setCurrentSpecification = useEditProductCardModal(s => s.setCurrentSpecification)
+    const currentSpecifications = useEditProductCardModal(s => s.currentSpecifications)
+    const setCurrentSpecifications = useEditProductCardModal(s => s.setCurrentSpecifications)
+    const addCurrentSpecification = useEditProductCardModal(s => s.addCurrentSpecification)
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
-
     const [galleryImages, setGalleryImages] = useState([
         {id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
         {id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
@@ -55,37 +57,16 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     // ----------------------------------- //
 
-    // тестовые данные
-    // const [options, setOptions] = useState<any>([
-    //     // {
-    //     //     id: '1',
-    //     //     name: 'Размер шлема',
-    //     //     optionsArray: [{id: '4', name: 'S'}, {id: '5', name: 'M'}, {id: '6', name: 'L'}]
-    //     // },
+    // текущие значения селектов
+    const [selectedOption, setSelectedOption] = useState<any>(null) // опция
+    const [selectedOptionVariant, setSelectedOptionVariant] = useState<any>(null) // разновидность опции
+    const [selectedSpecification, setSelectedSpecification] = useState<any>(null) // характеристика (spec)
+
+    // тестовые данные для характеристик
+    // const [currentSpecifications, setCurrentSpecifications] = useState([
+    //     { id: 150, name: 'New Spec', title: 'Введите текст' },
+    //     { id: 120, name: 'New Spec2', title: 'Введите текст2' },
     // ])
-
-    const [selectedOption, setSelectedOption] = useState(null)
-    const [selectedOptionVariant, setSelectedOptionVariant] = useState(null)
-    const [selectedSpecification, setSelectedSpecification] = useState(null)
-
-    const [currentSpecifications, setCurrentSpecifications] = useState([
-        { id: 150, name: 'New Spec'},
-        { id: 120, name: 'New Spec2'},
-    ])
-
-    // ----------------------------------- //
-
-    const [currentSpecificationTitle, setCurrentSpecificationTitle] = useState<string>('Введите текст')
-
-    const changeSpecificationTitleHandler = useCallback((specItem: any) => {
-        // setCurrentSpecificationTitle(newInputValue)
-        // setCurrentSpecifications(currentSpecifications.map(spec => spec.id === specItem.id ? {...spec, name: currentSpecificationTitle} : spec))
-    }, [])
-
-    const addNewSpecification = () => {
-        // const newSpecification: any = { id: 100, name: selectedSpecification }
-        // setCurrentSpecification(newSpecification)
-    }
 
     // ----------------------------------- //
 
@@ -113,17 +94,82 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     //     //     })
     // }
 
-    // функции для селектов
-    const deleteOptionsListHandler = (optionsItem: any) => {
-        // setOptions(options.filter((el: any) => el.id !== optionsItem.id))
+    // ----------------------------------- //
+
+    // функции для опций
+    const addOptionListHandler = () => {
+        const newOption = cardOptions.find(el => el.option.id === selectedOption.option.id)
+
+        // проверка на повторяемость опций
+        if (currentCardOptions.length < cardOptions.length) {
+            addCurrentCardOption(newOption!)
+        } else {
+            console.log('Превышено количество опций')
+        }
     }
-    const deleteOptionHandler = (listId: number, optionId: number) => {
-        // setOptions(options.map((el: any) => el.id === listId ? {
-        //     ...el, optionsArray: el.optionsArray.filter((opt: any) => opt.id !== optionId)
-        // } : el))
+
+    const deleteOptionListHandler = (optionsItem: ProductCardOption) => {
+        setCurrentCardOptions(currentCardOptions.filter(el => el.option.id !== optionsItem.option.id))
     }
-    const deleteSpecHandler = (specItem: ProductCardUserSpecification) => {
-        setCurrentSpecifications(currentSpecifications.filter((el: ProductCardUserSpecification) => el.id !== specItem.id))
+
+    // функция для подсчёта длины массива в массиве
+    // const arrayOfLength = (prop: any[]) => {
+    //     let length = prop.map(num => num.length)
+    //     console.log(length)
+    //     return length
+    // }
+    // arrayOfLength(cardOptions.map(el => el.optionVariants))
+
+    // функции для разновидности опций
+    const addOptionVariantHandler = () => {
+        // исправить!!!
+        const newOptionVariant = currentCardOptions.find(el => el.optionVariants.find(ov => ov.id === selectedOptionVariant.id))
+
+        // проверка на повторяемость опций
+        // надо поставить динамическое значение длины
+        if (currentOptionVariants.length < 2) {
+            // @ts-ignore
+            addCurrentOptionVariant(newOptionVariant!)
+        } else {
+            console.log('Превышено количество опций')
+        }
+
+        // console.log('выбранные опции', currentCardOptions)
+        // console.log('выбранная разновидность опции', currentOptionVariants)
+        console.log('новая опция', newOptionVariant)
+    }
+
+    const deleteOptionVariantHandler = (optionId: number, variantId: number) => {
+        // исправить ?
+        setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ?
+            { ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId) } : el))
+    }
+
+    // ----------------------------------- //
+
+    // функции для характеристик
+    const addSpecificationHandler = () => {
+        const newSpecification: ProductCardUserSpecification =
+            { id: Date.now(), name: selectedSpecification.name, title: 'Введите текст' }
+        addCurrentSpecification(newSpecification)
+        // для тестового варианта (локальный стейт)
+        // setCurrentSpecifications([newSpecification, ...currentSpecifications])
+        // console.log('new spec', newSpecification)
+    }
+
+    const deleteSpecificationHandler = (specItem: ProductCardUserSpecification) => {
+        setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
+        // для тестового варианта (локальный стейт)
+        // setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
+    }
+
+    const changeSpecificationTitleHandler = (specId: number, newInputValue: string) => {
+        setCurrentSpecifications(currentSpecifications.map(spec => spec.id === specId ?
+            {...spec, title: newInputValue} : spec))
+        // для тестового варианта (локальный стейт)
+        // setCurrentSpecifications(currentSpecifications.map(spec => spec.id === specId ?
+        //     {...spec, title: newInputValue} : spec))
+        // console.log(newInputValue)
     }
 
     // ----------------------------------- //
@@ -284,24 +330,26 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     <div className={s.rightSide_productOptions}>
                         <div className={s.productOptions_optionsList}>
                             {
-                                cardOptions.length === 0 ? <div style={{textAlign: 'center'}}>Добавьте опции</div> :
+                                currentCardOptions.length === 0 ? <div style={{textAlign: 'center'}}>
+                                        Для добавления выберите опции
+                                </div> :
 
-                                    cardOptions.map((option: ProductCardOption) => {
+                                    currentCardOptions.map((currentOption: ProductCardOption) => {
                                         return (
                                             <div className={s.optionsList_item}
-                                                 key={option.option.id}
+                                                 key={currentOption.option.id}
                                             >
                                                 <fieldset className={s.options_box}>
-                                                    <legend>{option.option.name}</legend>
+                                                    <legend>{currentOption.option.name}</legend>
                                                     <div className={s.options_rowItems}>
                                                         <div className={s.rowItems_item}>
                                                             <div className={s.item_deleteFullItem}
-                                                                 onClick={() => {deleteOptionsListHandler(option)}}
+                                                                 onClick={() => {deleteOptionListHandler(currentOption)}}
                                                             >
                                                                 Удалить опцию
                                                             </div>
                                                             {
-                                                                option.optionVariants.map((variant: ProductCardOptionVariant) => {
+                                                                currentOptionVariants.map((variant: ProductCardOptionVariant) => {
                                                                     return (
                                                                         <div className={s.item_content}
                                                                              style={{marginBottom: '5px'}}
@@ -311,7 +359,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                                                 {variant.name}
                                                                             </div>
                                                                             <img src={RemoveIcon} alt="remove-icon"
-                                                                                 onClick={() => {deleteOptionHandler(option.option.id, variant.id)}}
+                                                                                 onClick={() => {deleteOptionVariantHandler(currentOption.option.id, variant.id)}}
                                                                             />
                                                                         </div>
                                                                     )
@@ -319,26 +367,23 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                             }
                                                         </div>
                                                         <div className={s.rowItems_chooseItem}>
-                                                            <Button buttonDivWrapper={s.options_button}>+</Button>
-                                                            {/*<ControlledSelect control={formControl}*/}
-                                                            {/*                  name={'optionVersion'}*/}
-                                                            {/*                  label={'Разновидность опции'}*/}
-                                                            {/*                  className={s.options_search}*/}
-                                                            {/*                  data={option.optionsArray.map((el: any) => {*/}
-                                                            {/*                      return {*/}
-                                                            {/*                          id: el.id,*/}
-                                                            {/*                          value: el.name ? el.name : 'Нет имени'*/}
-                                                            {/*                      }*/}
-                                                            {/*                  })}*/}
-                                                            {/*/>*/}
-
+                                                            <Button buttonDivWrapper={s.options_button}
+                                                                    onClick={addOptionVariantHandler}
+                                                                    // onClick={() => {console.log(currentOption.optionVariants)}}
+                                                                    disabled={selectedOptionVariant === null}
+                                                            >
+                                                                +
+                                                            </Button>
                                                             <Select
                                                                 className={s.options_search}
-                                                                options={option.optionVariants}
+                                                                options={currentOption.optionVariants}
                                                                 placeholder="Разновидность опции"
-                                                                // isSearchable={true}
+                                                                isSearchable={true}
                                                                 value={selectedOptionVariant}
                                                                 onChange={(value: any) => {setSelectedOptionVariant(value)}}
+                                                                getOptionLabel={label => label!.name}
+                                                                getOptionValue={value => value!.name}
+                                                                noOptionsMessage={() => 'Опция не найдена'}
                                                             />
                                                         </div>
                                                     </div>
@@ -350,9 +395,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {
-                                        console.log(selectedOption)
-                                    }}
+                                    onClick={addOptionListHandler}
+                                    disabled={selectedOption === null}
                             >
                                 +
                             </Button>
@@ -384,9 +428,16 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         <div className={s.productOptions_optionsList}>
                             {
                                 currentSpecifications.length === 0 ?
-                                    <div style={{textAlign: 'center'}}>Добавьте характеристики</div> :
+                                    <div style={{textAlign: 'center'}}>
+                                        Для добавления выберите характеристики
+                                    </div> :
 
                                     currentSpecifications.map((spec: ProductCardUserSpecification) => {
+
+                                        const onChangeTitleHandler = (newInputValue: string) => {
+                                            changeSpecificationTitleHandler(spec.id, newInputValue)
+                                        }
+
                                         return (
                                             <div className={s.optionsList_item}
                                                  key={spec.id}
@@ -401,14 +452,13 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                                 justifyContent: 'space-between'
                                                             }}>
                                                                 <div className={s.item_content}>
-                                                                    {/*Здесь будет редактор текста*/}
-                                                                    <EditableSpan title={currentSpecificationTitle}
-                                                                                  onChangeInput={() => {changeSpecificationTitleHandler(spec)}}
+                                                                    <EditableSpan title={spec.title}
+                                                                                  onChangeInput={onChangeTitleHandler}
                                                                     />
                                                                 </div>
                                                                 <div className={s.item_deleteDetailsItem}>
                                                                     <img src={RemoveIcon} alt="remove-icon"
-                                                                         onClick={() => {deleteSpecHandler(spec)}}
+                                                                         onClick={() => {deleteSpecificationHandler(spec)}}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -423,7 +473,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         {/*<form onSubmit={formControl.handleSubmit(onSubmit)}>*/}
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={addNewSpecification}
+                                    onClick={addSpecificationHandler}
+                                    disabled={selectedSpecification === null}
                             >
                                 +
                             </Button>

@@ -1,10 +1,11 @@
 .editableSpan_input {
-    width: 280px;
-    height: 50px;
-    word-break: break-word;
-    overflow-y: auto;
     display: flex;
     align-items: center;
+    width: 280px;
+    height: 40px;
+    word-break: break-word;
+    overflow-y: auto;
+    font-size: 16px;
 }
 
 .editableSpan_text {

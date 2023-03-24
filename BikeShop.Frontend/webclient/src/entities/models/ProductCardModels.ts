@@ -24,4 +24,5 @@ export interface ProductCardOptionVariant {
 export interface ProductCardUserSpecification {
     id: number
     name: string
+    title: string // ? добавочное поле
 }
