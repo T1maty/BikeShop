@@ -4,8 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
 import {AxiosResponse} from "axios"
 import {
-    ProductCardOption,
-    ProductCardOptionVariant,
+    ProductCardOption, ProductCardOptionVariant,
     ProductCardSpecification, ProductCardUserSpecification
 } from '../../../entities/models/ProductCardModels'
 
@@ -17,8 +16,9 @@ interface EditProductCardModalStore {
 
     cardOptions: ProductCardOption[]
     getCardOptions: () => void
-    currentCardOptions: ProductCardOptionVariant[]
-    setCurrentCardOption: (option: ProductCardOptionVariant) => void
+    currentCardOptions: ProductCardOption[]
+    setCurrentCardOptions: (currentCardOptions: ProductCardOption[]) => void
+    addCurrentCardOption: (option: ProductCardOption) => void
 
     specifications: ProductCardSpecification[]
     getSpecifications: () => void
@@ -45,7 +45,10 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
     currentCardOptions: [],
-    setCurrentCardOption: (option) => set(state => {
+    setCurrentCardOptions: (currentCardOptions) => set(state => {
+        state.currentCardOptions = currentCardOptions
+    }),
+    addCurrentCardOption: (option) => set(state => {
         return {currentCardOptions: [option, ...state.currentCardOptions]}
     }),
 
