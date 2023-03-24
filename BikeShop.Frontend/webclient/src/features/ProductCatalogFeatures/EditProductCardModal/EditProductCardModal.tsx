@@ -97,23 +97,27 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // ----------------------------------- //
 
     // функции для опций
-    const addNewOptionHandler = () => {
+    const addOptionListHandler = () => {
         const newOption = cardOptions.find(el => el.option.id === selectedOption.option.id)
         addCurrentCardOption(newOption!)
     }
 
-    const deleteOptionsListHandler = (optionsItem: ProductCardOption) => {
+    const deleteOptionListHandler = (optionsItem: ProductCardOption) => {
         setCurrentCardOptions(currentCardOptions.filter(el => el.option.id !== optionsItem.option.id))
     }
 
-    const addNewOptionVariantHandler = () => {
-        const newOptionVariant = currentCardOptions.find(el => el.optionVariants.find(variant => variant.id === selectedOptionVariant.id))
-        // @ts-ignore
-        addCurrentOptionVariant(newOptionVariant!)
-        console.log('разновидность', currentCardOptions)
+    const addOptionVariantHandler = () => {
+        // исправить
+        const newOptionVariant = currentCardOptions.find(el => el.optionVariants.find(ov => ov.id === selectedOptionVariant.id))
+        // addCurrentOptionVariant(newOptionVariant!)
+
+        console.log('разновидность опции', currentOptionVariants)
+        console.log('опции', currentCardOptions)
+        console.log('новая опция', newOptionVariant)
 
     }
     const deleteOptionVariantHandler = (optionId: number, variantId: number) => {
+        // исправить
         setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ? {
             ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId)
         } : el))
@@ -122,7 +126,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // ----------------------------------- //
 
     // функции для характеристик
-    const addNewSpecificationHandler = () => {
+    const addSpecificationHandler = () => {
         const newSpecification: ProductCardUserSpecification =
             { id: Date.now(), name: selectedSpecification.name, title: 'Введите текст' }
         addCurrentSpecification(newSpecification)
@@ -131,7 +135,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         // console.log('new spec', newSpecification)
     }
 
-    const deleteSpecHandler = (specItem: ProductCardUserSpecification) => {
+    const deleteSpecificationHandler = (specItem: ProductCardUserSpecification) => {
         setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
         // для тестового варианта (локальный стейт)
         // setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
@@ -318,7 +322,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                     <div className={s.options_rowItems}>
                                                         <div className={s.rowItems_item}>
                                                             <div className={s.item_deleteFullItem}
-                                                                 onClick={() => {deleteOptionsListHandler(currentOption)}}
+                                                                 onClick={() => {deleteOptionListHandler(currentOption)}}
                                                             >
                                                                 Удалить опцию
                                                             </div>
@@ -342,7 +346,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                         </div>
                                                         <div className={s.rowItems_chooseItem}>
                                                             <Button buttonDivWrapper={s.options_button}
-                                                                    onClick={addNewOptionVariantHandler}
+                                                                    onClick={addOptionVariantHandler}
                                                                     // onClick={() => {console.log(currentOption.optionVariants)}}
                                                                     disabled={selectedOptionVariant === null}
                                                             >
@@ -369,7 +373,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={addNewOptionHandler}
+                                    onClick={addOptionListHandler}
                                     disabled={selectedOption === null}
                             >
                                 +
@@ -432,7 +436,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                                 </div>
                                                                 <div className={s.item_deleteDetailsItem}>
                                                                     <img src={RemoveIcon} alt="remove-icon"
-                                                                         onClick={() => {deleteSpecHandler(spec)}}
+                                                                         onClick={() => {deleteSpecificationHandler(spec)}}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -447,7 +451,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         {/*<form onSubmit={formControl.handleSubmit(onSubmit)}>*/}
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={addNewSpecificationHandler}
+                                    onClick={addSpecificationHandler}
                                     disabled={selectedSpecification === null}
                             >
                                 +

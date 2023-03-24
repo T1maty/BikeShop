@@ -19,6 +19,7 @@ interface EditProductCardModalStore {
     currentCardOptions: ProductCardOption[]
     setCurrentCardOptions: (currentCardOptions: ProductCardOption[]) => void
     addCurrentCardOption: (option: ProductCardOption) => void
+
     currentOptionVariants: ProductCardOptionVariant[]
     setCurrentOptionsVariants: (currentOptionVariants: ProductCardOptionVariant[]) => void
     addCurrentOptionVariant: (variant: ProductCardOptionVariant) => void
