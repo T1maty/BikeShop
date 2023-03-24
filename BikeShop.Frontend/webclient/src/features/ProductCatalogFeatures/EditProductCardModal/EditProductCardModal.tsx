@@ -60,7 +60,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // текущие значения селектов
     const [selectedOption, setSelectedOption] = useState<any>(null) // опция
     const [selectedOptionVariant, setSelectedOptionVariant] = useState<any>(null) // разновидность опции
-    const [selectedSpecification, setSelectedSpecification] = useState<any>(null) // характеристика
+    const [selectedSpecification, setSelectedSpecification] = useState<any>(null) // характеристика (spec)
 
     // тестовые данные для характеристик
     // const [currentSpecifications, setCurrentSpecifications] = useState([
@@ -99,28 +99,50 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // функции для опций
     const addOptionListHandler = () => {
         const newOption = cardOptions.find(el => el.option.id === selectedOption.option.id)
-        addCurrentCardOption(newOption!)
+
+        // проверка на повторяемость опций
+        if (currentCardOptions.length < cardOptions.length) {
+            addCurrentCardOption(newOption!)
+        } else {
+            console.log('Превышено количество опций')
+        }
     }
 
     const deleteOptionListHandler = (optionsItem: ProductCardOption) => {
         setCurrentCardOptions(currentCardOptions.filter(el => el.option.id !== optionsItem.option.id))
     }
 
+    // функция для подсчёта длины массива в массиве
+    // const arrayOfLength = (prop: any[]) => {
+    //     let length = prop.map(num => num.length)
+    //     console.log(length)
+    //     return length
+    // }
+    // arrayOfLength(cardOptions.map(el => el.optionVariants))
+
+    // функции для разновидности опций
     const addOptionVariantHandler = () => {
-        // исправить
+        // исправить!!!
         const newOptionVariant = currentCardOptions.find(el => el.optionVariants.find(ov => ov.id === selectedOptionVariant.id))
-        // addCurrentOptionVariant(newOptionVariant!)
 
-        console.log('разновидность опции', currentOptionVariants)
-        console.log('опции', currentCardOptions)
+        // проверка на повторяемость опций
+        // надо поставить динамическое значение длины
+        if (currentOptionVariants.length < 2) {
+            // @ts-ignore
+            addCurrentOptionVariant(newOptionVariant!)
+        } else {
+            console.log('Превышено количество опций')
+        }
+
+        // console.log('выбранные опции', currentCardOptions)
+        // console.log('выбранная разновидность опции', currentOptionVariants)
         console.log('новая опция', newOptionVariant)
-
     }
+
     const deleteOptionVariantHandler = (optionId: number, variantId: number) => {
-        // исправить
-        setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ? {
-            ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId)
-        } : el))
+        // исправить ?
+        setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ?
+            { ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId) } : el))
     }
 
     // ----------------------------------- //

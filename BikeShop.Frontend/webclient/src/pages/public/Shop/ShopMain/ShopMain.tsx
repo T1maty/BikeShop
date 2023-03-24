@@ -88,7 +88,9 @@ export const ShopMain = () => {
                     <div className={s.header_icons}>
                         <div className={s.header_icons_left}>
                             <div><img src={burgerMenu} alt="burger-menu"/></div>
-                            <div><img src={position} alt="position-logo"/></div>
+                            <div onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}>
+                                <img src={position} alt="position-logo"/>
+                            </div>
                         </div>
                         <div className={s.header_icons_right}>
                             {
