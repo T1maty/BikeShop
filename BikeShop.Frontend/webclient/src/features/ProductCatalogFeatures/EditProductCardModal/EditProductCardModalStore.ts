@@ -23,7 +23,8 @@ interface EditProductCardModalStore {
     specifications: ProductCardSpecification[]
     getSpecifications: () => void
     currentSpecifications: ProductCardUserSpecification[]
-    setCurrentSpecifications: (spec: ProductCardUserSpecification) => void
+    setCurrentSpecifications: (currentSpecifications: ProductCardUserSpecification[]) => void
+    addCurrentSpecification: (spec: ProductCardUserSpecification) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -60,8 +61,11 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
     currentSpecifications: [],
-    setCurrentSpecifications: (spec) => set(state => {
-        state.currentSpecifications.push(spec)
+    setCurrentSpecifications: (currentSpecifications) => set(state => {
+        state.currentSpecifications = currentSpecifications
+    }),
+    addCurrentSpecification: (spec) => set(state => {
+        return {currentSpecifications: [spec, ...state.currentSpecifications]}
     }),
 })))/*, {
     name: "editProductCardModal",

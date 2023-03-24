@@ -33,8 +33,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     const specifications = useEditProductCardModal(s => s.specifications)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
-    // const currentSpecifications = useEditProductCardModal(s => s.currentSpecifications)
-    // const setCurrentSpecifications = useEditProductCardModal(s => s.setCurrentSpecifications)
+    const currentSpecifications = useEditProductCardModal(s => s.currentSpecifications)
+    const setCurrentSpecifications = useEditProductCardModal(s => s.setCurrentSpecifications)
+    const addCurrentSpecification = useEditProductCardModal(s => s.addCurrentSpecification)
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
@@ -56,10 +57,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     const [selectedOption, setSelectedOption] = useState<any>(null) // опция
     const [selectedOptionVariant, setSelectedOptionVariant] = useState<any>(null) // разновидность опции
-
     const [selectedSpecification, setSelectedSpecification] = useState<any>(null) // характеристика
 
-    // тестовые данные
+    // тестовые данные для опций
     // const [options, setOptions] = useState<any>([
     //     // {
     //     //     id: '1',
@@ -68,11 +68,11 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     //     // },
     // ])
 
-    // тестовые данные
-    const [currentSpecifications, setCurrentSpecifications] = useState([
-        { id: 150, name: 'New Spec', title: 'Введите текст' },
-        { id: 120, name: 'New Spec2', title: 'Введите текст2' },
-    ])
+    // тестовые данные для характеристик
+    // const [currentSpecifications, setCurrentSpecifications] = useState([
+    //     { id: 150, name: 'New Spec', title: 'Введите текст' },
+    //     { id: 120, name: 'New Spec2', title: 'Введите текст2' },
+    // ])
 
     // ----------------------------------- //
 
@@ -115,21 +115,26 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // ----------------------------------- //
 
     // функции для характеристик
-    const addNewSpecification = () => {
+    const addNewSpecificationHandler = () => {
         const newSpecification: ProductCardUserSpecification =
             { id: Date.now(), name: selectedSpecification.name, title: 'Введите текст' }
-        setCurrentSpecifications([newSpecification, ...currentSpecifications])
-        console.log('new spec', newSpecification)
+        addCurrentSpecification(newSpecification)
+        // для тестового варианта
+        // setCurrentSpecifications([newSpecification, ...currentSpecifications])
+        // console.log('new spec', newSpecification)
     }
 
     const deleteSpecHandler = (specItem: ProductCardUserSpecification) => {
-        setCurrentSpecifications(currentSpecifications.filter((el: ProductCardUserSpecification) => el.id !== specItem.id))
+        setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
+        // setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
     }
 
     const changeSpecificationTitleHandler = (specId: number, newInputValue: string) => {
         setCurrentSpecifications(currentSpecifications.map(spec => spec.id === specId ?
             {...spec, title: newInputValue} : spec))
-        console.log(newInputValue)
+        // setCurrentSpecifications(currentSpecifications.map(spec => spec.id === specId ?
+        //     {...spec, title: newInputValue} : spec))
+        // console.log(newInputValue)
     }
 
     // ----------------------------------- //
@@ -431,7 +436,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         {/*<form onSubmit={formControl.handleSubmit(onSubmit)}>*/}
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={addNewSpecification}
+                                    onClick={addNewSpecificationHandler}
                             >
                                 +
                             </Button>
