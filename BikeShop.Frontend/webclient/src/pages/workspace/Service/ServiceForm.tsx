@@ -27,6 +27,8 @@ const ServiceForm = () => {
 
     const [isCreating, setIsCreating] = useState(false)
     const [openClientModal, setOpenClientModal] = useState(false)
+    const [summProducts, setSummProducts] = useState(0)
+    const [summWorks, setSummWorks] = useState(0)
 
     const formControl = useForm<CreateService>({
         defaultValues: {
@@ -79,6 +81,23 @@ const ServiceForm = () => {
             })
         }
     }
+
+    useEffect(() => {
+        let summ = 0
+        formControl.getValues('serviceWorks').forEach(n => {
+            summ += (n.price * n.quantity)
+        })
+        setSummWorks(summ)
+    }, [formControl.watch('serviceWorks')])
+
+    useEffect(() => {
+        let summ = 0
+        formControl.getValues('serviceProducts').forEach(n => {
+            summ += (n.price * n.quantity)
+        })
+        setSummProducts(summ)
+    }, [formControl.watch('serviceProducts')])
+
 
     // очистка всех данных (кнопка ОТМЕНА)
     const clearAllServiceInfo = () => {
@@ -149,7 +168,7 @@ const ServiceForm = () => {
                                             </Button>
                                 }
                             </div>
-                            <div className={s.content_sumField}>Сумма</div>
+                            <div className={s.content_sumField}>{summWorks + summProducts}</div>
                         </div>
                     </div>
                     <div className={s.infoFields_clientCard}>
@@ -180,6 +199,7 @@ const ServiceForm = () => {
                                               setOpenSelectProductModal(true)
                                           }}
                                           disabledButton={(currentService === null && !isCreating)}
+                                          summ={summProducts}
                             />
                             <SelectProductModal products={field.value}
                                                 setProducts={field.onChange}/>
@@ -197,6 +217,7 @@ const ServiceForm = () => {
                                               setOpenSelectWorkModal(true)
                                           }}
                                           disabledButton={(currentService === null && !isCreating)}
+                                          summ={summWorks}
                             />
                             <SelectWorkModal works={field.value} setWorks={field.onChange}/>
                         </div>

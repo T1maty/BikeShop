@@ -8,14 +8,16 @@ type ServiceTableProps = {
     data: ServiceItemProductWork[] | null
     buttonTitle: string
     serviceTableCallback: () => void
-    disabledButton: boolean
+    disabledButton: boolean,
+    summ: number
 }
 
 export const ServiceTable: React.FC<ServiceTableProps> = ({
                                                               data,
                                                               buttonTitle,
                                                               serviceTableCallback,
-                                                              disabledButton
+                                                              disabledButton,
+                                                              summ
                                                           }) => {
 
     const userClickHandler = () => {
@@ -39,7 +41,7 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
                     </div>
                 </div>
                 <div className={s.buttons_resultField}>
-                    3
+                    {summ}
                 </div>
             </div>
             <div className={s.tableBox_table}>
