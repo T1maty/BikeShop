@@ -14,6 +14,7 @@ interface WorkCatalogStore {
     works: Work[],
     setWorks: (value: Work[]) => void,
     group: WorkGroup[],
+    addGroup: (value: WorkGroup) => void,
     isLoading: boolean,
     currencyId: number | undefined
     getWork: (id: number) => void,
@@ -30,6 +31,10 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
         set({selectedRow: value})
     },
 
+    addGroup: (value) => {
+        set({group: [...get().group, value]})
+
+    },
 
     selected: {} as WorkGroup,
     setSelected: (value) => {

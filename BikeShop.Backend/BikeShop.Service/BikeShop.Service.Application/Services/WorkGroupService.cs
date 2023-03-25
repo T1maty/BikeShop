@@ -77,7 +77,7 @@ namespace BikeShop.Service.Application.Services
             var existingGroup = await GetShopWorkGroupByNameAsync(model.ShopId, model.Name);
 
             // Если да - исключение
-            if (existingGroup is not null) throw Errors.GroupAlreadyExist;
+            if (existingGroup is not null && existingGroup.Name != model.Name) throw Errors.GroupAlreadyExist;
 
 
             // Получаю сущность для обновления

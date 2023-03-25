@@ -5,7 +5,9 @@ import {WorkCatalogTable} from "../../../widgets";
 
 export const WorkCatalog = () => {
     return (
-        <div className={cls.container}>
+        <div className={cls.container} onContextMenu={(event) => {
+            event.preventDefault()
+        }}>
             <div className={cls.categories}>
                 <WorkCatalogTreeView/>
             </div>

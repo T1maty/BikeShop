@@ -34,6 +34,7 @@ export type {UpdateServiceStatus} from './requests/UpdateService'
 export type {CreateWork} from './requests/CreateWork'
 export type {UpdateWork} from './requests/UpdateWork'
 export type {CreateWorkGroup} from './requests/CreateWorkGroup'
+export type {UpdateWorkGroup} from './requests/UpdateWorkGroup'
 
 
 ///////////////////////////////////

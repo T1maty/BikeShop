@@ -78,7 +78,7 @@ export const CreateWorkModal = (props: { visibility: boolean, setVisibility: (va
                                  rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
 
                 <br/>
-                <Button color={'primary'} type={'submit'}>Создать товар</Button>
+                <Button color={'primary'} type={'submit'}>Создать услугу</Button>
                 <Button color={'primary'} onClick={() => {
                     props.setVisibility(false)
                 }}>Отмена</Button>

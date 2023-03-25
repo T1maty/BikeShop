@@ -21,3 +21,4 @@ export {CreateCurrencyModal} from './CRUDModals/CreateCurrencyModal/CreateCurren
 export {CreateQuantityUnitModal} from './CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal'
 
 export {TableProductItem} from './ServiceFeatures/TableProductItem/TableProductItem'
+export {UpdateWorkGroupModal} from './WorkCatalogFeatures/UpdateWorkGroupModal/UpdateWorkGroupModal'

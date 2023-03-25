@@ -1,19 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, Button, Modal} from "@mui/material";
 import {ControlledCheckbox, ControlledInput} from "../../../shared/ui";
 import {useSnackbar} from "notistack";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {CreateWorkGroup, WorkGroup} from "../../../entities";
-import {$api} from "../../../shared";
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {UpdateWorkGroup, WorkGroup} from "../../../entities";
+import {$api} from "../../../shared";
 
-const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (value: boolean) => void, parent: WorkGroup }) => {
+export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void, target: WorkGroup }) => {
 
     const {enqueueSnackbar} = useSnackbar()
-    const {addGroup} = useWorkCatalog(s => s)
+    const {getGroup} = useWorkCatalog(s => s)
 
-    const formControl = useForm<CreateWorkGroup>({
+    useEffect(() => {
+        formControl.setValue('name', props.target.name)
+        formControl.setValue('isCollapsed', props.target.isCollapsed)
+
+    }, [props.target])
+
+    const formControl = useForm<UpdateWorkGroup>({
         defaultValues: {
+            id: 0,
             name: '',
             parentId: 0,
             shopId: 1,
@@ -35,15 +42,17 @@ const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (valu
         color: 'white'
     };
 
-    const onSubmit: SubmitHandler<CreateWorkGroup> = (data: CreateWorkGroup) => {
-        data.parentId = props.parent.id
+    const onSubmit: SubmitHandler<UpdateWorkGroup> = (data: UpdateWorkGroup) => {
+        data.parentId = props.target.parentId
+        data.id = props.target.id
+        data.shopId = props.target.shopId
         console.log('submitData', data)
 
-        $api.post<WorkGroup>('/group/create', data).then((r) => {
+        $api.put<WorkGroup>('/group/update', data).then((r) => {
             formControl.reset()
             props.setVisibility(false)
-            addGroup(r.data)
-            enqueueSnackbar('Группа создана', {variant: 'success', autoHideDuration: 10000})
+            getGroup()
+            enqueueSnackbar('Группа обновленна', {variant: 'success', autoHideDuration: 10000})
         }).catch((r) => {
             console.log(r)
             enqueueSnackbar('Ошибка создания', {variant: 'error', autoHideDuration: 10000})
@@ -65,7 +74,7 @@ const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (valu
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
 
                 <div>
-                    {props.parent.name != undefined ? 'Создаем потомка для ' + props.parent.name : "Создаем в корне"}
+                    {"Обновляем группу: " + props.target.name}
                 </div>
                 <ControlledInput name={"name"} label={"Название группы"} control={formControl}
                                  rules={{required: "Обязательное поле"}}/>
@@ -73,7 +82,7 @@ const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (valu
                 <ControlledCheckbox name={"isCollapsed"} label={"Свернут по умолчанию"} control={formControl}/>
 
                 <br/>
-                <Button color={'primary'} type={'submit'}>Создать группу</Button>
+                <Button color={'primary'} type={'submit'}>Обновить группу</Button>
                 <Button color={'primary'} onClick={() => {
                     props.setVisibility(false)
                 }}>Отмена</Button>
@@ -81,5 +90,3 @@ const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (valu
         </Modal>
     );
 };
-
-export default CreateWorkModalGroup;

@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import cls from './CustomTagTreeView.module.scss'
 
 interface UniTreeView {
@@ -17,24 +17,17 @@ export const UniTreeView = memo((props: UniTreeView) => {
     const {data, selected, setSelected, onNodeContext, onNodeClick} = props
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
 
-    const [state, setState] = useState({
-        isOpen: false,
-        left: 0,
-        top: 0,
-        data: [],
-        variant: ''
-    })
+    useEffect(() => {
+        let exp: number[] = []
 
-    const onOpenHandler = useCallback((left: number, top: number, data: []) => {
-        setState({...state, isOpen: true, left, top, data})
-    }, [])
+        data.forEach((item: any) => {
+            if (!item.isCollapsed) {
+                exp.push(item.id)
+            }
+        });
 
-    const onCloseHandler = useCallback((variant?: string) => {
-        setState({...state, isOpen: false})
-        if (variant !== undefined) {
-            const {children, ...data}: any = state.data
-        }
-    }, [state])
+        setExpandedItems(exp)
+    }, [data])
 
     const handleExpand = (id: number) => {
         setExpandedItems([...expandedItems, id]);
@@ -57,6 +50,7 @@ export const UniTreeView = memo((props: UniTreeView) => {
                 tree.push(item);
             }
         });
+
         return tree;
     }
 
