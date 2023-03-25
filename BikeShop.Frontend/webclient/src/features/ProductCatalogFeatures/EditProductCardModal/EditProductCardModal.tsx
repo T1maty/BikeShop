@@ -39,21 +39,25 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const setCurrentSpecifications = useEditProductCardModal(s => s.setCurrentSpecifications)
     const addCurrentSpecification = useEditProductCardModal(s => s.addCurrentSpecification)
 
+    const galleryImages = useEditProductCardModal(s => s.galleryImages)
+    const setGalleryImages = useEditProductCardModal(s => s.setGalleryImages)
+    const uploadNewImage = useEditProductCardModal(s => s.uploadNewImage)
+
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
-    const [galleryImages, setGalleryImages] = useState([
-        {id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
-        {id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
-        {id: '3', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
-        {id: '4', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
-        {id: '5', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
-        {id: '6', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
-        {id: '7', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
-        {id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
-        {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
-    ])
+    // const [galleryImages, setGalleryImages] = useState([
+    //     {id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+    //     {id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+    //     {id: '3', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+    //     {id: '4', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+    //     {id: '5', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+    //     {id: '6', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+    //     {id: '7', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+    //     {id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+    //     {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+    // ])
 
     // ----------------------------------- //
 
@@ -116,36 +120,40 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
             console.log('Превышено количество опций')
         }
     }
-    console.log('текущие опции', currentCardOptions)
+    // console.log('текущие опции', currentCardOptions)
 
     const deleteOptionListHandler = (optionsItem: ProductCardOption) => {
         setCurrentCardOptions(currentCardOptions.filter(el => el.option.id !== optionsItem.option.id))
     }
 
     // функции для разновидности опций
-    const addOptionVariantHandler = () => {
-        // const newOptionVariant = currentCardOptions.find(el => el.optionVariants
-        //     .find(ov => ov.id === selectedOptionVariant.id))
-
+    const addOptionVariantHandler = (optionListId: number) => {
         // проверка на повторяемость опций
         // надо поставить динамическое значение длины
         if (currentOptionVariants.length < 2) {
+            // исправить
             addCurrentOptionVariant(selectedOptionVariant)
+
+            // const newOptionVariant = currentCardOptions.find(el => el.optionVariants
+            //     .find(ov => ov.id === selectedOptionVariant.id))
+
+            // currentCardOptions.map(el => el.option.id === selectedSpecification.optionId ?
+            //     .find(ov => ov.id === selectedOptionVariant.id))
+
             setSelectedOptionVariant(null)
         } else {
             console.log('Превышено количество опций')
         }
     }
-    console.log('выбранные опции - variant', selectedOptionVariant)
-    console.log('текущие variant', currentOptionVariants)
+    // console.log('выбранная опция - variant', selectedOptionVariant)
+    // console.log('текущие variant', currentOptionVariants)
 
     const deleteOptionVariantHandler = (optionId: number, variantId: number) => {
-        // исправить ?!
+        // исправить
+        setCurrentOptionsVariants(currentOptionVariants.filter(el => el.id !== variantId))
+
         // setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ?
         //     { ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId) } : el))
-
-        setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ?
-            { ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId) } : el))
     }
 
     // ----------------------------------- //
@@ -170,14 +178,15 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // ----------------------------------- //
 
     // загрузка изображения
-    const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
             const file = e.target.files[0]
             console.log('file: ', file)
 
             // перепроверить максимальный размер файла
-            if (file.size < 4000000) {
+            if (file.size < 7000000) {
                 convertFileToBase64(file, (file64: string) => {
+                    uploadNewImage(file64) // запрос на загрузку
                     console.log('file64: ', file64)
                 })
             } else {
@@ -187,7 +196,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     }
 
     const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.onloadend = () => {
             const file64 = reader.result as string
             callBack(file64)
@@ -296,7 +305,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             <div className={s.imageGallery_addImage}>
                                 <input type="file" id="file"
                                        accept="image/png, image/jpeg"
-                                       onChange={uploadHandler}
+                                       onChange={uploadImageHandler}
                                        className={s.inputFile}
                                 />
                             </div>
@@ -363,8 +372,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                         </div>
                                                         <div className={s.rowItems_chooseItem}>
                                                             <Button buttonDivWrapper={s.options_button}
-                                                                    onClick={addOptionVariantHandler}
-                                                                    // onClick={() => {console.log(currentOption.optionVariants)}}
+                                                                    onClick={() => {addOptionVariantHandler(currentOption.option.id)}}
                                                                     disabled={selectedOptionVariant === null}
                                                             >
                                                                 +
@@ -391,7 +399,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
                                     onClick={addOptionListHandler}
-                                    disabled={selectedOption === null}
+                                    disabled={selectedOption === null ||
+                                        currentCardOptions.length === cardOptions.length}
                             >
                                 +
                             </Button>

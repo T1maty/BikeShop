@@ -4,6 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
 import {AxiosResponse} from "axios"
 import {
+    ProductCardImage,
     ProductCardOption, ProductCardOptionVariant,
     ProductCardSpecification, ProductCardUserSpecification
 } from '../../../entities/models/ProductCardModels'
@@ -29,6 +30,10 @@ interface EditProductCardModalStore {
     currentSpecifications: ProductCardUserSpecification[]
     setCurrentSpecifications: (currentSpecifications: ProductCardUserSpecification[]) => void
     addCurrentSpecification: (spec: ProductCardUserSpecification) => void
+
+    galleryImages: ProductCardImage[]
+    setGalleryImages: (image: any) => void
+    uploadNewImage: (data: any) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -81,6 +86,21 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     addCurrentSpecification: (spec) => set(state => {
         return {currentSpecifications: [spec, ...state.currentSpecifications]}
     }),
+
+    galleryImages: [],
+    setGalleryImages: (image) => set(state => {
+        return {galleryImages: [image, ...state.galleryImages]}
+    }),
+    uploadNewImage: (data) => {
+        // set({isLoading: true})
+        const productId = 1
+        return $api.post(`/product/addimagetoproduct?productId=${productId}`, data).then(res => {
+            set(state => {state.galleryImages.push(res.data)})
+            // set({isLoading: false})
+        }).catch((error: any) => {
+            console.log('изорабражение не загружено', error)
+        })
+    },
 })))/*, {
     name: "editProductCardModal",
     version: 1
