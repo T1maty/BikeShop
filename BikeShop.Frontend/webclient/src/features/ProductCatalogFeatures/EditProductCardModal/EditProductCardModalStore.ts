@@ -42,7 +42,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         return $api.get<ProductCardOption[]>('/productcard/getalloptions').then(res => {
             set(state => {
                 state.cardOptions = res.data
-                console.log('все опции', state.cardOptions)
+                console.log('все доступные опции', state.cardOptions)
             })
         }).catch((error: any) => {
             console.log('опции не получены')
@@ -68,7 +68,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         return $api.get<ProductCardSpecification[]>('/productcard/getallspecifications').then(res => {
             set(state => {
                 state.specifications = res.data
-                console.log('все спецификации', state.specifications)
+                console.log('все доступные спецификации', state.specifications)
             })
         }).catch((error: any) => {
             console.log('спецификации не получены')

@@ -96,6 +96,14 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     // ----------------------------------- //
 
+    // функция для подсчёта длины массива в массиве
+    // const arrayOfLength = (array: any[]) => {
+    //     let length = array.map(num => num.length)
+    //     // console.log(length)
+    //     return length
+    // }
+    // arrayOfLength(cardOptions.map(el => el.optionVariants))
+
     // функции для опций
     const addOptionListHandler = () => {
         const newOption = cardOptions.find(el => el.option.id === selectedOption.option.id)
@@ -103,44 +111,39 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         // проверка на повторяемость опций
         if (currentCardOptions.length < cardOptions.length) {
             addCurrentCardOption(newOption!)
+            setSelectedOption(null)
         } else {
             console.log('Превышено количество опций')
         }
     }
+    console.log('текущие опции', currentCardOptions)
 
     const deleteOptionListHandler = (optionsItem: ProductCardOption) => {
         setCurrentCardOptions(currentCardOptions.filter(el => el.option.id !== optionsItem.option.id))
     }
 
-    // функция для подсчёта длины массива в массиве
-    // const arrayOfLength = (prop: any[]) => {
-    //     let length = prop.map(num => num.length)
-    //     console.log(length)
-    //     return length
-    // }
-    // arrayOfLength(cardOptions.map(el => el.optionVariants))
-
     // функции для разновидности опций
     const addOptionVariantHandler = () => {
-        // исправить!!!
-        const newOptionVariant = currentCardOptions.find(el => el.optionVariants.find(ov => ov.id === selectedOptionVariant.id))
+        // const newOptionVariant = currentCardOptions.find(el => el.optionVariants
+        //     .find(ov => ov.id === selectedOptionVariant.id))
 
         // проверка на повторяемость опций
         // надо поставить динамическое значение длины
         if (currentOptionVariants.length < 2) {
-            // @ts-ignore
-            addCurrentOptionVariant(newOptionVariant!)
+            addCurrentOptionVariant(selectedOptionVariant)
+            setSelectedOptionVariant(null)
         } else {
             console.log('Превышено количество опций')
         }
-
-        // console.log('выбранные опции', currentCardOptions)
-        // console.log('выбранная разновидность опции', currentOptionVariants)
-        console.log('новая опция', newOptionVariant)
     }
+    console.log('выбранные опции - variant', selectedOptionVariant)
+    console.log('текущие variant', currentOptionVariants)
 
     const deleteOptionVariantHandler = (optionId: number, variantId: number) => {
-        // исправить ?
+        // исправить ?!
+        // setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ?
+        //     { ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId) } : el))
+
         setCurrentCardOptions(currentCardOptions.map(el => el.option.id === optionId ?
             { ...el, optionVariants: el.optionVariants.filter(variant => variant.id !== variantId) } : el))
     }
@@ -152,24 +155,16 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         const newSpecification: ProductCardUserSpecification =
             { id: Date.now(), name: selectedSpecification.name, title: 'Введите текст' }
         addCurrentSpecification(newSpecification)
-        // для тестового варианта (локальный стейт)
-        // setCurrentSpecifications([newSpecification, ...currentSpecifications])
-        // console.log('new spec', newSpecification)
+        setSelectedSpecification(null)
     }
 
     const deleteSpecificationHandler = (specItem: ProductCardUserSpecification) => {
         setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
-        // для тестового варианта (локальный стейт)
-        // setCurrentSpecifications(currentSpecifications.filter(el => el.id !== specItem.id))
     }
 
     const changeSpecificationTitleHandler = (specId: number, newInputValue: string) => {
         setCurrentSpecifications(currentSpecifications.map(spec => spec.id === specId ?
             {...spec, title: newInputValue} : spec))
-        // для тестового варианта (локальный стейт)
-        // setCurrentSpecifications(currentSpecifications.map(spec => spec.id === specId ?
-        //     {...spec, title: newInputValue} : spec))
-        // console.log(newInputValue)
     }
 
     // ----------------------------------- //
@@ -496,8 +491,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             {/*    isSearchable={true}*/}
                             {/*    value={selectedSpecification}*/}
                             {/*    onChange={(value: any) => {setSelectedSpecification(value)}}*/}
-                            {/*    getOptionLabel={label => label.name}*/}
-                            {/*    getOptionValue={value => value.name}*/}
+                            {/*    getOptionLabel={label => label!.name}*/}
+                            {/*    getOptionValue={value => value!.name}*/}
                             {/*/>*/}
                         </div>
                         {/*</form>*/}
