@@ -40,7 +40,7 @@ namespace BikeShop.Products.Application.Services
             await _context.OptionVariants.AddRangeAsync(variants);
             await _context.SaveChangesAsync(new CancellationToken());
 
-            return new OptionDTO { option = option, optionVariants = variants };
+            return new OptionDTO { Name = option.Name, Id = option.Id, CreatedAt = option.CreatedAt, Enabled = option.Enabled, UpdatedAt = option.UpdatedAt, optionVariants = variants };
         }
 
         public async Task<Specification> CreateSpecification(string name)
@@ -60,7 +60,7 @@ namespace BikeShop.Products.Application.Services
 
             foreach (var option in options)
             {
-                dto.Add(new OptionDTO { option = option, optionVariants = optionVariants.Where(n=>n.OptionId == option.Id).ToList() });
+                dto.Add(new OptionDTO { Name = option.Name, Id = option.Id, CreatedAt = option.CreatedAt, Enabled = option.Enabled, UpdatedAt = option.UpdatedAt, optionVariants = optionVariants.Where(n=>n.OptionId == option.Id).ToList() });
             }
 
             return dto;
@@ -111,7 +111,7 @@ namespace BikeShop.Products.Application.Services
             _context.OptionVariants.RemoveRange(variants.Select(n => n.Value));
             await _context.SaveChangesAsync(new CancellationToken());
 
-            return new OptionDTO { option = ent, optionVariants = list };
+            return new OptionDTO { Name = ent.Name, Id = ent.Id, CreatedAt = ent.CreatedAt, Enabled = ent.Enabled, UpdatedAt = ent.UpdatedAt, optionVariants = list };
         }
 
         public async Task<ProductCardDTO> UpdateProductCard(UpdateProductCardDTO dto)

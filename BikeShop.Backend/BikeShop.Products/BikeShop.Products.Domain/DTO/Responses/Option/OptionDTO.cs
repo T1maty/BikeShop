@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Products.Domain.DTO.Responses.Option
 {
-    public class OptionDTO
+    public class OptionDTO : BaseEntity
     {
-        public Entities.Option option { get; set; }
+        public string Name { get; set; }
         public List<OptionVariant> optionVariants { get; set; }
     }
 }
