@@ -1,7 +1,6 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {AxiosResponse} from "axios";
 import {$api} from "shared";
 import {IProductExtended, IUpdateProduct} from "../../../../entities";
 
@@ -12,6 +11,7 @@ interface productCatalogTableStore {
     open: boolean
     page: number
     rows: IProductExtended[]
+    isLoading: boolean
 
     setOpen: (value: boolean, X: number, Y: number) => void
     addNewProduct: (product: IProductExtended) => void
@@ -21,7 +21,7 @@ interface productCatalogTableStore {
     isRowSelected: (id: number) => boolean
     setPage: (value: number) => void
     setRows: (data: IProductExtended[]) => void
-    getProducts: (tags: string[]) => Promise<AxiosResponse<IProductExtended[]>>
+    getProducts: (tags: string[]) => void
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
@@ -31,6 +31,7 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     rows: [],
     open: false,
     page: 0,
+    isLoading: false,
 
     setRows: (data) => {
         set({rows: data})
@@ -66,7 +67,11 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
             value = value.concat(n + '-')
         })
         value = value.slice(0, -1)
-        return $api.get<IProductExtended[]>('/product/getbytags/' + value + '?storageId=1')
+        set({isLoading: true})
+        $api.get<IProductExtended[]>('/product/getbytags/' + value + '?storageId=1').then((r) => {
+            set({rows: r.data})
+            set({isLoading: false})
+        })
     },
     updateRow: (rowData) => {
         set(state => {

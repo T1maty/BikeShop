@@ -20,6 +20,7 @@ export const ProductCatalogTable = (props: props) => {
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
+    const isLoading = useProductCatalogTableStore(s => s.isLoading)
 
     const createProductSuccessHandler = (product: IProduct) => {
         let extProd: IProductExtended;
@@ -53,6 +54,7 @@ export const ProductCatalogTable = (props: props) => {
                           rowOnContext={(row, event) => {
                               setContextVisible(true, event.clientX, event.clientY)
                           }}
+                          isLoading={isLoading}
                 />
             </div>
         </>
