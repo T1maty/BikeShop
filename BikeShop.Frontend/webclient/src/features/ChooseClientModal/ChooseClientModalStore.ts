@@ -4,7 +4,12 @@ import {immer} from "zustand/middleware/immer"
 import {$api} from "../../shared"
 import {AxiosResponse} from "axios"
 import {CreateUser, User} from '../../entities'
-import {ChooseClientAPI, SearchClient} from "../../entities/api/ChooseClientAPI"
+import {AuthAPI} from "../../entities/api/AuthAPI"
+
+export interface SearchClient {
+    fio: string
+    phoneNumber: string
+}
 
 interface ChooseClientModalStore {
     openClientModal: boolean
@@ -16,7 +21,7 @@ interface ChooseClientModalStore {
     phoneNumber: string
     setFIO: (value: string) => void
     setPhoneNumber: (value: string) => void
-    findUser: (data: SearchClient) => any // исправить тип
+    findUser: (data: SearchClient) => any
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
 
@@ -32,9 +37,9 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
     phoneNumber: '',
     setPhoneNumber: (value) => set({phoneNumber: value}),
 
-    findUser: (data: SearchClient) => {
+    findUser: (data) => {
         set({isLoading: true})
-        ChooseClientAPI.findUser(data)
+        AuthAPI.User.findUser(data)
             .then((res: any) => {
             set(state => {state.users = [...res.data.users]})
             set({isLoading: false})

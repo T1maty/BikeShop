@@ -5,6 +5,7 @@ import {$api} from "../../../shared";
 import {AxiosResponse} from "axios";
 import {CreateStorageResponse} from '../../../entities/responses/StorageResponse';
 import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage';
+import {EntitiesAPI} from "../../../entities/api/EntitiesAPI";
 
 interface CreateStorageModalStore {
     openCreateStorageModal: boolean
@@ -32,7 +33,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     },
     storages: [],
     getStorages: () => {
-        return $api.get<CreateStorageResponse[]>('/storagecrud/getall').then(res => {
+        EntitiesAPI.Storage.getStorages().then(res => {
             set(state => {
                 state.storages = res.data
                 console.log('все склады', state.storages)
@@ -42,7 +43,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
         })
     },
     addNewStorage: (data) => {
-        return $api.post('/storagecrud/create', data).then(res => {
+        EntitiesAPI.Storage.addNewStorage(data).then((res: any) => {
             // set(state => {
             //     state.storages.push(res.data)
             // })
@@ -51,7 +52,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
         })
     },
     updateStorageInfo: (updateData) => {
-        return $api.post('/storagecrud/update', updateData).then(res => {
+        EntitiesAPI.Storage.updateStorageInfo(updateData).then((res: any) => {
             // set(state => {
             //     state.storages.push(res.data)
             // })

@@ -2,8 +2,8 @@ import {create} from "zustand"
 import {immer} from "zustand/middleware/immer"
 import {devtools, persist} from "zustand/middleware"
 import {LoginData, LoginResponse, RegistrationData, Shop, User} from "../../entities"
-import {$api} from "../../shared"
 import {AxiosResponse} from "axios"
+import {AuthAPI} from "../../entities/api/AuthAPI"
 
 
 interface authState {
@@ -13,10 +13,9 @@ interface authState {
     setShop: (shop: Shop) => void
 
     login: (loginData: LoginData) => Promise<AxiosResponse<LoginResponse>>
+    logout: () => void
     register: (data: RegistrationData) => Promise<AxiosResponse>
     loginToShop: (shopId: number) => void
-
-    logout: () => void
 }
 
 const useAuth = create<authState>()(persist(devtools(immer((set) => ({
@@ -25,29 +24,25 @@ const useAuth = create<authState>()(persist(devtools(immer((set) => ({
     setShop: (shop) => set({shop: shop}),
 
     login: (loginData) => {
-        return $api.post<LoginResponse>("/auth/login", loginData)
+        return AuthAPI.Login.login(loginData)
     },
-
-    register: (data) => {
-        return $api.post('auth/register', data)
-    },
-
     logout: () => set(state => {
         state.user = {} as User
         state.shop = {} as Shop
-        $api.post('auth/logout').then(res => {})
+        AuthAPI.Login.logout().then((res: any) => {})
         localStorage.removeItem('accessToken')
     }),
+    register: (data) => {
+        return AuthAPI.Login.register(data)
+    },
 
     loginToShop: (shopId) => {
-        $api.get<Shop[]>('shop/getall').then((r) => {
-            let shop = r.data.filter(n => n.id === shopId)[0];
+        AuthAPI.Login.loginToShop(shopId).then((r: any) => {
+            let shop = r.data.filter((n: any) => n.id === shopId)[0]
+            set(state => {state.shop = shop})
             console.log(shop)
-            set(state => {
-                state.shop = shop
-            });
         })
-    }
+    },
 
 }))), {name: "useAuthUser", version: 1}));
 

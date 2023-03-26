@@ -4,7 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
 import {AxiosResponse} from "axios"
 import {CreateQuantityUnit, GetQuantityUnitResponse, UpdateQuantityUnit} from "../../../entities"
-import {QuantityUnitAPI} from "../../../entities/api/QuantityUnit";
+import {EntitiesAPI} from "../../../entities/api/EntitiesAPI"
 
 interface CreateQuantityUnitModalStore {
     openQuantityUnitModal: boolean
@@ -33,7 +33,7 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
     },
     quantityUnits: [],
     getQuantityUnits: () => {
-        QuantityUnitAPI.getQuantityUnits().then(res => {
+        EntitiesAPI.QuantityUnit.getQuantityUnits().then(res => {
             set(state => {
                 state.quantityUnits = res.data
                 console.log('все ед.измерения', state.quantityUnits)
@@ -43,7 +43,7 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
         })
     },
     addQuantityUnit: (data) => {
-        QuantityUnitAPI.addQuantityUnit(data).then((res: any) => {
+        EntitiesAPI.QuantityUnit.addQuantityUnit(data).then((res: any) => {
             set(state => {
                 state.quantityUnits.push(res.data)
             })
@@ -52,7 +52,7 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
         })
     },
     updateQuantityUnit: (updateData) => {
-        QuantityUnitAPI.updateQuantityUnit(updateData).then((res: any) => {
+        EntitiesAPI.QuantityUnit.updateQuantityUnit(updateData).then((res: any) => {
             //
         }).catch((error: any) => {
             console.log('ед.измерения не обновлена', error)

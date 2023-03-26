@@ -5,6 +5,7 @@ import {$api} from "../../../shared"
 import {AxiosResponse} from "axios"
 import {CreateShop, UpdateShop} from '../../../entities'
 import {CreateShopResponse} from "../../../entities/responses/ShopResponse"
+import {EntitiesAPI} from "../../../entities/api/EntitiesAPI"
 
 interface CreateShopModalStore {
     openCreateShopModal: boolean
@@ -32,7 +33,7 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
     },
     shops: [],
     getShops: () => {
-        return $api.get<CreateShopResponse[]>('/shop/getall').then(res => {
+        EntitiesAPI.Shop.getShops().then(res => {
             set(state => {
                 state.shops = res.data
                 console.log('все магазины', state.shops)
@@ -42,7 +43,7 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
         })
     },
     addNewShop: (data) => {
-        return $api.post('/shop/create', data).then(res => {
+        EntitiesAPI.Shop.addNewShop(data).then((res: any) => {
             // set(state => {
             //     state.shops.push(res.data)
             // })
@@ -51,7 +52,7 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
         })
     },
     updateShopInfo: (updateData) => {
-        return $api.put('/shop/update', updateData).then(res => {
+        EntitiesAPI.Shop.updateShopInfo(updateData).then((res: any) => {
             // set(state => {
             //     state.shops.push(res.data)
             // })

@@ -3,8 +3,7 @@ import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
 import {AxiosResponse} from 'axios'
 import {CreateServiceResponse, ServiceItem} from "../../entities"
-import {$api} from "../../shared"
-import {ArchiveAPI} from "../../entities/api/ArchiveAPI"
+import {EntitiesAPI} from "../../entities/api/EntitiesAPI"
 
 interface ArchiveModalStore {
     openArchiveModal: boolean
@@ -35,7 +34,7 @@ const useArchiveModal = create<ArchiveModalStore>()(/*persist(*/devtools(immer((
 
     getAllServicesInfo: () => {
         set({isLoading: true});
-        return ArchiveAPI.getAllServicesInfo().then(res => {
+        return EntitiesAPI.Archive.getAllServicesInfo().then(res => {
             set(state => {
                 state.services = res.data
                 state.filteredServices = res.data

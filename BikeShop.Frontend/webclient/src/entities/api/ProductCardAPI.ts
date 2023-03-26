@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios"
-import { $api } from "shared"
+import {$api} from "shared"
 import {ProductOption, ProductSpecification} from "../index"
 
 export const ProductCardAPI = {
