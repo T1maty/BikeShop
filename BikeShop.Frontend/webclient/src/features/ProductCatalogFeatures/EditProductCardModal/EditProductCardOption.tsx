@@ -107,14 +107,14 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                         let options = field.value.map((n: ProductOption) => n.id === option.id ?
                                                                             {
                                                                                 ...n,
-                                                                                optionVariants: n.optionVariants != undefined ? [...n.optionVariants, selectedOptionVariant] : [selectedOptionVariant]
+                                                                                optionVariants: n.optionVariants != undefined ? [...n.optionVariants, selectedOptionVariant[option.id]] : [selectedOptionVariant[option.id]]
                                                                             }
                                                                             :
                                                                             n)
                                                                         field.onChange(options)
                                                                         setSelectedOptionVariant([])
                                                                     }}
-                                                                    disabled={selectedOptionVariant === null}
+                                                                    disabled={selectedOptionVariant[option.id] === null}
                                                             >
                                                                 +
                                                             </Button>
