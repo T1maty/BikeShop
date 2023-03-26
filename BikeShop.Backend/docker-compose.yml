@@ -46,7 +46,7 @@ services:
     restart: on-failure  
     
     bikeshop.fileservice:
-    container_name: bikeshop-shop
+    container_name: bikeshop-fileservice
     build:
       context: BikeShop.FileService
       dockerfile: Dockerfile
