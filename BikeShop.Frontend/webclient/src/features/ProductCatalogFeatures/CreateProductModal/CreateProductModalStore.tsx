@@ -1,9 +1,9 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {CreateProduct, Product, ProductTag} from "../../../entities";
-import {AxiosResponse} from "axios";
-import {$api} from "../../../shared";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {CreateProduct, Product, ProductTag} from "../../../entities"
+import {AxiosResponse} from "axios"
+import {CatalogAPI} from '../../../entities/api/CatalogAPI'
 
 interface createProductModalStore {
     open: boolean
@@ -25,7 +25,7 @@ const useCreateProductModal = create<createProductModalStore>()(persist(devtools
         set({tags: [tag]})
     },
     create: (data) => {
-        return $api.post<Product>('/product/create', data)
+        return CatalogAPI.createProduct(data).then()
     }
 }))), {
     name: "creatProductModalStore",

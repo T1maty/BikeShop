@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {Product, UpdateProduct} from "../../../entities"
 import {AxiosResponse} from "axios"
-import {$api} from "../../../shared"
+import {CatalogAPI} from '../../../entities/api/CatalogAPI'
 
 interface createProductModalStore {
     open: boolean
@@ -20,7 +20,7 @@ const useUpdateProductModal = create<createProductModalStore>()(persist(devtools
     },
     product: {} as Product,
     update: (data) => {
-        return $api.put<UpdateProduct>('/product/update', data)
+        return CatalogAPI.updateProduct(data).then()
     }
 }))), {
     name: "creatUpdateModalStore",

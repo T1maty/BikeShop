@@ -1,9 +1,9 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {CreateTag, ProductTag} from "../../../entities";
-import {AxiosResponse} from 'axios';
-import {$api} from "../../../shared";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {CreateTag, ProductTag} from "../../../entities"
+import {AxiosResponse} from 'axios'
+import {CatalogAPI} from '../../../entities/api/CatalogAPI'
 
 interface createTagModalStore {
     openCreateTagModal: boolean
@@ -23,11 +23,11 @@ const useCreateTagModal = create<createTagModalStore>()(persist(devtools(immer((
     setParentNode: (node) => set({parentNode: node}),
 
     createTag: (tag) => {
-        return $api.post<ProductTag>('/tag/create', tag)
+        return CatalogAPI.createProductTag(tag).then()
     }
 }))), {
     name: "createTagModalStore",
     version: 1
 }));
 
-export default useCreateTagModal
+export default useCreateTagModal;
