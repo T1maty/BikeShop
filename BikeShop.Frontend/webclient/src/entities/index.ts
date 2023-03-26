@@ -13,9 +13,9 @@ export type {ServiceItem} from './models/ServiceItem'
 export type {IProductExtended} from './models/IProductExtended'
 export type {Work} from './models/Work'
 export type {WorkGroup} from './models/WorkGroup'
-export type {ProductOption} from './models/ProductOption'
-export type {ProductOptionVariant} from './models/ProductOptionVariant'
-export type {ProductSpecification} from './models/ProductSpecification'
+// export type {ProductOption} from '../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOption'
+// export type {ProductOptionVariant} from '../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionVariant'
+// export type {ProductSpecification} from '../features/ProductCatalogFeatures/EditProductCardModal/models/ProductSpecification'
 
 
 ///////////////////////////////////
@@ -38,7 +38,7 @@ export type {CreateWork} from './requests/CreateWork'
 export type {UpdateWork} from './requests/UpdateWork'
 export type {CreateWorkGroup} from './requests/CreateWorkGroup'
 export type {UpdateWorkGroup} from './requests/UpdateWorkGroup'
-export type {UpdateProductCard} from './requests/UpdateProductCard'
+// export type {UpdateProductCard} from '../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCard'
 
 
 ///////////////////////////////////

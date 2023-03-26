@@ -3,7 +3,7 @@ import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widget
 import {Button, InputUI} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
-    from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
+    from "../../../features/ProductCatalogFeatures/EditProductCardModal/store/EditProductCardModalStore"
 
 export const ProductCatalog = () => {
 

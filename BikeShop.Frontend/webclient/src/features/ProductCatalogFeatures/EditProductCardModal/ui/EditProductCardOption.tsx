@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import s from "./EditProductCardModal.module.scss";
-import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg";
-import {Button} from "../../../shared/ui";
-import Select from "react-select";
-import useEditProductCardModal from "./EditProductCardModalStore";
-import {Controller, UseFormReturn} from "react-hook-form";
-import {ProductOption, ProductOptionVariant} from "../../../entities";
+import React, {useState} from 'react'
+import s from "./EditProductCardModal.module.scss"
+import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
+import {Button} from "../../../../shared/ui"
+import Select from "react-select"
+import useEditProductCardModal from "../store/EditProductCardModalStore"
+import {Controller, UseFormReturn} from "react-hook-form"
+import {ProductOption} from "../models/ProductOption"
+import {ProductOptionVariant} from "../models/ProductOptionVariant"
 
 interface ControlledProps {
     name: string
@@ -14,17 +15,16 @@ interface ControlledProps {
     disabled?: boolean
 }
 
-const EditProductCardOption = (props: ControlledProps) => {
+export const EditProductCardOption = (props: ControlledProps) => {
 
     const cardOptions = useEditProductCardModal(s => s.cardOptions)
     const currentCardOptions = useEditProductCardModal(s => s.currentCardOptions)
-
 
     // текущие значения селектов
     const [selectedOption, setSelectedOption] = useState<any>(null) // опция
     const [selectedOptionVariant, setSelectedOptionVariant] = useState<any[]>(new Array(100)) // разновидность опции
 
-    const avableOptions = (field: any) => {
+    const availableOptions = (field: any) => {
         let optionIds: number[] = []
 
         field.value.forEach((n: ProductOption) => {
@@ -40,7 +40,9 @@ const EditProductCardOption = (props: ControlledProps) => {
                 name={props.name}
                 control={props.control.control}
                 render={({field}: any) =>
-                    <div className={s.rightSide_productOptions}>
+
+                    // <div className={s.rightSide_productOptions}>
+                    <>
                         <div className={s.productOptions_optionsList}>
                             {
                                 field.value.length === 0 ? <div style={{textAlign: 'center'}}>
@@ -49,12 +51,11 @@ const EditProductCardOption = (props: ControlledProps) => {
 
                                     field.value.map((option: ProductOption) => {
 
-                                        const avableVariants = () => {
-
-                                            let optionn = cardOptions.filter(n => n.id === option.id)[0]
+                                        const availableVariants = () => {
+                                            let optionItem = cardOptions.filter(n => n.id === option.id)[0]
                                             let ids: number[] = []
                                             option.optionVariants.map(n => ids.push(n.id))
-                                            return optionn.optionVariants.filter(n => !ids.includes(n.id))
+                                            return optionItem.optionVariants.filter(n => !ids.includes(n.id))
                                         }
 
                                         return (
@@ -120,7 +121,7 @@ const EditProductCardOption = (props: ControlledProps) => {
                                                             </Button>
                                                             <Select
                                                                 className={s.options_search}
-                                                                options={avableVariants()}
+                                                                options={availableVariants()}
                                                                 placeholder="Разновидность опции"
                                                                 isSearchable={true}
                                                                 value={selectedOptionVariant[option.id]}
@@ -155,7 +156,7 @@ const EditProductCardOption = (props: ControlledProps) => {
                             </Button>
                             <Select
                                 className={s.options_search}
-                                options={avableOptions(field)}
+                                options={availableOptions(field)}
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
@@ -167,14 +168,10 @@ const EditProductCardOption = (props: ControlledProps) => {
                                 noOptionsMessage={() => 'Опция не найдена'}
                             />
                         </div>
-                    </div>
-
+                    </>
+                    // </div>
                 }
             />
         </div>
-
-
-    );
-};
-
-export default EditProductCardOption;
+    )
+}

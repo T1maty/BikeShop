@@ -1,15 +1,30 @@
-import React, {ChangeEvent, useState} from 'react';
-import s from "./EditProductCardModal.module.scss";
-import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg";
-import {Button} from "../../../shared/ui";
-import useEditProductCardModal from "./EditProductCardModalStore";
+import React, {ChangeEvent, useState} from 'react'
+import s from "./EditProductCardModal.module.scss"
+import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
+import {Button} from "../../../../shared/ui"
+import useEditProductCardModal from "../store/EditProductCardModalStore"
 
-const EditProductCardGallery = () => {
+export const EditProductCardGallery = () => {
+
     const galleryImages = useEditProductCardModal(s => s.galleryImages)
     const setGalleryImages = useEditProductCardModal(s => s.setGalleryImages)
     const uploadNewImage = useEditProductCardModal(s => s.uploadNewImage)
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
+    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
+
+    // тестовые данные
+    // const [galleryImages, setGalleryImages] = useState([
+    //     {id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+    //     {id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+    //     {id: '3', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+    //     {id: '4', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+    //     {id: '5', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+    //     {id: '6', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+    //     {id: '7', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
+    //     {id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
+    //     {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
+    // ])
 
     const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
@@ -128,7 +143,5 @@ const EditProductCardGallery = () => {
                 </div>
             </div>
         </div>
-    );
-};
-
-export default EditProductCardGallery;
+    )
+}

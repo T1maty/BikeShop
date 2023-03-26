@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import s from "./EditProductCardModal.module.scss";
-import {Button, EditableSpan} from "../../../shared/ui";
-import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg";
-import Select from "react-select";
-import useEditProductCardModal from "./EditProductCardModalStore";
-import {Controller, UseFormReturn} from "react-hook-form";
-import {ProductSpecification} from "../../../entities";
+import React, {useState} from 'react'
+import s from "./EditProductCardModal.module.scss"
+import {Button, EditableSpan} from "../../../../shared/ui"
+import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
+import Select from "react-select"
+import useEditProductCardModal from "../store/EditProductCardModalStore"
+import {Controller, UseFormReturn} from "react-hook-form"
+import {ProductSpecification} from '../api/EditProductCardModalAPI'
 
 interface ControlledProps {
     name: string
@@ -14,10 +14,11 @@ interface ControlledProps {
     disabled?: boolean
 }
 
-const EditProductCardSpecifications = (props: ControlledProps) => {
+export const EditProductCardSpecifications = (props: ControlledProps) => {
 
+    // характеристика (spec)
     const specifications = useEditProductCardModal(s => s.specifications)
-    const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecification>({} as ProductSpecification) // характеристика (spec)
+    const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecification>({} as ProductSpecification)
 
     return (
         <div className={props.divClassName}>
@@ -26,8 +27,8 @@ const EditProductCardSpecifications = (props: ControlledProps) => {
                 control={props.control.control}
                 render={({field}: any) =>
 
-
-                    <div className={s.rightSide_productDetails}>
+                    /*<div className={s.rightSide_productDetails}>*/
+                    <>
                         <div className={s.productOptions_optionsList}>
                             {
                                 field.value.length === 0 ?
@@ -105,12 +106,10 @@ const EditProductCardSpecifications = (props: ControlledProps) => {
                                 noOptionsMessage={() => 'Характеристика не найдена'}
                             />
                         </div>
-                    </div>
+                    </>
+                    /*</div>*/
                 }
             />
         </div>
-
-    );
-};
-
-export default EditProductCardSpecifications;
+    )
+}

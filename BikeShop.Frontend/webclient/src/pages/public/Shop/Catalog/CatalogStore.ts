@@ -4,7 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../../shared"
 import {AxiosResponse} from "axios"
 import ProductTag from "../../../../entities/models/ProductTag"
-import {CatalogProductItem} from "../../../../entities/models/CatalogProductItem"
+import {CatalogProductItem} from "../../../../features/ProductCatalogFeatures/EditProductCardModal/models/CatalogProductItem"
 
 interface UseCatalogStore {
     isLoading: boolean

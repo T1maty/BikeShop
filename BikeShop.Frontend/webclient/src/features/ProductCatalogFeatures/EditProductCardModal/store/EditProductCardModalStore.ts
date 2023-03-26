@@ -1,9 +1,10 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../../shared"
-import {ProductCardImage, ProductCardOption} from '../../../entities/models/ProductCardModels'
-import {ProductOption, ProductSpecification} from "../../../entities";
+import {$api} from "../../../../shared"
+import {ProductCardImage, ProductCardOption} from '../models/ProductCardModels'
+import {EditProductCardModalAPI, ProductSpecification} from "../api/EditProductCardModalAPI"
+import {ProductOption} from "../models/ProductOption"
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -45,7 +46,16 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
 
     specifications: [],
     getSpecifications: () => {
-        return $api.get<ProductSpecification[]>('/productcard/getallspecifications').then(res => {
+        // return $api.get<ProductSpecification[]>('/productcard/getallspecifications').then(res => {
+        //     set(state => {
+        //         state.specifications = res.data
+        //         console.log('все доступные спецификации', state.specifications)
+        //     })
+        // }).catch((error: any) => {
+        //     console.log('спецификации не получены')
+        // })
+
+        EditProductCardModalAPI.getSpecifications().then(res => {
             set(state => {
                 state.specifications = res.data
                 console.log('все доступные спецификации', state.specifications)

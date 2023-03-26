@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
-import useEditProductCardModal from './EditProductCardModalStore'
-import {Button} from '../../../shared/ui'
+import useEditProductCardModal from '../store/EditProductCardModalStore'
+import {Button} from '../../../../shared/ui'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
-import EditProductCardSpecifications from "./EditProductCardSpecifications";
-import EditProductCardOption from "./EditProductCardOption";
-import EditProductCardDescription from "./EditProductCardDescription";
-import EditProductCardGallery from "./EditProductCardGallery";
-import EditProductCardTags from "./EditProductCardTags";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {UpdateProductCard} from "../../../entities";
+import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
+import {EditProductCardOption} from "./EditProductCardOption"
+import {EditProductCardDescription} from "./EditProductCardDescription"
+import {EditProductCardGallery} from "./EditProductCardGallery"
+import {EditProductCardTags} from "./EditProductCardTags"
+import {SubmitHandler, useForm} from "react-hook-form"
+import {UpdateProductCard} from "../models/UpdateProductCard"
 
 interface EditProductCardModalProps {
     productCardData?: any
@@ -24,22 +24,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
 
-
-    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
-
-    // const [galleryImages, setGalleryImages] = useState([
-    //     {id: '1', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
-    //     {id: '2', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
-    //     {id: '3', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
-    //     {id: '4', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
-    //     {id: '5', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
-    //     {id: '6', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
-    //     {id: '7', thumbnail: 'https://picsum.photos/id/1018/250/150/'},
-    //     {id: '8', thumbnail: 'https://picsum.photos/id/1015/250/150/'},
-    //     {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
-    // ])
-
-
     // ----------------------------------- //
 
     const formControl = useForm<UpdateProductCard>({
@@ -51,7 +35,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
 
     const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
-        // тестовые данные
         console.log('submitData', data)
 
         // добавление карточки
@@ -76,10 +59,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     // }
     // arrayOfLength(cardOptions.map(el => el.optionVariants))
 
-
-    // загрузка изображения
-
-
     // ----------------------------------- //
 
     useEffect(() => {
@@ -90,9 +69,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -121,7 +98,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     {
                         //////////////////////////////////////
                     }
-                    <EditProductCardDescription/>
+                        <EditProductCardDescription/>
                     {
                         //////////////////////////////////////
                     }
@@ -130,23 +107,26 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         {
                             //////////////////////////////////////
                         }
-                        <EditProductCardOption control={formControl} name={'options'}/>
-                        <EditProductCardSpecifications control={formControl} name={'specifications'}/>
+                        <EditProductCardOption divClassName={s.rightSide_productDetails}
+                                               control={formControl}
+                                               name={'options'}
+                        />
+                        <EditProductCardSpecifications divClassName={s.rightSide_productOptions}
+                                                       control={formControl}
+                                                       name={'specifications'}
+                        />
                         {
                             //////////////////////////////////////
                         }
 
-
-                    </div>
-                    <div className={s.rightSide_mainButtons}>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
-                            Отмена
-                        </Button>
-                        <Button type={'submit'}>
-                            Сохранить
-                        </Button>
+                        <div className={s.rightSide_mainButtons}>
+                            <Button onClick={() => {setOpen(false)}}>
+                                Отмена
+                            </Button>
+                            <Button type={'submit'}>
+                                Сохранить
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </form>

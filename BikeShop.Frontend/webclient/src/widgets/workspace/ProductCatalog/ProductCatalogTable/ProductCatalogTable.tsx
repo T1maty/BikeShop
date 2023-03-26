@@ -6,7 +6,7 @@ import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.
 import {IProduct, IProductExtended} from "../../../../entities"
 import {
     EditProductCardModal
-} from '../../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
+} from '../../../../features/ProductCatalogFeatures/EditProductCardModal/ui/EditProductCardModal'
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
 
