@@ -1,5 +1,5 @@
-import {ServiceStatusType} from "../models/ServiceItem";
-import {IUser} from "../models/IUser";
+import {ServiceStatusType} from "../models/Service/ServiceItem";
+import {User} from "../models/Auth/User";
 
 
 export interface CreateServiceResponse {
@@ -12,15 +12,15 @@ export interface CreateServiceResponse {
 
     name: string // название техники
     status: ServiceStatusType // статус заказа
-    client: IUser // данные клиента
+    client: User // данные клиента
     clientDescription: string // описание заказа
 
-    userMaster: IUser // данные мастера
+    userMaster: User // данные мастера
     userMasterDescription: string // комментарий от мастера
 
-    userCreated: IUser // тот, кто создал заказ
+    userCreated: User // тот, кто создал заказ
     userCreatedDescription: string // комментарий к описанию удаления
-    userDeleted: IUser // тот, кто удалил заказ из архива
+    userDeleted: User // тот, кто удалил заказ из архива
 
     priceWork: number // стоимость услуги
     discountWork: number

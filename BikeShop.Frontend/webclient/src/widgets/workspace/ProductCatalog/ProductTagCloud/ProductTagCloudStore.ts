@@ -1,11 +1,11 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {IProductTag} from "../../../../entities";
+import {ProductTag} from "../../../../entities";
 
 interface productCatalogTableStore {
-    tags: IProductTag[]
-    addTag: (tag: IProductTag) => void
+    tags: ProductTag[]
+    addTag: (tag: ProductTag) => void
     removeTag: (tagId: string) => void
     clearTags: () => void
 }

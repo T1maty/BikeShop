@@ -3,7 +3,7 @@ import {Modal} from '@mui/material'
 import s from './SelectProductWorkModal.module.scss'
 import useSelectProductWorkModal from './SelectProductWorkModalStore'
 import {SelectWork} from '../../../pages'
-import {ServiceItemWork} from "../../../entities/models/ServiceItem";
+import {ServiceItemWork} from "../../../entities/models/Service/ServiceItem";
 
 interface props {
     works: ServiceItemWork[]

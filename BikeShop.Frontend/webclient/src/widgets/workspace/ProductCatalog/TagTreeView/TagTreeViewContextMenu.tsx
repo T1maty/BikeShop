@@ -1,6 +1,6 @@
 import React from 'react'
 import MenuItem from "@mui/material/MenuItem"
-import {IProductTag} from "../../../../entities"
+import {ProductTag} from "../../../../entities"
 import {Menu} from "@mui/material"
 import useCreateTagModal from '../../../../features/ProductCatalogFeatures/CreateTagModal/CreateTagModalStore'
 import useTagTreeView from './TagTreeViewStore'
@@ -63,7 +63,7 @@ const TagTreeViewContextMenu = () => {
 
             <MenuItem onClick={() => {
                 setContextVisible(false, 0, 0)
-                setParentNode({} as IProductTag)
+                setParentNode({} as ProductTag)
                 setOpenCreateTagModal(true)
             }}
             >

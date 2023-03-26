@@ -1,5 +1,5 @@
-import {IUser} from "../models/IUser";
+import {User} from "../models/Auth/User"
 
-export default interface UserResponse {
-    users: IUser[]
+export interface UserResponse {
+    users: User[]
 }

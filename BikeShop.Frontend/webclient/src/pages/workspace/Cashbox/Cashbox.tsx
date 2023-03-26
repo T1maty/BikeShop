@@ -8,7 +8,7 @@ import usePayModal from '../../../features/PayModal/PayModalStore'
 import useChooseProductModal from '../../../features/ChooseProductModal/ChooseProductModalStore'
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
-import {IUser} from '../../../entities'
+import {User} from '../../../entities'
 
 export const Cashbox = () => {
 
@@ -22,7 +22,7 @@ export const Cashbox = () => {
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
 
-    const chooseClientHandler = (user: IUser) => {
+    const chooseClientHandler = (user: User) => {
         setUser(user)
         setOpenClientModal(false)
         console.log('Cashbox click user', user)
@@ -49,7 +49,7 @@ export const Cashbox = () => {
 
                     <div className={s.leftSide_client}>
                         <ClientCard user={user}/>
-                        <ChooseClientModal extraCallback={(user: IUser) => {chooseClientHandler(user)}}/>
+                        <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
                         <div className={s.leftSide_client_buttons}>
                                 <Button buttonDivWrapper={s.client_buttons_choose}
                                         onClick={() => setOpenClientModal(true)}

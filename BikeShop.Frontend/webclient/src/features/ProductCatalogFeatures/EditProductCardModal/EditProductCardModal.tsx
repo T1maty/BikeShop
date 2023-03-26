@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
-import useEditProductCardModal from '../store/EditProductCardModalStore'
-import {Button} from '../../../../shared/ui'
+import useEditProductCardModal from './EditProductCardModalStore'
+import {Button} from '../../../shared/ui'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
 import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
@@ -11,7 +11,7 @@ import {EditProductCardDescription} from "./EditProductCardDescription"
 import {EditProductCardGallery} from "./EditProductCardGallery"
 import {EditProductCardTags} from "./EditProductCardTags"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {UpdateProductCard} from "../models/UpdateProductCard"
+import {UpdateProductCard} from "../../../entities/models/Product/UpdateProductCard"
 
 interface EditProductCardModalProps {
     productCardData?: any

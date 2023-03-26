@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {ServiceItemProduct} from "../../../entities/models/ServiceItem";
+import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem";
 
 interface selectProductStore {
     convert: (product: any) => ServiceItemProduct

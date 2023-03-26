@@ -1,9 +1,9 @@
 import React from 'react'
 import s from "./ClientCard.module.scss"
-import {IUser} from "../../../entities"
+import {User} from "../../../entities"
 
 interface ClientCardProps {
-    user?: IUser
+    user?: User
     onDoubleClick?: () => void
 }
 

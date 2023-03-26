@@ -1,5 +1,5 @@
-import Group from "../models/Group";
+import {Group} from "../models/Service/Group"
 
-export default interface GroupResponse {
-  workGroups: Group[];
+export interface GroupResponse {
+    workGroups: Group[]
 }

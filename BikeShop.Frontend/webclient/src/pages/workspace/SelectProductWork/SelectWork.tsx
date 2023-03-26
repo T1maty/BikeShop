@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI, UniTable} from "../../../shared/ui"
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
-import {ServiceItemWork} from "../../../entities/models/ServiceItem";
+import {ServiceItemWork} from "../../../entities/models/Service/ServiceItem";
 import {WorkCatalogTreeView} from "../../../widgets/workspace/WorkCatalog/WorkCatalogTreeView";
 import {columns} from "./SlaveTableConfig";
 import {WorkCatalogTable} from "../../../widgets";

@@ -3,8 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../../shared"
 import {AxiosResponse} from "axios"
-import ProductTag from "../../../../entities/models/ProductTag"
-import {CatalogProductItem} from "../../../../features/ProductCatalogFeatures/EditProductCardModal/models/CatalogProductItem"
+import {CatalogProductItem, ProductTag} from "entities"
 
 interface UseCatalogStore {
     isLoading: boolean

@@ -1,4 +1,4 @@
-import {IUser} from "./IUser";
+import {User} from "../Auth/User";
 
 export type ServiceStatusType =
     'Waiting' |
@@ -17,12 +17,12 @@ export interface ServiceItem {
 
     name: string
     status: ServiceStatusType
-    client: IUser
+    client: User
     clientDescription: string
-    userMaster: IUser
+    userMaster: User
     userMasterDescription: string
 
-    userCreated: IUser
+    userCreated: User
     userCreatedDescription: string
     userDeleted: null | string
 

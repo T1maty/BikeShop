@@ -1,4 +1,4 @@
-export default interface ProductTag {
+export interface ProductTag {
     id: string
     name: string
     parentId: string

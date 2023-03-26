@@ -1,5 +1,5 @@
-import {IProductTag} from "../index"
+import {ProductTag} from "../index"
 
-export default interface ProductTagResponse {
-    tags: IProductTag[]
+export interface ProductTagResponse {
+    tags: ProductTag[]
 }

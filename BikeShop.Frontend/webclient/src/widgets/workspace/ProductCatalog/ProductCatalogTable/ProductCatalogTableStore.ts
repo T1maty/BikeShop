@@ -2,25 +2,25 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "shared";
-import {IProductExtended, IUpdateProduct} from "../../../../entities";
+import {ProductExtended, UpdateProduct} from "../../../../entities";
 
 interface productCatalogTableStore {
     contextMenuXY: { X: number, Y: number }
-    selectedRows: IProductExtended[]
+    selectedRows: ProductExtended[]
     rowsPerPage: number
     open: boolean
     page: number
-    rows: IProductExtended[]
+    rows: ProductExtended[]
     isLoading: boolean
 
     setOpen: (value: boolean, X: number, Y: number) => void
-    addNewProduct: (product: IProductExtended) => void
-    updateRow: (rowData: IUpdateProduct) => void
+    addNewProduct: (product: ProductExtended) => void
+    updateRow: (rowData: UpdateProduct) => void
     setSelectedRows: (ids: number[]) => void
     setRowsPerPage: (value: number) => void
     isRowSelected: (id: number) => boolean
     setPage: (value: number) => void
-    setRows: (data: IProductExtended[]) => void
+    setRows: (data: ProductExtended[]) => void
     getProducts: (tags: string[]) => void
 }
 
@@ -68,7 +68,7 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
         })
         value = value.slice(0, -1)
         set({isLoading: true})
-        $api.get<IProductExtended[]>('/product/getbytags/' + value + '?storageId=1').then((r) => {
+        $api.get<ProductExtended[]>('/product/getbytags/' + value + '?storageId=1').then((r) => {
             set({rows: r.data})
             set({isLoading: false})
         })

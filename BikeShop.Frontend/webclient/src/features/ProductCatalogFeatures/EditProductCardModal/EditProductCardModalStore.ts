@@ -1,10 +1,10 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../../../shared"
-import {ProductCardImage, ProductCardOption} from '../models/ProductCardModels'
-import {EditProductCardModalAPI, ProductSpecification} from "../api/EditProductCardModalAPI"
-import {ProductOption} from "../models/ProductOption"
+import {$api} from "../../../shared"
+import {ProductCardImage, ProductCardOption} from '../../../entities/models/Product/ProductCardModels'
+import {EditProductCardModalAPI} from "../../../entities/api/EditProductCardModalAPI"
+import {ProductOption, ProductSpecification} from "../../../entities"
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean

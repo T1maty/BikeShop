@@ -1,24 +1,24 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {$api} from "../../../shared";
-import {Work, WorkGroup} from "../../../entities";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {$api} from "../../../shared"
+import {Work, Group} from "../../../entities"
 
 interface WorkCatalogStore {
-    selected: WorkGroup,
-    setSelected: (value: WorkGroup) => void
+    selected: Group
+    setSelected: (value: Group) => void
 
-    selectedRow: Work,
+    selectedRow: Work
     setSelectedRow: (value: Work) => void
 
-    works: Work[],
+    works: Work[]
     setWorks: (value: Work[]) => void,
-    group: WorkGroup[],
-    addGroup: (value: WorkGroup) => void,
-    isLoading: boolean,
+    group: Group[]
+    addGroup: (value: Group) => void,
+    isLoading: boolean
     currencyId: number | undefined
-    getWork: (id: number) => void,
-    addWork: (work: Work) => void,
+    getWork: (id: number) => void
+    addWork: (work: Work) => void
     getGroup: () => void
     chooseMethod: (data: any) => void
     createWork: (data: any) => void
@@ -36,7 +36,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
 
     },
 
-    selected: {} as WorkGroup,
+    selected: {} as Group,
     setSelected: (value) => {
         set({selected: value})
     },
@@ -49,7 +49,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
     },
 
     works: [],
-    group: [] as WorkGroup[],
+    group: [] as Group[],
     isLoading: false,
     currencyId: undefined,
 
@@ -89,7 +89,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
     },
 
     getGroup() {
-        $api.get<WorkGroup[]>('/group/getbyshopid/1').then((data) => {
+        $api.get<Group[]>('/group/getbyshopid/1').then((data) => {
             console.log('Groups:', data.data)
             set({group: data.data})
         })

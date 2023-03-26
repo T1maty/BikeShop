@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react'
 import {Box, Button, Checkbox, FormControlLabel, Modal, TextField} from "@mui/material"
 import {Controller, SubmitHandler, useForm} from "react-hook-form"
-import {IProduct, IUpdateProduct} from "../../../entities"
+import {Product, UpdateProduct} from "../../../entities"
 import useUpdateProductModal from './UpdateProductModalStore'
 
 interface props {
-    onSuccess?: (updateData: IUpdateProduct) => void
+    onSuccess?: (updateData: UpdateProduct) => void
 }
 
 export const UpdateProductModal = (props: props) => {
@@ -15,7 +15,7 @@ export const UpdateProductModal = (props: props) => {
     const setOpen = useUpdateProductModal(s => s.setOpen)
     const update = useUpdateProductModal(s => s.update)
 
-    const {control, formState: {errors}, handleSubmit, setValue} = useForm<IUpdateProduct>({
+    const {control, formState: {errors}, handleSubmit, setValue} = useForm<UpdateProduct>({
         defaultValues: {
             id: product.id,
             name: product.name,
@@ -61,9 +61,9 @@ export const UpdateProductModal = (props: props) => {
         color: 'white'
     }
 
-    const onSubmit: SubmitHandler<IUpdateProduct> = (data: IUpdateProduct) => {
+    const onSubmit: SubmitHandler<UpdateProduct> = (data: UpdateProduct) => {
         update(data).then((r) => {
-            setOpen(false, {} as IProduct)
+            setOpen(false, {} as Product)
             props.onSuccess ? props.onSuccess(data) : true
         }).catch((r => {
 
@@ -74,7 +74,7 @@ export const UpdateProductModal = (props: props) => {
         <Modal
             open={open}
             onClose={() => {
-                setOpen(false, {} as IProduct)
+                setOpen(false, {} as Product)
             }}
             onContextMenu={(event) => {
                 event.preventDefault()
@@ -143,7 +143,7 @@ export const UpdateProductModal = (props: props) => {
                 <br/>
                 <Button color={'primary'} type={'submit'}>Обновить информацию о товаре</Button>
                 <Button color={'primary'} onClick={() => {
-                    setOpen(false, {} as IProduct)
+                    setOpen(false, {} as Product)
                 }}>Отмена</Button>
             </Box>
         </Modal>

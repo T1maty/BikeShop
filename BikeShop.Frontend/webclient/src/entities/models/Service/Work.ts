@@ -1,6 +1,6 @@
 export interface Work {
-    id: number,
-    name: string,
+    id: number
+    name: string
     description: string
     price: number
     workGroupId: number

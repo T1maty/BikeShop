@@ -4,10 +4,10 @@ import {ControlledCheckbox, ControlledInput} from "../../../shared/ui";
 import {useSnackbar} from "notistack";
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {UpdateWorkGroup, WorkGroup} from "../../../entities";
+import {UpdateWorkGroup, Group} from "../../../entities";
 import {$api} from "../../../shared";
 
-export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void, target: WorkGroup }) => {
+export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void, target: Group }) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const {getGroup} = useWorkCatalog(s => s)
@@ -48,7 +48,7 @@ export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility
         data.shopId = props.target.shopId
         console.log('submitData', data)
 
-        $api.put<WorkGroup>('/group/update', data).then((r) => {
+        $api.put<Group>('/group/update', data).then((r) => {
             formControl.reset()
             props.setVisibility(false)
             getGroup()

@@ -1,22 +1,22 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {IProductTag, IProductTagResponse, IUpdateTag} from "../../../../entities";
+import {ProductTag, ProductTagResponse, UpdateTag} from "../../../../entities";
 import {AxiosResponse} from "axios";
 import {$api} from "../../../../shared";
 
 interface tagTreeViewStore {
-    treeViewTags: IProductTag[],
+    treeViewTags: ProductTag[],
     contextMenuVisible: boolean,
     contextMenuXY: { X: number, Y: number }
 
     setContextMenuVisible: (value: boolean, X: number, Y: number) => void
 
-    setTreeViewTags: (tags: IProductTag[]) => void,
-    addTreeViewTag: (tag: IProductTag) => void,
+    setTreeViewTags: (tags: ProductTag[]) => void,
+    addTreeViewTag: (tag: ProductTag) => void,
     removeTreeViewTag: (tagId: string) => void,
-    addNewTag: (tag: IProductTag) => void
-    updateTag: (tag: IUpdateTag) => void
+    addNewTag: (tag: ProductTag) => void
+    updateTag: (tag: UpdateTag) => void
 
     expandedTags: string[]
     selectedTag: string
@@ -25,7 +25,7 @@ interface tagTreeViewStore {
 
     handleExpand: (id: string) => void
 
-    fetchTags: () => Promise<AxiosResponse<IProductTagResponse>>
+    fetchTags: () => Promise<AxiosResponse<ProductTagResponse>>
     deleteTag: (tagId: string) => Promise<AxiosResponse>
 
 }
@@ -93,7 +93,7 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
     },
 
     fetchTags: () => {
-        return $api.get<IProductTagResponse>('/tag/getall');
+        return $api.get<ProductTagResponse>('/tag/getall');
     },
 
     addNewTag: (tag) => {

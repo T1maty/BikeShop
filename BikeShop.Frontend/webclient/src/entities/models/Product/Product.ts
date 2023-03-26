@@ -1,4 +1,4 @@
-export interface IProduct {
+export interface Product {
     name: string
     catalogKey: string
     category: string

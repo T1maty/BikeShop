@@ -1,4 +1,4 @@
-import {IProductTag, IUpdateTag} from "../../../entities"
+import {ProductTag, UpdateTag} from "../../../entities"
 import {AxiosResponse} from "axios"
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
@@ -7,17 +7,17 @@ import {$api} from "../../../shared"
 
 interface createTagModalStore {
     open: boolean
-    openTagModal: (tag: IProductTag) => void
+    openTagModal: (tag: ProductTag) => void
     closeTagModal: () => void
 
-    targetTag: IProductTag
+    targetTag: ProductTag
 
-    updateTag: (tag: IUpdateTag) => Promise<AxiosResponse>
+    updateTag: (tag: UpdateTag) => Promise<AxiosResponse>
 }
 
 const useUpdateTagModal = create<createTagModalStore>()(persist(devtools(immer((set) => ({
     open: false,
-    targetTag: {} as IProductTag,
+    targetTag: {} as ProductTag,
 
     openTagModal: (tag) => {
         set({open: true})
@@ -26,7 +26,7 @@ const useUpdateTagModal = create<createTagModalStore>()(persist(devtools(immer((
 
     closeTagModal: () => {
         set({open: false})
-        set({targetTag: {} as IProductTag})
+        set({targetTag: {} as ProductTag})
     },
 
     updateTag: (tag) => {

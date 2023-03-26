@@ -1,4 +1,4 @@
-import {ServiceStatusType} from "../models/ServiceItem";
+import {ServiceStatusType} from "../models/Service/ServiceItem";
 
 export interface UpdateService {
     id: number

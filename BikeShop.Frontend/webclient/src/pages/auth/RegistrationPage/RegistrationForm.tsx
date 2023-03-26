@@ -2,7 +2,7 @@ import React from 'react'
 import {Box, Button, Container, Stack, TextField, Typography} from '@mui/material'
 import {Controller, SubmitHandler, useForm} from 'react-hook-form'
 import {NavLink, useNavigate} from 'react-router-dom'
-import {IRegistrationData} from '../../../entities'
+import {RegistrationData} from '../../../entities'
 import {BikeShopPaths} from '../../../app/routes/paths'
 import useAuthUser from '../useAuthUser'
 
@@ -11,14 +11,14 @@ const RegistrationForm = () => {
     const navigate = useNavigate()
     const register = useAuthUser(s => s.register)
 
-    const {control, formState: {errors}, handleSubmit} = useForm<IRegistrationData>({
+    const {control, formState: {errors}, handleSubmit} = useForm<RegistrationData>({
         defaultValues: {
             phone: '',
             password: '',
         }
     });
 
-    const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
+    const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
         register(data).then(() => {navigate(BikeShopPaths.COMMON.LOGIN)})
     };
 

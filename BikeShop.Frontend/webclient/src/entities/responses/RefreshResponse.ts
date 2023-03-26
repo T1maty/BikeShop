@@ -1,3 +1,3 @@
-export default interface RefreshResponse {
+export interface RefreshResponse {
     accessToken: string
 }

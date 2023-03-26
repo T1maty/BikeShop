@@ -2,13 +2,13 @@ import React from 'react'
 import {Box, Button, Modal, Typography} from "@mui/material"
 import useCreateProductModal from "./CreateProductModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {EnumProductCheckStatus, ICreateProduct, IProduct} from "../../../entities"
+import {EnumProductCheckStatus, CreateProduct, Product} from "../../../entities"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
 import {ControlledCheckbox, ControlledInput} from "../../../shared/ui"
 
 interface CreateProductModalProps {
-    onSuccess?: (data: IProduct) => void
+    onSuccess?: (data: Product) => void
 }
 
 export const CreateProductModal = (props: CreateProductModalProps) => {
@@ -20,7 +20,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
     const create = useCreateProductModal(s => s.create)
     const tags = useCreateProductModal(s => s.tags)
 
-    const formControl = useForm<ICreateProduct>({
+    const formControl = useForm<CreateProduct>({
         defaultValues: {
             name: "",
             catalogKey: "",
@@ -51,7 +51,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
         color: 'white'
     };
 
-    const onSubmit: SubmitHandler<ICreateProduct> = (data: ICreateProduct) => {
+    const onSubmit: SubmitHandler<CreateProduct> = (data: CreateProduct) => {
         if (tags.length > 0) {
             data.tagsIds = tags.map((n) => {
                 return n.id

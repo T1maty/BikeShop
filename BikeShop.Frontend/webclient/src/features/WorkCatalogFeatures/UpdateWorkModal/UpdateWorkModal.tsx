@@ -7,7 +7,7 @@ import {Box, Button, Modal, Typography} from "@mui/material";
 import {ControlledInput} from "../../../shared/ui";
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
 
-const UpdateWorkModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void }) => {
+export const UpdateWorkModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void }) => {
 
     const {selectedRow, selected, getWork} = useWorkCatalog(state => state)
 
@@ -95,7 +95,5 @@ const UpdateWorkModal = (props: { visibility: boolean, setVisibility: (value: bo
                 }}>Отмена</Button>
             </Box>
         </Modal>
-    );
-};
-
-export default UpdateWorkModal;
+    )
+}

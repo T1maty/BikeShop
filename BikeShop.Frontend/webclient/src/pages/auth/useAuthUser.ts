@@ -1,19 +1,19 @@
 import {create} from "zustand"
 import {immer} from "zustand/middleware/immer"
 import {devtools, persist} from "zustand/middleware"
-import {ILoginData, ILoginResponse, IRegistrationData, IShop, IUser} from "../../entities"
+import {LoginData, LoginResponse, RegistrationData, Shop, User} from "../../entities"
 import {$api} from "../../shared"
 import {AxiosResponse} from "axios"
 
 
 interface authState {
-    user?: IUser
-    shop?: IShop
-    setUser: (user: IUser) => void
-    setShop: (shop: IShop) => void
+    user?: User
+    shop?: Shop
+    setUser: (user: User) => void
+    setShop: (shop: Shop) => void
 
-    login: (loginData: ILoginData) => Promise<AxiosResponse<ILoginResponse>>
-    register: (data: IRegistrationData) => Promise<AxiosResponse>
+    login: (loginData: LoginData) => Promise<AxiosResponse<LoginResponse>>
+    register: (data: RegistrationData) => Promise<AxiosResponse>
     loginToShop: (shopId: number) => void
 
     logout: () => void
@@ -25,7 +25,7 @@ const useAuth = create<authState>()(persist(devtools(immer((set) => ({
     setShop: (shop) => set({shop: shop}),
 
     login: (loginData) => {
-        return $api.post<ILoginResponse>("/auth/login", loginData)
+        return $api.post<LoginResponse>("/auth/login", loginData)
     },
 
     register: (data) => {
@@ -33,14 +33,14 @@ const useAuth = create<authState>()(persist(devtools(immer((set) => ({
     },
 
     logout: () => set(state => {
-        state.user = {} as IUser
-        state.shop = {} as IShop
+        state.user = {} as User
+        state.shop = {} as Shop
         $api.post('auth/logout').then(res => {})
         localStorage.removeItem('accessToken')
     }),
 
     loginToShop: (shopId) => {
-        $api.get<IShop[]>('shop/getall').then((r) => {
+        $api.get<Shop[]>('shop/getall').then((r) => {
             let shop = r.data.filter(n => n.id === shopId)[0];
             console.log(shop)
             set(state => {

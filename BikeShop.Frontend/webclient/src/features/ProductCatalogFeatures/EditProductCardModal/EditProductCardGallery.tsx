@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
-import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
-import {Button} from "../../../../shared/ui"
-import useEditProductCardModal from "../store/EditProductCardModalStore"
+import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
+import {Button} from "../../../shared/ui"
+import useEditProductCardModal from "./EditProductCardModalStore"
 
 export const EditProductCardGallery = () => {
 

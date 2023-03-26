@@ -3,11 +3,11 @@ import TableRow from '@mui/material/TableRow'
 import {columns} from './ProductCatalogTableConfig'
 import TableCell from '@mui/material/TableCell'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
-import {IProductExtended} from '../../../../entities'
+import {ProductExtended} from '../../../../entities'
 
 interface props {
-    row: IProductExtended
-    onRowDoubleClick?: (product: IProductExtended) => void
+    row: ProductExtended
+    onRowDoubleClick?: (product: ProductExtended) => void
 }
 
 export const ProductCatalogTableRow = (props: props) => {

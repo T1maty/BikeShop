@@ -3,10 +3,10 @@ import {CreateProductModal, UpdateProductModal} from '../../../../features'
 import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
-import {IProduct, IProductExtended} from "../../../../entities"
+import {Product, ProductExtended} from "../../../../entities"
 import {
     EditProductCardModal
-} from '../../../../features/ProductCatalogFeatures/EditProductCardModal/ui/EditProductCardModal'
+} from '../../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
 
@@ -22,9 +22,9 @@ export const ProductCatalogTable = (props: props) => {
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
     const isLoading = useProductCatalogTableStore(s => s.isLoading)
 
-    const createProductSuccessHandler = (product: IProduct) => {
-        let extProd: IProductExtended;
-        extProd = {} as IProductExtended
+    const createProductSuccessHandler = (product: Product) => {
+        let extProd: ProductExtended;
+        extProd = {} as ProductExtended
         extProd.product = product
         extProd.quantity = 0
         addNewProduct(extProd)

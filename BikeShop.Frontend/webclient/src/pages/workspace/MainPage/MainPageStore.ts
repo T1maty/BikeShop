@@ -2,15 +2,15 @@ import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AxiosResponse} from "axios";
-import {IUser} from '../../../entities';
+import {User} from '../../../entities';
 
 interface MainPageStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     isClientChosen: boolean
     setIsClientChosen: (value: boolean) => void
-    user: IUser
-    setUser: (user: IUser) => void
+    user: User
+    setUser: (user: User) => void
 }
 
 const useMainPageStore = create<MainPageStore>()(/*persist(*/devtools(immer((set) => ({
@@ -32,7 +32,7 @@ const useMainPageStore = create<MainPageStore>()(/*persist(*/devtools(immer((set
         email: '',
         emailConfirmed: false
     },
-    setUser: (user: IUser) => set({user: user}),
+    setUser: (user: User) => set({user: user}),
 })))/*, {
     name: "mainPageStore",
     version: 1

@@ -3,7 +3,7 @@ import s from './SelectProductWork.module.scss'
 import {Button, InputUI, UniTable} from '../../../shared/ui'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
 import useSelectProduct from "./SelectProductStore";
-import {ServiceItemProduct} from "../../../entities/models/ServiceItem";
+import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem";
 import {columns} from "./SlaveTableConfig";
 
 interface SelectProductProps {

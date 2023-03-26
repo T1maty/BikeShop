@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {ICreateTag, IProductTag} from "../../../entities";
+import {CreateTag, ProductTag} from "../../../entities";
 import {AxiosResponse} from 'axios';
 import {$api} from "../../../shared";
 
@@ -9,21 +9,21 @@ interface createTagModalStore {
     openCreateTagModal: boolean
     setOpenCreateTagModal: (value: boolean) => void
 
-    parentNode: IProductTag,
-    setParentNode: (node: IProductTag) => void
+    parentNode: ProductTag,
+    setParentNode: (node: ProductTag) => void
 
-    createTag: (tag: ICreateTag) => Promise<AxiosResponse>
+    createTag: (tag: CreateTag) => Promise<AxiosResponse>
 }
 
 const useCreateTagModal = create<createTagModalStore>()(persist(devtools(immer((set) => ({
     openCreateTagModal: false,
     setOpenCreateTagModal: (value) => set({openCreateTagModal: value}),
 
-    parentNode: {} as IProductTag,
+    parentNode: {} as ProductTag,
     setParentNode: (node) => set({parentNode: node}),
 
     createTag: (tag) => {
-        return $api.post<IProductTag>('/tag/create', tag)
+        return $api.post<ProductTag>('/tag/create', tag)
     }
 }))), {
     name: "createTagModalStore",

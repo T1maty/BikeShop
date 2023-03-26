@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react'
 import {SubmitHandler, useForm} from "react-hook-form"
-import {IUpdateTag} from "../../../entities"
+import {UpdateTag} from "../../../entities"
 import {Box, Button, Modal, Typography} from "@mui/material"
 import {ControlledCheckbox, ControlledInput} from "../../../shared/ui"
 import {useSnackbar} from "notistack"
 import useUpdateTagModal from './UpdateTagModalStore'
 
 interface props {
-    onSuccess?: (tag: IUpdateTag) => void
+    onSuccess?: (tag: UpdateTag) => void
 }
 
 export const UpdateTagModal = (props: props) => {
@@ -19,7 +19,7 @@ export const UpdateTagModal = (props: props) => {
     const setClose = useUpdateTagModal(s => s.closeTagModal)
     const update = useUpdateTagModal(s => s.updateTag)
 
-    const control = useForm<IUpdateTag>({
+    const control = useForm<UpdateTag>({
         defaultValues: {
             name: "",
             sortOrder: 0,
@@ -57,7 +57,7 @@ export const UpdateTagModal = (props: props) => {
     };
 
 
-    const onSubmit: SubmitHandler<IUpdateTag> = (data: IUpdateTag) => {
+    const onSubmit: SubmitHandler<UpdateTag> = (data: UpdateTag) => {
         update(data).then((r) => {
             setClose()
             props.onSuccess ? props.onSuccess(data) : true

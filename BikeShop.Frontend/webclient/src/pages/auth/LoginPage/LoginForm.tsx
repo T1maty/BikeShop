@@ -2,7 +2,7 @@ import React from "react"
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material"
 import {Controller, SubmitHandler, useForm} from "react-hook-form"
 import {NavLink, useNavigate} from "react-router-dom"
-import {ILoginData} from "../../../entities"
+import {LoginData} from "../../../entities"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import useAuthUser from '../useAuthUser'
 
@@ -14,14 +14,14 @@ export const LoginForm = () => {
 
     const navigate = useNavigate()
 
-    const {control, formState: {errors}, handleSubmit} = useForm<ILoginData>({
+    const {control, formState: {errors}, handleSubmit} = useForm<LoginData>({
         defaultValues: {
             phone: '',
             password: '',
         }
     });
 
-    const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
+    const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
         login(data).then((r) => {
 
             localStorage.setItem('accessToken', r.data.accessToken)

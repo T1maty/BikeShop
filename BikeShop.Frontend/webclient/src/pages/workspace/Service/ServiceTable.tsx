@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from '../../../shared/ui';
 import s from './ServiceTable.module.scss';
-import {ServiceItemProductWork} from "../../../entities/models/ServiceItem";
+import {ServiceItemProductWork} from "../../../entities/models/Service/ServiceItem";
 import {TableProductItem} from "../../../features";
 
 type ServiceTableProps = {

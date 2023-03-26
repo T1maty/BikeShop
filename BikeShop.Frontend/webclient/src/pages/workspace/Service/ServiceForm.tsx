@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledInput, ControlledSelect} from "../../../shared/ui"
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {CreateService, IUser} from "../../../entities"
+import {CreateService, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, useForm} from "react-hook-form"
@@ -35,7 +35,7 @@ const ServiceForm = () => {
             shopId: useAuth.getState().shop?.id,
             id: 0,
             name: '',
-            client: {} as IUser,
+            client: {} as User,
             clientDescription: '',
             userMasterId: '',
 
@@ -112,7 +112,7 @@ const ServiceForm = () => {
         formControl.setValue('name', currentService ? currentService.name : '')
         formControl.setValue('clientDescription', currentService ? currentService.clientDescription : '')
         formControl.setValue('userMasterId', currentService ? currentService.userMaster?.id : '')
-        formControl.setValue('client', currentService ? currentService.client : {} as IUser)
+        formControl.setValue('client', currentService ? currentService.client : {} as User)
 
         formControl.setValue('serviceProducts', currentService ? currentService.products : [])
         formControl.setValue('serviceWorks', currentService ? currentService.works : [])
@@ -177,7 +177,7 @@ const ServiceForm = () => {
                                               disabled={!isCreating}
                                               state={openClientModal}
                                               setState={setOpenClientModal}
-                                              rules={{validate: (value: IUser) => value.id !== null}}
+                                              rules={{validate: (value: User) => value.id !== null}}
                         />
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}

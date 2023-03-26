@@ -1,6 +1,5 @@
-import {IProduct} from "../index"
+import {Product} from "../index"
 
-
-export interface IProductResponse {
-    products: IProduct[]
+export interface ProductResponse {
+    products: Product[]
 }

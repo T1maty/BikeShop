@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
-import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
-import {Button} from "../../../../shared/ui"
+import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
+import {Button} from "../../../shared/ui"
 import Select from "react-select"
-import useEditProductCardModal from "../store/EditProductCardModalStore"
+import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {ProductOption} from "../models/ProductOption"
-import {ProductOptionVariant} from "../models/ProductOptionVariant"
+import {ProductOption} from "../../../entities/models/Product/ProductOption"
+import {ProductOptionVariant} from "../../../entities/models/Product/ProductOptionVariant"
 
 interface ControlledProps {
     name: string

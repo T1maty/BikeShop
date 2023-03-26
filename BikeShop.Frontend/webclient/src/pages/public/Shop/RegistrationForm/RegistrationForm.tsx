@@ -3,7 +3,7 @@ import s from './RegistrationForm.module.scss'
 import {Button, ControlledCustomInput, ControlledInput} from '../../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from '../../../../entities/errors/workspaceErrors'
-import {IRegistrationData} from '../../../../entities'
+import {RegistrationData} from '../../../../entities'
 import {useSnackbar} from 'notistack'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
@@ -22,7 +22,7 @@ export const RegistrationForm = () => {
         }
     })
 
-    const onSubmit: SubmitHandler<IRegistrationData> = (data: IRegistrationData) => {
+    const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
         register(data).then((res: any) => {
             enqueueSnackbar('Вы успешно зарегистрировались',
                 {variant: 'success', autoHideDuration: 3000})

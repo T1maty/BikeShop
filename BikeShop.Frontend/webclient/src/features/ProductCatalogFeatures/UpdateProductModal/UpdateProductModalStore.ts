@@ -1,15 +1,15 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {IProduct, IUpdateProduct} from "../../../entities"
+import {Product, UpdateProduct} from "../../../entities"
 import {AxiosResponse} from "axios"
 import {$api} from "../../../shared"
 
 interface createProductModalStore {
     open: boolean
-    setOpen: (value: boolean, product: IProduct) => void
-    product: IProduct
-    update: (data: IUpdateProduct) => Promise<AxiosResponse>
+    setOpen: (value: boolean, product: Product) => void
+    product: Product
+    update: (data: UpdateProduct) => Promise<AxiosResponse>
 }
 
 const useUpdateProductModal = create<createProductModalStore>()(persist(devtools(immer((set) => ({
@@ -18,9 +18,9 @@ const useUpdateProductModal = create<createProductModalStore>()(persist(devtools
         set({open: value})
         set({product: product})
     },
-    product: {} as IProduct,
+    product: {} as Product,
     update: (data) => {
-        return $api.put<IUpdateProduct>('/product/update', data)
+        return $api.put<UpdateProduct>('/product/update', data)
     }
 }))), {
     name: "creatUpdateModalStore",

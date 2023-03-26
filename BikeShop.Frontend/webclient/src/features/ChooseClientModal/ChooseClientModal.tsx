@@ -4,14 +4,14 @@ import {Button, ControlledCustomInput, CustomSearchInput} from '../../shared/ui'
 import s from './ChooseClientModal.module.scss'
 import Input from '../../shared/ui/Input/Input';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {CreateUser, IUser} from '../../entities';
+import {CreateUser, User} from '../../entities';
 import {useSnackbar} from 'notistack';
 import {useDebounce} from '../../shared/hooks/useDebounce';
 import useChooseClientModal from './ChooseClientModalStore';
 import {Errors} from '../../entities/errors/workspaceErrors';
 
 interface ChooseClientModalProps {
-    extraCallback: (user: IUser) => void
+    extraCallback: (user: User) => void
 
     state?: boolean
     setState?: (state: boolean) => void
@@ -69,7 +69,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
         setUsers([])
     }*/
 
-    const userClickHandler = (user: IUser) => {
+    const userClickHandler = (user: User) => {
         extraCallback(user)
     }
 

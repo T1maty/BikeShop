@@ -6,7 +6,7 @@ import {
     CreateService,
     EnumServiceStatus,
     GetUsersResponse,
-    IUser,
+    User,
     ServiceItem,
     UpdateServiceStatus
 } from '../../../entities';
@@ -26,7 +26,7 @@ interface ServiceStore {
     filteredServices: ServiceItem[]
     setFilteredServices: (filteredServices: ServiceItem[]) => void
 
-    masters: IUser[]
+    masters: User[]
     getMasters: () => void
     getAllServicesInfo: () => any // надо исправить тип
     addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>

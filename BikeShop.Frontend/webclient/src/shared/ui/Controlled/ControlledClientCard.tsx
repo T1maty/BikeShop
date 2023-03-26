@@ -1,7 +1,7 @@
 import React from 'react';
 import {ClientCard} from "../../../widgets";
 import {ChooseClientModal} from "../../../features";
-import {IUser} from "../../../entities";
+import {User} from "../../../entities";
 import {Controller, UseFormReturn} from "react-hook-form";
 import {RegisterOptions} from "react-hook-form/dist/types/validator";
 
@@ -33,7 +33,7 @@ export const ControlledClientCard = (props: props) => {
                         <ClientCard user={field.value} onDoubleClick={() => {
                             if (!props.disabled) props.setState(true)
                         }}/>
-                        <ChooseClientModal extraCallback={(user: IUser) => {
+                        <ChooseClientModal extraCallback={(user: User) => {
                             field.onChange(user)
                             props.setState(false)
                         }}

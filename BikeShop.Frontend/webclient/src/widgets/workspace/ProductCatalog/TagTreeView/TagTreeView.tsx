@@ -3,7 +3,7 @@ import Box from "@mui/material/Box"
 import TreeView from "@mui/lab/TreeView"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import {IProductTag} from "../../../../entities"
+import {ProductTag} from "../../../../entities"
 import TagTreeViewContextMenu from "./TagTreeViewContextMenu"
 import {TagTreeViewNodes} from "./TagTreeViewNodes"
 import {CreateTagModal, UpdateTagModal} from "../../../../features"
@@ -19,7 +19,7 @@ export const TagTreeView = () => {
     const updateTag = useTagTreeView(s => s.updateTag)
 
     useEffect(() => {
-        fetchTags().then((r) => {setTreeViewData(r.data.tags as IProductTag[])})
+        fetchTags().then((r) => {setTreeViewData(r.data.tags as ProductTag[])})
     }, [])
 
     return (

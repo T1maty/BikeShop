@@ -1,4 +1,4 @@
-export interface IUser {
+export interface User {
     shopId: number
     id: string
     lastName: string

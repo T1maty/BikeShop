@@ -3,11 +3,11 @@ import {Box, Button, Modal} from "@mui/material";
 import {ControlledCheckbox, ControlledInput} from "../../../shared/ui";
 import {useSnackbar} from "notistack";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {CreateWorkGroup, WorkGroup} from "../../../entities";
+import {CreateWorkGroup, Work, Group} from "../../../entities"
 import {$api} from "../../../shared";
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
 
-const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (value: boolean) => void, parent: WorkGroup }) => {
+export const CreateWorkGroupModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void, parent: Group }) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const {addGroup} = useWorkCatalog(s => s)
@@ -39,7 +39,7 @@ const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (valu
         data.parentId = props.parent.id
         console.log('submitData', data)
 
-        $api.post<WorkGroup>('/group/create', data).then((r) => {
+        $api.post<Group>('/group/create', data).then((r) => {
             formControl.reset()
             props.setVisibility(false)
             addGroup(r.data)
@@ -79,7 +79,5 @@ const CreateWorkModalGroup = (props: { visibility: boolean, setVisibility: (valu
                 }}>Отмена</Button>
             </Box>
         </Modal>
-    );
-};
-
-export default CreateWorkModalGroup;
+    )
+}

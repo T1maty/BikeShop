@@ -6,9 +6,9 @@ import {ChooseClientModal, CreateProductModal, PayModal} from '../../../features
 import usePayModal from '../../../features/PayModal/PayModalStore'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {IUser} from "../../../entities"
+import {User} from "../../../entities"
 import useMainPageStore from "./MainPageStore"
-import {EditProductCardModal} from "../../../features/ProductCatalogFeatures/EditProductCardModal/ui/EditProductCardModal"
+import {EditProductCardModal} from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal"
 
 export const MainPage = () => {
 
@@ -35,7 +35,7 @@ export const MainPage = () => {
         {id: 10, task: 'task 10'},
     ])
 
-    const chooseClientHandler = (user: IUser) => {
+    const chooseClientHandler = (user: User) => {
         // setServiceUser(user)
         setUser(user)
         setIsClientChosen(true)
@@ -130,7 +130,7 @@ export const MainPage = () => {
                 <div className={s.content_rightSide}>
                     <div className={s.rightSide_top}>
                         <div className={s.rightSide_top_search}>
-                            <ChooseClientModal extraCallback={(user: IUser) => {
+                            <ChooseClientModal extraCallback={(user: User) => {
                                 chooseClientHandler(user)
                             }}/>
                             <Button buttonDivWrapper={s.search_chooseClientButton}

@@ -1,5 +1,5 @@
 import {ProductOption} from "./ProductOption"
-import {ProductSpecification} from "../api/EditProductCardModalAPI"
+import {ProductSpecification} from "./ProductSpecification"
 
 export interface UpdateProductCard {
     options: ProductOption[]

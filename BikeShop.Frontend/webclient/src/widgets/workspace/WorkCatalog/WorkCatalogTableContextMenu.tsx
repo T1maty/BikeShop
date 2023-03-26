@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import MenuItem from "@mui/material/MenuItem";
 import {Menu} from "@mui/material";
-import {CreateWorkModal} from "../../../features/WorkCatalogFeatures/CreateWorkModal/CreateWorkModal";
-import UpdateWorkModal from "../../../features/WorkCatalogFeatures/UpdateWorkModal/UpdateWorkModal";
+import {CreateWorkModal, UpdateWorkModal} from "../../../features";
 
 const WorkCatalogTableContextMenu = (props: { x: number, y: number, visibility: boolean, setVisibility: (value: boolean) => void }) => {
 
@@ -11,8 +10,9 @@ const WorkCatalogTableContextMenu = (props: { x: number, y: number, visibility: 
 
     return (
         <>
-            <UpdateWorkModal visibility={v1} setVisibility={sV1}/>
             <CreateWorkModal visibility={v} setVisibility={sV}/>
+            <UpdateWorkModal visibility={v1} setVisibility={sV1}/>
+
             <Menu
                 onContextMenu={(event) => {
                     event.preventDefault()

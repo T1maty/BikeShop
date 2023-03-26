@@ -2,11 +2,11 @@ import React from 'react'
 import {Box, Button, Modal, Typography} from "@mui/material"
 import useCreateTagModal from "./CreateTagModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {ICreateTag, IProductTag} from "../../../entities"
+import {CreateTag, ProductTag} from "../../../entities"
 import {ControlledCheckbox, ControlledInput} from "../../../shared/ui"
 
 interface props {
-    onSuccess?: (tag: IProductTag) => void
+    onSuccess?: (tag: ProductTag) => void
 }
 
 export const CreateTagModal = (props: props) => {
@@ -15,7 +15,7 @@ export const CreateTagModal = (props: props) => {
     const parentNode = useCreateTagModal(s => s.parentNode)
     const createTag = useCreateTagModal(s => s.createTag)
 
-    const control = useForm<ICreateTag>({
+    const control = useForm<CreateTag>({
         defaultValues: {
             name: "",
             sortOrder: 0,
@@ -40,7 +40,7 @@ export const CreateTagModal = (props: props) => {
     };
 
 
-    const onSubmit: SubmitHandler<ICreateTag> = (data: ICreateTag) => {
+    const onSubmit: SubmitHandler<CreateTag> = (data: CreateTag) => {
         data.parentId = parentNode.id
         createTag(data).then(r => {
             setOpen(false)

@@ -1,16 +1,16 @@
 import {create} from "zustand";
 import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {ICreateProduct, IProduct, IProductTag} from "../../../entities";
+import {CreateProduct, Product, ProductTag} from "../../../entities";
 import {AxiosResponse} from "axios";
 import {$api} from "../../../shared";
 
 interface createProductModalStore {
     open: boolean
     setOpen: (value: boolean) => void
-    tags: IProductTag[]
-    setTagAndOpen: (tag: IProductTag) => void
-    create: (data: ICreateProduct) => Promise<AxiosResponse<IProduct>>
+    tags: ProductTag[]
+    setTagAndOpen: (tag: ProductTag) => void
+    create: (data: CreateProduct) => Promise<AxiosResponse<Product>>
 }
 
 const useCreateProductModal = create<createProductModalStore>()(persist(devtools(immer((set, get) => ({
@@ -25,7 +25,7 @@ const useCreateProductModal = create<createProductModalStore>()(persist(devtools
         set({tags: [tag]})
     },
     create: (data) => {
-        return $api.post<IProduct>('/product/create', data)
+        return $api.post<Product>('/product/create', data)
     }
 }))), {
     name: "creatProductModalStore",

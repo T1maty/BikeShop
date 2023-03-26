@@ -1,15 +1,16 @@
-import {IUser} from "../models/IUser";
+import {User} from "../models/Auth/User"
 
 export interface GetUsersResponse {
     users: [
         {
-            user: IUser,
+            user: User
             userRoles: string[]
         }
     ]
 }
 
-export interface UserResponse {
+// ?
+export interface GetUserResponseGet {
     users: GetUsersResponse[]
 }
 
