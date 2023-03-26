@@ -1,15 +1,15 @@
-import {create} from 'zustand';
-import {devtools} from 'zustand/middleware';
-import {immer} from 'zustand/middleware/immer';
-import {$api} from '../../../shared';
+import {create} from 'zustand'
+import {devtools} from 'zustand/middleware'
+import {immer} from 'zustand/middleware/immer'
+import {$api} from '../../../shared'
 import {
     CreateService,
     EnumServiceStatus,
-    GetUsersResponse,
     User,
     ServiceItem,
     UpdateServiceStatus
-} from '../../../entities';
+} from '../../../entities'
+import {ServiceAPI} from '../../../entities/api/ServiceAPI'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
@@ -28,9 +28,9 @@ interface ServiceStore {
 
     masters: User[]
     getMasters: () => void
-    getAllServicesInfo: () => any // надо исправить тип
-    addNewService: (data: CreateService) => any // Promise<AxiosResponse<CreateServiceResponse>>
-    updateService: (updateData: CreateService) => any // надо исправить тип
+    getAllServicesInfo: () => any
+    addNewService: (data: CreateService) => any
+    updateService: (updateData: CreateService) => any
     updateServiceStatus: (data: UpdateServiceStatus) => void
 }
 
@@ -57,10 +57,10 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
 
     masters: [],
     getMasters: () => {
-        return $api.get<GetUsersResponse>('/user/find').then(res => {
+        ServiceAPI.getMasters().then((res: any) => {
 
             console.log(res.data)
-            let users = res.data.users.map(n => {
+            let users = res.data.users.map((n: any) => {
                 if (n.user.shopId != 0) return n.user
             })
 
@@ -74,7 +74,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     getAllServicesInfo: () => {
         set({isLoading: true})
 
-        return $api.get<ServiceItem[]>('/service/getbyshopid/1').then(res => {
+        ServiceAPI.getAllServicesInfo().then(res => {
             set(state => {
                 state.services = res.data
                 state.filteredServices = res.data
@@ -85,7 +85,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     addNewService: (data) => {
-        return $api.post('/service/create', data).then(res => {
+        ServiceAPI.addNewService(data).then((res: any) => {
             set(state => {
                 state.services.push(res.data)
             })
@@ -100,14 +100,14 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     updateService: (updateData) => {
-        return $api.put('/service/updateservice', updateData).then(res => {
-            $api.get('/service/getbyshopid/1').then(res => {
+        ServiceAPI.updateService(updateData).then((res: any) => {
+            ServiceAPI.getAllServicesInfo().then(res => {
                 const currentListStatus = useService.getState().serviceListStatus
 
                 set(state => {
                     state.services = res.data
                 })
-                // надо сделать универсальную функцию?
+                // надо сделать универсальную функцию ?!
                 if (currentListStatus === 'Waiting') {
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
@@ -128,8 +128,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true})
 
-        return $api.put(`/service/updateservicestatus?id=${data.id}&status=${data.status}`)
-            .then(res => {
+        ServiceAPI.updateServiceStatus(data)
+            .then((res: any) => {
                 const currentListStatus = useService.getState().serviceListStatus
 
                 if (currentListStatus) {
