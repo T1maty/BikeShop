@@ -5,8 +5,7 @@ import {Button} from "../../../shared/ui"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {ProductOption} from "../../../entities/models/Product/ProductOption"
-import {ProductOptionVariant} from "../../../entities/models/Product/ProductOptionVariant"
+import {ProductOption, ProductOptionVariant} from "../../../entities"
 
 interface ControlledProps {
     name: string

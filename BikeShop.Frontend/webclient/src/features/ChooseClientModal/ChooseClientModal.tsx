@@ -47,7 +47,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
         addNewUser(data).then((response) => {
 
-            setState ? setState(false) : setOpen(false)////
+            setState ? setState(false) : setOpen(false)
 
             formControl.reset()
             enqueueSnackbar('Клиент добавлен', {variant: 'success', autoHideDuration: 3000})
@@ -182,7 +182,6 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                             </Button>
                         </div>
                     </div>
-
                 </div>
             </form>
         </Modal>

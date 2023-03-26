@@ -1,4 +1,4 @@
-import {CreateQuantityUnit, UpdateQuantityUnit} from "../requests/CreateQuantityUnit"
+import {UpdateQuantityUnit} from "../requests/CreateQuantityUnit"
 
 export interface GetQuantityUnitResponse extends UpdateQuantityUnit {
     groupName: string

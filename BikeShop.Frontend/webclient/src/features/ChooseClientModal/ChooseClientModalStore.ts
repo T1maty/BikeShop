@@ -1,21 +1,15 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {$api} from "../../shared";
-import {AxiosResponse} from "axios";
-import {CreateUser, User} from '../../entities';
-
-interface SearchClient {
-    fio: string
-    phoneNumber: string
-}
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {$api} from "../../shared"
+import {AxiosResponse} from "axios"
+import {CreateUser, User} from '../../entities'
+import {ChooseClientAPI, SearchClient} from "../../entities/api/ChooseClientAPI"
 
 interface ChooseClientModalStore {
     openClientModal: boolean
     setOpenClientModal: (value: boolean) => void
     isLoading: boolean
-    // isClientChosen: boolean
-    // setIsClientChosen: (value: boolean) => void
     users: User[]
     setUsers: (users: any) => void
     fio: string
@@ -30,8 +24,6 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
     openClientModal: false,
     setOpenClientModal: (value) => set({openClientModal: value}),
     isLoading: false,
-    // isClientChosen: false,
-    // setIsClientChosen: (value) => set({isClientChosen: value}),
 
     users: [],
     setUsers: (users) => set({users: users}),
@@ -42,8 +34,8 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
 
     findUser: (data: SearchClient) => {
         set({isLoading: true})
-        return $api.get(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
-            .then(res => {
+        ChooseClientAPI.findUser(data)
+            .then((res: any) => {
             set(state => {state.users = [...res.data.users]})
             set({isLoading: false})
         })
