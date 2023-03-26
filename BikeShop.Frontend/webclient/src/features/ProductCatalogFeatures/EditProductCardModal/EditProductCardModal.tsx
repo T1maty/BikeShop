@@ -10,6 +10,8 @@ import EditProductCardOption from "./EditProductCardOption";
 import EditProductCardDescription from "./EditProductCardDescription";
 import EditProductCardGallery from "./EditProductCardGallery";
 import EditProductCardTags from "./EditProductCardTags";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {UpdateProductCard} from "../../../entities";
 
 interface EditProductCardModalProps {
     productCardData?: any
@@ -40,29 +42,29 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     // ----------------------------------- //
 
-    // const formControl = useForm<any>({
-    //     defaultValues: {
-    //         option: '',
-    //         specification: '',
-    //     }
-    // })
-    //
-    // const onSubmit: SubmitHandler<any> = (data: any) => {
-    //     // тестовые данные
-    //     const newDetail = {id: '555', name: 'New Characteristic', description: data.detail}
-    //     setSpecifications([newDetail, ...specifications])
-    //
-    //     // добавление карточки
-    //     //     addNewService(data).then((res: any) => {
-    //     //         setIsCreating(false)
-    //     //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-    //     //     }).catch((error: any) => {
-    //     //         let message = error(error.response.data.errorDescription).toString()
-    //     //         formControl.setError('name', {type: 'serverError', message: message})
-    //     //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-    //     //         console.error(error.response.data)
-    //     //     })
-    // }
+    const formControl = useForm<UpdateProductCard>({
+        defaultValues: {
+            options: [],
+            specifications: [],
+        }
+    })
+
+
+    const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
+        // тестовые данные
+        console.log('submitData', data)
+
+        // добавление карточки
+        //     addNewService(data).then((res: any) => {
+        //         setIsCreating(false)
+        //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+        //     }).catch((error: any) => {
+        //         let message = error(error.response.data.errorDescription).toString()
+        //         formControl.setError('name', {type: 'serverError', message: message})
+        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+        //         console.error(error.response.data)
+        //     })
+    }
 
     // ----------------------------------- //
 
@@ -94,58 +96,60 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <div className={s.editProductCardModal_mainBlock}>
-                <div className={s.editProductCardModal_leftSide}>
-                    {
-                        //////////////////////////////////////
-                    }
-                    <EditProductCardTags productCardData={productCardData}/>
-                    {
-                        //////////////////////////////////////
-                    }
-                    <div className={s.rightSide_productStatus}>
-                        Статус товара
+            <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                <div className={s.editProductCardModal_mainBlock}>
+                    <div className={s.editProductCardModal_leftSide}>
+                        {
+                            //////////////////////////////////////
+                        }
+                        <EditProductCardTags productCardData={productCardData}/>
+                        {
+                            //////////////////////////////////////
+                        }
+                        <div className={s.rightSide_productStatus}>
+                            Статус товара
+                        </div>
+                        {
+                            //////////////////////////////////////
+                        }
+                        <EditProductCardGallery/>
+                        {
+                            //////////////////////////////////////
+                        }
                     </div>
-                    {
-                        //////////////////////////////////////
-                    }
-                    <EditProductCardGallery/>
-                    {
-                        //////////////////////////////////////
-                    }
-                </div>
 
-                {
-                    //////////////////////////////////////
-                }
-                <EditProductCardDescription/>
-                {
-                    //////////////////////////////////////
-                }
-
-                <div className={s.editProductCardModal_rightSide}>
                     {
                         //////////////////////////////////////
                     }
-                    <EditProductCardOption/>
-                    <EditProductCardSpecifications/>
+                    <EditProductCardDescription/>
                     {
                         //////////////////////////////////////
                     }
 
+                    <div className={s.editProductCardModal_rightSide}>
+                        {
+                            //////////////////////////////////////
+                        }
+                        <EditProductCardOption control={formControl} name={'options'}/>
+                        <EditProductCardSpecifications control={formControl} name={'specifications'}/>
+                        {
+                            //////////////////////////////////////
+                        }
+
+
+                    </div>
                     <div className={s.rightSide_mainButtons}>
                         <Button onClick={() => {
                             setOpen(false)
                         }}>
                             Отмена
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button type={'submit'}>
                             Сохранить
                         </Button>
                     </div>
                 </div>
-            </div>
+            </form>
         </Modal>
     )
 }

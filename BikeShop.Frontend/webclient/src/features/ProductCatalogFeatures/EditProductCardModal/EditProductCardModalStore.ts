@@ -1,13 +1,9 @@
 import {create} from "zustand"
-import {devtools, persist} from "zustand/middleware"
+import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
-import {AxiosResponse} from "axios"
-import {
-    ProductCardImage,
-    ProductCardOption, ProductCardOptionVariant,
-    ProductCardSpecification, ProductCardUserSpecification
-} from '../../../entities/models/ProductCardModels'
+import {ProductCardImage, ProductCardOption} from '../../../entities/models/ProductCardModels'
+import {ProductOption, ProductSpecification} from "../../../entities";
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -15,21 +11,13 @@ interface EditProductCardModalStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
 
-    cardOptions: ProductCardOption[]
+    cardOptions: ProductOption[]
     getCardOptions: () => void
     currentCardOptions: ProductCardOption[]
-    setCurrentCardOptions: (currentCardOptions: ProductCardOption[]) => void
-    addCurrentCardOption: (option: ProductCardOption) => void
 
-    currentOptionVariants: ProductCardOptionVariant[]
-    setCurrentOptionsVariants: (currentOptionVariants: ProductCardOptionVariant[]) => void
-    addCurrentOptionVariant: (variant: ProductCardOptionVariant) => void
 
-    specifications: ProductCardSpecification[]
+    specifications: ProductSpecification[]
     getSpecifications: () => void
-    currentSpecifications: ProductCardUserSpecification[]
-    setCurrentSpecifications: (currentSpecifications: ProductCardUserSpecification[]) => void
-    addCurrentSpecification: (spec: ProductCardUserSpecification) => void
 
     galleryImages: ProductCardImage[]
     setGalleryImages: (image: any) => void
@@ -44,7 +32,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
 
     cardOptions: [],
     getCardOptions: () => {
-        return $api.get<ProductCardOption[]>('/productcard/getalloptions').then(res => {
+        return $api.get<ProductOption[]>('/productcard/getalloptions').then(res => {
             set(state => {
                 state.cardOptions = res.data
                 console.log('все доступные опции', state.cardOptions)
@@ -54,23 +42,10 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
     currentCardOptions: [],
-    setCurrentCardOptions: (currentCardOptions) => set(state => {
-        state.currentCardOptions = currentCardOptions
-    }),
-    addCurrentCardOption: (option) => set(state => {
-        return {currentCardOptions: [option, ...state.currentCardOptions]}
-    }),
-    currentOptionVariants: [],
-    setCurrentOptionsVariants: (currentOptionVariants) => set(state => {
-        state.currentOptionVariants = currentOptionVariants
-    }),
-    addCurrentOptionVariant: (variant) => set(state => {
-        return {currentOptionVariants: [variant, ...state.currentOptionVariants]}
-    }),
 
     specifications: [],
     getSpecifications: () => {
-        return $api.get<ProductCardSpecification[]>('/productcard/getallspecifications').then(res => {
+        return $api.get<ProductSpecification[]>('/productcard/getallspecifications').then(res => {
             set(state => {
                 state.specifications = res.data
                 console.log('все доступные спецификации', state.specifications)
@@ -79,13 +54,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('спецификации не получены')
         })
     },
-    currentSpecifications: [],
-    setCurrentSpecifications: (currentSpecifications) => set(state => {
-        state.currentSpecifications = currentSpecifications
-    }),
-    addCurrentSpecification: (spec) => set(state => {
-        return {currentSpecifications: [spec, ...state.currentSpecifications]}
-    }),
 
     galleryImages: [],
     setGalleryImages: (image) => set(state => {
@@ -95,7 +63,9 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         // set({isLoading: true})
         const productId = 1
         return $api.post(`/product/addimagetoproduct?productId=${productId}`, data).then(res => {
-            set(state => {state.galleryImages.push(res.data)})
+            set(state => {
+                state.galleryImages.push(res.data)
+            })
             // set({isLoading: false})
         }).catch((error: any) => {
             console.log('изорабражение не загружено', error)
