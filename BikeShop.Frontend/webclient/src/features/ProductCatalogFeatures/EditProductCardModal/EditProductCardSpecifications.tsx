@@ -18,7 +18,15 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
     // характеристика (spec)
     const specifications = useEditProductCardModal(s => s.specifications)
-    const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecification>({} as ProductSpecification)
+    const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecification>()
+
+    const GetOptionsHandler = (field: any) => {
+        let ids: number[] = []
+        field.value.forEach((n: ProductSpecification) => {
+            ids.push(n.id)
+        })
+        return specifications.filter(n => !ids.includes(n.id))
+    }
 
     return (
         <div className={props.divClassName}>
@@ -85,19 +93,19 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                             ...selectedSpecification,
                                             description: 'Введите описание характеристики'
                                         }])
-                                        setSelectedSpecification({} as ProductSpecification)
+                                        setSelectedSpecification(undefined)
                                     }}
-                                    disabled={selectedSpecification === null}
+                                    disabled={selectedSpecification === undefined}
                             >
                                 +
                             </Button>
 
                             <Select
                                 className={s.options_search}
-                                options={specifications}
+                                options={GetOptionsHandler(field)}
                                 placeholder={'Характеристика'}
                                 isSearchable={true}
-                                value={selectedSpecification}
+                                value={selectedSpecification ? selectedSpecification : null}
                                 onChange={(value) => {
                                     setSelectedSpecification(value as ProductSpecification)
                                 }}

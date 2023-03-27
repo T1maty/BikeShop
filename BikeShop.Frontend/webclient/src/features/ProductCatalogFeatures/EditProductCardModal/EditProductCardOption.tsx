@@ -124,7 +124,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                         setSelectedOptionVariant([])
                                                                         console.log(selectedOptionVariant)
                                                                     }}
-                                                                    disabled={selectedOptionVariant.find(n => n.id === option.id) === null}
+                                                                    disabled={selectedOptionVariant.find(n => n.id === option.id) === undefined}
                                                             >
                                                                 +
                                                             </Button>
