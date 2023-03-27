@@ -101,10 +101,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                                          :
                                                                                          n)
                                                                                      field.onChange(options)
-                                                                                     setSelectedOptionVariant([{
-                                                                                         id: 0,
-                                                                                         value: {} as ProductOptionVariant
-                                                                                     }])
+                                                                                     setSelectedOptionVariant([])
+
                                                                                  }}
                                                                             />
                                                                         </div>
@@ -123,10 +121,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                             :
                                                                             n)
                                                                         field.onChange(options)
-                                                                        setSelectedOptionVariant([{
-                                                                            id: 0,
-                                                                            value: {} as ProductOptionVariant
-                                                                        }])
+                                                                        setSelectedOptionVariant([])
+                                                                        console.log(selectedOptionVariant)
                                                                     }}
                                                                     disabled={selectedOptionVariant.find(n => n.id === option.id) === null}
                                                             >
@@ -137,7 +133,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 options={availableVariants()}
                                                                 placeholder="Разновидность опции"
                                                                 isSearchable={true}
-                                                                value={selectedOptionVariant.find(n => n.id === option.id)}
+                                                                value={selectedOptionVariant.find(n => n.id === option.id) ? selectedOptionVariant.find(n => n.id === option.id) : null}
                                                                 onChange={(value) => {
                                                                     if (value != undefined) {
                                                                         let buf = selectedOptionVariant.filter(n => n.id != option.id)
