@@ -21,7 +21,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
 
     // текущие значения селектов
     const [selectedOption, setSelectedOption] = useState<any>(null) // опция
-    const [selectedOptionVariant, setSelectedOptionVariant] = useState<any[]>(new Array(100)) // разновидность опции
+    const [selectedOptionVariant, setSelectedOptionVariant] = useState<{ id: number, value: ProductOptionVariant }[]>([]) // разновидность опции
 
     const availableOptions = (field: any) => {
         let optionIds: number[] = []
@@ -54,7 +54,12 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                             let optionItem = cardOptions.filter(n => n.id === option.id)[0]
                                             let ids: number[] = []
                                             option.optionVariants.map(n => ids.push(n.id))
-                                            return optionItem.optionVariants.filter(n => !ids.includes(n.id))
+                                            let buf = optionItem.optionVariants.filter(n => !ids.includes(n.id))
+                                            let result: { id: number, value: any }[] = []
+                                            buf.forEach(n => {
+                                                result.push({id: option.id, value: n})
+                                            })
+                                            return result
                                         }
 
                                         return (
@@ -68,7 +73,10 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                             <div className={s.item_deleteFullItem}
                                                                  onClick={() => {
                                                                      field.onChange(field.value.filter((n: ProductOption) => n.id != option.id))
-                                                                     setSelectedOptionVariant([])
+                                                                     setSelectedOptionVariant([{
+                                                                         id: 0,
+                                                                         value: {} as ProductOptionVariant
+                                                                     }])
                                                                  }}
                                                             >
                                                                 Удалить опцию
@@ -93,7 +101,10 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                                          :
                                                                                          n)
                                                                                      field.onChange(options)
-                                                                                     setSelectedOptionVariant([])
+                                                                                     setSelectedOptionVariant([{
+                                                                                         id: 0,
+                                                                                         value: {} as ProductOptionVariant
+                                                                                     }])
                                                                                  }}
                                                                             />
                                                                         </div>
@@ -107,14 +118,17 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                         let options = field.value.map((n: ProductOption) => n.id === option.id ?
                                                                             {
                                                                                 ...n,
-                                                                                optionVariants: n.optionVariants != undefined ? [...n.optionVariants, selectedOptionVariant[option.id]] : [selectedOptionVariant[option.id]]
+                                                                                optionVariants: n.optionVariants != undefined ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value] : [selectedOptionVariant.find(n => n.id === option.id)?.value]
                                                                             }
                                                                             :
                                                                             n)
                                                                         field.onChange(options)
-                                                                        setSelectedOptionVariant([])
+                                                                        setSelectedOptionVariant([{
+                                                                            id: 0,
+                                                                            value: {} as ProductOptionVariant
+                                                                        }])
                                                                     }}
-                                                                    disabled={selectedOptionVariant[option.id] === null}
+                                                                    disabled={selectedOptionVariant.find(n => n.id === option.id) === null}
                                                             >
                                                                 +
                                                             </Button>
@@ -123,14 +137,16 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 options={availableVariants()}
                                                                 placeholder="Разновидность опции"
                                                                 isSearchable={true}
-                                                                value={selectedOptionVariant[option.id]}
-                                                                onChange={(value: any) => {
-                                                                    let buf = selectedOptionVariant
-                                                                    buf[option.id] = value
-                                                                    setSelectedOptionVariant(buf)
+                                                                value={selectedOptionVariant.find(n => n.id === option.id)}
+                                                                onChange={(value) => {
+                                                                    if (value != undefined) {
+                                                                        let buf = selectedOptionVariant.filter(n => n.id != option.id)
+                                                                        buf.push({id: option.id, value: value.value})
+                                                                        setSelectedOptionVariant(buf)
+                                                                    }
                                                                 }}
-                                                                getOptionLabel={label => label!.name}
-                                                                getOptionValue={value => value!.name}
+                                                                getOptionLabel={label => label!.value.name}
+                                                                getOptionValue={value => value!.value.name}
                                                                 noOptionsMessage={() => 'Опция не найдена'}
                                                             />
                                                         </div>
