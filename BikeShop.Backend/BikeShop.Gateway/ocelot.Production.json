@@ -70,12 +70,27 @@
       ],
       "SwaggerKey": "payments"
     },
-{
+	{
       "UpstreamPathTemplate": "/api/currency/update",
       "UpstreamHttpMethod": [
         "Put"
       ],
       "DownstreamPathTemplate": "/currency/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
+	{
+      "UpstreamPathTemplate": "/api/currency/gethistory",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/currency/gethistory",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -1027,16 +1042,6 @@
           "Name": "Payments API",
           "Version": "v1",
           "Url": "http://bikeshop.payments:80/swagger/v1/swagger.json"
-        }
-      ]
-    },
-	{
-      "Key": "fileservice",
-      "Config": [
-        {
-          "Name": "FileService API",
-          "Version": "v1",
-          "Url": "http://bikeshop.fileservice:80/swagger/v1/swagger.json"
         }
       ]
     }

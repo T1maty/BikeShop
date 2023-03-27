@@ -69,7 +69,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     return (
         <Modal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -98,7 +100,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                     {
                         //////////////////////////////////////
                     }
-                        <EditProductCardDescription/>
+                    <EditProductCardDescription/>
                     {
                         //////////////////////////////////////
                     }
@@ -120,7 +122,9 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         }
 
                         <div className={s.rightSide_mainButtons}>
-                            <Button onClick={() => {setOpen(false)}}>
+                            <Button onClick={() => {
+                                setOpen(false)
+                            }}>
                                 Отмена
                             </Button>
                             <Button type={'submit'}>
@@ -128,6 +132,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             </Button>
                         </div>
                     </div>
+
                 </div>
             </form>
         </Modal>

@@ -25,6 +25,8 @@ namespace BikeShop.Payments.Application.Services
             var ent = new Currency { Coefficient = dto.Coefficient, Enabled = dto.Enabled, IsBaseCurrency = dto.IsBaseCurrency, Symbol = dto.Symbol, Name = dto.Name };
             await _context.Currencies.AddAsync(ent);
             await _context.SaveChangesAsync(new CancellationToken());
+            await _context.CurrencyHistories.AddAsync(new CurrencyHistory { Coefficient = ent.Coefficient, CurrencyId = ent.Id});
+            await _context.SaveChangesAsync(new CancellationToken());
             return ent;
         }
 
@@ -33,9 +35,19 @@ namespace BikeShop.Payments.Application.Services
             return await _context.Currencies.ToListAsync();
         }
 
+        public async Task<List<CurrencyHistory>> GetHistory(int currencyId)
+        {
+            return await _context.CurrencyHistories.Where(n => n.CurrencyId == currencyId).ToListAsync();
+        }
+
         public async Task<Currency> Update(UpdateCurrencyDTO dto)
         {
             var ent = await _context.Currencies.FindAsync(dto.Id);
+
+            if(dto.Coefficient != ent.Coefficient)
+            {
+                await _context.CurrencyHistories.AddAsync(new CurrencyHistory { Coefficient = dto.Coefficient, CurrencyId = ent.Id });
+            }
 
             ent.IsBaseCurrency = dto.IsBaseCurrency;
             ent.UpdatedAt = DateTime.Now;

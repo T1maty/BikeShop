@@ -18,21 +18,27 @@ namespace BikeShop.Payments.WebApi.Controllers
         }
 
         [HttpGet("getall")]
-        public async Task<List<Currency>> GetProductCard()
+        public async Task<List<Currency>> GetAll()
         {
             return await _currencyService.GetAll();
         }
 
         [HttpPost("create")]
-        public async Task<Currency> GetProductCard(CreateCurrencyDTO dto)
+        public async Task<Currency> Create(CreateCurrencyDTO dto)
         {
             return await _currencyService.Create(dto);
         }
 
         [HttpPut("update")]
-        public async Task<Currency> GetProductCard(UpdateCurrencyDTO dto)
+        public async Task<Currency> Update(UpdateCurrencyDTO dto)
         {
             return await _currencyService.Update(dto);
+        }
+
+        [HttpGet("gethistory")]
+        public async Task<List<CurrencyHistory>> GetCurrencyHistpry(int currencyID)
+        {
+            return await _currencyService.GetHistory(currencyID);
         }
     }
 }

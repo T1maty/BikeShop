@@ -13,5 +13,6 @@ namespace BikeShop.Payments.Application.Interfaces
         public Task<List<Currency>> GetAll();
         public Task<Currency> Create(CreateCurrencyDTO dto);
         public Task<Currency> Update(UpdateCurrencyDTO dto);
+        public Task<List<CurrencyHistory>> GetHistory(int currencyId);
     }
 }
