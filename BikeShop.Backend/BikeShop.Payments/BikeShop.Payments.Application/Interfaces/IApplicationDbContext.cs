@@ -9,6 +9,9 @@ public interface IApplicationDbContext
 {
     public DbSet<Currency> Currencies { get; set; }
     public DbSet<CurrencyHistory> CurrencyHistories { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
+    public DbSet<DiscountProductBind> DiscountProductBinds { get; set; }
+    public DbSet<Payment> Payments { get; set; }
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

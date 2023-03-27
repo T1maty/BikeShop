@@ -35,7 +35,56 @@
       ],
       "SwaggerKey": "fileservice"
     },
+	
+	
+	
+	
+	{
+      "UpstreamPathTemplate": "/api/currency/getall",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/currency/getall",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 
+    {
+      "UpstreamPathTemplate": "/api/currency/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/currency/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
+{
+      "UpstreamPathTemplate": "/api/currency/update",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/currency/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 
 
 {
@@ -146,11 +195,6 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	
-	
-	
-	
 	{
       "UpstreamPathTemplate": "/api/productcard/getproductcard",
       "UpstreamHttpMethod": [
@@ -271,10 +315,6 @@
       ],
       "SwaggerKey": "products"
     },
-	
-	
-	
-	
     {
       "UpstreamPathTemplate": "/api/storagecrud/getall",
       "UpstreamHttpMethod": [
@@ -430,10 +470,6 @@
       ],
       "SwaggerKey": "products"
     },
-
-
-
-
     {
       "UpstreamPathTemplate": "/api/quantityunit/getall",
       "UpstreamHttpMethod": [
@@ -981,6 +1017,26 @@
           "Name": "Shop API",
           "Version": "v1",
           "Url": "http://bikeshop.shop:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+	{
+      "Key": "payments",
+      "Config": [
+        {
+          "Name": "Payments API",
+          "Version": "v1",
+          "Url": "http://bikeshop.payments:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+	{
+      "Key": "fileservice",
+      "Config": [
+        {
+          "Name": "FileService API",
+          "Version": "v1",
+          "Url": "http://bikeshop.fileservice:80/swagger/v1/swagger.json"
         }
       ]
     }
