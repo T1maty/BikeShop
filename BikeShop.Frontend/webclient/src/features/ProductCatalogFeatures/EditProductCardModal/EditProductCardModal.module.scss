@@ -191,8 +191,7 @@
             @include flexOnlyBetween;
             gap: $defaultLargeMargin;
             width: 100%;
-            position: relative;
-            //z-index: -2;
+            z-index: 0; // чтобы кнопка была под селектом
 
             button {
                 width: 200px;

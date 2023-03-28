@@ -293,7 +293,6 @@
 @mixin selectOptionsBlock() {
     @include defaultBlockStyles($themeColorGray);
     height: 50%;
-    //height: 100%;
 
     > div:not(:last-child) {
         @include flexColumnOnly;
