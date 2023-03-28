@@ -58,7 +58,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         getProductCard(2)
         getCardOptions()
         getSpecifications()
-        // console.log('продукт из строки', currentProduct)
     // }, [currentProduct, productInfoFromRow])
     }, [])
 
@@ -78,7 +77,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags/>
                             <div className={s.rightSide_productStatus}>
-                                Статус товара: {currentProduct.product.checkStatus}
+                                Статус товара: {/*{currentProduct.product.checkStatus}*/}
                             </div>
                             <EditProductCardGallery/>
                         </div>

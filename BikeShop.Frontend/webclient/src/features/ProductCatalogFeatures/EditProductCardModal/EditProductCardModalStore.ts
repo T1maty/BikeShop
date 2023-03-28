@@ -8,7 +8,6 @@ import {
     ProductImage,
     ProductOption,
     ProductSpecification,
-    ProductTags
 } from '../../../entities'
 
 interface EditProductCardModalStore {
@@ -32,12 +31,8 @@ interface EditProductCardModalStore {
     getSpecifications: () => void
 
     galleryImages: ProductImage[]
-    // setGalleryImages: (image: any) => void
     setGalleryImages: (images: ProductImage[]) => void
     uploadNewImage: (data: any) => void
-
-    productTags: ProductTags[]
-    setProductTags: (tags: ProductTags[]) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
@@ -57,7 +52,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             set(state => {
                 state.currentProduct = res.data
                 state.galleryImages = res.data.productImages
-                state.productTags = res.data.productTags
                 console.log('карточка из таблицы', state.currentProduct)
             })
         }).catch((error: any) => {
@@ -95,9 +89,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     },
 
     galleryImages: [],
-    // setGalleryImages: (image) => set(state => {
-    //     return { galleryImages: [image, ...state.galleryImages] }
-    // }),
     setGalleryImages: (images) => set(state => {
         state.galleryImages = images
     }),
@@ -114,11 +105,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('изорабражение не загружено', error)
         })
     },
-
-    productTags: [],
-    setProductTags: (tags) => set(state => {
-        state.productTags = tags
-    }),
 })))/*, {
     name: "editProductCardModal",
     version: 1
