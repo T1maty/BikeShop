@@ -8,6 +8,12 @@ import useEditProductCardModal
 export const ProductCatalog = () => {
 
     const setOpenEditProductCardModal = useEditProductCardModal(s => s.setOpenEditProductCardModal)
+    const setProductInfoFromRow = useEditProductCardModal(s => s.setProductInfoFromRow)
+
+    const editProductCardModalHandler = (row: any) => {
+        setOpenEditProductCardModal(true)
+        setProductInfoFromRow(row)
+    }
 
     return (
         // <div className={s.productCatalogTableWrapper}>
@@ -24,29 +30,25 @@ export const ProductCatalog = () => {
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
                     {/*<div className={s.searchRow_chooseBtn}>*/}
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Отображение
                     </Button>
                     {/*</div>*/}
                     <div className={s.searchRow_searchInput}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {
-                        }}/>
+                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
                     </div>
-                    <Button buttonDivWrapper={s.searchRow_allProductsBtn} onClick={() => {
-                    }}>
+                    <Button buttonDivWrapper={s.searchRow_allProductsBtn} onClick={() => {}}>
                         Все товары
                     </Button>
                     {/*<div className={s.header_notSortedBtn}>*/}
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Неотсортированные
                     </Button>
                     {/*</div>*/}
                 </div>
 
                 <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
-                    <ProductCatalogTable onRowDoubleClick={() => {setOpenEditProductCardModal(true)}}/>
+                    <ProductCatalogTable onRowDoubleClick={(row: any) => {editProductCardModalHandler(row)}}/>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {$api} from "shared";
 import {ProductExtended, UpdateProduct} from "../../../../entities";
+import {CatalogAPI} from '../../../../entities/api/CatalogAPI';
 
 interface productCatalogTableStore {
     contextMenuXY: { X: number, Y: number }
@@ -63,12 +64,11 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     },
     getProducts: (tags) => {
         let value = ""
-        tags.forEach((n) => {
-            value = value.concat(n + '-')
-        })
+        tags.forEach((n) => {value = value.concat(n + '-')})
         value = value.slice(0, -1)
         set({isLoading: true})
-        $api.get<ProductExtended[]>('/product/getbytags/' + value + '?storageId=1').then((r) => {
+
+        CatalogAPI.getProductByTag(value).then((r) => {
             set({rows: r.data})
             set({isLoading: false})
         })

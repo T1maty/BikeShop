@@ -3,6 +3,7 @@ import s from "./EditProductCardModal.module.scss"
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
 import useEditProductCardModal from "./EditProductCardModalStore"
+import {ProductImage} from '../../../entities'
 
 export const EditProductCardGallery = () => {
 
@@ -26,6 +27,7 @@ export const EditProductCardGallery = () => {
     //     {id: '9', thumbnail: 'https://picsum.photos/id/1019/250/150/'},
     // ])
 
+    // загрузка изображения
     const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
             const file = e.target.files[0]
@@ -57,8 +59,8 @@ export const EditProductCardGallery = () => {
         setCurrentImageKey(imgKey)
     }
 
-    const deleteImageHandler = (imgId: string) => {
-        setGalleryImages(galleryImages.filter((img: any) => img.id !== imgId))
+    const deleteImageHandler = (imgId: number) => {
+        setGalleryImages(galleryImages.filter(img => img.id !== imgId))
         setCurrentImageKey(null)
     }
 
@@ -91,25 +93,22 @@ export const EditProductCardGallery = () => {
                 {
                     galleryImages.length === 0 ? <div>Фотографий нет</div> :
 
-                        galleryImages.map((img: any, key: number) => {
+                        galleryImages.map((img: ProductImage, key: number) => {
                             return (
                                 <div key={img.id}
-                                     onDoubleClick={() => {
-                                         setImageHandler(key)
-                                     }}
+                                     onDoubleClick={() => {setImageHandler(key)}}
                                      className={s.imageList_item}
                                 >
                                     <img className={currentImageKey === key ? s.active_image : ''}
-                                         src={img.thumbnail} alt="img-thumbnail"
+                                         src={img.url} alt="img-thumbnail"
+                                         // src={img.thumbnail} alt="img-thumbnail"
                                     />
                                     <div className={s.imageList_imageCount}>
                                         {key + 1}/{galleryImages.length}
                                     </div>
                                     <img src={RemoveIcon} alt="remove-icon"
                                          className={s.imageList_deleteItem}
-                                         onClick={() => {
-                                             deleteImageHandler(img.id)
-                                         }}
+                                         onClick={() => {deleteImageHandler(img.id)}}
                                     />
                                 </div>
                             )
@@ -119,17 +118,13 @@ export const EditProductCardGallery = () => {
             <div className={s.imageGallery_buttons}>
                 <div className={s.imageGallery_sortButtons}>
                     <Button disabled={currentImageKey === null || currentImageKey === 0}
-                            onClick={() => {
-                                onMoveBackwardHandler(currentImageKey)
-                            }}
+                            onClick={() => {onMoveBackwardHandler(currentImageKey)}}
                     >
                         Переместить назад
                     </Button>
                     <Button
                         disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
-                        onClick={() => {
-                            onMoveForwardHandler(currentImageKey)
-                        }}
+                        onClick={() => {onMoveForwardHandler(currentImageKey)}}
                     >
                         Переместить вперёд
                     </Button>

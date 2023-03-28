@@ -21,7 +21,13 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
+    const isLoading = useEditProductCardModal(s => s.isLoading)
+
+    const productInfoFromRow = useEditProductCardModal(s => s.productInfoFromRow)
+
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const getProductCard = useEditProductCardModal(s => s.getProductCard)
+
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
 
@@ -48,50 +54,58 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     }
 
     useEffect(() => {
-        // getProductCard()
+        // getProductCard(productInfoFromRow.id)
+        getProductCard(2)
         getCardOptions()
         getSpecifications()
+        // console.log('продукт из строки', currentProduct)
+    // }, [currentProduct, productInfoFromRow])
     }, [])
 
-    return (
-        <Modal
-            open={open}
-            onClose={() => {setOpen(false)}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                <div className={s.editProductCardModal_mainBlock}>
-                    <div className={s.editProductCardModal_leftSide}>
-                        <EditProductCardTags productCardData={productCardData}/>
-                        <div className={s.rightSide_productStatus}>
-                            Статус товара
-                        </div>
-                        <EditProductCardGallery/>
-                    </div>
+    if (isLoading) {
+        return <div>Загрузка...</div>
+    } else {
 
-                    <EditProductCardDescription/>
+        return (
+            <Modal
+                open={open}
+                onClose={() => {setOpen(false)}}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                    <div className={s.editProductCardModal_mainBlock}>
+                        <div className={s.editProductCardModal_leftSide}>
+                            <EditProductCardTags/>
+                            <div className={s.rightSide_productStatus}>
+                                Статус товара: {currentProduct.product.checkStatus}
+                            </div>
+                            <EditProductCardGallery/>
+                        </div>
 
-                    <div className={s.editProductCardModal_rightSide}>
-                        <EditProductCardOption divClassName={s.rightSide_productDetails}
-                                               control={formControl}
-                                               name={'options'}
-                        />
-                        <EditProductCardSpecifications divClassName={s.rightSide_productOptions}
-                                                       control={formControl}
-                                                       name={'specifications'}
-                        />
-                        <div className={s.rightSide_mainButtons}>
-                            <Button onClick={() => {setOpen(false)}}>
-                                Отмена
-                            </Button>
-                            <Button type={'submit'}>
-                                Сохранить
-                            </Button>
+                        <EditProductCardDescription/>
+
+                        <div className={s.editProductCardModal_rightSide}>
+                            <EditProductCardOption divClassName={s.rightSide_productDetails}
+                                                   control={formControl}
+                                                   name={'options'}
+                            />
+                            <EditProductCardSpecifications divClassName={s.rightSide_productOptions}
+                                                           control={formControl}
+                                                           name={'specifications'}
+                            />
+                            <div className={s.rightSide_mainButtons}>
+                                <Button onClick={() => {setOpen(false)}}>
+                                    Отмена
+                                </Button>
+                                <Button type={'submit'}>
+                                    Сохранить
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </Modal>
-    )
+                </form>
+            </Modal>
+        )
+    }
 }

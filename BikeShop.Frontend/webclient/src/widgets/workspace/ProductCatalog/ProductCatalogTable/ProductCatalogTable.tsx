@@ -9,11 +9,11 @@ import {EditProductCardModal}
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
 
-interface props {
+interface CatalogTableProps {
     onRowDoubleClick?: (product: any) => void
 }
 
-export const ProductCatalogTable = (props: props) => {
+export const ProductCatalogTable = (props: CatalogTableProps) => {
 
     const rows = useProductCatalogTableStore(s => s.rows)
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
@@ -33,29 +33,29 @@ export const ProductCatalogTable = (props: props) => {
         return {
             ...item.product,
             quantity: item.quantity,
-            quantityUnitName: item.quantityUnit?.name ? item.quantityUnit?.name : "Error"
+            quantityUnitName: item.quantityUnit?.name ? item.quantityUnit?.name : 'Error'
         }
     })
 
-    console.log('строки', data)
+    console.log('строки из таблицы', data)
 
     return (
         <>
             <ProductCatalogTableContextMenu/>
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
-            <EditProductCardModal productCardData={'Здесь будут теги!'}/>
+            <EditProductCardModal productCardData={data}/>
 
             <div className={s.table_content}>
                 <UniTable rows={data}
                           columns={columns}
+                          isLoading={isLoading}
                           rowOnDoubleClick={(row) => {
                               props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
                           }}
                           rowOnContext={(row, event) => {
                               setContextVisible(true, event.clientX, event.clientY)
                           }}
-                          isLoading={isLoading}
                 />
             </div>
         </>

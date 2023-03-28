@@ -46,7 +46,7 @@ export const MainPage = () => {
     const createServiceHandler = () => {
         setOpenClientModal(true)
     }
-    // update commit
+
     return (
         // <div className={s.mainPageWrapper}>
         <div className={s.mainPageMainBlock}>

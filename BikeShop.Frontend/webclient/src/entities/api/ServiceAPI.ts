@@ -8,27 +8,27 @@ import {UpdateServiceStatus} from '../requests/UpdateService'
 export const ServiceAPI = {
     getMasters(): any {
         return (
-            $api.get<Array<GetUsersResponse>>('/service/find')
+            $api.get<GetUsersResponse[]>('/service/find')
         )
     },
-    getAllServicesInfo(): Promise<AxiosResponse<Array<ServiceItem>>> {
+    getAllServicesInfo(): Promise<AxiosResponse<ServiceItem[]>> {
         return (
-            $api.get<Array<ServiceItem>>('/service/getbyshopid/1')
+            $api.get<ServiceItem[]>('/service/getbyshopid/1')
         )
     },
     addNewService(data: CreateService): any {
         return (
-            $api.post<Array<CreateService>>('/service/create', data)
+            $api.post<CreateService[]>('/service/create', data)
         )
     },
     updateService(updateData: CreateService): any {
         return (
-            $api.put<Array<CreateService>>('/service/updateservice', updateData)
+            $api.put<CreateService[]>('/service/updateservice', updateData)
         )
     },
     updateServiceStatus(data: UpdateServiceStatus): any {
         return (
-            $api.put<Array<CreateService>>(`/service/updateservicestatus?id=${data.id}&status=${data.status}`, data)
+            $api.put<CreateService[]>(`/service/updateservicestatus?id=${data.id}&status=${data.status}`, data)
         )
     },
 }

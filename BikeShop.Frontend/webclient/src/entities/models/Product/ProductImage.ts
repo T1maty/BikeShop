@@ -1,10 +1,8 @@
-export interface ProductSpecification {
+export interface ProductImage {
     id: number
-    name: string
     productId: number
     sortOrder: number
-    description: string
-
+    url: string
     createdAt: string
     updatedAt: string
     enabled: boolean

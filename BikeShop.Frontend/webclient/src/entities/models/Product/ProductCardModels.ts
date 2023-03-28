@@ -1,41 +1,32 @@
-export interface ProductCardOption {
-    option: ProductCardSpecification
-    optionVariants: ProductCardOptionVariant[]
-}
+// export interface ProductCardOption {
+//     option: ProductCardSpecification
+//     optionVariants: ProductCardOptionVariant[]
+// }
+//
+// export interface ProductCardSpecification {
+//     id: number
+//     name: string
+//     createdAt: string
+//     updatedAt: string
+//     enabled: boolean
+// }
+//
+// export interface ProductCardOptionVariant {
+//     optionId: number
+//     optionName: string
+//     id: number
+//     name: string
+//     createdAt: string
+//     updatedAt: string
+//     enabled: boolean
+// }
 
-export interface ProductCardSpecification {
-    id: number
-    name: string
-    createdAt: string
-    updatedAt: string
-    enabled: boolean
-}
+// export interface ProductCardUserSpecification {
+//     id: number
+//     name: string
+//     title: string // ? добавочное поле
+// }
 
-export interface ProductCardOptionVariant {
-    optionId: number
-    optionName: string
-    id: number
-    name: string
-    createdAt: string
-    updatedAt: string
-    enabled: boolean
-}
-
-export interface ProductCardUserSpecification {
-    id: number
-    name: string
-    title: string // ? добавочное поле
-}
-
-export interface ProductCardImage {
-    id: number
-    productId: number
-    sortOrder: number
-    url: string
-    createdAt: string
-    updatedAt: string
-    enabled: boolean
-}
 
 // ВАРИАНТ С АССОЦИАТИВНЫМ МАССИВОМ
 // export interface ProductCardOptionVariantsDomainType {
@@ -55,3 +46,5 @@ export interface ProductCardImage {
 // добавление новой разновидности опции в список опций
 // const newOptionVariant: ProductCardOptionVariant = {...}
 // return {...state, [newOptionVariant.id]: [newOptionVariant, ...state[newOptionVariant.id]]}
+
+export default {}

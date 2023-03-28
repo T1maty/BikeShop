@@ -42,10 +42,6 @@ export const ShopMain = () => {
             original: 'https://s3.amazonaws.com/images.gearjunkie.com/uploads/2018/10/red-bull-rampage-rugged-terrain.jpg',
             thumbnail: '',
         },
-        {
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: '',
-        },
     ])
 
     const InputStyles = {

@@ -23,6 +23,16 @@ interface TableProps {
     setSelected?: (value: any) => void
 }
 
+interface TableRowProps {
+    row?: any
+    columns: Column[]
+    rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
+    onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
+
+    selected: any[]
+    setSelected: (row: any) => void
+}
+
 export const UniTable = (props: TableProps) => {
 
     const [selected, setSelected] = useState([])
@@ -37,7 +47,8 @@ export const UniTable = (props: TableProps) => {
                 {
                     !props.isLoading ?
                         props.rows.map((item: any, index) => {
-                            return <TableRow key={index} row={item}
+                            return <TableRow key={index}
+                                             row={item}
                                              columns={props.columns}
                                              onRowDoubleClick={props.rowOnDoubleClick}
                                              rowOnContext={props.rowOnContext}
@@ -54,6 +65,7 @@ export const UniTable = (props: TableProps) => {
         </div>
     )
 }
+
 
 const TableHeadItem = memo((props: { theadData: Column[] }) => {
 
@@ -72,15 +84,6 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
     )
 })
 
-interface TableRowProps {
-    row?: any
-    columns: Column[]
-    rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
-    onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
-
-    selected: any[]
-    setSelected: (row: any) => void
-}
 
 const TableRow = memo((props: TableRowProps) => {
 

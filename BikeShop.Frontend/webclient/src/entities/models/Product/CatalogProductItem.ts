@@ -64,5 +64,20 @@ export interface CatalogProductItem {
             sortOrder: number
             url: string
         }
+    ],
+    productTags: [
+        {
+            id: number
+            createdAt: string
+            updatedAt: string
+            enabled: boolean
+            name: string
+            parentId: number
+            isCollapsed: boolean
+            isRetailVisible: boolean
+            isB2BVisible: boolean
+            isUniversal: boolean
+            sortOrder: number
+        }
     ]
 }

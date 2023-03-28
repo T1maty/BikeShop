@@ -22,7 +22,7 @@ export const AuthAPI = {
         },
         loginToShop(shopId: number): any {
             return (
-                $api.get<Array<Shop>>('shop/getall')
+                $api.get<Shop[]>('shop/getall')
             )
         },
     },
@@ -30,7 +30,7 @@ export const AuthAPI = {
     User: {
         findUser(data: SearchClient): any {
             return (
-                $api.get<Array<User>>(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
+                $api.get<User[]>(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
             )
         },
     },

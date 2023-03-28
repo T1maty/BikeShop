@@ -9,17 +9,17 @@ import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 
 export const EntitiesAPI = {
     Archive: {
-        getAllServicesInfo(): Promise<AxiosResponse<Array<any>>> {
+        getAllServicesInfo(): Promise<AxiosResponse<any[]>> {
             return (
-                $api.get<Array<any>>('/service/getbyshopid/1')
+                $api.get<any[]>('/service/getbyshopid/1')
             )
         },
     },
 
     Shop: {
-        getShops(): Promise<AxiosResponse<Array<CreateShopResponse>>> {
+        getShops(): Promise<AxiosResponse<CreateShopResponse[]>> {
             return (
-                $api.get<Array<CreateShopResponse>>('/shop/getall')
+                $api.get<CreateShopResponse[]>('/shop/getall')
             )
         },
         addNewShop(data: CreateShop): any {
@@ -35,9 +35,9 @@ export const EntitiesAPI = {
     },
 
     Storage: {
-        getStorages(): Promise<AxiosResponse<Array<CreateStorageResponse>>> {
+        getStorages(): Promise<AxiosResponse<CreateStorageResponse[]>> {
             return (
-                $api.get<Array<CreateStorageResponse>>('/storagecrud/getall')
+                $api.get<CreateStorageResponse[]>('/storagecrud/getall')
             )
         },
         addNewStorage(data: CreateStorage): any {
@@ -53,9 +53,9 @@ export const EntitiesAPI = {
     },
 
     QuantityUnit: {
-        getQuantityUnits(): Promise<AxiosResponse<Array<GetQuantityUnitResponse>>> {
+        getQuantityUnits(): Promise<AxiosResponse<GetQuantityUnitResponse[]>> {
             return (
-                $api.get<Array<GetQuantityUnitResponse>>('/quantityunit/getall')
+                $api.get<GetQuantityUnitResponse[]>('/quantityunit/getall')
             )
         },
         addQuantityUnit(data: CreateQuantityUnit): any {
