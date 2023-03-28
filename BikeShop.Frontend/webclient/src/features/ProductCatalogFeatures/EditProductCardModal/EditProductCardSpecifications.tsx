@@ -22,9 +22,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
     const GetOptionsHandler = (field: any) => {
         let ids: number[] = []
-        field.value.forEach((n: ProductSpecification) => {
-            ids.push(n.id)
-        })
+        field.value.forEach((n: ProductSpecification) => {ids.push(n.id)})
         return specifications.filter(n => !ids.includes(n.id))
     }
 
@@ -65,7 +63,8 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                                                                           {
                                                                                               ...n,
                                                                                               description: newInputValue
-                                                                                          } : n))
+                                                                                          }
+                                                                                          : n))
                                                                                   }}
                                                                     />
                                                                 </div>
@@ -106,9 +105,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                 placeholder={'Характеристика'}
                                 isSearchable={true}
                                 value={selectedSpecification ? selectedSpecification : null}
-                                onChange={(value) => {
-                                    setSelectedSpecification(value as ProductSpecification)
-                                }}
+                                onChange={(value) => {setSelectedSpecification(value as ProductSpecification)}}
                                 getOptionLabel={label => label!.name}
                                 getOptionValue={value => value!.name}
                                 noOptionsMessage={() => 'Характеристика не найдена'}

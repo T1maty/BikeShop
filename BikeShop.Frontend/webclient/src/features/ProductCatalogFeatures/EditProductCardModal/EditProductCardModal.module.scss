@@ -2,237 +2,200 @@
 @import '../../../app/styles/variables/variables';
 
 .editProductCardModal_mainBlock {
-  @include defaultModalStyle;
-  @include flexOnlyBetween;
-  gap: $defaultLargeMargin;
-  min-width: 1300px;
-  //min-width: 70%;
-  //min-height: 700px;
-  height: 90vh;
-
-  .editProductCardModal_leftSide {
-    @include flexColumn;
-    //@include flexOnlyBetween;
+    @include defaultModalStyle;
+    @include flexOnlyBetween;
     gap: $defaultLargeMargin;
-    width: 60%;
-    color: black;
+    min-width: 1300px;
+    height: 90vh;
 
-    // тестировочный стиль
-    //.leftSide_imageGallery {
-    //    @include defaultBlockStyles($themeColorMilk);
-    //    height: 50%;
-    //}
-
-    // вариант со слайдером
-    //.leftSide_imageGallery {
-    //    @include defaultBlockStyles($themeColorMilk);
-    //    @include flexColumn;
-    //    justify-content: center;
-    //    height: 50%;
-    //
-    //    .imageGallery_sortButtons {
-    //        margin-top: $defaultExtraLargeMargin;
-    //        @include flexOnlyBetween;
-    //        gap: $defaultLargeMargin;
-    //    }
-    //}
-
-    // итоговый вариант
-    .leftSide_imageGallery {
-      @include defaultBlockStyles($themeColorMilk);
-      @include flexColumn;
-      justify-content: center;
-      //height: 50%;
-      //height: 100%;
-      //max-height: 400px;
-      height: 70%;
-      //width: 510px;
-      width: 400px;
-
-      .imageGallery_imageList {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        //max-height: 400px;
-        height: 100%;
-        overflow-y: auto;
-
-        .imageList_item {
-          position: relative;
-
-          &:hover {
-            cursor: pointer;
-            opacity: 0.5;
-          }
-
-          img {
-            width: 140px;
-          }
-
-          .active_image {
-            opacity: 0.5;
-            border: 1px solid white;
-          }
-
-          .imageList_imageCount {
-            position: absolute;
-            top: 0;
-            left: 0;
-            margin: 5px;
-            padding: 2px 5px;
-            background-color: white;
-          }
-
-          .imageList_deleteItem {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: 5px;
-            width: 20px;
-            height: 20px;
-
-            &:hover {
-              cursor: pointer;
-              filter: contrast(3);
-            }
-          }
-        }
-      }
-
-      .imageGallery_buttons {
-        .imageGallery_sortButtons {
-          margin-top: $defaultLargeMargin;
-          @include flexOnlyBetween;
-          gap: $defaultLargeMargin;
-        }
-
-        .imageGallery_addImage {
-          margin-top: $defaultLargeMargin;
-          @include inputTypeFile($themeColorGray);
-        }
-      }
-
-    }
-
-    .rightSide_tagEditor {
-      @include defaultBlockStyles($themeColorMilk);
-      //height: 100%;
-      height: 25%;
-      color: black;
-
-      .tagEditor_title {
-        font-weight: bold;
-        font-size: 18px;
-        margin-bottom: $defaultSmallMargin;
-      }
-
-      .tagEditor_tags {
-
-      }
-    }
-
-    .rightSide_productStatus {
-      @include flexCenter;
-      width: 100%;
-      height: 5%;
-      padding: 10px;
-      border: 2px solid $themeColorMilk;
-      border-radius: $smallBorderRadius;
-      color: white;
-    }
-  }
-
-  .leftSide_descriptionEditor {
-    @include defaultBlockStyles($themeColorMilk);
-    @include flexColumnOnly;
-    height: 100%;
-
-    .descriptionEditor_title {
-      font-weight: bold;
-      font-size: 18px;
-      color: black;
-      margin-bottom: $defaultSmallMargin;
-    }
-
-    .descriptionEditor_editorTextarea {
-      //min-height: 200px;
-      //overflow-y: auto;
-
-      .editorClassName {
-        max-height: 150px;
-        overflow-y: auto;
+    .editProductCardModal_leftSide {
+        @include flexColumn;
+        gap: $defaultLargeMargin;
+        width: 60%;
         color: black;
-      }
-    }
 
-    .descriptionEditor_textarea {
-      height: 100%;
-
-      textarea {
-        resize: none;
-        width: 100%;
-        height: 100%;
-        padding: $defaultLargeMargin;
-        border: 2px solid $themeColorDark;
-        border-radius: $smallBorderRadius;
-        background-color: transparent;
-        font-size: 16px;
-
-        //:focus-visible {
-        //    border: 2px solid $themeColorDark;
+        // тестировочный стиль
+        //.leftSide_imageGallery {
+        //    @include defaultBlockStyles($themeColorMilk);
+        //    height: 50%;
         //}
-      }
+
+        // вариант со слайдером
+        //.leftSide_imageGallery {
+        //    @include defaultBlockStyles($themeColorMilk);
+        //    @include flexColumn;
+        //    justify-content: center;
+        //    height: 50%;
+        //
+        //    .imageGallery_sortButtons {
+        //        margin-top: $defaultExtraLargeMargin;
+        //        @include flexOnlyBetween;
+        //        gap: $defaultLargeMargin;
+        //    }
+        //}
+
+        // итоговый вариант
+        .leftSide_imageGallery {
+            @include defaultBlockStyles($themeColorMilk);
+            @include flexColumn;
+            justify-content: center;
+            height: 70%;
+            width: 400px;
+
+            .imageGallery_imageList {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+                height: 100%;
+                overflow-y: auto;
+
+                .imageList_item {
+                    position: relative;
+
+                    &:hover {
+                        cursor: pointer;
+                        opacity: 0.5;
+                    }
+
+                    img {
+                        width: 140px;
+                    }
+
+                    .active_image {
+                        opacity: 0.5;
+                        border: 1px solid white;
+                    }
+
+                    .imageList_imageCount {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        margin: 5px;
+                        padding: 2px 5px;
+                        background-color: white;
+                    }
+
+                    .imageList_deleteItem {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        margin: 5px;
+                        width: 20px;
+                        height: 20px;
+
+                        &:hover {
+                            cursor: pointer;
+                            filter: contrast(3);
+                        }
+                    }
+                }
+            }
+
+            .imageGallery_buttons {
+                .imageGallery_sortButtons {
+                    margin-top: $defaultLargeMargin;
+                    @include flexOnlyBetween;
+                    gap: $defaultLargeMargin;
+                }
+
+                .imageGallery_addImage {
+                    margin-top: $defaultLargeMargin;
+                    @include inputTypeFile($themeColorGray);
+                }
+            }
+
+        }
+
+        .rightSide_tagEditor {
+            @include defaultBlockStyles($themeColorMilk);
+            height: 25%;
+            color: black;
+
+            .tagEditor_title {
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: $defaultSmallMargin;
+            }
+
+            .tagEditor_tags {
+
+            }
+        }
+
+        .rightSide_productStatus {
+            @include flexCenter;
+            width: 100%;
+            height: 5%;
+            padding: 10px;
+            border: 2px solid $themeColorMilk;
+            border-radius: $smallBorderRadius;
+            color: white;
+        }
     }
-  }
 
-  .editProductCardModal_rightSide {
-    @include flexColumn;
-    gap: $defaultLargeMargin;
-    width: 40%;
+    .leftSide_descriptionEditor {
+        @include defaultBlockStyles($themeColorMilk);
+        @include flexColumnOnly;
+        height: 100%;
 
-    //.rightSide_tagEditor {
-    //    @include defaultBlockStyles($themeColorMilk);
-    //    height: 100%;
-    //    color: black;
-    //
-    //    .tagEditor_title {
-    //        font-weight: bold;
-    //        font-size: 18px;
-    //        margin-bottom: $defaultSmallMargin;
-    //    }
-    //
-    //    .tagEditor_tags {
-    //
-    //    }
-    //}
-    //
-    //.rightSide_productStatus {
-    //    width: 100%;
-    //    padding: 10px;
-    //    border: 2px solid $themeColorMilk;
-    //    border-radius: $smallBorderRadius;
-    //    text-align: center;
-    //}
+        .descriptionEditor_title {
+            font-weight: bold;
+            font-size: 18px;
+            color: black;
+            margin-bottom: $defaultSmallMargin;
+        }
 
-    .rightSide_productOptions {
-      @include selectOptionsBlock;
+        .descriptionEditor_editorTextarea {
+            .editorClassName {
+                max-height: 150px;
+                overflow-y: auto;
+                color: black;
+            }
+        }
+
+        .descriptionEditor_textarea {
+            height: 100%;
+
+            textarea {
+                resize: none;
+                width: 100%;
+                height: 100%;
+                padding: $defaultLargeMargin;
+                border: 2px solid $themeColorDark;
+                border-radius: $smallBorderRadius;
+                background-color: transparent;
+                font-size: 16px;
+
+                //:focus-visible {
+                //    border: 2px solid $themeColorDark;
+                //}
+            }
+        }
     }
 
-    .rightSide_productDetails {
-      @include selectOptionsBlock;
-    }
+    .editProductCardModal_rightSide {
+        @include flexColumn;
+        gap: $defaultLargeMargin;
+        width: 40%;
 
-    .rightSide_mainButtons {
-      @include flexOnlyBetween;
-      gap: $defaultLargeMargin;
-      width: 100%;
-      position: relative;
-      z-index: -100;
+        .rightSide_productOptions {
+            @include selectOptionsBlock;
+        }
 
-      button {
-        width: 200px;
-      }
+        .rightSide_productDetails {
+            @include selectOptionsBlock;
+        }
+
+        .rightSide_mainButtons {
+            @include flexOnlyBetween;
+            gap: $defaultLargeMargin;
+            width: 100%;
+            position: relative;
+
+            button {
+                width: 200px;
+            }
+        }
     }
-  }
 }

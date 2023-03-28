@@ -133,7 +133,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 options={availableVariants()}
                                                                 placeholder="Разновидность опции"
                                                                 isSearchable={true}
-                                                                value={selectedOptionVariant.find(n => n.id === option.id) ? selectedOptionVariant.find(n => n.id === option.id) : null}
+                                                                value={selectedOptionVariant.find(n => n.id === option.id)
+                                                                    ? selectedOptionVariant.find(n => n.id === option.id) : null}
                                                                 onChange={(value) => {
                                                                     if (value != undefined) {
                                                                         let buf = selectedOptionVariant.filter(n => n.id != option.id)
@@ -158,7 +159,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                     onClick={() => {
                                         field.onChange([...field.value, {...selectedOption, optionVariants: []}])
                                         setSelectedOption(null)
-                                    }
+                                        }
                                     }
                                     disabled={selectedOption === null ||
                                         currentCardOptions.length === cardOptions.length}
@@ -171,9 +172,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
-                                onChange={(value: any) => {
-                                    setSelectedOption(value)
-                                }}
+                                onChange={(value: any) => {setSelectedOption(value)}}
                                 getOptionLabel={label => label!.name}
                                 getOptionValue={value => value!.name}
                                 noOptionsMessage={() => 'Опция не найдена'}

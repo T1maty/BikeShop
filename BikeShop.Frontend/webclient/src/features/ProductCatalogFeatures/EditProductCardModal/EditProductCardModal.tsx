@@ -24,15 +24,12 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
 
-    // ----------------------------------- //
-
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
             options: [],
             specifications: [],
         }
     })
-
 
     const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
         console.log('submitData', data)
@@ -49,18 +46,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
         //     })
     }
 
-    // ----------------------------------- //
-
-    // функция для подсчёта длины массива в массиве
-    // const arrayOfLength = (array: any[]) => {
-    //     let length = array.map(num => num.length)
-    //     // console.log(length)
-    //     return length
-    // }
-    // arrayOfLength(cardOptions.map(el => el.optionVariants))
-
-    // ----------------------------------- //
-
     useEffect(() => {
         getCardOptions()
         getSpecifications()
@@ -69,46 +54,23 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <div className={s.editProductCardModal_mainBlock}>
                     <div className={s.editProductCardModal_leftSide}>
-                        {
-                            //////////////////////////////////////
-                        }
                         <EditProductCardTags productCardData={productCardData}/>
-                        {
-                            //////////////////////////////////////
-                        }
                         <div className={s.rightSide_productStatus}>
                             Статус товара
                         </div>
-                        {
-                            //////////////////////////////////////
-                        }
                         <EditProductCardGallery/>
-                        {
-                            //////////////////////////////////////
-                        }
                     </div>
 
-                    {
-                        //////////////////////////////////////
-                    }
                     <EditProductCardDescription/>
-                    {
-                        //////////////////////////////////////
-                    }
 
                     <div className={s.editProductCardModal_rightSide}>
-                        {
-                            //////////////////////////////////////
-                        }
                         <EditProductCardOption divClassName={s.rightSide_productDetails}
                                                control={formControl}
                                                name={'options'}
@@ -117,14 +79,8 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                                                        control={formControl}
                                                        name={'specifications'}
                         />
-                        {
-                            //////////////////////////////////////
-                        }
-
                         <div className={s.rightSide_mainButtons}>
-                            <Button onClick={() => {
-                                setOpen(false)
-                            }}>
+                            <Button onClick={() => {setOpen(false)}}>
                                 Отмена
                             </Button>
                             <Button type={'submit'}>
@@ -132,7 +88,6 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
                             </Button>
                         </div>
                     </div>
-
                 </div>
             </form>
         </Modal>
