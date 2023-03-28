@@ -1,7 +1,6 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../../shared"
 import {ProductCardImage, ProductCardOption} from '../../../entities/models/Product/ProductCardModels'
 import {ProductCardAPI} from "../../../entities/api/ProductCardAPI"
 import {ProductOption, ProductSpecification} from "../../../entities"
@@ -13,9 +12,8 @@ interface EditProductCardModalStore {
     setIsLoading: (value: boolean) => void
 
     cardOptions: ProductOption[]
-    getCardOptions: () => void
     currentCardOptions: ProductCardOption[]
-
+    getCardOptions: () => void
 
     specifications: ProductSpecification[]
     getSpecifications: () => void
@@ -25,13 +23,14 @@ interface EditProductCardModalStore {
     uploadNewImage: (data: any) => void
 }
 
-const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
     openEditProductCardModal: false,
     setOpenEditProductCardModal: (value) => set({openEditProductCardModal: value}),
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
 
     cardOptions: [],
+    currentCardOptions: [],
     getCardOptions: () => {
         ProductCardAPI.getOptions().then(res => {
             set(state => {
@@ -42,7 +41,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('опции не получены')
         })
     },
-    currentCardOptions: [],
 
     specifications: [],
     getSpecifications: () => {

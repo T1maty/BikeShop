@@ -20,10 +20,26 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
     const specifications = useEditProductCardModal(s => s.specifications)
     const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecification>()
 
-    const getOptionsHandler = (field: any) => {
+    const getSpecificationsHandler = (field: any) => {
         let ids: number[] = []
         field.value.forEach((n: ProductSpecification) => {ids.push(n.id)})
         return specifications.filter(n => !ids.includes(n.id))
+    }
+
+    const onChangeSpecificationHandler = (newInputValue: string, field: any, spec:ProductSpecification) => {
+        field.onChange(field.value.map((n: ProductSpecification) => n.id === spec.id ? {...n, description: newInputValue} :n))
+    }
+
+    const editSpecificationHandler = (field: any) => {
+        field.onChange([...field.value, {
+            ...selectedSpecification,
+            description: 'Введите описание характеристики'
+        }])
+        setSelectedSpecification(undefined)
+    }
+
+    const deleteSpecificationHandler = (field: any, spec: ProductSpecification) => {
+        field.onChange(field.value.filter((n: ProductSpecification) => n.id != spec.id))
     }
 
     return (
@@ -59,20 +75,13 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                                                 <div className={s.item_content}>
                                                                     <EditableSpan title={spec.description}
                                                                                   onChangeInput={(newInputValue) => {
-                                                                                      field.onChange(field.value.map((n: ProductSpecification) => n.id === spec.id ?
-                                                                                          {
-                                                                                              ...n,
-                                                                                              description: newInputValue
-                                                                                          }
-                                                                                          : n))
+                                                                                      onChangeSpecificationHandler(newInputValue, field, spec)
                                                                                   }}
                                                                     />
                                                                 </div>
                                                                 <div className={s.item_deleteDetailsItem}>
                                                                     <img src={RemoveIcon} alt="remove-icon"
-                                                                         onClick={() => {
-                                                                             field.onChange(field.value.filter((n: ProductSpecification) => n.id != spec.id))
-                                                                         }}
+                                                                         onClick={() => {deleteSpecificationHandler(field, spec)}}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -87,13 +96,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {
-                                        field.onChange([...field.value, {
-                                            ...selectedSpecification,
-                                            description: 'Введите описание характеристики'
-                                        }])
-                                        setSelectedSpecification(undefined)
-                                    }}
+                                    onClick={() => {editSpecificationHandler(field)}}
                                     disabled={selectedSpecification === undefined}
                             >
                                 +
@@ -101,7 +104,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
                             <Select
                                 className={s.options_search}
-                                options={getOptionsHandler(field)}
+                                options={getSpecificationsHandler(field)}
                                 placeholder={'Характеристика'}
                                 isSearchable={true}
                                 value={selectedSpecification ? selectedSpecification : null}
