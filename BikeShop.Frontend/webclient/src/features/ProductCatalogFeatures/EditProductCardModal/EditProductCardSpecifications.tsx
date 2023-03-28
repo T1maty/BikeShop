@@ -26,7 +26,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
         return specifications.filter(n => !ids.includes(n.id))
     }
 
-    const onChangeSpecificationHandler = (newInputValue: string, field: any, spec:ProductSpecification) => {
+    const onChangeSpecificationHandler = (newInputValue: string, field: any, spec: ProductSpecification) => {
         field.onChange(field.value.map((n: ProductSpecification) => n.id === spec.id ? {...n, description: newInputValue} :n))
     }
 
@@ -101,7 +101,6 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                             >
                                 +
                             </Button>
-
                             <Select
                                 className={s.options_search}
                                 options={getSpecificationsHandler(field)}

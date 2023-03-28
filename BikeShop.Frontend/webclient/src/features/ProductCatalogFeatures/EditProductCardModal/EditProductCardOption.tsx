@@ -31,11 +31,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
     // доступные опции и варианты
     const availableOptions = (field: any) => {
         let optionIds: number[] = []
-
-        field.value.forEach((n: ProductOption) => {
-            optionIds.push(n.id)
-        })
-
+        field.value.forEach((n: ProductOption) => {optionIds.push(n.id)})
         return cardOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
     }
 
@@ -45,7 +41,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
         option.optionVariants.map(n => ids.push(n.id))
         let buf = optionItem.optionVariants.filter(n => !ids.includes(n.id))
         let result: { id: number, value: any }[] = []
-        buf.forEach(n => {result.push({id: option.id, value: n})})
+        buf.forEach(n => {result.push({ id: option.id, value: n })})
         return result
     }
 
@@ -57,17 +53,14 @@ export const EditProductCardOption = (props: ControlledProps) => {
 
     const deleteOptionListHandler = (field: any, option: ProductOption) => {
         field.onChange(field.value.filter((n: ProductOption) => n.id != option.id))
-        setSelectedOptionVariant([{
-            id: 0,
-            value: {} as ProductOptionVariant
-        }])
+        setSelectedOptionVariant([{ id: 0, value: {} as ProductOptionVariant }])
     }
 
     // функции для разновидностей опций
     const onChangeOptionsVariantHandler = (value: any, option: ProductOption) => {
         if (value != undefined) {
             let buf = selectedOptionVariant.filter(n => n.id != option.id)
-            buf.push({id: option.id, value: value.value})
+            buf.push({ id: option.id, value: value.value })
             setSelectedOptionVariant(buf)
         }
     }
@@ -81,13 +74,10 @@ export const EditProductCardOption = (props: ControlledProps) => {
 
     const addOptionVariantHandler = (field: any, option: ProductOption) => {
         let options = field.value.map((n: ProductOption) => n.id === option.id ?
-            {
-                ...n,
-                optionVariants: n.optionVariants != undefined
+            {...n, optionVariants: n.optionVariants != undefined
                     ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value]
                     : [selectedOptionVariant.find(n => n.id === option.id)?.value]
-            }
-            : n)
+            } : n)
         field.onChange(options)
         setSelectedOptionVariant([])
         console.log(selectedOptionVariant)
