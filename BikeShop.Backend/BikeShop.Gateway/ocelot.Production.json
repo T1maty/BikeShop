@@ -100,6 +100,21 @@
       ],
       "SwaggerKey": "payments"
     },
+	{
+      "UpstreamPathTemplate": "/api/financialinteraction/newbill",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/financialinteraction/newbill",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 
 
 {

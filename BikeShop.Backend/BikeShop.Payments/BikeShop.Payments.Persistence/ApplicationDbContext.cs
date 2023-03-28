@@ -12,6 +12,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Discount> Discounts { get; set; }
     public DbSet<DiscountProductBind> DiscountProductBinds { get; set; }
     public DbSet<Payment> Payments { get; set; }
+    public DbSet<Bill> Bills { get; set; }
+    public DbSet<BillProduct> BillProducts { get; set; }
+
 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
