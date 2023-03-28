@@ -4,9 +4,8 @@ import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {Product, ProductExtended} from "../../../../entities"
-import {
-    EditProductCardModal
-} from '../../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
+import {EditProductCardModal}
+    from '../../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
 
@@ -23,7 +22,7 @@ export const ProductCatalogTable = (props: props) => {
     const isLoading = useProductCatalogTableStore(s => s.isLoading)
 
     const createProductSuccessHandler = (product: Product) => {
-        let extProd: ProductExtended;
+        let extProd: ProductExtended
         extProd = {} as ProductExtended
         extProd.product = product
         extProd.quantity = 0
@@ -38,6 +37,8 @@ export const ProductCatalogTable = (props: props) => {
         }
     })
 
+    console.log('строки', data)
+
     return (
         <>
             <ProductCatalogTableContextMenu/>
@@ -48,7 +49,7 @@ export const ProductCatalogTable = (props: props) => {
             <div className={s.table_content}>
                 <UniTable rows={data}
                           columns={columns}
-                          rowOnDoubleClick={(row, event) => {
+                          rowOnDoubleClick={(row) => {
                               props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
                           }}
                           rowOnContext={(row, event) => {

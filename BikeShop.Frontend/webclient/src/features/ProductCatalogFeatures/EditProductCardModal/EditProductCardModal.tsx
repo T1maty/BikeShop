@@ -21,6 +21,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
+    const getProductCard = useEditProductCardModal(s => s.getProductCard)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
 
@@ -47,6 +48,7 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     }
 
     useEffect(() => {
+        // getProductCard()
         getCardOptions()
         getSpecifications()
     }, [])

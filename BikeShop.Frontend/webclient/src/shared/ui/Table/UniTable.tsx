@@ -1,6 +1,6 @@
+import React, {memo, useState} from "react"
 import cls from "./UniTable.module.scss"
 import {Loader} from "../Loader/Loader"
-import React, {memo, useState} from "react"
 
 export interface Column {
     id: string
@@ -9,7 +9,7 @@ export interface Column {
     align?: 'right' | 'left'
 }
 
-interface ITableProps {
+interface TableProps {
     rows: any[]
     columns: Column[]
 
@@ -23,17 +23,7 @@ interface ITableProps {
     setSelected?: (value: any) => void
 }
 
-interface TableRowProps {
-    row?: any
-    columns: Column[]
-    rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
-    onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
-
-    selected: any[]
-    setSelected: (row: any) => void
-}
-
-export const UniTable = (props: ITableProps) => {
+export const UniTable = (props: TableProps) => {
 
     const [selected, setSelected] = useState([])
 
@@ -62,8 +52,8 @@ export const UniTable = (props: ITableProps) => {
                 </tbody>
             </table>
         </div>
-    );
-};
+    )
+}
 
 const TableHeadItem = memo((props: { theadData: Column[] }) => {
 
@@ -80,7 +70,17 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
             }
         </tr>
     )
-});
+})
+
+interface TableRowProps {
+    row?: any
+    columns: Column[]
+    rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
+    onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
+
+    selected: any[]
+    setSelected: (row: any) => void
+}
 
 const TableRow = memo((props: TableRowProps) => {
 
@@ -94,9 +94,7 @@ const TableRow = memo((props: TableRowProps) => {
                 props.setSelected(props.row)
                 props.rowOnContext ? props.rowOnContext(props.row, event) : true
             }}
-            onClick={() => {
-                props.setSelected(props.row)
-            }}
+            onClick={() => {props.setSelected(props.row)}}
         >
             {
                 props.columns.map((item, index) => {
@@ -106,5 +104,5 @@ const TableRow = memo((props: TableRowProps) => {
                 })
             }
         </tr>
-    );
-});
+    )
+})

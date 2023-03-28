@@ -1,8 +1,13 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {ProductOption, ProductSpecification} from '../index'
+import {CatalogProductItem, ProductOption, ProductSpecification} from '../index'
 
 export const ProductCardAPI = {
+    getProductCard(productId: number): Promise<AxiosResponse<CatalogProductItem>> {
+        return (
+            $api.get<CatalogProductItem>(`/productcard/getproductcardproductId=${productId}`)
+        )
+    },
     getOptions(): Promise<AxiosResponse<Array<ProductOption>>> {
         return (
             $api.get<Array<ProductOption>>('/productcard/getalloptions')

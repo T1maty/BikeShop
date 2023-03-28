@@ -4,6 +4,7 @@ import {Editor} from "react-draft-wysiwyg"
 import {EditorState} from "draft-js"
 
 export const EditProductCardDescription = () => {
+
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
     return (
@@ -19,9 +20,7 @@ export const EditProductCardDescription = () => {
                     wrapperClassName="wrapperClassName"
                     editorClassName={s.editorClassName}
                     // editorClassName="editorClassName"
-                    onEditorStateChange={(editorState) => {
-                        setEditorState(editorState)
-                    }}
+                    onEditorStateChange={(editorState) => {setEditorState(editorState)}}
                 />
             </div>
         </div>

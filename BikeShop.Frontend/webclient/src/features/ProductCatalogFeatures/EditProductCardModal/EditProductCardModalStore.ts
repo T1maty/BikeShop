@@ -11,6 +11,8 @@ interface EditProductCardModalStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
 
+    getProductCard: (productId: number) => void
+
     cardOptions: ProductOption[]
     currentCardOptions: ProductCardOption[]
     getCardOptions: () => void
@@ -28,6 +30,17 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     setOpenEditProductCardModal: (value) => set({openEditProductCardModal: value}),
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
+
+    getProductCard: (productId: number) => {
+        ProductCardAPI.getProductCard(productId).then(res => {
+            // set(state => {
+            //     state.cardOptions = res.data
+            //     console.log('все доступные опции', state.cardOptions)
+            // })
+        }).catch((error: any) => {
+            console.log('опции не получены')
+        })
+    },
 
     cardOptions: [],
     currentCardOptions: [],

@@ -45,15 +45,11 @@ export const ProductCatalog = () => {
                     {/*</div>*/}
                 </div>
 
-                <div className={s.rightSide_table} onContextMenu={(event) => {
-                    event.preventDefault()
-                }}>
-                    <ProductCatalogTable onRowDoubleClick={() => {
-                        setOpenEditProductCardModal(true)
-                    }}/>
+                <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
+                    <ProductCatalogTable onRowDoubleClick={() => {setOpenEditProductCardModal(true)}}/>
                 </div>
             </div>
         </div>
         // </div>
-    );
-};
+    )
+}
