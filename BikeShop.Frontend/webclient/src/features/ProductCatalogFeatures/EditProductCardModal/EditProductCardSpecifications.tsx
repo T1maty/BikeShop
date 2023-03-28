@@ -20,7 +20,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
     const specifications = useEditProductCardModal(s => s.specifications)
     const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecification>()
 
-    const GetOptionsHandler = (field: any) => {
+    const getOptionsHandler = (field: any) => {
         let ids: number[] = []
         field.value.forEach((n: ProductSpecification) => {ids.push(n.id)})
         return specifications.filter(n => !ids.includes(n.id))
@@ -101,7 +101,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
                             <Select
                                 className={s.options_search}
-                                options={GetOptionsHandler(field)}
+                                options={getOptionsHandler(field)}
                                 placeholder={'Характеристика'}
                                 isSearchable={true}
                                 value={selectedSpecification ? selectedSpecification : null}
