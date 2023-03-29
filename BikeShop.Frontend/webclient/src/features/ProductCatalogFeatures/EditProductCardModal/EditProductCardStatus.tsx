@@ -48,8 +48,10 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                             // defaultInputValue={productStatus}
                             // value={selectedStatus ? selectedStatus : null}
                             // onChange={(value) => {setSelectedStatus(value as string)}}
-                            value={field.value}
-                            onChange={(value) => {field.onChange(value as string)}}
+                            value={checkStatus.find(n => n.name === field.value)}
+                            onChange={(value) => {
+                                value ? field.onChange(value.name) : false
+                            }}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             isSearchable={false}
