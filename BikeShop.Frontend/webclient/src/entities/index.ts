@@ -12,7 +12,6 @@ export type {Work} from './models/Service/Work'
 
 export type {CatalogProductItem} from './models/Product/CatalogProductItem'
 export type {Product} from './models/Product/Product'
-export type {ProductTag} from './models/Product/ProductTag'
 export type {ProductExtended} from './models/Product/ProductExtended'
 
 export type {ProductOption} from './models/Product/ProductOption'
@@ -20,7 +19,8 @@ export type {ProductOptionVariant} from './models/Product/ProductOptionVariant'
 export type {ProductOptionVariantBind} from './models/Product/ProductOptionVariantBind'
 export type {ProductSpecification} from './models/Product/ProductSpecification'
 export type {ProductImage} from './models/Product/ProductImage'
-export type {ProductTags} from './models/Product/ProductTags'
+export type {ProductTag} from './models/Product/ProductTag'
+export type {ProductTagForCard} from './models/Product/ProductTagForCard'
 
 export type {ServiceItem} from './models/Service/ServiceItem'
 export type {TreeViewData} from './models/Others/TreeViewData'

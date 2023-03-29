@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
-import {Button} from '../../../shared/ui'
+import {Button, LoaderScreen} from '../../../shared/ui'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
 import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
@@ -13,20 +13,13 @@ import {EditProductCardTags} from "./EditProductCardTags"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {UpdateProductCard} from "../../../entities/models/Product/UpdateProductCard"
 
-interface EditProductCardModalProps {
-    productCardData?: any
-}
-
-export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({productCardData}) => {
+export const EditProductCardModal = () => {
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
 
-    const productInfoFromRow = useEditProductCardModal(s => s.productInfoFromRow)
-
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
-    const getProductCard = useEditProductCardModal(s => s.getProductCard)
 
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
@@ -54,15 +47,12 @@ export const EditProductCardModal: React.FC<EditProductCardModalProps> = ({produ
     }
 
     useEffect(() => {
-        // getProductCard(productInfoFromRow.id)
-        getProductCard(2)
         getCardOptions()
         getSpecifications()
-    // }, [currentProduct, productInfoFromRow])
     }, [])
 
     if (isLoading) {
-        return <div>Загрузка...</div>
+        return <LoaderScreen variant={'ellipsis'}/>
     } else {
 
         return (

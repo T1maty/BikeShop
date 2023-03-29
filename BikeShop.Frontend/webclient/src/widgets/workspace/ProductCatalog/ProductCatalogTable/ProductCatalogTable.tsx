@@ -4,8 +4,6 @@ import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {Product, ProductExtended} from "../../../../entities"
-import {EditProductCardModal}
-    from '../../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
 
@@ -37,14 +35,11 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
         }
     })
 
-    console.log('строки из таблицы', data)
-
     return (
         <>
             <ProductCatalogTableContextMenu/>
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
-            <EditProductCardModal productCardData={data}/>
 
             <div className={s.table_content}>
                 <UniTable rows={data}

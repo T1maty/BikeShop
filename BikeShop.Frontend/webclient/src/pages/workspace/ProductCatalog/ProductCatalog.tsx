@@ -4,20 +4,17 @@ import {Button, InputUI} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
+import {EditProductCardModal} from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal"
 
 export const ProductCatalog = () => {
 
-    const setOpenEditProductCardModal = useEditProductCardModal(s => s.setOpenEditProductCardModal)
-    const setProductInfoFromRow = useEditProductCardModal(s => s.setProductInfoFromRow)
-
-    const editProductCardModalHandler = (row: any) => {
-        setOpenEditProductCardModal(true)
-        setProductInfoFromRow(row)
-    }
+    const getProductCard = useEditProductCardModal(s => s.getProductCard)
 
     return (
         // <div className={s.productCatalogTableWrapper}>
         <div className={s.productCatalogTable_mainBlock}>
+            <EditProductCardModal/>
+
             <div className={s.productCatalogTable_leftSide}>
                 <div className={s.leftSide_header}>
                     <ProductTagCloud/>
@@ -48,7 +45,7 @@ export const ProductCatalog = () => {
                 </div>
 
                 <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
-                    <ProductCatalogTable onRowDoubleClick={(row: any) => {editProductCardModalHandler(row)}}/>
+                    <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
                 </div>
             </div>
         </div>

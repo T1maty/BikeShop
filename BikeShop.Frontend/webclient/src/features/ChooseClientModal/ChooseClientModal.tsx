@@ -1,14 +1,13 @@
-import React, {ChangeEvent, useEffect, useRef} from 'react';
-import {Modal} from '@mui/material';
-import {Button, ControlledCustomInput, CustomSearchInput} from '../../shared/ui';
+import React, {ChangeEvent, useEffect, useRef} from 'react'
 import s from './ChooseClientModal.module.scss'
-import Input from '../../shared/ui/Input/Input';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import {CreateUser, User} from '../../entities';
-import {useSnackbar} from 'notistack';
-import {useDebounce} from '../../shared/hooks/useDebounce';
-import useChooseClientModal from './ChooseClientModalStore';
-import {Errors} from '../../entities/errors/workspaceErrors';
+import {Modal} from '@mui/material'
+import {Button, ControlledCustomInput, CustomSearchInput, InputUI} from '../../shared/ui'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {CreateUser, User} from '../../entities'
+import {useSnackbar} from 'notistack'
+import {useDebounce} from '../../shared/hooks/useDebounce'
+import useChooseClientModal from './ChooseClientModalStore'
+import {Errors} from '../../entities/errors/workspaceErrors'
 
 interface ChooseClientModalProps {
     extraCallback: (user: User) => void
@@ -99,13 +98,13 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                         {/*                   clearInputValue={() => {setFIO('')}}*/}
                         {/*/>*/}
                         <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите фамилию'} value={fio}
-                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setFIO(e.currentTarget.value)
-                                   }}
-                                   clearInputValue={() => {
-                                       setFIO('')
-                                   }}
+                            <InputUI placeholder={'Введите фамилию'} value={fio}
+                                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                        setFIO(e.currentTarget.value)
+                                     }}
+                                     clearInputValue={() => {
+                                        setFIO('')
+                                     }}
                             />
                         </div>
                         {/*<CustomSearchInput placeholder={'Введите номер телефона'}*/}
@@ -115,13 +114,13 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                         {/*                   clearInputValue={() => {setPhoneNumber('')}}*/}
                         {/*/>*/}
                         <div className={s.clientModal_searchBlock_input}>
-                            <Input placeholder={'Введите номер телефона'} value={phoneNumber}
-                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                       setPhoneNumber(e.currentTarget.value)
-                                   }}
-                                   clearInputValue={() => {
-                                       setPhoneNumber('')
-                                   }}
+                            <InputUI placeholder={'Введите номер телефона'} value={phoneNumber}
+                                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                         setPhoneNumber(e.currentTarget.value)
+                                     }}
+                                     clearInputValue={() => {
+                                         setPhoneNumber('')
+                                     }}
                             />
                         </div>
                         <div className={s.clientModal_searchBlock_textField}>
@@ -185,5 +184,5 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                 </div>
             </form>
         </Modal>
-    );
-};
+    )
+}

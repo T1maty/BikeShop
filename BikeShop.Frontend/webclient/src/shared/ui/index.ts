@@ -1,12 +1,12 @@
 // Здесь происходят экспорты во внешний мир, то есть внешний API для других слоев
 
-export {default as InputUI} from './Input/Input'
-
 export {UniTable} from './Table/UniTable'
 
 export {Button} from './Button/Button'
-export {EditableSpan} from './EditableSpan/EditableSpan'
+export {LoaderScreen} from './Loader/LoaderScreen'
 
+export {EditableSpan} from './EditableSpan/EditableSpan'
+export {InputUI} from './InputUI/InputUI'
 export {CustomInput} from './CustomInput/CustomInput'
 export {CustomSearchInput} from './CustomInput/CustomSeacrhInput'
 
