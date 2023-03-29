@@ -23,6 +23,8 @@ interface EditProductCardModalStore {
     specifications: ProductSpecification[]
     getSpecifications: () => void
 
+    productStatus: string
+
     productTags: ProductTagForCard[]
     setProductTags: (tags: ProductTagForCard[]) => void
 
@@ -43,6 +45,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         ProductCardAPI.getProductCardById(productId).then(res => {
             set(state => {
                 state.currentProduct = res.data
+                state.productStatus = res.data.product.checkStatus
                 state.productTags = res.data.productTags
                 state.galleryImages = res.data.productImages
                 console.log('карточка из таблицы', state.currentProduct)
@@ -82,6 +85,8 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('спецификации не получены')
         })
     },
+
+    productStatus: '',
 
     productTags: [],
     setProductTags: (tags) => set(state => {

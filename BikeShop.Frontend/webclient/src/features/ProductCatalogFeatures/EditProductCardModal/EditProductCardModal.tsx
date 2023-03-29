@@ -10,6 +10,7 @@ import {EditProductCardOption} from "./EditProductCardOption"
 import {EditProductCardDescription} from "./EditProductCardDescription"
 import {EditProductCardGallery} from "./EditProductCardGallery"
 import {EditProductCardTags} from "./EditProductCardTags"
+import {EditProductCardStatus} from "./EditProductCardStatus"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {UpdateProductCard} from "../../../entities/models/Product/UpdateProductCard"
 
@@ -20,12 +21,14 @@ export const EditProductCardModal = () => {
     const isLoading = useEditProductCardModal(s => s.isLoading)
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
+    const productStatus = useEditProductCardModal(s => s.productStatus)
 
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
+            // status: '',
             options: [],
             specifications: [],
         }
@@ -66,9 +69,14 @@ export const EditProductCardModal = () => {
                     <div className={s.editProductCardModal_mainBlock}>
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags/>
-                            <div className={s.rightSide_productStatus}>
-                                Статус товара: {/*{currentProduct.product.checkStatus}*/}
-                            </div>
+
+                            <EditProductCardStatus control={formControl}
+                                                   name={'status'}
+                            />
+                            {/*<div className={s.rightSide_productStatus}>*/}
+                            {/*    Статус товара: {productStatus}*/}
+                            {/*</div>*/}
+
                             <EditProductCardGallery/>
                         </div>
 
