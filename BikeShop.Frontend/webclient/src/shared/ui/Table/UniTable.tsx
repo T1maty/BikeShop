@@ -46,7 +46,7 @@ export const UniTable = (props: TableProps) => {
                 <tbody className={cls.tbody}>
                 {
                     !props.isLoading ?
-                        props.rows.map((item: any, index) => {
+                        props.rows?.map((item: any, index) => {
                             return <TableRow key={index}
                                              row={item}
                                              columns={props.columns}
@@ -97,7 +97,9 @@ const TableRow = memo((props: TableRowProps) => {
                 props.setSelected(props.row)
                 props.rowOnContext ? props.rowOnContext(props.row, event) : true
             }}
-            onClick={() => {props.setSelected(props.row)}}
+            onClick={() => {
+                props.setSelected(props.row)
+            }}
         >
             {
                 props.columns.map((item, index) => {

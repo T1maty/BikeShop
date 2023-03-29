@@ -2,25 +2,30 @@ import React from 'react';
 import {Modal} from "@mui/material";
 import {Button} from '../../shared/ui'
 import s from './PayModal.module.scss'
-import usePayModal from './PayModalStore';
 import {ClientCard} from "../../widgets";
-import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore";
+import {User} from "../../entities";
 
-export const PayModal = () => {
+interface props {
+    open: boolean,
+    setOpen: (value: boolean) => void,
+    user?: User,
+    summ: number
+    result: (value: {
+        cash: number,
+        bankCount: number,
+        card: number,
+        personalBalance: number,
+    }) => void
+}
 
-    const open = usePayModal(s => s.openPayModal)
-    const setOpen = usePayModal(s => s.setOpenPayModal)
-    const user = useCashboxStore(s => s.user)
-
-    const chooseButtonHandler = () => {
-        // code here
-        setOpen(false)
-    }
+export const PayModal = (props: props) => {
 
     return (
         <Modal
-            open={open}
-            onClose={() => {setOpen(false)}}
+            open={props.open}
+            onClose={() => {
+                props.setOpen(false)
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -30,34 +35,30 @@ export const PayModal = () => {
                         К оплате:
                     </div>
                     <div className={s.header_sum}>
-                        10 590
+                        {props.summ}
                     </div>
                 </div>
                 <div className={s.payModal_clientCard}>
-                    <ClientCard user={user}/>
+                    {props.user ? <ClientCard user={props.user}/> : 'Пользователь не выбран'}
                 </div>
                 <div className={s.payModal_payType}>
-                    <Button onClick={() => {}}>
+                    <Button onClick={() => {
+                    }}>
                         Использовать терминал
                     </Button>
-                    <Button onClick={() => {}}>
+                    <Button onClick={() => {
+                    }}>
                         Оплата с баланса
                     </Button>
                 </div>
-                <div className={s.payModal_cashValue}>
-                    Полученная сумма наличными
-                </div>
                 <div className={s.payModal_cashbackBlock}>
                     <div className={s.cashbackBlock_info}>
-                        <div className={s.cashbackBlock_text}>Сдача:</div>
-                        <div className={s.cashbackBlock_value}>410</div>
                     </div>
                     <div className={s.cashbackBlock_buttons}>
-                        <Button onClick={chooseButtonHandler}>
+                        <Button onClick={() => {
+                            props.result({cash: props.summ, card: 0, bankCount: 0, personalBalance: 0})
+                        }}>
                             Оплатить
-                        </Button>
-                        <Button onClick={() => {setOpen(false)}}>
-                            Отмена
                         </Button>
                     </div>
                 </div>

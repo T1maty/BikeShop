@@ -1,5 +1,5 @@
 export interface Column {
-    id: 'id' | 'name' | 'price' | 'quantityUnitName' | 'discount' | 'total' | 'quantity';
+    id: 'productId' | 'name' | 'retailPrice' | 'quantityUnitName' | 'discount' | 'total' | 'quantity';
     label: string;
     minWidth?: number;
     align?: 'right' | 'left';
@@ -7,7 +7,7 @@ export interface Column {
 
 export const columns: Column[] = [
     {
-        id: 'id',
+        id: 'productId',
         label: 'Артикул',
         minWidth: 70,
         align: 'right',
@@ -31,7 +31,7 @@ export const columns: Column[] = [
         align: 'left',
     },
     {
-        id: 'price',
+        id: 'retailPrice',
         label: 'Цена',
         minWidth: 70,
         align: 'left',

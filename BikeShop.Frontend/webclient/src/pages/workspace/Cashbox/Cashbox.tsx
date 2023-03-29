@@ -1,11 +1,8 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './Cashbox.module.scss'
 import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal} from '../../../features'
 import {Button, CustomSearchInput, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
-import useChooseDiscountModal from '../../../features/ChooseDiscountModal/ChooseDiscountModalStore'
-import usePayModal from '../../../features/PayModal/PayModalStore'
-import useChooseProductModal from '../../../features/ChooseProductModal/ChooseProductModalStore'
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
 import {User} from '../../../entities'
@@ -16,12 +13,27 @@ export const Cashbox = () => {
     const isActiveTable = true
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
-    const setOpenDiscountModal = useChooseDiscountModal(s => s.setOpenDiscountModal)
-    const setOpenProductModal = useChooseProductModal(s => s.setOpenProductModal)
-    const setOpenPayModal = usePayModal(s => s.setOpenPayModal)
 
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
+    const bill = useCashboxStore(s => s.bill)
+    const addProduct = useCashboxStore(s => s.addProduct)
+
+    const [open, setOpen] = useState(false);
+    const [openPay, setOpenPay] = useState(false);
+    const [sum, setSum] = useState(0)
+
+    useEffect(() => {
+        let sum = 0;
+        bill.products?.forEach(n => {
+            console.log('qunt', n.quantity)
+            console.log('price', n.price)
+            console.log('disc', n.discount)
+            sum += (n.quantity * n.price - n.discount)
+        })
+        setSum(sum)
+
+    }, [bill])
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -90,7 +102,8 @@ export const Cashbox = () => {
                     <div className={s.discount_buttons}>
                         <ChooseDiscountModal/>
                         <Button buttonDivWrapper={s.buttons_choose}
-                                onClick={() => setOpenDiscountModal(true)}
+                                onClick={() => {
+                                }}
                         >
                             Выбрать скидку для клиента
                         </Button>
@@ -106,10 +119,10 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock_rightSideWrapper}>
                 <div className={s.cashboxMainBlock_rightSideHeader}>
-                    <ChooseProductModal/>
+                    <ChooseProductModal open={open} setOpen={setOpen} data={bill.products} addData={addProduct}/>
                     <Button buttonDivWrapper={s.header_chooseBtn}
                             onClick={() => {
-                                setOpenProductModal(true)
+                                setOpen(true)
                             }}
                     >
                         Выбрать товары
@@ -122,7 +135,11 @@ export const Cashbox = () => {
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideMiddle}>
-                    <UniTable rows={[]} columns={columns}/>
+
+
+                    <UniTable rows={bill.products} columns={columns}/>
+
+
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideBottom}>
@@ -142,14 +159,14 @@ export const Cashbox = () => {
                             </div>
                         </div>
                         <div className={s.buttonsBlock_two}>
-                            Итоговая сумма
+                            {sum}
                         </div>
                     </div>
-
                     <div className={s.rightSideBottom_payBlock}>
-                        <PayModal/>
+                        <PayModal open={openPay} setOpen={setOpenPay} summ={sum} result={(value) => {
+                        }}/>
                         <Button onClick={() => {
-                            setOpenPayModal(true)
+                            setOpenPay(true)
                         }}>
                             К оплате
                         </Button>

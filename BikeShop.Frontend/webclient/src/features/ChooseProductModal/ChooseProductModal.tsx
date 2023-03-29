@@ -1,23 +1,34 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Modal} from '@mui/material'
 import s from '../ChooseProductModal/ChooseProductModal.module.scss'
-import useChooseProductModal from './ChooseProductModalStore'
-import {ProductCatalog} from '../../pages'
+import {ProductCatalogTable, TagTreeView} from "../../widgets";
+import {ProductExtended} from "../../entities";
 
-export const ChooseProductModal = () => {
+interface props {
+    open?: boolean,
+    setOpen?: (value: boolean) => void,
+    data: any[],
+    addData: (value: any) => void
+}
 
-    const open = useChooseProductModal(s => s.openProductModal)
-    const setOpen = useChooseProductModal(s => s.setOpenProductModal)
+export const ChooseProductModal = (props: props) => {
+
+    const [open, setOpen] = useState(false);
 
     return (
         <Modal
-            open={open}
-            onClose={() => {setOpen(false)}}
+            open={props.open ? props.open : open}
+            onClose={() => {
+                props.setOpen ? props.setOpen(false) : setOpen(false)
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <div className={s.chooseProductModal_mainBox}>
-                <ProductCatalog/>
+                <TagTreeView/>
+                <ProductCatalogTable onRowDoubleClick={(row: ProductExtended) => {
+                    props.addData(row)
+                }}/>
             </div>
         </Modal>
     );

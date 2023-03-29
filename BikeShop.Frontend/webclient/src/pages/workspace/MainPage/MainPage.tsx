@@ -2,8 +2,7 @@ import React, {useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import s from "./MainPage.module.scss"
 import {Button} from '../../../shared/ui'
-import {ChooseClientModal, CreateProductModal, PayModal} from '../../../features'
-import usePayModal from '../../../features/PayModal/PayModalStore'
+import {ChooseClientModal, CreateProductModal} from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {User} from "../../../entities"
@@ -15,7 +14,6 @@ export const MainPage = () => {
     const navigate = useNavigate();
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
-    const setOpenPayModal = usePayModal(s => s.setOpenPayModal)
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
 
     // const setServiceUser = useService(s => s.setCurrentUser)
@@ -164,10 +162,9 @@ export const MainPage = () => {
                             <div className={s.result_span}>
                                 Цена
                             </div>
-                            <PayModal/>
                             <Button buttonDivWrapper={s.result_payBtn}
                                     onClick={() => {
-                                        setOpenPayModal(true)
+
                                     }}>
                                 К оплате
                             </Button>
