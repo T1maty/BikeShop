@@ -34,7 +34,7 @@ export const CustomSearchInput: React.FC<SuperInputTextPropsType> = (
         onEnter,
         clearInputValue,
         // error,
-        helperText, // error для Controlled Input (React Hook Forms)
+        helperText, // error для Controlled InputUI (React Hook Forms)
         className,
         divClassName,
         spanClassName,

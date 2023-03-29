@@ -30,7 +30,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
         onKeyPress,
         onEnter,
         error,
-        helperText, // error для Controlled Input (React Hook Forms)
+        helperText, // error для Controlled InputUI (React Hook Forms)
         className,
         divClassName,
         spanClassName,
