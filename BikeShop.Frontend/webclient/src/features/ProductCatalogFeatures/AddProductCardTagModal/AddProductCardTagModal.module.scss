@@ -1,0 +1,12 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.addProductCardTagModal_mainBox {
+    @include defaultModalStyle;
+    border-radius: $smallBorderRadius;
+    @include flexColumn;
+
+    .addProductCardTagModal_content {
+
+    }
+}

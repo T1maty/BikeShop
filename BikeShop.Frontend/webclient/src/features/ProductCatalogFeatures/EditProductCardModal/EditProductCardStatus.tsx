@@ -25,6 +25,20 @@ export const EditProductCardStatus = (props: ControlledProps) => {
         {id: 7, name: 'Confirmed'},
     ])
 
+    // const [checkStatus, setCheckStatus] = useState([
+    //     'JustCreatedByUser', 'JustCreatedByScript', 'PartialyFilledByUser',
+    //     'PartialyFilledByScript', 'FilledByUser', 'FilledByScript', 'Confirmed'
+    // ])
+
+    const getProductStatusHandler = (field: any) => {
+        // let ids: number[] = []
+        // field.value.forEach((n: ProductSpecification) => {ids.push(n.id)})
+        // return checkStatus.filter(n => !ids.includes(n.id))
+        return field.value // надо исправить!!!
+    }
+
+    // console.log(selectedStatus)
+
     return (
         <Controller
             name={props.name}
@@ -38,13 +52,15 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                         <div className={s.productStatus_select}>
                             <Select
                                 className={s.options_search}
-                                options={checkStatus}
+                                options={getProductStatusHandler(field)}
+                                // options={checkStatus}
                                 placeholder={'Выбор...'}
+                                // defaultInputValue={selectedStatus}
                                 value={selectedStatus ? selectedStatus : null}
                                 onChange={(value) => {setSelectedStatus(value as string)}}
-                                getOptionLabel={label => label!.name}
-                                getOptionValue={value => value!.name}
-                                // isSearchable={true}
+                                getOptionLabel={label => label.name}
+                                getOptionValue={value => value.name}
+                                isSearchable={false}
                                 // noOptionsMessage={() => 'Статус не найден'}
                             />
                         </div>

@@ -4,8 +4,12 @@ import useEditProductCardModal from './EditProductCardModalStore'
 import {ProductTagForCard} from '../../../entities'
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
+import useAddProductCardTagModal from "../AddProductCardTagModal/AddProductCardTagModalStore"
+import {AddProductCardTagModal} from "../AddProductCardTagModal/AddProductCardTagModal"
 
 export const EditProductCardTags = () => {
+
+    const setOpenAddProductCardTagModal = useAddProductCardTagModal(s => s.setOpenAddProductCardTagModal)
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const productTags = useEditProductCardModal(s => s.productTags)
@@ -23,7 +27,7 @@ export const EditProductCardTags = () => {
     // ])
 
     const addTagHandler = () => {
-        //
+        setOpenAddProductCardTagModal(true)
     }
 
     const deleteTagHandler = (tagId: number) => {
@@ -39,6 +43,7 @@ export const EditProductCardTags = () => {
                 >
                     Добавить тег
                 </Button>
+                <AddProductCardTagModal/>
             </div>
             <div className={s.tagEditor_tags}>
                 {

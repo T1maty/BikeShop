@@ -4,7 +4,7 @@ import {Button, InputUI} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
-import {EditProductCardModal} from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal"
+import {EditProductCardModal} from "../../../features"
 
 export const ProductCatalog = () => {
 

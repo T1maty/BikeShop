@@ -6,6 +6,8 @@ export {PayModal} from './PayModal/PayModal'
 export {ChooseClientModal} from './ChooseClientModal/ChooseClientModal'
 export {ChooseDiscountModal} from './ChooseDiscountModal/ChooseDiscountModal'
 
+export {EditProductCardModal} from './ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
+export {AddProductCardTagModal} from './ProductCatalogFeatures/AddProductCardTagModal/AddProductCardTagModal'
 export {CreateProductModal} from './ProductCatalogFeatures/CreateProductModal/CreateProductModal'
 export {CreateTagModal} from './ProductCatalogFeatures/CreateTagModal/CreateTagModal'
 export {UpdateTagModal} from './ProductCatalogFeatures/UpdateTagModal/UpdateTagModal'
