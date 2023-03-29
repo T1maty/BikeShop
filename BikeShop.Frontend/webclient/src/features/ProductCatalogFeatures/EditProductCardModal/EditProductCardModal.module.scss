@@ -135,6 +135,10 @@
                 height: 80%;
                 overflow-y: auto;
 
+                .tagList_noTags {
+                    margin: 0 auto;
+                }
+
                 .tagList_item {
                     background-color: $themeColorDark;
                     padding: $defaultSmallMargin;
@@ -178,6 +182,9 @@
         .rightSide_productStatus {
             @include flexBetween;
             width: 100%;
+            border: 2px solid $themeColorMilk;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
 
             .productStatus_title {
                 width: 35%;

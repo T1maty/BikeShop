@@ -20,6 +20,7 @@ export const EditProductCardModal = () => {
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
 
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const productStatus = useEditProductCardModal(s => s.productStatus)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
@@ -27,7 +28,7 @@ export const EditProductCardModal = () => {
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
             checkStatus: '',
-            // checkStatus: productStatus,
+            // checkStatus: { label: productStatus, value: productStatus },
             options: [],
             specifications: [],
         }
@@ -51,6 +52,7 @@ export const EditProductCardModal = () => {
     useEffect(() => {
         getCardOptions()
         getSpecifications()
+        // formControl.setValue('checkStatus', currentProduct ? currentProduct.product.checkStatus : '')
     }, [])
 
     if (isLoading) {

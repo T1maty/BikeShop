@@ -11,7 +11,7 @@ interface ControlledProps {
 
 export const EditProductCardStatus = (props: ControlledProps) => {
 
-    // const productStatus = useEditProductCardModal(s => s.productStatus)
+    const productStatus = useEditProductCardModal(s => s.productStatus)
     // const [selectedStatus, setSelectedStatus] = useState<any>(productStatus)
 
     // данные для статуса
@@ -45,10 +45,10 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                             className={s.options_search}
                             options={checkStatus}
                             placeholder={'Выбор...'}
-                            // defaultInputValue={selectedStatus}
+                            // defaultInputValue={productStatus}
                             // value={selectedStatus ? selectedStatus : null}
-                            value={field.value}
                             // onChange={(value) => {setSelectedStatus(value as string)}}
+                            value={field.value}
                             onChange={(value) => {field.onChange(value as string)}}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}

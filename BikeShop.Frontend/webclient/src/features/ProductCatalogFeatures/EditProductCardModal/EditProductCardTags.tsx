@@ -47,7 +47,7 @@ export const EditProductCardTags = () => {
             </div>
             <div className={s.tagEditor_tags}>
                 {
-                    productTags.length === 0 ? <div>Тегов нет</div> :
+                    productTags.length === 0 ? <div className={s.tagList_noTags}>Тегов нет</div> :
                         productTags.map((tag: ProductTagForCard) => {
                             return (
                                 <div key={tag.id} className={s.tagList_item}>

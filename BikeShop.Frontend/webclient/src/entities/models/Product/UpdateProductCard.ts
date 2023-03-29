@@ -4,7 +4,7 @@ import {ProductSpecification} from "./ProductSpecification"
 export interface UpdateProductCard {
     product: {}
     productCard: {}
-    checkStatus: string
+    checkStatus: any // string
     options: ProductOption[]
     specifications: ProductSpecification[]
     tags: []
