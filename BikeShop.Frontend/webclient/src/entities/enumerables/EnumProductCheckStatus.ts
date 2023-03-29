@@ -1,8 +1,8 @@
 interface IEnProductCheckStatus {
     justCreatedByUser: string
     justCreatedByScript: string
-    partialyFilledByUser: string
-    partialyFilledByScript: string
+    partiallyFilledByUser: string
+    partiallyFilledByScript: string
     filledByUser: string
     filledByScript: string
     confirmed: string
@@ -11,8 +11,8 @@ interface IEnProductCheckStatus {
 export const EnumProductCheckStatus: IEnProductCheckStatus = {
     justCreatedByUser: "JustCreatedByUser",
     justCreatedByScript: "JustCreatedByScript",
-    partialyFilledByUser: "PartialyFilledByUser",
-    partialyFilledByScript: "PartialyFilledByScript",
+    partiallyFilledByUser: "PartiallyFilledByUser",
+    partiallyFilledByScript: "PartiallyFilledByScript",
     filledByUser: "FilledByUser",
     filledByScript: "FilledByScript",
     confirmed: "Confirmed",

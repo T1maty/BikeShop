@@ -11,15 +11,15 @@ interface ControlledProps {
 
 export const EditProductCardStatus = (props: ControlledProps) => {
 
-    const productStatus = useEditProductCardModal(s => s.productStatus)
-    const [selectedStatus, setSelectedStatus] = useState<any>(productStatus)
+    // const productStatus = useEditProductCardModal(s => s.productStatus)
+    // const [selectedStatus, setSelectedStatus] = useState<any>(productStatus)
 
     // данные для статуса
     const [checkStatus, setCheckStatus] = useState([
         {id: 1, name: 'JustCreatedByUser'},
         {id: 2, name: 'JustCreatedByScript'},
-        {id: 3, name: 'PartialyFilledByUser'},
-        {id: 4, name: 'PartialyFilledByScript'},
+        {id: 3, name: 'PartiallyFilledByUser'},
+        {id: 4, name: 'PartiallyFilledByScript'},
         {id: 5, name: 'FilledByUser'},
         {id: 6, name: 'FilledByScript'},
         {id: 7, name: 'Confirmed'},
@@ -30,42 +30,33 @@ export const EditProductCardStatus = (props: ControlledProps) => {
     //     'PartialyFilledByScript', 'FilledByUser', 'FilledByScript', 'Confirmed'
     // ])
 
-    const getProductStatusHandler = (field: any) => {
-        // let ids: number[] = []
-        // field.value.forEach((n: ProductSpecification) => {ids.push(n.id)})
-        // return checkStatus.filter(n => !ids.includes(n.id))
-        return field.value // надо исправить!!!
-    }
-
-    // console.log(selectedStatus)
-
     return (
         <Controller
             name={props.name}
             control={props.control.control}
             render={({field}: any) =>
-                <>
-                    <div className={s.rightSide_productStatus}>
-                        <div className={s.productStatus_title}>
-                            Статус товара:
-                        </div>
-                        <div className={s.productStatus_select}>
-                            <Select
-                                className={s.options_search}
-                                options={getProductStatusHandler(field)}
-                                // options={checkStatus}
-                                placeholder={'Выбор...'}
-                                // defaultInputValue={selectedStatus}
-                                value={selectedStatus ? selectedStatus : null}
-                                onChange={(value) => {setSelectedStatus(value as string)}}
-                                getOptionLabel={label => label.name}
-                                getOptionValue={value => value.name}
-                                isSearchable={false}
-                                // noOptionsMessage={() => 'Статус не найден'}
-                            />
-                        </div>
+
+                <div className={s.rightSide_productStatus}>
+                    <div className={s.productStatus_title}>
+                        Статус товара:
                     </div>
-                </>
+                    <div className={s.productStatus_select}>
+                        <Select
+                            className={s.options_search}
+                            options={checkStatus}
+                            placeholder={'Выбор...'}
+                            // defaultInputValue={selectedStatus}
+                            // value={selectedStatus ? selectedStatus : null}
+                            value={field.value}
+                            // onChange={(value) => {setSelectedStatus(value as string)}}
+                            onChange={(value) => {field.onChange(value as string)}}
+                            getOptionLabel={label => label.name}
+                            getOptionValue={value => value.name}
+                            isSearchable={false}
+                            // noOptionsMessage={() => 'Статус не найден'}
+                        />
+                    </div>
+                </div>
             }
         />
     )

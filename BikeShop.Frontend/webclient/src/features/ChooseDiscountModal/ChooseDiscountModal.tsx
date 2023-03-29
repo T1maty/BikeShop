@@ -7,6 +7,7 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import Select from "react-select"
 
 export const ChooseDiscountModal = () => {
+
     const open = useChooseDiscountModal(s => s.openDiscountModal)
     const setOpen = useChooseDiscountModal(s => s.setOpenDiscountModal)
 

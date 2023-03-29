@@ -1,6 +1,6 @@
-import React from 'react';
-import {Controller, UseFormReturn} from "react-hook-form";
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import React from 'react'
+import {Controller, UseFormReturn} from "react-hook-form"
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 
 interface props {
     control: UseFormReturn<any>

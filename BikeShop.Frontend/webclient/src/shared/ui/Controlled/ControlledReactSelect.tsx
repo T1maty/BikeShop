@@ -2,7 +2,7 @@ import React from 'react'
 import {Controller, UseFormReturn} from "react-hook-form"
 import Select from 'react-select'
 
-interface props {
+interface ControlledReactSelectProps {
     name: string
     control: UseFormReturn<any>
 
@@ -16,7 +16,7 @@ interface props {
     className?: any
 }
 
-export const ControlledReactSelect = (props: props) => {
+export const ControlledReactSelect = (props: ControlledReactSelectProps) => {
 
     return (
         <div className={props.divClassName}>
@@ -29,13 +29,18 @@ export const ControlledReactSelect = (props: props) => {
                         placeholder={props.placeholder}
                         options={props.data}
                         isSearchable={props.isSearchable ? props.isSearchable : false}
-                        value={props.value}
-                        // onChange={(value: any) => {
-                        //     field.onChange(value)
-                        //     // console.log(value)
-                        //     // props.onChangeSelect
+
+                        // value={props.value}
+                        value={field.value}
+                        // onChange={props.onChangeSelect}
+                        // onChange={(event) => {
+                        //     field.onChange(event.target.value)
                         // }}
-                        onChange={props.onChangeSelect}
+                        onChange={(value: any) => {
+                            field.onChange(value)
+                            console.log('значение из селекта', value)
+                            // props.onChangeSelect
+                        }}
                     />
                 }
             />
