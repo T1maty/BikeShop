@@ -39,7 +39,7 @@
             @include defaultBlockStyles($themeColorMilk);
             @include flexColumn;
             justify-content: center;
-            height: 70%;
+            height: 65%;
             width: 400px;
 
             .imageGallery_imageList {
@@ -182,6 +182,7 @@
         .rightSide_productStatus {
             @include flexBetween;
             width: 100%;
+            height: 10%;
             border: 2px solid $themeColorMilk;
             border-radius: $smallBorderRadius;
             padding: $defaultSmallMargin;
