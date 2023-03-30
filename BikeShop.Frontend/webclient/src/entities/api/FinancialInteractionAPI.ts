@@ -1,8 +1,8 @@
-import {LoginData} from "../models/Auth/LoginData";
-import {$api} from "../../shared";
-import {LoginResponse} from "../responses/LoginResponse";
+import {LoginData} from "../models/Auth/LoginData"
+import {$api} from "../../shared"
+import {LoginResponse} from "../responses/LoginResponse"
 
-export const AuthAPI = {
+export const FinancialInteractionAPI = {
     Login: {
         login(loginData: LoginData): any {
             return (

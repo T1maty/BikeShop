@@ -1,12 +1,12 @@
 ///////////////////////////////////
 //          Entities             //
 ///////////////////////////////////
-
 export type {LoginData} from './models/Auth/LoginData'
 export type {RegistrationData} from './models/Auth/RegistrationData'
 
 export type {User} from './models/Auth/User'
 export type {Shop} from './models/Auth/Shop'
+export type {SearchClient} from './models/Auth/SearchClient'
 export type {Group} from './models/Service/Group'
 export type {Work} from './models/Service/Work'
 
@@ -30,7 +30,6 @@ export type {PaymentData} from './models/PaymentData'
 ///////////////////////////////////
 //          Requests             //
 ///////////////////////////////////
-
 export type {CreateUser} from './requests/CreateUser'
 export type {CreateService} from './requests/CreateService'
 export type {UpdateService} from './requests/UpdateService'
@@ -64,12 +63,20 @@ export type {GetQuantityUnitResponse} from './responses/QuantityUnitResponse'
 export type {UserObj} from './responses/GetUsersResponse'
 
 ///////////////////////////////////
+//             API               //
+///////////////////////////////////
+export {AuthAPI} from './api/AuthAPI'
+export {CatalogAPI} from './api/CatalogAPI'
+export {EntitiesAPI} from './api/EntitiesAPI'
+export {FinancialInteractionAPI} from './api/FinancialInteractionAPI'
+export {ProductCardAPI} from './api/ProductCardAPI'
+export {ServiceAPI} from './api/ServiceAPI'
+
+///////////////////////////////////
 //          Others               //
 ///////////////////////////////////
 export {OnlyWithoutAuthRoute} from '../app/providers/RouteProviders/OnlyWithoutAuthRoute'
 export {CheckAuthRouteProvider} from '../app/providers/RouteProviders/CheckAuthRouteProvider'
-
-// export {PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeaderProvider'
 export {WorkspaceHeaderProvider} from '../app/providers/HeaderProviders/WorkspaceHeaderProvider'
 
 export {EnumProductCheckStatus} from './enumerables/EnumProductCheckStatus'

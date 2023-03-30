@@ -1,7 +1,7 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {CreateUser, LoginData, LoginResponse, RegistrationData, Shop, User} from "../index"
-import {SearchClient} from "../../features/ChooseClientModal/ChooseClientModalStore"
+import {CreateUser, LoginData, LoginResponse,
+    RegistrationData, SearchClient, Shop, User} from "../index"
 
 export const AuthAPI = {
     Login: {

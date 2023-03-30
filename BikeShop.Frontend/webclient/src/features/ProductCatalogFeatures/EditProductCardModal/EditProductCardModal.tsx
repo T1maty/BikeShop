@@ -30,10 +30,9 @@ export const EditProductCardModal = () => {
                 descriptionShort: '',
                 description: ''
             },
-            // descriptionShort: '',
-            // description: '',
             options: [],
             specifications: [],
+            productImages: [],
             productTags: []
         }
     })
@@ -41,10 +40,9 @@ export const EditProductCardModal = () => {
     const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
         console.log('submitData', data)
 
-        // добавление карточки
-        //     addNewService(data).then((res: any) => {
-        //         setIsCreating(false)
-        //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+        // обновление карточки
+        //     updateProductCard(data).then((res: any) => {
+        //         enqueueSnackbar('Карточка обновлена', {variant: 'success', autoHideDuration: 3000})
         //     }).catch((error: any) => {
         //         let message = error(error.response.data.errorDescription).toString()
         //         formControl.setError('name', {type: 'serverError', message: message})

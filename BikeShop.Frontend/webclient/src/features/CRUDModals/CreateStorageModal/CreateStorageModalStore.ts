@@ -1,11 +1,9 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {$api} from "../../../shared";
-import {AxiosResponse} from "axios";
-import {CreateStorageResponse} from '../../../entities/responses/StorageResponse';
-import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage';
-import {EntitiesAPI} from "../../../entities/api/EntitiesAPI";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {CreateStorageResponse} from '../../../entities/responses/StorageResponse'
+import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage'
+import {EntitiesAPI} from "entities"
 
 interface CreateStorageModalStore {
     openCreateStorageModal: boolean

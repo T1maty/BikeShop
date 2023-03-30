@@ -8,6 +8,11 @@ export const ProductCardAPI = {
             $api.get<CatalogProductItem>(`/productcard/getproductcard?productId=${productId}`)
         )
     },
+    updateProductCard(): Promise<AxiosResponse<CatalogProductItem>> {
+        return (
+            $api.put<CatalogProductItem>(`/productcard/updateproductcard`)
+        )
+    },
     getOptions(): Promise<AxiosResponse<ProductOption[]>> {
         return (
             $api.get<ProductOption[]>('/productcard/getalloptions')

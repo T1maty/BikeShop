@@ -1,9 +1,8 @@
 import {create} from "zustand"
 import {immer} from "zustand/middleware/immer"
 import {devtools, persist} from "zustand/middleware"
-import {LoginData, LoginResponse, RegistrationData, Shop, User} from "../../entities"
+import {AuthAPI, LoginData, LoginResponse, RegistrationData, Shop, User} from "../../entities"
 import {AxiosResponse} from "axios"
-import {AuthAPI} from "../../entities/api/AuthAPI"
 
 
 interface authState {

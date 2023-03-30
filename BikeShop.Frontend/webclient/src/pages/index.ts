@@ -14,8 +14,6 @@ export {ProductsWrapper} from './workspace/ProductsCount/ProductsWrapper'
 export {ArrivalOfProducts} from './workspace/ProductsCount/ArrivalOfProducts'
 export {InventoryOfProducts} from './workspace/ProductsCount/InventoryOfProducts'
 
-// export {_Home} from './public/Home/_Home'
-
 export {ShopMain} from './public/Shop/ShopMain/ShopMain'
 export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'
 export {ShopHeader} from './public/Shop/ShopMain/ShopHeader'

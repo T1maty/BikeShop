@@ -23,7 +23,8 @@ export const EditProductCardDescriptionShort = (props: ControlledProps) => {
                             <textarea value={field.value.descriptionShort} placeholder={'Введите текст...'}
                                       onChange={(v) => {
                                           field.onChange({...field.value, descriptionShort: v.target.value})
-                                      }}/>
+                                      }}
+                            />
                         </div>
                     </div>
                 </div>

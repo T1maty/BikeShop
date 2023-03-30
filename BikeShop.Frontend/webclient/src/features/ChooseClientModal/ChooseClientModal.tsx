@@ -61,16 +61,6 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
         })
     }
 
-    // зачистка инпутов
-    /*const clearFioInput = () => {
-        setFIO('')
-        setUsers([])
-    }
-    const clearPhoneInput = () => {
-        setPhoneNumber('')
-        setUsers([])
-    }*/
-
     const userClickHandler = (user: User) => {
         extraCallback(user)
     }

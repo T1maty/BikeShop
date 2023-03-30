@@ -1,11 +1,8 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../../shared"
-import {AxiosResponse} from "axios"
-import {CreateShop, UpdateShop} from '../../../entities'
+import {CreateShop, EntitiesAPI, UpdateShop} from '../../../entities'
 import {CreateShopResponse} from "../../../entities/responses/ShopResponse"
-import {EntitiesAPI} from "../../../entities/api/EntitiesAPI"
 
 interface CreateShopModalStore {
     openCreateShopModal: boolean

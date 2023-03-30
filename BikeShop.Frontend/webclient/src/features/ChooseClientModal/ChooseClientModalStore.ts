@@ -2,13 +2,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {AxiosResponse} from "axios"
-import {CreateUser, User} from '../../entities'
-import {AuthAPI} from "../../entities/api/AuthAPI"
-
-export interface SearchClient {
-    fio: string
-    phoneNumber: string
-}
+import {AuthAPI, CreateUser, SearchClient, User} from '../../entities'
 
 interface ChooseClientModalStore {
     openClientModal: boolean
@@ -48,6 +42,8 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
             .then((res: any) => {
             set(state => {state.users = [...res.data.users]})
             set({isLoadingDiv: false})
+        }).catch((error: any) => {
+            console.log('пользователь не найден')
         })
     },
     addNewUser: (data) => {

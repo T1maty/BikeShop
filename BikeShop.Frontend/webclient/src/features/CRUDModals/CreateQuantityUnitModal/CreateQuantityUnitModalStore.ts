@@ -1,8 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CreateQuantityUnit, GetQuantityUnitResponse, UpdateQuantityUnit} from "../../../entities"
-import {EntitiesAPI} from "../../../entities/api/EntitiesAPI"
+import {CreateQuantityUnit, EntitiesAPI, GetQuantityUnitResponse, UpdateQuantityUnit} from "../../../entities"
 
 interface CreateQuantityUnitModalStore {
     openQuantityUnitModal: boolean

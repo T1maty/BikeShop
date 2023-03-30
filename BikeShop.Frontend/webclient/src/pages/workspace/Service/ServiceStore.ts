@@ -1,15 +1,9 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {$api} from '../../../shared'
-import {
-    CreateService,
-    EnumServiceStatus,
-    User,
-    ServiceItem,
-    UpdateServiceStatus
+import {CreateService, EnumServiceStatus, User,
+    ServiceItem, UpdateServiceStatus, ServiceAPI
 } from '../../../entities'
-import {ServiceAPI} from '../../../entities/api/ServiceAPI'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
