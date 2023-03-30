@@ -1,9 +1,10 @@
 import {create} from "zustand"
-import {devtools, persist} from "zustand/middleware"
+import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CreateStorageResponse} from '../../../entities/responses/StorageResponse'
 import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage'
-import {EntitiesAPI} from "entities/api/EntitiesAPI"
+import {EntitiesAPI} from "../../../entities"
+
 
 interface CreateStorageModalStore {
     openCreateStorageModal: boolean
@@ -24,6 +25,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     setOpenCreateStorageModal: (value: boolean) => set({openCreateStorageModal: value}),
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
+
 
     currentStorage: null,
     setCurrentStorage: (storage) => {

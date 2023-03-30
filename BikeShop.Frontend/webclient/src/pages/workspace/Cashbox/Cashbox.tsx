@@ -5,9 +5,9 @@ import {Button, CustomSearchInput, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
-import {PaymentData, User} from '../../../entities'
+import {FinancialInteractionAPI, PaymentData, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig";
-import {$api} from "../../../shared";
+import useAuthUser from "../../auth/useAuthUser";
 
 export const Cashbox = () => {
 
@@ -15,6 +15,7 @@ export const Cashbox = () => {
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
 
+    const logUser = useAuthUser(s => s.user)
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
     const bill = useCashboxStore(s => s.bill)
@@ -23,6 +24,11 @@ export const Cashbox = () => {
     const [open, setOpen] = useState(false);
     const [openPay, setOpenPay] = useState(false);
     const [sum, setSum] = useState(0)
+
+    let data: {}[] = []
+    bill.products?.forEach(n => {
+        data.push({...n, total: (n.quantity * n.price - n.discount)})
+    })
 
     useEffect(() => {
         let sum = 0;
@@ -37,7 +43,15 @@ export const Cashbox = () => {
     }, [bill])
 
     const paymentResultHandler = (value: PaymentData) => {
-        $api.post('/')
+        let res = {...bill, ...value}
+        res.userId = logUser != undefined ? logUser.id : ""
+        res.description = 'desc'
+        res.shopId = 1
+        res.currencyId = 1
+        console.log(res)
+        FinancialInteractionAPI.NewBill.create(res).then((r) => {
+            console.log(r)
+        })
     }
 
     const chooseClientHandler = (user: User) => {
@@ -140,7 +154,7 @@ export const Cashbox = () => {
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideMiddle}>
-                    <UniTable rows={bill.products} columns={columns}/>
+                    <UniTable rows={data} columns={columns}/>
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideBottom}>

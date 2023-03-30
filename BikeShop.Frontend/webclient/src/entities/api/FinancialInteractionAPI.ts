@@ -1,12 +1,11 @@
-import {LoginData} from "../models/Auth/LoginData"
-import {$api} from "../../shared"
-import {LoginResponse} from "../responses/LoginResponse"
+import {$api} from "../../shared";
+import {NewBillDTO} from "../../pages/workspace/Cashbox/models/NewBillDTO";
 
 export const FinancialInteractionAPI = {
-    Login: {
-        login(loginData: LoginData): any {
+    NewBill: {
+        create(data: NewBillDTO) {
             return (
-                $api.post<LoginResponse>('/auth/login', loginData)
+                $api.post('/financialinteraction/newbill', data)
             )
         },
     }
