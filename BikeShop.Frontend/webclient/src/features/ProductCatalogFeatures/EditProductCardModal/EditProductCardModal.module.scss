@@ -202,19 +202,19 @@
         @include flexColumnOnly;
         height: 100%;
 
-        .briefEditor {
+        .shortEditor {
             margin-bottom: $defaultSmallMargin;
 
-            .briefEditor_title {
+            .shortEditor_title {
                 font-weight: bold;
                 font-size: 18px;
                 color: black;
                 margin-bottom: $defaultSmallMargin;
             }
-            .briefEditor_textarea {
+            .shortEditor_textarea {
                 height: 100px;
 
-                .briefEditor_textarea_wrapper {
+                .shortEditor_textarea_wrapper {
                     height: 100%;
 
                     textarea {

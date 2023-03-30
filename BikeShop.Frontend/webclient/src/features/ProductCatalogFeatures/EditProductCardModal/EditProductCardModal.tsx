@@ -26,6 +26,11 @@ export const EditProductCardModal = () => {
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
             checkStatus: '',
+            productCard: {
+                descriptionShort: '',
+                description: ''
+            },
+            // descriptionShort: '',
             options: [],
             specifications: [],
         }
@@ -70,7 +75,7 @@ export const EditProductCardModal = () => {
                             <EditProductCardGallery/>
                         </div>
 
-                        <EditProductCardDescription/>
+                        <EditProductCardDescription control={formControl} name={'productCard'}/>
 
                         <div className={s.editProductCardModal_rightSide}>
                             <EditProductCardOption divClassName={s.rightSide_productDetails}
