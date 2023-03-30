@@ -1,8 +1,6 @@
-import React, {useState} from 'react'
+import React from 'react'
 import s from "./EditProductCardModal.module.scss"
-import {Editor} from "react-draft-wysiwyg"
-import {EditorState} from "draft-js"
-import {Controller, UseFormReturn} from "react-hook-form"
+import {UseFormReturn} from "react-hook-form"
 import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort"
 import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull"
 
@@ -19,7 +17,7 @@ export const EditProductCardDescription = (props: ControlledProps) => {
     return (
         <div className={s.leftSide_descriptionEditor}>
 
-            <EditProductCardDescriptionShort control={props.control} name={'descriptionShort'}/>
+            <EditProductCardDescriptionShort control={props.control} name={'productCard'}/>
             {/*<Controller*/}
             {/*    name={props.name}*/}
             {/*    control={props.control.control}*/}
@@ -37,7 +35,7 @@ export const EditProductCardDescription = (props: ControlledProps) => {
             {/*    }*/}
             {/*/>*/}
 
-            <EditProductCardDescriptionFull control={props.control} name={'description'}/>
+            <EditProductCardDescriptionFull control={props.control} name={'productCard'}/>
             {/*<Controller*/}
             {/*    name={props.name}*/}
             {/*    control={props.control.control}*/}

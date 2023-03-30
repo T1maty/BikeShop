@@ -3,19 +3,14 @@ import {Modal} from "@mui/material";
 import {Button} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import {ClientCard} from "../../widgets";
-import {User} from "../../entities";
+import {PaymentData, User} from "../../entities";
 
 interface props {
     open: boolean,
     setOpen: (value: boolean) => void,
     user?: User,
     summ: number
-    result: (value: {
-        cash: number,
-        bankCount: number,
-        card: number,
-        personalBalance: number,
-    }) => void
+    result: (value: PaymentData) => void
 }
 
 export const PayModal = (props: props) => {
@@ -57,6 +52,7 @@ export const PayModal = (props: props) => {
                     <div className={s.cashbackBlock_buttons}>
                         <Button onClick={() => {
                             props.result({cash: props.summ, card: 0, bankCount: 0, personalBalance: 0})
+                            props.setOpen(false)
                         }}>
                             Оплатить
                         </Button>

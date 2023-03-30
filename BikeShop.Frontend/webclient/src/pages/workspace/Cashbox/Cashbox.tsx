@@ -5,8 +5,9 @@ import {Button, CustomSearchInput, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
-import {User} from '../../../entities'
+import {PaymentData, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig";
+import {$api} from "../../../shared";
 
 export const Cashbox = () => {
 
@@ -34,6 +35,10 @@ export const Cashbox = () => {
         setSum(sum)
 
     }, [bill])
+
+    const paymentResultHandler = (value: PaymentData) => {
+        $api.post('/')
+    }
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -159,8 +164,7 @@ export const Cashbox = () => {
                         </div>
                     </div>
                     <div className={s.rightSideBottom_payBlock}>
-                        <PayModal open={openPay} setOpen={setOpenPay} summ={sum} result={(value) => {
-                        }}/>
+                        <PayModal open={openPay} setOpen={setOpenPay} summ={sum} result={paymentResultHandler}/>
                         <Button onClick={() => {
                             setOpenPay(true)
                         }}>
