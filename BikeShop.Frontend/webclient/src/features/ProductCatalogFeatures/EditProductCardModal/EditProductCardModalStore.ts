@@ -116,7 +116,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('изорабражение не загружено', error)
+            console.log('изображение не загружено', error)
         })
     },
 })))/*, {

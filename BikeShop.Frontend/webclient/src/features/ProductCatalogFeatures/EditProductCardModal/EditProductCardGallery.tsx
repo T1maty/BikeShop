@@ -4,8 +4,14 @@ import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {ProductImage} from '../../../entities'
+import {Controller, UseFormReturn} from "react-hook-form"
 
-export const EditProductCardGallery = () => {
+interface ControlledProps {
+    name: string
+    control: UseFormReturn<any>
+}
+
+export const EditProductCardGallery = (props: ControlledProps) => {
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const galleryImages = useEditProductCardModal(s => s.galleryImages)
@@ -55,7 +61,7 @@ export const EditProductCardGallery = () => {
         reader.readAsDataURL(file)
     }
 
-    // функции для изображения
+    // функции для работы с текущими изображениями
     const setImageHandler = (imgKey: number) => {
         setCurrentImageKey(imgKey)
     }
@@ -102,55 +108,62 @@ export const EditProductCardGallery = () => {
     }
 
     return (
-        <div className={s.leftSide_imageGallery}>
-            <div className={s.imageGallery_imageList}>
-                {
-                    galleryImages.length === 0 ? <div>Фотографий нет</div> :
+        <Controller
+            name={props.name}
+            control={props.control.control}
+            render={({field}: any) =>
 
-                        galleryImages.map((img: ProductImage, key: number) => {
-                            return (
-                                <div key={img.id}
-                                     onDoubleClick={() => {setImageHandler(key)}}
-                                     className={s.imageList_item}
-                                >
-                                    <img className={currentImageKey === key ? s.active_image : ''}
-                                         src={img.url} alt="img-thumbnail"
-                                         // src={img.thumbnail} alt="img-thumbnail"
-                                    />
-                                    <div className={s.imageList_imageCount}>
-                                        {key + 1}/{galleryImages.length}
-                                    </div>
-                                    <img src={RemoveIcon} alt="remove-icon"
-                                         className={s.imageList_deleteItem}
-                                         onClick={() => {deleteImageHandler(img.id)}}
-                                    />
-                                </div>
-                            )
-                        })
-                }
-            </div>
-            <div className={s.imageGallery_buttons}>
-                <div className={s.imageGallery_sortButtons}>
-                    <Button disabled={currentImageKey === null || currentImageKey === 0}
-                            onClick={() => {onMoveBackwardHandler(currentImageKey)}}
-                    >
-                        Переместить назад
-                    </Button>
-                    <Button
-                        disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
-                        onClick={() => {onMoveForwardHandler(currentImageKey)}}
-                    >
-                        Переместить вперёд
-                    </Button>
+                <div className={s.leftSide_imageGallery}>
+                    <div className={s.imageGallery_imageList}>
+                        {
+                            galleryImages.length === 0 ? <div>Фотографий нет</div> :
+
+                                galleryImages.map((img: ProductImage, key: number) => {
+                                    return (
+                                        <div key={img.id}
+                                             className={s.imageList_item}
+                                             onDoubleClick={() => {setImageHandler(key)}}
+                                        >
+                                            <img className={currentImageKey === key ? s.active_image : ''}
+                                                 src={img.url} alt="img-thumbnail"
+                                                // src={img.thumbnail} alt="img-thumbnail"
+                                            />
+                                            <div className={s.imageList_imageCount}>
+                                                {key + 1}/{galleryImages.length}
+                                            </div>
+                                            <img src={RemoveIcon} alt="remove-icon"
+                                                 className={s.imageList_deleteItem}
+                                                 onClick={() => {deleteImageHandler(img.id)}}
+                                            />
+                                        </div>
+                                    )
+                                })
+                        }
+                    </div>
+                    <div className={s.imageGallery_buttons}>
+                        <div className={s.imageGallery_sortButtons}>
+                            <Button disabled={currentImageKey === null || currentImageKey === 0}
+                                    onClick={() => {onMoveBackwardHandler(currentImageKey)}}
+                            >
+                                Переместить назад
+                            </Button>
+                            <Button
+                                disabled={currentImageKey === null || currentImageKey === (galleryImages.length - 1)}
+                                onClick={() => {onMoveForwardHandler(currentImageKey)}}
+                            >
+                                Переместить вперёд
+                            </Button>
+                        </div>
+                        <div className={s.imageGallery_addImage}>
+                            <input type="file" id="file"
+                                   accept="image/png, image/jpeg"
+                                   onChange={uploadImageHandler}
+                                   className={s.inputFile}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div className={s.imageGallery_addImage}>
-                    <input type="file" id="file"
-                           accept="image/png, image/jpeg"
-                           onChange={uploadImageHandler}
-                           className={s.inputFile}
-                    />
-                </div>
-            </div>
-        </div>
+            }
+        />
     )
 }

@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+// import draftToHtml from 'draftjs-to-html'
 import {Editor} from "react-draft-wysiwyg"
 import {EditorState} from "draft-js"
 import {Controller, UseFormReturn} from "react-hook-form"
@@ -12,6 +14,7 @@ interface ControlledProps {
 export const EditProductCardDescriptionFull = (props: ControlledProps) => {
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     return (
         <Controller

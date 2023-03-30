@@ -1,5 +1,7 @@
 import React from 'react'
 import s from "./EditProductCardModal.module.scss"
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+// import draftToHtml from 'draftjs-to-html'
 import {UseFormReturn} from "react-hook-form"
 import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort"
 import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull"

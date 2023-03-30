@@ -3,8 +3,6 @@ import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
 import {Button, LoaderScreen} from '../../../shared/ui'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-// import draftToHtml from 'draftjs-to-html'
 import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
 import {EditProductCardOption} from "./EditProductCardOption"
 import {EditProductCardDescription} from "./EditProductCardDescription"
@@ -25,7 +23,7 @@ export const EditProductCardModal = () => {
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
-            checkStatus: '',
+            checkStatus: '', // ? надо переместить в объект
             productCard: {
                 descriptionShort: '',
                 description: ''
@@ -72,7 +70,7 @@ export const EditProductCardModal = () => {
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags control={formControl} name={'productTags'}/>
                             <EditProductCardStatus control={formControl} name={'checkStatus'}/>
-                            <EditProductCardGallery/>
+                            <EditProductCardGallery control={formControl} name={'productImages'}/>
                         </div>
 
                         <EditProductCardDescription control={formControl} name={'productCard'}/>
