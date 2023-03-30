@@ -28,16 +28,25 @@ const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, 
             price: value.retailPrice
         }
 
-        if (get().bill.products.find(n => n.productId === newValue.productId)) {
+        let all = [...(get().bill.products != undefined ? get().bill.products : [])]
+        let ent = all?.find(n => n.productId === newValue.productId)
+        if (ent != undefined) {
+            let index = all.indexOf(ent)
+            let quant = ent.quantity
 
+            set(state => {
+                state.bill.products[index].quantity = quant + 1
+            })
+        } else {
+            set(state => {
+                state.bill.products != undefined ?
+
+                    state.bill.products.push(newValue)
+                    :
+                    state.bill.products = [newValue]
+            })
         }
-        set(state => {
-            state.bill.products != undefined ?
 
-                state.bill.products.push(newValue)
-                :
-                state.bill.products = [newValue]
-        })
     },
     setProducts: (value) => {
         set(state => {
