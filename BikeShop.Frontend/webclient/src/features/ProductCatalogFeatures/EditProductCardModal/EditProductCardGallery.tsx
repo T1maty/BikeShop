@@ -7,6 +7,7 @@ import {ProductImage} from '../../../entities'
 
 export const EditProductCardGallery = () => {
 
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const galleryImages = useEditProductCardModal(s => s.galleryImages)
     const setGalleryImages = useEditProductCardModal(s => s.setGalleryImages)
     const uploadNewImage = useEditProductCardModal(s => s.uploadNewImage)
@@ -35,7 +36,8 @@ export const EditProductCardGallery = () => {
             // перепроверить максимальный размер файла
             if (file.size < 7000000) {
                 convertFileToBase64(file, (file64: string) => {
-                    uploadNewImage(file64) // запрос на загрузку
+                    addImageHandler(file64) // добавить изображение в стор
+                    // uploadNewImage(file64) // запрос на загрузку
                     console.log('file64: ', file64)
                 })
             } else {
@@ -56,6 +58,19 @@ export const EditProductCardGallery = () => {
     // функции для изображения
     const setImageHandler = (imgKey: number) => {
         setCurrentImageKey(imgKey)
+    }
+
+    const addImageHandler = (newImage: string) => {
+        const imageObj = {
+            id: Date.now(),
+            createdAt: '',
+            updatedAt: '',
+            enabled: true,
+            productId: currentProduct.product.id,
+            sortOrder: 0,
+            url: newImage,
+        }
+        setGalleryImages([imageObj, ...galleryImages])
     }
 
     const deleteImageHandler = (imgId: number) => {

@@ -6,7 +6,7 @@ import useService, {ServiceListStatusType} from "./ServiceStore"
 import {ServiceStatusType} from "../../../entities/models/Service/ServiceItem"
 import {EnumServiceStatus} from "../../../entities"
 
-const ServiceNavigation = () => {
+export const ServiceNavigation = () => {
 
     const isLoading = useService(s => s.isLoading)
     const serviceListStatus = useService(s => s.serviceListStatus)
@@ -140,7 +140,5 @@ const ServiceNavigation = () => {
                 </div>
             </div>
         </div>
-    );
-};
-
-export default ServiceNavigation;
+    )
+}

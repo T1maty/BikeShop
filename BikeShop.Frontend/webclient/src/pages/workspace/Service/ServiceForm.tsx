@@ -12,7 +12,7 @@ import useSelectProductWorkModal
 import {useSnackbar} from "notistack"
 import useAuth from "../../auth/useAuthUser"
 
-const ServiceForm = () => {
+export const ServiceForm = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -20,7 +20,6 @@ const ServiceForm = () => {
     const masters = useService(s => s.masters)
     const currentService = useService(s => s.currentService)
     const setCurrentService = useService(s => s.setCurrentService)
-
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
     const setOpenSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
@@ -225,7 +224,5 @@ const ServiceForm = () => {
                 />
             </form>
         </div>
-    );
-};
-
-export default ServiceForm;
+    )
+}

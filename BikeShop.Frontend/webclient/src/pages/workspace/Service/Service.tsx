@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import s from './Service.module.scss'
-import ServiceNavigation from "./ServiceNavigation"
-import ServiceForm from "./ServiceForm"
 import useService from "./ServiceStore"
 import {LoaderScreen} from "../../../shared/ui"
+import {ServiceForm} from "./ServiceForm"
+import {ServiceNavigation} from "./ServiceNavigation"
 
 export const Service = () => {
 
