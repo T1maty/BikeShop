@@ -32,6 +32,7 @@ export const ControlledReactSelect = (props: ControlledReactSelectProps) => {
 
                         // value={props.value}
                         value={field.value}
+
                         // onChange={props.onChangeSelect}
                         // onChange={(event) => {
                         //     field.onChange(event.target.value)
