@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CreateStorageResponse} from '../../../entities/responses/StorageResponse'
 import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage'
-import {EntitiesAPI} from "entities"
+import {EntitiesAPI} from "entities/api/EntitiesAPI"
 
 interface CreateStorageModalStore {
     openCreateStorageModal: boolean
