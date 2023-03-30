@@ -9,19 +9,28 @@ export const EditProductCardDescription = () => {
 
     return (
         <div className={s.leftSide_descriptionEditor}>
-            <div className={s.descriptionEditor_title}>Описание товара:</div>
-            {/*<div className={s.descriptionEditor_textarea}>*/}
-            {/*    <textarea/>*/}
-            {/*</div>*/}
-            <div className={s.descriptionEditor_editorTextarea}>
-                <Editor
-                    editorState={editorState}
-                    toolbarClassName="toolbarClassName"
-                    wrapperClassName="wrapperClassName"
-                    editorClassName={s.editorClassName}
-                    // editorClassName="editorClassName"
-                    onEditorStateChange={(editorState) => {setEditorState(editorState)}}
-                />
+            <div className={s.briefEditor}>
+                <div className={s.briefEditor_title}>Краткое описание товара:</div>
+                <div className={s.briefEditor_textarea}>
+                    <div className={s.briefEditor_textarea_wrapper}>
+                        <textarea/>
+                    </div>
+                </div>
+            </div>
+
+            <div className={s.fullEditor}>
+                <div className={s.descriptionEditor_title}>Детальное описание товара:</div>
+                <div className={s.descriptionEditor_editorTextarea}>
+                    <Editor
+                        editorState={editorState}
+                        wrapperClassName="wrapperClassName"
+                        // toolbarClassName="toolbarClassName"
+                        toolbarClassName={s.editor_toolbar}
+                        // editorClassName="editorClassName"
+                        editorClassName={s.editorClassName}
+                        onEditorStateChange={(editorState) => {setEditorState(editorState)}}
+                    />
+                </div>
             </div>
         </div>
     )

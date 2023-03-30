@@ -66,14 +66,7 @@ export const EditProductCardModal = () => {
                     <div className={s.editProductCardModal_mainBlock}>
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags/>
-
-                            <EditProductCardStatus control={formControl}
-                                                   name={'checkStatus'}
-                            />
-                            {/*<div className={s.rightSide_productStatus}>*/}
-                            {/*    Статус товара: {productStatus}*/}
-                            {/*</div>*/}
-
+                            <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                             <EditProductCardGallery/>
                         </div>
 
