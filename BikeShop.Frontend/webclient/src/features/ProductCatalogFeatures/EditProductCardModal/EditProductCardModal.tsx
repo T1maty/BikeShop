@@ -31,8 +31,10 @@ export const EditProductCardModal = () => {
                 description: ''
             },
             // descriptionShort: '',
+            // description: '',
             options: [],
             specifications: [],
+            productTags: []
         }
     })
 
@@ -70,7 +72,7 @@ export const EditProductCardModal = () => {
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.editProductCardModal_mainBlock}>
                         <div className={s.editProductCardModal_leftSide}>
-                            <EditProductCardTags/>
+                            <EditProductCardTags control={formControl} name={'productTags'}/>
                             <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                             <EditProductCardGallery/>
                         </div>

@@ -68,7 +68,7 @@ export type {UserObj} from './responses/GetUsersResponse'
 export {OnlyWithoutAuthRoute} from '../app/providers/RouteProviders/OnlyWithoutAuthRoute'
 export {CheckAuthRouteProvider} from '../app/providers/RouteProviders/CheckAuthRouteProvider'
 
-export {PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeaderProvider'
+// export {PublicHeaderProvider} from '../app/providers/HeaderProviders/PublicHeaderProvider'
 export {WorkspaceHeaderProvider} from '../app/providers/HeaderProviders/WorkspaceHeaderProvider'
 
 export {EnumProductCheckStatus} from './enumerables/EnumProductCheckStatus'

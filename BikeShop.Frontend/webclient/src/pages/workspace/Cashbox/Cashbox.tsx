@@ -135,11 +135,7 @@ export const Cashbox = () => {
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideMiddle}>
-
-
                     <UniTable rows={bill.products} columns={columns}/>
-
-
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideBottom}>

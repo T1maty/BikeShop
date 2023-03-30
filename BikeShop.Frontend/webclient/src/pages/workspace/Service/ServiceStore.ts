@@ -57,9 +57,11 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
 
     masters: [],
     getMasters: () => {
+        set({isLoading: true})
         ServiceAPI.getMasters().then((res: any) => {
 
-            console.log(res.data)
+            console.log('мастера в сервисе', res.data)
+
             let users = res.data.users.map((n: any) => {
                 if (n.user.shopId != 0) return n.user
             })
@@ -69,11 +71,11 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 state.masters = users.filter(n => n !== undefined)
                 console.log('все мастера', state.masters)
             })
+            set({isLoading: false})
         })
     },
     getAllServicesInfo: () => {
         set({isLoading: true})
-
         ServiceAPI.getAllServicesInfo().then(res => {
             set(state => {
                 state.services = res.data
@@ -85,6 +87,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
     addNewService: (data) => {
+        set({isLoading: true})
         ServiceAPI.addNewService(data).then((res: any) => {
             set(state => {
                 state.services.push(res.data)
@@ -93,13 +96,14 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 state.filteredServices = state.services.filter(serv =>
                     serv.status === 'Waiting' || serv.status === 'WaitingSupply')
             })
-            set({isLoading: false})
             set({currentService: res.data})
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('service not created', error)
         })
     },
     updateService: (updateData) => {
+        set({isLoading: true})
         ServiceAPI.updateService(updateData).then((res: any) => {
             ServiceAPI.getAllServicesInfo().then(res => {
                 const currentListStatus = useService.getState().serviceListStatus
@@ -107,6 +111,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 set(state => {
                     state.services = res.data
                 })
+
                 // надо сделать универсальную функцию ?!
                 if (currentListStatus === 'Waiting') {
                     set(state => {
@@ -127,7 +132,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true})
-
         ServiceAPI.updateServiceStatus(data)
             .then((res: any) => {
                 const currentListStatus = useService.getState().serviceListStatus

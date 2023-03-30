@@ -14,6 +14,7 @@ interface ControlledProps {
 export const EditProductCardDescription = (props: ControlledProps) => {
 
     // const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     return (
         <div className={s.leftSide_descriptionEditor}>

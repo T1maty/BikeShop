@@ -33,29 +33,35 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
     },
     shops: [],
     getShops: () => {
+        set({isLoading: true})
         EntitiesAPI.Shop.getShops().then(res => {
             set(state => {
                 state.shops = res.data
                 console.log('все магазины', state.shops)
             })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('магазины не получены')
         })
     },
     addNewShop: (data) => {
+        set({isLoading: true})
         EntitiesAPI.Shop.addNewShop(data).then((res: any) => {
             // set(state => {
             //     state.shops.push(res.data)
             // })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('магазин не создан', error)
         })
     },
     updateShopInfo: (updateData) => {
+        set({isLoading: true})
         EntitiesAPI.Shop.updateShopInfo(updateData).then((res: any) => {
             // set(state => {
             //     state.shops.push(res.data)
             // })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('магазин не обновлён', error)
         })

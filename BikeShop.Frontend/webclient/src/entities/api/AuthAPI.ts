@@ -1,6 +1,6 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {LoginData, LoginResponse, RegistrationData, Shop, User} from "../index"
+import {CreateUser, LoginData, LoginResponse, RegistrationData, Shop, User} from "../index"
 import {SearchClient} from "../../features/ChooseClientModal/ChooseClientModalStore"
 
 export const AuthAPI = {
@@ -31,6 +31,11 @@ export const AuthAPI = {
         findUser(data: SearchClient): any {
             return (
                 $api.get<User[]>(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
+            )
+        },
+        addNewUser(data: CreateUser): any {
+            return (
+                $api.post<CreateUser>('/user/create', data)
             )
         },
     },

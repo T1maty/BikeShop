@@ -2,12 +2,11 @@ import React, {useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import s from "./MainPage.module.scss"
 import {Button} from '../../../shared/ui'
-import {ChooseClientModal, CreateProductModal} from '../../../features'
+import {ChooseClientModal, CreateProductModal, EditProductCardModal} from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {User} from "../../../entities"
 import useMainPageStore from "./MainPageStore"
-import {EditProductCardModal} from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModal"
 
 export const MainPage = () => {
 

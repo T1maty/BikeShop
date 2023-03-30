@@ -1,4 +1,4 @@
-export {PublicHeader} from './public/PublicHeader/PublicHeader'
+// export {PublicHeader} from './public/PublicHeader/PublicHeader'
 export {ClientCard} from './workspace/ClientCard/ClientCard'
 
 export {ProductCatalogTable} from './workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTable'

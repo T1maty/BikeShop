@@ -3,11 +3,12 @@ import {ProductSpecification} from "./ProductSpecification"
 
 export interface UpdateProductCard {
     // product: {}
-    productCard: {}
     checkStatus: string
+    productCard: {}
     // descriptionShort: string
     // description: string
     options: ProductOption[]
     specifications: ProductSpecification[]
-    tags: []
+    productImages: []
+    productTags: []
 }

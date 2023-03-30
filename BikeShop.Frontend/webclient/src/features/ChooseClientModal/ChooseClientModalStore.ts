@@ -1,7 +1,6 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../shared"
 import {AxiosResponse} from "axios"
 import {CreateUser, User} from '../../entities'
 import {AuthAPI} from "../../entities/api/AuthAPI"
@@ -14,13 +13,17 @@ export interface SearchClient {
 interface ChooseClientModalStore {
     openClientModal: boolean
     setOpenClientModal: (value: boolean) => void
+    isLoadingDiv: boolean
     isLoading: boolean
+    setIsLoading: (value: boolean) => void
+
     users: User[]
     setUsers: (users: any) => void
     fio: string
-    phoneNumber: string
     setFIO: (value: string) => void
+    phoneNumber: string
     setPhoneNumber: (value: string) => void
+
     findUser: (data: SearchClient) => any
     addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
 }
@@ -28,7 +31,9 @@ interface ChooseClientModalStore {
 const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtools(immer((set) => ({
     openClientModal: false,
     setOpenClientModal: (value) => set({openClientModal: value}),
+    isLoadingDiv: false,
     isLoading: false,
+    setIsLoading: (value) => set({isLoading: value}),
 
     users: [],
     setUsers: (users) => set({users: users}),
@@ -38,14 +43,16 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
     setPhoneNumber: (value) => set({phoneNumber: value}),
 
     findUser: (data) => {
-        set({isLoading: true})
+        set({isLoadingDiv: true})
         AuthAPI.User.findUser(data)
             .then((res: any) => {
             set(state => {state.users = [...res.data.users]})
-            set({isLoading: false})
+            set({isLoadingDiv: false})
         })
     },
-    addNewUser: (data) => {return $api.post<CreateUser>('/user/create', data)}
+    addNewUser: (data) => {
+        return AuthAPI.User.addNewUser(data)
+    },
 })))/*, {
     name: "chooseClientModalStore",
     version: 1

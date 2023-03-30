@@ -4,7 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {ProductCardAPI} from "../../../entities/api/ProductCardAPI"
 import {
     CatalogProductItem, ProductImage,
-    ProductOption, ProductSpecification, ProductTag, ProductTagForCard
+    ProductOption, ProductSpecification, ProductTagForCard
 } from '../../../entities'
 
 interface EditProductCardModalStore {

@@ -15,13 +15,13 @@ import {
     RegistrationPage,
     Service,
     ShopMain,
-    ShopWrapper
+    ShopWrapper,
+    WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
 import {
     BarcodeScannerListenerProvider
 } from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
-import {WorkCatalog} from '../../pages/index'
 
 // @ts-ignore
 export const routes = createBrowserRouter([

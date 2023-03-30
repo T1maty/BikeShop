@@ -1,8 +1,6 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../../shared"
-import {AxiosResponse} from "axios"
 import {CreateQuantityUnit, GetQuantityUnitResponse, UpdateQuantityUnit} from "../../../entities"
 import {EntitiesAPI} from "../../../entities/api/EntitiesAPI"
 
@@ -33,27 +31,33 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
     },
     quantityUnits: [],
     getQuantityUnits: () => {
+        set({isLoading: true})
         EntitiesAPI.QuantityUnit.getQuantityUnits().then(res => {
             set(state => {
                 state.quantityUnits = res.data
                 console.log('все ед.измерения', state.quantityUnits)
             })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('ед.измерения не получены')
         })
     },
     addQuantityUnit: (data) => {
+        set({isLoading: true})
         EntitiesAPI.QuantityUnit.addQuantityUnit(data).then((res: any) => {
             set(state => {
                 state.quantityUnits.push(res.data)
             })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('ед.измерения не создана', error)
         })
     },
     updateQuantityUnit: (updateData) => {
+        set({isLoading: true})
         EntitiesAPI.QuantityUnit.updateQuantityUnit(updateData).then((res: any) => {
             //
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('ед.измерения не обновлена', error)
         })

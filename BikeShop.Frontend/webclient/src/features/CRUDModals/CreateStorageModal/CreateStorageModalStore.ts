@@ -33,29 +33,35 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     },
     storages: [],
     getStorages: () => {
+        set({isLoading: true})
         EntitiesAPI.Storage.getStorages().then(res => {
             set(state => {
                 state.storages = res.data
                 console.log('все склады', state.storages)
             })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('склады не получены')
         })
     },
     addNewStorage: (data) => {
+        set({isLoading: true})
         EntitiesAPI.Storage.addNewStorage(data).then((res: any) => {
             // set(state => {
             //     state.storages.push(res.data)
             // })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('склад не создан', error)
         })
     },
     updateStorageInfo: (updateData) => {
+        set({isLoading: true})
         EntitiesAPI.Storage.updateStorageInfo(updateData).then((res: any) => {
             // set(state => {
             //     state.storages.push(res.data)
             // })
+            set({isLoading: false})
         }).catch((error: any) => {
             console.log('склад не обновлён', error)
         })

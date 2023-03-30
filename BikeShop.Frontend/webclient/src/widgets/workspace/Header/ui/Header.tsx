@@ -26,6 +26,7 @@ export const Header = () => {
 
     const user = useAuthUser(s => s.user)
     const shop = useAuthUser(s => s.shop)
+
     const openShopModal = useCreateShopModal(s => s.setOpenCreateShopModal)
     const openStorageModal = useCreateStorageModal(s => s.setOpenCreateStorageModal)
     const openCurrencyModal = useCreateCurrencyModal(s => s.setOpenCreateCurrencyModal)
@@ -37,8 +38,8 @@ export const Header = () => {
         {
             title: 'Архив',
             func: () => {
-                navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                setIsMenuOpen(false)
+                // navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                // setIsMenuOpen(false)
             }
         },
         {
@@ -61,7 +62,7 @@ export const Header = () => {
         {
             title: 'Магазины',
             func: () => {
-                openShopModal(true);
+                openShopModal(true)
                 setIsMenuOpen(false)
             }
 
@@ -69,21 +70,21 @@ export const Header = () => {
         {
             title: 'Склады',
             func: () => {
-                openStorageModal(true);
+                openStorageModal(true)
                 setIsMenuOpen(false)
             }
         },
         {
             title: 'Валюты',
             func: () => {
-                openCurrencyModal(true);
+                openCurrencyModal(true)
                 setIsMenuOpen(false)
             }
         },
         {
             title: 'Ед. измерения',
             func: () => {
-                openQuantityUnitModal(true);
+                openQuantityUnitModal(true)
                 setIsMenuOpen(false)
             }
         },

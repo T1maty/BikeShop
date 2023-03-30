@@ -3,7 +3,7 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateStorageModal.module.scss'
-import {Button, ControlledCheckbox, ControlledInput} from '../../../shared/ui'
+import {Button, ControlledCheckbox, ControlledInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateStorageModal from './CreateStorageModalStore'
 import {UpdateStorage} from '../../../entities/requests/CreateStorage'
@@ -14,6 +14,7 @@ export const CreateStorageModal = () => {
 
     const open = useCreateStorageModal(s => s.openCreateStorageModal)
     const setOpen = useCreateStorageModal(s => s.setOpenCreateStorageModal)
+    const isLoading = useCreateStorageModal(s => s.isLoading)
 
     const currentStorage = useCreateStorageModal(s => s.currentStorage)
     const setCurrentStorage = useCreateStorageModal(s => s.setCurrentStorage)
@@ -30,7 +31,8 @@ export const CreateStorageModal = () => {
             isOutsource: true,
             enabled: true,
         }
-    });
+    })
+
     const onSubmit: SubmitHandler<UpdateStorage> = (data: UpdateStorage) => {
         if (currentStorage === null) {
             addNewStorage(data).then((response: any) => {
@@ -71,75 +73,80 @@ export const CreateStorageModal = () => {
         getStorages()
     }, [])
 
-    return (
-        <Modal
-            open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <div className={s.shopStorageModal_mainBlock}>
-                <div className={s.shopStorageModal_shops}>
-                    <div className={s.shopStorageModal_shopList}>
-                        {storages.map(storage => (
-                            <div key={storage.id}
-                                 className={storage.id === currentStorage?.id ? s.shop_item_active : s.shop_item}
-                                 onClick={() => {
-                                     setCurrentStorage(storage)
-                                     console.log('выбранный склад', storage)
-                                 }}
-                            >
-                                <div><span>ID:</span> {storage.id}</div>
-                                <div><span>Название:</span> {storage.name}</div>
-                                <div><span>Задержка поставки:</span> {storage.supplyDelay}</div>
-                                <div><span>Активен:</span> {storage.enabled ? 'Да' : 'Нет'}</div>
+    if (isLoading) {
+        return <LoaderScreen variant={'ellipsis'}/>
+    } else {
+
+        return (
+            <Modal
+                open={open}
+                onClose={() => {
+                    setOpen(false)
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className={s.shopStorageModal_mainBlock}>
+                    <div className={s.shopStorageModal_shops}>
+                        <div className={s.shopStorageModal_shopList}>
+                            {storages.map(storage => (
+                                <div key={storage.id}
+                                     className={storage.id === currentStorage?.id ? s.shop_item_active : s.shop_item}
+                                     onClick={() => {
+                                         setCurrentStorage(storage)
+                                         console.log('выбранный склад', storage)
+                                     }}
+                                >
+                                    <div><span>ID:</span> {storage.id}</div>
+                                    <div><span>Название:</span> {storage.name}</div>
+                                    <div><span>Задержка поставки:</span> {storage.supplyDelay}</div>
+                                    <div><span>Активен:</span> {storage.enabled ? 'Да' : 'Нет'}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className={s.shopStorageModal_createBlock}>
+                        <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                            <div className={s.shopStorageModal_inputFields}>
+                                <ControlledInput name={'name'}
+                                                 label={'Название склада'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                                <ControlledInput name={'supplyDelay'}
+                                                 label={'Задержка поставки'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                                <ControlledCheckbox name={'isOutsource'}
+                                                    label={'Аутсорсный склад ?'}
+                                                    control={formControl}
+                                                    divClassName={s.infoBlock_checkbox}
+                                />
+                                <ControlledCheckbox name={'enabled'}
+                                                    label={'Магазин работает'}
+                                                    control={formControl}
+                                                    divClassName={s.infoBlock_checkbox}
+                                />
+                                <Button buttonDivWrapper={s.infoBlock_cancelBtn}
+                                        disabled={currentStorage === null}
+                                        onClick={() => {
+                                            setCurrentStorage(null)
+                                        }}
+                                >
+                                    Отмена
+                                </Button>
                             </div>
-                        ))}
+                            <div className={s.footer_buttons}>
+                                <Button type={'submit'}>
+                                    {currentStorage === null ? 'Создать склад' : 'Обновить данные'}
+                                </Button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <div className={s.shopStorageModal_createBlock}>
-                    <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                        <div className={s.shopStorageModal_inputFields}>
-                            <ControlledInput name={'name'}
-                                             label={'Название склада'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
-                            <ControlledInput name={'supplyDelay'}
-                                             label={'Задержка поставки'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
-                            <ControlledCheckbox name={'isOutsource'}
-                                                label={'Аутсорсный склад ?'}
-                                                control={formControl}
-                                                divClassName={s.infoBlock_checkbox}
-                            />
-                            <ControlledCheckbox name={'enabled'}
-                                                label={'Магазин работает'}
-                                                control={formControl}
-                                                divClassName={s.infoBlock_checkbox}
-                            />
-                            <Button buttonDivWrapper={s.infoBlock_cancelBtn}
-                                    disabled={currentStorage === null}
-                                    onClick={() => {
-                                        setCurrentStorage(null)
-                                    }}
-                            >
-                                Отмена
-                            </Button>
-                        </div>
-                        <div className={s.footer_buttons}>
-                            <Button type={'submit'}>
-                                {currentStorage === null ? 'Создать склад' : 'Обновить данные'}
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </Modal>
-    );
-};
+            </Modal>
+        )
+    }
+}

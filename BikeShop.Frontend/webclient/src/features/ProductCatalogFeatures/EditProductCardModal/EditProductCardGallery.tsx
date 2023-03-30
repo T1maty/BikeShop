@@ -12,7 +12,6 @@ export const EditProductCardGallery = () => {
     const uploadNewImage = useEditProductCardModal(s => s.uploadNewImage)
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
-    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     // тестовые данные
     // const [galleryImages, setGalleryImages] = useState([

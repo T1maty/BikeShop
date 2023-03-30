@@ -3,10 +3,10 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateQuantityUnitModal.module.scss'
-import {Button, ControlledCheckbox, ControlledInput} from '../../../shared/ui'
+import {Button, ControlledCheckbox, ControlledInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateQuantityUnitModal from "./CreateQuantityUnitModalStore"
-import {UpdateQuantityUnit} from "../../../entities";
+import {UpdateQuantityUnit} from "../../../entities"
 
 export const CreateQuantityUnitModal = () => {
 
@@ -14,6 +14,7 @@ export const CreateQuantityUnitModal = () => {
 
     const open = useCreateQuantityUnitModal(s => s.openQuantityUnitModal)
     const setOpen = useCreateQuantityUnitModal(s => s.setOpenCreateQuantityUnitModal)
+    const isLoading = useCreateQuantityUnitModal(s => s.isLoading)
 
     const quantityUnits = useCreateQuantityUnitModal(s => s.quantityUnits)
     const currentQuantityUnit = useCreateQuantityUnitModal(s => s.currentQuantityUnit)
@@ -91,97 +92,102 @@ export const CreateQuantityUnitModal = () => {
         getQuantityUnits()
     }, [])
 
-    return (
-        <Modal
-            open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <div className={s.shopStorageModal_mainBlock}>
-                <div className={s.shopStorageModal_tree}>
-                    TreeView
-                </div>
-                <div className={s.shopStorageModal_shops}>
-                    <div className={s.shopStorageModal_shopList}>
-                        {quantityUnits.map(qu => (
-                            <div key={qu.id}
-                                 className={qu.id === currentQuantityUnit?.id ? s.shop_item_active : s.shop_item}
-                                 onClick={() => {
-                                     setCurrentQuantityUnit(qu)
-                                     console.log(qu)
-                                 }}
-                            >
-                                <div><span>ID:</span> {qu.id}</div>
-                                <div><span>Название:</span> {qu.name}</div>
-                                <div><span>Полное название:</span> {qu.fullName}</div>
-                                <div><span>Коэффициент:</span> {qu.baseCoeficient}</div>
-                                <div><span>По умолчанию:</span> {qu.isDefaultInGroup ? 'Да' : 'Нет'}</div>
-                                <div><span>Конвертируемость:</span> {qu.isSwitchable ? 'Да' : 'Нет'}</div>
-                                <div><span>Делимость:</span> {qu.isSplittable ? 'Да' : 'Нет'}</div>
-                                <div><span>Включена:</span> {qu.enabled ? 'Да' : 'Нет'}</div>
+    if (isLoading) {
+        return <LoaderScreen variant={'ellipsis'}/>
+    } else {
+
+        return (
+            <Modal
+                open={open}
+                onClose={() => {
+                    setOpen(false)
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className={s.shopStorageModal_mainBlock}>
+                    <div className={s.shopStorageModal_tree}>
+                        TreeView
+                    </div>
+                    <div className={s.shopStorageModal_shops}>
+                        <div className={s.shopStorageModal_shopList}>
+                            {quantityUnits.map(qu => (
+                                <div key={qu.id}
+                                     className={qu.id === currentQuantityUnit?.id ? s.shop_item_active : s.shop_item}
+                                     onClick={() => {
+                                         setCurrentQuantityUnit(qu)
+                                         console.log(qu)
+                                     }}
+                                >
+                                    <div><span>ID:</span> {qu.id}</div>
+                                    <div><span>Название:</span> {qu.name}</div>
+                                    <div><span>Полное название:</span> {qu.fullName}</div>
+                                    <div><span>Коэффициент:</span> {qu.baseCoeficient}</div>
+                                    <div><span>По умолчанию:</span> {qu.isDefaultInGroup ? 'Да' : 'Нет'}</div>
+                                    <div><span>Конвертируемость:</span> {qu.isSwitchable ? 'Да' : 'Нет'}</div>
+                                    <div><span>Делимость:</span> {qu.isSplittable ? 'Да' : 'Нет'}</div>
+                                    <div><span>Включена:</span> {qu.enabled ? 'Да' : 'Нет'}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className={s.shopStorageModal_createBlock}>
+                        <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                            <div className={s.shopStorageModal_inputFields}>
+                                <ControlledInput name={'name'}
+                                                 label={'Название'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                                <ControlledInput name={'fullName'}
+                                                 label={'Полное название'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                                <ControlledInput name={'baseCoeficient'}
+                                                 label={'Коэффициент'}
+                                                 control={formControl}
+                                                 rules={{required: Errors[0].name}}
+                                />
+                                <ControlledCheckbox name={'isDefaultInGroup'}
+                                                    label={'По умолчанию'}
+                                                    control={formControl}
+                                                    divClassName={s.infoBlock_checkbox}
+                                />
+                                <ControlledCheckbox name={'isSwitchable'}
+                                                    label={'Конвертируемость'}
+                                                    control={formControl}
+                                                    divClassName={s.infoBlock_checkbox}
+                                />
+                                <ControlledCheckbox name={'isSplittable'}
+                                                    label={'Делимость'}
+                                                    control={formControl}
+                                                    divClassName={s.infoBlock_checkbox}
+                                />
+                                <ControlledCheckbox name={'enabled'}
+                                                    label={'Включена'}
+                                                    control={formControl}
+                                                    divClassName={s.infoBlock_checkbox}
+                                />
+                                <Button buttonDivWrapper={s.infoBlock_cancelBtn}
+                                        disabled={currentQuantityUnit === null}
+                                        onClick={() => {
+                                            setCurrentQuantityUnit(null)
+                                        }}
+                                >
+                                    Отмена
+                                </Button>
                             </div>
-                        ))}
+                            <div className={s.footer_buttons}>
+                                <Button type={'submit'}>
+                                    {currentQuantityUnit === null ? 'Создать ед.измерения' : 'Обновить данные'}
+                                </Button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <div className={s.shopStorageModal_createBlock}>
-                    <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                        <div className={s.shopStorageModal_inputFields}>
-                            <ControlledInput name={'name'}
-                                             label={'Название'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
-                            <ControlledInput name={'fullName'}
-                                             label={'Полное название'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
-                            <ControlledInput name={'baseCoeficient'}
-                                             label={'Коэффициент'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                            />
-                            <ControlledCheckbox name={'isDefaultInGroup'}
-                                                label={'По умолчанию'}
-                                                control={formControl}
-                                                divClassName={s.infoBlock_checkbox}
-                            />
-                            <ControlledCheckbox name={'isSwitchable'}
-                                                label={'Конвертируемость'}
-                                                control={formControl}
-                                                divClassName={s.infoBlock_checkbox}
-                            />
-                            <ControlledCheckbox name={'isSplittable'}
-                                                label={'Делимость'}
-                                                control={formControl}
-                                                divClassName={s.infoBlock_checkbox}
-                            />
-                            <ControlledCheckbox name={'enabled'}
-                                                label={'Включена'}
-                                                control={formControl}
-                                                divClassName={s.infoBlock_checkbox}
-                            />
-                            <Button buttonDivWrapper={s.infoBlock_cancelBtn}
-                                    disabled={currentQuantityUnit === null}
-                                    onClick={() => {
-                                        setCurrentQuantityUnit(null)
-                                    }}
-                            >
-                                Отмена
-                            </Button>
-                        </div>
-                        <div className={s.footer_buttons}>
-                            <Button type={'submit'}>
-                                {currentQuantityUnit === null ? 'Создать ед.измерения' : 'Обновить данные'}
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </Modal>
-    );
-};
+            </Modal>
+        )
+    }
+}

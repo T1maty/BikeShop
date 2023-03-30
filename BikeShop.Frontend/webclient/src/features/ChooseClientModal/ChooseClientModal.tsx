@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useRef} from 'react'
 import s from './ChooseClientModal.module.scss'
 import {Modal} from '@mui/material'
-import {Button, ControlledCustomInput, CustomSearchInput, InputUI} from '../../shared/ui'
+import {Button, ControlledCustomInput, CustomSearchInput, InputUI, LoaderScreen} from '../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {CreateUser, User} from '../../entities'
 import {useSnackbar} from 'notistack'
@@ -22,7 +22,9 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
 
     const open = useChooseClientModal(s => s.openClientModal)
     const setOpen = useChooseClientModal(s => s.setOpenClientModal)
+    const isLoadingDiv = useChooseClientModal(s => s.isLoadingDiv)
     const isLoading = useChooseClientModal(s => s.isLoading)
+    const setIsLoading = useChooseClientModal(s => s.setIsLoading)
 
     const users = useChooseClientModal(s => s.users)
     const fio = useChooseClientModal(s => s.fio)
@@ -42,13 +44,14 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
             patronymic: '',
             phone: ''
         }
-    });
+    })
+
     const onSubmit: SubmitHandler<CreateUser> = (data: CreateUser) => {
+        setIsLoading(true)
         addNewUser(data).then((response) => {
-
             setState ? setState(false) : setOpen(false)
-
             formControl.reset()
+            setIsLoading(false)
             enqueueSnackbar('Клиент добавлен', {variant: 'success', autoHideDuration: 3000})
         }).catch((error) => {
             let message = error(error.response.data.errorDescription).toString()
@@ -78,111 +81,120 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
         }
     }, [searchClientByFIO, searchClientByPhone])
 
-    return (
-        <Modal
-            open={state ? state : open}
-            onClose={() => {setState ? setState(false) : setOpen(false)}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                <div className={s.clientModal_mainBox}>
-                    <div className={s.clientModal_searchBlock}>
-                        <div className={s.clientModal_searchBlock_title}>
-                            Найти клиента:
-                        </div>
-                        {/*<CustomSearchInput placeholder={'Введите фамилию'}*/}
-                        {/*                   value={fio}*/}
-                        {/*                   onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
-                        {/*                       setFIO(e.currentTarget.value)}}*/}
-                        {/*                   clearInputValue={() => {setFIO('')}}*/}
-                        {/*/>*/}
-                        <div className={s.clientModal_searchBlock_input}>
-                            <InputUI placeholder={'Введите фамилию'} value={fio}
-                                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                        setFIO(e.currentTarget.value)
-                                     }}
-                                     clearInputValue={() => {
-                                        setFIO('')
-                                     }}
-                            />
-                        </div>
-                        {/*<CustomSearchInput placeholder={'Введите номер телефона'}*/}
-                        {/*                   value={phoneNumber}*/}
-                        {/*                   onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
-                        {/*                       setPhoneNumber(e.currentTarget.value)}}*/}
-                        {/*                   clearInputValue={() => {setPhoneNumber('')}}*/}
-                        {/*/>*/}
-                        <div className={s.clientModal_searchBlock_input}>
-                            <InputUI placeholder={'Введите номер телефона'} value={phoneNumber}
-                                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                         setPhoneNumber(e.currentTarget.value)
-                                     }}
-                                     clearInputValue={() => {
-                                         setPhoneNumber('')
-                                     }}
-                            />
-                        </div>
-                        <div className={s.clientModal_searchBlock_textField}>
-                            {
-                                users.length === 0
-                                    ?
-                                    <div>Клиент не найден</div>
-                                    :
-                                    isLoading
-                                        ? <div>Поиск...</div> :
-                                        users.map((u: any) => {
-                                            return (
-                                                <div className={s.textField_contentItem} key={u.user.id}
-                                                     onClick={() => {
-                                                         userClickHandler(u.user)
-                                                     }}
-                                                >
-                                                    {u.user.lastName} {u.user.firstName} {u.user.patronymic}
-                                                </div>
-                                            )
-                                        })
-                            }
-                        </div>
-                    </div>
+    if (isLoading) {
+        return <LoaderScreen variant={'ellipsis'}/>
+    } else {
 
-                    <div className={s.clientModal_addClient}>
-                        <div className={s.addClient_title}>
-                            Создать клиента:
+        return (
+            <Modal
+                open={state ? state : open}
+                onClose={() => {
+                    setState ? setState(false) : setOpen(false)
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                    <div className={s.clientModal_mainBox}>
+                        <div className={s.clientModal_searchBlock}>
+                            <div className={s.clientModal_searchBlock_title}>
+                                Найти клиента:
+                            </div>
+                            {/*<CustomSearchInput placeholder={'Введите фамилию'}*/}
+                            {/*                   value={fio}*/}
+                            {/*                   onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
+                            {/*                       setFIO(e.currentTarget.value)}}*/}
+                            {/*                   clearInputValue={() => {setFIO('')}}*/}
+                            {/*/>*/}
+                            <div className={s.clientModal_searchBlock_input}>
+                                <InputUI placeholder={'Введите фамилию'} value={fio}
+                                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                             setFIO(e.currentTarget.value)
+                                         }}
+                                         clearInputValue={() => {
+                                             setFIO('')
+                                         }}
+                                />
+                            </div>
+                            {/*<CustomSearchInput placeholder={'Введите номер телефона'}*/}
+                            {/*                   value={phoneNumber}*/}
+                            {/*                   onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
+                            {/*                       setPhoneNumber(e.currentTarget.value)}}*/}
+                            {/*                   clearInputValue={() => {setPhoneNumber('')}}*/}
+                            {/*/>*/}
+                            <div className={s.clientModal_searchBlock_input}>
+                                <InputUI placeholder={'Введите номер телефона'} value={phoneNumber}
+                                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                             setPhoneNumber(e.currentTarget.value)
+                                         }}
+                                         clearInputValue={() => {
+                                             setPhoneNumber('')
+                                         }}
+                                />
+                            </div>
+                            <div className={s.clientModal_searchBlock_textField}>
+                                {
+                                    users.length === 0
+                                        ?
+                                        <div>Клиент не найден</div>
+                                        :
+                                        isLoadingDiv
+                                            ? <div>Поиск...</div> :
+                                            users.map((u: any) => {
+                                                return (
+                                                    <div className={s.textField_contentItem} key={u.user.id}
+                                                         onClick={() => {
+                                                             userClickHandler(u.user)
+                                                         }}
+                                                    >
+                                                        {u.user.lastName} {u.user.firstName} {u.user.patronymic}
+                                                    </div>
+                                                )
+                                            })
+                                }
+                            </div>
                         </div>
-                        <div className={s.addClient_inputs}>
-                            <ControlledCustomInput name={'lastName'}
-                                                   placeholder={'Фамилия'}
-                                                   control={formControl}
-                                                   rules={{required: Errors[0].name}}
-                            />
-                            <ControlledCustomInput name={'firstName'}
-                                                   placeholder={'Имя'}
-                                                   control={formControl}
-                                                   rules={{required: Errors[0].name}}
-                            />
-                            <ControlledCustomInput name={'patronymic'}
-                                                   placeholder={'Отчество'}
-                                                   control={formControl}
-                                                   rules={{required: Errors[0].name}}
-                            />
-                            <ControlledCustomInput name={'phone'}
-                                                   placeholder={'Номер телефона'}
-                                                   control={formControl}
-                                                   rules={{required: Errors[0].name}}
-                            />
-                        </div>
-                        <div className={s.addClient_buttonsBlock}>
-                            <Button type={'submit'}>
-                                Добавить клиента
-                            </Button>
-                            <Button onClick={() => {setState ? setState(false) : setOpen(false)}}>
-                                Отмена
-                            </Button>
+
+                        <div className={s.clientModal_addClient}>
+                            <div className={s.addClient_title}>
+                                Создать клиента:
+                            </div>
+                            <div className={s.addClient_inputs}>
+                                <ControlledCustomInput name={'lastName'}
+                                                       placeholder={'Фамилия'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
+                                />
+                                <ControlledCustomInput name={'firstName'}
+                                                       placeholder={'Имя'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
+                                />
+                                <ControlledCustomInput name={'patronymic'}
+                                                       placeholder={'Отчество'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
+                                />
+                                <ControlledCustomInput name={'phone'}
+                                                       placeholder={'Номер телефона'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
+                                />
+                            </div>
+                            <div className={s.addClient_buttonsBlock}>
+                                <Button type={'submit'}>
+                                    Добавить клиента
+                                </Button>
+                                <Button onClick={() => {
+                                    setState ? setState(false) : setOpen(false)
+                                }}>
+                                    Отмена
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </Modal>
-    )
+                </form>
+            </Modal>
+        )
+    }
 }

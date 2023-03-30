@@ -12,6 +12,7 @@ interface CreateCurrencyModalStore {
 
     currentCurrency: any // CreateShopResponse | null
     setCurrentCurrency: (currency: any) => void
+
     currencies: any[]
     // getСurrencies: () => void
     // addCurrency: (data: CreateShop) => any
@@ -28,33 +29,38 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
     setCurrentCurrency: (currency) => {
         set({currentCurrency: currency})
     },
+
     currencies: [],
     // getСurrencies: () => {
-    //     return $api.get<CreateShopResponse[]>('/shop/getall').then(res => {
+    //     set({isLoading: true})
+    //     EntitiesAPI.QuantityUnit.getQuantityUnits().then(res => {
     //         set(state => {
-    //             state.shops = res.data
-    //             console.log('все магазины', state.shops)
+    //             state.quantityUnits = res.data
+    //             console.log('все ед.измерения', state.quantityUnits)
     //         })
+    //         set({isLoading: false})
     //     }).catch((error: any) => {
-    //         console.log('магазины не получены')
+    //         console.log('ед.измерения не получены')
     //     })
     // },
     // addCurrency: (data) => {
-    //     return $api.post('/shop/create', data).then(res => {
-    //         // set(state => {
-    //         //     state.shops.push(res.data)
-    //         // })
+    //     set({isLoading: true})
+    //     EntitiesAPI.QuantityUnit.addQuantityUnit(data).then((res: any) => {
+    //         set(state => {
+    //             state.quantityUnits.push(res.data)
+    //         })
+    //         set({isLoading: false})
     //     }).catch((error: any) => {
-    //         console.log('магазин не создан', error)
+    //         console.log('ед.измерения не создана', error)
     //     })
     // },
     // updateCurrency: (updateData) => {
-    //     return $api.put('/shop/update', updateData).then(res => {
-    //         // set(state => {
-    //         //     state.shops.push(res.data)
-    //         // })
+    //     set({isLoading: true})
+    //     EntitiesAPI.QuantityUnit.updateQuantityUnit(updateData).then((res: any) => {
+    //         //
+    //         set({isLoading: false})
     //     }).catch((error: any) => {
-    //         console.log('магазин не обновлён', error)
+    //         console.log('ед.измерения не обновлена', error)
     //     })
     // },
 })))/*, {
