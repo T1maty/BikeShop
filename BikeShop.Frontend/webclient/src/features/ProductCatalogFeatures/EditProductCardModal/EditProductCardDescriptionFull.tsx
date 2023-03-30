@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import draftToHtml from 'draftjs-to-html'
 import {Editor} from "react-draft-wysiwyg"
 import {EditorState} from "draft-js"
