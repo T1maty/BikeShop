@@ -63,13 +63,11 @@ export const UniTreeView = memo((props: UniTreeView) => {
             if (hasChildren && isExpanded) {
                 handleCollapse(item.id)
             } else if (!hasChildren) {
-                console.log('none children')
             } else {
                 handleExpand(item.id)
             }
         }
-
-
+        
         return (
             <div key={item.id} className={cls.wrapper} onContextMenu={(e) => {
                 e.preventDefault()
@@ -78,7 +76,8 @@ export const UniTreeView = memo((props: UniTreeView) => {
 
                      className={cls.parent}>
 
-                    <div className={selected.id === item.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
+                    <div
+                        className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
 
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}>
@@ -109,9 +108,10 @@ export const UniTreeView = memo((props: UniTreeView) => {
         );
     };
 
+
     return (
         <>
-            {buildTree(data, 0).map(renderItem)}
+            {data != undefined ? buildTree(data, 0).map(renderItem) : false}
         </>
     )
 })

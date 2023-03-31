@@ -1,25 +1,43 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Box from "@mui/material/Box"
-import TreeView from "@mui/lab/TreeView"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import {ProductTag} from "../../../../entities"
 import TagTreeViewContextMenu from "./TagTreeViewContextMenu"
-import {TagTreeViewNodes} from "./TagTreeViewNodes"
 import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
+import {UniTreeView} from "../../../../shared/ui";
+import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore";
+import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore";
 
 export const TagTreeView = () => {
 
     const setTreeViewData = useTagTreeView(s => s.setTreeViewTags)
     const expanded = useTagTreeView(s => s.expandedTags)
+    const setSelect = useTagTreeView(s => s.setSelectedTag)
     const selected = useTagTreeView(s => s.selectedTag)
     const fetchTags = useTagTreeView(s => s.fetchTags)
     const addTag = useTagTreeView(s => s.addNewTag)
     const updateTag = useTagTreeView(s => s.updateTag)
+    const treeViewData = useTagTreeView(s => s.treeViewTags)
+    const tagsCloud = useProductTagCloudStore(s => s.tags)
+    const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
+
+    const [selectedN, setSelectedN] = useState()
+
+    const setProductsToTableHandler = (node: ProductTag) => {
+        setSelect(node.id)
+
+        let tags = tagsCloud.map((n) => {
+            return n.id
+        })
+        tags.push(node.id)
+        setProductsToTable(tags)
+    }
 
     useEffect(() => {
-        fetchTags().then((r) => {setTreeViewData(r.data.tags as ProductTag[])})
+        fetchTags().then((r) => {
+            console.log('tags', r.data.tags)
+            setTreeViewData(r.data.tags as ProductTag[])
+        })
     }, [])
 
     return (
@@ -39,15 +57,9 @@ export const TagTreeView = () => {
             <UpdateTagModal onSuccess={updateTag}/>
             <CreateTagModal onSuccess={addTag}/>
             <TagTreeViewContextMenu/>
-            <TreeView
-                aria-label="controlled"
-                defaultCollapseIcon={<ExpandMoreIcon/>}
-                defaultExpandIcon={<ChevronRightIcon/>}
-                expanded={expanded}
-                selected={[selected]}
-            >
-                <TagTreeViewNodes/>
-            </TreeView>
+            <UniTreeView data={treeViewData} selected={selectedN} setSelected={setSelectedN}
+                         onNodeClick={setProductsToTableHandler}/>
+
         </Box>
     )
 }

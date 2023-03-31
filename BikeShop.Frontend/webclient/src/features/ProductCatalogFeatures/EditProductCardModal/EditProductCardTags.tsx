@@ -4,7 +4,6 @@ import useEditProductCardModal from './EditProductCardModalStore'
 import {ProductTagForCard} from '../../../entities'
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
-import useAddProductCardTagModal from "../AddProductCardTagModal/AddProductCardTagModalStore"
 import {AddProductCardTagModal} from "../AddProductCardTagModal/AddProductCardTagModal"
 import {Controller, UseFormReturn} from "react-hook-form"
 
@@ -15,10 +14,10 @@ interface ControlledProps {
 
 export const EditProductCardTags = (props: ControlledProps) => {
 
-    const setOpenAddProductCardTagModal = useAddProductCardTagModal(s => s.setOpenAddProductCardTagModal)
-
     const productTags = useEditProductCardModal(s => s.productTags)
     const setProductTags = useEditProductCardModal(s => s.setProductTags)
+
+    const [open, setOpen] = useState(false)
 
     // тестовые данные
     // const [productTags, setProductTags] = useState([
@@ -32,7 +31,7 @@ export const EditProductCardTags = (props: ControlledProps) => {
     // ])
 
     const addTagHandler = () => {
-        setOpenAddProductCardTagModal(true)
+        setOpen(true)
     }
 
     const deleteTagHandler = (tagId: number) => {
@@ -53,7 +52,7 @@ export const EditProductCardTags = (props: ControlledProps) => {
                         >
                             Добавить тег
                         </Button>
-                        <AddProductCardTagModal/>
+                        <AddProductCardTagModal setOpen={setOpen} open={open}/>
                     </div>
                     <div className={s.tagEditor_tags}>
                         {
@@ -65,7 +64,9 @@ export const EditProductCardTags = (props: ControlledProps) => {
                                             <div>
                                                 <img src={RemoveIcon} alt="remove-icon"
                                                      className={s.tagList_deleteItem}
-                                                     onClick={() => {deleteTagHandler(tag.id)}}
+                                                     onClick={() => {
+                                                         deleteTagHandler(tag.id)
+                                                     }}
                                                 />
                                             </div>
                                         </div>
