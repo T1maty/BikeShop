@@ -94,7 +94,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                     <>
                         <div className={s.productOptions_optionsList}>
                             {
-                                field.value.length === 0 ? <div style={{textAlign: 'center'}}>
+                                field.value.length === 0 ? <div style={{
+                                    width: '350px', textAlign: 'center', wordBreak: 'break-word'
+                                }}>
                                         Для добавления выберите опции
                                     </div> :
 

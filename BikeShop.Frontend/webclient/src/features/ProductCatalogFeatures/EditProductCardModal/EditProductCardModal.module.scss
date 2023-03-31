@@ -11,7 +11,7 @@
     .editProductCardModal_leftSide {
         @include flexColumn;
         gap: $defaultLargeMargin;
-        width: 60%;
+        width: 30%;
         color: black;
 
         // тестировочный стиль
@@ -40,7 +40,7 @@
             @include flexColumn;
             justify-content: center;
             height: 65%;
-            width: 400px;
+            //width: 400px;
 
             .imageGallery_imageList {
                 display: flex;
@@ -193,6 +193,7 @@
         @include defaultBlockStyles($themeColorMilk);
         @include flexColumnOnly;
         height: 100%;
+        width: 40%;
 
         .shortEditor {
             margin-bottom: $defaultSmallMargin;
@@ -249,7 +250,7 @@
     .editProductCardModal_rightSide {
         @include flexColumn;
         gap: $defaultLargeMargin;
-        width: 40%;
+        width: 30%;
 
         .rightSide_productOptions {
             @include selectOptionsBlock;
@@ -266,7 +267,7 @@
             z-index: 0; // чтобы кнопка была под селектом
 
             button {
-                width: 200px;
+                width: 175px;
             }
         }
     }

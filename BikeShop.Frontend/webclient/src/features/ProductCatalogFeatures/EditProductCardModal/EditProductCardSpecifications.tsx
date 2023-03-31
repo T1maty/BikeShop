@@ -54,8 +54,8 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                         <div className={s.productOptions_optionsList}>
                             {
                                 field.value.length === 0 ?
-                                    <div style={{textAlign: 'center'}}>
-                                        Для добавления выберите характеристики
+                                    <div style={{width: '350px', textAlign: 'center', wordBreak: 'break-word'}}>
+                                        Для добавления выберите характеристику
                                     </div> :
 
                                     field.value.map((spec: ProductSpecification, index: number) => {

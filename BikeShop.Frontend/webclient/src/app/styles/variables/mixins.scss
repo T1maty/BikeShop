@@ -303,13 +303,13 @@
     .productOptions_optionsList {
         overflow-y: auto;
         max-height: 180px;
-        width: 380px;
-
+        //width: 360px;
+        overflow-x: hidden;
 
         .optionsList_item {
             margin-bottom: $defaultSmallMargin;
             padding-right: 10px;
-            width: 360px;
+            //width: 360px;
 
             .options_box {
                 border-radius: $smallBorderRadius;
@@ -391,6 +391,7 @@
                         .options_search {
                             width: 100%;
                             color: black;
+                            font-size: 14px;
                         }
                     }
                 }
@@ -415,6 +416,7 @@
         .options_search {
             width: 100%;
             color: black;
+            font-size: 14px;
         }
     }
 }
