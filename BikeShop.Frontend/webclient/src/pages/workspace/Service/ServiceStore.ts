@@ -94,6 +94,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         }).catch((error: any) => {
             console.log('service not created', error)
+        }).finally(() => {
+            // set({isLoading: false})
         })
     },
     updateService: (updateData) => {
