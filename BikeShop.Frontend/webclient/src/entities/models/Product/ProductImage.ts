@@ -3,7 +3,8 @@ export interface ProductImage {
     productId: number
     sortOrder: number
     url: string
+
+    enabled: boolean
     createdAt: string
     updatedAt: string
-    enabled: boolean
 }

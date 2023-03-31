@@ -9,7 +9,7 @@ export interface ProductTagForCard {
     isUniversal: boolean
     sortOrder: number
 
+    enabled: boolean
     createdAt: string
     updatedAt: string
-    enabled: boolean
 }
