@@ -16,14 +16,16 @@ interface EditProductCardModalStore {
     getProductCard: (productId: number) => void
     updateProductCard: (data: UpdateProductCard) => void
 
+    productStatus: string
+    productCardDescription: string
+    setProductCardDescription: (desc: string) => void
+
     cardOptions: ProductOption[]
     currentCardOptions: ProductOption[]
     getCardOptions: () => void
 
     specifications: ProductSpecification[]
     getSpecifications: () => void
-
-    productStatus: string
 
     productTags: ProductTagForCard[]
     setProductTags: (tags: ProductTagForCard[]) => void
@@ -69,6 +71,10 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
 
+    productStatus: '',
+    productCardDescription: '',
+    setProductCardDescription: (desc) => set({productCardDescription: desc}),
+
     cardOptions: [],
     currentCardOptions: [],
     getCardOptions: () => {
@@ -97,8 +103,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('спецификации не получены')
         })
     },
-
-    productStatus: '',
 
     productTags: [],
     setProductTags: (tags) => set(state => {

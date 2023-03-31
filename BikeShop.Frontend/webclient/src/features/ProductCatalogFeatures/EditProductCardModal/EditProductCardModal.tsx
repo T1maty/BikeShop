@@ -22,10 +22,11 @@ export const EditProductCardModal = () => {
     const isLoading = useEditProductCardModal(s => s.isLoading)
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
-    const galleryImages = useEditProductCardModal(s => s.galleryImages)
-    const productTags = useEditProductCardModal(s => s.productTags)
+    const productCardDescription = useEditProductCardModal(s => s.productCardDescription)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
+    const galleryImages = useEditProductCardModal(s => s.galleryImages)
+    const productTags = useEditProductCardModal(s => s.productTags)
     const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
     const formControl = useForm<UpdateProductCard>({
@@ -35,18 +36,21 @@ export const EditProductCardModal = () => {
             },
             productCard: {
                 descriptionShort: '',
-                description: ''
+                description: '',
             },
             productOptions: [],
             productSpecifications: [],
             productImages: [],
-            productTags: []
+            productTags: [],
         }
     })
 
     const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
         data.product = {
             ...currentProduct.product, checkStatus: data.product.checkStatus
+        }
+        data.productCard = {
+            ...currentProduct.productCard, description: productCardDescription
         }
         data.productImages = galleryImages
         data.productTags = productTags

@@ -1,7 +1,5 @@
 import React from 'react'
 import s from "./EditProductCardModal.module.scss"
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-// import draftToHtml from 'draftjs-to-html'
 import {UseFormReturn} from "react-hook-form"
 import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort"
 import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull"
@@ -12,9 +10,6 @@ interface ControlledProps {
 }
 
 export const EditProductCardDescription = (props: ControlledProps) => {
-
-    // const [editorState, setEditorState] = useState(EditorState.createEmpty())
-    // console.log('editorState => ', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     return (
         <div className={s.leftSide_descriptionEditor}>
