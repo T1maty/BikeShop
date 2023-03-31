@@ -58,7 +58,22 @@ export const TagTreeView = () => {
             <CreateTagModal onSuccess={addTag}/>
             <TagTreeViewContextMenu/>
             <UniTreeView data={treeViewData} selected={selectedN} setSelected={setSelectedN}
-                         onNodeClick={setProductsToTableHandler}/>
+                         onNodeClick={setProductsToTableHandler} onNodeContext={(event) => {/*
+                setSelect(node.id)
+                setContext(true, event.clientX, event.clientY)
+                setProductsToTableHandler()
+            */
+            }}
+                         onNodeDoubleClick={() => {/*
+                             addTagToCloud(treeData.filter((n) => {
+                                 if (n.id == props.nodeId) return n
+                             })[0])
+                         */
+                         }}
+
+
+            />
+
 
         </Box>
     )

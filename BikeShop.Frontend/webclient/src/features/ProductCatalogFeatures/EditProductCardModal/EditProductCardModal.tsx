@@ -20,14 +20,9 @@ export const EditProductCardModal = () => {
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
-
-    const currentProduct = useEditProductCardModal(s => s.currentProduct)
-    const productCardDescription = useEditProductCardModal(s => s.productCardDescription)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
-    const galleryImages = useEditProductCardModal(s => s.galleryImages)
-    const productTags = useEditProductCardModal(s => s.productTags)
-    const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
@@ -46,14 +41,6 @@ export const EditProductCardModal = () => {
     })
 
     const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
-        data.product = {
-            ...currentProduct.product, checkStatus: data.product.checkStatus
-        }
-        data.productCard = {
-            ...currentProduct.productCard, description: productCardDescription
-        }
-        data.productImages = galleryImages
-        data.productTags = productTags
 
         console.log('submitData', data)
 
@@ -69,6 +56,11 @@ export const EditProductCardModal = () => {
     }
 
     useEffect(() => {
+        formControl.setValue('productTags', currentProduct.productTags)
+        formControl.setValue('productImages', currentProduct.productImages)
+    }, [currentProduct])
+
+    useEffect(() => {
         getCardOptions()
         getSpecifications()
     }, [])
@@ -80,7 +72,9 @@ export const EditProductCardModal = () => {
         return (
             <Modal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -104,7 +98,9 @@ export const EditProductCardModal = () => {
                                                            name={'productSpecifications'}
                             />
                             <div className={s.rightSide_mainButtons}>
-                                <Button onClick={() => {setOpen(false)}}>
+                                <Button onClick={() => {
+                                    setOpen(false)
+                                }}>
                                     Отмена
                                 </Button>
                                 <Button type={'submit'}>

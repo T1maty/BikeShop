@@ -2,8 +2,12 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {
-    ProductCardAPI, CatalogProductItem, ProductImage, ProductOption,
-    ProductSpecification, ProductTagForCard, UpdateProductCard
+    CatalogProductItem,
+    ProductCardAPI,
+    ProductOption,
+    ProductSpecification,
+    ProductTagForCard,
+    UpdateProductCard
 } from '../../../entities'
 
 interface EditProductCardModalStore {
@@ -30,9 +34,6 @@ interface EditProductCardModalStore {
     productTags: ProductTagForCard[]
     setProductTags: (tags: ProductTagForCard[]) => void
 
-    galleryImages: ProductImage[]
-    setGalleryImages: (images: ProductImage[]) => void
-    uploadNewImage: (data: any) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
@@ -49,7 +50,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
                 state.currentProduct = res.data
                 state.productStatus = res.data.product.checkStatus
                 state.productTags = res.data.productTags
-                state.galleryImages = res.data.productImages
 
                 console.log('карточка из таблицы', state.currentProduct)
                 // console.log('изображения карточки', state.galleryImages)
@@ -109,23 +109,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         state.productTags = tags
     }),
 
-    galleryImages: [],
-    setGalleryImages: (images) => set(state => {
-        state.galleryImages = images
-    }),
-    uploadNewImage: (data) => {
-        set({isLoading: true})
-        const productId = 1
-
-        return ProductCardAPI.uploadNewImage(data).then(res => {
-            set(state => {
-                state.galleryImages.push(res.data)
-            })
-            set({isLoading: false})
-        }).catch((error: any) => {
-            console.log('изображение не загружено', error)
-        })
-    },
 })))/*, {
     name: "editProductCardModal",
     version: 1

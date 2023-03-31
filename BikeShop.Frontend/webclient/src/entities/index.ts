@@ -27,6 +27,7 @@ export type {ServiceItem} from './models/Service/ServiceItem'
 export type {TreeViewData} from './models/Others/TreeViewData'
 export type {QuantityUnit} from './models/Others/QuantityUnit'
 export type {PaymentData} from './models/PaymentData'
+export type {ProductCard} from './models/Product/ProductCard'
 
 ///////////////////////////////////
 //          Requests             //

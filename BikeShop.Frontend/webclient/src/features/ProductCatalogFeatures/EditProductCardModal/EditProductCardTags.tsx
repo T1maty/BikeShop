@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
-import useEditProductCardModal from './EditProductCardModalStore'
 import {ProductTagForCard} from '../../../entities'
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
@@ -14,28 +13,10 @@ interface ControlledProps {
 
 export const EditProductCardTags = (props: ControlledProps) => {
 
-    const productTags = useEditProductCardModal(s => s.productTags)
-    const setProductTags = useEditProductCardModal(s => s.setProductTags)
-
     const [open, setOpen] = useState(false)
-
-    // тестовые данные
-    // const [productTags, setProductTags] = useState([
-    //     {id: 1, name: 'htt50/150/'},
-    //     {id: 2, name: 'htt250/150/'},
-    //     {id: 3, name: 'ht/150/'},
-    //     {id: 4, name: 'http/1018/250/150/'},
-    //     {id: 5, name: 'https/1015/250/150/'},
-    //     {id: 6, name: 'https/1015/250/150/'},
-    //     {id: 7, name: 'https/1015/250/150/'},
-    // ])
 
     const addTagHandler = () => {
         setOpen(true)
-    }
-
-    const deleteTagHandler = (tagId: number) => {
-        setProductTags(productTags.filter(tag => tag.id !== tagId))
     }
 
     return (
@@ -56,8 +37,8 @@ export const EditProductCardTags = (props: ControlledProps) => {
                     </div>
                     <div className={s.tagEditor_tags}>
                         {
-                            productTags.length === 0 ? <div className={s.tagList_noTags}>Тегов нет</div> :
-                                productTags.map((tag: ProductTagForCard) => {
+                            field.value.length === 0 ? <div className={s.tagList_noTags}>Тегов нет</div> :
+                                field.value.map((tag: ProductTagForCard) => {
                                     return (
                                         <div key={tag.id} className={s.tagList_item}>
                                             <div className={s.tagList_itemTitle}>{tag.name}</div>
@@ -65,7 +46,7 @@ export const EditProductCardTags = (props: ControlledProps) => {
                                                 <img src={RemoveIcon} alt="remove-icon"
                                                      className={s.tagList_deleteItem}
                                                      onClick={() => {
-                                                         deleteTagHandler(tag.id)
+                                                         field.onChange(field.value.filter((t: any) => t.id !== tag.id))
                                                      }}
                                                 />
                                             </div>

@@ -7,6 +7,7 @@ interface UniTreeView {
     setSelected: (node: any) => void
     onNodeContext?: (node: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
     onNodeClick?: (node: any) => void
+    onNodeDoubleClick?: (node: any) => void
 }
 
 /**
@@ -67,7 +68,7 @@ export const UniTreeView = memo((props: UniTreeView) => {
                 handleExpand(item.id)
             }
         }
-        
+
         return (
             <div key={item.id} className={cls.wrapper} onContextMenu={(e) => {
                 e.preventDefault()
