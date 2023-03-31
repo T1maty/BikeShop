@@ -16,7 +16,6 @@ export const EditProductCardGallery = (props: ControlledProps) => {
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const galleryImages = useEditProductCardModal(s => s.galleryImages)
     const setGalleryImages = useEditProductCardModal(s => s.setGalleryImages)
-    const uploadNewImage = useEditProductCardModal(s => s.uploadNewImage)
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
 

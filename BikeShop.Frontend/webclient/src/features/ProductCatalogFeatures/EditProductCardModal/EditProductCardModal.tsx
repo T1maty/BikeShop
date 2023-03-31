@@ -10,43 +10,59 @@ import {EditProductCardGallery} from "./EditProductCardGallery"
 import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {UpdateProductCard} from "../../../entities/models/Product/UpdateProductCard"
+import {useSnackbar} from "notistack"
+import {CatalogProductItem, UpdateProductCard} from "../../../entities"
 
 export const EditProductCardModal = () => {
+
+    const {enqueueSnackbar} = useSnackbar()
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
 
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
+    const galleryImages = useEditProductCardModal(s => s.galleryImages)
+    const productTags = useEditProductCardModal(s => s.productTags)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
+    const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
-            checkStatus: '', // ? надо переместить в объект
+            // checkStatus: '', // надо переместить в объект product
+            product: {
+                checkStatus: '',
+            },
             productCard: {
                 descriptionShort: '',
                 description: ''
             },
-            options: [],
-            specifications: [],
+            productOptions: [],
+            productSpecifications: [],
             productImages: [],
             productTags: []
         }
     })
 
     const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
+        data.product = {
+            ...currentProduct.product, checkStatus: data.product.checkStatus
+        }
+        data.productImages = galleryImages
+        data.productTags = productTags
+
         console.log('submitData', data)
 
         // обновление карточки
-        //     updateProductCard(data).then((res: any) => {
-        //         enqueueSnackbar('Карточка обновлена', {variant: 'success', autoHideDuration: 3000})
-        //     }).catch((error: any) => {
-        //         let message = error(error.response.data.errorDescription).toString()
-        //         formControl.setError('name', {type: 'serverError', message: message})
-        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //         console.error(error.response.data)
-        //     })
+        // updateProductCard(data).then((res: any) => {
+        //     enqueueSnackbar('Карточка обновлена', {variant: 'success', autoHideDuration: 3000})
+        // }).catch((error: any) => {
+        //     let message = error(error.response.data.errorDescription).toString()
+        //     // formControl.setError('name', {type: 'serverError', message: message})
+        //     enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+        //     console.error(error.response.data)
+        // })
     }
 
     useEffect(() => {
@@ -69,7 +85,7 @@ export const EditProductCardModal = () => {
                     <div className={s.editProductCardModal_mainBlock}>
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags control={formControl} name={'productTags'}/>
-                            <EditProductCardStatus control={formControl} name={'checkStatus'}/>
+                            <EditProductCardStatus control={formControl} name={'product'}/>
                             <EditProductCardGallery control={formControl} name={'productImages'}/>
                         </div>
 
@@ -78,11 +94,11 @@ export const EditProductCardModal = () => {
                         <div className={s.editProductCardModal_rightSide}>
                             <EditProductCardOption divClassName={s.rightSide_productDetails}
                                                    control={formControl}
-                                                   name={'options'}
+                                                   name={'productOptions'}
                             />
                             <EditProductCardSpecifications divClassName={s.rightSide_productOptions}
                                                            control={formControl}
-                                                           name={'specifications'}
+                                                           name={'productSpecifications'}
                             />
                             <div className={s.rightSide_mainButtons}>
                                 <Button onClick={() => {setOpen(false)}}>

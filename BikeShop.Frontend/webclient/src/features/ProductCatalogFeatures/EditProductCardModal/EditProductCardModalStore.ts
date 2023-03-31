@@ -2,8 +2,8 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {
-    CatalogProductItem, ProductCardAPI, ProductImage,
-    ProductOption, ProductSpecification, ProductTagForCard
+    ProductCardAPI, CatalogProductItem, ProductImage, ProductOption,
+    ProductSpecification, ProductTagForCard, UpdateProductCard
 } from '../../../entities'
 
 interface EditProductCardModalStore {
@@ -14,7 +14,7 @@ interface EditProductCardModalStore {
 
     currentProduct: CatalogProductItem
     getProductCard: (productId: number) => void
-    updateProductCard: (productId: number) => void
+    updateProductCard: (data: UpdateProductCard) => void
 
     cardOptions: ProductOption[]
     currentCardOptions: ProductOption[]
@@ -48,7 +48,10 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
                 state.productStatus = res.data.product.checkStatus
                 state.productTags = res.data.productTags
                 state.galleryImages = res.data.productImages
+
                 console.log('карточка из таблицы', state.currentProduct)
+                // console.log('изображения карточки', state.galleryImages)
+                // console.log('теги карточки', state.productTags)
             })
             set({isLoading: false})
             set({openEditProductCardModal: true})
@@ -56,11 +59,11 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('карточка не получена')
         })
     },
-    updateProductCard: () => {
+    updateProductCard: (data) => {
         set({isLoading: true})
-        ProductCardAPI.updateProductCard().then(res => {
-            console.log('карточка обновлена')
+        ProductCardAPI.updateProductCard(data).then((res: any) => {
             set({isLoading: false})
+            console.log('карточка обновлена')
         }).catch((error: any) => {
             console.log('карточка не обновлена')
         })

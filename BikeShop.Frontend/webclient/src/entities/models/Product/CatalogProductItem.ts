@@ -30,19 +30,20 @@ export interface CatalogProductItem {
     productSpecifications: [
         {
             id: number
-            createdAt: string
-            updatedAt: string
-            enabled: boolean
+            name: string
+            description: string
             productId: number
             specificationId: number
             sortOrder: number
-            description: string
-            name: string
+            enabled: boolean
+            createdAt: string
+            updatedAt: string
         }
     ],
     productOptions: [
         {
             id: number
+            name: string
             createdAt: string
             updatedAt: string
             enabled: boolean
@@ -50,27 +51,23 @@ export interface CatalogProductItem {
             productId: number
             sortOrder: number
             lintProductId: number
-            name: string
             optionName: string
         }
     ],
     productImages: [
         {
             id: number
-            createdAt: string
-            updatedAt: string
-            enabled: boolean
             productId: number
             sortOrder: number
             url: string
+            enabled: boolean
+            createdAt: string
+            updatedAt: string
         }
     ],
     productTags: [
         {
             id: number
-            createdAt: string
-            updatedAt: string
-            enabled: boolean
             name: string
             parentId: number
             isCollapsed: boolean
@@ -78,6 +75,9 @@ export interface CatalogProductItem {
             isB2BVisible: boolean
             isUniversal: boolean
             sortOrder: number
+            enabled: boolean
+            createdAt: string
+            updatedAt: string
         }
     ]
 }
