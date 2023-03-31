@@ -46,12 +46,12 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                             placeholder={'Выбор...'}
                             defaultValue={checkStatus.find(n => n.name === productStatus)}
                             value={checkStatus.find(s => s.name === field.value)}
+                            onChange={(value) => {
+                                value ? field.onChange({...field.value, checkStatus: value.name}) : false
+                            }}
                             // onChange={(value) => {
                             //     value ? field.onChange(value.name) : false
                             // }}
-                            onChange={(value) => {
-                                value ? field.onChange({...field.value, checkStatus: value}) : false
-                            }}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             isSearchable={false}

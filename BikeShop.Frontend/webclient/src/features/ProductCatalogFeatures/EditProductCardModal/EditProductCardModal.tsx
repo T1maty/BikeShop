@@ -11,7 +11,7 @@ import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {useSnackbar} from "notistack"
-import {CatalogProductItem, UpdateProductCard} from "../../../entities"
+import {UpdateProductCard} from "../../../entities"
 
 export const EditProductCardModal = () => {
 
@@ -30,7 +30,6 @@ export const EditProductCardModal = () => {
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
-            // checkStatus: '', // надо переместить в объект product
             product: {
                 checkStatus: '',
             },
