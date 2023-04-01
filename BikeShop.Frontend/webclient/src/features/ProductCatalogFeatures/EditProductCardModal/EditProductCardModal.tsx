@@ -20,9 +20,10 @@ export const EditProductCardModal = () => {
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
+
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
-    const currentProduct = useEditProductCardModal(s => s.currentProduct)
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
@@ -97,9 +98,7 @@ export const EditProductCardModal = () => {
                                                            name={'productSpecifications'}
                             />
                             <div className={s.rightSide_mainButtons}>
-                                <Button onClick={() => {
-                                    setOpen(false)
-                                }}>
+                                <Button onClick={() => {setOpen(false)}}>
                                     Отмена
                                 </Button>
                                 <Button type={'submit'}>

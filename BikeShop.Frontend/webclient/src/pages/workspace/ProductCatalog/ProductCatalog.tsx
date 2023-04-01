@@ -1,14 +1,25 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
 import {Button, InputUI} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
 import {EditProductCardModal} from "../../../features"
+import {useSnackbar} from "notistack"
 
 export const ProductCatalog = () => {
 
+    const {enqueueSnackbar} = useSnackbar()
+
     const getProductCard = useEditProductCardModal(s => s.getProductCard)
+    const isError = useEditProductCardModal(s => s.isError)
+
+    useEffect(() => {
+        if (isError) {
+            enqueueSnackbar('Ошибка сервера: карточка не загружена!',
+                {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [isError])
 
     return (
         // <div className={s.productCatalogTableWrapper}>

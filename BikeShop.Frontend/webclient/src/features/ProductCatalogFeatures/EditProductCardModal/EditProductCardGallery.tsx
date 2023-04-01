@@ -88,7 +88,6 @@ export const EditProductCardGallery = (props: ControlledProps) => {
         const itemAbove = items[index]
         items[imgKey - 1] = items[imgKey]
         items[imgKey] = itemAbove
-        console.log(items)
         field.onChange(items)
         setCurrentImageKey(null)
     }
@@ -119,9 +118,7 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                                     return (
                                         <div key={img.id}
                                              className={s.imageList_item}
-                                             onDoubleClick={() => {
-                                                 setImageHandler(key)
-                                             }}
+                                             onDoubleClick={() => {setImageHandler(key)}}
                                         >
                                             <img className={currentImageKey === key ? s.active_image : ''}
                                                  src={img.url} alt="img-thumbnail"
@@ -132,9 +129,7 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                                             </div>
                                             <img src={RemoveIcon} alt="remove-icon"
                                                  className={s.imageList_deleteItem}
-                                                 onClick={() => {
-                                                     deleteImageHandler(img.id, field)
-                                                 }}
+                                                 onClick={() => {deleteImageHandler(img.id, field)}}
                                             />
                                         </div>
                                     )
@@ -144,17 +139,13 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                     <div className={s.imageGallery_buttons}>
                         <div className={s.imageGallery_sortButtons}>
                             <Button disabled={currentImageKey === null || currentImageKey === 0}
-                                    onClick={() => {
-                                        onMoveBackwardHandler(currentImageKey, field)
-                                    }}
+                                    onClick={() => {onMoveBackwardHandler(currentImageKey, field)}}
                             >
                                 Переместить назад
                             </Button>
                             <Button
                                 disabled={currentImageKey === null || currentImageKey === (field.value.length - 1)}
-                                onClick={() => {
-                                    onMoveForwardHandler(currentImageKey, field)
-                                }}
+                                onClick={() => {onMoveForwardHandler(currentImageKey, field)}}
                             >
                                 Переместить вперёд
                             </Button>
@@ -162,9 +153,7 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                         <div className={s.imageGallery_addImage}>
                             <input type="file" id="file"
                                    accept="image/png, image/jpeg"
-                                   onChange={(v) => {
-                                       uploadImageHandler(v, field)
-                                   }}
+                                   onChange={(v) => {uploadImageHandler(v, field)}}
                                    className={s.inputFile}
                             />
                         </div>

@@ -24,11 +24,6 @@ export const EditProductCardStatus = (props: ControlledProps) => {
         {id: 7, name: 'Confirmed'},
     ])
 
-    // const [checkStatus, setCheckStatus] = useState([
-    //     'JustCreatedByUser', 'JustCreatedByScript', 'PartiallyFilledByUser',
-    //     'PartiallyFilledByScript', 'FilledByUser', 'FilledByScript', 'Confirmed'
-    // ])
-
     return (
         <Controller
             name={props.name}
@@ -42,23 +37,20 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                     <div className={s.productStatus_select}>
                         <Select
                             className={s.options_search}
-                            options={checkStatus}
                             placeholder={'Выбор...'}
+                            options={checkStatus}
                             defaultValue={checkStatus.find(n => n.name === productStatus)}
                             value={checkStatus.find(s => s.name === field.value)}
                             onChange={(value) => {
                                 value ? field.onChange(value.name) : false
                             }}
-                            // onChange={(value) => {
-                            //     value ? field.onChange(value.name) : false
-                            // }}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             isSearchable={false}
-                            // noOptionsMessage={() => 'Статус не найден'}
                         />
                     </div>
                 </div>
+
             }
         />
     )

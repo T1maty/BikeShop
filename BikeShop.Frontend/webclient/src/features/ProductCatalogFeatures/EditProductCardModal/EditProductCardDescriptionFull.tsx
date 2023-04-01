@@ -5,7 +5,7 @@ import draftToHtml from 'draftjs-to-html'
 import {Editor} from "react-draft-wysiwyg"
 import {convertToRaw, EditorState} from "draft-js"
 import {Controller, UseFormReturn} from "react-hook-form"
-import htmlToDraft from "html-to-draftjs";
+import htmlToDraft from "html-to-draftjs"
 
 interface ControlledProps {
     name: string
@@ -21,7 +21,6 @@ export const EditProductCardDescriptionFull = (props: ControlledProps) => {
         const result = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         field.onChange({...field.value, description: result});
         console.log('конвертация:', htmlToDraft(result))
-
     }
 
 
@@ -30,18 +29,13 @@ export const EditProductCardDescriptionFull = (props: ControlledProps) => {
             name={props.name}
             control={props.control.control}
             render={({field}: any) =>
+
                 <div className={s.fullEditor}>
                     <div className={s.descriptionEditor_title}>
                         Детальное описание товара:
                     </div>
                     <div className={s.descriptionEditor_editorTextarea}>
                         <Editor
-                            // editorState={field.value.description}
-                            // onEditorStateChange={(value) => {
-                            //     field.onChange({...field.value,
-                            //         description: draftToHtml(convertToRaw(value.getCurrentContent()))
-                            //     })
-                            // }}
                             editorState={editorState}
                             onEditorStateChange={(editorState) => {
                                 onChangeEditorHandler(editorState, field)
@@ -53,10 +47,10 @@ export const EditProductCardDescriptionFull = (props: ControlledProps) => {
                             toolbarClassName={s.editor_toolbar}
                             // editorClassName="editorClassName"
                             editorClassName={s.editorClassName}
-
                         />
                     </div>
                 </div>
+
             }
         />
     )
