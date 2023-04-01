@@ -1,12 +1,12 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../../../shared"
-import {CatalogProductItem, ProductTag} from "entities"
+import {CatalogProductItem, ProductTag, ShopAPI} from "entities"
 
 interface UseCatalogStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+
     tags: ProductTag[]
     getTags: () => void
     defaultProducts: CatalogProductItem[]
@@ -20,7 +20,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
     tags: [],
     getTags: () => {
         set({isLoading: true})
-        return $api.get<ProductTag[]>('/public/gettags').then(res => {
+        ShopAPI.getTags().then(res => {
             set(state => {
                 state.tags = res.data
                 console.log('все теги', state.tags)
@@ -33,7 +33,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
     defaultProducts: [],
     getDefaultProducts: () => {
         set({isLoading: true})
-        return $api.get<CatalogProductItem[]>('/public/gettags').then(res => {
+        ShopAPI.getDefaultProducts().then(res => {
             set(state => {
                 state.defaultProducts = res.data
                 console.log('все дефолтные товары', state.defaultProducts)
