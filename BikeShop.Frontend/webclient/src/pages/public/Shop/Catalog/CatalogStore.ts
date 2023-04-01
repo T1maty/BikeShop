@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItem, ProductTag, ShopAPI} from "entities"
+import {CatalogProductItem, ProductTag, ShopAPI} from '../../../../entities'
 
 interface UseCatalogStore {
     isLoading: boolean
