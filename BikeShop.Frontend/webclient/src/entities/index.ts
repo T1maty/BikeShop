@@ -72,6 +72,7 @@ export {EntitiesAPI} from './api/EntitiesAPI'
 export {FinancialInteractionAPI} from './api/FinancialInteractionAPI'
 export {ProductCardAPI} from './api/ProductCardAPI'
 export {ServiceAPI} from './api/ServiceAPI'
+export {ShopAPI} from './api/ShopAPI'
 
 ///////////////////////////////////
 //          Others               //

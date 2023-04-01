@@ -1,27 +1,14 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    ArrivalOfProducts,
-    Cashbox,
-    Catalog,
-    CatalogProductItem,
-    InventoryOfProducts,
-    LoginPage,
-    MainPage,
-    Order,
-    ProductCatalog,
-    ProductsWrapper,
-    Profile,
-    RegistrationPage,
-    Service,
-    ShopMain,
-    ShopWrapper,
-    WorkCatalog
+    ArrivalOfProducts, Cashbox, Catalog, CatalogProductItem, InventoryOfProducts,
+    LoginPage, MainPage, Order, ProductCatalog, ProductsWrapper, Profile,
+    RegistrationPage, Service, ShopMain, ShopWrapper, WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
-import {
-    BarcodeScannerListenerProvider
-} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+import {BarcodeScannerListenerProvider}
+    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+import {CheckAct, WorkAct} from 'widgets'
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -151,5 +138,13 @@ export const routes = createBrowserRouter([
                 <InventoryOfProducts/>
             </ProductsWrapper>
         </WorkspaceHeaderProvider>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.CHECK_ACT,
+        element: <CheckAct/>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.WORK_ACT,
+        element: <WorkAct/>
     },
 ])

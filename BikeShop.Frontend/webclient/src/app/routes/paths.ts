@@ -19,5 +19,7 @@ export const BikeShopPaths = {
         WORK_CATALOG: '/workspace/work-catalog',
         ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
         INVENTORY_OF_PRODUCTS: '/workspace/inventory-of-products',
+        CHECK_ACT: '/workspace/check-act',
+        WORK_ACT: '/workspace/work-act',
     },
 }

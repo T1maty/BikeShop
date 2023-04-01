@@ -420,3 +420,32 @@
         }
     }
 }
+
+// WorkActs
+@mixin workActHeaderBlock {
+    width: 50%;
+
+    .header_title {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: $defaultSmallMargin;
+    }
+    .header_content {
+
+    }
+}
+@mixin workActProductBlock {
+    width: 100%;
+
+    .works_content {
+        background-color: $themeColorMilk;
+        border-radius: $smallBorderRadius;
+        text-align: center;
+        min-height: 100px;
+        margin-bottom: $defaultSmallMargin;
+    }
+    .works_result {
+        text-align: right;
+        line-height: $minLineHeight;
+    }
+}

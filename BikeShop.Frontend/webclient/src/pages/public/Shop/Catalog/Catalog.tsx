@@ -113,7 +113,7 @@ export const Catalog = () => {
     useEffect(() => {
         setActiveFilter1(true)
         getTags()
-        // getDefaultProducts()
+        getDefaultProducts()
     }, [])
 
     if (isLoading) {
