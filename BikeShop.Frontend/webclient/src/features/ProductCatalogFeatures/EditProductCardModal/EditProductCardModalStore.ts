@@ -61,13 +61,13 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         set({isLoading: true})
         ProductCardAPI.updateProductCard(data).then((res: any) => {
             set({isLoading: false})
-            // console.log('карточка обновлена')
+            console.log('карточка обновлена')
         }).catch((error: any) => {
-            set({isError: true})
-            // console.log('карточка не обновлена')
+            // set({isError: true})
+            console.log('карточка не обновлена')
         }).finally(() => {
             set({isLoading: false})
-            set({isError: false})
+            // set({isError: false})
         })
     },
 

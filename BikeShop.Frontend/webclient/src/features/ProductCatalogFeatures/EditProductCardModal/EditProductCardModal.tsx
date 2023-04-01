@@ -47,15 +47,15 @@ export const EditProductCardModal = () => {
         console.log('submitData', data)
         updateProductCard(data)
 
-        if (isError) {
-            enqueueSnackbar('Ошибка сервера: карточка не обновлена!',
-                {variant: 'error', autoHideDuration: 3000,
-                    anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
-        } else {
-            enqueueSnackbar('Карточка обновлена',
-                {variant: 'success', autoHideDuration: 3000,
-                    anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
-        }
+        // if (isError) {
+        //     enqueueSnackbar('Ошибка сервера: карточка не обновлена!',
+        //         {variant: 'error', autoHideDuration: 3000,
+        //             anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
+        // } else {
+        //     enqueueSnackbar('Карточка обновлена',
+        //         {variant: 'success', autoHideDuration: 3000,
+        //             anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
+        // }
 
         // обновление карточки
         // updateProductCard(data).then((res: any) => {
