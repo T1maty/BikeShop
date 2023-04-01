@@ -18,11 +18,13 @@ namespace BikeShop.Products.Application.Services
     {
         private readonly IApplicationDbContext _context;
         private readonly IPublicService _publicService;
+        private readonly IProductService _productService;
 
-        public ProductCardService(IApplicationDbContext context, IPublicService publicService)
+        public ProductCardService(IApplicationDbContext context, IPublicService publicService, IProductService productService)
         {
             _context = context;
             _publicService = publicService;
+            _productService = productService;
         }
 
         public async Task<OptionDTO> CreateOption(CreateOptionDTO dto)
@@ -191,6 +193,52 @@ namespace BikeShop.Products.Application.Services
             //Удаляем лишние спецификации
             var forRemoveSpecs = _context.ProductSpecifications.Where(n => n.ProductId == dto.Id).Where(n => !specIds.Contains(n.Id));
             _context.ProductSpecifications.RemoveRange(forRemoveSpecs);
+
+            var imgIds = dto.productImages.Select(n1 => n1.id);
+            var productImgs = await _context.ProductImgs.Where(n => imgIds.Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n);
+
+            foreach (var img in dto.productImages)
+            {
+                if (img.id != 0)
+                {
+                    var ent = productImgs[img.id];
+                    ent.UpdatedAt = DateTime.Now;
+                    ent.SortOrder = img.sortOrder;
+                }
+                else
+                {
+                    var newImg = await _productService.AddImageToProduct(dto.Id, img.image);
+                    var actual = await _context.ProductImgs.FindAsync(newImg.Id);
+                    actual.SortOrder = img.sortOrder;
+                    actual.Enabled = img.enabled;
+                }
+            }
+
+            var forRemoveImgs = _context.ProductImgs.Where(n => n.ProductId == dto.Id).Where(n => !imgIds.Contains(n.Id));
+            _context.ProductImgs.RemoveRange(forRemoveImgs);
+
+
+            var atbIDs = await _context.TagToProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n=>n.ProductTagId, n=>n);
+            var newTagBinds = new List<TagToProductBind>();
+            
+            foreach (var id in dto.productTags)
+            {
+                if (atbIDs.ContainsKey(id))
+                {
+                    atbIDs.Remove(id);
+                }
+                else
+                {
+                    newTagBinds.Add(new TagToProductBind { ProductId = dto.Id, ProductTagId = id });
+                }
+            }
+
+            _context.TagToProductBinds.RemoveRange(atbIDs.Values);
+            await _context.TagToProductBinds.AddRangeAsync(newTagBinds);
+
+
+
+
 
             await _context.SaveChangesAsync(new CancellationToken());
             return new ProductCardDTO();

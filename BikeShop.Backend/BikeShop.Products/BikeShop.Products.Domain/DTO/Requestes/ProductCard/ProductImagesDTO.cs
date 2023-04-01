@@ -12,6 +12,7 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
         public int id { get; set; }
 
         public int sortOrder { get; set; }
+        public bool enabled { get; set; }
 
         public IFormFile? image { get; set; }
     }

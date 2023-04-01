@@ -14,9 +14,9 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
 
         public List<ProductSpecidicationDTO> productSpecifications { get; set; }
 
-        public List<ProductImagesDTO> images { get; set; }
+        public List<ProductImagesDTO> productImages { get; set; }
 
-        public List<ProductTagsDTO> tags { get; set; }
+        public List<int> productTags { get; set; }
 
         public ProductCardMicroDTO productCard { get; set; }
     }
