@@ -56,6 +56,8 @@
     //box-shadow: 24;
 }
 
+////////////////////////////////////////////////////////////////////
+
 // mixins for UI components
 // textField size
 @mixin defaultFiledStyle() {
@@ -190,6 +192,8 @@
     }
 }
 
+////////////////////////////////////////////////////////////////////
+
 // CreateShopModal
 @mixin createShopStorageModal($itemsColumnHeight, $columnWidth2, $columnWidth3) {
     .shopStorageModal_shops {
@@ -204,90 +208,100 @@
             padding-right: $defaultSmallMargin;
             overflow-y: auto;
             max-height: $itemsColumnHeight; // высота колонки с элементами
-
-            .shop_item {
-                @include divSmallMarginBottom;
-                border-radius: $smallBorderRadius;
-                border: 1px solid white;
-                padding: 10px;
-                color: black;
-
-                &:hover {
-                    cursor: pointer;
-                    background-color: $themeColorDark;
-                    color: white;
-                }
-
-                > div {
-                    span {
-                        font-weight: bold;
-                    }
-                }
-            }
-            .shop_item_active {
-                @include divSmallMarginBottom;
-                border-radius: $smallBorderRadius;
-                background-color: $themeColorDark;
-                border: 1px solid white;
-                padding: 10px;
-                color: white;
-
-                > div {
-                    span {
-                        font-weight: bold;
-                    }
-                }
-            }
+            @include ActiveEntity;
         }
     }
 
     // третья колонка
     .shopStorageModal_createBlock {
         width: $columnWidth3; // высота колонки с формами
+        @include CreateEntityForm;
+    }
+}
 
-        form {
-            @include divLargeMarginBottom;
+// CreateShopModal Active Entity Item
+@mixin ActiveEntity() {
+    .shop_item {
+        @include divSmallMarginBottom;
+        border-radius: $smallBorderRadius;
+        border: 1px solid white;
+        padding: 10px;
+        color: black;
 
-            .shopStorageModal_inputFields {
-                background-color: $themeColorGray;
-                padding: $defaultLargeMargin;
-                border-radius: $smallBorderRadius;
-                @include divSmallMarginBottom;
+        &:hover {
+            cursor: pointer;
+            background-color: $themeColorDark;
+            color: white;
+        }
 
-                .infoBlock_input {
-                    //
-                }
-                .infoBlock_checkbox {
-                    @include flexCenter;
-                    height: 50px;
-                    border: 2px solid $themeColorMilk;
-                    border-radius: $smallBorderRadius;
-                }
-                .infoBlock_cancelBtn {
-                    display: flex;
-                    gap: $defaultLargeMargin;
-
-                    button {
-                        @include defaultMediumButton;
-                    }
-                }
+        > div {
+            span {
+                font-weight: bold;
             }
+        }
+    }
+    .shop_item_active {
+        @include divSmallMarginBottom;
+        border-radius: $smallBorderRadius;
+        background-color: $themeColorDark;
+        border: 1px solid white;
+        padding: 10px;
+        color: white;
 
-            .footer_buttons {
-                @include flexOnlyBetween;
-                gap: $defaultLargeMargin;
-
-                > div {
-                    width: 100%;
-                }
-                button {
-                    padding: 20px;
-                    width: 100%;
-                }
+        > div {
+            span {
+                font-weight: bold;
             }
         }
     }
 }
+
+// CreateShopModal FormStyles
+@mixin CreateEntityForm() {
+    form {
+        @include divLargeMarginBottom;
+
+        .shopStorageModal_inputFields {
+            background-color: $themeColorGray;
+            padding: $defaultLargeMargin;
+            border-radius: $smallBorderRadius;
+            @include divSmallMarginBottom;
+
+            .infoBlock_input {
+                //
+            }
+            .infoBlock_checkbox {
+                @include flexCenter;
+                height: 50px;
+                border: 2px solid $themeColorMilk;
+                border-radius: $smallBorderRadius;
+            }
+            .infoBlock_cancelBtn {
+                display: flex;
+                gap: $defaultLargeMargin;
+
+                button {
+                    @include defaultMediumButton;
+                }
+            }
+        }
+
+        .footer_buttons {
+            @include flexOnlyBetween;
+            gap: $defaultLargeMargin;
+
+            > div {
+                width: 100%;
+            }
+            button {
+                padding: 20px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////
 
 // EditProductCardModal
 @mixin selectOptionsBlock() {
@@ -420,6 +434,8 @@
         }
     }
 }
+
+////////////////////////////////////////////////////////////////////
 
 // WorkActs
 @mixin workActHeaderBlock {

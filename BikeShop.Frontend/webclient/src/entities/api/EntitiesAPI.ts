@@ -6,6 +6,9 @@ import {GetQuantityUnitResponse} from "../responses/QuantityUnitResponse"
 import {CreateQuantityUnit, UpdateQuantityUnit} from "../requests/CreateQuantityUnit"
 import {CreateStorageResponse} from "../responses/StorageResponse"
 import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
+import {Specification} from '../models/Others/Specification'
+import {CreateSpecification} from '../requests/CreateSpecification'
+import {UpdateSpecification} from '../requests/UpdateSpecification';
 
 export const EntitiesAPI = {
     Archive: {
@@ -72,5 +75,18 @@ export const EntitiesAPI = {
 
     Currency: {
 
+    },
+
+    Specification: {
+        addNewSpecification(data: CreateSpecification): any {
+            return (
+                $api.post<CreateSpecification>('/productcard/createspecification', data)
+            )
+        },
+        updateSpecification(updateData: UpdateSpecification): any {
+            return (
+                $api.put<UpdateSpecification>('/productcard/updatespecification', updateData)
+            )
+        },
     },
 }

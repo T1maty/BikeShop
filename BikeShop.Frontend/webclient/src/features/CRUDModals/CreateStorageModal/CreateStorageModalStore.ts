@@ -26,7 +26,6 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
 
-
     currentStorage: null,
     setCurrentStorage: (storage) => {
         set({currentStorage: storage})
