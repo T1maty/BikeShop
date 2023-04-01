@@ -17,7 +17,8 @@ export const ProductCatalog = () => {
     useEffect(() => {
         if (isError) {
             enqueueSnackbar('Ошибка сервера: карточка не загружена!',
-                {variant: 'error', autoHideDuration: 3000})
+                {variant: 'error', autoHideDuration: 3000,
+                    anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
         }
     }, [isError])
 

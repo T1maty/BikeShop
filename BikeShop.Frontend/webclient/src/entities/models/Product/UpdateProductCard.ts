@@ -2,7 +2,7 @@ import {ProductOption} from "./ProductOption"
 import {ProductSpecification} from "./ProductSpecification"
 import {ProductTagForCard} from "./ProductTagForCard"
 import {ProductImage} from "./ProductImage"
-import {ProductCard} from "./ProductCard";
+import {ProductCard} from "./ProductCard"
 
 export interface UpdateProductCard {
     id: number
@@ -13,5 +13,3 @@ export interface UpdateProductCard {
     productImages: ProductImage[]
     productTags: ProductTagForCard[]
 }
-
-// export default {}

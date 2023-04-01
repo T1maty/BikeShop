@@ -20,10 +20,12 @@ export const EditProductCardModal = () => {
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
+    const isError = useEditProductCardModal(s => s.isError)
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
+    const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
@@ -43,6 +45,17 @@ export const EditProductCardModal = () => {
 
         data.id = currentProduct.product.id
         console.log('submitData', data)
+        updateProductCard(data)
+
+        if (isError) {
+            enqueueSnackbar('Ошибка сервера: карточка не обновлена!',
+                {variant: 'error', autoHideDuration: 3000,
+                    anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
+        } else {
+            enqueueSnackbar('Карточка обновлена',
+                {variant: 'success', autoHideDuration: 3000,
+                    anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
+        }
 
         // обновление карточки
         // updateProductCard(data).then((res: any) => {
@@ -56,14 +69,14 @@ export const EditProductCardModal = () => {
     }
 
     useEffect(() => {
-        formControl.setValue('productTags', currentProduct.productTags)
-        formControl.setValue('productImages', currentProduct.productImages)
-    }, [currentProduct])
-
-    useEffect(() => {
         getCardOptions()
         getSpecifications()
     }, [])
+
+    useEffect(() => {
+        formControl.setValue('productTags', currentProduct.productTags)
+        formControl.setValue('productImages', currentProduct.productImages)
+    }, [currentProduct])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
