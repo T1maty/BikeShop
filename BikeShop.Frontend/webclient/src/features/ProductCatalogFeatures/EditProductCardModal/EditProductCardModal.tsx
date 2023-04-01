@@ -26,9 +26,7 @@ export const EditProductCardModal = () => {
 
     const formControl = useForm<UpdateProductCard>({
         defaultValues: {
-            product: {
-                checkStatus: '',
-            },
+            checkStatus: '',
             productCard: {
                 descriptionShort: '',
                 description: '',
@@ -42,6 +40,7 @@ export const EditProductCardModal = () => {
 
     const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
 
+        data.id = currentProduct.product.id
         console.log('submitData', data)
 
         // обновление карточки
@@ -82,7 +81,7 @@ export const EditProductCardModal = () => {
                     <div className={s.editProductCardModal_mainBlock}>
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags control={formControl} name={'productTags'}/>
-                            <EditProductCardStatus control={formControl} name={'product'}/>
+                            <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                             <EditProductCardGallery control={formControl} name={'productImages'}/>
                         </div>
 

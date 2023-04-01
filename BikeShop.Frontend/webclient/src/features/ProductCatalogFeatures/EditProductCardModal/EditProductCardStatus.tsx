@@ -47,7 +47,7 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                             defaultValue={checkStatus.find(n => n.name === productStatus)}
                             value={checkStatus.find(s => s.name === field.value)}
                             onChange={(value) => {
-                                value ? field.onChange({...field.value, checkStatus: value.name}) : false
+                                value ? field.onChange(value.name) : false
                             }}
                             // onChange={(value) => {
                             //     value ? field.onChange(value.name) : false

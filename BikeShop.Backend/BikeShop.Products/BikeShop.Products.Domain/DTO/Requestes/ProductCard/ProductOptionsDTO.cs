@@ -8,7 +8,6 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
 {
     public class ProductOptionsDTO
     {
-        public int id { get; set; }
-        public List<int> variantIds { get; set; }
+        public List<OptionVariantDTO> optionVariants { get; set; }
     }
 }

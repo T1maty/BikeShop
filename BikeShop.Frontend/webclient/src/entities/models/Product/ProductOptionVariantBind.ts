@@ -1,7 +1,13 @@
 export interface ProductOptionVariantBind {
     productId: number
+    id: number
+    name: string
+    optionId: number
     optionVariantId: number
+    optionName: string
+    createdAt: string
     sortOrder: number
     linkProductId: number
-    optionName: string
+    updatedAt: string
+    enabled: boolean
 }

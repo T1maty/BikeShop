@@ -8,9 +8,11 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
 {
     public class UpdateProductCardDTO
     {
-        public List<ProductOptionsDTO> options { get; set; }
+        public int Id { get; set; }
+        public string CheckStatus { get; set; }
+        public List<ProductOptionsDTO> productOptions { get; set; }
 
-        public List<int> specifications { get; set; }
+        public List<ProductSpecidicationDTO> productSpecifications { get; set; }
 
         public List<ProductImagesDTO> images { get; set; }
 

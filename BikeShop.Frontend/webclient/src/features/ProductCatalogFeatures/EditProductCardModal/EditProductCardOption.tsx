@@ -31,7 +31,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
     // доступные опции и варианты
     const availableOptions = (field: any) => {
         let optionIds: number[] = []
-        field.value.forEach((n: ProductOption) => {optionIds.push(n.id)})
+        field.value.forEach((n: ProductOption) => {
+            optionIds.push(n.id)
+        })
         return cardOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
     }
 
@@ -41,7 +43,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
         option.optionVariants.map(n => ids.push(n.id))
         let buf = optionItem.optionVariants.filter(n => !ids.includes(n.id))
         let result: { id: number, value: any }[] = []
-        buf.forEach(n => {result.push({ id: option.id, value: n })})
+        buf.forEach(n => {
+            result.push({id: option.id, value: n})
+        })
         return result
     }
 
@@ -53,28 +57,33 @@ export const EditProductCardOption = (props: ControlledProps) => {
 
     const deleteOptionListHandler = (field: any, option: ProductOption) => {
         field.onChange(field.value.filter((n: ProductOption) => n.id != option.id))
-        setSelectedOptionVariant([{ id: 0, value: {} as ProductOptionVariant }])
+        setSelectedOptionVariant([{id: 0, value: {} as ProductOptionVariant}])
     }
 
     // функции для разновидностей опций
     const onChangeOptionsVariantHandler = (value: any, option: ProductOption) => {
         if (value != undefined) {
             let buf = selectedOptionVariant.filter(n => n.id != option.id)
-            buf.push({ id: option.id, value: value.value })
+            buf.push({id: option.id, value: value.value})
             setSelectedOptionVariant(buf)
         }
     }
 
     const setOptionsVariantHandler = (field: any, option: ProductOption, variant: ProductOptionVariant) => {
+
         let options = field.value.map((n: ProductOption) => n.id === option.id ?
-            {...n, optionVariants: n.optionVariants.filter(n => n.id != variant.id)} : n)
+            {
+                ...n,
+                optionVariants: n.optionVariants.filter(n => n.id != variant.id),
+            } : n)
         field.onChange(options)
         setSelectedOptionVariant([])
     }
 
     const addOptionVariantHandler = (field: any, option: ProductOption) => {
         let options = field.value.map((n: ProductOption) => n.id === option.id ?
-            {...n, optionVariants: n.optionVariants != undefined
+            {
+                ...n, optionVariants: n.optionVariants != undefined
                     ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value]
                     : [selectedOptionVariant.find(n => n.id === option.id)?.value]
             } : n)
@@ -95,8 +104,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
                         <div className={s.productOptions_optionsList}>
                             {
                                 field.value.length === 0 ? <div style={{
-                                    width: '350px', textAlign: 'center', wordBreak: 'break-word'
-                                }}>
+                                        width: '350px', textAlign: 'center', wordBreak: 'break-word'
+                                    }}>
                                         Для добавления выберите опции
                                     </div> :
 
@@ -112,7 +121,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                     <div className={s.options_rowItems}>
                                                         <div className={s.rowItems_item}>
                                                             <div className={s.item_deleteFullItem}
-                                                                 onClick={() => {deleteOptionListHandler(field, option)}}
+                                                                 onClick={() => {
+                                                                     deleteOptionListHandler(field, option)
+                                                                 }}
                                                             >
                                                                 Удалить опцию
                                                             </div>
@@ -127,7 +138,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                                 {variant.name}
                                                                             </div>
                                                                             <img src={RemoveIcon} alt="remove-icon"
-                                                                                 onClick={() => {setOptionsVariantHandler(field, option, variant)}}
+                                                                                 onClick={() => {
+                                                                                     setOptionsVariantHandler(field, option, variant)
+                                                                                 }}
                                                                             />
                                                                         </div>
                                                                     )
@@ -136,7 +149,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                         </div>
                                                         <div className={s.rowItems_chooseItem}>
                                                             <Button buttonDivWrapper={s.options_button}
-                                                                    onClick={() => {addOptionVariantHandler(field, option)}}
+                                                                    onClick={() => {
+                                                                        addOptionVariantHandler(field, option)
+                                                                    }}
                                                                     disabled={selectedOptionVariant.find(n => n.id === option.id) === undefined}
                                                             >
                                                                 +
@@ -148,7 +163,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 isSearchable={true}
                                                                 value={selectedOptionVariant.find(n => n.id === option.id)
                                                                     ? selectedOptionVariant.find(n => n.id === option.id) : null}
-                                                                onChange={(value) => {onChangeOptionsVariantHandler(value, option)}}
+                                                                onChange={(value) => {
+                                                                    onChangeOptionsVariantHandler(value, option)
+                                                                }}
                                                                 getOptionLabel={label => label!.value.name}
                                                                 getOptionValue={value => value!.value.name}
                                                                 noOptionsMessage={() => 'Опция не найдена'}
@@ -163,7 +180,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {addOptionListHandler(field)}}
+                                    onClick={() => {
+                                        addOptionListHandler(field)
+                                    }}
                                     disabled={selectedOption === null || currentCardOptions.length === cardOptions.length}
                             >
                                 +
@@ -174,7 +193,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
-                                onChange={(value: any) => {setSelectedOption(value)}}
+                                onChange={(value: any) => {
+                                    setSelectedOption(value)
+                                }}
                                 getOptionLabel={label => label!.name}
                                 getOptionValue={value => value!.name}
                                 noOptionsMessage={() => 'Опция не найдена'}

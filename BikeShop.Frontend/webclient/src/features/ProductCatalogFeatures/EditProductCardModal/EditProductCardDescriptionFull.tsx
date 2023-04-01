@@ -5,6 +5,7 @@ import draftToHtml from 'draftjs-to-html'
 import {Editor} from "react-draft-wysiwyg"
 import {convertToRaw, EditorState} from "draft-js"
 import {Controller, UseFormReturn} from "react-hook-form"
+import htmlToDraft from "html-to-draftjs";
 
 interface ControlledProps {
     name: string
@@ -19,9 +20,10 @@ export const EditProductCardDescriptionFull = (props: ControlledProps) => {
         setEditorState(editorState)
         const result = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         field.onChange({...field.value, description: result});
-        console.log('конвертация:', result)
-        
+        console.log('конвертация:', htmlToDraft(result))
+
     }
+
 
     return (
         <Controller

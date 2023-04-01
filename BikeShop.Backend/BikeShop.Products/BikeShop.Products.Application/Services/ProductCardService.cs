@@ -116,6 +116,83 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<ProductCardDTO> UpdateProductCard(UpdateProductCardDTO dto)
         {
+            var allOptions = await _context.Options.ToDictionaryAsync(n => n.Id, n => n);
+            var allVariants = await _context.OptionVariants.ToDictionaryAsync(n => n.Id, n => n);
+            var allSpecifications = await _context.Specifications.ToDictionaryAsync(n => n.Id, n => n);
+
+
+            var product = await _context.Products.FindAsync(dto.Id);
+            var productCard = await _context.ProductsCards.Where(n => n.ProductId == dto.Id).FirstOrDefaultAsync();
+
+            product.CheckStatus = dto.CheckStatus;
+            productCard.Description = dto.productCard.description;
+            productCard.DescriptionShort = dto.productCard.shortDescription;
+
+            var variants = new List<OptionVariantDTO>();
+            dto.productOptions.ForEach(n => n.optionVariants.ForEach(n1 =>variants.Add(n1)));
+            var vIds = variants.Select(n1 => n1.id);
+            var variantBinds = await _context.ProductOptionVariantBinds.Where(n => vIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
+
+            var newBinds = new List<ProductOptionVariantBind>();
+
+            foreach (var variant in variants)
+            {
+                if (variant.id != 0)
+                {
+                    //Редактирум все существующие бинды
+                    var ent = variantBinds[variant.id];
+                    ent.SortOrder = variant.SortOrder;
+                    ent.LinkProductId = variant.LinkProductId;
+                    ent.Enabled = variant.enabled;
+                    ent.UpdatedAt = DateTime.Now;
+                }
+                else
+                {
+                    //Создаем новые бинды
+                    var vari = allVariants[variant.OptionVariantId];
+                    var opt = allOptions[vari.OptionId];
+                    newBinds.Add(new ProductOptionVariantBind { LinkProductId = variant.LinkProductId, OptionVariantId = variant.OptionVariantId, ProductId = dto.Id, SortOrder = variant.SortOrder, Name = vari.Name, OptionId = opt.Id, OptionName = opt.Name});
+                }
+            }
+
+            //Добавляем новые бинды
+            await _context.ProductOptionVariantBinds.AddRangeAsync(newBinds);
+
+            //Удаляем все бинды у товара, которых нету.
+            var forRemove = _context.ProductOptionVariantBinds.Where(n => n.ProductId == dto.Id).Where(n => !vIds.Contains(n.Id));
+            _context.ProductOptionVariantBinds.RemoveRange(forRemove);
+
+
+            var specIds = dto.productSpecifications.Select(n => n.id);
+            var prodSpecifications = await _context.ProductSpecifications.Where(n => specIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
+            var newSpecs = new List<ProductSpecification>();
+
+            foreach (var sp in dto.productSpecifications)
+            {
+                if(sp.id != 0)
+                {
+                    //Редактируем существующие спецификации
+                    var ent = prodSpecifications[sp.id];
+                    ent.Description = sp.Description;
+                    ent.SortOrder = sp.SortOrder;
+                    ent.UpdatedAt = DateTime.Now;
+                    ent.Enabled = sp.Enabled;
+                }
+                else
+                {
+                    //Добавляем в список новые спецификации
+                    newSpecs.Add(new ProductSpecification { Description = sp.Description, Enabled = sp.Enabled, Name = allSpecifications[sp.SpecificationId].Name, SortOrder = sp.SortOrder, SpecificationId = sp.SpecificationId, ProductId = dto.Id });
+                }
+            }
+
+            //Добавляем новые спецификаии
+            await _context.ProductSpecifications.AddRangeAsync(newSpecs);
+            
+            //Удаляем лишние спецификации
+            var forRemoveSpecs = _context.ProductSpecifications.Where(n => n.ProductId == dto.Id).Where(n => !specIds.Contains(n.Id));
+            _context.ProductSpecifications.RemoveRange(forRemoveSpecs);
+
+            await _context.SaveChangesAsync(new CancellationToken());
             return new ProductCardDTO();
         }
 
