@@ -23,8 +23,6 @@ export type {ProductSpecification} from './models/Product/ProductSpecification'
 export type {ProductImage} from './models/Product/ProductImage'
 export type {ProductTag} from './models/Product/ProductTag'
 export type {ProductTagForCard} from './models/Product/ProductTagForCard'
-export type {UpdateProductCard} from './models/Product/UpdateProductCard'
-
 export type {ServiceItem} from './models/Service/ServiceItem'
 export type {TreeViewData} from './models/Others/TreeViewData'
 export type {QuantityUnit} from './models/Others/QuantityUnit'

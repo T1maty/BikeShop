@@ -1,6 +1,9 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {CatalogProductItem, ProductOption, ProductSpecification, UpdateProductCard} from '../index'
+import {CatalogProductItem, ProductOption, ProductSpecification} from '../index'
+import {
+    UpdateProductCardRequest
+} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardRequest";
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<CatalogProductItem>> {
@@ -8,9 +11,9 @@ export const ProductCardAPI = {
             $api.get<CatalogProductItem>(`/productcard/getproductcard?productId=${productId}`)
         )
     },
-    updateProductCard(data: UpdateProductCard): any {
+    updateProductCard(data: UpdateProductCardRequest): any {
         return (
-            $api.put<UpdateProductCard>('/productcard/updateproductcard', data)
+            $api.put('/productcard/updateproductcard', data)
         )
     },
     getOptions(): Promise<AxiosResponse<ProductOption[]>> {

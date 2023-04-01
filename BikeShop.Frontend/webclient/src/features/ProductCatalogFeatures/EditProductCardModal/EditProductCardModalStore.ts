@@ -1,13 +1,8 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {
-    ProductCardAPI,
-    CatalogProductItem,
-    ProductOption,
-    ProductSpecification,
-    UpdateProductCard
-} from '../../../entities'
+import {CatalogProductItem, ProductCardAPI, ProductOption, ProductSpecification} from '../../../entities'
+import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -19,7 +14,7 @@ interface EditProductCardModalStore {
 
     currentProduct: CatalogProductItem
     getProductCard: (productId: number) => void
-    updateProductCard: (data: UpdateProductCard) => void
+    updateProductCard: (data: UpdateProductCardRequest) => void
 
     productStatus: string
 
@@ -64,7 +59,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('карточка обновлена')
         }).catch((error: any) => {
             // set({isError: true})
-            console.log('карточка не обновлена')
+            console.log('карточка не обновлена', error)
         }).finally(() => {
             set({isLoading: false})
             // set({isError: false})

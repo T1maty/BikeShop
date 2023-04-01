@@ -11,7 +11,10 @@ import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {useSnackbar} from "notistack"
-import {UpdateProductCard} from "../../../entities"
+import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
+import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
+import {ProductSpecificationRequest} from "./models/ProductSpecificationRequest";
+import {ProductOptionVariantBindRequest} from "./models/ProductOptionVariantBindRequest";
 
 export const EditProductCardModal = () => {
 
@@ -27,7 +30,7 @@ export const EditProductCardModal = () => {
     const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
     const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
-    const formControl = useForm<UpdateProductCard>({
+    const formControl = useForm<UpdateProductCardFormModel>({
         defaultValues: {
             checkStatus: '',
             productCard: {
@@ -41,11 +44,48 @@ export const EditProductCardModal = () => {
         }
     })
 
-    const onSubmit: SubmitHandler<UpdateProductCard> = (data: UpdateProductCard) => {
+    const onSubmit: SubmitHandler<UpdateProductCardFormModel> = (data: UpdateProductCardFormModel) => {
 
-        data.id = currentProduct.product.id
-        console.log('submitData', data)
-        updateProductCard(data)
+        var DATA = {} as UpdateProductCardRequest
+
+        let specs: ProductSpecificationRequest[] = []
+        data.productSpecifications.forEach(n => {
+            specs.push({
+                id: 0,
+                specificationId: n.id,
+                sortOrder: 0,
+                description: n.description,
+                enabled: true
+            } as ProductSpecificationRequest)
+        })
+
+        let variants: { optionVariants: ProductOptionVariantBindRequest[] }[] = []
+        data.productOptions.forEach(n => {
+            let vars: ProductOptionVariantBindRequest[] = []
+            n.optionVariants.forEach(j => {
+                vars.push({
+                    id: 0,
+                    enabled: true,
+                    linkProductId: 0,
+                    sortOrder: 0,
+                    optionVariantId: j.id
+                } as ProductOptionVariantBindRequest)
+            })
+            variants.push({optionVariants: vars})
+        })
+
+        DATA.id = currentProduct.product.id
+        DATA.checkStatus = data.checkStatus
+        DATA.productSpecifications = specs
+        DATA.productOptions = variants
+        DATA.productCard = {
+            description: data.productCard.description,
+            shortDescription: data.productCard.descriptionShort
+        }
+        DATA.productTags = []
+        DATA.productImages = []
+        console.log('submitData', DATA)
+        updateProductCard(DATA)
 
         // if (isError) {
         //     enqueueSnackbar('Ошибка сервера: карточка не обновлена!',
@@ -111,7 +151,9 @@ export const EditProductCardModal = () => {
                                                            name={'productSpecifications'}
                             />
                             <div className={s.rightSide_mainButtons}>
-                                <Button onClick={() => {setOpen(false)}}>
+                                <Button onClick={() => {
+                                    setOpen(false)
+                                }}>
                                     Отмена
                                 </Button>
                                 <Button type={'submit'}>
