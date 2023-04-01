@@ -13,51 +13,8 @@ export const EditProductCardDescription = (props: ControlledProps) => {
 
     return (
         <div className={s.leftSide_descriptionEditor}>
-
             <EditProductCardDescriptionShort control={props.control} name={'productCard'}/>
-            {/*<Controller*/}
-            {/*    name={props.name}*/}
-            {/*    control={props.control.control}*/}
-            {/*    render={({field}: any) =>*/}
-
-            {/*        <div className={s.shortEditor}>*/}
-            {/*            <div className={s.shortEditor_title}>Краткое описание товара:</div>*/}
-            {/*            <div className={s.shortEditor_textarea}>*/}
-            {/*                <div className={s.shortEditor_textarea_wrapper}>*/}
-            {/*                    <textarea {...field} placeholder={'Введите текст...'}/>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-
-            {/*    }*/}
-            {/*/>*/}
-
             <EditProductCardDescriptionFull control={props.control} name={'productCard'}/>
-            {/*<Controller*/}
-            {/*    name={props.name}*/}
-            {/*    control={props.control.control}*/}
-            {/*    render={({field}: any) =>*/}
-            {/*        */}
-            {/*        <div className={s.fullEditor}>*/}
-            {/*            <div className={s.descriptionEditor_title}>Детальное описание товара:</div>*/}
-            {/*            <div className={s.descriptionEditor_editorTextarea}>*/}
-            {/*                <Editor*/}
-            {/*                    editorState={editorState}*/}
-            {/*                    placeholder={'Введите текст...'}*/}
-            {/*                    wrapperClassName="wrapperClassName"*/}
-            {/*                    // toolbarClassName="toolbarClassName"*/}
-            {/*                    toolbarClassName={s.editor_toolbar}*/}
-            {/*                    // editorClassName="editorClassName"*/}
-            {/*                    editorClassName={s.editorClassName}*/}
-            {/*                    onEditorStateChange={(editorState) => {*/}
-            {/*                        setEditorState(editorState)*/}
-            {/*                    }}*/}
-            {/*                />*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*        */}
-            {/*    }*/}
-            {/*/>*/}
         </div>
     )
 }

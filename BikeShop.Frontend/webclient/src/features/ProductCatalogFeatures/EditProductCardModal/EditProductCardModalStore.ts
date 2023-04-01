@@ -2,11 +2,10 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {
-    CatalogProductItem,
     ProductCardAPI,
+    CatalogProductItem,
     ProductOption,
     ProductSpecification,
-    ProductTagForCard,
     UpdateProductCard
 } from '../../../entities'
 
@@ -15,14 +14,14 @@ interface EditProductCardModalStore {
     setOpenEditProductCardModal: (value: boolean) => void
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+    isError: boolean
+    setIsError: (value: boolean) => void
 
     currentProduct: CatalogProductItem
     getProductCard: (productId: number) => void
     updateProductCard: (data: UpdateProductCard) => void
 
     productStatus: string
-    productCardDescription: string
-    setProductCardDescription: (desc: string) => void
 
     cardOptions: ProductOption[]
     currentCardOptions: ProductOption[]
@@ -30,10 +29,6 @@ interface EditProductCardModalStore {
 
     specifications: ProductSpecification[]
     getSpecifications: () => void
-
-    productTags: ProductTagForCard[]
-    setProductTags: (tags: ProductTagForCard[]) => void
-
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
@@ -41,6 +36,8 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     setOpenEditProductCardModal: (value) => set({openEditProductCardModal: value}),
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
+    isError: false,
+    setIsError: (value) => set({isError: value}),
 
     currentProduct: {} as CatalogProductItem,
     getProductCard: (productId: number) => {
@@ -49,16 +46,16 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             set(state => {
                 state.currentProduct = res.data
                 state.productStatus = res.data.product.checkStatus
-                state.productTags = res.data.productTags
-
                 console.log('карточка из таблицы', state.currentProduct)
-                // console.log('изображения карточки', state.galleryImages)
-                // console.log('теги карточки', state.productTags)
             })
             set({isLoading: false})
             set({openEditProductCardModal: true})
         }).catch((error: any) => {
+            set({isError: true})
             console.log('карточка не получена')
+        }).finally(() => {
+            set({isLoading: false})
+            set({isError: false})
         })
     },
     updateProductCard: (data) => {
@@ -72,8 +69,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     },
 
     productStatus: '',
-    productCardDescription: '',
-    setProductCardDescription: (desc) => set({productCardDescription: desc}),
 
     cardOptions: [],
     currentCardOptions: [],
@@ -103,12 +98,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             console.log('спецификации не получены')
         })
     },
-
-    productTags: [],
-    setProductTags: (tags) => set(state => {
-        state.productTags = tags
-    }),
-
 })))/*, {
     name: "editProductCardModal",
     version: 1
