@@ -13,9 +13,8 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import {useSnackbar} from "notistack"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
-import {ProductSpecificationRequest} from "./models/ProductSpecificationRequest";
-import {ProductOptionVariantBindRequest} from "./models/ProductOptionVariantBindRequest";
 import {ProductImageRequest} from "./models/ProductImageRequest";
+import {ProductOptionVariantBind, ProductSpecificationBind} from "../../../entities";
 
 export const EditProductCardModal = () => {
 
@@ -35,7 +34,7 @@ export const EditProductCardModal = () => {
         defaultValues: {
             checkStatus: '',
             productCard: {
-                descriptionShort: '',
+                shortDescription: '',
                 description: '',
             },
             productOptions: [],
@@ -49,7 +48,7 @@ export const EditProductCardModal = () => {
 
         var DATA = {} as UpdateProductCardRequest
 
-        let specs: ProductSpecificationRequest[] = []
+        let specs: ProductSpecificationBind[] = []
         data.productSpecifications.forEach(n => {
             specs.push({
                 id: 0,
@@ -57,12 +56,12 @@ export const EditProductCardModal = () => {
                 sortOrder: 0,
                 description: '',
                 enabled: true
-            } as ProductSpecificationRequest)
+            } as ProductSpecificationBind)
         })
 
-        let variants: { optionVariants: ProductOptionVariantBindRequest[] }[] = []
+        let variants: { optionVariants: ProductOptionVariantBind[] }[] = []
         data.productOptions.forEach(n => {
-            let vars: ProductOptionVariantBindRequest[] = []
+            let vars: ProductOptionVariantBind[] = []
             n.variants.forEach(j => {
                 vars.push({
                     id: 0,
@@ -70,12 +69,12 @@ export const EditProductCardModal = () => {
                     linkProductId: 0,
                     sortOrder: 0,
                     optionVariantId: j.id
-                } as ProductOptionVariantBindRequest)
+                } as ProductOptionVariantBind)
             })
             variants.push({optionVariants: vars})
         })
 
-        let tagIds: number[] = []
+        let tagIds: string[] = []
         data.productTags.forEach(n => {
             tagIds.push(n.id)
         })
@@ -128,7 +127,7 @@ export const EditProductCardModal = () => {
         formControl.setValue('productTags', currentProduct.productTags)
         formControl.setValue('productImages', currentProduct.productImages)
         formControl.setValue("productSpecifications", currentProduct.productSpecifications)
-        formControl.setValue("productOptions", currentProduct.productOptions)
+        //formControl.setValue("productOptions", currentProduct.productOptions)
     }, [currentProduct])
 
     if (isLoading) {

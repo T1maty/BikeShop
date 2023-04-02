@@ -5,7 +5,8 @@ import {Button} from "../../../shared/ui"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {ProductOption, ProductOptionVariant} from "../../../entities"
+import {ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
+import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
 
 interface ControlledProps {
     name: string
@@ -37,16 +38,18 @@ export const EditProductCardOption = (props: ControlledProps) => {
         return cardOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
     }
 
-    const availableVariants = (option: ProductOption) => {
+    const availableVariants = (option: ProductOptionsWithVariants) => {
         let optionItem = cardOptions.filter(n => n.id === option.id)[0]
         let ids: number[] = []
-        option.optionVariants.map(n => ids.push(n.id))
-        let buf = optionItem.optionVariants.filter(n => !ids.includes(n.id))
-        let result: { id: number, value: any }[] = []
-        buf.forEach(n => {
-            result.push({id: option.id, value: n})
-        })
-        return result
+        let avVars: ProductOptionVariantBind[] = []
+
+        option.variants.map(n => ids.push(n.id))
+        //let buf = optionItem..filter(n => !ids.includes(n.id))
+        //let result: { id: number, value: any }[] = []
+        //buf.forEach(n => {
+        //   result.push({id: option.id, value: n})
+        //})
+        return []
     }
 
     // функции для опций
@@ -74,7 +77,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
         let options = field.value.map((n: ProductOption) => n.id === option.id ?
             {
                 ...n,
-                optionVariants: n.optionVariants.filter(n => n.id != variant.id),
+                //optionVariants: n.optionVariants.filter(n => n.id != variant.id),
             } : n)
         field.onChange(options)
         setSelectedOptionVariant([])
@@ -83,9 +86,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
     const addOptionVariantHandler = (field: any, option: ProductOption) => {
         let options = field.value.map((n: ProductOption) => n.id === option.id ?
             {
-                ...n, optionVariants: n.optionVariants != undefined
-                    ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value]
-                    : [selectedOptionVariant.find(n => n.id === option.id)?.value]
+                //...n, optionVariants: n.optionVariants != undefined
+                //    ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value]
+                //   : [selectedOptionVariant.find(n => n.id === option.id)?.value]
             } : n)
         field.onChange(options)
         setSelectedOptionVariant([])
@@ -109,9 +112,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                         Для добавления выберите опции
                                     </div> :
 
-                                    field.value.map((option: ProductOption) => {
-                                        availableVariants(option)
-
+                                    field.value.map((option: ProductOptionsWithVariants) => {
                                         return (
                                             <div className={s.optionsList_item}
                                                  key={option.id}
@@ -128,7 +129,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 Удалить опцию
                                                             </div>
                                                             {
-                                                                option.optionVariants?.map((variant: ProductOptionVariant) => {
+                                                                option.variants?.map((variant: ProductOptionVariant) => {
                                                                     return (
                                                                         <div className={s.item_content}
                                                                              style={{marginBottom: '5px'}}

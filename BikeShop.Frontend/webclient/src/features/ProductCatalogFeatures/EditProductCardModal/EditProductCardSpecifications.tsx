@@ -5,7 +5,7 @@ import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {ProductSpecification} from "../../../entities"
+import {ProductSpecificationBind} from "../../../entities"
 
 interface ControlledProps {
     name: string
@@ -18,16 +18,37 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
     // характеристика (spec)
     const specifications = useEditProductCardModal(s => s.specifications)
-    const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecification>()
+    const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecificationBind>()
 
     const getSpecificationsHandler = (field: any) => {
         let ids: number[] = []
-        field.value.forEach((n: ProductSpecification) => {ids.push(n.id)})
-        return specifications.filter(n => !ids.includes(n.id))
+        field.value.forEach((n: ProductSpecificationBind) => {
+            ids.push(n.id)
+        })
+
+        let availableSpecs: ProductSpecificationBind[] = []
+        specifications.filter(n => !ids.includes(n.id)).forEach(n => {
+            let s: ProductSpecificationBind = {
+                id: 0,
+                name: n.name,
+                productId: 0,
+                sortOrder: 0,
+                description: 'Вводить сюда',
+                specificationId: n.id,
+                createdAt: n.createdAt,
+                updatedAt: n.updatedAt,
+                enabled: n.enabled,
+            }
+            availableSpecs.push(s)
+        })
+        return availableSpecs
     }
 
-    const onChangeSpecificationHandler = (newInputValue: string, field: any, spec: ProductSpecification) => {
-        field.onChange(field.value.map((n: ProductSpecification) => n.id === spec.id ? {...n, description: newInputValue} :n))
+    const onChangeSpecificationHandler = (newInputValue: string, field: any, spec: ProductSpecificationBind) => {
+        field.onChange(field.value.map((n: ProductSpecificationBind) => n.id === spec.id ? {
+            ...n,
+            description: newInputValue
+        } : n))
     }
 
     const editSpecificationHandler = (field: any) => {
@@ -38,8 +59,8 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
         setSelectedSpecification(undefined)
     }
 
-    const deleteSpecificationHandler = (field: any, spec: ProductSpecification) => {
-        field.onChange(field.value.filter((n: ProductSpecification) => n.id != spec.id))
+    const deleteSpecificationHandler = (field: any, spec: ProductSpecificationBind) => {
+        field.onChange(field.value.filter((n: ProductSpecificationBind) => n.id != spec.id))
     }
 
     return (
@@ -58,7 +79,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                         Для добавления выберите характеристику
                                     </div> :
 
-                                    field.value.map((spec: ProductSpecification, index: number) => {
+                                    field.value.map((spec: ProductSpecificationBind, index: number) => {
                                         return (
                                             <div className={s.optionsList_item}
                                                  key={index}
@@ -81,7 +102,9 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                                                 </div>
                                                                 <div className={s.item_deleteDetailsItem}>
                                                                     <img src={RemoveIcon} alt="remove-icon"
-                                                                         onClick={() => {deleteSpecificationHandler(field, spec)}}
+                                                                         onClick={() => {
+                                                                             deleteSpecificationHandler(field, spec)
+                                                                         }}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -96,7 +119,9 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {editSpecificationHandler(field)}}
+                                    onClick={() => {
+                                        editSpecificationHandler(field)
+                                    }}
                                     disabled={selectedSpecification === undefined}
                             >
                                 +
@@ -107,7 +132,9 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                 placeholder={'Характеристика'}
                                 isSearchable={true}
                                 value={selectedSpecification ? selectedSpecification : null}
-                                onChange={(value) => {setSelectedSpecification(value as ProductSpecification)}}
+                                onChange={(value) => {
+                                    setSelectedSpecification(value as ProductSpecificationBind)
+                                }}
                                 getOptionLabel={label => label!.name}
                                 getOptionValue={value => value!.name}
                                 noOptionsMessage={() => 'Характеристика не найдена'}
