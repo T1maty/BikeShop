@@ -3,7 +3,10 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateStorageModal.module.scss'
-import {Button, ControlledCheckbox, ControlledInput, LoaderScreen} from '../../../shared/ui'
+import {
+    Button, ControlledCheckbox, ControlledCustomInput,
+    ControlledInput, LoaderScreen
+} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateStorageModal from './CreateStorageModalStore'
 import {UpdateStorage} from '../../../entities/requests/CreateStorage'
@@ -15,6 +18,7 @@ export const CreateStorageModal = () => {
     const open = useCreateStorageModal(s => s.openCreateStorageModal)
     const setOpen = useCreateStorageModal(s => s.setOpenCreateStorageModal)
     const isLoading = useCreateStorageModal(s => s.isLoading)
+    const errorStatus = useCreateStorageModal(s => s.errorStatus)
 
     const currentStorage = useCreateStorageModal(s => s.currentStorage)
     const setCurrentStorage = useCreateStorageModal(s => s.setCurrentStorage)
@@ -35,28 +39,10 @@ export const CreateStorageModal = () => {
 
     const onSubmit: SubmitHandler<UpdateStorage> = (data: UpdateStorage) => {
         if (currentStorage === null) {
-            addNewStorage(data).then((response: any) => {
-                formControl.reset()
-                getStorages()
-                enqueueSnackbar('Склад добавлен', {variant: 'success', autoHideDuration: 3000})
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            addNewStorage(data)
         }
-
         if (currentStorage !== null) {
-            updateStorageInfo(data).then((response: any) => {
-                getStorages()
-                enqueueSnackbar('Склад обновлён', {variant: 'success', autoHideDuration: 3000})
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            updateStorageInfo(data)
         }
     }
 
@@ -68,6 +54,16 @@ export const CreateStorageModal = () => {
         formControl.setValue('isOutsource', currentStorage ? currentStorage.isOutsource : true)
         formControl.setValue('enabled', currentStorage ? currentStorage.enabled : true)
     }, [currentStorage])
+
+    useEffect(() => {
+        if (errorStatus === 'success') {
+            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+            formControl.reset()
+        }
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
 
     useEffect(() => {
         getStorages()
@@ -89,35 +85,44 @@ export const CreateStorageModal = () => {
                 <div className={s.shopStorageModal_mainBlock}>
                     <div className={s.shopStorageModal_shops}>
                         <div className={s.shopStorageModal_shopList}>
-                            {storages.map(storage => (
-                                <div key={storage.id}
-                                     className={storage.id === currentStorage?.id ? s.shop_item_active : s.shop_item}
-                                     onClick={() => {
-                                         setCurrentStorage(storage)
-                                         console.log('выбранный склад', storage)
-                                     }}
-                                >
-                                    <div><span>ID:</span> {storage.id}</div>
-                                    <div><span>Название:</span> {storage.name}</div>
-                                    <div><span>Задержка поставки:</span> {storage.supplyDelay}</div>
-                                    <div><span>Активен:</span> {storage.enabled ? 'Да' : 'Нет'}</div>
-                                </div>
-                            ))}
+                            {
+                                storages.map(storage => (
+                                    <div key={storage.id}
+                                         className={storage.id === currentStorage?.id ? s.shop_item_active : s.shop_item}
+                                         onClick={() => {setCurrentStorage(storage)}}
+                                    >
+                                        <div><span>ID:</span> {storage.id}</div>
+                                        <div><span>Название:</span> {storage.name}</div>
+                                        <div><span>Задержка поставки:</span> {storage.supplyDelay}</div>
+                                        <div><span>Активен:</span> {storage.enabled ? 'Да' : 'Нет'}</div>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
 
                     <div className={s.shopStorageModal_createBlock}>
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
                             <div className={s.shopStorageModal_inputFields}>
-                                <ControlledInput name={'name'}
-                                                 label={'Название склада'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                {/*<ControlledInput name={'name'}*/}
+                                {/*                 label={'Название склада'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*/>*/}
+                                <ControlledCustomInput name={'name'}
+                                                       placeholder={'Название склада'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledInput name={'supplyDelay'}
-                                                 label={'Задержка поставки'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                {/*<ControlledInput name={'supplyDelay'}*/}
+                                {/*                 label={'Задержка поставки'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*/>*/}
+                                <ControlledCustomInput name={'supplyDelay'}
+                                                       placeholder={'Задержка поставки'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
                                 <ControlledCheckbox name={'isOutsource'}
                                                     label={'Аутсорсный склад ?'}
@@ -131,9 +136,7 @@ export const CreateStorageModal = () => {
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentStorage === null}
-                                        onClick={() => {
-                                            setCurrentStorage(null)
-                                        }}
+                                        onClick={() => {setCurrentStorage(null)}}
                                 >
                                     Отмена
                                 </Button>

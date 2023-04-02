@@ -3,9 +3,11 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateCurrencyModal.module.scss'
-import {Button, ControlledCheckbox, ControlledCustomInput, ControlledInput, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCheckbox, ControlledCustomInput,
+    ControlledInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateCurrencyModal from "./CreateCurrencyModalStore"
+import {Currency} from "../../../entities"
 
 export const CreateCurrencyModal = () => {
 
@@ -24,18 +26,18 @@ export const CreateCurrencyModal = () => {
     const addCurrency = useCreateCurrencyModal(s => s.addCurrency)
     const updateCurrency = useCreateCurrencyModal(s => s.updateCurrency)
 
-    const formControl = useForm<any>({
+    const formControl = useForm<Currency>({
         defaultValues: {
             id: 0,
             name: '',
             symbol: '',
             coefficient: 1,
-            baseCurrency: true,
+            isBaseCurrency: true,
             enabled: true,
         }
     })
 
-    const onSubmit: SubmitHandler<any> = (data: any) => {
+    const onSubmit: SubmitHandler<Currency> = (data: Currency) => {
         if (currentCurrency === null) {
             addCurrency(data)
         }

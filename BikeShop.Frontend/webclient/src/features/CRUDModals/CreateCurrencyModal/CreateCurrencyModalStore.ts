@@ -3,7 +3,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {Currency, ProductCardAPI} from "../../../entities"
+import {Currency} from "../../../entities"
 
 interface CreateCurrencyModalStore {
     openCurrencyModal: boolean
@@ -38,12 +38,10 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
         EntitiesAPI.Currency.getCurrencies().then(res => {
             set(state => {
                 state.currencies = res.data
-                console.log('все валюты', state.currencies)
             })
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
-            console.log('ед.измерения не получены')
         }).finally(() => {
             set({errorStatus: 'default'})
             set({isLoading: false})
@@ -77,7 +75,6 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
             set({errorStatus: 'success'})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
-            console.log(error)
         }).finally(() => {
             set({errorStatus: 'default'})
             set({isLoading: false})

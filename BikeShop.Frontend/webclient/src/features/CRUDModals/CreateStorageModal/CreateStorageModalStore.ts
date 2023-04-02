@@ -4,16 +4,18 @@ import {immer} from "zustand/middleware/immer"
 import {CreateStorageResponse} from '../../../entities/responses/StorageResponse'
 import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage'
 import {EntitiesAPI} from "../../../entities"
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 
 interface CreateStorageModalStore {
     openCreateStorageModal: boolean
     setOpenCreateStorageModal: (value: boolean) => void
     isLoading: boolean
-    setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
 
     currentStorage: CreateStorageResponse | null
     setCurrentStorage: (storage: CreateStorageResponse | null) => void
+
     storages: CreateStorageResponse[]
     getStorages: () => void
     addNewStorage: (data: CreateStorage) => any
@@ -24,7 +26,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     openCreateStorageModal: false,
     setOpenCreateStorageModal: (value: boolean) => set({openCreateStorageModal: value}),
     isLoading: false,
-    setIsLoading: (value: boolean) => set({isLoading: value}),
+    errorStatus: 'default',
 
     currentStorage: null,
     setCurrentStorage: (storage) => {
@@ -40,29 +42,43 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('склады не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     addNewStorage: (data) => {
         set({isLoading: true})
         EntitiesAPI.Storage.addNewStorage(data).then((res: any) => {
-            // set(state => {
-            //     state.storages.push(res.data)
-            // })
+            set(state => {
+                state.storages.push(res.data)
+            })
             set({isLoading: false})
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
-            console.log('склад не создан', error)
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     updateStorageInfo: (updateData) => {
         set({isLoading: true})
         EntitiesAPI.Storage.updateStorageInfo(updateData).then((res: any) => {
-            // set(state => {
-            //     state.storages.push(res.data)
-            // })
+            EntitiesAPI.Storage.getStorages().then(res => {
+                set(state => {
+                    state.storages = res.data
+                    state.currentStorage = null
+                })
+            })
             set({isLoading: false})
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
-            console.log('склад не обновлён', error)
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 })))/*, {
