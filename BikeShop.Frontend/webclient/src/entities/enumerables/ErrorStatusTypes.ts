@@ -1,0 +1,1 @@
+export type ErrorStatusTypes = 'default' | 'success' | 'error'

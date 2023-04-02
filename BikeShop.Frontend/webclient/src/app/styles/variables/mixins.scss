@@ -245,7 +245,11 @@
         }
     }
     .shop_item_active {
-        @include divSmallMarginBottom;
+        //@include divSmallMarginBottom;
+        > div:not(:last-child) {
+            margin-bottom: $defaultExtraSmallMargin;
+        }
+
         border-radius: $smallBorderRadius;
         background-color: $themeColorDark;
         border: 1px solid white;

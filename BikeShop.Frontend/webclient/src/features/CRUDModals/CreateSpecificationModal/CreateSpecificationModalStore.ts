@@ -3,12 +3,13 @@ import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {EntitiesAPI, ProductCardAPI, Specification} from '../../../entities'
 import {UpdateSpecification} from '../../../entities/requests/UpdateSpecification'
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface CreateSpecificationModalStore {
     openCreateSpecificationModal: boolean
     setOpenCreateSpecificationModal: (value: boolean) => void
     isLoading: boolean
-    setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
 
     currentSpecification: Specification | null
     setCurrentSpecification: (specification: Specification | null) => void
@@ -24,7 +25,7 @@ const useCreateSpecificationModal = create<CreateSpecificationModalStore>()(/*pe
     openCreateSpecificationModal: false,
     setOpenCreateSpecificationModal: (value: boolean) => set({openCreateSpecificationModal: value}),
     isLoading: false,
-    setIsLoading: (value: boolean) => set({isLoading: value}),
+    errorStatus: 'default',
 
     currentSpecification: null,
     setCurrentSpecification: (specification) => {
@@ -41,24 +42,45 @@ const useCreateSpecificationModal = create<CreateSpecificationModalStore>()(/*pe
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('спецификации не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 
     addNewSpecification: (name) => {
-        // set({isLoading: true})
-        return EntitiesAPI.Specification.addNewSpecification(name)/*.then((res: any) => {
+        set({isLoading: true})
+        EntitiesAPI.Specification.addNewSpecification(name).then((res: any) => {
             set(state => {
                 state.specifications.push(res.data)
             })
             set({isLoading: false})
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
-            console.log('спецификация не создана', error)
-        })*/
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
     },
     updateSpecification: (updateData) => {
-        // set({isLoading: true})
-        return EntitiesAPI.Specification.updateSpecification(updateData)
+        set({isLoading: true})
+        EntitiesAPI.Specification.updateSpecification(updateData).then((res: any) => {
+            ProductCardAPI.getSpecifications().then(res => {
+                set(state => {
+                    state.specifications = res.data
+                    state.currentSpecification = null
+                })
+            })
+            set({isLoading: false})
+            set({errorStatus: 'success'})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
     },
 })))/*, {
     name: "createShopModal",

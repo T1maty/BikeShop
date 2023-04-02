@@ -16,7 +16,7 @@ export const CreateSpecificationModal = () => {
     const open = useCreateSpecificationModal(s => s.openCreateSpecificationModal)
     const setOpen = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
     const isLoading = useCreateSpecificationModal(s => s.isLoading)
-    const setIsLoading = useCreateSpecificationModal(s => s.setIsLoading)
+    const errorStatus = useCreateSpecificationModal(s => s.errorStatus)
 
     const currentSpecification = useCreateSpecificationModal(s => s.currentSpecification)
     const setCurrentSpecification = useCreateSpecificationModal(s => s.setCurrentSpecification)
@@ -34,34 +34,39 @@ export const CreateSpecificationModal = () => {
     })
 
     const onSubmit: SubmitHandler<UpdateSpecification> = (data: UpdateSpecification) => {
+        // if (currentSpecification === null) {
+        //     setIsLoading(true)
+        //     addNewSpecification(data.name).then((res: any) => {
+        //         setIsLoading(false)
+        //         formControl.reset()
+        //         enqueueSnackbar('Спецификация добавлена', {variant: 'success', autoHideDuration: 3000})
+        //         getSpecifications()
+        //     }).catch((error: any) => {
+        //         enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        //     }).finally(() => {
+        //         setIsLoading(false)
+        //     })
+        // }
         if (currentSpecification === null) {
-            setIsLoading(true)
-            addNewSpecification(data.name).then((res: any) => {
-                setIsLoading(false)
-                formControl.reset()
-                enqueueSnackbar('Спецификация добавлена', {variant: 'success', autoHideDuration: 3000})
-                getSpecifications()
-            }).catch((error: any) => {
-                enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
-            }).finally(() => {
-                setIsLoading(false)
-            })
-
+            addNewSpecification(data.name)
         }
 
+        // if (currentSpecification !== null) {
+        //     setIsLoading(true)
+        //     updateSpecification(data).then((res: any) => {
+        //         setIsLoading(false)
+        //         formControl.reset()
+        //         setCurrentSpecification(null)
+        //         enqueueSnackbar('Спецификация обновлена', {variant: 'success', autoHideDuration: 3000})
+        //         getSpecifications()
+        //     }).catch((error: any) => {
+        //         enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        //     }).finally(() => {
+        //         setIsLoading(false)
+        //     })
+        // }
         if (currentSpecification !== null) {
-            setIsLoading(true)
-            updateSpecification(data).then((res: any) => {
-                setIsLoading(false)
-                formControl.reset()
-                setCurrentSpecification(null)
-                enqueueSnackbar('Спецификация обновлена', {variant: 'success', autoHideDuration: 3000})
-                getSpecifications()
-            }).catch((error: any) => {
-                enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
-            }).finally(() => {
-                setIsLoading(false)
-            })
+            updateSpecification(data)
         }
     }
 
@@ -71,6 +76,16 @@ export const CreateSpecificationModal = () => {
         formControl.setValue('name', currentSpecification ? currentSpecification.name : '')
         formControl.setValue('enabled', currentSpecification ? currentSpecification.enabled : true)
     }, [currentSpecification])
+
+    useEffect(() => {
+        if (errorStatus === 'success') {
+            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+            formControl.reset()
+        }
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
 
     useEffect(() => {
         getSpecifications()
