@@ -38,7 +38,6 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
         EntitiesAPI.Storage.getStorages().then(res => {
             set(state => {
                 state.storages = res.data
-                console.log('все склады', state.storages)
             })
             set({isLoading: false})
         }).catch((error: any) => {

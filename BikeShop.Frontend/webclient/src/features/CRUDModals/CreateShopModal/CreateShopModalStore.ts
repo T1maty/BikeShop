@@ -35,7 +35,6 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
         EntitiesAPI.Shop.getShops().then(res => {
             set(state => {
                 state.shops = res.data
-                console.log('все магазины', state.shops)
             })
             set({isLoading: false})
         }).catch((error: any) => {

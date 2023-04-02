@@ -2,12 +2,13 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CreateQuantityUnit, EntitiesAPI, GetQuantityUnitResponse, UpdateQuantityUnit} from "../../../entities"
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface CreateQuantityUnitModalStore {
     openQuantityUnitModal: boolean
     setOpenCreateQuantityUnitModal: (value: boolean) => void
     isLoading: boolean
-    setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
 
     quantityUnits: GetQuantityUnitResponse[]
     currentQuantityUnit: GetQuantityUnitResponse | null
@@ -22,7 +23,7 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
     openQuantityUnitModal: false,
     setOpenCreateQuantityUnitModal: (value: boolean) => set({openQuantityUnitModal: value}),
     isLoading: false,
-    setIsLoading: (value: boolean) => set({isLoading: value}),
+    errorStatus: 'default',
 
     currentQuantityUnit: null,
     setCurrentQuantityUnit: (quantityUnit) => {
@@ -34,11 +35,13 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
         EntitiesAPI.QuantityUnit.getQuantityUnits().then(res => {
             set(state => {
                 state.quantityUnits = res.data
-                console.log('все ед.измерения', state.quantityUnits)
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('ед.измерения не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     addQuantityUnit: (data) => {
@@ -48,17 +51,30 @@ const useCreateQuantityUnitModal = create<CreateQuantityUnitModalStore>()(/*pers
                 state.quantityUnits.push(res.data)
             })
             set({isLoading: false})
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
-            console.log('ед.измерения не создана', error)
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     updateQuantityUnit: (updateData) => {
         set({isLoading: true})
         EntitiesAPI.QuantityUnit.updateQuantityUnit(updateData).then((res: any) => {
-            //
+            EntitiesAPI.QuantityUnit.getQuantityUnits().then(res => {
+                set(state => {
+                    state.quantityUnits = res.data
+                    state.currentQuantityUnit = null
+                })
+            })
             set({isLoading: false})
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
-            console.log('ед.измерения не обновлена', error)
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 })))/*, {

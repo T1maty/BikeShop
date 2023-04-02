@@ -3,7 +3,8 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateQuantityUnitModal.module.scss'
-import {Button, ControlledCheckbox, ControlledInput, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCheckbox, ControlledCustomInput,
+    ControlledInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateQuantityUnitModal from "./CreateQuantityUnitModalStore"
 import {UpdateQuantityUnit} from "../../../entities"
@@ -15,6 +16,7 @@ export const CreateQuantityUnitModal = () => {
     const open = useCreateQuantityUnitModal(s => s.openQuantityUnitModal)
     const setOpen = useCreateQuantityUnitModal(s => s.setOpenCreateQuantityUnitModal)
     const isLoading = useCreateQuantityUnitModal(s => s.isLoading)
+    const errorStatus = useCreateQuantityUnitModal(s => s.errorStatus)
 
     const quantityUnits = useCreateQuantityUnitModal(s => s.quantityUnits)
     const currentQuantityUnit = useCreateQuantityUnitModal(s => s.currentQuantityUnit)
@@ -39,29 +41,10 @@ export const CreateQuantityUnitModal = () => {
     });
     const onSubmit: SubmitHandler<UpdateQuantityUnit> = (data: UpdateQuantityUnit) => {
         if (currentQuantityUnit === null) {
-            addQuantityUnit(data).then((res: any) => {
-                formControl.reset()
-                enqueueSnackbar('Ед.измерения создана', {variant: 'success', autoHideDuration: 3000})
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            addQuantityUnit(data)
         }
-
         if (currentQuantityUnit !== null) {
-            updateQuantityUnit(data).then((res: any) => {
-                formControl.reset()
-                setCurrentQuantityUnit(null)
-                getQuantityUnits()
-                enqueueSnackbar('Ед.измерения обновлена', {variant: 'success', autoHideDuration: 3000})
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            updateQuantityUnit(data)
         }
     }
 
@@ -87,6 +70,16 @@ export const CreateQuantityUnitModal = () => {
         formControl.setValue('enabled', currentQuantityUnit ?
             currentQuantityUnit.enabled : true)
     }, [currentQuantityUnit])
+
+    useEffect(() => {
+        if (errorStatus === 'success') {
+            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+            formControl.reset()
+        }
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
 
     useEffect(() => {
         getQuantityUnits()
@@ -135,20 +128,35 @@ export const CreateQuantityUnitModal = () => {
                     <div className={s.shopStorageModal_createBlock}>
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
                             <div className={s.shopStorageModal_inputFields}>
-                                <ControlledInput name={'name'}
-                                                 label={'Название'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                {/*<ControlledInput name={'name'}*/}
+                                {/*                 label={'Название'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*/>*/}
+                                <ControlledCustomInput name={'name'}
+                                                       placeholder={'Название'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledInput name={'fullName'}
-                                                 label={'Полное название'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                {/*<ControlledInput name={'fullName'}*/}
+                                {/*                 label={'Полное название'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*/>*/}
+                                <ControlledCustomInput name={'fullName'}
+                                                       placeholder={'Полное название'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledInput name={'baseCoeficient'}
-                                                 label={'Коэффициент'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                {/*<ControlledInput name={'baseCoeficient'}*/}
+                                {/*                 label={'Коэффициент'}*/}
+                                {/*                 control={formControl}*/}
+                                {/*                 rules={{required: Errors[0].name}}*/}
+                                {/*/>*/}
+                                <ControlledCustomInput name={'baseCoeficient'}
+                                                       placeholder={'Коэффициент'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
                                 <ControlledCheckbox name={'isDefaultInGroup'}
                                                     label={'По умолчанию'}
