@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import {Controller, UseFormReturn} from "react-hook-form"
 import Select from 'react-select'
 
@@ -9,8 +9,10 @@ interface ControlledReactSelectProps {
     placeholder: string
     data: any[]
     isSearchable?: boolean
+    disabled?: boolean
     value: any
     onChangeSelect: (value: any) => void
+    noOptionsMessage?: (obj: { inputValue: string }) => ReactNode | undefined
 
     divClassName?: any
     className?: any
@@ -28,6 +30,7 @@ export const ControlledReactSelect = (props: ControlledReactSelectProps) => {
                         className={props.className}
                         placeholder={props.placeholder}
                         options={props.data}
+                        isDisabled={props.disabled ? props.disabled : false}
                         isSearchable={props.isSearchable ? props.isSearchable : false}
 
                         // value={props.value}
@@ -42,6 +45,7 @@ export const ControlledReactSelect = (props: ControlledReactSelectProps) => {
                             console.log('значение из селекта', value)
                             // props.onChangeSelect
                         }}
+                        noOptionsMessage={props.noOptionsMessage}
                     />
                 }
             />

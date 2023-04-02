@@ -73,6 +73,11 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 console.log('все мастера', state.masters)
             })
             set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 

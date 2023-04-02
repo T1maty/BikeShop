@@ -9,11 +9,13 @@ interface ControlledCustomInputProps {
     control: UseFormReturn<any>
     rules?: Omit<RegisterOptions<any, any>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
     color?: 'black'
+    divClassName?: any
+    disabled?: boolean
 }
 
 export const ControlledCustomInput = (props: ControlledCustomInputProps) => {
     return (
-        // <div className={props.className}>
+        <div className={props.divClassName}>
             <Controller
                 name={props.name}
                 control={props.control.control}
@@ -24,9 +26,10 @@ export const ControlledCustomInput = (props: ControlledCustomInputProps) => {
                                  error={!!props.control.formState.errors[props.name]}
                                  helperText={props.control.formState.errors[props.name]?.message}
                                  color={props.color}
+                                 disabled={props.disabled ? props.disabled : false}
                     />
                 }
             />
-        // </div>
+        </div>
     );
 };

@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
-import {Button, ControlledClientCard, ControlledInput, ControlledSelect} from "../../../shared/ui"
+import {
+    Button,
+    ControlledClientCard,
+    ControlledCustomInput,
+    ControlledInput,
+    ControlledReactSelect,
+    ControlledSelect
+} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
 import {CreateService, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
@@ -142,30 +149,61 @@ export const ServiceForm = () => {
     return (
         <div className={s.service_rightSide}>
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                <ControlledInput name={'name'}
-                                 label={'Техника'}
-                                 control={formControl}
-                                 rules={{required: Errors[0].name}}
-                                 divClassName={s.rightSide_stuffInput}
-                                 disabled={currentService === null && !isCreating}
+                {/*<ControlledInput name={'name'}*/}
+                {/*                 label={'Техника'}*/}
+                {/*                 control={formControl}*/}
+                {/*                 rules={{required: Errors[0].name}}*/}
+                {/*                 divClassName={s.rightSide_stuffInput}*/}
+                {/*                 disabled={currentService === null && !isCreating}*/}
+                {/*/>*/}
+                <ControlledCustomInput name={'name'}
+                                       placeholder={'Техника'}
+                                       control={formControl}
+                                       rules={{required: Errors[0].name}}
+                                       divClassName={s.rightSide_stuffInput}
+                                       disabled={currentService === null && !isCreating}
                 />
                 <div className={s.rightSide_infoFields}>
                     <div className={s.infoFields_content}>
-                        <ControlledInput name={'clientDescription'}
-                                         label={'Детальное описание'}
-                                         control={formControl}
-                                         rules={{required: Errors[0].name}}
-                                         divClassName={s.content_detailsInput}
-                                         disabled={currentService === null && !isCreating}
+                        {/*<ControlledInput name={'clientDescription'}*/}
+                        {/*                 label={'Детальное описание'}*/}
+                        {/*                 control={formControl}*/}
+                        {/*                 rules={{required: Errors[0].name}}*/}
+                        {/*                 divClassName={s.content_detailsInput}*/}
+                        {/*                 disabled={currentService === null && !isCreating}*/}
+                        {/*/>*/}
+                        <ControlledCustomInput name={'clientDescription'}
+                                               placeholder={'Детальное описание'}
+                                               control={formControl}
+                                               rules={{required: Errors[0].name}}
+                                               divClassName={s.content_detailsInput}
+                                               disabled={currentService === null && !isCreating}
                         />
-                        <ControlledSelect control={formControl}
-                                          name={'userMasterId'}
-                                          label={'Мастер'}
-                                          className={s.content_masterInput}
-                                          disabled={currentService === null && !isCreating}
-                                          data={masters.map((n) => {
-                                              return {id: n.id, value: n.firstName ? n.firstName : 'Нет имени'}
-                                          })}
+                        {/*<ControlledSelect control={formControl}*/}
+                        {/*                  name={'userMasterId'}*/}
+                        {/*                  label={'Мастер'}*/}
+                        {/*                  className={s.content_masterInput}*/}
+                        {/*                  disabled={currentService === null && !isCreating}*/}
+                        {/*                  data={masters.map((n) => {*/}
+                        {/*                      return {id: n.id, value: n.firstName ? n.firstName : 'Нет имени'}*/}
+                        {/*                  })}*/}
+                        {/*/>*/}
+                        <ControlledReactSelect control={formControl}
+                                               name={'userMasterId'}
+                                               className={s.select_box}
+                                               placeholder={'Мастер'}
+                                               isSearchable
+                                               disabled={currentService === null && !isCreating}
+                                               value={formControl.getFieldState('userMasterId')}
+                                               onChangeSelect={(value: any) => {formControl.setValue('userMasterId', value)}}
+                                               data={masters.map((el: any) => {
+                                                   return {
+                                                       // id: el.id,
+                                                       value: el.value,
+                                                       label: el.label,
+                                                   }
+                                               })}
+                                               noOptionsMessage={() => 'Мастер не найден'}
                         />
                         <div className={s.content_buttons}>
                             <div className={s.content_saveBtn}>
@@ -202,7 +240,8 @@ export const ServiceForm = () => {
                         />
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}
-                                onClick={clearAllServiceInfo}>
+                                onClick={clearAllServiceInfo}
+                        >
                             Отмена
                         </Button>
                     </div>
@@ -216,9 +255,7 @@ export const ServiceForm = () => {
                         <div className={s.rightSide_tables}>
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор товаров'}
-                                          serviceTableCallback={() => {
-                                              setOpenSelectProductModal(true)
-                                          }}
+                                          serviceTableCallback={() => {setOpenSelectProductModal(true)}}
                                           disabledButton={(currentService === null && !isCreating)}
                                           summ={summProducts}
                             />
@@ -234,9 +271,7 @@ export const ServiceForm = () => {
                         <div className={s.rightSide_tables}>
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор услуг'}
-                                          serviceTableCallback={() => {
-                                              setOpenSelectWorkModal(true)
-                                          }}
+                                          serviceTableCallback={() => {setOpenSelectWorkModal(true)}}
                                           disabledButton={(currentService === null && !isCreating)}
                                           summ={summWorks}
                             />

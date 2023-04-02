@@ -81,7 +81,7 @@
                 @include flexColumn;
                 margin-top: $defaultSmallMargin;
                 text-align: center;
-                overflow-y: auto;
+                //overflow-y: auto; // надо будет пофиксить!
                 max-height: 560px;
 
                 .serviceItem {
@@ -147,6 +147,7 @@
                     gap: $defaultLargeMargin;
 
                     .content_saveBtn {
+                        z-index: 0;
                         width: 100%;
 
                         button {
