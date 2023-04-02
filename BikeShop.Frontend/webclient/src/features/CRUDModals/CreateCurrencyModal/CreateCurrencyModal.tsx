@@ -3,8 +3,7 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateCurrencyModal.module.scss'
-import {Button, ControlledCheckbox, ControlledCustomInput,
-    ControlledInput, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateCurrencyModal from "./CreateCurrencyModalStore"
 import {Currency} from "../../../entities"
@@ -107,45 +106,30 @@ export const CreateCurrencyModal = () => {
                     <div className={s.shopStorageModal_createBlock}>
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
                             <div className={s.shopStorageModal_inputFields}>
-                                {/*<ControlledInput name={'name'}*/}
-                                {/*                 label={'Название'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'name'}
                                                        placeholder={'Название'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                {/*<ControlledInput name={'symbol'}*/}
-                                {/*                 label={'Символ'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'symbol'}
                                                        placeholder={'Символ'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                {/*<ControlledInput name={'coefficient'}*/}
-                                {/*                 label={'Коэффициент'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'coefficient'}
                                                        placeholder={'Коэффициент'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                <ControlledCheckbox name={'isBaseCurrency'}
-                                                    label={'Базовая валюта'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'isBaseCurrency'}
+                                                          label={'Базовая валюта'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
-                                <ControlledCheckbox name={'enabled'}
-                                                    label={'Валюта включена'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'enabled'}
+                                                          label={'Валюта включена'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentCurrency === null}

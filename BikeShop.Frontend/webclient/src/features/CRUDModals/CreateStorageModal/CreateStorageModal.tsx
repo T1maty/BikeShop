@@ -3,10 +3,7 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateStorageModal.module.scss'
-import {
-    Button, ControlledCheckbox, ControlledCustomInput,
-    ControlledInput, LoaderScreen
-} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateStorageModal from './CreateStorageModalStore'
 import {UpdateStorage} from '../../../entities/requests/CreateStorage'
@@ -104,35 +101,25 @@ export const CreateStorageModal = () => {
                     <div className={s.shopStorageModal_createBlock}>
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
                             <div className={s.shopStorageModal_inputFields}>
-                                {/*<ControlledInput name={'name'}*/}
-                                {/*                 label={'Название склада'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'name'}
                                                        placeholder={'Название склада'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                {/*<ControlledInput name={'supplyDelay'}*/}
-                                {/*                 label={'Задержка поставки'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'supplyDelay'}
                                                        placeholder={'Задержка поставки'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                <ControlledCheckbox name={'isOutsource'}
-                                                    label={'Аутсорсный склад ?'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'isOutsource'}
+                                                          label={'Аутсорсный склад ?'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
-                                <ControlledCheckbox name={'enabled'}
-                                                    label={'Магазин работает'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'enabled'}
+                                                          label={'Склад работает'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentStorage === null}

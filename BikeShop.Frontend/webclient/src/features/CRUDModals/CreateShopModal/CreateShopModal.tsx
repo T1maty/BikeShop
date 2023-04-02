@@ -3,7 +3,7 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateShopModal.module.scss'
-import {Button, ControlledCheckbox, ControlledInput, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateShopModal from './CreateShopModalStore'
 import {UpdateShop} from '../../../entities'
@@ -108,35 +108,35 @@ export const CreateShopModal = () => {
                     <div className={s.shopStorageModal_createBlock}>
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
                             <div className={s.shopStorageModal_inputFields}>
-                                <ControlledInput name={'name'}
-                                                 label={'Название магазина'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                <ControlledCustomInput name={'name'}
+                                                       placeholder={'Название магазина'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledInput name={'address'}
-                                                 label={'Адрес магазина'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                <ControlledCustomInput name={'address'}
+                                                       placeholder={'Адрес магазина'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledInput name={'phone'}
-                                                 label={'Телефон магазина'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                <ControlledCustomInput name={'phone'}
+                                                       placeholder={'Телефон магазина'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledInput name={'secret'}
-                                                 label={'Пароль'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                <ControlledCustomInput name={'secret'}
+                                                       placeholder={'Пароль'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledInput name={'storageId'}
-                                                 label={'Склад'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
+                                <ControlledCustomInput name={'storageId'}
+                                                       placeholder={'Склад'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
-                                <ControlledCheckbox name={'enabled'}
-                                                    label={'Магазин работает'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'enabled'}
+                                                          label={'Магазин работает'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentShop === null}
