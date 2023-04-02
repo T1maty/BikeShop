@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
-import {ProductTagForCard} from '../../../entities'
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
 import {AddProductCardTagModal} from "../AddProductCardTagModal/AddProductCardTagModal"
 import {Controller, UseFormReturn} from "react-hook-form"
+import {ProductTag} from "../../../entities";
 
 interface ControlledProps {
     name: string
@@ -38,7 +38,7 @@ export const EditProductCardTags = (props: ControlledProps) => {
                     <div className={s.tagEditor_tags}>
                         {
                             field.value.length === 0 ? <div className={s.tagList_noTags}>Тегов нет</div> :
-                                field.value.map((tag: ProductTagForCard) => {
+                                field.value.map((tag: ProductTag) => {
                                     return (
                                         <div key={tag.id} className={s.tagList_item}>
                                             <div className={s.tagList_itemTitle}>{tag.name}</div>
