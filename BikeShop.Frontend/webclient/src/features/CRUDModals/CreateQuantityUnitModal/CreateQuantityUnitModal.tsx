@@ -3,8 +3,7 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateQuantityUnitModal.module.scss'
-import {Button, ControlledCheckbox, ControlledCustomInput,
-    ControlledInput, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateQuantityUnitModal from "./CreateQuantityUnitModalStore"
 import {UpdateQuantityUnit} from "../../../entities"
@@ -128,55 +127,40 @@ export const CreateQuantityUnitModal = () => {
                     <div className={s.shopStorageModal_createBlock}>
                         <form onSubmit={formControl.handleSubmit(onSubmit)}>
                             <div className={s.shopStorageModal_inputFields}>
-                                {/*<ControlledInput name={'name'}*/}
-                                {/*                 label={'Название'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'name'}
                                                        placeholder={'Название'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                {/*<ControlledInput name={'fullName'}*/}
-                                {/*                 label={'Полное название'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'fullName'}
                                                        placeholder={'Полное название'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                {/*<ControlledInput name={'baseCoeficient'}*/}
-                                {/*                 label={'Коэффициент'}*/}
-                                {/*                 control={formControl}*/}
-                                {/*                 rules={{required: Errors[0].name}}*/}
-                                {/*/>*/}
                                 <ControlledCustomInput name={'baseCoeficient'}
                                                        placeholder={'Коэффициент'}
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                <ControlledCheckbox name={'isDefaultInGroup'}
-                                                    label={'По умолчанию'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'isDefaultInGroup'}
+                                                          label={'По умолчанию'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
-                                <ControlledCheckbox name={'isSwitchable'}
-                                                    label={'Конвертируемость'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'isSwitchable'}
+                                                          label={'Конвертируемость'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
-                                <ControlledCheckbox name={'isSplittable'}
-                                                    label={'Делимость'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'isSplittable'}
+                                                          label={'Делимость'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
-                                <ControlledCheckbox name={'enabled'}
-                                                    label={'Включена'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                <ControlledCustomCheckbox name={'enabled'}
+                                                          label={'Включена'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentQuantityUnit === null}

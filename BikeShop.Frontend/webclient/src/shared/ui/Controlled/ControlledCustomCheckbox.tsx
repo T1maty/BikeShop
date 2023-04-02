@@ -19,26 +19,11 @@ export const ControlledCustomCheckbox = (props: ControlledCheckboxProps) => {
                 name={props.name}
                 control={props.control.control}
                 render={({field}) => (
-
-                    // <FormControlLabel
-                    //     label={props.label}
-                    //     value={field.value}
-                    //     control={
-                    //         <Checkbox
-                    //             checked={field.value}
-                    //             onChange={(event, value) => {
-                    //                 field.onChange(value)
-                    //             }}
-                    //         />
-                    //     }
-                    // />
-
                     <CustomCheckbox checked={field.value}
                                     onChangeChecked={(value) => {field.onChange(value)}}
                     >
                         {props.label}
                     </CustomCheckbox>
-
                 )}/>
         </div>
     );
