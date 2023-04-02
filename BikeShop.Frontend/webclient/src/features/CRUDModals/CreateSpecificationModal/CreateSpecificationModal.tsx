@@ -153,12 +153,12 @@ export const CreateSpecificationModal = () => {
                                     Спецификация включена
                                 </CustomCheckbox>
 
-                                <Button buttonDivWrapper={s.infoBlock_cancelBtn}
-                                        disabled={currentSpecification === null}
-                                        onClick={() => {setCurrentSpecification(null)}}
-                                >
-                                    Отмена
-                                </Button>
+                                {/*<Button buttonDivWrapper={s.infoBlock_cancelBtn}*/}
+                                {/*        disabled={currentSpecification === null}*/}
+                                {/*        onClick={() => {setCurrentSpecification(null)}}*/}
+                                {/*>*/}
+                                {/*    Отмена*/}
+                                {/*</Button>*/}
                             </div>
                             <div className={s.footer_buttons}>
                                 <Button type={'submit'}>
