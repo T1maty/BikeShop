@@ -5,7 +5,7 @@ import {Button} from "../../../shared/ui"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
+import {ProductOption, ProductOptionVariant} from "../../../entities"
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
 
 interface ControlledProps {
@@ -39,17 +39,17 @@ export const EditProductCardOption = (props: ControlledProps) => {
     }
 
     const availableVariants = (option: ProductOptionsWithVariants) => {
-        let optionItem = allOptions.filter(n => n.id === option.id)[0]
+        let optionItem = allOptions.find(n => n.id === option.id)
         let ids: number[] = []
-        let avVars: ProductOptionVariantBind[] = []
+        option.optionVariants?.map(n => ids.push(n.id))
 
-        option.variants.map(n => ids.push(n.id))
-        //let buf = optionItem..filter(n => !ids.includes(n.id))
-        //let result: { id: number, value: any }[] = []
-        //buf.forEach(n => {
-        //   result.push({id: option.id, value: n})
-        //})
-        return []
+        let buf = optionItem?.optionVariants.filter(n => !ids.includes(n.id))
+
+        let result: { id: number, value: any }[] = []
+        buf?.forEach(n => {
+            result.push({id: option.id, value: n})
+        })
+        return result
     }
 
     // функции для опций
@@ -72,23 +72,23 @@ export const EditProductCardOption = (props: ControlledProps) => {
         }
     }
 
-    const setOptionsVariantHandler = (field: any, option: ProductOption, variant: ProductOptionVariant) => {
+    const setOptionsVariantHandler = (field: any, option: ProductOptionsWithVariants, variant: ProductOptionVariant) => {
 
-        let options = field.value.map((n: ProductOption) => n.id === option.id ?
+        let options = field.value.map((n: ProductOptionsWithVariants) => n.id === option.id ?
             {
                 ...n,
-                //optionVariants: n.optionVariants.filter(n => n.id != variant.id),
+                optionVariants: n.optionVariants.filter(n => n.id != variant.id),
             } : n)
         field.onChange(options)
         setSelectedOptionVariant([])
     }
 
-    const addOptionVariantHandler = (field: any, option: ProductOption) => {
-        let options = field.value.map((n: ProductOption) => n.id === option.id ?
+    const addOptionVariantHandler = (field: any, option: ProductOptionsWithVariants) => {
+        let options = field.value.map((n: ProductOptionsWithVariants) => n.id === option.id ?
             {
-                //...n, optionVariants: n.optionVariants != undefined
-                //    ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value]
-                //   : [selectedOptionVariant.find(n => n.id === option.id)?.value]
+                ...n, optionVariants: n.optionVariants != undefined
+                    ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value]
+                    : [selectedOptionVariant.find(n => n.id === option.id)?.value]
             } : n)
         field.onChange(options)
         setSelectedOptionVariant([])
@@ -129,7 +129,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 Удалить опцию
                                                             </div>
                                                             {
-                                                                option.variants?.map((variant: ProductOptionVariant) => {
+                                                                option.optionVariants?.map((variant: ProductOptionVariant) => {
                                                                     return (
                                                                         <div className={s.item_content}
                                                                              style={{marginBottom: '5px'}}

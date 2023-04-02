@@ -4,7 +4,7 @@ export interface ProductOptionsWithVariants {
     id: number
 
     name: string
-    variants: ProductOptionVariant[]
+    optionVariants: ProductOptionVariant[]
     createdAt: string
     updatedAt: string
     enabled: boolean

@@ -59,11 +59,10 @@ export const EditProductCardModal = () => {
             } as ProductSpecificationBind)
         })
 
-        let variants: { optionVariants: ProductOptionVariantBind[] }[] = []
+        let variants: ProductOptionVariantBind[] = []
         data.productOptions.forEach(n => {
-            let vars: ProductOptionVariantBind[] = []
-            n.variants.forEach(j => {
-                vars.push({
+            n.optionVariants.forEach(j => {
+                variants.push({
                     id: 0,
                     enabled: true,
                     linkProductId: 0,
@@ -71,7 +70,6 @@ export const EditProductCardModal = () => {
                     optionVariantId: j.id
                 } as ProductOptionVariantBind)
             })
-            variants.push({optionVariants: vars})
         })
 
         let tagIds: string[] = []
@@ -87,7 +85,7 @@ export const EditProductCardModal = () => {
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
         DATA.productSpecifications = specs
-        //DATA.productOptions = variants
+        DATA.productOptions = variants
         DATA.productCard = {
             description: data.productCard.description,
             shortDescription: data.productCard.shortDescription
@@ -95,7 +93,7 @@ export const EditProductCardModal = () => {
         DATA.productTags = tagIds
         DATA.productImages = prodImgs
         console.log('submitData', DATA)
-        updateProductCard(DATA)
+        //updateProductCard(DATA)
 
         // if (isError) {
         //     enqueueSnackbar('Ошибка сервера: карточка не обновлена!',
@@ -137,7 +135,7 @@ export const EditProductCardModal = () => {
                 newOption = {
                     id: n.optionId,
                     name: n.optionName,
-                    variants: [],
+                    optionVariants: [],
                     createdAt: '',
                     updatedAt: '',
                     enabled: true,
@@ -145,8 +143,8 @@ export const EditProductCardModal = () => {
                 ids.push(n.optionId)
                 options.push(newOption)
             }
-            options.find(n1 => n1.id === n.optionId)?.variants.push({
-                id: n.id,
+            options.find(n1 => n1.id === n.optionId)?.optionVariants.push({
+                id: n.optionVariantId,
                 name: n.name,
                 optionId: n.optionId,
                 optionName: n.optionName,
