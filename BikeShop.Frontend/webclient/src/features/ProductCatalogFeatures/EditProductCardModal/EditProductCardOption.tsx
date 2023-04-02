@@ -22,8 +22,8 @@ type SelectedOptionVariantType = {
 
 export const EditProductCardOption = (props: ControlledProps) => {
 
-    const cardOptions = useEditProductCardModal(s => s.cardOptions)
-    const currentCardOptions = useEditProductCardModal(s => s.currentCardOptions)
+    const allOptions = useEditProductCardModal(s => s.allOptions)
+
 
     // текущие значения селектов
     const [selectedOption, setSelectedOption] = useState<any>(null) // опция
@@ -35,11 +35,11 @@ export const EditProductCardOption = (props: ControlledProps) => {
         field.value.forEach((n: ProductOption) => {
             optionIds.push(n.id)
         })
-        return cardOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
+        return allOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
     }
 
     const availableVariants = (option: ProductOptionsWithVariants) => {
-        let optionItem = cardOptions.filter(n => n.id === option.id)[0]
+        let optionItem = allOptions.filter(n => n.id === option.id)[0]
         let ids: number[] = []
         let avVars: ProductOptionVariantBind[] = []
 
@@ -184,7 +184,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                     onClick={() => {
                                         addOptionListHandler(field)
                                     }}
-                                    disabled={selectedOption === null || currentCardOptions.length === cardOptions.length}
+                                    disabled={selectedOption === null}
                             >
                                 +
                             </Button>

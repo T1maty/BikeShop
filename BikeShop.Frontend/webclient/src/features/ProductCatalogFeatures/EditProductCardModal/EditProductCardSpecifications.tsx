@@ -17,7 +17,7 @@ interface ControlledProps {
 export const EditProductCardSpecifications = (props: ControlledProps) => {
 
     // характеристика (spec)
-    const specifications = useEditProductCardModal(s => s.specifications)
+    const allSpecifications = useEditProductCardModal(s => s.allSpecifications)
     const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecificationBind>()
 
     const getSpecificationsHandler = (field: any) => {
@@ -27,7 +27,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
         })
 
         let availableSpecs: ProductSpecificationBind[] = []
-        specifications.filter(n => !ids.includes(n.id)).forEach(n => {
+        allSpecifications.filter(n => !ids.includes(n.id)).forEach(n => {
             let s: ProductSpecificationBind = {
                 id: 0,
                 name: n.name,

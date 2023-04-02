@@ -19,10 +19,12 @@ export const EditProductCardDescriptionShort = (props: ControlledProps) => {
                     <div className={s.shortEditor_title}>Краткое описание товара:</div>
                     <div className={s.shortEditor_textarea}>
                             <textarea placeholder={'Введите текст...'}
-                                      value={field.value.descriptionShort}
+                                      value={field.value.shortDescription}
                                       onChange={(v) => {
-                                          field.onChange({...field.value,
-                                              descriptionShort: v.target.value})
+                                          field.onChange({
+                                              ...field.value,
+                                              descriptionShort: v.target.value
+                                          })
                                       }}
                             />
                     </div>

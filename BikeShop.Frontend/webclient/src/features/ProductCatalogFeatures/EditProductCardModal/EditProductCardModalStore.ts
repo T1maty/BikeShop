@@ -1,29 +1,29 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {ProductCardAPI, ProductFullData, ProductOption, ProductSpecification} from '../../../entities'
+import {ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
+import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
     setOpenEditProductCardModal: (value: boolean) => void
+
     isLoading: boolean
     setIsLoading: (value: boolean) => void
-    isError: boolean
-    setIsError: (value: boolean) => void
 
     currentProduct: ProductFullData
     getProductCard: (productId: number) => void
     updateProductCard: (data: UpdateProductCardRequest) => void
 
-    productStatus: string
+    isError: boolean
+    setIsError: (value: boolean) => void
 
-    cardOptions: ProductOption[]
-    currentCardOptions: ProductOption[]
-    getCardOptions: () => void
+    allOptions: ProductOptionsWithVariants[]
+    getAllOptions: () => void
 
-    specifications: ProductSpecification[]
-    getSpecifications: () => void
+    allSpecifications: ProductSpecification[]
+    getAllSpecifications: () => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
@@ -40,7 +40,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         ProductCardAPI.getProductCardById(productId).then(res => {
             set(state => {
                 state.currentProduct = res.data
-                state.productStatus = res.data.product.checkStatus
                 console.log('карточка из таблицы', state.currentProduct)
             })
             set({isLoading: false})
@@ -66,16 +65,13 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
 
-    productStatus: '',
-
-    cardOptions: [],
-    currentCardOptions: [],
-    getCardOptions: () => {
+    allOptions: [],
+    getAllOptions: () => {
         set({isLoading: true})
         ProductCardAPI.getOptions().then(res => {
             set(state => {
-                state.cardOptions = res.data
-                console.log('все доступные опции', state.cardOptions)
+                state.allOptions = res.data
+                console.log('все доступные опции', state.allOptions)
             })
             set({isLoading: false})
         }).catch((error: any) => {
@@ -83,13 +79,13 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         })
     },
 
-    specifications: [],
-    getSpecifications: () => {
+    allSpecifications: [],
+    getAllSpecifications: () => {
         set({isLoading: true})
         ProductCardAPI.getSpecifications().then(res => {
             set(state => {
-                state.specifications = res.data
-                console.log('все доступные спецификации', state.specifications)
+                state.allSpecifications = res.data
+                console.log('все доступные спецификации', state.allSpecifications)
             })
             set({isLoading: false})
         }).catch((error: any) => {

@@ -15,6 +15,7 @@ import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
 import {ProductImageRequest} from "./models/ProductImageRequest";
 import {ProductOptionVariantBind, ProductSpecificationBind} from "../../../entities";
+import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
 
 export const EditProductCardModal = () => {
 
@@ -23,11 +24,10 @@ export const EditProductCardModal = () => {
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
-    const isError = useEditProductCardModal(s => s.isError)
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
-    const getCardOptions = useEditProductCardModal(s => s.getCardOptions)
-    const getSpecifications = useEditProductCardModal(s => s.getSpecifications)
+    const getAllOptions = useEditProductCardModal(s => s.getAllOptions)
+    const getAllSpecifications = useEditProductCardModal(s => s.getAllSpecifications)
     const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
     const formControl = useForm<UpdateProductCardFormModel>({
@@ -119,15 +119,44 @@ export const EditProductCardModal = () => {
     }
 
     useEffect(() => {
-        getCardOptions()
-        getSpecifications()
-    }, [])
-
-    useEffect(() => {
+        getAllOptions()
+        getAllSpecifications()
         formControl.setValue('productTags', currentProduct.productTags)
         formControl.setValue('productImages', currentProduct.productImages)
         formControl.setValue("productSpecifications", currentProduct.productSpecifications)
-        //formControl.setValue("productOptions", currentProduct.productOptions)
+        formControl.setValue("productCard", {
+            description: currentProduct.productCard != undefined ? currentProduct.productCard.description : '',
+            shortDescription: currentProduct.productCard != undefined ? currentProduct.productCard.descriptionShort : ''
+        })
+
+        let options: ProductOptionsWithVariants[] = []
+        let ids: number[] = []
+        currentProduct.productOptions?.forEach(n => {
+            let newOption: ProductOptionsWithVariants
+            if (!ids.includes(n.optionId)) {
+                newOption = {
+                    id: n.optionId,
+                    name: n.optionName,
+                    variants: [],
+                    createdAt: '',
+                    updatedAt: '',
+                    enabled: true,
+                }
+                ids.push(n.optionId)
+                options.push(newOption)
+            }
+            options.find(n1 => n1.id === n.optionId)?.variants.push({
+                id: n.id,
+                name: n.name,
+                optionId: n.optionId,
+                optionName: n.optionName,
+                createdAt: n.createdAt,
+                updatedAt: n.updatedAt,
+                enabled: n.enabled
+            })
+        })
+        console.log('optionParse', options)
+        formControl.setValue("productOptions", options)
     }, [currentProduct])
 
     if (isLoading) {

@@ -11,7 +11,7 @@ interface ControlledProps {
 
 export const EditProductCardStatus = (props: ControlledProps) => {
 
-    const productStatus = useEditProductCardModal(s => s.productStatus)
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
 
     // данные для статуса
     const [checkStatus, setCheckStatus] = useState([
@@ -39,7 +39,7 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                             className={s.options_search}
                             placeholder={'Выбор...'}
                             options={checkStatus}
-                            defaultValue={checkStatus.find(n => n.name === productStatus)}
+                            defaultValue={checkStatus.find(n => n.name === currentProduct.product.checkStatus)}
                             value={checkStatus.find(s => s.name === field.value)}
                             onChange={(value) => {
                                 value ? field.onChange(value.name) : false
