@@ -13,13 +13,13 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import {useSnackbar} from "notistack"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
-import {ProductImageRequest} from "./models/ProductImageRequest";
-import {ProductOptionVariantBind, ProductSpecificationBind} from "../../../entities";
+import {ProductOptionVariantBind} from "../../../entities";
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
 
 export const EditProductCardModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
+
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
@@ -48,19 +48,9 @@ export const EditProductCardModal = () => {
 
         var DATA = {} as UpdateProductCardRequest
 
-        let specs: ProductSpecificationBind[] = []
-        data.productSpecifications.forEach(n => {
-            specs.push({
-                id: 0,
-                specificationId: n.id,
-                sortOrder: 0,
-                description: '',
-                enabled: true
-            } as ProductSpecificationBind)
-        })
-
-        let variants: ProductOptionVariantBind[] = []
+        let options: { optionVariants: ProductOptionVariantBind[] }[] = []
         data.productOptions.forEach(n => {
+            let variants: ProductOptionVariantBind[] = []
             n.optionVariants.forEach(j => {
                 variants.push({
                     id: 0,
@@ -70,6 +60,7 @@ export const EditProductCardModal = () => {
                     optionVariantId: j.id
                 } as ProductOptionVariantBind)
             })
+            options.push({optionVariants: variants})
         })
 
         let tagIds: string[] = []
@@ -77,23 +68,18 @@ export const EditProductCardModal = () => {
             tagIds.push(n.id)
         })
 
-        let prodImgs: ProductImageRequest[] = []
-        data.productImages.forEach(n => {
-
-        })
-
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
-        DATA.productSpecifications = specs
-        DATA.productOptions = variants
+        DATA.productSpecifications = data.productSpecifications
+        DATA.productOptions = options
         DATA.productCard = {
             description: data.productCard.description,
             shortDescription: data.productCard.shortDescription
         }
         DATA.productTags = tagIds
-        DATA.productImages = prodImgs
+        DATA.productImages = data.productImages
         console.log('submitData', DATA)
-        //updateProductCard(DATA)
+        updateProductCard(DATA)
 
         // if (isError) {
         //     enqueueSnackbar('Ошибка сервера: карточка не обновлена!',
@@ -121,6 +107,7 @@ export const EditProductCardModal = () => {
         getAllSpecifications()
         formControl.setValue('productTags', currentProduct.productTags)
         formControl.setValue('productImages', currentProduct.productImages)
+        formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
         formControl.setValue("productSpecifications", currentProduct.productSpecifications)
         formControl.setValue("productCard", {
             description: currentProduct.productCard != undefined ? currentProduct.productCard.description : '',
@@ -153,7 +140,8 @@ export const EditProductCardModal = () => {
                 enabled: n.enabled
             })
         })
-        console.log('optionParse', options)
+
+
         formControl.setValue("productOptions", options)
     }, [currentProduct])
 

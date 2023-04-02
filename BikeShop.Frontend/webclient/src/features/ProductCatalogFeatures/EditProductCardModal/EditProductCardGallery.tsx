@@ -34,14 +34,14 @@ export const EditProductCardGallery = (props: ControlledProps) => {
     const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>, field: any) => {
         if (e.target.files && e.target.files.length) {
             const file = e.target.files[0]
-            console.log('file: ', file)
+            //console.log('file: ', file)
 
             // перепроверить максимальный размер файла
             if (file.size < 7000000) {
                 convertFileToBase64(file, (file64: string) => {
-                    addImageHandler(file64, field) // добавить изображение в стор
+                    addImageHandler(file, field) // добавить изображение в стор
                     // uploadNewImage(file64) // запрос на загрузку
-                    console.log('file64: ', file64)
+                    //console.log('file64: ', file64)
                 })
             } else {
                 console.error('Error: ', 'Файл слишком большого размера')
@@ -63,15 +63,16 @@ export const EditProductCardGallery = (props: ControlledProps) => {
         setCurrentImageKey(imgKey)
     }
 
-    const addImageHandler = (newImage: string, field: any) => {
+    const addImageHandler = (newImage: File, field: any) => {
         const imageObj = {
-            id: Date.now(),
+            id: 0,
             createdAt: '',
             updatedAt: '',
             enabled: true,
             productId: currentProduct.product.id,
             sortOrder: 0,
-            url: newImage,
+            url: '',
+            image: newImage
         }
         field.onChange([imageObj, ...field.value])
     }
@@ -118,7 +119,9 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                                     return (
                                         <div key={img.id}
                                              className={s.imageList_item}
-                                             onDoubleClick={() => {setImageHandler(key)}}
+                                             onDoubleClick={() => {
+                                                 setImageHandler(key)
+                                             }}
                                         >
                                             <img className={currentImageKey === key ? s.active_image : ''}
                                                  src={img.url} alt="img-thumbnail"
@@ -129,7 +132,9 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                                             </div>
                                             <img src={RemoveIcon} alt="remove-icon"
                                                  className={s.imageList_deleteItem}
-                                                 onClick={() => {deleteImageHandler(img.id, field)}}
+                                                 onClick={() => {
+                                                     deleteImageHandler(img.id, field)
+                                                 }}
                                             />
                                         </div>
                                     )
@@ -139,13 +144,17 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                     <div className={s.imageGallery_buttons}>
                         <div className={s.imageGallery_sortButtons}>
                             <Button disabled={currentImageKey === null || currentImageKey === 0}
-                                    onClick={() => {onMoveBackwardHandler(currentImageKey, field)}}
+                                    onClick={() => {
+                                        onMoveBackwardHandler(currentImageKey, field)
+                                    }}
                             >
                                 Переместить назад
                             </Button>
                             <Button
                                 disabled={currentImageKey === null || currentImageKey === (field.value.length - 1)}
-                                onClick={() => {onMoveForwardHandler(currentImageKey, field)}}
+                                onClick={() => {
+                                    onMoveForwardHandler(currentImageKey, field)
+                                }}
                             >
                                 Переместить вперёд
                             </Button>
@@ -153,7 +162,9 @@ export const EditProductCardGallery = (props: ControlledProps) => {
                         <div className={s.imageGallery_addImage}>
                             <input type="file" id="file"
                                    accept="image/png, image/jpeg"
-                                   onChange={(v) => {uploadImageHandler(v, field)}}
+                                   onChange={(v) => {
+                                       uploadImageHandler(v, field)
+                                   }}
                                    className={s.inputFile}
                             />
                         </div>

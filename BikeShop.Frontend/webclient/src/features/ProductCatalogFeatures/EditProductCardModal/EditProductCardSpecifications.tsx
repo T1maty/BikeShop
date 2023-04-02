@@ -23,7 +23,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
     const getSpecificationsHandler = (field: any) => {
         let ids: number[] = []
         field.value.forEach((n: ProductSpecificationBind) => {
-            ids.push(n.id)
+            ids.push(n.specificationId)
         })
 
         let availableSpecs: ProductSpecificationBind[] = []
@@ -45,22 +45,19 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
     }
 
     const onChangeSpecificationHandler = (newInputValue: string, field: any, spec: ProductSpecificationBind) => {
-        field.onChange(field.value.map((n: ProductSpecificationBind) => n.id === spec.id ? {
+        field.onChange(field.value.map((n: ProductSpecificationBind) => n.specificationId === spec.specificationId ? {
             ...n,
             description: newInputValue
         } : n))
     }
 
     const editSpecificationHandler = (field: any) => {
-        field.onChange([...field.value, {
-            ...selectedSpecification,
-            description: 'Введите описание характеристики'
-        }])
+        field.onChange([...field.value, selectedSpecification])
         setSelectedSpecification(undefined)
     }
 
     const deleteSpecificationHandler = (field: any, spec: ProductSpecificationBind) => {
-        field.onChange(field.value.filter((n: ProductSpecificationBind) => n.id != spec.id))
+        field.onChange(field.value.filter((n: ProductSpecificationBind) => n.specificationId != spec.specificationId))
     }
 
     return (
@@ -70,7 +67,6 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                 control={props.control.control}
                 render={({field}: any) =>
 
-                    /*<div className={s.rightSide_productDetails}>*/
                     <>
                         <div className={s.productOptions_optionsList}>
                             {
@@ -141,7 +137,6 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                             />
                         </div>
                     </>
-                    /*</div>*/
                 }
             />
         </div>

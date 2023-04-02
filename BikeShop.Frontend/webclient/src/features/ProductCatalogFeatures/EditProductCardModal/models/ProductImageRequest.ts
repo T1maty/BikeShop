@@ -1,6 +1,7 @@
 export interface ProductImageRequest {
     id: number,
     sortOrder: number,
-    enabled: boolean,
-    image: string
+    url?: string,
+    image?: File
+    enabled: boolean
 }

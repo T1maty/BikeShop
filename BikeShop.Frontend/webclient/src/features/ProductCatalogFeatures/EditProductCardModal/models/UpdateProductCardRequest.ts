@@ -1,11 +1,12 @@
 import {ProductOptionVariantBind, ProductSpecificationBind} from "../../../../entities";
+import {ProductImageRequest} from "./ProductImageRequest";
 
 export interface UpdateProductCardRequest {
     id: number
     checkStatus: string
     productCard: { description: string, shortDescription: string }
-    productOptions: ProductOptionVariantBind[]
+    productOptions: { optionVariants: ProductOptionVariantBind[] }[]
     productSpecifications: ProductSpecificationBind[]
-    productImages: { id: number, sortOrder: number, enabled: boolean, image: string }[]
+    productImages: ProductImageRequest[]
     productTags: string[]
 }

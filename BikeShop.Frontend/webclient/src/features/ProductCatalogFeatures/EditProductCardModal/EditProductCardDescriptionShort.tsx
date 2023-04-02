@@ -23,7 +23,7 @@ export const EditProductCardDescriptionShort = (props: ControlledProps) => {
                                       onChange={(v) => {
                                           field.onChange({
                                               ...field.value,
-                                              descriptionShort: v.target.value
+                                              shortDescription: v.target.value
                                           })
                                       }}
                             />
