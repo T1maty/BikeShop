@@ -1,9 +1,12 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {ProductFullData, ProductOption, ProductSpecification} from '../index'
+import {ProductFullData, ProductSpecification} from '../index'
 import {
     UpdateProductCardRequest
 } from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardRequest";
+import {
+    ProductOptionsWithVariants
+} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants";
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {
@@ -16,9 +19,9 @@ export const ProductCardAPI = {
             $api.put('/productcard/updateproductcard', data)
         )
     },
-    getOptions(): Promise<AxiosResponse<ProductOption[]>> {
+    getOptions(): Promise<AxiosResponse<ProductOptionsWithVariants[]>> {
         return (
-            $api.get<ProductOption[]>('/productcard/getalloptions')
+            $api.get<ProductOptionsWithVariants[]>('/productcard/getalloptions')
         )
     },
     getSpecifications(): Promise<AxiosResponse<ProductSpecification[]>> {
