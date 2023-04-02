@@ -222,7 +222,11 @@
 // CreateShopModal Active Entity Item
 @mixin ActiveEntity() {
     .shop_item {
-        @include divSmallMarginBottom;
+        //@include divSmallMarginBottom;
+        > div:not(:last-child) {
+            margin-bottom: $defaultExtraSmallMargin;
+        }
+
         border-radius: $smallBorderRadius;
         border: 1px solid white;
         padding: 10px;

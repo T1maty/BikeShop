@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CreateSpecification, EntitiesAPI, ProductCardAPI, Specification} from '../../../entities'
+import {EntitiesAPI, ProductCardAPI, Specification} from '../../../entities'
 import {UpdateSpecification} from '../../../entities/requests/UpdateSpecification'
 
 interface CreateSpecificationModalStore {
@@ -16,7 +16,7 @@ interface CreateSpecificationModalStore {
     specifications: Specification[]
     getSpecifications: () => void
 
-    addNewSpecification: (data: CreateSpecification) => any
+    addNewSpecification: (name: string) => any
     updateSpecification: (updateData: UpdateSpecification) => any
 }
 
@@ -45,27 +45,20 @@ const useCreateSpecificationModal = create<CreateSpecificationModalStore>()(/*pe
         })
     },
 
-    addNewSpecification: (data) => {
-        set({isLoading: true})
-        EntitiesAPI.Specification.addNewSpecification(data).then((res: any) => {
+    addNewSpecification: (name) => {
+        // set({isLoading: true})
+        return EntitiesAPI.Specification.addNewSpecification(name)/*.then((res: any) => {
             set(state => {
                 state.specifications.push(res.data)
             })
             set({isLoading: false})
         }).catch((error: any) => {
             console.log('спецификация не создана', error)
-        })
+        })*/
     },
     updateSpecification: (updateData) => {
-        set({isLoading: true})
-        EntitiesAPI.Specification.updateSpecification(updateData).then((res: any) => {
-            set(state => {
-                state.specifications.push(res.data)
-            })
-            set({isLoading: false})
-        }).catch((error: any) => {
-            console.log('спецификация не обновлена', error)
-        })
+        // set({isLoading: true})
+        return EntitiesAPI.Specification.updateSpecification(updateData)
     },
 })))/*, {
     name: "createShopModal",

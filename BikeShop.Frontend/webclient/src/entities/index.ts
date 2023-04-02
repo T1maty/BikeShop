@@ -34,7 +34,6 @@ export type {PaymentData} from './models/PaymentData'
 ///////////////////////////////////
 export type {CreateUser} from './requests/CreateUser'
 export type {CreateService} from './requests/CreateService'
-export type {CreateSpecification} from './requests/CreateSpecification'
 export type {UpdateService} from './requests/UpdateService'
 export type {CreateShop} from './requests/CreateShop'
 export type {UpdateShop} from './requests/CreateShop'

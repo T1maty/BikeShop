@@ -16,6 +16,7 @@ export const CreateSpecificationModal = () => {
     const open = useCreateSpecificationModal(s => s.openCreateSpecificationModal)
     const setOpen = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
     const isLoading = useCreateSpecificationModal(s => s.isLoading)
+    const setIsLoading = useCreateSpecificationModal(s => s.setIsLoading)
 
     const currentSpecification = useCreateSpecificationModal(s => s.currentSpecification)
     const setCurrentSpecification = useCreateSpecificationModal(s => s.setCurrentSpecification)
@@ -34,27 +35,32 @@ export const CreateSpecificationModal = () => {
 
     const onSubmit: SubmitHandler<UpdateSpecification> = (data: UpdateSpecification) => {
         if (currentSpecification === null) {
-            addNewSpecification(data).then((response: any) => {
+            setIsLoading(true)
+            addNewSpecification(data.name).then((res: any) => {
+                setIsLoading(false)
                 formControl.reset()
-                getSpecifications()
                 enqueueSnackbar('Спецификация добавлена', {variant: 'success', autoHideDuration: 3000})
+                getSpecifications()
             }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
+                enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+            }).finally(() => {
+                setIsLoading(false)
             })
+
         }
 
         if (currentSpecification !== null) {
-            updateSpecification(data).then((response: any) => {
-                getSpecifications()
+            setIsLoading(true)
+            updateSpecification(data).then((res: any) => {
+                setIsLoading(false)
+                formControl.reset()
+                setCurrentSpecification(null)
                 enqueueSnackbar('Спецификация обновлена', {variant: 'success', autoHideDuration: 3000})
+                getSpecifications()
             }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
+                enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+            }).finally(() => {
+                setIsLoading(false)
             })
         }
     }
@@ -93,7 +99,7 @@ export const CreateSpecificationModal = () => {
                                      className={spec.id === currentSpecification?.id ? s.shop_item_active : s.shop_item}
                                      onClick={() => {
                                          setCurrentSpecification(spec)
-                                         console.log('выбранный склад', spec)
+                                         console.log('выбранная спецификация', spec)
                                      }}
                                 >
                                     <div><span>ID:</span> {spec.id}</div>

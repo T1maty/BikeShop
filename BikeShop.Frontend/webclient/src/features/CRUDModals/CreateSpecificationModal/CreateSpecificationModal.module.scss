@@ -16,6 +16,7 @@
             @include divSmallMarginBottom;
             padding-right: $defaultSmallMargin;
             overflow-y: auto;
+            max-height: 300px;
             @include ActiveEntity;
         }
     }
