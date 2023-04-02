@@ -280,8 +280,8 @@
             }
             .infoBlock_checkbox {
                 @include flexCenter;
-                height: 50px;
-                border: 2px solid $themeColorMilk;
+                height: 40px;
+                border: 1px solid $themeColorMilk;
                 border-radius: $extraSmallBorderRadius;
             }
             .infoBlock_cancelBtn {

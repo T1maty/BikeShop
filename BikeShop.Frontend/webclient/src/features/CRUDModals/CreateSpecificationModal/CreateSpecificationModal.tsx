@@ -4,7 +4,7 @@ import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateSpecificationModal.module.scss'
 import {
-    Button, ControlledCheckbox, ControlledCustomInput,
+    Button, ControlledCheckbox, ControlledCustomCheckbox, ControlledCustomInput,
     ControlledInput, CustomCheckbox, LoaderScreen
 } from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
@@ -141,18 +141,17 @@ export const CreateSpecificationModal = () => {
                                                        control={formControl}
                                                        rules={{required: Errors[0].name}}
                                 />
-                                <ControlledCheckbox name={'enabled'}
-                                                    label={'Спецификация включена'}
-                                                    control={formControl}
-                                                    divClassName={s.infoBlock_checkbox}
+                                {/*<ControlledCheckbox name={'enabled'}*/}
+                                {/*                    label={'Спецификация включена'}*/}
+                                {/*                    control={formControl}*/}
+                                {/*                    divClassName={s.infoBlock_checkbox}*/}
+                                {/*/>*/}
+
+                                <ControlledCustomCheckbox name={'enabled'}
+                                                          label={'Спецификация включена'}
+                                                          control={formControl}
+                                                          divClassName={s.infoBlock_checkbox}
                                 />
-
-                                <CustomCheckbox // checked={checked}
-                                                // onChangeChecked={setChecked}
-                                >
-                                    Спецификация включена
-                                </CustomCheckbox>
-
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentSpecification === null}
                                         onClick={() => {setCurrentSpecification(null)}}

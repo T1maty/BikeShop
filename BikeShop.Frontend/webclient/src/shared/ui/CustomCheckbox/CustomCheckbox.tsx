@@ -28,6 +28,7 @@ export const CustomCheckbox: React.FC<CheckboxPropsType> = (
 
     return (
         <label className={s.container}>
+            {children}
             <input
                 type={'checkbox'}
                 onChange={onChangeCallback}
@@ -35,7 +36,8 @@ export const CustomCheckbox: React.FC<CheckboxPropsType> = (
 
                 {...restProps} // отдаём инпуту остальные пропсы, если они есть (checked, например, там внутри)
             />
-            {children && <span className={s.checkmark}>{children}</span>}
+            {/*{children && <span className={s.checkmark}>{children}</span>}*/}
+            <span className={s.checkmark}></span>
         </label> // благодаря label нажатие на спан передастся в инпут
     )
 }
