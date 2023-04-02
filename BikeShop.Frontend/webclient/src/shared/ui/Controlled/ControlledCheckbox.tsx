@@ -19,6 +19,7 @@ export const ControlledCheckbox = (props: ControlledCheckboxProps) => {
                 name={props.name}
                 control={props.control.control}
                 render={({field}) => (
+
                     <FormControlLabel
                         label={props.label}
                         value={field.value}
@@ -29,7 +30,9 @@ export const ControlledCheckbox = (props: ControlledCheckboxProps) => {
                                     field.onChange(value)
                                 }}
                             />
-                        }/>
+                        }
+                    />
+
                 )}/>
         </div>
     );

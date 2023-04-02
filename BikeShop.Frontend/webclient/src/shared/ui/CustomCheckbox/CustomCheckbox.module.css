@@ -3,7 +3,7 @@
     /*display: block;*/
     position: relative;
     padding-left: 30px;
-    margin-bottom: 12px;
+    /*margin-bottom: 12px;*/
     cursor: pointer;
     font-size: 16px;
     -webkit-user-select: none;
@@ -67,3 +67,8 @@
     position: absolute;
     display: none;
 }
+
+/*.checkbox_title {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
