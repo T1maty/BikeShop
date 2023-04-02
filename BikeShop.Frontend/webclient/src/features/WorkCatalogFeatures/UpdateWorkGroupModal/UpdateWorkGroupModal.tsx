@@ -1,13 +1,19 @@
-import React, {useEffect} from 'react';
-import {Box, Button, Modal} from "@mui/material";
-import {ControlledCheckbox, ControlledInput} from "../../../shared/ui";
-import {useSnackbar} from "notistack";
-import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {UpdateWorkGroup, Group} from "../../../entities";
-import {$api} from "../../../shared";
+import React, {useEffect} from 'react'
+import {Box, Button, Modal} from "@mui/material"
+import {ControlledCustomCheckbox, ControlledCustomInput} from '../../../shared/ui'
+import {useSnackbar} from "notistack"
+import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
+import {SubmitHandler, useForm} from "react-hook-form"
+import {UpdateWorkGroup, Group} from "../../../entities"
+import {$api} from "../../../shared"
 
-export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void, target: Group }) => {
+interface UpdateWorkGroupModalProps {
+    visibility: boolean
+    setVisibility: (value: boolean) => void
+    target: Group
+}
+
+export const UpdateWorkGroupModal = (props: UpdateWorkGroupModalProps) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const {getGroup} = useWorkCatalog(s => s)
@@ -26,7 +32,7 @@ export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility
             shopId: 1,
             isCollapsed: false
         }
-    });
+    })
 
     const style = {
         position: 'absolute',
@@ -40,7 +46,7 @@ export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility
         p: 4,
         borderRadius: 10,
         color: 'white'
-    };
+    }
 
     const onSubmit: SubmitHandler<UpdateWorkGroup> = (data: UpdateWorkGroup) => {
         data.parentId = props.target.parentId
@@ -62,31 +68,37 @@ export const UpdateWorkGroupModal = (props: { visibility: boolean, setVisibility
     return (
         <Modal
             open={props.visibility}
-            onClose={() => {
-                props.setVisibility(false)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
+            onClose={() => {props.setVisibility(false)}}
+            onContextMenu={(event) => {event.preventDefault()}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
-
                 <div>
-                    {"Обновляем группу: " + props.target.name}
+                    {'Обновляем группу: ' + props.target.name}
                 </div>
-                <ControlledInput name={"name"} label={"Название группы"} control={formControl}
-                                 rules={{required: "Обязательное поле"}}/>
-
-                <ControlledCheckbox name={"isCollapsed"} label={"Свернут по умолчанию"} control={formControl}/>
-
+                <ControlledCustomInput name={'name'}
+                                       placeholder={'Название группы'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomCheckbox name={'isCollapsed'}
+                                          label={'Свёрнут по умолчанию'}
+                                          control={formControl}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
                 <br/>
-                <Button color={'primary'} type={'submit'}>Обновить группу</Button>
-                <Button color={'primary'} onClick={() => {
-                    props.setVisibility(false)
-                }}>Отмена</Button>
+                <Button type={'submit'}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Обновить группу
+                </Button>
+                <Button onClick={() => {props.setVisibility(false)}}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Отмена
+                </Button>
             </Box>
         </Modal>
-    );
-};
+    )
+}

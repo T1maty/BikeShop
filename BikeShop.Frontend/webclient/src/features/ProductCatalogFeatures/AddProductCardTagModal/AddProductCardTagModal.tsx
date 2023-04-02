@@ -14,9 +14,7 @@ export const AddProductCardTagModal: React.FC<AddProductCardTagModalProps> = ({e
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >

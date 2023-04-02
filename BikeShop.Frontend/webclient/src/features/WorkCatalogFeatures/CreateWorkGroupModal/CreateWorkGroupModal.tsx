@@ -1,13 +1,19 @@
-import React from 'react';
-import {Box, Button, Modal} from "@mui/material";
-import {ControlledCheckbox, ControlledInput} from "../../../shared/ui";
-import {useSnackbar} from "notistack";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {CreateWorkGroup, Work, Group} from "../../../entities"
-import {$api} from "../../../shared";
-import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
+import React from 'react'
+import {Box, Modal} from "@mui/material"
+import {ControlledCustomCheckbox, ControlledCustomInput, Button} from '../../../shared/ui'
+import {useSnackbar} from "notistack"
+import {SubmitHandler, useForm} from "react-hook-form"
+import {CreateWorkGroup, Group} from "../../../entities"
+import {$api} from "../../../shared"
+import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
 
-export const CreateWorkGroupModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void, parent: Group }) => {
+interface CreateWorkGroupModalProps {
+    visibility: boolean
+    setVisibility: (value: boolean) => void
+    parent: Group
+}
+
+export const CreateWorkGroupModal = (props: CreateWorkGroupModalProps) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const {addGroup} = useWorkCatalog(s => s)
@@ -63,20 +69,30 @@ export const CreateWorkGroupModal = (props: { visibility: boolean, setVisibility
             aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
-
                 <div>
                     {props.parent.name != undefined ? 'Создаем потомка для ' + props.parent.name : "Создаем в корне"}
                 </div>
-                <ControlledInput name={"name"} label={"Название группы"} control={formControl}
-                                 rules={{required: "Обязательное поле"}}/>
-
-                <ControlledCheckbox name={"isCollapsed"} label={"Свернут по умолчанию"} control={formControl}/>
-
+                <ControlledCustomInput name={'name'}
+                                       placeholder={'Название группы'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomCheckbox name={'isCollapsed'}
+                                          label={'Свернут по умолчанию'}
+                                          control={formControl}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
                 <br/>
-                <Button color={'primary'} type={'submit'}>Создать группу</Button>
-                <Button color={'primary'} onClick={() => {
-                    props.setVisibility(false)
-                }}>Отмена</Button>
+                <Button type={'submit'}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Создать группу
+                </Button>
+                <Button onClick={() => {props.setVisibility(false)}}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Отмена
+                </Button>
             </Box>
         </Modal>
     )

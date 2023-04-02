@@ -1,13 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
-import {
-    Button,
-    ControlledClientCard,
-    ControlledCustomInput,
-    ControlledInput,
-    ControlledReactSelect,
-    ControlledSelect
-} from '../../../shared/ui'
+import {Button, ControlledClientCard, ControlledCustomInput, ControlledReactSelect,} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
 import {CreateService, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
@@ -149,13 +142,6 @@ export const ServiceForm = () => {
     return (
         <div className={s.service_rightSide}>
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                {/*<ControlledInput name={'name'}*/}
-                {/*                 label={'Техника'}*/}
-                {/*                 control={formControl}*/}
-                {/*                 rules={{required: Errors[0].name}}*/}
-                {/*                 divClassName={s.rightSide_stuffInput}*/}
-                {/*                 disabled={currentService === null && !isCreating}*/}
-                {/*/>*/}
                 <ControlledCustomInput name={'name'}
                                        placeholder={'Техника'}
                                        control={formControl}
@@ -165,13 +151,6 @@ export const ServiceForm = () => {
                 />
                 <div className={s.rightSide_infoFields}>
                     <div className={s.infoFields_content}>
-                        {/*<ControlledInput name={'clientDescription'}*/}
-                        {/*                 label={'Детальное описание'}*/}
-                        {/*                 control={formControl}*/}
-                        {/*                 rules={{required: Errors[0].name}}*/}
-                        {/*                 divClassName={s.content_detailsInput}*/}
-                        {/*                 disabled={currentService === null && !isCreating}*/}
-                        {/*/>*/}
                         <ControlledCustomInput name={'clientDescription'}
                                                placeholder={'Детальное описание'}
                                                control={formControl}
@@ -179,15 +158,6 @@ export const ServiceForm = () => {
                                                divClassName={s.content_detailsInput}
                                                disabled={currentService === null && !isCreating}
                         />
-                        {/*<ControlledSelect control={formControl}*/}
-                        {/*                  name={'userMasterId'}*/}
-                        {/*                  label={'Мастер'}*/}
-                        {/*                  className={s.content_masterInput}*/}
-                        {/*                  disabled={currentService === null && !isCreating}*/}
-                        {/*                  data={masters.map((n) => {*/}
-                        {/*                      return {id: n.id, value: n.firstName ? n.firstName : 'Нет имени'}*/}
-                        {/*                  })}*/}
-                        {/*/>*/}
                         <ControlledReactSelect control={formControl}
                                                name={'userMasterId'}
                                                className={s.select_box}
@@ -246,7 +216,6 @@ export const ServiceForm = () => {
                         </Button>
                     </div>
                 </div>
-
 
                 <Controller
                     name={'serviceProducts'}

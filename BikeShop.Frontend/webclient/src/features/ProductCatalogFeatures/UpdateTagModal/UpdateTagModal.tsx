@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react'
 import {SubmitHandler, useForm} from "react-hook-form"
 import {UpdateTag} from "../../../entities"
-import {Box, Button, Modal, Typography} from "@mui/material"
-import {ControlledCheckbox, ControlledInput} from "../../../shared/ui"
+import {Box, Modal, Typography} from "@mui/material"
+import {ControlledCustomCheckbox, ControlledCustomInput, Button} from '../../../shared/ui'
 import {useSnackbar} from "notistack"
 import useUpdateTagModal from './UpdateTagModalStore'
 
-interface props {
+interface UpdateTagModalProps {
     onSuccess?: (tag: UpdateTag) => void
 }
 
-export const UpdateTagModal = (props: props) => {
+export const UpdateTagModal = (props: UpdateTagModalProps) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -21,7 +21,7 @@ export const UpdateTagModal = (props: props) => {
 
     const control = useForm<UpdateTag>({
         defaultValues: {
-            name: "",
+            name: '',
             sortOrder: 0,
             isRetailVisible: false,
             isB2BVisible: false,
@@ -87,26 +87,45 @@ export const UpdateTagModal = (props: props) => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={control.handleSubmit(onSubmit)}>
-
                 <Typography
-                    sx={{pb: 3}}>ID: {tag.id}</Typography>
-
-                <ControlledInput name={"name"} label={"Название тега"} control={control}
-                                 rules={{required: "Введите название нового тега"}}/>
+                    sx={{pb: 3}}>ID: {tag.id}
+                </Typography>
+                <ControlledCustomInput name={'name'}
+                                       placeholder={'Название тега'}
+                                       control={control}
+                                       rules={{required: 'Введите название нового тега'}}
+                />
                 <br/>
                 <br/>
-                <ControlledInput name={"sortOrder"} label={"Порядок сортировки"} control={control}
-                                 rules={{
-                                     required: "Порядок сортировки необходимо ввести",
-                                     validate: (value: number) => value > -1
-                                 }}/>
-
-                <ControlledCheckbox name={"isRetailVisible"} label={'Видим в интернет-магазине'} control={control}/>
-                <ControlledCheckbox name={"isB2BVisible"} label={'Виден в B2B'} control={control}/>
-                <ControlledCheckbox name={"isUniversal"} label={'Универсальный тег'} control={control}/>
+                <ControlledCustomInput name={'sortOrder'}
+                                       placeholder={'Порядок сортировки'}
+                                       control={control}
+                                       rules={{
+                                           required: 'Порядок сортировки необходимо ввести',
+                                           validate: (value: number) => value > -1
+                                       }}
+                />
+                <ControlledCustomCheckbox name={'isRetailVisible'}
+                                          label={'Видим в интернет-магазине'}
+                                          control={control}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
+                <ControlledCustomCheckbox name={'isB2BVisible'}
+                                          label={'Видим в B2B'}
+                                          control={control}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
+                <ControlledCustomCheckbox name={'isUniversal'}
+                                          label={'Универсальный тег'}
+                                          control={control}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
                 <br/>
-                <Button color='primary' type="submit">Редактировать тег</Button>
-
+                <Button type={'submit'}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Редактировать тег
+                </Button>
             </Box>
         </Modal>
     )

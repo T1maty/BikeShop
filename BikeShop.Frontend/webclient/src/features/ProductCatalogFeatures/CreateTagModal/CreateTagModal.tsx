@@ -1,15 +1,17 @@
 import React from 'react'
-import {Box, Button, Modal, Typography} from "@mui/material"
+import {Box, Modal, Typography} from "@mui/material"
 import useCreateTagModal from "./CreateTagModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {CreateTag, ProductTag} from "../../../entities"
-import {ControlledCheckbox, ControlledInput} from "../../../shared/ui"
+import {ControlledCustomCheckbox, ControlledCustomInput, Button} from '../../../shared/ui'
+import s from '../../CRUDModals/CreateShopModal/CreateShopModal.module.scss'
 
-interface props {
+interface CreateTagModalProps {
     onSuccess?: (tag: ProductTag) => void
 }
 
-export const CreateTagModal = (props: props) => {
+export const CreateTagModal = (props: CreateTagModalProps) => {
+
     const open = useCreateTagModal(s => s.openCreateTagModal)
     const setOpen = useCreateTagModal(s => s.setOpenCreateTagModal)
     const parentNode = useCreateTagModal(s => s.parentNode)
@@ -17,13 +19,13 @@ export const CreateTagModal = (props: props) => {
 
     const control = useForm<CreateTag>({
         defaultValues: {
-            name: "",
+            name: '',
             sortOrder: 0,
             isRetailVisible: false,
             isB2BVisible: false,
             isUniversal: false
         }
-    });
+    })
 
     const style = {
         position: 'absolute',
@@ -37,8 +39,7 @@ export const CreateTagModal = (props: props) => {
         p: 4,
         borderRadius: 10,
         color: 'white'
-    };
-
+    }
 
     const onSubmit: SubmitHandler<CreateTag> = (data: CreateTag) => {
         data.parentId = parentNode.id
@@ -57,36 +58,51 @@ export const CreateTagModal = (props: props) => {
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
+            onClose={() => {setOpen(false)}}
+            onContextMenu={(event) => {event.preventDefault()}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={control.handleSubmit(onSubmit)}>
-
                 <Typography sx={{pb: 3}}>Добавить
-                    в: {parentNode.id === undefined ? 'КОРЕНЬ ДЕРЕВА' : parentNode.name}</Typography>
-
-                <ControlledInput name={"name"} label={"Название тега"} control={control}
-                                 rules={{required: "Введите название нового тега"}}/>
+                    в: {parentNode.id === undefined ? 'КОРЕНЬ ДЕРЕВА' : parentNode.name}
+                </Typography>
+                <ControlledCustomInput name={'name'}
+                                       placeholder={'Название тега'}
+                                       control={control}
+                                       rules={{required: "Введите название нового тега"}}
+                />
                 <br/>
                 <br/>
-                <ControlledInput name={"sortOrder"} label={"Порядок сортировки"} control={control}
-                                 rules={{
-                                     required: "Порядок сортировки необходимо ввести",
-                                     validate: (value: number) => value > -1
-                                 }}/>
-
-                <ControlledCheckbox name={"isRetailVisible"} label={'Видим в интернет-магазине'} control={control}/>
-                <ControlledCheckbox name={"isB2BVisible"} label={'Виден в B2B'} control={control}/>
-                <ControlledCheckbox name={"isUniversal"} label={'Универсальный тег'} control={control}/>
+                <ControlledCustomInput name={'sortOrder'}
+                                       placeholder={'Порядок сортировки'}
+                                       control={control}
+                                       rules={{
+                                           required: "Порядок сортировки необходимо ввести",
+                                           validate: (value: number) => value > -1
+                                       }}
+                />
+                <ControlledCustomCheckbox name={'isRetailVisible'}
+                                          label={'Видим в интернет-магазине'}
+                                          control={control}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
+                <ControlledCustomCheckbox name={'isB2BVisible'}
+                                          label={'Видим в B2B'}
+                                          control={control}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
+                <ControlledCustomCheckbox name={'isUniversal'}
+                                          label={'Универсальный тег'}
+                                          control={control}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
                 <br/>
-                <Button color='primary' type="submit">Создать тег</Button>
-
+                <Button type={'submit'}
+                        buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Создать тег
+                </Button>
             </Box>
         </Modal>
     )

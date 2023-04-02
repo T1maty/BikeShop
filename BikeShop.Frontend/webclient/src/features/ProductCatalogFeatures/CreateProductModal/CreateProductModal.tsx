@@ -1,11 +1,11 @@
 import React from 'react'
-import {Box, Button, Modal, Typography} from "@mui/material"
+import {Box, Modal, Typography} from "@mui/material"
 import useCreateProductModal from "./CreateProductModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {EnumProductCheckStatus, CreateProduct, Product} from "../../../entities"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
-import {ControlledCheckbox, ControlledInput} from "../../../shared/ui"
+import {Button, ControlledCustomCheckbox, ControlledCustomInput} from '../../../shared/ui'
 
 interface CreateProductModalProps {
     onSuccess?: (data: Product) => void
@@ -22,10 +22,10 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
 
     const formControl = useForm<CreateProduct>({
         defaultValues: {
-            name: "",
-            catalogKey: "",
-            category: "cat",
-            manufacturerBarcode: "",
+            name: '',
+            catalogKey: '',
+            category: 'cat',
+            manufacturerBarcode: '',
             incomePrice: 0,
             dealerPrice: 0,
             retailPrice: 0,
@@ -49,7 +49,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
         p: 4,
         borderRadius: 10,
         color: 'white'
-    };
+    }
 
     const onSubmit: SubmitHandler<CreateProduct> = (data: CreateProduct) => {
         if (tags.length > 0) {
@@ -71,53 +71,75 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
             console.error(r.response.data)
         })
 
-    };
+    }
 
     return (
         <Modal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
+            onClose={() => {setOpen(false)}}
+            onContextMenu={(event) => {event.preventDefault()}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
-                <Typography>{tags.map((n) => {
-                    return n.id + ' '
-                })}</Typography>
-
-                <ControlledInput name={"name"} label={"Название товара"} control={formControl}
-                                 rules={{required: "Обязательное поле"}}/>
-
-                <ControlledInput name={"catalogKey"} label={"Каталожный номер"} control={formControl}
-                                 rules={{required: "Обязательное поле"}}/>
-
-                <ControlledInput name={"manufacturerBarcode"} label={"Штрихкод производителя"} control={formControl}
-                                 rules={{required: "Обязательное поле"}}/>
-
-                <ControlledInput name={"incomePrice"} label={"Цена возможной закупки"} control={formControl}
-                                 rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
-
-                <ControlledInput name={"dealerPrice"} label={"Оптовая цена"} control={formControl}
-                                 rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
-
-                <ControlledInput name={"retailPrice"} label={"Розничная цена"} control={formControl}
-                                 rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
-
-                <ControlledCheckbox name={"b2BVisibility"} label={'Видим в B2B'}
-                                    control={formControl}/>
-                <ControlledCheckbox name={"retailVisibility"} label={'Видим в интернет-магазине'}
-                                    control={formControl}/>
-
+                <Typography>
+                    {
+                        tags.map((n) => {
+                            return n.id + ' '
+                        })
+                    }
+                </Typography>
+                <ControlledCustomInput name={'name'}
+                                       placeholder={'Название товара'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomInput name={'catalogKey'}
+                                       placeholder={'Каталожный номер'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomInput name={'manufacturerBarcode'}
+                                       placeholder={'Штрих-код производителя'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomInput name={'incomePrice'}
+                                       placeholder={'Цена возможной закупки'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomInput name={'dealerPrice'}
+                                       placeholder={'Оптовая цена'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomInput name={'retailPrice'}
+                                       placeholder={'Розничная цена'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomCheckbox name={'b2BVisibility'}
+                                          label={'Видим в B2B'}
+                                          control={formControl}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
+                <ControlledCustomCheckbox name={'retailVisibility'}
+                                          label={'Видим в интернет-магазине'}
+                                          control={formControl}
+                                          // divClassName={s.infoBlock_checkbox}
+                />
                 <br/>
-                <Button color={'primary'} type={'submit'}>Создать товар</Button>
-                <Button color={'primary'} onClick={() => {
-                    setOpen(false)
-                }}>Отмена</Button>
+                <Button type={'submit'}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Создать товар
+                </Button>
+                <Button onClick={() => {setOpen(false)}}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Отмена
+                </Button>
             </Box>
         </Modal>
     )

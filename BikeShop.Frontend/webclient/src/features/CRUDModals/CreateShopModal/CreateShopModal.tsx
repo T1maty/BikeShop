@@ -140,9 +140,7 @@ export const CreateShopModal = () => {
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentShop === null}
-                                        onClick={() => {
-                                            setCurrentShop(null)
-                                        }}
+                                        onClick={() => {setCurrentShop(null)}}
                                 >
                                     Отмена
                                 </Button>

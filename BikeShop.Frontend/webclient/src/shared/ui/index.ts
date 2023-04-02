@@ -15,8 +15,6 @@ export {ControlledClientCard} from './Controlled/ControlledClientCard'
 export {ControlledInput} from './Controlled/ControlledInput'
 export {ControlledCustomInput} from './Controlled/ControlledCustomInput'
 export {ControlledCustomCheckbox} from './Controlled/ControlledCustomCheckbox'
-export {ControlledCheckbox} from './Controlled/ControlledCheckbox'
-export {ControlledSelect} from './Controlled/ControlledSelect'
 export {ControlledReactSelect} from './Controlled/ControlledReactSelect'
 
 export {UniTreeView} from './CustomTagTreeView/UniTreeView'
