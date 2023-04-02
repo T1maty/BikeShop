@@ -1,13 +1,13 @@
-import {ProductCard, ProductImage, ProductSpecification, ProductTagForCard} from "entities"
+import {ProductImage, ProductSpecificationBind, ProductTag} from "entities"
 import {ProductOptionsWithVariants} from "./ProductOptionsWithVariants";
 
 
 export interface UpdateProductCardFormModel {
     id: number
     checkStatus: string
-    productCard: ProductCard
+    productCard: { description: string, shortDescription: string }
     productOptions: ProductOptionsWithVariants[]
-    productSpecifications: ProductSpecification[]
+    productSpecifications: ProductSpecificationBind[]
     productImages: ProductImage[]
-    productTags: ProductTagForCard[]
+    productTags: ProductTag[]
 }

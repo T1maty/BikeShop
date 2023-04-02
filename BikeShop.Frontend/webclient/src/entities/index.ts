@@ -20,11 +20,16 @@ export type {Specification} from './models/Others/Specification'
 export type {Currency} from './models/Others/Currency'
 export type {ProductOptionVariantBind} from './models/Product/ProductOptionVariantBind'
 export type {ProductOptionsUpdate} from './models/Product/ProductOptionsUpdate'
-export type {ProductTagForCard} from './models/Product/ProductTagForCard'
 export type {ServiceItem} from './models/Service/ServiceItem'
 export type {TreeViewData} from './models/Others/TreeViewData'
 export type {QuantityUnit} from './models/Others/QuantityUnit'
 export type {PaymentData} from './models/PaymentData'
+
+///////////////////////////////////
+//           Models              //
+///////////////////////////////////
+
+export type {ProductFullData} from './models/ProductFullData'
 
 ///////////////////////////////////
 //          Requests             //

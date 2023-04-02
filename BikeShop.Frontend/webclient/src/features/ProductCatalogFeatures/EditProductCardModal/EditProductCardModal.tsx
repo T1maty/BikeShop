@@ -88,10 +88,10 @@ export const EditProductCardModal = () => {
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
         DATA.productSpecifications = specs
-        DATA.productOptions = variants
+        //DATA.productOptions = variants
         DATA.productCard = {
             description: data.productCard.description,
-            shortDescription: data.productCard.descriptionShort
+            shortDescription: data.productCard.shortDescription
         }
         DATA.productTags = tagIds
         DATA.productImages = prodImgs

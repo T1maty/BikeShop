@@ -1,14 +1,14 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {CatalogProductItem, ProductOption, ProductSpecification} from '../index'
+import {ProductFullData, ProductOption, ProductSpecification} from '../index'
 import {
     UpdateProductCardRequest
 } from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardRequest";
 
 export const ProductCardAPI = {
-    getProductCardById(productId: number): Promise<AxiosResponse<CatalogProductItem>> {
+    getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {
         return (
-            $api.get<CatalogProductItem>(`/productcard/getproductcard?productId=${productId}`)
+            $api.get<ProductFullData>(`/productcard/getproductcard?productId=${productId}`)
         )
     },
     updateProductCard(data: UpdateProductCardRequest): any {
