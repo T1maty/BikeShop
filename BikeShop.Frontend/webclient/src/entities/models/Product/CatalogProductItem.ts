@@ -1,3 +1,5 @@
+import {ProductOption} from "../../entities/ProductOption";
+
 export interface CatalogProductItem {
     product: {
         id: number
@@ -40,20 +42,7 @@ export interface CatalogProductItem {
             updatedAt: string
         }
     ],
-    productOptions: [
-        {
-            id: number
-            name: string
-            createdAt: string
-            updatedAt: string
-            enabled: boolean
-            optionVariantId: number
-            productId: number
-            sortOrder: number
-            lintProductId: number
-            optionName: string
-        }
-    ],
+    productOptions: ProductOption[],
     productImages: [
         {
             id: number

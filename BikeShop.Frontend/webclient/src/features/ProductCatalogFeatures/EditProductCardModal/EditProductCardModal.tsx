@@ -15,6 +15,7 @@ import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
 import {ProductSpecificationRequest} from "./models/ProductSpecificationRequest";
 import {ProductOptionVariantBindRequest} from "./models/ProductOptionVariantBindRequest";
+import {ProductImageRequest} from "./models/ProductImageRequest";
 
 export const EditProductCardModal = () => {
 
@@ -74,6 +75,16 @@ export const EditProductCardModal = () => {
             variants.push({optionVariants: vars})
         })
 
+        let tagIds: number[] = []
+        data.productTags.forEach(n => {
+            tagIds.push(n.id)
+        })
+
+        let prodImgs: ProductImageRequest[] = []
+        data.productImages.forEach(n => {
+
+        })
+
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
         DATA.productSpecifications = specs
@@ -82,8 +93,8 @@ export const EditProductCardModal = () => {
             description: data.productCard.description,
             shortDescription: data.productCard.descriptionShort
         }
-        DATA.productTags = []
-        DATA.productImages = []
+        DATA.productTags = tagIds
+        DATA.productImages = prodImgs
         console.log('submitData', DATA)
         updateProductCard(DATA)
 
@@ -116,6 +127,8 @@ export const EditProductCardModal = () => {
     useEffect(() => {
         formControl.setValue('productTags', currentProduct.productTags)
         formControl.setValue('productImages', currentProduct.productImages)
+        formControl.setValue("productSpecifications", currentProduct.productSpecifications)
+        formControl.setValue("productOptions", currentProduct.productOptions)
     }, [currentProduct])
 
     if (isLoading) {

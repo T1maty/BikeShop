@@ -1,28 +1,24 @@
-///////////////////////////////////
-//          Entities             //
-///////////////////////////////////
+export type {Product} from './entities/Product'
+export type {ProductSpecification} from './entities/ProductSpecification'
+export type {ProductSpecificationBind} from './entities/ProductSpecificationBind'
+export type {ProductCard} from './entities/ProductCard'
+export type {ProductOption} from './entities/ProductOption'
+export type {ProductOptionVariant} from './entities/ProductOptionVariant'
+export type {ProductTag} from './entities/ProductTag'
+export type {ProductImage} from './entities/ProductImage'
+///////////////
 export type {LoginData} from './models/Auth/LoginData'
 export type {RegistrationData} from './models/Auth/RegistrationData'
-
 export type {User} from './models/Auth/User'
 export type {Shop} from './models/Auth/Shop'
 export type {SearchClient} from './models/Auth/SearchClient'
 export type {Group} from './models/Service/Group'
 export type {Work} from './models/Service/Work'
-
 export type {CatalogProductItem} from './models/Product/CatalogProductItem'
-export type {Product} from './models/Product/Product'
 export type {ProductExtended} from './models/Product/ProductExtended'
-export type {ProductCard} from './models/Product/ProductCard'
 export type {Specification} from './models/Others/Specification'
-
-export type {ProductOption} from './models/Product/ProductOption'
-export type {ProductOptionVariant} from './models/Product/ProductOptionVariant'
 export type {ProductOptionVariantBind} from './models/Product/ProductOptionVariantBind'
 export type {ProductOptionsUpdate} from './models/Product/ProductOptionsUpdate'
-export type {ProductSpecification} from './models/Product/ProductSpecification'
-export type {ProductImage} from './models/Product/ProductImage'
-export type {ProductTag} from './models/Product/ProductTag'
 export type {ProductTagForCard} from './models/Product/ProductTagForCard'
 export type {ServiceItem} from './models/Service/ServiceItem'
 export type {TreeViewData} from './models/Others/TreeViewData'

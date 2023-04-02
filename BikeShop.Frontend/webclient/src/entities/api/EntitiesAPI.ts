@@ -7,7 +7,7 @@ import {CreateQuantityUnit, UpdateQuantityUnit} from "../requests/CreateQuantity
 import {CreateStorageResponse} from "../responses/StorageResponse"
 import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 import {UpdateSpecification} from '../requests/UpdateSpecification'
-import {Specification} from "../models/Others/Specification"
+import {ProductSpecification} from "../entities/ProductSpecification";
 
 export const EntitiesAPI = {
     Archive: {
@@ -72,14 +72,12 @@ export const EntitiesAPI = {
         },
     },
 
-    Currency: {
-
-    },
+    Currency: {},
 
     Specification: {
-        addNewSpecification(name: string): Promise<AxiosResponse<Specification, any>> {
+        addNewSpecification(name: string): Promise<AxiosResponse<ProductSpecification, any>> {
             return (
-                $api.post<{name: string}, any>(`/productcard/createspecification?name=${name}`)
+                $api.post<{ name: string }, any>(`/productcard/createspecification?name=${name}`)
             )
         },
         updateSpecification(updateData: UpdateSpecification): any {

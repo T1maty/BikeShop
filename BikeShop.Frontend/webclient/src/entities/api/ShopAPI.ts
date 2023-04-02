@@ -1,5 +1,5 @@
 import {$api} from "../../shared"
-import {ProductTag} from "../models/Product/ProductTag"
+import {ProductTag} from "../entities/ProductTag"
 import {AxiosResponse} from "axios"
 import {CatalogProductItem} from "../models/Product/CatalogProductItem"
 
