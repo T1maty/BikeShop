@@ -17,14 +17,19 @@ export const ServiceForm = () => {
     const {enqueueSnackbar} = useSnackbar()
 
     const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
+    const setOpenSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
+    const errorStatus = useService(s => s.errorStatus)
+    const isCreating = useService(s => s.isCreating)
+    const setIsCreating = useService(s => s.setIsCreating)
+
     const masters = useService(s => s.masters)
+
     const currentService = useService(s => s.currentService)
     const setCurrentService = useService(s => s.setCurrentService)
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
-    const setOpenSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
 
-    const [isCreating, setIsCreating] = useState(false)
+    // const [isCreating, setIsCreating] = useState(false)
     const [openClientModal, setOpenClientModal] = useState(false)
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
@@ -50,35 +55,51 @@ export const ServiceForm = () => {
 
     const onSubmit: SubmitHandler<CreateService> = (data: CreateService) => {
         // создание сервиса
+        // if (isCreating) {
+        //     console.log('create IF works, new data =', data)
+        //     data.shopId = 1
+        //
+        //     addNewService(data).then((res: any) => {
+        //         setIsCreating(false)
+        //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
+        //
+        //     }).catch((error: any) => {
+        //         let message = error(error.response.data.errorDescription).toString()
+        //         formControl.setError('name', {type: 'serverError', message: message})
+        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+        //         console.error(error.response.data)
+        //     })
+        // }
         if (isCreating) {
             console.log('create IF works, new data =', data)
             data.shopId = 1
-
-            addNewService(data).then((res: any) => {
-                setIsCreating(false)
-                enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            addNewService(data)
         }
 
         // обновление сервиса
+        // if (!isCreating) {
+        //     console.log('update IF works, updateData = ', data)
+        //
+        //     updateService(data).then((res: any) => {
+        //         enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
+        //     }).catch((error: any) => {
+        //         let message = error(error.response.data.errorDescription).toString()
+        //         formControl.setError('name', {type: 'serverError', message: message})
+        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
+        //         console.error(error.response.data)
+        //     })
+        // }
         if (!isCreating) {
             console.log('update IF works, updateData = ', data)
-
-            updateService(data).then((res: any) => {
-                enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            updateService(data)
         }
+    }
+
+    // очистка всех данных (кнопка ОТМЕНА)
+    const clearAllServiceInfo = () => {
+        formControl.reset()
+        setCurrentService(null)
+        setIsCreating(false)
     }
 
     useEffect(() => {
@@ -97,14 +118,6 @@ export const ServiceForm = () => {
         setSummProducts(summ)
     }, [formControl.watch('serviceProducts')])
 
-
-    // очистка всех данных (кнопка ОТМЕНА)
-    const clearAllServiceInfo = () => {
-        formControl.reset()
-        setCurrentService(null)
-        setIsCreating(false)
-    }
-
     useEffect(() => {
         formControl.reset()
         formControl.setValue('id', currentService ? currentService.id : 0)
@@ -116,6 +129,15 @@ export const ServiceForm = () => {
         formControl.setValue('serviceProducts', currentService ? currentService.products : [])
         formControl.setValue('serviceWorks', currentService ? currentService.works : [])
     }, [currentService])
+
+    useEffect(() => {
+        if (errorStatus === 'success') {
+            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+        }
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
 
     return (
         <div className={s.service_rightSide}>

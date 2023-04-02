@@ -1,15 +1,19 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {CreateService, EnumServiceStatus, User,
-    ServiceItem, UpdateServiceStatus, ServiceAPI
+import {
+    CreateService, EnumServiceStatus, User,
+    ServiceItem, UpdateServiceStatus, ServiceAPI, Specification
 } from '../../../entities'
+import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
 interface ServiceStore {
     isLoading: boolean
-    setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
+    isCreating: boolean
+    setIsCreating: (value: boolean) => void
 
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
@@ -22,6 +26,7 @@ interface ServiceStore {
 
     masters: User[]
     getMasters: () => void
+
     getAllServicesInfo: () => any
     addNewService: (data: CreateService) => any
     updateService: (updateData: CreateService) => any
@@ -30,7 +35,9 @@ interface ServiceStore {
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
-    setIsLoading: (value) => set({isLoading: value}),
+    errorStatus: 'default',
+    isCreating: false,
+    setIsCreating: (value) => {set({isCreating: value})},
 
     currentService: null,
     setCurrentService: (service) => {
@@ -68,6 +75,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         })
     },
+
     getAllServicesInfo: () => {
         set({isLoading: true})
         ServiceAPI.getAllServicesInfo().then(res => {
@@ -77,6 +85,12 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     .filter((item) =>
                         item.status === 'Waiting' || item.status === 'WaitingSupply')
             })
+            set({isLoading: false})
+            set({isCreating: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
             set({isLoading: false})
         })
     },
@@ -93,9 +107,10 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({currentService: res.data})
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('service not created', error)
+            set({errorStatus: 'error'})
         }).finally(() => {
-            // set({isLoading: false})
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     updateService: (updateData) => {
@@ -123,36 +138,42 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 set({isLoading: false})
             })
         }).catch((error: any) => {
-            console.log('service not updated', error)
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     updateServiceStatus: (data: UpdateServiceStatus) => {
         set({isLoading: true})
-        ServiceAPI.updateServiceStatus(data)
-            .then((res: any) => {
-                const currentListStatus = useService.getState().serviceListStatus
+        ServiceAPI.updateServiceStatus(data).then((res: any) => {
+            const currentListStatus = useService.getState().serviceListStatus
 
-                if (currentListStatus) {
+            if (currentListStatus) {
+                set(state => {
+                    state.services.filter(serv => serv.id === data.id)[0].status = data.status
+                })
+                // надо сделать универсальную функцию?
+                if (currentListStatus === 'Waiting') {
                     set(state => {
-                        state.services.filter(serv => serv.id === data.id)[0].status = data.status
+                        state.filteredServices = state.services.filter(serv =>
+                            serv.status === 'Waiting' || serv.status === 'WaitingSupply')
                     })
-                    // надо сделать универсальную функцию?
-                    if (currentListStatus === 'Waiting') {
-                        set(state => {
-                            state.filteredServices = state.services.filter(serv =>
-                                serv.status === 'Waiting' || serv.status === 'WaitingSupply')
-                        })
-                    } else {
-                        set(state => {
-                            state.filteredServices = state.services.filter(serv =>
-                                serv.status === currentListStatus)
-                        })
-                    }
+                } else {
+                    set(state => {
+                        state.filteredServices = state.services.filter(serv =>
+                            serv.status === currentListStatus)
+                    })
                 }
-                set({isLoading: false})
-            }).catch((error: any) => {
-                console.log('service status not updated', error)
-            })
+            }
+
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
     },
 })))/*, {
     name: "serviceStore",
