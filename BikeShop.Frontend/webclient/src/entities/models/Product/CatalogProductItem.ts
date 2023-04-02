@@ -1,4 +1,6 @@
-import {ProductOption} from "../../entities/ProductOption";
+import {
+    ProductOptionsWithVariants
+} from "../../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants";
 
 export interface CatalogProductItem {
     product: {
@@ -42,7 +44,7 @@ export interface CatalogProductItem {
             updatedAt: string
         }
     ],
-    productOptions: ProductOption[],
+    productOptions: ProductOptionsWithVariants[],
     productImages: [
         {
             id: number

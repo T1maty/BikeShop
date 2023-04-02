@@ -55,7 +55,7 @@ export const EditProductCardModal = () => {
                 id: 0,
                 specificationId: n.id,
                 sortOrder: 0,
-                description: n.description,
+                description: '',
                 enabled: true
             } as ProductSpecificationRequest)
         })
@@ -63,7 +63,7 @@ export const EditProductCardModal = () => {
         let variants: { optionVariants: ProductOptionVariantBindRequest[] }[] = []
         data.productOptions.forEach(n => {
             let vars: ProductOptionVariantBindRequest[] = []
-            n.optionVariants.forEach(j => {
+            n.variants.forEach(j => {
                 vars.push({
                     id: 0,
                     enabled: true,
