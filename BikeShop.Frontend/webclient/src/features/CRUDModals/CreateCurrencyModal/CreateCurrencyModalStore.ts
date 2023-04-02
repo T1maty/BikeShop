@@ -2,27 +2,30 @@ import {EntitiesAPI} from "entities/api/EntitiesAPI"
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
+import {Currency, ProductCardAPI} from "../../../entities"
 
 interface CreateCurrencyModalStore {
     openCurrencyModal: boolean
     setOpenCreateCurrencyModal: (value: boolean) => void
     isLoading: boolean
-    setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
 
-    currentCurrency: any // CreateShopResponse | null
-    setCurrentCurrency: (currency: any) => void
+    currentCurrency: Currency | null
+    setCurrentCurrency: (currency: Currency | null) => void
 
-    currencies: any[]
-    // getСurrencies: () => void
-    // addCurrency: (data: CreateShop) => any
-    // updateCurrency: (updateData: UpdateShop) => any
+    currencies: Currency[]
+    getCurrencies: () => void
+    addCurrency: (data: Currency) => any
+    updateCurrency: (updateData: Currency) => any
 }
 
 const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openCurrencyModal: false,
-    setOpenCreateCurrencyModal: (value: boolean) => set({openCurrencyModal: value}),
+    setOpenCreateCurrencyModal: (value: boolean) =>
+        set({openCurrencyModal: value}),
     isLoading: false,
-    setIsLoading: (value: boolean) => set({isLoading: value}),
+    errorStatus: 'default',
 
     currentCurrency: null,
     setCurrentCurrency: (currency) => {
@@ -30,38 +33,56 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
     },
 
     currencies: [],
-    // getСurrencies: () => {
-    //     set({isLoading: true})
-    //     EntitiesAPI.QuantityUnit.getQuantityUnits().then(res => {
-    //         set(state => {
-    //             state.quantityUnits = res.data
-    //             console.log('все ед.измерения', state.quantityUnits)
-    //         })
-    //         set({isLoading: false})
-    //     }).catch((error: any) => {
-    //         console.log('ед.измерения не получены')
-    //     })
-    // },
-    // addCurrency: (data) => {
-    //     set({isLoading: true})
-    //     EntitiesAPI.QuantityUnit.addQuantityUnit(data).then((res: any) => {
-    //         set(state => {
-    //             state.quantityUnits.push(res.data)
-    //         })
-    //         set({isLoading: false})
-    //     }).catch((error: any) => {
-    //         console.log('ед.измерения не создана', error)
-    //     })
-    // },
-    // updateCurrency: (updateData) => {
-    //     set({isLoading: true})
-    //     EntitiesAPI.QuantityUnit.updateQuantityUnit(updateData).then((res: any) => {
-    //         //
-    //         set({isLoading: false})
-    //     }).catch((error: any) => {
-    //         console.log('ед.измерения не обновлена', error)
-    //     })
-    // },
+    getCurrencies: () => {
+        set({isLoading: true})
+        EntitiesAPI.Currency.getCurrencies().then(res => {
+            set(state => {
+                state.currencies = res.data
+                console.log('все валюты', state.currencies)
+            })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+            console.log('ед.измерения не получены')
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
+    addCurrency: (data) => {
+        set({isLoading: true})
+        EntitiesAPI.Currency.createCurrency(data).then((res: any) => {
+            set(state => {
+                state.currencies.push(res.data)
+            })
+            set({isLoading: false})
+            set({errorStatus: 'success'})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
+    updateCurrency: (updateData) => {
+        set({isLoading: true})
+        EntitiesAPI.Currency.updateCurrency(updateData).then((res: any) => {
+            EntitiesAPI.Currency.getCurrencies().then(res => {
+                set(state => {
+                    state.currencies = res.data
+                    state.currentCurrency = null
+                })
+            })
+            set({isLoading: false})
+            set({errorStatus: 'success'})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+            console.log(error)
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
 })))/*, {
     name: "createCurrencyModal",
     version: 1

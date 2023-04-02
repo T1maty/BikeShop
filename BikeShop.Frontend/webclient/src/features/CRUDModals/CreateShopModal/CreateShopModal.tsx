@@ -15,6 +15,7 @@ export const CreateShopModal = () => {
     const open = useCreateShopModal(s => s.openCreateShopModal)
     const setOpen = useCreateShopModal(s => s.setOpenCreateShopModal)
     const isLoading = useCreateShopModal(s => s.isLoading)
+    const errorStatus = useCreateShopModal(s => s.errorStatus)
 
     const currentShop = useCreateShopModal(s => s.currentShop)
     const setCurrentShop = useCreateShopModal(s => s.setCurrentShop)
@@ -37,28 +38,10 @@ export const CreateShopModal = () => {
 
     const onSubmit: SubmitHandler<UpdateShop> = (data: UpdateShop) => {
         if (currentShop === null) {
-            addNewShop(data).then((res: any) => {
-                formControl.reset()
-                getShops()
-                enqueueSnackbar('Магазин создан', {variant: 'success', autoHideDuration: 3000})
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            addNewShop(data)
         }
-
         if (currentShop !== null) {
-            updateShopInfo(data).then((res: any) => {
-                getShops()
-                enqueueSnackbar('Магазин обновлён', {variant: 'success', autoHideDuration: 3000})
-            }).catch((error: any) => {
-                let message = error(error.response.data.errorDescription).toString()
-                formControl.setError('name', {type: 'serverError', message: message})
-                enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-                console.error(error.response.data)
-            })
+            updateShopInfo(data)
         }
     }
 
@@ -72,6 +55,16 @@ export const CreateShopModal = () => {
         formControl.setValue('storageId', currentShop ? currentShop.storageId : 1)
         formControl.setValue('enabled', currentShop ? currentShop.enabled : true)
     }, [currentShop])
+
+    useEffect(() => {
+        if (errorStatus === 'success') {
+            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+            formControl.reset()
+        }
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
 
     useEffect(() => {
         getShops()

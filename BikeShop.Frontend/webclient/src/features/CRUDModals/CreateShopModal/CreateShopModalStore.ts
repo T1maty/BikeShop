@@ -3,12 +3,13 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CreateShop, EntitiesAPI, UpdateShop} from '../../../entities'
 import {CreateShopResponse} from "../../../entities/responses/ShopResponse"
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface CreateShopModalStore {
     openCreateShopModal: boolean
     setOpenCreateShopModal: (value: boolean) => void
     isLoading: boolean
-    setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
 
     currentShop: CreateShopResponse | null
     setCurrentShop: (shop: CreateShopResponse | null) => void
@@ -22,7 +23,7 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
     openCreateShopModal: false,
     setOpenCreateShopModal: (value: boolean) => set({openCreateShopModal: value}),
     isLoading: false,
-    setIsLoading: (value: boolean) => set({isLoading: value}),
+    errorStatus: 'default',
 
     currentShop: null,
     setCurrentShop: (shop) => {
@@ -38,29 +39,43 @@ const useCreateShopModal = create<CreateShopModalStore>()(/*persist(*/devtools(i
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('магазины не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     addNewShop: (data) => {
         set({isLoading: true})
         EntitiesAPI.Shop.addNewShop(data).then((res: any) => {
-            // set(state => {
-            //     state.shops.push(res.data)
-            // })
+            set(state => {
+                state.shops.push(res.data)
+            })
             set({isLoading: false})
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
-            console.log('магазин не создан', error)
+            set({errorStatus: 'error'})
+            console.log(error)
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
     updateShopInfo: (updateData) => {
         set({isLoading: true})
         EntitiesAPI.Shop.updateShopInfo(updateData).then((res: any) => {
-            // set(state => {
-            //     state.shops.push(res.data)
-            // })
+            EntitiesAPI.Shop.getShops().then(res => {
+                set(state => {
+                    state.shops = res.data
+                    state.currentShop = null
+                })
+            })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('магазин не обновлён', error)
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 })))/*, {

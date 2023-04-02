@@ -8,6 +8,7 @@ import {CreateStorageResponse} from "../responses/StorageResponse"
 import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 import {UpdateSpecification} from '../requests/UpdateSpecification'
 import {Specification} from "../models/Others/Specification"
+import {Currency} from "../models/Others/Currency";
 
 export const EntitiesAPI = {
     Archive: {
@@ -73,7 +74,26 @@ export const EntitiesAPI = {
     },
 
     Currency: {
-
+        getCurrencies(): Promise<AxiosResponse<Currency[]>> {
+            return (
+                $api.get<Currency[]>('/currency/getall')
+            )
+        },
+        createCurrency(data: Currency): any {
+            return (
+                $api.post<Currency>('/currency/create', data)
+            )
+        },
+        updateCurrency(updateData: Currency): any {
+            return (
+                $api.put<Currency>('/currency/update', updateData)
+            )
+        },
+        getCurrencyHistory(currencyID: number): any {
+            return (
+                $api.get<Currency>(`/currency/gethistory?currencyID=${currencyID}`)
+            )
+        },
     },
 
     Specification: {

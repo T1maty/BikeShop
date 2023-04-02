@@ -7,5 +7,5 @@
   gap: $defaultLargeMargin;
   min-width: 700px;
 
-  @include createShopStorageModal(430px, 50%, 50%);
+  @include createShopStorageModal(380px, 50%, 50%);
 }

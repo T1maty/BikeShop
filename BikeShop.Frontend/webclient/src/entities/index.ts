@@ -9,6 +9,7 @@ export type {Shop} from './models/Auth/Shop'
 export type {SearchClient} from './models/Auth/SearchClient'
 export type {Group} from './models/Service/Group'
 export type {Work} from './models/Service/Work'
+export type {Currency} from './models/Others/Currency'
 
 export type {CatalogProductItem} from './models/Product/CatalogProductItem'
 export type {Product} from './models/Product/Product'
