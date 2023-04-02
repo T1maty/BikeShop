@@ -9,6 +9,7 @@ export {EditableSpan} from './EditableSpan/EditableSpan'
 export {InputUI} from './InputUI/InputUI'
 export {CustomInput} from './CustomInput/CustomInput'
 export {CustomSearchInput} from './CustomInput/CustomSeacrhInput'
+export {CustomCheckbox} from './CustomCheckbox/CustomCheckbox'
 
 export {ControlledClientCard} from './Controlled/ControlledClientCard'
 export {ControlledInput} from './Controlled/ControlledInput'
