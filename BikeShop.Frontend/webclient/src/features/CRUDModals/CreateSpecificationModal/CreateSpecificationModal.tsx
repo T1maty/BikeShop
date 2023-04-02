@@ -3,8 +3,10 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Modal} from '@mui/material'
 import s from './CreateSpecificationModal.module.scss'
-import {Button, ControlledCheckbox, ControlledCustomInput,
-    ControlledInput, LoaderScreen} from '../../../shared/ui'
+import {
+    Button, ControlledCheckbox, ControlledCustomInput,
+    ControlledInput, CustomCheckbox, LoaderScreen
+} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateSpecificationModal from './CreateSpecificationModalStore'
 import {UpdateSpecification} from '../../../entities/requests/UpdateSpecification'
@@ -144,6 +146,13 @@ export const CreateSpecificationModal = () => {
                                                     control={formControl}
                                                     divClassName={s.infoBlock_checkbox}
                                 />
+
+                                <CustomCheckbox // checked={checked}
+                                                // onChangeChecked={setChecked}
+                                >
+                                    Спецификация включена
+                                </CustomCheckbox>
+
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentSpecification === null}
                                         onClick={() => {setCurrentSpecification(null)}}
