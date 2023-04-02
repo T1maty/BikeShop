@@ -7,8 +7,7 @@ import {CreateQuantityUnit, UpdateQuantityUnit} from "../requests/CreateQuantity
 import {CreateStorageResponse} from "../responses/StorageResponse"
 import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 import {UpdateSpecification} from '../requests/UpdateSpecification'
-import {Specification} from "../models/Others/Specification"
-import {Currency} from "../models/Others/Currency";
+import {ProductSpecification} from "../entities/ProductSpecification";
 
 export const EntitiesAPI = {
     Archive: {
@@ -73,33 +72,12 @@ export const EntitiesAPI = {
         },
     },
 
-    Currency: {
-        getCurrencies(): Promise<AxiosResponse<Currency[]>> {
-            return (
-                $api.get<Currency[]>('/currency/getall')
-            )
-        },
-        createCurrency(data: Currency): any {
-            return (
-                $api.post<Currency>('/currency/create', data)
-            )
-        },
-        updateCurrency(updateData: Currency): any {
-            return (
-                $api.put<Currency>('/currency/update', updateData)
-            )
-        },
-        getCurrencyHistory(currencyID: number): any {
-            return (
-                $api.get<Currency>(`/currency/gethistory?currencyID=${currencyID}`)
-            )
-        },
-    },
+    Currency: {},
 
     Specification: {
-        addNewSpecification(name: string): Promise<AxiosResponse<Specification, any>> {
+        addNewSpecification(name: string): Promise<AxiosResponse<ProductSpecification, any>> {
             return (
-                $api.post<{name: string}, any>(`/productcard/createspecification?name=${name}`)
+                $api.post<{ name: string }, any>(`/productcard/createspecification?name=${name}`)
             )
         },
         updateSpecification(updateData: UpdateSpecification): any {

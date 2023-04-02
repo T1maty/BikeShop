@@ -1,3 +1,7 @@
+import {
+    ProductOptionsWithVariants
+} from "../../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants";
+
 export interface CatalogProductItem {
     product: {
         id: number
@@ -40,20 +44,7 @@ export interface CatalogProductItem {
             updatedAt: string
         }
     ],
-    productOptions: [
-        {
-            id: number
-            name: string
-            createdAt: string
-            updatedAt: string
-            enabled: boolean
-            optionVariantId: number
-            productId: number
-            sortOrder: number
-            lintProductId: number
-            optionName: string
-        }
-    ],
+    productOptions: ProductOptionsWithVariants[],
     productImages: [
         {
             id: number
