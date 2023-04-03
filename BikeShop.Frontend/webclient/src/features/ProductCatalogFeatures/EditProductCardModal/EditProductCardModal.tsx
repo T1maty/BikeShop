@@ -145,14 +145,16 @@ export const EditProductCardModal = () => {
             })
         })
         console.log("Глобальная установка дефолтных значений")
-
-        let contentBlock = htmlToDraft(currentProduct.productCard.description)
-        console.log('загружаем дефолтное значение', currentProduct.productCard.description)
-        if (contentBlock) {
-            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-            const editorState = EditorState.createWithContent(contentState);
-            setEditorState(editorState)
+        if (currentProduct.productCard != undefined) {
+            let contentBlock = htmlToDraft(currentProduct.productCard?.description)
+            console.log('загружаем дефолтное значение', currentProduct.productCard.description)
+            if (contentBlock) {
+                const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                const editorState = EditorState.createWithContent(contentState);
+                setEditorState(editorState)
+            }
         }
+
 
         formControl.setValue("productOptions", options)
     }, [currentProduct])
