@@ -1,0 +1,35 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.registrationPage_container {
+    background-color: $themeColorGray;
+    @include flexCenter;
+    height: 100vh;
+
+    .loginForm_mainBox {
+        background-color: $themeColorDark;
+        border: 1px solid white;
+        border-radius: $smallBorderRadius;
+        width: 350px;
+        height: 370px;
+        @include flexColumn;
+        padding: 0 40px;
+
+        @include RegistrationBlock(268px); // main layout styles
+
+        .haveAccount {
+            margin-top: 20px;
+
+            &:hover {
+                cursor: pointer;
+                color: #1876D1;
+            }
+        }
+    }
+}
+
+.checkbox_block {
+    display: flex;
+    margin-top: 20px;
+    text-align: center;
+}

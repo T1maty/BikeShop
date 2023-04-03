@@ -60,7 +60,7 @@ export const RegistrationForm = () => {
                 </form>
             </div>
             <Button type={'submit'} buttonDivWrapper={s.loginForm_submitButton}>
-                Готово
+                Зарегистрироваться
             </Button>
         </div>
     )
