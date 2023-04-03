@@ -1,27 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import s from './Order.module.scss'
-import {Button, ControlledInput} from '../../../../shared/ui';
-import {Errors} from '../../../../entities/errors/workspaceErrors';
-import {SubmitHandler, useForm} from 'react-hook-form';
+import {Button, ControlledCustomInput} from '../../../../shared/ui'
+import {Errors} from '../../../../entities/errors/workspaceErrors'
+import {SubmitHandler, useForm} from 'react-hook-form'
 
 export const Order = () => {
-
-    const InputStyles = {
-        color: 'black',
-        '.MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '.MuiSvgIcon-root ': {
-            fill: 'black',
-        },
-    }
-    const InputLabelProps = {style: { color: 'black'}}
 
     // тестовые данные
     const [order, setOrder] = useState([
@@ -30,7 +13,6 @@ export const Order = () => {
         {id: '3', name: 'Specialized'},
     ])
 
-    // сбор данных с формы //
     const formControl = useForm({
         defaultValues: {
             lastName: '',
@@ -41,17 +23,9 @@ export const Order = () => {
         }
     });
 
-    // const onSubmit: SubmitHandler<any> = (data: any) => {
-    //     addNewService(data).then((res: any) => {
-    //         clearSubmitInfo() // очистка полей
-    //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-    //     }).catch((error: any) => {
-    //         let message = error(error.response.data.errorDescription).toString()
-    //         formControl.setError('name', {type: 'serverError', message: message})
-    //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-    //         console.error(error.response.data)
-    //     })
-    // }
+    const onSubmit: SubmitHandler<any> = (data: any) => {
+        //
+    }
 
     return (
         <div className={s.order_mainBox}>
@@ -62,48 +36,43 @@ export const Order = () => {
                         <div className={s.formItem_title}>Контактная информация</div>
                         <div className={s.contacts_items}>
                             <div className={s.contacts_lastName}>
-                                <ControlledInput name={'lastName'}
-                                                 label={'Фамилия'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                                 sx={InputStyles}
-                                                 InputLabelProps={InputLabelProps}
+                                <ControlledCustomInput name={'lastName'}
+                                                       placeholder={'Фамилия'}
+                                                       color={'black'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.contacts_firstName}>
-                                <ControlledInput name={'firstName'}
-                                                 label={'Имя'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                                 sx={InputStyles}
-                                                 InputLabelProps={InputLabelProps}
+                                <ControlledCustomInput name={'firstName'}
+                                                       placeholder={'Имя'}
+                                                       color={'black'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.contacts_patronymic}>
-                                <ControlledInput name={'patronymic'}
-                                                 label={'Отчество'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                                 sx={InputStyles}
-                                                 InputLabelProps={InputLabelProps}
+                                <ControlledCustomInput name={'patronymic'}
+                                                       placeholder={'Отчество'}
+                                                       color={'black'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.contacts_phone}>
-                                <ControlledInput name={'phone'}
-                                                 label={'Телефон'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                                 sx={InputStyles}
-                                                 InputLabelProps={InputLabelProps}
+                                <ControlledCustomInput name={'phone'}
+                                                       placeholder={'Телефон'}
+                                                       color={'black'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
                             </div>
                             <div className={s.contacts_email}>
-                                <ControlledInput name={'email'}
-                                                 label={'Почта'}
-                                                 control={formControl}
-                                                 rules={{required: Errors[0].name}}
-                                                 sx={InputStyles}
-                                                 InputLabelProps={InputLabelProps}
+                                <ControlledCustomInput name={'email'}
+                                                       placeholder={'Почта'}
+                                                       color={'black'}
+                                                       control={formControl}
+                                                       rules={{required: Errors[0].name}}
                                 />
                             </div>
                         </div>
@@ -155,8 +124,7 @@ export const Order = () => {
                             </div>
                             <hr/>
                             <div className={s.price_confirmButton}>
-                                <Button onClick={() => {
-                                }}>
+                                <Button onClick={() => {}}>
                                     Подтвердить заказ
                                 </Button>
                             </div>

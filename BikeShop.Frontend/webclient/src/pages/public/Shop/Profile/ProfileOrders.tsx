@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import s from './ProfileOrders.module.scss'
-import {MenuItem} from '@mui/material';
-import {Button, ControlledInput} from '../../../../shared/ui';
-import {Errors} from '../../../../entities/errors/workspaceErrors';
-import {useForm} from 'react-hook-form';
+import {Button, ControlledCustomInput} from '../../../../shared/ui'
+import {useForm} from 'react-hook-form'
 
 type ProfileOrderStatusEng = 'WaitingPayment' | 'WaitingPackage' | 'Ready' | 'Canceled'
 type ProfileOrderStatusRu = 'Ожидает оплаты' | 'Ожидает комплектации' | 'Готов к выдаче' | 'Отменён'
@@ -16,6 +14,7 @@ export const ProfileOrders = () => {
     const img03 = 'https://i.pinimg.com/originals/8c/ef/90/8cef90ae85a3276e873ba89b21ff34e1.jpg'
     const img04 = 'https://i.pinimg.com/originals/c8/43/33/c8433307705031e7514bfd3d46cb0629.jpg'
 
+    // тестовые данные
     const [items, setItems] = useState([
         {
             id: '1', status: 'Ожидает комплектации', sum: 999, isPay: true, isCollapsed: false,
@@ -35,23 +34,6 @@ export const ProfileOrders = () => {
         },
     ])
 
-    const InputStyles = {
-        color: 'black',
-        '.MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '.MuiSvgIcon-root ': {
-            fill: 'black',
-        },
-    }
-    const InputLabelProps = {style: { color: 'black'}}
-
     // сбор данных с формы //
     const formControl = useForm({
         defaultValues: {
@@ -62,15 +44,7 @@ export const ProfileOrders = () => {
     });
 
     // const onSubmit: SubmitHandler<any> = (data: any) => {
-    //     addNewService(data).then((res: any) => {
-    //         clearSubmitInfo() // очистка полей
-    //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-    //     }).catch((error: any) => {
-    //         let message = error(error.response.data.errorDescription).toString()
-    //         formControl.setError('name', {type: 'serverError', message: message})
-    //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-    //         console.error(error.response.data)
-    //     })
+
     // }
 
     const collapseItem = (currentItemId: string) => {
@@ -135,30 +109,27 @@ export const ProfileOrders = () => {
                                             <div className={s.collapsedPart_deliveryType}>Способ получения: доставка</div>
                                             <div className={s.collapsedPart_deliveryDetails}>
                                                 <div>
-                                                    <ControlledInput name={'delivery-company'}
-                                                                     label={'Грузовая'}
-                                                                     control={formControl}
-                                                                     rules={{required: Errors[0].name}}
-                                                                     sx={InputStyles}
-                                                                     InputLabelProps={InputLabelProps}
+                                                    <ControlledCustomInput name={'delivery-company'}
+                                                                           placeholder={'Грузовая'}
+                                                                           control={formControl}
+                                                                           color={'black'}
+                                                                           // rules={{required: Errors[0].name}}
                                                     />
                                                 </div>
                                                 <div>
-                                                    <ControlledInput name={'post-type'}
-                                                                     label={'Почта'}
-                                                                     control={formControl}
-                                                                     rules={{required: Errors[0].name}}
-                                                                     sx={InputStyles}
-                                                                     InputLabelProps={InputLabelProps}
+                                                    <ControlledCustomInput name={'post-type'}
+                                                                           placeholder={'Почта'}
+                                                                           control={formControl}
+                                                                           color={'black'}
+                                                                           // rules={{required: Errors[0].name}}
                                                     />
                                                 </div>
                                                 <div>
-                                                    <ControlledInput name={'post-type'}
-                                                                     label={'Почта'}
-                                                                     control={formControl}
-                                                                     rules={{required: Errors[0].name}}
-                                                                     sx={InputStyles}
-                                                                     InputLabelProps={InputLabelProps}
+                                                    <ControlledCustomInput name={'post-type'}
+                                                                           placeholder={'Почта'}
+                                                                           control={formControl}
+                                                                           color={'black'}
+                                                                           // rules={{required: Errors[0].name}}
                                                     />
                                                 </div>
                                             </div>
