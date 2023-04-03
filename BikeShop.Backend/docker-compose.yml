@@ -50,7 +50,7 @@ services:
     build:
       context: BikeShop.FileService
       dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.shop
+    image: nomadrilius/bikeshop.fileservice
     hostname: bikeshop.FileService
     ports:
       - 5005:80
@@ -82,12 +82,15 @@ services:
       - bikeshop.products
       - bikeshop.service
       - bikeshop.shop
+      - bikeshop.fileservice
+      - bikeshop.payments
     depends_on:
       - bikeshop.identity
       - bikeshop.products
       - bikeshop.service
       - bikeshop.shop
-
+      - bikeshop.fileservice
+      - bikeshop.payments
 
   
     
