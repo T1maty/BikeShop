@@ -5,6 +5,7 @@ using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.WebApi.Models.Product;
@@ -147,6 +148,18 @@ namespace BikeShop.Products.WebApi.Controllers
         public async Task<ProductImg> AddImageToProduct(int productId, [FromForm]IFormFile imageFile)
         {
             return await _productService.AddImageToProduct(productId, imageFile);
+        }
+
+        [HttpPost("deleteimage")]
+        public async Task DeleteImage(int imageId)
+        {
+            await _productService.DeleteImage(imageId);
+        }
+
+        [HttpPut("updateimage")]
+        public async Task<ProductImg> UpdateImage(ProductImageDTO dto)
+        {
+            return await _productService.UpdateImage(dto);
         }
     }
 }

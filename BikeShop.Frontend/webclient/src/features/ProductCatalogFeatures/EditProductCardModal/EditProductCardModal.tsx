@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './EditProductCardModal.module.scss'
 import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
@@ -13,13 +13,14 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import {useSnackbar} from "notistack"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
-import {ProductOptionVariantBind} from "../../../entities";
+import {ProductImage, ProductOptionVariantBind} from "../../../entities";
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
 
 export const EditProductCardModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
+    const [images, setImages] = useState<ProductImage[]>([])
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
@@ -39,7 +40,6 @@ export const EditProductCardModal = () => {
             },
             productOptions: [],
             productSpecifications: [],
-            productImages: [],
             productTags: [],
         }
     })
@@ -77,7 +77,6 @@ export const EditProductCardModal = () => {
             shortDescription: data.productCard.shortDescription
         }
         DATA.productTags = tagIds
-        DATA.productImages = data.productImages
         console.log('submitData', DATA)
         updateProductCard(DATA)
 
@@ -106,13 +105,14 @@ export const EditProductCardModal = () => {
         getAllOptions()
         getAllSpecifications()
         formControl.setValue('productTags', currentProduct.productTags)
-        formControl.setValue('productImages', currentProduct.productImages)
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
         formControl.setValue("productSpecifications", currentProduct.productSpecifications)
         formControl.setValue("productCard", {
             description: currentProduct.productCard != undefined ? currentProduct.productCard.description : '',
             shortDescription: currentProduct.productCard != undefined ? currentProduct.productCard.descriptionShort : ''
         })
+
+        setImages(currentProduct.productImages)
 
         let options: ProductOptionsWithVariants[] = []
         let ids: number[] = []
@@ -163,7 +163,9 @@ export const EditProductCardModal = () => {
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags control={formControl} name={'productTags'}/>
                             <EditProductCardStatus control={formControl} name={'checkStatus'}/>
-                            <EditProductCardGallery control={formControl} name={'productImages'}/>
+
+                            <EditProductCardGallery images={images} setImages={setImages}/>
+
                         </div>
 
                         <EditProductCardDescription control={formControl} name={'productCard'}/>

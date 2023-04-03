@@ -209,6 +209,38 @@
       ],
       "SwaggerKey": "products"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/product/deleteimage",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/product/deleteimage",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	
+	{
+      "UpstreamPathTemplate": "/api/product/updateimage",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/product/updateimage",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
 
     {
       "UpstreamPathTemplate": "/api/storage/getbystorage",

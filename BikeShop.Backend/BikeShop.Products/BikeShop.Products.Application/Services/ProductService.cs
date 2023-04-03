@@ -1,6 +1,7 @@
 ﻿using BikeShop.Products.Application.Common.Exceptions;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Application.RefitClients;
+using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BikeShop.Products.Application.Services
 {
@@ -107,6 +109,20 @@ namespace BikeShop.Products.Application.Services
             img.Url = url;
             await _context.SaveChangesAsync(new CancellationToken());
             return img;
+        }
+
+        public async Task DeleteImage(int imageId)
+        {
+            _context.ProductImgs.Remove(await _context.ProductImgs.FindAsync(imageId));   
+        }
+
+        public async Task<ProductImg> UpdateImage(ProductImageDTO dto)
+        {
+            var ent = await _context.ProductImgs.FindAsync(dto.Id);
+            ent.SortOrder = dto.SortOrder;
+            ent.UpdatedAt = DateTime.Now;
+            await _context.SaveChangesAsync(new CancellationToken());
+            return ent;
         }
     }
 }

@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const API_URL = "https://bikeshop59.store/api";
+export const API_URL = "https://www.bikeshop59.store/api";
 
 const $api = axios.create({
 
     baseURL: API_URL,
     headers: {
-        "Content-Type": "application/json",
+        //"Content-Type": "application/json",
     },
     withCredentials: true,
 
