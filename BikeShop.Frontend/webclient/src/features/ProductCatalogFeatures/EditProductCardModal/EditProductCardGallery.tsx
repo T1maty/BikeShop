@@ -55,8 +55,14 @@ export const EditProductCardGallery = (props: prp) => {
     }
 
     const deleteImageHandler = (imgId: number) => {
-        props.setImages(props.images.filter((img: ProductImage) => img.id !== imgId))
-        setCurrentImageKey(null)
+        $api.post(`/product/deleteimage?imageId=${imgId}`).then((r) => {
+            console.log(imgId, r)
+            props.setImages(props.images.filter((img: ProductImage) => img.id !== imgId))
+            setCurrentImageKey(null)
+        }).catch((r) => {
+            console.log(r)
+        })
+
     }
 
     const onMoveBackwardHandler = (imgKey: number) => {

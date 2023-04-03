@@ -113,7 +113,8 @@ namespace BikeShop.Products.Application.Services
 
         public async Task DeleteImage(int imageId)
         {
-            _context.ProductImgs.Remove(await _context.ProductImgs.FindAsync(imageId));   
+            _context.ProductImgs.Remove(await _context.ProductImgs.FindAsync(imageId));
+            await _context.SaveChangesAsync(new CancellationToken());
         }
 
         public async Task<ProductImg> UpdateImage(ProductImageDTO dto)
