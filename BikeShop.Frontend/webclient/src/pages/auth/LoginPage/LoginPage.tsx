@@ -1,10 +1,12 @@
 import React from "react"
-import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material"
-import {Controller, SubmitHandler, useForm} from "react-hook-form"
-import {NavLink, useNavigate} from "react-router-dom"
+import s from '../LoginPage/LoginPage.module.scss'
+import {SubmitHandler, useForm} from "react-hook-form"
+import {useNavigate} from "react-router-dom"
 import {LoginData} from "../../../entities"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import useAuthUser from '../useAuthUser'
+import {ControlledCustomInput, Button} from '../../../shared/ui'
+import {Errors} from '../../../entities/errors/workspaceErrors'
 
 export const LoginPage = () => {
 
@@ -14,7 +16,7 @@ export const LoginPage = () => {
 
     const navigate = useNavigate()
 
-    const {control, formState: {errors}, handleSubmit} = useForm<LoginData>({
+    const formControl = useForm<LoginData>({
         defaultValues: {
             phone: '',
             password: '',
@@ -23,7 +25,6 @@ export const LoginPage = () => {
 
     const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
         login(data).then((r) => {
-
             localStorage.setItem('accessToken', r.data.accessToken)
             setUser(r.data.user)
             if (r.data.user.shopId != 0) {
@@ -32,53 +33,54 @@ export const LoginPage = () => {
             } else {
                 navigate(BikeShopPaths.SHOP.PROFILE)
             }
-
-
         })
     }
 
     return (
-        <Stack justifyContent="center" alignItems="center" sx={{height: "100vh"}}>
-            <Container maxWidth="sm">
-                <Typography variant="h4">Login</Typography>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                    <Controller
-                        name="phone"
-                        control={control}
-                        rules={{
-                            required: "Phone number is required",
-                            minLength: {value: 4, message: "Min length is 4"},
-                            pattern: {
-                                value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
-                                message: "Phone number is invalid"
-                            }
-                        }}
-                        render={({field}: any) => <TextField {...field}
-                                                             error={!!errors.phone}
-                                                             helperText={errors.phone ? errors.phone?.message : ""}
-                                                             label="Phone number"
-                                                             variant="outlined"
-                                                             fullWidth margin="dense"/>}
-                    />
-                    <Controller
-                        name="password"
-                        control={control}
-                        rules={{required: "Password is required"}}
-                        render={({field}: any) => <TextField {...field}
-                                                             type="password"
-                                                             error={!!errors.password}
-                                                             helperText={errors.password ? errors.password?.message : ""}
-                                                             label="Password" variant="outlined"
-                                                             fullWidth
-                                                             margin="dense"/>}
-                    />
+        <div className={s.loginPage_container}>
 
-                    <Button type="submit" variant="contained" sx={{mt: 2}}>Login</Button>
-                </Box>
-                <NavLink to="/registration">Registration</NavLink><br/>
-                <NavLink to="/main">main page</NavLink><br/>
-                <NavLink to="/workcatalog">workcatalog</NavLink><br/>
-            </Container>
-        </Stack>
+            <div className={s.loginForm_mainBox}>
+                <div className={s.loginForm_title}>
+                    Авторизация
+                </div>
+                <div className={s.loginForm_form}>
+                    <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                        <div>
+                            <ControlledCustomInput name={'phone'}
+                                                   placeholder={'Почта или номер телефона'}
+                                                   control={formControl}
+                                                   rules={{
+                                                       required: 'Поле обязательно для заполнения',
+                                                       minLength: {value: 4, message: 'Минимальная длина 4 символа'},
+                                                       pattern: {
+                                                           value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                                                           message: 'Неверный формат номера телефона'
+                                                       }
+                                                   }}
+                            />
+                        </div>
+                        <div>
+                            <ControlledCustomInput name={'password'}
+                                                   placeholder={'Пароль'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
+                            />
+                        </div>
+                    </form>
+                </div>
+                <div className={s.loginForm_buttons}>
+                    <Button buttonDivWrapper={s.loginForm_registerButton}
+                            onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
+                    >
+                        Регистрация
+                    </Button>
+                    <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
+                        Вход
+                    </Button>
+                </div>
+
+            </div>
+
+        </div>
     )
 }

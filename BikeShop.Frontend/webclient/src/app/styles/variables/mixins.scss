@@ -488,16 +488,15 @@
 ////////////////////////////////////////////////////////////////////
 
 // Registration
-@mixin RegistrationBlock() {
+@mixin RegistrationBlock($buttonWidth) {
 
-    // variants here
+    // custom variants here
 
     .loginForm_title {
         margin: 30px 0 30px 0;
         font-size: 30px;
         font-weight: bold;
         color: $themeColorMilk;
-        //color: black;
     }
     .loginForm_form {
         margin-bottom: $defaultSmallMargin;
@@ -509,7 +508,7 @@
         }
     }
     .loginForm_submitButton {
-        width: 240px;
+        width: $buttonWidth;
         display: flex;
         justify-content: center;
 

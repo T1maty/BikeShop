@@ -38,7 +38,14 @@ export const RegistrationPage = () => {
                             <ControlledCustomInput name={'phone'}
                                                    placeholder={'Номер телефона'}
                                                    control={formControl}
-                                                   rules={{required: Errors[0].name}}
+                                                   rules={{
+                                                       required: 'Поле обязательно для заполнения',
+                                                       minLength: {value: 4, message: 'Минимальная длина 4 символа'},
+                                                       pattern: {
+                                                           value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                                                           message: 'Неверный формат номера телефона'
+                                                       }
+                                                   }}
                             />
                         </div>
                         <div>
@@ -68,46 +75,3 @@ export const RegistrationPage = () => {
         </div>
     )
 }
-
-
-// <Stack justifyContent="center" alignItems="center" sx={{height: '100vh'}}>
-//     <Container maxWidth="sm">
-//         <Typography variant="h4">Registration</Typography>
-//         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-//             <Controller
-//                 name="phone"
-//                 control={control}
-//                 rules={{
-//                     required: 'Phone number is required',
-//                     minLength: {value: 4, message: 'Min length is 4'},
-//                     pattern: {
-//                         value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
-//                         message: 'Phone number is invalid'
-//                     }
-//                 }}
-//                 render={({field}: any) => <TextField {...field}
-//                                                      error={!!errors.phone}
-//                                                      helperText={errors.phone ? errors.phone?.message : ''}
-//                                                      label="Phone number" variant="outlined"
-//                                                      fullWidth margin="dense"/>}
-//             />
-//
-//             <Controller
-//                 name="password"
-//                 control={control}
-//                 rules={{required: 'Password is required'}}
-//                 render={({field}: any) => <TextField {...field}
-//                                                      type="password"
-//                                                      error={!!errors.password}
-//                                                      helperText={errors.password ? errors.password?.message : ''}
-//                                                      label="Password" variant="outlined"
-//                                                      fullWidth
-//                                                      margin="dense"/>}
-//             />
-//
-//             <Button type="submit" variant="contained" sx={{mt: 2}}>Register</Button>
-//         </Box>
-//         <br/>
-//         <NavLink to="/login">Login</NavLink><br/>
-//     </Container>
-// </Stack>
