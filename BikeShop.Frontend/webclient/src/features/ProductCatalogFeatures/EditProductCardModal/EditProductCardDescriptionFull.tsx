@@ -1,28 +1,27 @@
-import React, {useState} from 'react'
+import React from 'react'
 import s from "./EditProductCardModal.module.scss"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import draftToHtml from 'draftjs-to-html'
 import {Editor} from "react-draft-wysiwyg"
 import {convertToRaw, EditorState} from "draft-js"
 import {Controller, UseFormReturn} from "react-hook-form"
-import htmlToDraft from "html-to-draftjs"
 
 interface ControlledProps {
     name: string
     control: UseFormReturn<any>
+    editorState: EditorState
+    setEditorState: (value: EditorState) => void
 }
 
 export const EditProductCardDescriptionFull = (props: ControlledProps) => {
 
-    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    const {editorState, setEditorState} = props
 
     const onChangeEditorHandler = (editorState: any, field: any) => {
         setEditorState(editorState)
         const result = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         field.onChange({...field.value, description: result});
-        console.log('конвертация:', htmlToDraft(result))
     }
-
 
     return (
         <Controller
@@ -47,6 +46,7 @@ export const EditProductCardDescriptionFull = (props: ControlledProps) => {
                             toolbarClassName={s.editor_toolbar}
                             // editorClassName="editorClassName"
                             editorClassName={s.editorClassName}
+
                         />
                     </div>
                 </div>

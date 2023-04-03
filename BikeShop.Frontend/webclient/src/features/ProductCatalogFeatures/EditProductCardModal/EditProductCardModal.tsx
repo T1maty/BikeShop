@@ -5,7 +5,6 @@ import useEditProductCardModal from './EditProductCardModalStore'
 import {Button, LoaderScreen} from '../../../shared/ui'
 import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
 import {EditProductCardOption} from "./EditProductCardOption"
-import {EditProductCardDescription} from "./EditProductCardDescription"
 import {EditProductCardGallery} from "./EditProductCardGallery"
 import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
@@ -15,11 +14,16 @@ import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
 import {ProductImage, ProductOptionVariantBind} from "../../../entities";
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
+import {ContentState, EditorState} from "draft-js";
+import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull";
+import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort";
+import htmlToDraft from "html-to-draftjs";
 
 export const EditProductCardModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [images, setImages] = useState<ProductImage[]>([])
 
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
@@ -140,7 +144,15 @@ export const EditProductCardModal = () => {
                 enabled: n.enabled
             })
         })
+        console.log("Глобальная установка дефолтных значений")
 
+        let contentBlock = htmlToDraft(currentProduct.productCard.description)
+        console.log('загружаем дефолтное значение', currentProduct.productCard.description)
+        if (contentBlock) {
+            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+            const editorState = EditorState.createWithContent(contentState);
+            setEditorState(editorState)
+        }
 
         formControl.setValue("productOptions", options)
     }, [currentProduct])
@@ -168,7 +180,13 @@ export const EditProductCardModal = () => {
 
                         </div>
 
-                        <EditProductCardDescription control={formControl} name={'productCard'}/>
+
+                        <div className={s.leftSide_descriptionEditor}>
+                            <EditProductCardDescriptionFull control={formControl} name={'productCard'}
+                                                            editorState={editorState} setEditorState={setEditorState}/>
+                            <EditProductCardDescriptionShort control={formControl} name={'productCard'}/>
+                        </div>
+
 
                         <div className={s.editProductCardModal_rightSide}>
                             <EditProductCardOption divClassName={s.rightSide_productDetails}
