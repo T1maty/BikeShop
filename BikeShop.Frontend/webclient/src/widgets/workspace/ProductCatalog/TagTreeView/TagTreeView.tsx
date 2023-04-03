@@ -8,7 +8,11 @@ import {UniTreeView} from "../../../../shared/ui";
 import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore";
 import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore";
 
-export const TagTreeView = () => {
+interface prp {
+    onNodeDoubleClick?: (node: any) => void
+}
+
+export const TagTreeView = (props: prp) => {
 
     const setTreeViewData = useTagTreeView(s => s.setTreeViewTags)
     const expanded = useTagTreeView(s => s.expandedTags)
@@ -64,11 +68,12 @@ export const TagTreeView = () => {
                 setProductsToTableHandler()
             */
             }}
-                         onNodeDoubleClick={() => {/*
+                         onNodeDoubleClick={(node) => {/*
                              addTagToCloud(treeData.filter((n) => {
                                  if (n.id == props.nodeId) return n
                              })[0])
                          */
+                             props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
                          }}
 
 

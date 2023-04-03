@@ -15,7 +15,7 @@ interface UniTreeView {
  */
 
 export const UniTreeView = memo((props: UniTreeView) => {
-    const {data, selected, setSelected, onNodeContext, onNodeClick} = props
+    const {data, selected, setSelected, onNodeContext, onNodeClick, onNodeDoubleClick} = props
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
 
     useEffect(() => {
@@ -92,6 +92,9 @@ export const UniTreeView = memo((props: UniTreeView) => {
                              }}
                              onContextMenu={(event) => {
                                  onNodeContext ? onNodeContext(item, event) : true
+                             }}
+                             onDoubleClick={() => {
+                                 onNodeDoubleClick ? onNodeDoubleClick(item) : true
                              }}
                         >
                             {item.name}

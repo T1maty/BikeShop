@@ -5,6 +5,7 @@ import {Button} from "../../../shared/ui"
 import {AddProductCardTagModal} from "../AddProductCardTagModal/AddProductCardTagModal"
 import {Controller, UseFormReturn} from "react-hook-form"
 import {ProductTag} from "../../../entities";
+import {useSnackbar} from "notistack";
 
 interface ControlledProps {
     name: string
@@ -13,6 +14,7 @@ interface ControlledProps {
 
 export const EditProductCardTags = (props: ControlledProps) => {
 
+    const {enqueueSnackbar} = useSnackbar()
     const [open, setOpen] = useState(false)
 
     const addTagHandler = () => {
@@ -33,7 +35,18 @@ export const EditProductCardTags = (props: ControlledProps) => {
                         >
                             Добавить тег
                         </Button>
-                        <AddProductCardTagModal setOpen={setOpen} open={open}/>
+                        <AddProductCardTagModal setOpen={setOpen} open={open} onTagDoubleClick={(tag) => {
+                            if (field.value.find((n: ProductTag) => n.id === tag.id) === undefined) {
+                                field.onChange([...field.value, tag])
+                                setOpen(false)
+                            } else {
+                                enqueueSnackbar('Такой тег уже есть у товара', {
+                                    variant: 'warning',
+                                    autoHideDuration: 3000
+                                })
+                            }
+                        }
+                        }/>
                     </div>
                     <div className={s.tagEditor_tags}>
                         {

@@ -6,21 +6,23 @@ import {TagTreeView} from "../../../widgets";
 interface AddProductCardTagModalProps {
     open: boolean
     setOpen: (value: boolean) => void
-    extraCallback?: () => void
+    onTagDoubleClick?: (tag: any) => void
 }
 
-export const AddProductCardTagModal: React.FC<AddProductCardTagModalProps> = ({extraCallback, open, setOpen}) => {
+export const AddProductCardTagModal: React.FC<AddProductCardTagModalProps> = ({onTagDoubleClick, open, setOpen}) => {
 
     return (
         <Modal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <div className={s.addProductCardTagModal_mainBox}>
                 <div className={s.addProductCardTagModal_content}>
-                    <TagTreeView/>
+                    <TagTreeView onNodeDoubleClick={onTagDoubleClick}/>
                 </div>
             </div>
         </Modal>
