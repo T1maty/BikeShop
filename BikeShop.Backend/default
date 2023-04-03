@@ -1,0 +1,32 @@
+server {
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+    	server_name bikeshop59.store; # managed by Certbot
+
+	location / {
+		proxy_pass http://localhost:5000;
+		proxy_set_header Host $host;
+		#try_files $uri $uri/ =404;
+	}
+
+
+    	listen [::]:443 ssl ipv6only=on; # managed by Certbot
+   	listen 443 ssl; # managed by Certbot
+   	ssl_certificate /etc/letsencrypt/live/bikeshop59.store/fullchain.pem; # managed by Certbot
+   	ssl_certificate_key /etc/letsencrypt/live/bikeshop59.store/privkey.pem; # managed by Certbot
+    	include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    	if ($host = bikeshop59.store) {
+     	   return 301 https://$host$request_uri;
+   	} # managed by Certbot
+
+
+	listen 80 ;
+	listen [::]:80 ;
+    	server_name bikeshop59.store;
+    	return 404; # managed by Certbot
+
+}
