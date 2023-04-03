@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './RegistrationForm.module.scss'
-import {Button, ControlledCustomInput, ControlledInput} from '../../../../shared/ui'
+import {Button, ControlledCustomInput} from '../../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from '../../../../entities/errors/workspaceErrors'
 import {RegistrationData} from '../../../../entities'
@@ -12,6 +12,7 @@ import useAuthUser from '../../../auth/useAuthUser'
 export const RegistrationForm = () => {
 
     const {enqueueSnackbar} = useSnackbar()
+
     const navigate = useNavigate()
     const register = useAuthUser(s => s.register)
 
@@ -56,19 +57,6 @@ export const RegistrationForm = () => {
                                                rules={{required: Errors[0].name}}
                         />
                     </div>
-
-                    {/*<ControlledInput name={'phone'}*/}
-                    {/*                 label={'Номер телефона'}*/}
-                    {/*                 control={formControl}*/}
-                    {/*                 rules={{required: Errors[0].name}}*/}
-                    {/*                 divClassName={s.options_search}*/}
-                    {/*/>*/}
-                    {/*<ControlledInput name={'password'}*/}
-                    {/*                 label={'Номер телефона'}*/}
-                    {/*                 control={formControl}*/}
-                    {/*                 rules={{required: Errors[0].name}}*/}
-                    {/*                 divClassName={s.options_search}*/}
-                    {/*/>*/}
                 </form>
             </div>
             <Button type={'submit'} buttonDivWrapper={s.loginForm_submitButton}>

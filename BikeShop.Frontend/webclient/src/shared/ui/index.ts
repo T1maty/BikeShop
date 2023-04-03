@@ -12,7 +12,6 @@ export {CustomSearchInput} from './CustomInput/CustomSeacrhInput'
 export {CustomCheckbox} from './CustomCheckbox/CustomCheckbox'
 
 export {ControlledClientCard} from './Controlled/ControlledClientCard'
-export {ControlledInput} from './Controlled/ControlledInput'
 export {ControlledCustomInput} from './Controlled/ControlledCustomInput'
 export {ControlledCustomCheckbox} from './Controlled/ControlledCustomCheckbox'
 export {ControlledReactSelect} from './Controlled/ControlledReactSelect'

@@ -1,29 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import s from './ProfileInfo.module.scss'
-import {Button, ControlledInput} from "../../../../shared/ui";
-import {Errors} from "../../../../entities/errors/workspaceErrors";
-import {useForm} from "react-hook-form";
+import {Button, ControlledCustomInput} from '../../../../shared/ui'
+import {Errors} from "../../../../entities/errors/workspaceErrors"
+import {SubmitHandler, useForm} from 'react-hook-form'
 
 export const ProfileInfo = () => {
 
-    const InputStyles = {
-        color: 'black',
-        '.MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '.MuiSvgIcon-root ': {
-            fill: 'black',
-        },
-    }
-    const InputLabelProps = {style: { color: 'black'}}
-
-    // сбор данных с формы //
     const formControl = useForm({
         defaultValues: {
             lastName: '',
@@ -35,17 +17,9 @@ export const ProfileInfo = () => {
         }
     });
 
-    // const onSubmit: SubmitHandler<any> = (data: any) => {
-    //     addNewService(data).then((res: any) => {
-    //         clearSubmitInfo() // очистка полей
-    //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-    //     }).catch((error: any) => {
-    //         let message = error(error.response.data.errorDescription).toString()
-    //         formControl.setError('name', {type: 'serverError', message: message})
-    //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-    //         console.error(error.response.data)
-    //     })
-    // }
+    const onSubmit: SubmitHandler<any> = (data: any) => {
+        //
+    }
 
     return (
         <div className={s.profileInfo_mainBox}>
@@ -62,59 +36,53 @@ export const ProfileInfo = () => {
                         <div className={s.content_inputs}>
                             <div className={s.inputs_left}>
                                 <div className={s.inputs_left_lastName}>
-                                    <ControlledInput name={'lastName'}
-                                                     label={'Фамилия'}
-                                                     control={formControl}
-                                                     rules={{required: Errors[0].name}}
-                                                     sx={InputStyles}
-                                                     InputLabelProps={InputLabelProps}
+                                    <ControlledCustomInput name={'lastName'}
+                                                           placeholder={'Фамилия'}
+                                                           color={'black'}
+                                                           control={formControl}
+                                                           rules={{required: Errors[0].name}}
                                     />
                                 </div>
                                 <div className={s.inputs_left_firstName}>
-                                    <ControlledInput name={'firstName'}
-                                                     label={'Имя'}
-                                                     control={formControl}
-                                                     rules={{required: Errors[0].name}}
-                                                     sx={InputStyles}
-                                                     InputLabelProps={InputLabelProps}
+                                    <ControlledCustomInput name={'firstName'}
+                                                           placeholder={'Имя'}
+                                                           color={'black'}
+                                                           control={formControl}
+                                                           rules={{required: Errors[0].name}}
                                     />
                                 </div>
                                 <div className={s.inputs_left_patronymic}>
-                                    <ControlledInput name={'patronymic'}
-                                                     label={'Отчество'}
-                                                     control={formControl}
-                                                     rules={{required: Errors[0].name}}
-                                                     sx={InputStyles}
-                                                     InputLabelProps={InputLabelProps}
+                                    <ControlledCustomInput name={'patronymic'}
+                                                           placeholder={'Отчество'}
+                                                           color={'black'}
+                                                           control={formControl}
+                                                           rules={{required: Errors[0].name}}
                                     />
                                 </div>
                             </div>
                             <div className={s.inputs_right}>
                                 <div className={s.inputs_left_lastName}>
-                                    <ControlledInput name={'gender'}
-                                                     label={'Пол'}
-                                                     control={formControl}
-                                                     rules={{required: Errors[0].name}}
-                                                     sx={InputStyles}
-                                                     InputLabelProps={InputLabelProps}
+                                    <ControlledCustomInput name={'gender'}
+                                                           placeholder={'Пол'}
+                                                           color={'black'}
+                                                           control={formControl}
+                                                           rules={{required: Errors[0].name}}
                                     />
                                 </div>
                                 <div className={s.inputs_left_lastName}>
-                                    <ControlledInput name={'dateOfBirth'}
-                                                     label={'Дата рождения'}
-                                                     control={formControl}
-                                                     rules={{required: Errors[0].name}}
-                                                     sx={InputStyles}
-                                                     InputLabelProps={InputLabelProps}
+                                    <ControlledCustomInput name={'dateOfBirth'}
+                                                           placeholder={'Дата рождения'}
+                                                           color={'black'}
+                                                           control={formControl}
+                                                           rules={{required: Errors[0].name}}
                                     />
                                 </div>
                                 <div className={s.inputs_left_lastName}>
-                                    <ControlledInput name={'language'}
-                                                     label={'Язык'}
-                                                     control={formControl}
-                                                     rules={{required: Errors[0].name}}
-                                                     sx={InputStyles}
-                                                     InputLabelProps={InputLabelProps}
+                                    <ControlledCustomInput name={'language'}
+                                                           placeholder={'Язык'}
+                                                           color={'black'}
+                                                           control={formControl}
+                                                           rules={{required: Errors[0].name}}
                                     />
                                 </div>
                             </div>
@@ -132,21 +100,19 @@ export const ProfileInfo = () => {
                     <div className={s.form_title}>Контакты</div>
                     <div className={s.content_inputs}>
                         <div className={s.inputs_left_phone}>
-                            <ControlledInput name={'phone'}
-                                             label={'Телефон'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'phone'}
+                                                   placeholder={'Телефон'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
                         </div>
                         <div className={s.inputs_right_email}>
-                            <ControlledInput name={'email'}
-                                             label={'Почта'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'email'}
+                                                   placeholder={'Почта'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
                         </div>
                     </div>
@@ -162,98 +128,86 @@ export const ProfileInfo = () => {
                     <div className={s.form_title}>Доставка</div>
                     <div className={s.delivery_content}>
                         <div className={s.content_row}>
-                            <ControlledInput name={'delivery-company'}
-                                             label={'Грузовая'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'delivery-company'}
+                                                   placeholder={'Грузовая'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'post-type'}
-                                             label={'Почта'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'post-type'}
+                                                   placeholder={'Почта'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'address'}
-                                             label={'Адрес'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'address'}
+                                                   placeholder={'Адрес'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
                         </div>
 
                         <div className={s.content_row}>
-                            <ControlledInput name={'delivery-company'}
-                                             label={'Грузовая'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'delivery-company'}
+                                                   placeholder={'Грузовая'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'post-type'}
-                                             label={'Почта'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'post-type'}
+                                                   placeholder={'Почта'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'address'}
-                                             label={'Адрес'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'address'}
+                                                   placeholder={'Адрес'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
                         </div>
 
                         <div className={s.content_row}>
-                            <ControlledInput name={'delivery-company'}
-                                             label={'Грузовая'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'delivery-company'}
+                                                   placeholder={'Грузовая'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'post-type'}
-                                             label={'Почта'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'post-type'}
+                                                   placeholder={'Почта'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'address'}
-                                             label={'Адрес'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'address'}
+                                                   placeholder={'Адрес'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
                         </div>
 
                         <div className={s.content_row}>
-                            <ControlledInput name={'delivery-company'}
-                                             label={'Грузовая'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'delivery-company'}
+                                                   placeholder={'Грузовая'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'post-type'}
-                                             label={'Почта'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'post-type'}
+                                                   placeholder={'Почта'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
-                            <ControlledInput name={'address'}
-                                             label={'Адрес'}
-                                             control={formControl}
-                                             rules={{required: Errors[0].name}}
-                                             sx={InputStyles}
-                                             InputLabelProps={InputLabelProps}
+                            <ControlledCustomInput name={'address'}
+                                                   placeholder={'Адрес'}
+                                                   color={'black'}
+                                                   control={formControl}
+                                                   rules={{required: Errors[0].name}}
                             />
                         </div>
                     </div>

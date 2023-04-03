@@ -1,13 +1,18 @@
-import React, {useEffect} from 'react';
-import {useSnackbar} from "notistack";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {UpdateWork, Work} from "../../../entities";
-import {$api} from "../../../shared";
-import {Box, Button, Modal, Typography} from "@mui/material";
-import {ControlledInput} from "../../../shared/ui";
-import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore";
+import React, {useEffect} from 'react'
+import {useSnackbar} from "notistack"
+import {SubmitHandler, useForm} from "react-hook-form"
+import {UpdateWork, Work} from "../../../entities"
+import {$api} from "../../../shared"
+import {Box, Modal, Typography} from "@mui/material"
+import {ControlledCustomInput, Button} from '../../../shared/ui'
+import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
 
-export const UpdateWorkModal = (props: { visibility: boolean, setVisibility: (value: boolean) => void }) => {
+interface UpdateWorkModalProps {
+    visibility: boolean
+    setVisibility: (value: boolean) => void
+}
+
+export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
 
     const {selectedRow, selected, getWork} = useWorkCatalog(state => state)
 
@@ -21,10 +26,9 @@ export const UpdateWorkModal = (props: { visibility: boolean, setVisibility: (va
             groupId: 1,
             enabled: true
         }
-    });
+    })
 
     const onSubmit: SubmitHandler<UpdateWork> = (data: UpdateWork) => {
-
         console.log(selectedRow)
         data.id = selectedRow.id
         data.groupId = selectedRow.workGroupId
@@ -42,7 +46,7 @@ export const UpdateWorkModal = (props: { visibility: boolean, setVisibility: (va
             console.log(r)
             enqueueSnackbar('Ошибка', {variant: 'error', autoHideDuration: 10000})
         })
-    };
+    }
 
     const style = {
         position: 'absolute',
@@ -67,32 +71,41 @@ export const UpdateWorkModal = (props: { visibility: boolean, setVisibility: (va
     return (
         <Modal
             open={props.visibility}
-            onClose={() => {
-                props.setVisibility(false)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
+            onClose={() => {props.setVisibility(false)}}
+            onContextMenu={(event) => {event.preventDefault()}}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
-                <Typography>{selectedRow.name}</Typography>
-
-                <ControlledInput name={"name"} label={"Название услуги"} control={formControl}
-                                 rules={{required: "Обязательное поле"}}/>
-
-                <ControlledInput name={"description"} label={"Описание"} control={formControl}
-                                 rules={{required: "Обязательное поле"}}/>
-
-                <ControlledInput name={"price"} label={"Цена"} control={formControl}
-                                 rules={{required: "Обязательное поле", validate: (value: number) => value > 0}}/>
-
+                <Typography>
+                    {selectedRow.name}
+                </Typography>
+                <ControlledCustomInput name={'name'}
+                                       placeholder={'Название услуги'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomInput name={'description'}
+                                       placeholder={'Описание'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
+                <ControlledCustomInput name={'price'}
+                                       placeholder={'Цена'}
+                                       control={formControl}
+                                       rules={{required: 'Обязательное поле'}}
+                />
                 <br/>
-                <Button color={'primary'} type={'submit'}>Обновить услугу</Button>
-                <Button color={'primary'} onClick={() => {
-                    props.setVisibility(false)
-                }}>Отмена</Button>
+                <Button type={'submit'}
+                    // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Обновить услугу
+                </Button>
+                <Button onClick={() => {props.setVisibility(false)}}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                >
+                    Отмена
+                </Button>
             </Box>
         </Modal>
     )
