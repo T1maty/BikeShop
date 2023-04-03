@@ -51,7 +51,7 @@ services:
       context: BikeShop.FileService
       dockerfile: Dockerfile
     image: nomadrilius/bikeshop.fileservice
-    hostname: bikeshop.FileService
+    hostname: bikeshop.fileservice
     ports:
       - 5005:80
     restart: on-failure  
@@ -62,7 +62,7 @@ services:
       context: BikeShop.Payments
       dockerfile: Dockerfile
     image: nomadrilius/bikeshop.payments
-    hostname: bikeshop.Payments
+    hostname: bikeshop.payments
     ports:
       - 5006:80
     restart: on-failure  
