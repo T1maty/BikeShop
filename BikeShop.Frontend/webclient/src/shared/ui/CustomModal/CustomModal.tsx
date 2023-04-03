@@ -1,30 +1,26 @@
 import React, {
     AllHTMLAttributes, HTMLAttributes,
-    type MouseEvent,
-    type ReactNode,
-    useCallback,
-    useEffect,
-    useRef,
-    useState
+    type MouseEvent, type ReactNode,
+    useCallback, useEffect, useRef, useState
 } from 'react'
-import cls from './Modal.module.scss'
-import clsx from "clsx";
-import {Portal} from "../../../widgets/workspace/Portal/Portal";
+import cls from './CustomModal.module.scss'
+import clsx from "clsx"
+import {Portal} from "../../../widgets/workspace/Portal/Portal"
 
-interface ModalProps extends HTMLAttributes<HTMLDivElement>{
-    className?: string
+interface ModalProps extends HTMLAttributes<HTMLDivElement> {
     children?: ReactNode
+    className?: string
+    open: boolean
     isOpen?: boolean
     onClose?: () => void
-    open: boolean
 }
 
 const ANIMATION_DELAY = 300
 
-export const Modal = (props: ModalProps) => {
+export const CustomModal = (props: ModalProps) => {
     const {
-        className,
         children,
+        className,
         open,
         onClose,
         ...restProps
@@ -34,7 +30,7 @@ export const Modal = (props: ModalProps) => {
     const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
     const closeHandler = useCallback(() => {
-        if (onClose) {
+            if (onClose) {
             setIsClosing(true)
             timerRef.current = setTimeout(() => {
                 onClose()
@@ -64,15 +60,15 @@ export const Modal = (props: ModalProps) => {
     }
     if (!open) return null
 
-
     const mods: Record<string, boolean> = {
         [cls.opened]: open,
         [cls.isClosing]: isClosing
     }
+
     return (
         <Portal>
             <div className={clsx(cls.Modal, mods, [className])} {...restProps}>
-                <div className={cls.overlay} onClick={closeHandler}>
+                <div className={cls.overlay} onClick={() => {}}>
                     <div className={cls.content} onClick={onContentClick}>
                         {children}
                     </div>

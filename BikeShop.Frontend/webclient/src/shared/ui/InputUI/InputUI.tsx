@@ -1,6 +1,6 @@
-import React, {ChangeEvent} from 'react';
-import {TextField} from '@mui/material';
-import {TextFieldProps} from "@mui/material/TextField/TextField";
+import React, {ChangeEvent} from 'react'
+import {TextField} from '@mui/material'
+import {TextFieldProps} from "@mui/material/TextField/TextField"
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
 import InputAdornment from '@mui/material/InputAdornment'

@@ -1,7 +1,8 @@
 @import '../../../app/styles/variables/variables';
 
 .btn {
-    z-index: 20;
+    //z-index: 20;
+    z-index: 0;
     position: relative;
     overflow: hidden;
     transition: background 400ms;
