@@ -5,6 +5,7 @@ import {Button} from "../../../shared/ui"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {ProductImage} from '../../../entities'
 import {Controller, UseFormReturn} from "react-hook-form"
+import axios from "axios";
 
 interface ControlledProps {
     name: string
@@ -38,8 +39,15 @@ export const EditProductCardGallery = (props: ControlledProps) => {
 
             // перепроверить максимальный размер файла
             if (file.size < 7000000) {
+                let formData = new FormData();
+                formData.append('imageFile', file)
+                axios.post(`http://localhost:5002/product/addimagetoproduct?productId=1`, formData).then((r) => {
+                    console.log(r)
+                }).catch((r) => {
+                    console.log(r)
+                })
                 convertFileToBase64(file, (file64: string) => {
-                    addImageHandler(file, field) // добавить изображение в стор
+                    //addImageHandler(file, field) // добавить изображение в стор
                     // uploadNewImage(file64) // запрос на загрузку
                     //console.log('file64: ', file64)
                 })
