@@ -31,6 +31,14 @@ services:
     ports: 
       - 5004:80
     restart: on-failure
+    
+    bikeshop.fileservice:
+    container_name: bikeshop-fileservice
+    image: nomadrilius/bikeshop.fileservice
+    hostname: bikeshop.fileservice
+    ports: 
+      - 5005:80
+    restart: on-failure
 
   bikeshop.gateway:
     container_name: bikeshop-gateway
