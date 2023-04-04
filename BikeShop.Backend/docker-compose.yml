@@ -2,7 +2,7 @@ version: '3'
 services:
   bikeshop.identity:
     container_name: bikeshop-identity
-    image: kpssnik/bikeshop.identity
+    image: nomadrilius/bikeshop.identity
     hostname: bikeshop.identity
     ports: 
       - 5001:80
