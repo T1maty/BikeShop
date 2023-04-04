@@ -1,12 +1,8 @@
 version: '3'
 services:
-  
   bikeshop.identity:
     container_name: bikeshop-identity
-    build: 
-      context: BikeShop.Identity
-      dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.identity
+    image: kpssnik/bikeshop.identity
     hostname: bikeshop.identity
     ports: 
       - 5001:80
@@ -14,10 +10,7 @@ services:
 
   bikeshop.products:
     container_name: bikeshop-products
-    build:
-      context: BikeShop.Products
-      dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.products
+    image: kpssnik/bikeshop.products
     hostname: bikeshop.products
     ports: 
       - 5002:80
@@ -25,73 +18,33 @@ services:
 
   bikeshop.service:
     container_name: bikeshop-service
-    build:
-      context: BikeShop.Service
-      dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.service
+    image: kpssnik/bikeshop.service
     hostname: bikeshop.service
     ports: 
       - 5003:80
     restart: on-failure
-    
+
   bikeshop.shop:
     container_name: bikeshop-shop
-    build:
-      context: BikeShop.Shop
-      dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.shop
+    image: kpssnik/bikeshop.shop
     hostname: bikeshop.shop
-    ports:
+    ports: 
       - 5004:80
-    restart: on-failure  
-    
-    bikeshop.fileservice:
-    container_name: bikeshop-fileservice
-    build:
-      context: BikeShop.FileService
-      dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.fileservice
-    hostname: bikeshop.fileservice
-    ports:
-      - 5005:80
-    restart: on-failure  
-    
-    bikeshop.payments:
-    container_name: bikeshop-payments
-    build:
-      context: BikeShop.Payments
-      dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.payments
-    hostname: bikeshop.payments
-    ports:
-      - 5006:80
-    restart: on-failure  
-    
+    restart: on-failure
+
   bikeshop.gateway:
     container_name: bikeshop-gateway
-    build:
-      context: BikeShop.Gateway
-      dockerfile: Dockerfile
-    image: nomadrilius/bikeshop.gateway
+    image: kpssnik/bikeshop.gateway
     hostname: bikeshop.gateway
     ports:
       - 5000:80
     restart: on-failure 
+
     links:
       - bikeshop.identity
       - bikeshop.products
       - bikeshop.service
-      - bikeshop.shop
-      - bikeshop.fileservice
-      - bikeshop.payments
     depends_on:
       - bikeshop.identity
       - bikeshop.products
       - bikeshop.service
-      - bikeshop.shop
-      - bikeshop.fileservice
-      - bikeshop.payments
-
-  
-    
-    
