@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
-// import {Modal} from '@mui/material'
 import s from './CreateCurrencyModal.module.scss'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput,
     LoaderScreen, CustomModal} from '../../../shared/ui'
@@ -78,8 +77,6 @@ export const CreateCurrencyModal = () => {
             <CustomModal
                 open={open}
                 onClose={() => {setOpen(false)}}
-                // aria-labelledby="modal-modal-title"
-                // aria-describedby="modal-modal-description"
             >
                 <div className={s.shopStorageModal_mainBlock}>
                     <div className={s.shopStorageModal_shops}>
