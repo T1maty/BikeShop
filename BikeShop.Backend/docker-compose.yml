@@ -39,6 +39,14 @@ services:
     ports: 
       - 5005:80
     restart: on-failure
+    
+  bikeshop.payments:
+    container_name: bikeshop-payments
+    image: nomadrilius/bikeshop.payments
+    hostname: bikeshop.payments
+    ports: 
+      - 5006:80
+    restart: on-failure
 
   bikeshop.gateway:
     container_name: bikeshop-gateway
