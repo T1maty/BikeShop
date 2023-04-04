@@ -6,7 +6,7 @@ services:
     build: 
       context: BikeShop.Identity
       dockerfile: Dockerfile
-    image: kpssnik/bikeshop.identity
+    image: nomadrilius/bikeshop.identity
     hostname: bikeshop.identity
     ports: 
       - 5001:80
@@ -17,7 +17,7 @@ services:
     build:
       context: BikeShop.Products
       dockerfile: Dockerfile
-    image: kpssnik/bikeshop.products
+    image: nomadrilius/bikeshop.products
     hostname: bikeshop.products
     ports: 
       - 5002:80
@@ -28,7 +28,7 @@ services:
     build:
       context: BikeShop.Service
       dockerfile: Dockerfile
-    image: kpssnik/bikeshop.service
+    image: nomadrilius/bikeshop.service
     hostname: bikeshop.service
     ports: 
       - 5003:80
@@ -39,7 +39,7 @@ services:
     build:
       context: BikeShop.Shop
       dockerfile: Dockerfile
-    image: kpssnik/bikeshop.shop
+    image: nomadrilius/bikeshop.shop
     hostname: bikeshop.shop
     ports:
       - 5004:80
@@ -50,10 +50,21 @@ services:
     build:
       context: BikeShop.FileService
       dockerfile: Dockerfile
-    image: kpssnik/bikeshop.shop
-    hostname: bikeshop.FileService
+    image: nomadrilius/bikeshop.fileservice
+    hostname: bikeshop.fileservice
     ports:
       - 5005:80
+    restart: on-failure  
+    
+    bikeshop.payments:
+    container_name: bikeshop-payments
+    build:
+      context: BikeShop.Payments
+      dockerfile: Dockerfile
+    image: nomadrilius/bikeshop.payments
+    hostname: bikeshop.payments
+    ports:
+      - 5006:80
     restart: on-failure  
     
   bikeshop.gateway:
@@ -61,7 +72,7 @@ services:
     build:
       context: BikeShop.Gateway
       dockerfile: Dockerfile
-    image: kpssnik/bikeshop.gateway
+    image: nomadrilius/bikeshop.gateway
     hostname: bikeshop.gateway
     ports:
       - 5000:80
@@ -71,12 +82,15 @@ services:
       - bikeshop.products
       - bikeshop.service
       - bikeshop.shop
+      - bikeshop.fileservice
+      - bikeshop.payments
     depends_on:
       - bikeshop.identity
       - bikeshop.products
       - bikeshop.service
       - bikeshop.shop
-
+      - bikeshop.fileservice
+      - bikeshop.payments
 
   
     
