@@ -32,7 +32,7 @@ services:
       - 5004:80
     restart: on-failure
     
-    bikeshop.fileservice:
+  bikeshop.fileservice:
     container_name: bikeshop-fileservice
     image: nomadrilius/bikeshop.fileservice
     hostname: bikeshop.fileservice
