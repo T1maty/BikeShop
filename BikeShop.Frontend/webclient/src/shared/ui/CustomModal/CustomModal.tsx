@@ -68,7 +68,7 @@ export const CustomModal = (props: ModalProps) => {
     return (
         <Portal>
             <div className={clsx(cls.Modal, mods, [className])} {...restProps}>
-                <div className={cls.overlay} onClick={() => {}}>
+                <div className={cls.overlay} onClick={closeHandler}>
                     <div className={cls.content} onClick={onContentClick}>
                         {children}
                     </div>
