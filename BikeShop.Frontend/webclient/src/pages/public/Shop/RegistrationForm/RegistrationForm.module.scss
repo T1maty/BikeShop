@@ -13,5 +13,5 @@
     height: 300px;
     @include flexColumn;
 
-    @include RegistrationBlock(240px); // main layout styles
+    @include registrationBlock(240px); // main layout styles
 }
