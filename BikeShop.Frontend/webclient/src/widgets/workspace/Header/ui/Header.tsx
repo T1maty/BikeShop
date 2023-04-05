@@ -9,8 +9,7 @@ import {useTranslation} from "react-i18next"
 import cls from './Header.module.scss'
 import {Clock} from "../../../../shared/ui/Clock/Clock"
 import {MenuIcon} from "../../../../shared/ui/IconButtons/MenuIcon"
-import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon"
-import {Badge} from "../../../../shared/ui/Badge/Badge"
+import BellIcon from "../../../../shared/assets/workspace/bell-icon.svg"
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import useCreateStorageModal from "../../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore"
 import useCreateShopModal from "../../../../features/CRUDModals/CreateShopModal/CreateShopModalStore"
@@ -149,9 +148,7 @@ export const Header = () => {
                 <div className={cls.leftSide}>
                     <div className={cls.leftSide_burgerMenu}>
                         <div className={cls.burgerMenu_iconButton}>
-                            <MenuIcon onClick={() => {
-                                setIsMenuOpen(!isMenuOpen)
-                            }}/>
+                            <MenuIcon onClick={() => {setIsMenuOpen(!isMenuOpen)}}/>
                         </div>
                         {
                             isMenuOpen ?
@@ -212,9 +209,9 @@ export const Header = () => {
                 </div>
                 <div className={cls.rightSide}>
                     <HeaderUserMenu firstName={user?.firstName} lastName={user?.lastName}/>
-                    <Badge badgeContent={3}>
-                        <NotificationIcon/>
-                    </Badge>
+                    <div>
+                        <img src={BellIcon} alt="bell-icon" width={25} height={25}/>
+                    </div>
                 </div>
             </div>
         </div>
