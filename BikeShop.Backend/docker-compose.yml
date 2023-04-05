@@ -47,6 +47,14 @@ services:
     ports: 
       - 5006:80
     restart: on-failure
+    
+  bikeshop.acts:
+    container_name: bikeshop-acts
+    image: nomadrilius/bikeshop.acts
+    hostname: bikeshop.acts
+    ports: 
+      - 5007:80
+    restart: on-failure
 
   bikeshop.gateway:
     container_name: bikeshop-gateway

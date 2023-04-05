@@ -3,6 +3,26 @@
     "BaseUrl": "http://bikeshop.gateway:80"
   },
   "Routes": [
+  
+    {
+      "UpstreamPathTemplate": "/api/acts/getall",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/acts/getall",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+  
+  
+  
+  
 
     {
       "UpstreamPathTemplate": "/api/image/upload/{imgId}",
@@ -1089,6 +1109,16 @@
           "Name": "Payments API",
           "Version": "v1",
           "Url": "http://bikeshop.payments:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+	{
+      "Key": "acts",
+      "Config": [
+        {
+          "Name": "Acts API",
+          "Version": "v1",
+          "Url": "http://bikeshop.acts:80/swagger/v1/swagger.json"
         }
       ]
     }
