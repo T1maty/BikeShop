@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["BikeShop.Acts.Domain/BikeShop.Acts.Domain.csproj", "BikeShop.Acts.Domain/BikeShop.Acts.Domain.csproj"]
 COPY ["BikeShop.Acts.Application/BikeShop.Acts.Application.csproj", "BikeShop.Acts.Application/BikeShop.Acts.Application.csproj"]
-COPY ["BikeShop.Acts.Persistence/BikeShop.Acts.Persistence.csproj", "BikeShop.Acts.Persistence/BikeShop.Acts.Persistence.csproj"]
+COPY ["BikeShop.Acts.Persistence/BikeShop.Acts.Persistense.csproj", "BikeShop.Acts.Persistence/BikeShop.Acts.Persistence.csproj"]
 COPY ["BikeShop.Acts.WebApi/BikeShop.Acts.WebApi.csproj", "BikeShop.Acts.WebApi/BikeShop.Acts.WebApi.csproj"]
 
 COPY . .

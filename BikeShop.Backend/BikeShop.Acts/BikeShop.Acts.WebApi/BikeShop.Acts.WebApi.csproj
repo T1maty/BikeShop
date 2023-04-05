@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BikeShop.Acts.Application\BikeShop.Acts.Application.csproj" />
-    <ProjectReference Include="..\BikeShop.Acts.Persistense\BikeShop.Acts.Persistense.csproj" />
+    <ProjectReference Include="..\BikeShop.Acts.Persistense\BikeShop.Acts.Persistenсe.csproj" />
   </ItemGroup>
 
 </Project>

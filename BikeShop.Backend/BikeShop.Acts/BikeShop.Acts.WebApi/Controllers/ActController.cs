@@ -4,7 +4,7 @@ namespace BikeShop.Acts.WebApi.Controllers
 {
     [Produces("application/json")]
     [ApiController]
-    [Route("act")]
+    [Route("acts")]
     public class ActController
     {
         [HttpGet("getall")]

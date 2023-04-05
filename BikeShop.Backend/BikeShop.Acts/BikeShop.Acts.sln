@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Acts.WebApi", "BikeShop.Acts.WebApi\BikeShop.Acts.WebApi.csproj", "{3DE2E73E-EFF4-4F03-B583-4C2C9C191752}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Acts.Persistense", "BikeShop.Acts.Persistense\BikeShop.Acts.Persistense.csproj", "{397E7099-A6E0-413C-B692-8BA6F7037BA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Acts.Persistenсe", "BikeShop.Acts.Persistense\BikeShop.Acts.Persistenсe.csproj", "{397E7099-A6E0-413C-B692-8BA6F7037BA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Acts.Application", "BikeShop.Acts.Application\BikeShop.Acts.Application.csproj", "{DDA8C4D2-C732-4CAE-ACCF-E5DF65C9658B}"
 EndProject
