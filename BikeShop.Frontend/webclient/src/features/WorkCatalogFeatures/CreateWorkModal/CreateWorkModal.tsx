@@ -1,11 +1,11 @@
 import React from 'react'
-import {SubmitHandler, useForm} from "react-hook-form"
-import {CreateWork, Work} from "../../../entities"
-import {Box} from "@mui/material"
+import s from './CreateWorkModal.module.scss'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {CreateWork, Work} from '../../../entities'
 import {ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
-import {$api} from "../../../shared"
-import {useSnackbar} from "notistack"
-import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
+import {$api} from '../../../shared'
+import {useSnackbar} from 'notistack'
+import {useWorkCatalog} from '../../../widgets/workspace/WorkCatalog/TableCatalogStore'
 
 interface CreateWorkModalProps {
     visibility: boolean
@@ -46,54 +46,44 @@ export const CreateWorkModal = (props: CreateWorkModalProps) => {
         })
     }
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 800,
-        bgcolor: '#33373B',
-
-        boxShadow: 24,
-        p: 4,
-        borderRadius: 10,
-        color: 'white'
-    };
-
     return (
         <CustomModal
             open={props.visibility}
             onClose={() => {props.setVisibility(false)}}
             onContextMenu={(event) => {event.preventDefault()}}
         >
-            <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
-                <ControlledCustomInput name={'name'}
-                                       placeholder={'Название услуги'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomInput name={'description'}
-                                       placeholder={'Описание'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomInput name={'price'}
-                                       placeholder={'Цена'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <br/>
-                <Button type={'submit'}
-                    // buttonDivWrapper={s.infoBlock_cancelBtn}
-                >
-                    Создать услугу
-                </Button>
-                <Button onClick={() => {props.setVisibility(false)}}
-                    // buttonDivWrapper={s.infoBlock_cancelBtn}
-                >
-                    Отмена
-                </Button>
-            </Box>
+            <div className={s.createWorkModal_mainBox}>
+                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                    <ControlledCustomInput name={'name'}
+                                           placeholder={'Название услуги'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomInput name={'description'}
+                                           placeholder={'Описание'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomInput name={'price'}
+                                           placeholder={'Цена'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <br/>
+                    <Button type={'submit'}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                    >
+                        Создать услугу
+                    </Button>
+                    <Button onClick={() => {
+                        props.setVisibility(false)
+                    }}
+                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                    >
+                        Отмена
+                    </Button>
+                </div>
+            </div>
         </CustomModal>
     )
 }

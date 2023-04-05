@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react'
-import {useSnackbar} from "notistack"
-import {SubmitHandler, useForm} from "react-hook-form"
-import {UpdateWork, Work} from "../../../entities"
-import {$api} from "../../../shared"
-import {Box, Typography} from "@mui/material"
+import s from './UpdateWorkModal.module.scss'
+import {useSnackbar} from 'notistack'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {UpdateWork, Work} from '../../../entities'
+import {$api} from '../../../shared'
 import {ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
-import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
+import {useWorkCatalog} from '../../../widgets/workspace/WorkCatalog/TableCatalogStore'
 
 interface UpdateWorkModalProps {
     visibility: boolean
@@ -14,9 +14,12 @@ interface UpdateWorkModalProps {
 
 export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
 
-    const {selectedRow, selected, getWork} = useWorkCatalog(state => state)
-
     const {enqueueSnackbar} = useSnackbar()
+
+    const selectedRow = useWorkCatalog(s => s.selectedRow)
+    const selected = useWorkCatalog(s => s.selected)
+    const getWork = useWorkCatalog(s => s.getWork)
+
     const formControl = useForm<UpdateWork>({
         defaultValues: {
             id: 0,
@@ -48,20 +51,6 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
         })
     }
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 800,
-        bgcolor: '#33373B',
-
-        boxShadow: 24,
-        p: 4,
-        borderRadius: 10,
-        color: 'white'
-    };
-
     useEffect(() => {
         formControl.setValue('name', selectedRow.name)
         formControl.setValue('description', selectedRow.description)
@@ -74,10 +63,9 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
             onClose={() => {props.setVisibility(false)}}
             onContextMenu={(event) => {event.preventDefault()}}
         >
-            <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
-                <Typography>
-                    {selectedRow.name}
-                </Typography>
+            <div className={s.updateWorkModal_mainBox}></div>
+            <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <span>{selectedRow.name}</span>
                 <ControlledCustomInput name={'name'}
                                        placeholder={'Название услуги'}
                                        control={formControl}
@@ -99,12 +87,14 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
                 >
                     Обновить услугу
                 </Button>
-                <Button onClick={() => {props.setVisibility(false)}}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
+                <Button onClick={() => {
+                    props.setVisibility(false)
+                }}
+                    // buttonDivWrapper={s.infoBlock_cancelBtn}
                 >
                     Отмена
                 </Button>
-            </Box>
+            </div>
         </CustomModal>
     )
 }

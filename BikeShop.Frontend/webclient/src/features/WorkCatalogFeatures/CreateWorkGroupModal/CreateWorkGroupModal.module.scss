@@ -1,0 +1,6 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.createWorkGroupModal_mainBox {
+    @include defaultModalStyle;
+}

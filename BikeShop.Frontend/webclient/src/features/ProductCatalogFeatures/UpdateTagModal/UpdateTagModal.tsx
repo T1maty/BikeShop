@@ -15,8 +15,8 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
     const {enqueueSnackbar} = useSnackbar()
 
     const open = useUpdateTagModal(s => s.open)
-    const tag = useUpdateTagModal(s => s.targetTag)
     const setClose = useUpdateTagModal(s => s.closeTagModal)
+    const tag = useUpdateTagModal(s => s.targetTag)
     const update = useUpdateTagModal(s => s.updateTag)
 
     const control = useForm<UpdateTag>({

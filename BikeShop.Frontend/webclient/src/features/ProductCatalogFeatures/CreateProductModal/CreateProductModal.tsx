@@ -12,9 +12,10 @@ interface CreateProductModalProps {
 }
 
 export const CreateProductModal = (props: CreateProductModalProps) => {
-    const error = useTranslation('errors').t
 
     const {enqueueSnackbar} = useSnackbar()
+    const error = useTranslation('errors').t
+
     const open = useCreateProductModal(s => s.open)
     const setOpen = useCreateProductModal(s => s.setOpen)
     const create = useCreateProductModal(s => s.create)

@@ -5,15 +5,15 @@ import {Product, UpdateProduct} from '../../../entities'
 import useUpdateProductModal from './UpdateProductModalStore'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 
-interface props {
+interface UpdateProductModalProps {
     onSuccess?: (updateData: UpdateProduct) => void
 }
 
-export const UpdateProductModal = (props: props) => {
+export const UpdateProductModal = (props: UpdateProductModalProps) => {
 
     const open = useUpdateProductModal(s => s.open)
-    const product = useUpdateProductModal(s => s.product)
     const setOpen = useUpdateProductModal(s => s.setOpen)
+    const product = useUpdateProductModal(s => s.product)
     const update = useUpdateProductModal(s => s.update)
 
     const formControl = useForm<UpdateProduct>({
