@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {Modal} from '@mui/material'
 import s from './CreateSpecificationModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput,
+    CustomModal, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateSpecificationModal from './CreateSpecificationModalStore'
 import {UpdateSpecification} from '../../../entities/requests/UpdateSpecification'
@@ -67,13 +67,9 @@ export const CreateSpecificationModal = () => {
     } else {
 
         return (
-            <Modal
+            <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                onClose={() => {setOpen(false)}}
             >
                 <div className={s.createSpecificationModal_mainBlock}>
 
@@ -124,9 +120,8 @@ export const CreateSpecificationModal = () => {
                             </div>
                         </form>
                     </div>
-
                 </div>
-            </Modal>
+            </CustomModal>
         )
     }
 }

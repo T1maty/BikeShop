@@ -1,11 +1,11 @@
 import React from 'react'
-import {Box, Modal, Typography} from "@mui/material"
+import {Box, Typography} from "@mui/material"
 import useCreateProductModal from "./CreateProductModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {EnumProductCheckStatus, CreateProduct, Product} from "../../../entities"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
-import {Button, ControlledCustomCheckbox, ControlledCustomInput} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 
 interface CreateProductModalProps {
     onSuccess?: (data: Product) => void
@@ -74,12 +74,10 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
     }
 
     return (
-        <Modal
+        <CustomModal
             open={open}
             onClose={() => {setOpen(false)}}
             onContextMenu={(event) => {event.preventDefault()}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
                 <Typography>
@@ -141,6 +139,6 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
                     Отмена
                 </Button>
             </Box>
-        </Modal>
+        </CustomModal>
     )
 }

@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import {Modal} from '@mui/material'
 import s from '../ChooseProductModal/ChooseProductModal.module.scss'
-import {ProductCatalogTable, TagTreeView} from "../../widgets";
-import {ProductExtended} from "../../entities";
+import {ProductCatalogTable, TagTreeView} from "../../widgets"
+import {ProductExtended} from "../../entities"
+import {CustomModal} from "../../shared/ui"
 
 interface props {
     open?: boolean,
@@ -13,23 +13,17 @@ interface props {
 
 export const ChooseProductModal = (props: props) => {
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
 
     return (
-        <Modal
+        <CustomModal
             open={props.open ? props.open : open}
-            onClose={() => {
-                props.setOpen ? props.setOpen(false) : setOpen(false)
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            onClose={() => {props.setOpen ? props.setOpen(false) : setOpen(false)}}
         >
             <div className={s.chooseProductModal_mainBox}>
                 <TagTreeView/>
-                <ProductCatalogTable onRowDoubleClick={(row: ProductExtended) => {
-                    props.addData(row)
-                }}/>
+                <ProductCatalogTable onRowDoubleClick={(row: ProductExtended) => {props.addData(row)}}/>
             </div>
-        </Modal>
-    );
-};
+        </CustomModal>
+    )
+}

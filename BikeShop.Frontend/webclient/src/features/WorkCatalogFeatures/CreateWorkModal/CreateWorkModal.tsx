@@ -1,8 +1,8 @@
 import React from 'react'
 import {SubmitHandler, useForm} from "react-hook-form"
 import {CreateWork, Work} from "../../../entities"
-import {Box, Modal} from "@mui/material"
-import {ControlledCustomInput, Button} from '../../../shared/ui'
+import {Box} from "@mui/material"
+import {ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
 import {$api} from "../../../shared"
 import {useSnackbar} from "notistack"
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
@@ -61,12 +61,10 @@ export const CreateWorkModal = (props: CreateWorkModalProps) => {
     };
 
     return (
-        <Modal
+        <CustomModal
             open={props.visibility}
             onClose={() => {props.setVisibility(false)}}
             onContextMenu={(event) => {event.preventDefault()}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
                 <ControlledCustomInput name={'name'}
@@ -96,6 +94,6 @@ export const CreateWorkModal = (props: CreateWorkModalProps) => {
                     Отмена
                 </Button>
             </Box>
-        </Modal>
-    );
-};
+        </CustomModal>
+    )
+}

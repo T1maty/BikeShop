@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react'
-import {Box, Button, Checkbox, FormControlLabel, Modal, TextField} from "@mui/material"
+import {Box, Button, Checkbox, FormControlLabel, TextField} from "@mui/material"
 import {Controller, SubmitHandler, useForm} from "react-hook-form"
 import {Product, UpdateProduct} from "../../../entities"
 import useUpdateProductModal from './UpdateProductModalStore'
+import {CustomModal} from "../../../shared/ui"
 
 interface props {
     onSuccess?: (updateData: UpdateProduct) => void
@@ -71,16 +72,10 @@ export const UpdateProductModal = (props: props) => {
     }
 
     return (
-        <Modal
+        <CustomModal
             open={open}
-            onClose={() => {
-                setOpen(false, {} as Product)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            onClose={() => {setOpen(false, {} as Product)}}
+            onContextMenu={(event) => {event.preventDefault()}}
         >
             <Box sx={style} component="form" onSubmit={handleSubmit(onSubmit)}>
 
@@ -146,6 +141,6 @@ export const UpdateProductModal = (props: props) => {
                     setOpen(false, {} as Product)
                 }}>Отмена</Button>
             </Box>
-        </Modal>
+        </CustomModal>
     )
 }

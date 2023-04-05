@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import {Modal} from '@mui/material'
 import s from './ArchiveModal.module.scss'
 import {ServiceItem} from '../../entities'
 import useArchiveModal from "./ArchiveModalStore"
-import {Button} from "../../shared/ui"
+import {Button, CustomModal} from "../../shared/ui"
 import style from "../../shared/ui/Button/Button.module.scss"
 
 type ArchiveModalStatusType = 'Ended' | 'Canceled' | 'Deleted'
@@ -54,11 +53,9 @@ export const ArchiveModal = () => {
     }, [])
 
     return (
-        <Modal
+        <CustomModal
             open={open}
             onClose={() => {setOpen(false)}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
                 <div className={s.archiveModal_mainBox}>
                     <div className={s.archiveModal_title}>Архив ремонтов</div>
@@ -143,7 +140,6 @@ export const ArchiveModal = () => {
                         </Button>
                     </div>
                 </div>
-
-        </Modal>
-    );
-};
+        </CustomModal>
+    )
+}

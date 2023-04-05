@@ -1,6 +1,6 @@
 import React from 'react'
-import {Box, Modal} from "@mui/material"
-import {ControlledCustomCheckbox, ControlledCustomInput, Button} from '../../../shared/ui'
+import {Box} from "@mui/material"
+import {ControlledCustomCheckbox, ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
 import {useSnackbar} from "notistack"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {CreateWorkGroup, Group} from "../../../entities"
@@ -57,16 +57,10 @@ export const CreateWorkGroupModal = (props: CreateWorkGroupModalProps) => {
     };
 
     return (
-        <Modal
+        <CustomModal
             open={props.visibility}
-            onClose={() => {
-                props.setVisibility(false)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            onClose={() => {props.setVisibility(false)}}
+            onContextMenu={(event) => {event.preventDefault()}}
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
                 <div>
@@ -94,6 +88,6 @@ export const CreateWorkGroupModal = (props: CreateWorkGroupModalProps) => {
                     Отмена
                 </Button>
             </Box>
-        </Modal>
+        </CustomModal>
     )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './AddProductCardTagModal.module.scss'
-import {Modal} from "@mui/material"
-import {TagTreeView} from "../../../widgets";
+import {TagTreeView} from "../../../widgets"
+import {CustomModal} from "../../../shared/ui"
 
 interface AddProductCardTagModalProps {
     open: boolean
@@ -12,19 +12,15 @@ interface AddProductCardTagModalProps {
 export const AddProductCardTagModal: React.FC<AddProductCardTagModalProps> = ({onTagDoubleClick, open, setOpen}) => {
 
     return (
-        <Modal
+        <CustomModal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            onClose={() => {setOpen(false)}}
         >
             <div className={s.addProductCardTagModal_mainBox}>
                 <div className={s.addProductCardTagModal_content}>
                     <TagTreeView onNodeDoubleClick={onTagDoubleClick}/>
                 </div>
             </div>
-        </Modal>
-    );
-};
+        </CustomModal>
+    )
+}

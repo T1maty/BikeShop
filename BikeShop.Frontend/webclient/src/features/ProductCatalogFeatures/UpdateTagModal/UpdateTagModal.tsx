@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import {SubmitHandler, useForm} from "react-hook-form"
 import {UpdateTag} from "../../../entities"
-import {Box, Modal, Typography} from "@mui/material"
-import {ControlledCustomCheckbox, ControlledCustomInput, Button} from '../../../shared/ui'
+import {Box, Typography} from "@mui/material"
+import {ControlledCustomCheckbox, ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
 import {useSnackbar} from "notistack"
 import useUpdateTagModal from './UpdateTagModalStore'
 
@@ -41,7 +41,6 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         console.log(tag)
     }, [tag])
 
-
     const style = {
         position: 'absolute',
         top: '50%',
@@ -75,16 +74,10 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
     };
 
     return (
-        <Modal
+        <CustomModal
             open={open}
-            onClose={() => {
-                setClose()
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            onClose={() => {setClose()}}
+            onContextMenu={(event) => {event.preventDefault()}}
         >
             <Box sx={style} component="form" onSubmit={control.handleSubmit(onSubmit)}>
                 <Typography
@@ -127,6 +120,6 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
                     Редактировать тег
                 </Button>
             </Box>
-        </Modal>
+        </CustomModal>
     )
 }

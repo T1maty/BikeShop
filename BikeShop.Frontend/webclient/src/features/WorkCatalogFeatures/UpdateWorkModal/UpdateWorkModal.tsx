@@ -3,8 +3,8 @@ import {useSnackbar} from "notistack"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {UpdateWork, Work} from "../../../entities"
 import {$api} from "../../../shared"
-import {Box, Modal, Typography} from "@mui/material"
-import {ControlledCustomInput, Button} from '../../../shared/ui'
+import {Box, Typography} from "@mui/material"
+import {ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
 
 interface UpdateWorkModalProps {
@@ -69,12 +69,10 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
     }, [selectedRow])
 
     return (
-        <Modal
+        <CustomModal
             open={props.visibility}
             onClose={() => {props.setVisibility(false)}}
             onContextMenu={(event) => {event.preventDefault()}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
                 <Typography>
@@ -107,6 +105,6 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
                     Отмена
                 </Button>
             </Box>
-        </Modal>
+        </CustomModal>
     )
 }

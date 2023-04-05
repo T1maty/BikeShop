@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import s from './ChooseDiscountModal.module.scss'
-import {Modal} from '@mui/material'
-import {Button, ControlledReactSelect} from '../../shared/ui'
+import {Button, ControlledReactSelect, CustomModal} from '../../shared/ui'
 import useChooseDiscountModal from './ChooseDiscountModalStore'
 import {SubmitHandler, useForm} from "react-hook-form"
 import Select from "react-select"
@@ -26,24 +25,13 @@ export const ChooseDiscountModal = () => {
     // })
     //
     // const onSubmit: SubmitHandler<any> = (data: any) => {
-    //     // выбор скидки
-    //     //     addNewService(data).then((res: any) => {
-    //     //         setOpen(false)
-    //     //         enqueueSnackbar('Скидка выбрана', {variant: 'success', autoHideDuration: 3000})
-    //     //     }).catch((error: any) => {
-    //     //         let message = error(error.response.data.errorDescription).toString()
-    //     //         formControl.setError('name', {type: 'serverError', message: message})
-    //     //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-    //     //         console.error(error.response.data)
-    //     //     })
+    //
     // }
 
     return (
-        <Modal
+        <CustomModal
             open={open}
             onClose={() => {setOpen(false)}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <div className={s.discountModal_mainBox}>
                 <div className={s.discountModal_selectBlock}>
@@ -78,6 +66,6 @@ export const ChooseDiscountModal = () => {
                     <Button onClick={() => {setOpen(false)}}>Отмена</Button>
                 </div>
             </div>
-        </Modal>
+        </CustomModal>
     );
 };

@@ -1,7 +1,7 @@
-import React, {ChangeEvent, useEffect, useRef} from 'react'
+import React, {ChangeEvent, useEffect} from 'react'
 import s from './ChooseClientModal.module.scss'
-import {Modal} from '@mui/material'
-import {Button, ControlledCustomInput, CustomSearchInput, InputUI, LoaderScreen} from '../../shared/ui'
+import {Button, ControlledCustomInput, CustomModal, CustomSearchInput,
+    InputUI, LoaderScreen} from '../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {CreateUser, User} from '../../entities'
 import {useSnackbar} from 'notistack'
@@ -76,13 +76,9 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
     } else {
 
         return (
-            <Modal
+            <CustomModal
                 open={state ? state : open}
-                onClose={() => {
-                    setState ? setState(false) : setOpen(false)
-                }}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                onClose={() => {setState ? setState(false) : setOpen(false)}}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.clientModal_mainBox}>
@@ -184,7 +180,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                         </div>
                     </div>
                 </form>
-            </Modal>
+            </CustomModal>
         )
     }
 }

@@ -1,9 +1,9 @@
 import React from 'react'
-import {Box, Modal, Typography} from "@mui/material"
+import {Box, Typography} from "@mui/material"
 import useCreateTagModal from "./CreateTagModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {CreateTag, ProductTag} from "../../../entities"
-import {ControlledCustomCheckbox, ControlledCustomInput, Button} from '../../../shared/ui'
+import {ControlledCustomCheckbox, ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
 import s from '../../CRUDModals/CreateShopModal/CreateShopModal.module.scss'
 
 interface CreateTagModalProps {
@@ -56,12 +56,10 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
     };
 
     return (
-        <Modal
+        <CustomModal
             open={open}
             onClose={() => {setOpen(false)}}
             onContextMenu={(event) => {event.preventDefault()}}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <Box sx={style} component="form" onSubmit={control.handleSubmit(onSubmit)}>
                 <Typography sx={{pb: 3}}>Добавить
@@ -104,6 +102,6 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
                     Создать тег
                 </Button>
             </Box>
-        </Modal>
+        </CustomModal>
     )
 }

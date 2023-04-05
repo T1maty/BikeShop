@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {Modal} from '@mui/material'
 import s from './CreateStorageModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput,
+    CustomModal, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateStorageModal from './CreateStorageModalStore'
 import {UpdateStorage} from '../../../entities/requests/CreateStorage'
@@ -71,13 +71,9 @@ export const CreateStorageModal = () => {
     } else {
 
         return (
-            <Modal
+            <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                onClose={() => {setOpen(false)}}
             >
                 <div className={s.shopStorageModal_mainBlock}>
                     <div className={s.shopStorageModal_shops}>
@@ -136,7 +132,7 @@ export const CreateStorageModal = () => {
                         </form>
                     </div>
                 </div>
-            </Modal>
+            </CustomModal>
         )
     }
 }

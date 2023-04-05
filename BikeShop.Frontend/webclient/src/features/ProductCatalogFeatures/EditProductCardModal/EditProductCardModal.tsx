@@ -1,23 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import s from './EditProductCardModal.module.scss'
-import {Modal} from '@mui/material'
 import useEditProductCardModal from './EditProductCardModalStore'
-import {Button, LoaderScreen} from '../../../shared/ui'
+import {SubmitHandler, useForm} from "react-hook-form"
+import {useSnackbar} from "notistack"
+import htmlToDraft from "html-to-draftjs"
+import {ContentState, EditorState} from "draft-js"
+import {Button, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
 import {EditProductCardOption} from "./EditProductCardOption"
 import {EditProductCardGallery} from "./EditProductCardGallery"
 import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
-import {SubmitHandler, useForm} from "react-hook-form"
-import {useSnackbar} from "notistack"
-import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
-import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
-import {ProductImage, ProductOptionVariantBind} from "../../../entities";
-import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
-import {ContentState, EditorState} from "draft-js";
-import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull";
-import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort";
-import htmlToDraft from "html-to-draftjs";
+import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
+import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest"
+import {ProductImage, ProductOptionVariantBind} from "../../../entities"
+import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
+import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull"
+import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort"
 
 export const EditProductCardModal = () => {
 
@@ -68,9 +67,7 @@ export const EditProductCardModal = () => {
         })
 
         let tagIds: string[] = []
-        data.productTags.forEach(n => {
-            tagIds.push(n.id)
-        })
+        data.productTags.forEach(n => {tagIds.push(n.id)})
 
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
@@ -144,7 +141,9 @@ export const EditProductCardModal = () => {
                 enabled: n.enabled
             })
         })
+
         console.log("Глобальная установка дефолтных значений")
+
         if (currentProduct.productCard != undefined) {
             let contentBlock = htmlToDraft(currentProduct.productCard?.description)
             console.log('загружаем дефолтное значение', currentProduct.productCard.description)
@@ -154,8 +153,6 @@ export const EditProductCardModal = () => {
                 setEditorState(editorState)
             }
         }
-
-
         formControl.setValue("productOptions", options)
     }, [currentProduct])
 
@@ -164,13 +161,9 @@ export const EditProductCardModal = () => {
     } else {
 
         return (
-            <Modal
+            <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                onClose={() => {setOpen(false)}}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.editProductCardModal_mainBlock}>
@@ -200,9 +193,7 @@ export const EditProductCardModal = () => {
                                                            name={'productSpecifications'}
                             />
                             <div className={s.rightSide_mainButtons}>
-                                <Button onClick={() => {
-                                    setOpen(false)
-                                }}>
+                                <Button onClick={() => {setOpen(false)}}>
                                     Отмена
                                 </Button>
                                 <Button type={'submit'}>
@@ -212,7 +203,7 @@ export const EditProductCardModal = () => {
                         </div>
                     </div>
                 </form>
-            </Modal>
+            </CustomModal>
         )
     }
 }

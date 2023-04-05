@@ -1,9 +1,8 @@
-import React from 'react';
-import {Modal} from "@mui/material";
-import {Button} from '../../shared/ui'
+import React from 'react'
+import {Button, CustomModal} from '../../shared/ui'
 import s from './PayModal.module.scss'
-import {ClientCard} from "../../widgets";
-import {PaymentData, User} from "../../entities";
+import {ClientCard} from "../../widgets"
+import {PaymentData, User} from "../../entities"
 
 interface props {
     open: boolean,
@@ -16,13 +15,9 @@ interface props {
 export const PayModal = (props: props) => {
 
     return (
-        <Modal
+        <CustomModal
             open={props.open}
-            onClose={() => {
-                props.setOpen(false)
-            }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            onClose={() => {props.setOpen(false)}}
         >
             <div className={s.payModal_mainBox}>
                 <div className={s.payModal_header}>
@@ -53,12 +48,13 @@ export const PayModal = (props: props) => {
                         <Button onClick={() => {
                             props.result({cash: props.summ, card: 0, bankCount: 0, personalBalance: 0})
                             props.setOpen(false)
-                        }}>
+                        }}
+                        >
                             Оплатить
                         </Button>
                     </div>
                 </div>
             </div>
-        </Modal>
-    );
-};
+        </CustomModal>
+    )
+}
