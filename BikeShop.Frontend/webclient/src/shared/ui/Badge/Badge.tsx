@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement} from 'react'
 import cls from './Badge.module.scss'
 
 type BadgeType = {
-    children: ReactElement,
+    children: ReactElement
     badgeContent: number
 }
 
@@ -12,5 +12,5 @@ export const Badge: FC<BadgeType> = ({children,badgeContent}) => {
             {children}
             <span className={cls.badge}>{badgeContent}</span>
         </span>
-    );
-};
+    )
+}

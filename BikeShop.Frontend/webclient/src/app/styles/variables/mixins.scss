@@ -58,7 +58,7 @@
 
 ////////////////////////////////////////////////////////////////////
 
-// mixins for UI components
+// mixins for UI components //
 // textField size
 @mixin defaultFiledStyle() {
     @include flexCenter;
@@ -195,6 +195,41 @@
 
 ////////////////////////////////////////////////////////////////////
 
+// Header
+//@mixin burgerMenuStyles() {
+//    .leftSide_burgerMenu {
+//        position: relative;
+//
+//        .burgerMenu_iconButton {
+//            @include hoverCursorPointer;
+//            font-weight: bold;
+//            font-size: 20px;
+//            user-select: none;
+//        }
+//        .burgerMenu_menuList {
+//            position: absolute;
+//            top: 25px;
+//            right: -25px;
+//            background-color: var(--header-color);
+//            border-radius: $defaultSmallMargin;
+//            border: 1px solid white;
+//            padding: $defaultLargeMargin;
+//            min-width: 130px;
+//            z-index: 100;
+//
+//            .menuList_item {
+//                padding: 3px 0;
+//                &:hover {
+//                    cursor: pointer;
+//                    background-color: $themeColorGray;
+//                }
+//            }
+//        }
+//    }
+//}
+
+////////////////////////////////////////////////////////////////////
+
 // CreateShopModal
 @mixin createShopStorageModal($itemsColumnHeight, $columnWidth2, $columnWidth3) {
     .shopStorageModal_shops {
@@ -209,19 +244,19 @@
             padding-right: $defaultSmallMargin;
             overflow-y: auto;
             max-height: $itemsColumnHeight; // высота колонки с элементами
-            @include ActiveEntity;
+            @include activeEntity;
         }
     }
 
     // третья колонка
     .shopStorageModal_createBlock {
         width: $columnWidth3; // высота колонки с формами
-        @include CreateEntityForm;
+        @include createEntityForm;
     }
 }
 
 // CreateShopModal Active Entity Item
-@mixin ActiveEntity() {
+@mixin activeEntity() {
     .shop_item {
         //@include divSmallMarginBottom;
         > div:not(:last-child) {
@@ -266,7 +301,7 @@
 }
 
 // CreateShopModal FormStyles
-@mixin CreateEntityForm() {
+@mixin createEntityForm() {
     form {
         @include divLargeMarginBottom;
 
@@ -488,7 +523,7 @@
 ////////////////////////////////////////////////////////////////////
 
 // Registration
-@mixin RegistrationBlock($buttonWidth) {
+@mixin registrationBlock($buttonWidth) {
 
     // custom variants here
 

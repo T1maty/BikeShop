@@ -15,7 +15,7 @@
         @include flexColumn;
         padding: 0 40px;
 
-        @include RegistrationBlock(268px); // main layout styles
+        @include registrationBlock(268px); // main layout styles
 
         .haveAccount {
             margin-top: 20px;
