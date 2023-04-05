@@ -17,11 +17,11 @@
             padding-right: $defaultSmallMargin;
             overflow-y: auto;
             max-height: 300px;
-            @include ActiveEntity;
+            @include activeEntity;
         }
     }
 
     .specificationModal_createBlock {
-        @include CreateEntityForm;
+        @include createEntityForm;
     }
 }

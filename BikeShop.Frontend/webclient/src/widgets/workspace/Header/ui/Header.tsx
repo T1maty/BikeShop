@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
+import s from './Header.module.scss'
 import {
     CreateCurrencyModal, CreateQuantityUnitModal,
-    CreateShopModal, CreateStorageModal,
-    HeaderUserMenu
+    CreateShopModal, CreateStorageModal, HeaderUserMenu
 } from "../../../../features"
 import {useNavigate} from "react-router-dom"
 import {useTranslation} from "react-i18next"
-import cls from './Header.module.scss'
 import {Clock} from "../../../../shared/ui/Clock/Clock"
 import {MenuIcon} from "../../../../shared/ui/IconButtons/MenuIcon"
-import BellIcon from "../../../../shared/assets/workspace/bell-icon.svg"
+import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon"
+import {Badge} from "../../../../shared/ui/Badge/Badge"
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import useCreateStorageModal from "../../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore"
 import useCreateShopModal from "../../../../features/CRUDModals/CreateShopModal/CreateShopModalStore"
@@ -138,23 +138,23 @@ export const Header = () => {
     ])
 
     return (
-        <div className={cls.appBar}>
+        <div className={s.appBar}>
             <CreateShopModal/>
             <CreateStorageModal/>
             <CreateCurrencyModal/>
             <CreateQuantityUnitModal/>
 
-            <div className={cls.content}>
-                <div className={cls.leftSide}>
-                    <div className={cls.leftSide_burgerMenu}>
-                        <div className={cls.burgerMenu_iconButton}>
+            <div className={s.content}>
+                <div className={s.leftSide}>
+                    <div className={s.leftSide_burgerMenu}>
+                        <div className={s.burgerMenu_iconButton}>
                             <MenuIcon onClick={() => {setIsMenuOpen(!isMenuOpen)}}/>
                         </div>
                         {
                             isMenuOpen ?
-                                <div className={cls.burgerMenu_menuList}>
+                                <div className={s.burgerMenu_menuList}>
                                     {menuItems1.map(item => (
-                                        <div className={cls.menuList_item}
+                                        <div className={s.menuList_item}
                                              key={item.title}
                                              onClick={item.func}
                                         >
@@ -164,7 +164,7 @@ export const Header = () => {
                                     <hr/>
 
                                     {menuItems2.map(item => (
-                                        <div className={cls.menuList_item}
+                                        <div className={s.menuList_item}
                                              key={item.title}
                                              onClick={item.func}
                                         >
@@ -174,7 +174,7 @@ export const Header = () => {
                                     <hr/>
 
                                     {menuItems3.map(item => (
-                                        <div className={cls.menuList_item}
+                                        <div className={s.menuList_item}
                                              key={item.title}
                                              onClick={item.func}
                                         >
@@ -184,7 +184,7 @@ export const Header = () => {
                                     <hr/>
 
                                     {menuItems4.map(item => (
-                                        <div className={cls.menuList_item}
+                                        <div className={s.menuList_item}
                                              key={item.title}
                                              onClick={item.func}
                                         >
@@ -196,22 +196,20 @@ export const Header = () => {
                                 : ''
                         }
                     </div>
-                    <div className={cls.leftSide_shopTitle}
-                         onClick={() => {
-                             navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
-                         }}
+                    <div className={s.leftSide_shopTitle}
+                         onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
                     >
                         {shop ? shop.name : 'Магазин не выбран'}
                     </div>
                 </div>
-                <div className={cls.center}>
+                <div className={s.center}>
                     <Clock/>
                 </div>
-                <div className={cls.rightSide}>
+                <div className={s.rightSide}>
                     <HeaderUserMenu firstName={user?.firstName} lastName={user?.lastName}/>
-                    <div>
-                        <img src={BellIcon} alt="bell-icon" width={25} height={25}/>
-                    </div>
+                    <Badge badgeContent={3}>
+                        <NotificationIcon/>
+                    </Badge>
                 </div>
             </div>
         </div>
