@@ -170,18 +170,19 @@ export const EditProductCardModal = () => {
                         <div className={s.editProductCardModal_leftSide}>
                             <EditProductCardTags control={formControl} name={'productTags'}/>
                             <EditProductCardStatus control={formControl} name={'checkStatus'}/>
-
                             <EditProductCardGallery images={images} setImages={setImages}/>
-
                         </div>
-
 
                         <div className={s.leftSide_descriptionEditor}>
-                            <EditProductCardDescriptionFull control={formControl} name={'productCard'}
-                                                            editorState={editorState} setEditorState={setEditorState}/>
-                            <EditProductCardDescriptionShort control={formControl} name={'productCard'}/>
+                            <EditProductCardDescriptionShort name={'productCard'}
+                                                             control={formControl}
+                            />
+                            <EditProductCardDescriptionFull name={'productCard'}
+                                                            control={formControl}
+                                                            editorState={editorState}
+                                                            setEditorState={setEditorState}
+                            />
                         </div>
-
 
                         <div className={s.editProductCardModal_rightSide}>
                             <EditProductCardOption divClassName={s.rightSide_productDetails}

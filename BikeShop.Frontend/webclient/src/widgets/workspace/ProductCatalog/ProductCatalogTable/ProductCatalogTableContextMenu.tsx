@@ -39,8 +39,9 @@ export const ProductCatalogTableContextMenu = () => {
             <MenuItem onClick={() => {
                 setOpenUpdateProductModal(true, selected[0].product)
                 setContextVisible(false, 0, 0)
-            }}
-            >Редактировать
+                }}
+            >
+                Редактировать
             </MenuItem>
 
             <MenuItem>Изменить цену</MenuItem>
@@ -52,7 +53,8 @@ export const ProductCatalogTableContextMenu = () => {
                 setOpenCreateProductModal(tag)
                 setContextVisible(false, 0, 0)
             }}
-            >Создать
+            >
+                Создать
             </MenuItem>
 
             <MenuItem>Статистика</MenuItem>

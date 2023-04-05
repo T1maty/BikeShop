@@ -2,7 +2,7 @@ import React from 'react'
 import TablePagination from "@mui/material/TablePagination"
 import useProductCatalogTableStore from "./ProductCatalogTableStore"
 
-export const ProductCatalogTablePagination = () => {
+export const _ProductCatalogTablePagination = () => {
 
     const rows = useProductCatalogTableStore(s => s.rows)
     const setPage = useProductCatalogTableStore(s => s.setPage)

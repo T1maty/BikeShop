@@ -56,7 +56,7 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         control.setValue('isRetailVisible', false)
         control.setValue('isB2BVisible', false)
         control.setValue('isUniversal', false)
-    };
+    }
 
     return (
         <CustomModal
@@ -66,43 +66,39 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         >
             <div className={s.updateTagModal_mainBox}>
                 <div onSubmit={control.handleSubmit(onSubmit)}>
-                <span>ID: {tag.id}</span>
-                    <ControlledCustomInput name={'name'}
-                                           placeholder={'Название тега'}
-                                           control={control}
-                                           rules={{required: 'Введите название нового тега'}}
-                    />
-                    <br/>
-                    <br/>
-                    <ControlledCustomInput name={'sortOrder'}
-                                           placeholder={'Порядок сортировки'}
-                                           control={control}
-                                           rules={{
-                                               required: 'Порядок сортировки необходимо ввести',
-                                               validate: (value: number) => value > -1
-                                           }}
-                    />
-                    <ControlledCustomCheckbox name={'isRetailVisible'}
-                                              label={'Видим в интернет-магазине'}
-                                              control={control}
-                        // divClassName={s.infoBlock_checkbox}
-                    />
-                    <ControlledCustomCheckbox name={'isB2BVisible'}
-                                              label={'Видим в B2B'}
-                                              control={control}
-                        // divClassName={s.infoBlock_checkbox}
-                    />
-                    <ControlledCustomCheckbox name={'isUniversal'}
-                                              label={'Универсальный тег'}
-                                              control={control}
-                        // divClassName={s.infoBlock_checkbox}
-                    />
-                    <br/>
-                    <Button type={'submit'}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Редактировать тег
-                    </Button>
+                    <div className={s.updateTagModal_inputs}>
+                        <div>
+                            ID: {tag.id}
+                        </div>
+                        <ControlledCustomInput name={'name'}
+                                               placeholder={'Название тега'}
+                                               control={control}
+                                               rules={{required: 'Введите название нового тега'}}
+                        />
+                        <ControlledCustomInput name={'sortOrder'}
+                                               placeholder={'Порядок сортировки'}
+                                               control={control}
+                                               rules={{
+                                                   required: 'Порядок сортировки необходимо ввести',
+                                                   validate: (value: number) => value > -1
+                                               }}
+                        />
+                        <ControlledCustomCheckbox name={'isRetailVisible'}
+                                                  label={'Видим в интернет-магазине'}
+                                                  control={control}
+                        />
+                        <ControlledCustomCheckbox name={'isB2BVisible'}
+                                                  label={'Видим в B2B'}
+                                                  control={control}
+                        />
+                        <ControlledCustomCheckbox name={'isUniversal'}
+                                                  label={'Универсальный тег'}
+                                                  control={control}
+                        />
+                        <Button type={'submit'}>
+                            Редактировать тег
+                        </Button>
+                    </div>
                 </div>
             </div>
         </CustomModal>

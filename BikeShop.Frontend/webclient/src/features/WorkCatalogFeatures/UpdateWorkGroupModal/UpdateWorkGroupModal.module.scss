@@ -3,4 +3,13 @@
 
 .updateWorkGroupModal_mainBox {
     @include defaultModalStyle;
+
+    .updateWorkGroupModal_inputs {
+        margin-bottom: $defaultLargeMargin;
+        @include divLargeMarginBottom;
+    }
+
+    .createWorkModal_buttons {
+        @include workAndProductModalsButtonBlock;
+    }
 }

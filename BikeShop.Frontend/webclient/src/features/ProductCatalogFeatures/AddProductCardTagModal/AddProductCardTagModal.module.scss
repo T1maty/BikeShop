@@ -3,8 +3,8 @@
 
 .addProductCardTagModal_mainBox {
     @include defaultModalStyle;
-    border-radius: $smallBorderRadius;
     @include flexColumn;
+    border-radius: $smallBorderRadius;
 
     .addProductCardTagModal_content {
 

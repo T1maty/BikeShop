@@ -14,6 +14,7 @@ interface CreateProductModalProps {
 export const CreateProductModal = (props: CreateProductModalProps) => {
 
     const {enqueueSnackbar} = useSnackbar()
+
     const error = useTranslation('errors').t
 
     const open = useCreateProductModal(s => s.open)
@@ -57,7 +58,6 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 10000})
             console.error(r.response.data)
         })
-
     }
 
     return (
@@ -68,64 +68,60 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
         >
             <div className={s.createProductModal_mainBox}>
                 <div onSubmit={formControl.handleSubmit(onSubmit)}>
-                <span>
-                    {
-                        tags.map((n) => {
-                            return n.id + ' '
-                        })
-                    }
-                </span>
-                    <ControlledCustomInput name={'name'}
-                                           placeholder={'Название товара'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomInput name={'catalogKey'}
-                                           placeholder={'Каталожный номер'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomInput name={'manufacturerBarcode'}
-                                           placeholder={'Штрих-код производителя'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomInput name={'incomePrice'}
-                                           placeholder={'Цена возможной закупки'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomInput name={'dealerPrice'}
-                                           placeholder={'Оптовая цена'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomInput name={'retailPrice'}
-                                           placeholder={'Розничная цена'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomCheckbox name={'b2BVisibility'}
-                                              label={'Видим в B2B'}
-                                              control={formControl}
-                        // divClassName={s.infoBlock_checkbox}
-                    />
-                    <ControlledCustomCheckbox name={'retailVisibility'}
-                                              label={'Видим в интернет-магазине'}
-                                              control={formControl}
-                        // divClassName={s.infoBlock_checkbox}
-                    />
-                    <br/>
-                    <Button type={'submit'}
-                            // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Создать товар
-                    </Button>
-                    <Button onClick={() => {setOpen(false)}}
-                            // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Отмена
-                    </Button>
+                    <div className={s.createProductModal_inputs}>
+                        <div>
+                            {
+                                tags.map((n) => {return n.id + ' '})
+                            }
+                        </div>
+                        <ControlledCustomInput name={'name'}
+                                               placeholder={'Название товара'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'catalogKey'}
+                                               placeholder={'Каталожный номер'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'manufacturerBarcode'}
+                                               placeholder={'Штрих-код производителя'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'incomePrice'}
+                                               placeholder={'Цена возможной закупки'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'dealerPrice'}
+                                               placeholder={'Оптовая цена'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'retailPrice'}
+                                               placeholder={'Розничная цена'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomCheckbox name={'b2BVisibility'}
+                                                  label={'Видим в B2B'}
+                                                  control={formControl}
+                        />
+                        <ControlledCustomCheckbox name={'retailVisibility'}
+                                                  label={'Видим в интернет-магазине'}
+                                                  control={formControl}
+                        />
+                    </div>
+
+                    <div className={s.createProductModal_buttons}>
+                        <Button onClick={() => {setOpen(false)}}>
+                            Отмена
+                        </Button>
+                        <Button type={'submit'}>
+                            Создать товар
+                        </Button>
+                    </div>
                 </div>
             </div>
         </CustomModal>

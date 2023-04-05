@@ -1,20 +1,21 @@
-import React from 'react';
-import {ProductTag} from "../../../../entities";
+import React from 'react'
 import s from './ProductTagItem.module.scss'
-import useProductTagCloudStore from "./ProductTagCloudStore";
+import {ProductTag} from "../../../../entities"
+import useProductTagCloudStore from "./ProductTagCloudStore"
 
-interface props {
+interface ProductTagCloudItemProps {
     tag: ProductTag
 }
 
-export const ProductTagCloudItem = (props: props) => {
+export const ProductTagCloudItem = (props: ProductTagCloudItemProps) => {
+
     const remove = useProductTagCloudStore(s => s.removeTag)
+
     return (
-        <div className={s.item} onDoubleClick={() => {
-            remove(props.tag.id)
-        }}>
+        <div className={s.item}
+             onDoubleClick={() => {remove(props.tag.id)}}
+        >
             {props.tag.name}
         </div>
-    );
-};
-
+    )
+}

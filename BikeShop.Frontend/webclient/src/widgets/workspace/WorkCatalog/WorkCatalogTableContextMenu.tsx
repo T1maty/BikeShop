@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import MenuItem from "@mui/material/MenuItem";
-import {Menu} from "@mui/material";
-import {CreateWorkModal, UpdateWorkModal} from "../../../features";
+import React, {useState} from 'react'
+import MenuItem from "@mui/material/MenuItem"
+import {Menu} from "@mui/material"
+import {CreateWorkModal, UpdateWorkModal} from "../../../features"
 
 const WorkCatalogTableContextMenu = (props: { x: number, y: number, visibility: boolean, setVisibility: (value: boolean) => void }) => {
 

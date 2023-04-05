@@ -3,4 +3,24 @@
 
 .updateProductModal_mainBox {
     @include defaultModalStyle;
+
+    .updateProductModal_inputs {
+        margin-bottom: $defaultLargeMargin;
+        @include divSmallMarginBottom;
+    }
+    .updateProductModal_buttons {
+        //@include workAndProductModalsButtonBlock;
+
+        display: flex;
+        gap: 20px;
+
+        button {
+            height: 50px;
+            width: 100%;
+        }
+
+        > div {
+            width: 100%;
+        }
+    }
 }

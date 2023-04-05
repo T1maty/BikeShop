@@ -3,4 +3,12 @@
 
 .updateWorkModal_mainBox {
     @include defaultModalStyle;
+
+    .updateWorkModal_inputs {
+        margin-bottom: $defaultLargeMargin;
+        @include divSmallMarginBottom;
+    }
+    .updateWorkModal_buttons {
+        @include workAndProductModalsButtonBlock;
+    }
 }

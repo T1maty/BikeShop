@@ -1,8 +1,8 @@
 import React from 'react'
+import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {CreateProductModal, UpdateProductModal} from '../../../../features'
 import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
-import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
 import {Product, ProductExtended} from "../../../../entities"
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
@@ -13,11 +13,11 @@ interface CatalogTableProps {
 
 export const ProductCatalogTable = (props: CatalogTableProps) => {
 
+    const isLoading = useProductCatalogTableStore(s => s.isLoading)
     const rows = useProductCatalogTableStore(s => s.rows)
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
-    const isLoading = useProductCatalogTableStore(s => s.isLoading)
 
     const createProductSuccessHandler = (product: Product) => {
         let extProd: ProductExtended

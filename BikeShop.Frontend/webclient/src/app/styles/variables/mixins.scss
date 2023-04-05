@@ -147,6 +147,20 @@
     }
 }
 
+@mixin workAndProductModalsButtonBlock() {
+    display: flex;
+    gap: 20px;
+
+    button {
+        height: 40px;
+        width: 100%;
+    }
+
+    > div {
+        width: 100%;
+    }
+}
+
 // div styles
 @mixin divSmallMarginBottom() {
     > div:not(:last-child) {

@@ -51,32 +51,28 @@ export const CreateWorkGroupModal = (props: CreateWorkGroupModalProps) => {
         >
             <div className={s.createWorkGroupModal_mainBox}>
                 <div onSubmit={formControl.handleSubmit(onSubmit)}>
-                    <div>
-                        {props.parent.name != undefined ? 'Создаем потомка для ' + props.parent.name : 'Создаем в корне'}
+                    <div className={s.createWorkGroupModal_inputs}>
+                        <div>
+                            {props.parent.name != undefined ? 'Создаем потомка для ' + props.parent.name : 'Создаем в корне'}
+                        </div>
+                        <ControlledCustomInput name={'name'}
+                                               placeholder={'Название группы'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomCheckbox name={'isCollapsed'}
+                                                  label={'Свернуть по умолчанию'}
+                                                  control={formControl}
+                        />
                     </div>
-                    <ControlledCustomInput name={'name'}
-                                           placeholder={'Название группы'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomCheckbox name={'isCollapsed'}
-                                              label={'Свернут по умолчанию'}
-                                              control={formControl}
-                        // divClassName={s.infoBlock_checkbox}
-                    />
-                    <br/>
-                    <Button type={'submit'}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Создать группу
-                    </Button>
-                    <Button onClick={() => {
-                        props.setVisibility(false)
-                    }}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Отмена
-                    </Button>
+                    <div className={s.updateWorkGroupModal_buttons}>
+                        <Button onClick={() => {props.setVisibility(false)}}>
+                            Отмена
+                        </Button>
+                        <Button type={'submit'}>
+                            Создать группу
+                        </Button>
+                    </div>
                 </div>
             </div>
         </CustomModal>

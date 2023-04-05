@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react'
 import cls from './CustomTagTreeView.module.scss'
 
 interface UniTreeView {
@@ -15,6 +15,7 @@ interface UniTreeView {
  */
 
 export const UniTreeView = memo((props: UniTreeView) => {
+
     const {data, selected, setSelected, onNodeContext, onNodeClick, onNodeDoubleClick} = props
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
 
@@ -25,36 +26,34 @@ export const UniTreeView = memo((props: UniTreeView) => {
             if (!item.isCollapsed) {
                 exp.push(item.id)
             }
-        });
+        })
 
         setExpandedItems(exp)
     }, [data])
 
     const handleExpand = (id: number) => {
-        setExpandedItems([...expandedItems, id]);
-    };
+        setExpandedItems([...expandedItems, id])
+    }
 
     const handleCollapse = (id: number) => {
-        setExpandedItems(expandedItems.filter((item: number) => item !== id));
-    };
-
+        setExpandedItems(expandedItems.filter((item: number) => item !== id))
+    }
 
     function buildTree(data: Array<object>, parentId: number) {
-        const tree: Array<object> = [];
+        const tree: Array<object> = []
 
         data.forEach((item: any) => {
             if (item.parentId === parentId) {
-                const children = buildTree(data, item.id);
+                const children = buildTree(data, item.id)
                 if (children.length) {
-                    item.children = children;
+                    item.children = children
                 }
-                tree.push(item);
+                tree.push(item)
             }
-        });
+        })
 
-        return tree;
+        return tree
     }
-
 
     const renderItem = (item: any) => {
         const isExpanded = expandedItems.includes(item.id);
@@ -70,18 +69,17 @@ export const UniTreeView = memo((props: UniTreeView) => {
         }
 
         return (
-            <div key={item.id} className={cls.wrapper} onContextMenu={(e) => {
-                e.preventDefault()
-            }}>
+            <div key={item.id}
+                 className={cls.wrapper}
+                 onContextMenu={(e) => {e.preventDefault()}}
+            >
                 <div style={{cursor: 'pointer'}}
-
-                     className={cls.parent}>
-
-                    <div
-                        className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
-
+                     className={cls.parent}
+                >
+                    <div className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
                         <div className={cls.toggle}
-                             onClick={onClickHandlerCollapsed}>
+                             onClick={onClickHandlerCollapsed}
+                        >
                             {hasChildren && (isExpanded ? '\\/' : '>')}
                         </div>
 
@@ -99,19 +97,19 @@ export const UniTreeView = memo((props: UniTreeView) => {
                         >
                             {item.name}
                         </div>
-
                     </div>
                 </div>
 
-                {hasChildren && isExpanded && (
+                {
+                    hasChildren && isExpanded && (
                     <div className={cls.child}>
                         {item.children.map(renderItem)}
                     </div>
-                )}
+                    )
+                }
             </div>
-        );
-    };
-
+        )
+    }
 
     return (
         <>

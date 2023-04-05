@@ -64,111 +64,39 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
             onContextMenu={(event) => {event.preventDefault()}}
         >
             <div className={s.updateProductModal_mainBox}>
-
                 <div onSubmit={formControl.handleSubmit(onSubmit)}>
-                    <h2>Артикул товара: {product.id}</h2>
-                    <br/>
-
-                    <ControlledCustomInput name={'name'}
-                                           placeholder={'Название товара'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    {/*<Controller*/}
-                    {/*    name="name"*/}
-                    {/*    control={control}*/}
-                    {/*    rules={{required: 'Обязательное поле'}}*/}
-                    {/*    render={({field}: any) =>*/}
-
-                    {/*        <TextField {...field} sx={{pb: 3}}*/}
-                    {/*                   fullWidth={true}*/}
-                    {/*                   error={!!errors.name}*/}
-                    {/*                   label="Название товара"*/}
-                    {/*                   variant="outlined"*/}
-                    {/*        />*/}
-                    {/*    }*/}
-                    {/*/>*/}
-
-                    <ControlledCustomInput name={'manufacturerBarcode'}
-                                           placeholder={'Штрихкод производителя'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    {/*<Controller*/}
-                    {/*    name="manufacturerBarcode"*/}
-                    {/*    control={control}*/}
-                    {/*    rules={{required: 'Обязательное поле'}}*/}
-                    {/*    render={({field}: any) =>*/}
-
-                    {/*        <TextField {...field} sx={{pb: 3}}*/}
-                    {/*                   fullWidth={true}*/}
-                    {/*                   error={!!errors.manufacturerBarcode}*/}
-                    {/*                   label="Штрихкод производителя"*/}
-                    {/*                   variant="outlined"*/}
-                    {/*        />*/}
-                    {/*    }*/}
-                    {/*/>*/}
-
-                    <ControlledCustomInput name={'b2BVisibility'}
-                                           placeholder={'Видим в B2B'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    {/*<Controller*/}
-                    {/*    name="b2BVisibility"*/}
-                    {/*    control={control}*/}
-                    {/*    render={({field}) => (*/}
-
-                    {/*        <FormControlLabel*/}
-                    {/*            label={'Видим в B2B'}*/}
-                    {/*            control={*/}
-                    {/*                <Checkbox*/}
-                    {/*                    checked={field.value}*/}
-                    {/*                    onChange={(event, value) => {*/}
-                    {/*                        field.onChange(value);*/}
-                    {/*                    }}*/}
-                    {/*                />*/}
-                    {/*            }*/}
-                    {/*        />*/}
-
-                    {/*    )}*/}
-                    {/*/>*/}
-
-                    <ControlledCustomCheckbox name={'retailVisibility'}
-                                              label={'Видим в интернет-магазине'}
-                                              control={formControl}
-                                              // divClassName={s.infoBlock_checkbox}
-                    />
-                    {/*<Controller*/}
-                    {/*    name="retailVisibility"*/}
-                    {/*    control={control}*/}
-                    {/*    render={({field}) => (*/}
-                    {/*        */}
-                    {/*        <FormControlLabel*/}
-                    {/*            label={'Видим в интернет-магазине'}*/}
-                    {/*            control={*/}
-                    {/*                <Checkbox*/}
-                    {/*                    checked={field.value}*/}
-                    {/*                    onChange={(event, value) => {*/}
-                    {/*                        field.onChange(value);*/}
-                    {/*                    }}/>*/}
-                    {/*            }*/}
-                    {/*        />*/}
-                    {/*    )}*/}
-                    {/*/>*/}
-
-                    <br/>
-
-                    <Button type={'submit'}
-                            // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Обновить информацию о товаре
-                    </Button>
-                    <Button onClick={() => {setOpen(false, {} as Product)}}
-                            // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Отмена
-                    </Button>
+                    <div className={s.updateProductModal_inputs}>
+                        <div>
+                            Артикул товара: {product.id}
+                        </div>
+                        <ControlledCustomInput name={'name'}
+                                               placeholder={'Название товара'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'manufacturerBarcode'}
+                                               placeholder={'Штрихкод производителя'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'b2BVisibility'}
+                                               placeholder={'Видим в B2B'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomCheckbox name={'retailVisibility'}
+                                                  label={'Видим в интернет-магазине'}
+                                                  control={formControl}
+                        />
+                    </div>
+                    <div className={s.updateProductModal_buttons}>
+                        <Button onClick={() => {setOpen(false, {} as Product)}}>
+                            Отмена
+                        </Button>
+                        <Button type={'submit'}>
+                            Обновить информацию
+                        </Button>
+                    </div>
                 </div>
             </div>
         </CustomModal>

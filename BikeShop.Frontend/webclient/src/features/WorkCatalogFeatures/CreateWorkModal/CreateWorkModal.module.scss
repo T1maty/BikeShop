@@ -3,4 +3,12 @@
 
 .createWorkModal_mainBox {
     @include defaultModalStyle;
+
+    .createWorkModal_inputs {
+        margin-bottom: $defaultLargeMargin;
+        @include divSmallMarginBottom;
+    }
+    .createWorkModal_buttons {
+        @include workAndProductModalsButtonBlock;
+    }
 }

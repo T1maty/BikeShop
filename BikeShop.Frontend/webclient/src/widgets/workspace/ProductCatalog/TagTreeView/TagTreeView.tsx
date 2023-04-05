@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react'
-import Box from "@mui/material/Box"
+import s from './TagTreeView.module.scss'
 import {ProductTag} from "../../../../entities"
 import TagTreeViewContextMenu from "./TagTreeViewContextMenu"
 import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
-import {UniTreeView} from "../../../../shared/ui";
-import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore";
-import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore";
+import {UniTreeView} from "../../../../shared/ui"
+import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore"
+import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore"
 
-interface prp {
+interface TagTreeViewProps {
     onNodeDoubleClick?: (node: any) => void
 }
 
-export const TagTreeView = (props: prp) => {
+export const TagTreeView = (props: TagTreeViewProps) => {
 
     const setTreeViewData = useTagTreeView(s => s.setTreeViewTags)
     const expanded = useTagTreeView(s => s.expandedTags)
@@ -29,57 +29,43 @@ export const TagTreeView = (props: prp) => {
 
     const setProductsToTableHandler = (node: ProductTag) => {
         setSelect(node.id)
-
-        let tags = tagsCloud.map((n) => {
-            return n.id
-        })
+        let tags = tagsCloud.map((n) => {return n.id})
         tags.push(node.id)
         setProductsToTable(tags)
     }
 
     useEffect(() => {
         fetchTags().then((r) => {
-            console.log('tags', r.data.tags)
             setTreeViewData(r.data.tags as ProductTag[])
+            console.log('tags', r.data.tags)
         })
     }, [])
 
     return (
-        <Box sx={{
-            flexGrow: 1,
-            maxWidth: 400,
-            maxHeight: 100,
-            backgroundColor: '#33373B',
-            borderRadius: 5,
-            p: 2,
-            m: 2
-        }}
-             onContextMenu={(event) => {
-                 event.preventDefault()
-             }}
+        <div className={s.tagTreeView_mainBox}
+             onContextMenu={(event) => {event.preventDefault()}}
         >
             <UpdateTagModal onSuccess={updateTag}/>
             <CreateTagModal onSuccess={addTag}/>
+
             <TagTreeViewContextMenu/>
-            <UniTreeView data={treeViewData} selected={selectedN} setSelected={setSelectedN}
-                         onNodeClick={setProductsToTableHandler} onNodeContext={(event) => {/*
-                setSelect(node.id)
-                setContext(true, event.clientX, event.clientY)
-                setProductsToTableHandler()
-            */
-            }}
-                         onNodeDoubleClick={(node) => {/*
-                             addTagToCloud(treeData.filter((n) => {
-                                 if (n.id == props.nodeId) return n
-                             })[0])
-                         */
-                             props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
+
+            <UniTreeView data={treeViewData}
+                         selected={selectedN}
+                         setSelected={setSelectedN}
+                         onNodeClick={setProductsToTableHandler}
+                         onNodeContext={(event) => {
+                         // setSelect(node.id)
+                         // setContext(true, event.clientX, event.clientY)
+                         // setProductsToTableHandler()
                          }}
-
-
+                         onNodeDoubleClick={(node) => {
+                             props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
+                             // addTagToCloud(treeData.filter((n) => {
+                             //     if (n.id == props.nodeId) return n
+                             // })[0])
+                         }}
             />
-
-
-        </Box>
+        </div>
     )
 }

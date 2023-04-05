@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {Menu} from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import {Group} from "../../../entities";
-import {useWorkCatalog} from "./TableCatalogStore";
-import {CreateWorkModal, CreateWorkGroupModal, UpdateWorkGroupModal} from "../../../features";
+import React, {useState} from 'react'
+import {Menu} from '@mui/material'
+import MenuItem from '@mui/material/MenuItem'
+import {Group} from '../../../entities'
+import {useWorkCatalog} from './TableCatalogStore'
+import {CreateWorkModal, CreateWorkGroupModal, UpdateWorkGroupModal} from '../../../features'
 
 const WorkCatalogTreeViewContext = (props: { x: number, y: number, visibility: boolean, setVisibility: (value: boolean) => void }) => {
 
@@ -37,33 +37,37 @@ const WorkCatalogTreeViewContext = (props: { x: number, y: number, visibility: b
                 <MenuItem onClick={() => {
                     props.setVisibility(false)
                     sV(true)
-                }}>
+                }}
+                >
                     Создать услугу
                 </MenuItem>
 
                 <MenuItem onClick={() => {
                     props.setVisibility(false)
                     sV2(true)
-                }}>
+                }}
+                >
                     Редактировать группу
                 </MenuItem>
                 <MenuItem onClick={() => {
                     props.setVisibility(false)
                     sV1(true)
                     setParent({} as Group)
-                }}>
+                }}
+                >
                     Создать группу в корне
                 </MenuItem>
                 <MenuItem onClick={() => {
                     props.setVisibility(false)
                     sV1(true)
                     setParent(selected)
-                }}>
+                }}
+                >
                     Создать потомка
                 </MenuItem>
             </Menu>
         </>
-    );
-};
+    )
+}
 
 export default WorkCatalogTreeViewContext;

@@ -54,34 +54,35 @@ export const CreateWorkModal = (props: CreateWorkModalProps) => {
         >
             <div className={s.createWorkModal_mainBox}>
                 <div onSubmit={formControl.handleSubmit(onSubmit)}>
-                    <ControlledCustomInput name={'name'}
-                                           placeholder={'Название услуги'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomInput name={'description'}
-                                           placeholder={'Описание'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <ControlledCustomInput name={'price'}
-                                           placeholder={'Цена'}
-                                           control={formControl}
-                                           rules={{required: 'Обязательное поле'}}
-                    />
-                    <br/>
-                    <Button type={'submit'}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Создать услугу
-                    </Button>
-                    <Button onClick={() => {
-                        props.setVisibility(false)
-                    }}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
-                    >
-                        Отмена
-                    </Button>
+                    <div className={s.createWorkModal_inputs}>
+                        <ControlledCustomInput name={'name'}
+                                               placeholder={'Название услуги'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'description'}
+                                               placeholder={'Описание'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'price'}
+                                               placeholder={'Цена'}
+                                               control={formControl}
+                                               rules={{required: 'Обязательное поле'}}
+                        />
+                    </div>
+                    <div className={s.createWorkModal_buttons}>
+                        <Button onClick={() => {props.setVisibility(false)}}
+                                buttonDivWrapper={s.createWorkModal_cancelBtn}
+                        >
+                            Отмена
+                        </Button>
+                        <Button type={'submit'}
+                                buttonDivWrapper={s.createWorkModal_submitBtn}
+                        >
+                            Создать услугу
+                        </Button>
+                    </div>
                 </div>
             </div>
         </CustomModal>
