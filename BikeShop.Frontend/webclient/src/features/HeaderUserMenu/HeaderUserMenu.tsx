@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-// import s from '../../widgets/workspace/Header/ui/Header.module.scss'
+import React, {useState} from 'react'
 import s from './HeaderUserMenu.module.scss'
 import {BikeShopPaths} from "../../app/routes/paths"
 import {useTranslation} from "react-i18next"

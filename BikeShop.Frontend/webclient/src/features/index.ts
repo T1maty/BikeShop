@@ -1,4 +1,5 @@
 export {HeaderUserMenu} from './HeaderUserMenu/HeaderUserMenu'
+export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 
 export {ArchiveModal} from './ArchiveModal/ArchiveModal'
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
