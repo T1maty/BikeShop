@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import {useNavigate} from "react-router-dom"
 import s from "./MainPage.module.scss"
+import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {ChooseClientModal, CreateProductModal,
     CreateSpecificationModal, EditProductCardModal} from '../../../features'
@@ -9,17 +9,16 @@ import {BikeShopPaths} from "../../../app/routes/paths"
 import {User} from "../../../entities"
 import useMainPageStore from "./MainPageStore"
 import useCreateSpecificationModal
-    from '../../../features/CRUDModals/CreateSpecificationModal/CreateSpecificationModalStore';
+    from '../../../features/CRUDModals/CreateSpecificationModal/CreateSpecificationModalStore'
 
 export const MainPage = () => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
-    const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
-
     const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
 
+    const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
     const setUser = useMainPageStore(s => s.setUser)
 
@@ -41,7 +40,6 @@ export const MainPage = () => {
         setUser(user)
         setIsClientChosen(true)
         setOpenClientModal(false)
-        console.log('MainPage click user', user)
     }
 
     const createServiceHandler = () => {
@@ -51,9 +49,11 @@ export const MainPage = () => {
     return (
         // <div className={s.mainPageWrapper}>
         <div className={s.mainPageMainBlock}>
+
             <CreateProductModal/>
             <EditProductCardModal/>
             <CreateSpecificationModal/>
+
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
