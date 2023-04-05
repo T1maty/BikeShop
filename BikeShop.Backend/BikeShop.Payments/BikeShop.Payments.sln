@@ -1,29 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{087F99C9-7062-4866-A9B6-2274F4A37978}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7C113993-3B87-459E-AF94-E6E835D3685C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{FB69F9D8-5BEB-4D00-99B7-5BF617441E74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShop.Payments.Domain", "BikeShop.Payments.Domain\BikeShop.Payments.Domain.csproj", "{FCCB460C-91B1-47C9-B0CE-52179C288D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Payments.Domain", "BikeShop.Payments.Domain\BikeShop.Payments.Domain.csproj", "{FCCB460C-91B1-47C9-B0CE-52179C288D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShop.Payments.Application", "BikeShop.Payments.Application\BikeShop.Payments.Application.csproj", "{34394F3E-C450-44C3-92C9-48C6F3DE4402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Payments.Application", "BikeShop.Payments.Application\BikeShop.Payments.Application.csproj", "{34394F3E-C450-44C3-92C9-48C6F3DE4402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShop.Payments.Persistence", "BikeShop.Payments.Persistence\BikeShop.Payments.Persistence.csproj", "{73002E86-414A-4C36-95A7-1075A1F3E59E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Payments.Persistence", "BikeShop.Payments.Persistence\BikeShop.Payments.Persistence.csproj", "{73002E86-414A-4C36-95A7-1075A1F3E59E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShop.Payments.WebApi", "BikeShop.Payments.WebApi\BikeShop.Payments.WebApi.csproj", "{C1EA9996-6F83-4B42-98EE-42418ED07323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeShop.Payments.WebApi", "BikeShop.Payments.WebApi\BikeShop.Payments.WebApi.csproj", "{7988C559-3444-4F8F-B1B2-ECFB2173347B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{FCCB460C-91B1-47C9-B0CE-52179C288D68} = {087F99C9-7062-4866-A9B6-2274F4A37978}
-		{34394F3E-C450-44C3-92C9-48C6F3DE4402} = {087F99C9-7062-4866-A9B6-2274F4A37978}
-		{73002E86-414A-4C36-95A7-1075A1F3E59E} = {7C113993-3B87-459E-AF94-E6E835D3685C}
-		{C1EA9996-6F83-4B42-98EE-42418ED07323} = {FB69F9D8-5BEB-4D00-99B7-5BF617441E74}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FCCB460C-91B1-47C9-B0CE-52179C288D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -38,9 +35,21 @@ Global
 		{73002E86-414A-4C36-95A7-1075A1F3E59E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73002E86-414A-4C36-95A7-1075A1F3E59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73002E86-414A-4C36-95A7-1075A1F3E59E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1EA9996-6F83-4B42-98EE-42418ED07323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1EA9996-6F83-4B42-98EE-42418ED07323}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1EA9996-6F83-4B42-98EE-42418ED07323}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1EA9996-6F83-4B42-98EE-42418ED07323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7988C559-3444-4F8F-B1B2-ECFB2173347B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7988C559-3444-4F8F-B1B2-ECFB2173347B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7988C559-3444-4F8F-B1B2-ECFB2173347B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7988C559-3444-4F8F-B1B2-ECFB2173347B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FCCB460C-91B1-47C9-B0CE-52179C288D68} = {087F99C9-7062-4866-A9B6-2274F4A37978}
+		{34394F3E-C450-44C3-92C9-48C6F3DE4402} = {087F99C9-7062-4866-A9B6-2274F4A37978}
+		{73002E86-414A-4C36-95A7-1075A1F3E59E} = {7C113993-3B87-459E-AF94-E6E835D3685C}
+		{7988C559-3444-4F8F-B1B2-ECFB2173347B} = {FB69F9D8-5BEB-4D00-99B7-5BF617441E74}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C19078F-17B6-4EFE-8892-1DAF5F77F31E}
 	EndGlobalSection
 EndGlobal
