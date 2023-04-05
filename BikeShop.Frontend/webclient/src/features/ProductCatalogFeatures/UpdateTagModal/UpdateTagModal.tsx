@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
-import {SubmitHandler, useForm} from "react-hook-form"
-import {UpdateTag} from "../../../entities"
-import {Box, Typography} from "@mui/material"
+import s from './UpdateTagModal.module.scss'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {UpdateTag} from '../../../entities'
 import {ControlledCustomCheckbox, ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
-import {useSnackbar} from "notistack"
+import {useSnackbar} from 'notistack'
 import useUpdateTagModal from './UpdateTagModalStore'
 
 interface UpdateTagModalProps {
@@ -41,21 +41,6 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         console.log(tag)
     }, [tag])
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: '#33373B',
-
-        boxShadow: 24,
-        p: 4,
-        borderRadius: 10,
-        color: 'white'
-    };
-
-
     const onSubmit: SubmitHandler<UpdateTag> = (data: UpdateTag) => {
         update(data).then((r) => {
             setClose()
@@ -79,47 +64,47 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
             onClose={() => {setClose()}}
             onContextMenu={(event) => {event.preventDefault()}}
         >
-            <Box sx={style} component="form" onSubmit={control.handleSubmit(onSubmit)}>
-                <Typography
-                    sx={{pb: 3}}>ID: {tag.id}
-                </Typography>
-                <ControlledCustomInput name={'name'}
-                                       placeholder={'Название тега'}
-                                       control={control}
-                                       rules={{required: 'Введите название нового тега'}}
-                />
-                <br/>
-                <br/>
-                <ControlledCustomInput name={'sortOrder'}
-                                       placeholder={'Порядок сортировки'}
-                                       control={control}
-                                       rules={{
-                                           required: 'Порядок сортировки необходимо ввести',
-                                           validate: (value: number) => value > -1
-                                       }}
-                />
-                <ControlledCustomCheckbox name={'isRetailVisible'}
-                                          label={'Видим в интернет-магазине'}
-                                          control={control}
-                                          // divClassName={s.infoBlock_checkbox}
-                />
-                <ControlledCustomCheckbox name={'isB2BVisible'}
-                                          label={'Видим в B2B'}
-                                          control={control}
-                                          // divClassName={s.infoBlock_checkbox}
-                />
-                <ControlledCustomCheckbox name={'isUniversal'}
-                                          label={'Универсальный тег'}
-                                          control={control}
-                                          // divClassName={s.infoBlock_checkbox}
-                />
-                <br/>
-                <Button type={'submit'}
+            <div className={s.updateTagModal_mainBox}>
+                <div onSubmit={control.handleSubmit(onSubmit)}>
+                <span>ID: {tag.id}</span>
+                    <ControlledCustomInput name={'name'}
+                                           placeholder={'Название тега'}
+                                           control={control}
+                                           rules={{required: 'Введите название нового тега'}}
+                    />
+                    <br/>
+                    <br/>
+                    <ControlledCustomInput name={'sortOrder'}
+                                           placeholder={'Порядок сортировки'}
+                                           control={control}
+                                           rules={{
+                                               required: 'Порядок сортировки необходимо ввести',
+                                               validate: (value: number) => value > -1
+                                           }}
+                    />
+                    <ControlledCustomCheckbox name={'isRetailVisible'}
+                                              label={'Видим в интернет-магазине'}
+                                              control={control}
+                        // divClassName={s.infoBlock_checkbox}
+                    />
+                    <ControlledCustomCheckbox name={'isB2BVisible'}
+                                              label={'Видим в B2B'}
+                                              control={control}
+                        // divClassName={s.infoBlock_checkbox}
+                    />
+                    <ControlledCustomCheckbox name={'isUniversal'}
+                                              label={'Универсальный тег'}
+                                              control={control}
+                        // divClassName={s.infoBlock_checkbox}
+                    />
+                    <br/>
+                    <Button type={'submit'}
                         // buttonDivWrapper={s.infoBlock_cancelBtn}
-                >
-                    Редактировать тег
-                </Button>
-            </Box>
+                    >
+                        Редактировать тег
+                    </Button>
+                </div>
+            </div>
         </CustomModal>
     )
 }

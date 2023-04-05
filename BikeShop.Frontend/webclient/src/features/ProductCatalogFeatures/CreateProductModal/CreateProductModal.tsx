@@ -1,10 +1,10 @@
 import React from 'react'
-import {Box, Typography} from "@mui/material"
-import useCreateProductModal from "./CreateProductModalStore"
-import {SubmitHandler, useForm} from "react-hook-form"
-import {EnumProductCheckStatus, CreateProduct, Product} from "../../../entities"
-import {useSnackbar} from "notistack"
-import {useTranslation} from "react-i18next"
+import s from './CreateProductModal.module.scss'
+import useCreateProductModal from './CreateProductModalStore'
+import {SubmitHandler, useForm} from 'react-hook-form'
+import {EnumProductCheckStatus, CreateProduct, Product} from '../../../entities'
+import {useSnackbar} from 'notistack'
+import {useTranslation} from 'react-i18next'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 
 interface CreateProductModalProps {
@@ -35,21 +35,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
             b2BVisibility: false,
             tagsIds: ['0']
         }
-    });
-
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 800,
-        bgcolor: '#33373B',
-
-        boxShadow: 24,
-        p: 4,
-        borderRadius: 10,
-        color: 'white'
-    }
+    })
 
     const onSubmit: SubmitHandler<CreateProduct> = (data: CreateProduct) => {
         if (tags.length > 0) {
@@ -79,66 +65,68 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
             onClose={() => {setOpen(false)}}
             onContextMenu={(event) => {event.preventDefault()}}
         >
-            <Box sx={style} component="form" onSubmit={formControl.handleSubmit(onSubmit)}>
-                <Typography>
+            <div className={s.createProductModal_mainBox}>
+                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <span>
                     {
                         tags.map((n) => {
                             return n.id + ' '
                         })
                     }
-                </Typography>
-                <ControlledCustomInput name={'name'}
-                                       placeholder={'Название товара'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomInput name={'catalogKey'}
-                                       placeholder={'Каталожный номер'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomInput name={'manufacturerBarcode'}
-                                       placeholder={'Штрих-код производителя'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomInput name={'incomePrice'}
-                                       placeholder={'Цена возможной закупки'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomInput name={'dealerPrice'}
-                                       placeholder={'Оптовая цена'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomInput name={'retailPrice'}
-                                       placeholder={'Розничная цена'}
-                                       control={formControl}
-                                       rules={{required: 'Обязательное поле'}}
-                />
-                <ControlledCustomCheckbox name={'b2BVisibility'}
-                                          label={'Видим в B2B'}
-                                          control={formControl}
-                                          // divClassName={s.infoBlock_checkbox}
-                />
-                <ControlledCustomCheckbox name={'retailVisibility'}
-                                          label={'Видим в интернет-магазине'}
-                                          control={formControl}
-                                          // divClassName={s.infoBlock_checkbox}
-                />
-                <br/>
-                <Button type={'submit'}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
-                >
-                    Создать товар
-                </Button>
-                <Button onClick={() => {setOpen(false)}}
-                        // buttonDivWrapper={s.infoBlock_cancelBtn}
-                >
-                    Отмена
-                </Button>
-            </Box>
+                </span>
+                    <ControlledCustomInput name={'name'}
+                                           placeholder={'Название товара'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomInput name={'catalogKey'}
+                                           placeholder={'Каталожный номер'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomInput name={'manufacturerBarcode'}
+                                           placeholder={'Штрих-код производителя'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomInput name={'incomePrice'}
+                                           placeholder={'Цена возможной закупки'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomInput name={'dealerPrice'}
+                                           placeholder={'Оптовая цена'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomInput name={'retailPrice'}
+                                           placeholder={'Розничная цена'}
+                                           control={formControl}
+                                           rules={{required: 'Обязательное поле'}}
+                    />
+                    <ControlledCustomCheckbox name={'b2BVisibility'}
+                                              label={'Видим в B2B'}
+                                              control={formControl}
+                        // divClassName={s.infoBlock_checkbox}
+                    />
+                    <ControlledCustomCheckbox name={'retailVisibility'}
+                                              label={'Видим в интернет-магазине'}
+                                              control={formControl}
+                        // divClassName={s.infoBlock_checkbox}
+                    />
+                    <br/>
+                    <Button type={'submit'}
+                            // buttonDivWrapper={s.infoBlock_cancelBtn}
+                    >
+                        Создать товар
+                    </Button>
+                    <Button onClick={() => {setOpen(false)}}
+                            // buttonDivWrapper={s.infoBlock_cancelBtn}
+                    >
+                        Отмена
+                    </Button>
+                </div>
+            </div>
         </CustomModal>
     )
 }

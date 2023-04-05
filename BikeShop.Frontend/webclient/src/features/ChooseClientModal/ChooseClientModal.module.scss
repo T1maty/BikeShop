@@ -7,8 +7,8 @@
 
     .clientModal_searchBlock {
         @include flexColumn;
-        margin-bottom: 30px;
         @include divLargeMarginBottom;
+        margin-bottom: 30px;
 
         .clientModal_searchBlock_title {
             @include titleCenter;
