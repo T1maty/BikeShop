@@ -89,6 +89,10 @@
             .product_select {
                 width: 100%;
                 color: black;
+
+                .product_select_box {
+                    color: black;
+                }
             }
 
             .product_buy {
@@ -99,9 +103,9 @@
                 .product_available {
                     .isAvailable {
                         @include flexCenter;
+                        text-align: center;
                         padding: $divButtonPadding;
                         border-radius: $smallBorderRadius;
-
                         background-color: $themeColorMilk;
                     }
 

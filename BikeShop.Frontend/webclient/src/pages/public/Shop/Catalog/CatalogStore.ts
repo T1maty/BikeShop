@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItem, ProductTag, ShopAPI} from '../../../../entities'
+import {CatalogProductItemType, ProductTag, ShopAPI} from '../../../../entities'
 
 interface UseCatalogStore {
     isLoading: boolean
@@ -9,7 +9,7 @@ interface UseCatalogStore {
 
     tags: ProductTag[]
     getTags: () => void
-    defaultProducts: CatalogProductItem[]
+    defaultProducts: CatalogProductItemType[]
     getDefaultProducts: () => void
 }
 

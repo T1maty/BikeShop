@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import s from './CatalogProductItem.module.scss'
-import {Button} from "../../../../shared/ui"
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
+import {Button, ControlledReactSelect} from "../../../../shared/ui"
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import NoProductImage from "../../../../shared/assets/shop/icons/bicycle-02.svg"
 import SorryNoImage from "../../../../shared/assets/shop/images/sorryNoImage.jpg"
+import {useForm} from "react-hook-form"
+import {CatalogProductItemType, ProductSpecificationBind} from "../../../../entities"
+import Select from "react-select";
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -17,8 +19,10 @@ export const CatalogProductItem = () => {
     const [isDelivery, setIsDelivery] = useState<boolean>(false)
 
     // тестовые данные
+    const amountOfProduct = 10 // есть ли на складе
+
+    const [selectedProduct, setSelectedProduct] = useState<any>()
     const [products, setProducts] = useState(['Велосипед-1', 'Велосипед-2', 'Велосипед-3'])
-    const amountOfProduct = 10
 
     const [images, setImages] = useState([
         {
@@ -48,6 +52,12 @@ export const CatalogProductItem = () => {
         },
     ])
 
+    // const formControl = useForm<any>({
+    //     defaultValues: {
+    //         currentProduct: {} as CatalogProductItemType,
+    //     }
+    // })
+
     const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
                                    isDetails: boolean, isDelivery: boolean) => {
 
@@ -57,10 +67,10 @@ export const CatalogProductItem = () => {
         setIsDelivery(isDelivery)
     }
 
-    const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
-        // setCurrentMasterId(event.target.value as string)
-        console.log('клик по селекту товара', event.target.value)
-    }
+    // const onChangeMUISelectHandler = (event: SelectChangeEvent) => {
+    //     // setCurrentMasterId(event.target.value as string)
+    //     console.log('клик по селекту товара', event.target.value)
+    // }
 
     // useEffect(() => {
     //     // setIsCharacteristic(true)
@@ -113,42 +123,73 @@ export const CatalogProductItem = () => {
                        А так же доступные...
                    </div>
                    <div className={s.product_select}>
-                       <FormControl fullWidth>
-                           <InputLabel id="product-select-label" style={{color: 'black'}}>Модель</InputLabel>
-                           <Select
-                               labelId="product-select-label"
-                               id="product-select"
-                               name={'productSelect'}
-                               value={'Велосипед-1'}
-                               label="productSelect"
-                               onChange={onChangeMUISelectHandler}
-                               sx={{
-                                   color: "black",
-                                   '.MuiOutlinedInput-notchedOutline': {
-                                       borderColor: 'black',
-                                   },
-                                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                       borderColor: 'black',
-                                   },
-                                   '&:hover .MuiOutlinedInput-notchedOutline': {
-                                       borderColor: 'black',
-                                   },
-                                   '.MuiSvgIcon-root ': {
-                                       fill: 'black',
-                                   }
-                               }}
-                           >
-                               {
-                                   products.map((p: any) => {
-                                       return (
-                                           <MenuItem key={p} value={p}>
-                                               {p}
-                                           </MenuItem>
-                                       )
-                                   })
-                               }
-                           </Select>
-                       </FormControl>
+
+                       <Select
+                           className={s.product_select_box}
+                           options={products}
+                           placeholder={'Товар'}
+                           isSearchable={false}
+                           value={selectedProduct ? selectedProduct : null}
+                           onChange={(value) => {setSelectedProduct(value)}}
+                           getOptionLabel={label => label!.name}
+                           getOptionValue={value => value!.name}
+                           noOptionsMessage={() => 'Товар не найден'}
+                       />
+
+                       {/*<ControlledReactSelect control={formControl}*/}
+                       {/*                       name={'productSelect'}*/}
+                       {/*                       className={s.product_select_box}*/}
+                       {/*                       placeholder={'Товар'}*/}
+                       {/*                       isSearchable={false}*/}
+                       {/*                       // disabled={currentService === null && !isCreating}*/}
+                       {/*                       value={formControl.getFieldState('productSelect')}*/}
+                       {/*                       onChangeSelect={(value: any) => {formControl.setValue('productSelect', value)}}*/}
+                       {/*                       data={products.map((el: any) => {*/}
+                       {/*                           return {*/}
+                       {/*                               value: el.value,*/}
+                       {/*                               label: el.label,*/}
+                       {/*                           }*/}
+                       {/*                       })}*/}
+                       {/*                       noOptionsMessage={() => 'Товар не найден'}*/}
+                       {/*/>*/}
+
+                       {/*<FormControl fullWidth>*/}
+                       {/*    <InputLabel id="product-select-label" style={{color: 'black'}}>Модель</InputLabel>*/}
+                       {/*    <Select*/}
+                       {/*        labelId="product-select-label"*/}
+                       {/*        id="product-select"*/}
+                       {/*        name={'productSelect'}*/}
+                       {/*        value={'Велосипед-1'}*/}
+                       {/*        label="productSelect"*/}
+                       {/*        onChange={onChangeMUISelectHandler}*/}
+                       {/*        sx={{*/}
+                       {/*            color: "black",*/}
+                       {/*            '.MuiOutlinedInput-notchedOutline': {*/}
+                       {/*                borderColor: 'black',*/}
+                       {/*            },*/}
+                       {/*            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {*/}
+                       {/*                borderColor: 'black',*/}
+                       {/*            },*/}
+                       {/*            '&:hover .MuiOutlinedInput-notchedOutline': {*/}
+                       {/*                borderColor: 'black',*/}
+                       {/*            },*/}
+                       {/*            '.MuiSvgIcon-root ': {*/}
+                       {/*                fill: 'black',*/}
+                       {/*            }*/}
+                       {/*        }}*/}
+                       {/*    >*/}
+                       {/*        {*/}
+                       {/*            products.map((p: any) => {*/}
+                       {/*                return (*/}
+                       {/*                    <MenuItem key={p} value={p}>*/}
+                       {/*                        {p}*/}
+                       {/*                    </MenuItem>*/}
+                       {/*                )*/}
+                       {/*            })*/}
+                       {/*        }*/}
+                       {/*    </Select>*/}
+                       {/*</FormControl>*/}
+
                    </div>
                    <div className={s.product_buy}>
                        <div className={s.product_available}>

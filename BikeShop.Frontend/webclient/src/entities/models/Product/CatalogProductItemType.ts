@@ -2,7 +2,7 @@ import {
     ProductOptionsWithVariants
 } from "../../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants";
 
-export interface CatalogProductItem {
+export interface CatalogProductItemType {
     product: {
         id: number
         createdAt: string
