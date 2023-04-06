@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import s from './CatalogProductItem.module.scss'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import {Button, ControlledReactSelect} from "../../../../shared/ui"
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
@@ -7,11 +8,16 @@ import NoProductImage from "../../../../shared/assets/shop/icons/bicycle-02.svg"
 import SorryNoImage from "../../../../shared/assets/shop/images/sorryNoImage.jpg"
 import {useForm} from "react-hook-form"
 import {CatalogProductItemType, ProductSpecificationBind} from "../../../../entities"
-import Select from "react-select";
+import Select from "react-select"
+import useCatalog from './CatalogStore'
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
 export const CatalogProductItem = () => {
+
+    const params = useParams()
+
+    const currentProduct = useCatalog(s => s.currentProduct)
 
     // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')
     const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)
@@ -72,9 +78,9 @@ export const CatalogProductItem = () => {
     //     console.log('клик по селекту товара', event.target.value)
     // }
 
-    // useEffect(() => {
-    //     // setIsCharacteristic(true)
-    // }, [])
+    useEffect(() => {
+
+    }, [params.productId])
 
     return (
        <div className={s.shop_productItem_mainBox}>
@@ -113,7 +119,7 @@ export const CatalogProductItem = () => {
                    />
                </div>
                <div className={s.product_info}>
-                   <div className={s.product_title}>Merida</div>
+                   <div className={s.product_title}>{currentProduct && currentProduct.product.name}</div>
                    <div className={s.product_price}>$ 1350</div>
                    <div className={s.product_description}>
                        Описание товара с ограничением в 7 строк.

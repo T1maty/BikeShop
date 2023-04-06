@@ -28,6 +28,7 @@ export const Catalog = () => {
     const getTags = useCatalog(s => s.getTags)
     const defaultProducts = useCatalog(s => s.defaultProducts)
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
+    const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
 
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
@@ -53,50 +54,50 @@ export const Catalog = () => {
     ])
 
     // тестовые данные
-    const [products, setProducts] = useState<ProductsType[]>([
-        {
-            id: '1',
-            image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-            name: 'Merida',
-            price: 500,
-            addToCart: cart,
-        },
-        {
-            id: '2',
-            image: '',
-            name: 'Specialized',
-            price: 100500,
-            addToCart: cart,
-        },
-        {
-            id: '3',
-            image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-            name: 'Merida',
-            price: 500,
-            addToCart: cart,
-        },
-        {
-            id: '4',
-            image: '',
-            name: 'Specialized',
-            price: 100500,
-            addToCart: cart,
-        },
-        {
-            id: '5',
-            image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-            name: 'Merida',
-            price: 500,
-            addToCart: cart,
-        },
-        {
-            id: '6',
-            image: '',
-            name: 'Specialized',
-            price: 100500,
-            addToCart: cart,
-        },
-    ])
+    // const [products, setProducts] = useState<ProductsType[]>([
+    //     {
+    //         id: '1',
+    //         image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+    //         name: 'Merida',
+    //         price: 500,
+    //         addToCart: cart,
+    //     },
+    //     {
+    //         id: '2',
+    //         image: '',
+    //         name: 'Specialized',
+    //         price: 100500,
+    //         addToCart: cart,
+    //     },
+    //     {
+    //         id: '3',
+    //         image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+    //         name: 'Merida',
+    //         price: 500,
+    //         addToCart: cart,
+    //     },
+    //     {
+    //         id: '4',
+    //         image: '',
+    //         name: 'Specialized',
+    //         price: 100500,
+    //         addToCart: cart,
+    //     },
+    //     {
+    //         id: '5',
+    //         image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+    //         name: 'Merida',
+    //         price: 500,
+    //         addToCart: cart,
+    //     },
+    //     {
+    //         id: '6',
+    //         image: '',
+    //         name: 'Specialized',
+    //         price: 100500,
+    //         addToCart: cart,
+    //     },
+    // ])
 
     const filterUniversalHandler = (filterName: FilterProductsType,
                                     activeFilter1: boolean, activeFilter2: boolean,
@@ -183,7 +184,10 @@ export const Catalog = () => {
                             defaultProducts.map(prod => (
                                 <div key={prod.product.id}
                                      className={s.content_item}
-                                     onClick={() => {navigate(BikeShopPaths.SHOP.PRODUCT)}}
+                                     onClick={() => {
+                                         setCurrentProduct(prod)
+                                         navigate(`/shop/catalog/${prod.product.id}`)}
+                                }
                                 >
                                     <div className={s.item_image}>
                                         {

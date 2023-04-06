@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItemType, ProductTag, ShopAPI} from '../../../../entities'
+import {CatalogProductItemType, ProductTag, ServiceItem, ShopAPI} from '../../../../entities'
 
 interface UseCatalogStore {
     isLoading: boolean
@@ -9,8 +9,12 @@ interface UseCatalogStore {
 
     tags: ProductTag[]
     getTags: () => void
+
     defaultProducts: CatalogProductItemType[]
     getDefaultProducts: () => void
+
+    currentProduct: CatalogProductItemType | null
+    setCurrentProduct: (product: CatalogProductItemType | null) => void
 }
 
 const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -30,6 +34,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             console.log('теги не получены')
         })
     },
+
     defaultProducts: [],
     getDefaultProducts: () => {
         set({isLoading: true})
@@ -42,6 +47,11 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         }).catch((error: any) => {
             console.log('дефолтные товары не получены')
         })
+    },
+
+    currentProduct: {} as CatalogProductItemType,
+    setCurrentProduct: (product) => {
+        set({currentProduct: product})
     },
 })))/*, {
     name: "useCatalog",
