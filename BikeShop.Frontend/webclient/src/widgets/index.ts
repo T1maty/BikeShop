@@ -1,4 +1,5 @@
 export {ClientCard} from './workspace/ClientCard/ClientCard'
+export {ContextMenu} from './workspace/ContextMenu/ContextMenu'
 
 export {ProductCatalogTable} from './workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTable'
 export {WorkCatalogTable} from './workspace/WorkCatalog/WorkCatalogTable'

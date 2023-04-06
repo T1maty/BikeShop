@@ -22,12 +22,14 @@
     align-items: center;
     justify-content: center;
     width: 200px;
-    height: 45px;
-    margin-bottom: 5px;
+    height: 25px;
+    //margin-bottom: 5px;
     background: #676767;
+    border-radius: 0;
+    border: 1px solid white;
 }
 
-.button:hover{
+.button:hover {
     background: #4b4b4b;
 }
 
@@ -37,9 +39,10 @@
     position: absolute;
     opacity: 0;
     z-index: 10;
-    padding: 5px;
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.28);
+    //padding: 5px;
+    border: 1px solid white;
+    //border-radius: 12px;
+    //background: rgba(0, 0, 0, 0.28);
 }
 
 .button:nth-last-child(1) {
@@ -58,7 +61,6 @@
 }
 
 .isClosing {
-
     .content {
         opacity: 0;
     }
