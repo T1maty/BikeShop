@@ -30,7 +30,7 @@ export const ContextMenu = memo(({isOpen, onClose, settings, top, left}: Context
 
     const closeHandler = useCallback((e?: MouseEvent, value?: string, click?: any) => {
         if (onClose) {
-            { click ? click() : '' }
+            { click ? click() : '' } // добавлено
             setIsClosing(true)
             timerRef.current = setTimeout(() => {
                 onClose(value)

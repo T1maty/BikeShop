@@ -9,14 +9,16 @@ import {ContextMenu} from "../../ContextMenu/ContextMenu"
 
 export const ProductCatalogTableContextMenu = () => {
 
-    const selected = useProductCatalogTableStore(s => s.selectedRows)
-    const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
-    const contextMenuVisible = useProductCatalogTableStore(s => s.open)
-    const contextXY = useProductCatalogTableStore(s => s.contextMenuXY)
     const setOpenCreateProductModal = useCreateProductModal(s => s.setTagAndOpen)
     const setOpenUpdateProductModal = useUpdateProductModal(s => s.setOpen)
-    const tagSelected = useTagTreeView(s => s.selectedTag)
+
+    const contextMenuVisible = useProductCatalogTableStore(s => s.open)
+    const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
+    const contextXY = useProductCatalogTableStore(s => s.contextMenuXY)
+    const selected = useProductCatalogTableStore(s => s.selectedRows)
+
     const treeViewData = useTagTreeView(s => s.treeViewTags)
+    const tagSelected = useTagTreeView(s => s.selectedTag)
 
     const settings = [
         {
