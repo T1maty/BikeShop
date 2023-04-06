@@ -1,11 +1,13 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItemType, ProductTag, ServiceItem, ShopAPI} from '../../../../entities'
+import {CatalogProductItemType, ProductTag, ShopAPI} from '../../../../entities'
+import {ErrorStatusTypes} from '../../../../entities/enumerables/ErrorStatusTypes'
 
 interface UseCatalogStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
 
     tags: ProductTag[]
     getTags: () => void
@@ -20,6 +22,7 @@ interface UseCatalogStore {
 const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
+    errorStatus: 'default',
 
     tags: [],
     getTags: () => {
@@ -31,7 +34,10 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('теги не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 
@@ -45,7 +51,10 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('дефолтные товары не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 

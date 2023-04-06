@@ -4,6 +4,7 @@ export {UniTable} from './Table/UniTable'
 
 export {Button} from './Button/Button'
 export {LoaderScreen} from './Loader/LoaderScreen'
+export {LoaderScreenForShop} from './Loader/LoaderScreenForShop'
 
 export {EditableSpan} from './EditableSpan/EditableSpan'
 export {InputUI} from './InputUI/InputUI' // инпут с поиском (пока не удалять)

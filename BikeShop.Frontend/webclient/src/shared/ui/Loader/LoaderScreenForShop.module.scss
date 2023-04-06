@@ -1,5 +1,5 @@
 @import '../../../app/styles/variables/mixins';
 
 .loaderScreenBox {
-    @include loaderScreenStyles(rgba(0, 0, 0, 0.7))
+    @include loaderScreenStyles(none)
 }

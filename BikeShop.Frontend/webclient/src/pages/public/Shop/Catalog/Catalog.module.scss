@@ -142,9 +142,9 @@
                 }
             }
         }
-        .right_paginator {
-            @include flexCenter;
-            border: 1px solid black;
-        }
+        //.right_paginator {
+        //    @include flexCenter;
+        //    border: 1px solid black;
+        //}
     }
 }

@@ -7,23 +7,21 @@ import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import {useNavigate} from "react-router-dom"
 import useCatalog from "./CatalogStore"
-import {LoaderScreen} from "../../../../shared/ui"
+import {LoaderScreenForShop} from '../../../../shared/ui'
+import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
+import {useSnackbar} from 'notistack'
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
-type ProductsType = {
-    id: string
-    image: string
-    name: string
-    price: number
-    addToCart: string
-}
-
 export const Catalog = () => {
+
+    const {enqueueSnackbar} = useSnackbar()
 
     const navigate = useNavigate()
 
     const isLoading = useCatalog(s => s.isLoading)
+    const errorStatus = useCatalog(s => s.errorStatus)
+
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
     const defaultProducts = useCatalog(s => s.defaultProducts)
@@ -112,13 +110,19 @@ export const Catalog = () => {
     }
 
     useEffect(() => {
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
+
+    useEffect(() => {
         setActiveFilter1(true)
         getTags()
         getDefaultProducts()
     }, [])
 
     if (isLoading) {
-        return <LoaderScreen variant={'ellipsis'}/>
+        return <LoaderScreenForShop image={ShopLoaderScreen}/>
     } else {
 
         return (
@@ -186,7 +190,7 @@ export const Catalog = () => {
                                      className={s.content_item}
                                      onClick={() => {
                                          setCurrentProduct(prod)
-                                         navigate(`/shop/catalog/${prod.product.id}`)}
+                                         navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)}
                                 }
                                 >
                                     <div className={s.item_image}>

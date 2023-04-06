@@ -7,7 +7,7 @@ export const BikeShopPaths = {
     SHOP: {
         HOME: '/shop',
         CATALOG: '/shop/catalog',
-        PRODUCT: '/shop/catalog/:productId',
+        PRODUCT: '/shop/catalog/:category/:productId',
         PROFILE: '/shop/profile',
         ORDER: '/shop/order',
     },

@@ -11,7 +11,8 @@
     .shop_main {
         flex: 1 1 auto; /*чтобы прибить футер к низу*/
         color: black;
-        background-color: $themeColorSomeWhite;
+        //background-color: $themeColorSomeWhite;
+        background-color: white;
         padding: $containerShopPadding;
     }
 }
