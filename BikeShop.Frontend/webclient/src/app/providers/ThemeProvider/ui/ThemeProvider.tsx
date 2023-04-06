@@ -8,8 +8,10 @@ type ThemeProviderProps = {
 }
 
 const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
+
     const [theme, setTheme] = useState<Theme>(defaultTheme)
     document.body.className = theme
+
     const defaultProps = useMemo(() => ({
         theme,
         setTheme

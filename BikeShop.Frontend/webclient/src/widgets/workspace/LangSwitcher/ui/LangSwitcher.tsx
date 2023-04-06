@@ -1,7 +1,5 @@
 import React, {type FC} from 'react'
 import {useTranslation} from 'react-i18next'
-import {MenuItem} from "@mui/material"
-import Menu from "@mui/material/Menu"
 import {Button} from "../../../../shared/ui"
 
 interface LangSwitcherProps {
@@ -10,11 +8,11 @@ interface LangSwitcherProps {
 
 export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const open = Boolean(anchorEl)
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-        console.log('test')
+        setAnchorEl(event.currentTarget)
     }
 
     const handleClose = () => {
@@ -39,26 +37,20 @@ export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
                 {t('Language')}
             </Button>
 
-            <Menu
-                id="demo-customized-menu"
-                className={className}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
+            <div className={className}
+                 // open={open}
+                 // onClose={handleClose}
             >
-                <MenuItem onClick={() => toggleLanguage('en')}>
+                <div onClick={() => toggleLanguage('en')}>
                     EN
-                </MenuItem>
-                <MenuItem onClick={() => toggleLanguage('ru')}>
+                </div>
+                <div onClick={() => toggleLanguage('ru')}>
                     RU
-                </MenuItem>
-                <MenuItem onClick={() => toggleLanguage('ua')}>
+                </div>
+                <div onClick={() => toggleLanguage('ua')}>
                     UA
-                </MenuItem>
-            </Menu>
+                </div>
+            </div>
         </>
     )
 }
