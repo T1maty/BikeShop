@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BikeShop.Acts.Application\BikeShop.Acts.Application.csproj" />
+    <ProjectReference Include="..\BikeShop.Acts.Domain\BikeShop.Acts.Domain.csproj" />
   </ItemGroup>
 
 </Project>

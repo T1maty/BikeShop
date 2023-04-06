@@ -1,9 +1,12 @@
+using BikeShop.Acts.Application.Refit;
 using BikeShop.Products.Application;
 using BikeShop.Products.Application.Common.Configurations;
 using BikeShop.Products.Persistence;
 using BikeShop.Products.WebApi.Middleware;
 using BikeShop.Products.WebApi.Models.Validation;
+using BikeShop.Service.Application.RefitClients;
 using Microsoft.Extensions.Options;
+using Refit;
 using System.Net.Mime;
 using System.Reflection;
 using System.Text.Json;
@@ -21,6 +24,12 @@ builder.Services.AddSingleton(resolver =>
 builder.Services.Configure<DefaultValuesConfiguration>(builder.Configuration.GetSection("DefaultValues"));
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<DefaultValuesConfiguration>>().Value);
+
+builder.Services.AddRefitClient<IProductClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
+builder.Services.AddRefitClient<IShopClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Shop"]));
+
 
 // Подключение контроллеров, так же настройка именования JSON данных
 builder.Services.AddControllers()

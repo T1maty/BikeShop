@@ -21,7 +21,7 @@ namespace BikeShop.Products.Domain.Enums
         {
             var b = new Dictionary<string, ProductMoveSourceEnum>();
             b.Add("Bill", ProductMoveSourceEnum.Bill);
-            b.Add("IncomeAct", ProductMoveSourceEnum.IncomeAct);
+            b.Add("SupplyInvoice", ProductMoveSourceEnum.IncomeAct);
             b.Add("Order", ProductMoveSourceEnum.Order);
             b.Add("Service", ProductMoveSourceEnum.Service);
             return b;

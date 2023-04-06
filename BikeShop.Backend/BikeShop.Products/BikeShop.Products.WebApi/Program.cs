@@ -9,6 +9,7 @@ using BikeShop.Products.Application.RefitClients;
 using BikeShop.Products.Persistence;
 using BikeShop.Products.WebApi.Middleware;
 using BikeShop.Products.WebApi.Models.Validation;
+using BikeShop.Service.Application.RefitClients;
 using Microsoft.Extensions.Options;
 using Refit;
 
@@ -48,6 +49,9 @@ builder.Services.AddControllers()
 
 builder.Services.AddRefitClient<IFileServiceClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:FileService"]));
+
+builder.Services.AddRefitClient<IShopClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Shop"]));
 
 // Инъекция сервисов из слоя Application и Persistence
 builder.Services.AddApplication();
