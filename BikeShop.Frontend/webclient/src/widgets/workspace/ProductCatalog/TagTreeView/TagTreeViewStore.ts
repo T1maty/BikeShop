@@ -1,60 +1,41 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {ProductTag, ProductTagResponse, UpdateTag} from "../../../../entities";
-import {AxiosResponse} from "axios";
-import {$api} from "../../../../shared";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {ProductTag, ProductTagResponse, UpdateTag} from "../../../../entities"
+import {AxiosResponse} from "axios"
+import {$api} from "../../../../shared"
 
 interface tagTreeViewStore {
-    treeViewTags: ProductTag[],
-    contextMenuVisible: boolean,
+    contextMenuVisible: boolean
+    setContextMenuVisible: (value: boolean, X: number, Y: number) => void
     contextMenuXY: { X: number, Y: number }
 
-    setContextMenuVisible: (value: boolean, X: number, Y: number) => void
+    treeViewTags: ProductTag[],
+    setTreeViewTags: (tags: ProductTag[]) => void
+    addTreeViewTag: (tag: ProductTag) => void
+    removeTreeViewTag: (tagId: string) => void
 
-    setTreeViewTags: (tags: ProductTag[]) => void,
-    addTreeViewTag: (tag: ProductTag) => void,
-    removeTreeViewTag: (tagId: string) => void,
-    addNewTag: (tag: ProductTag) => void
-    updateTag: (tag: UpdateTag) => void
-
-    expandedTags: string[]
     selectedTag: string
     setSelectedTag: (id: string) => void
+    expandedTags: string[]
     setExpandedTags: (id: string[]) => void
-
     handleExpand: (id: string) => void
 
     fetchTags: () => Promise<AxiosResponse<ProductTagResponse>>
+    addNewTag: (tag: ProductTag) => void
     deleteTag: (tagId: string) => Promise<AxiosResponse>
-
+    updateTag: (tag: UpdateTag) => void
 }
 
 const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, get) => ({
-    treeViewTags: [],
     contextMenuVisible: false,
-    contextMenuXY: {X: 0, Y: 0},
-
-    deleteTag: (tagId) => {
-        return $api.put('')
-    },
     setContextMenuVisible: (value, x, y) => set({
         contextMenuVisible: value,
         contextMenuXY: {X: x, Y: y},
     }),
+    contextMenuXY: {X: 0, Y: 0},
 
-    updateTag: (tag) => set(state => {
-        let EditTag = state.treeViewTags.filter((n) => {
-            if (n.id == tag.id) return n
-        })[0]
-        EditTag.name = tag.name
-        EditTag.isB2BVisible = tag.isB2BVisible
-        EditTag.isRetailVisible = tag.isRetailVisible
-        EditTag.isUniversal = tag.isUniversal
-        EditTag.sortOrder = tag.sortOrder
-        EditTag.updatedAt = Date.toString()
-    }),
-
+    treeViewTags: [],
     setTreeViewTags: (tags) => set({
         treeViewTags: tags
     }),
@@ -67,16 +48,14 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
         })
     }),
 
-    expandedTags: [],
-    selectedTag: "",
-
+    selectedTag: '',
     setSelectedTag: (id) => set({
         selectedTag: id
     }),
+    expandedTags: [],
     setExpandedTags: (id) => set({
         expandedTags: id
     }),
-
     handleExpand: (id) => {
         if (get().expandedTags.includes(id)) {
             set({
@@ -95,14 +74,26 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
     fetchTags: () => {
         return $api.get<ProductTagResponse>('/tag/getall');
     },
-
     addNewTag: (tag) => {
         set(state => {
             state.treeViewTags.push(tag)
             state.expandedTags.push(tag.id.toString())
         })
     },
-
+    deleteTag: (tagId) => {
+        return $api.put('')
+    },
+    updateTag: (tag) => set(state => {
+        let EditTag = state.treeViewTags.filter((n) => {
+            if (n.id == tag.id) return n
+        })[0]
+        EditTag.name = tag.name
+        EditTag.isB2BVisible = tag.isB2BVisible
+        EditTag.isRetailVisible = tag.isRetailVisible
+        EditTag.isUniversal = tag.isUniversal
+        EditTag.sortOrder = tag.sortOrder
+        EditTag.updatedAt = Date.toString()
+    }),
 }))), {
     name: "tagTreeViewStore",
     version: 1

@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import {useWorkCatalog} from './TableCatalogStore'
 import {UniTreeView} from '../../../shared/ui'
-import WorkCatalogTreeViewContext from './WorkCatalogTreeViewContext'
-
+import {WorkCatalogTreeViewContext} from './WorkCatalogTreeViewContext'
 
 export const WorkCatalogTreeView = () => {
-    const {group, getWork, getGroup, selected, setSelected} = useWorkCatalog(state => state)
+
+    const getWork = useWorkCatalog(s => s.getWork)
+    const group = useWorkCatalog(s => s.group)
+    const getGroup = useWorkCatalog(s => s.getGroup)
+    const selected = useWorkCatalog(s => s.selected)
+    const setSelected = useWorkCatalog(s => s.setSelected)
 
     const [XY, setXY] = useState({x: 0, y: 0})
     const [visibility, setVisibility] = useState(false)

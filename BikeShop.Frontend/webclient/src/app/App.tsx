@@ -1,6 +1,5 @@
 import React, {FC, Suspense} from "react"
 import './styles/index.scss'
-// import CssBaseline from "@mui/material/CssBaseline"
 import {createTheme, ThemeProvider} from "@mui/material/styles"
 import {RouterProvider} from "react-router-dom"
 import {SnackbarProvider} from "notistack"

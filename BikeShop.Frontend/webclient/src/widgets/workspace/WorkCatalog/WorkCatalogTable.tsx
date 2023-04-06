@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import WorkCatalogTableContextMenu from './WorkCatalogTableContextMenu'
+import {WorkCatalogTableContextMenu} from './WorkCatalogTableContextMenu'
 import {columns} from './WorkCatalogTableConfig'
 import {UniTable} from '../../../shared/ui'
 import {useWorkCatalog} from './TableCatalogStore'
@@ -16,7 +16,8 @@ export const WorkCatalogTable = (props: { onRowDoubleClick?: (row: any) => void 
 
     return (
         <div>
-            <WorkCatalogTableContextMenu x={XY.x + 5} y={XY.y + 5}
+            <WorkCatalogTableContextMenu x={XY.x + 5}
+                                         y={XY.y + 5}
                                          visibility={visibility}
                                          setVisibility={setVisibility}
             />

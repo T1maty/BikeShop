@@ -1,5 +1,4 @@
 .menu {
-    border-radius: 10px;
     opacity: 0;
     pointer-events: none;
     position: fixed;
@@ -8,6 +7,7 @@
     right: 0;
     left: 0;
     z-index: -1;
+    //border-radius: 10px;
 }
 .overlay {
     width: 100%;

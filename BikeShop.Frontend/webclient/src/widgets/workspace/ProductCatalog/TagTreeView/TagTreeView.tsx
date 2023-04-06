@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import s from './TagTreeView.module.scss'
 import {ProductTag} from "../../../../entities"
-import TagTreeViewContextMenu from "./TagTreeViewContextMenu"
+import {TagTreeViewContextMenu} from "./TagTreeViewContextMenu"
 import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
 import {UniTreeView} from "../../../../shared/ui"

@@ -9,12 +9,12 @@ export const TagTreeViewNodes = () => {
     const treeViewData = useTagTreeView(s => s.treeViewTags)
 
     function createTree(parentId: string = '0') {
-        const nodesToAdd: ProductTag[] = [];
+        const nodesToAdd: ProductTag[] = []
 
         if (treeViewData.length > 0) {
             treeViewData.map((n) => {
-                if (n.parentId == parentId) nodesToAdd.push(n);
-            });
+                if (n.parentId == parentId) nodesToAdd.push(n)
+            })
         }
 
         if (nodesToAdd.length > 0) {
