@@ -1,4 +1,4 @@
-import React, {FC, Suspense} from "react"
+import React, {Suspense} from "react"
 import './styles/index.scss'
 import {createTheme, ThemeProvider} from "@mui/material/styles"
 import {RouterProvider} from "react-router-dom"
@@ -10,7 +10,7 @@ const darkTheme = createTheme({
     palette: {
         mode: "dark"
     }
-});
+})
 
 export const App = () => {
 
@@ -24,7 +24,7 @@ export const App = () => {
                     </Suspense>
                 </SnackbarProvider>
             </ThemeProvider>
-            <Buttons off={false}/>
+            {/*<Buttons off={false}/>*/}
         </div>
-    );
-};
+    )
+}

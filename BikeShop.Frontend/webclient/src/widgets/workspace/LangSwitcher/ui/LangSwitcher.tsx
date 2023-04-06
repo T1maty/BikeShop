@@ -1,24 +1,26 @@
 import React, {type FC} from 'react'
 import {useTranslation} from 'react-i18next'
-import {MenuItem} from "@mui/material";
-import Menu from "@mui/material/Menu";
-import {Button} from "../../../../shared/ui";
-
+import {MenuItem} from "@mui/material"
+import Menu from "@mui/material/Menu"
+import {Button} from "../../../../shared/ui"
 
 interface LangSwitcherProps {
     className?: string
 }
 
 export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
         console.log('test')
-    };
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
-    };
+    }
+
     const {t, i18n} = useTranslation()
 
     const toggleLanguage = (language: string): void => {
@@ -36,6 +38,7 @@ export const LangSwitcher: FC<LangSwitcherProps> = ({className = ''}) => {
             >
                 {t('Language')}
             </Button>
+
             <Menu
                 id="demo-customized-menu"
                 className={className}

@@ -21,7 +21,6 @@ import profile from '../../../../shared/assets/shop/icons/profile.png'
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import {ShopFooter} from "./ShopFooter"
-import {SearchProduct} from './SearchProduct'
 import {CustomSearchInput} from 'shared/ui'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
@@ -43,22 +42,6 @@ export const ShopMain = () => {
             thumbnail: '',
         },
     ])
-
-    const InputStyles = {
-        color: 'black',
-        '.MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black',
-        },
-        '.MuiSvgIcon-root ': {
-            fill: 'black',
-        }
-    }
 
     // тестовые данные
     const isAuth = false
@@ -90,11 +73,10 @@ export const ShopMain = () => {
                         </div>
                         <div className={s.header_icons_right}>
                             {
-                                search ? <SearchProduct sx={InputStyles}/> : ''
-                                // search ? <CustomSearchInput placeholder={'Поиск товара'}
-                                //                             color={'black'}
-                                //                             clearInputValue={() => {}}/>
-                                //     : ''
+                                search ? <CustomSearchInput placeholder={'Поиск товара'}
+                                                            color={'black'}
+                                                            clearInputValue={() => {}}/>
+                                    : ''
                             }
                             <div onClick={() => {setSearch(!search)}}>
                                 <img src={searchIcon} alt="search-logo"/>

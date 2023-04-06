@@ -1,9 +1,11 @@
-import React from 'react';
-import {ThemeSwitcher} from "../../../../shared/ui/ThemeSwitcher/ThemeSwitcher";
-import {LangSwitcher} from "../../LangSwitcher";
+import React from 'react'
+import {ThemeSwitcher} from "../../../../shared/ui/ThemeSwitcher/ThemeSwitcher"
+import {LangSwitcher} from "../../LangSwitcher"
 
 const Buttons = ({off} : any) => {
+
     if (off) return null
+
     return (
         <div style={{position: "absolute", left: 0, top: '50vh'}}>
             <div style={{marginBottom: 10}}>
@@ -13,7 +15,7 @@ const Buttons = ({off} : any) => {
                 <LangSwitcher/>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Buttons;
+export default Buttons

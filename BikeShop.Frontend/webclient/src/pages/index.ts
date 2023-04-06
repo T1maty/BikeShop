@@ -18,7 +18,6 @@ export {ShopMain} from './public/Shop/ShopMain/ShopMain'
 export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'
 export {ShopHeader} from './public/Shop/ShopMain/ShopHeader'
 export {ShopFooter} from './public/Shop/ShopMain/ShopFooter'
-export {SearchProduct} from './public/Shop/ShopMain/SearchProduct'
 
 export {Catalog} from './public/Shop/Catalog/Catalog'
 export {CatalogProductItem} from './public/Shop/Catalog/CatalogProductItem'
