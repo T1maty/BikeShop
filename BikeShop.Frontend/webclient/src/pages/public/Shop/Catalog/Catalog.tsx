@@ -179,40 +179,37 @@ export const Catalog = () => {
                     </div>
 
                     <div className={s.right_content}>
-                        {products.map(prod => (
-                            <div key={prod.id}
-                                 className={s.content_item}
-                                 onClick={() => {
-                                     navigate(BikeShopPaths.SHOP.PRODUCT)
-                                 }}
-                            >
-                                <div className={s.item_image}>
-                                    {
-                                        prod.image === null || prod.image === '' ?
-                                            <div className={s.item_noImage}>
-                                                <div className={s.item_noImage_title}>Sorry, no photo!</div>
-                                                <div className={s.item_noImage_icon}>
-                                                    <img src={NoProductImage} alt='no-product-image'/>
+                        {
+                            defaultProducts.map(prod => (
+                                <div key={prod.product.id}
+                                     className={s.content_item}
+                                     onClick={() => {navigate(BikeShopPaths.SHOP.PRODUCT)}}
+                                >
+                                    <div className={s.item_image}>
+                                        {
+                                            // prod.image === null || prod.image === '' ?
+                                            !prod.productImages ?
+                                                <div className={s.item_noImage}>
+                                                    <div className={s.item_noImage_title}>Sorry, no photo!</div>
+                                                    <div className={s.item_noImage_icon}>
+                                                        <img src={NoProductImage} alt='no-product-image'/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            : <img src={prod.image} alt='product-image'/>
-                                    }
+                                                : <img src={prod.productImages[0].url} alt='product-image'/>
+                                        }
 
-                                </div>
-                                <div className={s.item_title}>{prod.name}</div>
-                                <div className={s.item_buy}>
-                                    <div className={s.item_price}>{prod.price}</div>
-                                    <div className={s.item_cart} onClick={() => {
-                                        alert('added to cart')
-                                    }}>
-                                        <img src={prod.addToCart} alt='cart-logo'/>
+                                    </div>
+                                    <div className={s.item_title}>{prod.product.name}</div>
+                                    <div className={s.item_buy}>
+                                        <div className={s.item_price}>{prod.product.retailPrice}</div>
+                                        <div className={s.item_cart} onClick={() => {alert('added to cart')}}>
+                                            <img src={cart} alt='cart-logo'/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        }
                     </div>
-
-                    <div className={s.right_paginator}>Пагинатор</div>
                 </div>
             </div>
         )
