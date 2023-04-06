@@ -37,7 +37,7 @@
 	{
       "UpstreamPathTemplate": "/api/supplyinvoice/create",
       "UpstreamHttpMethod": [
-        "Get"
+        "Post"
       ],
       "DownstreamPathTemplate": "/supplyinvoice/create",
       "DownstreamScheme": "http",
@@ -52,7 +52,7 @@
 	{
       "UpstreamPathTemplate": "/api/supplyinvoice/execute",
       "UpstreamHttpMethod": [
-        "Get"
+        "Post"
       ],
       "DownstreamPathTemplate": "/supplyinvoice/execute",
       "DownstreamScheme": "http",
