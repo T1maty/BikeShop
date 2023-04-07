@@ -4,6 +4,18 @@
 .cart_mainBox {
     position: relative;
 
+    .cart_count {
+        position: absolute;
+        top: 15px;
+        right: -10px;
+        @include flexCenter;
+        background-color: yellow;
+        border-radius: 50%;
+        color: black;
+        width: 20px;
+        height: 20px;
+    }
+
     .cart_content {
         position: absolute;
         top: 45px;
@@ -19,6 +31,9 @@
 
             .cart_cartListItem {
                 @include flexBetween;
+                background-color: $themeColorMilk;
+                padding: $defaultSmallMargin;
+                border-radius: $defaultSmallMargin;
 
                 .cart_cartListItem_content {
                     display: flex;
@@ -33,7 +48,7 @@
                         }
                     }
                     .cart_cartListItem_info {
-
+                        color: black;
                     }
                 }
 

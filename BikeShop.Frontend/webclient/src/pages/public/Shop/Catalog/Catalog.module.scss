@@ -10,6 +10,7 @@
     .catalog_left {
         border: 1px solid black;
         width: 25%;
+        height: 69vh; // возможно надо пофиксить
     }
     .catalog_right {
         @include flexColumn;
@@ -94,31 +95,38 @@
                     margin-bottom: $defaultLargeMargin;
                 }
 
-                .item_image {
-                    min-height: 200px;
+                .item_content {
+                    .item_image {
+                        text-align: center;
+                        min-height: 200px;
+                        width: 100%; // чтобы область клика была вся ширина
 
-                    img {
-                        width: auto;
-                        height: 200px;
+                        img {
+                            width: auto;
+                            height: 200px;
+                        }
+                    }
+                    // заглушка, если нету фотографии
+                    .item_noImage {
+                        @include flexColumn;
+
+                        .item_noImage_title {
+                            padding: 20px 0 10px 0;
+                        }
+
+                        img {
+                            width: auto;
+                            height: 120px;
+                        }
+                    }
+
+                    .item_title {
+                        font-weight: bold;
+                        text-align: center;
+                        margin-top: 10px;
                     }
                 }
-                // заглушка, если нету фотографии
-                .item_noImage {
-                    @include flexColumn;
 
-                    .item_noImage_title {
-                        padding: 20px 0 10px 0;
-                    }
-
-                    img {
-                        width: auto;
-                        height: 120px;
-                    }
-                }
-
-                .item_title {
-                    font-weight: bold;
-                }
                 .item_buy {
                     display: flex;
                     align-items: center;

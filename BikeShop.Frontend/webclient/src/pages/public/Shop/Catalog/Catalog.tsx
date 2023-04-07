@@ -2,14 +2,15 @@ import React, {useState, useEffect} from 'react'
 import s from './Catalog.module.scss'
 import SortThumbnails from '../../../../shared/assets/shop/icons/sort-thumbnails.png'
 import SortList from '../../../../shared/assets/shop/icons/sort-list.png'
-import cart from "../../../../shared/assets/shop/icons/cart.png"
+import cart from '../../../../shared/assets/shop/icons/cart.png'
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
-import {BikeShopPaths} from "../../../../app/routes/paths"
-import {useNavigate} from "react-router-dom"
-import useCatalog from "./CatalogStore"
+import {BikeShopPaths} from '../../../../app/routes/paths'
+import {useNavigate} from 'react-router-dom'
+import useCatalog from './CatalogStore'
 import {LoaderScreenForShop} from '../../../../shared/ui'
 import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
 import {useSnackbar} from 'notistack'
+import useCart from '../Cart/CartStore';
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -27,6 +28,8 @@ export const Catalog = () => {
     const defaultProducts = useCatalog(s => s.defaultProducts)
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
     const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
+
+    const setProductToCart = useCart(s => s.setProductToCart)
 
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
@@ -177,7 +180,7 @@ export const Catalog = () => {
                                      key={item.id}
                                      onClick={item.func}
                                 >
-                                    <img src={item.icon} alt='view-type_icon'/>
+                                    <img src={item.icon} alt="view-type_icon"/>
                                 </div>
                             ))}
                         </div>
@@ -186,33 +189,36 @@ export const Catalog = () => {
                     <div className={s.right_content}>
                         {
                             defaultProducts.map(prod => (
-                                <div key={prod.product.id}
-                                     className={s.content_item}
-                                     onClick={() => {
-                                         setCurrentProduct(prod)
-                                         console.log('выбранный продукт', prod)
-                                         navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)}
-                                }
-                                >
-                                    <div className={s.item_image}>
-                                        {
-                                            // prod.image === null || prod.image === '' ?
-                                            !prod.productImages ?
-                                                <div className={s.item_noImage}>
-                                                    <div className={s.item_noImage_title}>Sorry, no photo!</div>
-                                                    <div className={s.item_noImage_icon}>
-                                                        <img src={NoProductImage} alt='no-product-image'/>
+                                <div key={prod.product.id} className={s.content_item}>
+                                    <div className={s.item_content}
+                                         onClick={() => {
+                                            console.log('выбранный продукт', prod)
+                                            setCurrentProduct(prod)
+                                            navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)
+                                         }}
+                                    >
+                                        <div className={s.item_image}>
+                                            {
+                                                // prod.image === null || prod.image === '' ?
+                                                !prod.productImages ?
+                                                    <div className={s.item_noImage}>
+                                                        <div className={s.item_noImage_title}>Sorry, no photo!</div>
+                                                        <div className={s.item_noImage_icon}>
+                                                            <img src={NoProductImage} alt="no-product-image"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                : <img src={prod.productImages[0].url} alt='product-image'/>
-                                        }
+                                                    : <img src={prod.productImages[0].url} alt="product-image"/>
+                                            }
 
+                                        </div>
+                                        <div className={s.item_title}>{prod.product.name}</div>
                                     </div>
-                                    <div className={s.item_title}>{prod.product.name}</div>
                                     <div className={s.item_buy}>
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
-                                        <div className={s.item_cart} onClick={() => {alert('added to cart')}}>
-                                            <img src={cart} alt='cart-logo'/>
+                                        <div className={s.item_cart}
+                                             onClick={() => {setProductToCart(prod)}}
+                                        >
+                                            <img src={cart} alt="cart-logo"/>
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import s from './Cart.module.scss'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
 import {Button} from "../../../../shared/ui"
@@ -12,6 +12,8 @@ export const Cart = () => {
 
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false)
 
+    const cartSum = cartProducts.reduce((acc, obj) => acc + obj.product.retailPrice, 0) // сумма корзины
+
     const deleteProductFromCartHandler = (productId: number) => {
         setProducts(cartProducts.filter(pr => pr.product.id !== productId))
     }
@@ -23,6 +25,12 @@ export const Cart = () => {
             <div>
                 <img src={cart} alt="cart-logo"/>
             </div>
+
+            {
+                cartProducts.length !== 0 ?
+                    <div className={s.cart_count}>1</div>
+                    : ''
+            }
 
             {
                 isCartOpen ?
@@ -40,7 +48,12 @@ export const Cart = () => {
                                                         <img src={cartProd.productImages[0].url} alt="product"/>
                                                     </div>
                                                     <div className={s.cart_cartListItem_info}>
-                                                        {cartProd.product.name}
+                                                        <div>
+                                                            {cartProd.product.name}
+                                                        </div>
+                                                        <div>
+                                                            {cartProd.product.retailPrice} x 1шт. = {cartProd.product.retailPrice*1}
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className={s.cart_cartListItem_deleteIcon}>
@@ -61,7 +74,7 @@ export const Cart = () => {
                                 <div className={s.cart_result}>
                                     <fieldset className={s.result_fieldset}>
                                         <legend>Итого</legend>
-                                        <div className={s.result_text}>99999999</div>
+                                        <div className={s.result_text}>{cartSum}</div>
                                     </fieldset>
                                     <Button buttonDivWrapper={s.result_orderButton}
                                             onClick={() => {}}
