@@ -6,6 +6,7 @@ import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
 import {CustomSearchInput} from "../../../../shared/ui"
+import {Cart} from "../Cart/Cart"
 
 interface ShopHeaderProps {
     isAuth: boolean
@@ -26,8 +27,12 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
             </div>
             <div className={s.shop_header_right}>
                 <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
+
                 <div><img src={language} alt="language-logo"/></div>
-                <div><img src={cart} alt="cart-logo"/></div>
+
+                {/*<div><img src={cart} alt="cart-logo"/></div>*/}
+                <Cart/>
+
                 <LoginBlock isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>
             </div>
         </div>

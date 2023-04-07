@@ -1,0 +1,79 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.cart_mainBox {
+    position: relative;
+
+    .cart_content {
+        position: absolute;
+        top: 45px;
+        right: -225px;
+        background-color: $themeColorGray;
+        border-radius: $defaultSmallMargin;
+        padding: $defaultLargeMargin;
+        min-width: 350px;
+        z-index: 100;
+
+        .cart_cartList {
+            @include divSmallMarginBottom;
+
+            .cart_cartListItem {
+                @include flexBetween;
+
+                .cart_cartListItem_content {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    .cart_cartListItem_image {
+                        img {
+                            filter: none;
+                            height: 50px;
+                            width: auto;
+                        }
+                    }
+                    .cart_cartListItem_info {
+
+                    }
+                }
+
+                .cart_cartListItem_deleteIcon {
+                    img {
+                        filter: none;
+                        width: 30px;
+                        height: 30px;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        filter: contrast(3);
+                    }
+                }
+            }
+            .emptyCart {
+                @include flexCenter;
+                font-size: 20px;
+            }
+        }
+        .cart_result {
+            @include flexBetween;
+            border-top: 2px solid $themeColorMilk;
+            margin-top: $defaultSmallMargin;
+            padding-top: $defaultSmallMargin;
+
+            .result_fieldset {
+                border-radius: $smallBorderRadius;
+
+                .result_text {
+                    text-align: center;
+                    font-size: 20px;
+                }
+            }
+            .result_orderButton {
+                button {
+                    height: 40px;
+                }
+            }
+        }
+    }
+}

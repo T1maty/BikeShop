@@ -10,6 +10,7 @@ import {useForm} from "react-hook-form"
 import Select from "react-select"
 import useCatalog from './CatalogStore'
 import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
+import useCart from "../Cart/CartStore"
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -17,6 +18,7 @@ export const CatalogProductItem = () => {
 
     const isLoading = useCatalog(s => s.isLoading)
     const currentProduct = useCatalog(s => s.currentProduct)
+    const setProductToCart = useCart(s => s.setProductToCart)
 
     // вид отображения
     // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')
@@ -32,41 +34,40 @@ export const CatalogProductItem = () => {
     const [selectedProduct, setSelectedProduct] = useState<any>()
     // const [products, setProducts] = useState(['Велосипед-1', 'Велосипед-2', 'Велосипед-3'])
 
-    const [images, setImages] = useState([
-        {
-            original: 'https://wallpapercave.com/wp/wp2118883.jpg',
-            thumbnail: 'https://wallpapercave.com/wp/wp2118883.jpg',
-            // thumbnail: 'https://i.pinimg.com/736x/ea/37/bb/ea37bb261a973425d867b2bcb156861d--bike-wallpaper-super-bikes.jpg',
-        },
-        {
-            original: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-            thumbnail: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-        },
-        {
-            original: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
-            thumbnail: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
-        },
-        {
-            original: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
-            thumbnail: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
-        },
-        {
-            original: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
-            thumbnail: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
-        },
-        {
-            original: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
-            thumbnail: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
-        },
-    ])
+    // const [myImages, setMyImages] = useState([
+    //     {
+    //         original: 'https://wallpapercave.com/wp/wp2118883.jpg',
+    //         thumbnail: 'https://wallpapercave.com/wp/wp2118883.jpg',
+    //     },
+    //     {
+    //         original: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+    //         thumbnail: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
+    //     },
+    //     {
+    //         original: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
+    //         thumbnail: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
+    //     },
+    //     {
+    //         original: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
+    //         thumbnail: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
+    //     },
+    //     {
+    //         original: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
+    //         thumbnail: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
+    //     },
+    //     {
+    //         original: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
+    //         thumbnail: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
+    //     },
+    // ])
+
+    // преобразование галереи под нужный тип библиотеки
+    const myImages = currentProduct!.productImages.map(img => {
+        return {original: img.url, thumbnail: img.url}
+    })
 
     // если нет изображений, чтобы не ломалась вёрстка
-    const [noImages, setNoImages] = useState([
-        {
-            original: SorryNoImage,
-            thumbnail: SorryNoImage,
-        },
-    ])
+    const noImages = [{original: SorryNoImage, thumbnail: SorryNoImage}]
 
     // const formControl = useForm<any>({
     //     defaultValues: {
@@ -109,12 +110,12 @@ export const CatalogProductItem = () => {
 
                 <div className={s.product}>
                     <div className={s.product_images}>
-                        <ImageGallery items={images.length > 0 ? images : noImages}
-                                      // items={currentProduct.productImages}
+                        <ImageGallery items={myImages.length > 0 ? myImages : noImages}
                                       showPlayButton={false}
                                       // showFullscreenButton={false}
                                       showIndex={true}
                                       showNav={false}
+                                      showBullets={true}
                                       thumbnailPosition={'left'}
                                       onErrorImageURL={SorryNoImage}
                                       // additionalClass={s.imageGallery}
@@ -127,26 +128,28 @@ export const CatalogProductItem = () => {
                             {currentProduct.productCard.descriptionShort}
                         </div>
                         <div className={s.product_select}>
-                            {
-                                currentProduct.productOptions.map(option => {
-                                    return (
-                                        <Select
-                                            key={option.id}
-                                            className={s.product_select_box}
-                                            // options={option}
-                                            placeholder={option.name}
-                                            isSearchable={false}
-                                            value={selectedProduct ? selectedProduct : null}
-                                            onChange={(value) => {
-                                                setSelectedProduct(value)
-                                            }}
-                                            getOptionLabel={label => label!.name}
-                                            getOptionValue={value => value!.name}
-                                            // noOptionsMessage={() => 'Товар не найден'}
-                                        />
-                                    )
-                                })
-                            }
+                            Select
+
+                            {/*{*/}
+                            {/*    currentProduct.productOptions.map(option => {*/}
+                            {/*        return (*/}
+                            {/*            <Select*/}
+                            {/*                key={option.id}*/}
+                            {/*                className={s.product_select_box}*/}
+                            {/*                // options={option}*/}
+                            {/*                placeholder={option.name}*/}
+                            {/*                isSearchable={false}*/}
+                            {/*                value={selectedProduct ? selectedProduct : null}*/}
+                            {/*                onChange={(value) => {*/}
+                            {/*                    setSelectedProduct(value)*/}
+                            {/*                }}*/}
+                            {/*                getOptionLabel={label => label!.name}*/}
+                            {/*                getOptionValue={value => value!.name}*/}
+                            {/*                // noOptionsMessage={() => 'Товар не найден'}*/}
+                            {/*            />*/}
+                            {/*        )*/}
+                            {/*    })*/}
+                            {/*}*/}
 
                             {/*<ControlledReactSelect control={formControl}*/}
                             {/*                       name={'productSelect'}*/}
@@ -213,7 +216,7 @@ export const CatalogProductItem = () => {
 
                             </div>
                             <div className={s.product_addToCart}>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {setProductToCart(currentProduct)}}>
                                     Добавить в корзину
                                 </Button>
                             </div>

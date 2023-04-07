@@ -117,8 +117,10 @@ export const EditProductCardModal = () => {
 
         let options: ProductOptionsWithVariants[] = []
         let ids: number[] = []
+
         currentProduct.productOptions?.forEach(n => {
             let newOption: ProductOptionsWithVariants
+
             if (!ids.includes(n.optionId)) {
                 newOption = {
                     id: n.optionId,
