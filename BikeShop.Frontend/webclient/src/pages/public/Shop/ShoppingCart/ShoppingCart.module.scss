@@ -30,6 +30,9 @@
 
         .cart_cartList {
             @include divSmallMarginBottom;
+            padding-right: 10px;
+            max-height: 350px;
+            overflow-y: auto;
 
             .cart_cartListItem {
                 @include flexBetween;
@@ -49,6 +52,7 @@
                             width: auto;
                         }
                     }
+
                     .cart_cartListItem_info {
                         color: black;
                     }
@@ -67,10 +71,13 @@
                     }
                 }
             }
+
             .emptyCart {
                 @include flexCenter;
+                overflow: hidden;
             }
         }
+
         .cart_result {
             @include flexBetween;
             border-top: 2px solid $themeColorMilk;
@@ -85,6 +92,7 @@
                     font-size: 20px;
                 }
             }
+
             .result_orderButton {
                 button {
                     height: 40px;
