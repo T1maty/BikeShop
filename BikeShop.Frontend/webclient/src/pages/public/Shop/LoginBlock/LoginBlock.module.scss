@@ -26,5 +26,6 @@
         justify-content: flex-end;
         gap: $defaultSmallMargin;
         min-width: 250px;
+        @include hoverCursorPointer;
     }
 }
