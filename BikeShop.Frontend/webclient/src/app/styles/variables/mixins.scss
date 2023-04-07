@@ -207,6 +207,16 @@
     }
 }
 
+@mixin CatalogProductItemIsAvailableLabel($bgColor) {
+    @include flexCenter;
+    text-align: center;
+    //padding: $divButtonPadding;
+    padding: $defaultSmallMargin;
+    border-radius: $smallBorderRadius;
+    background-color: $bgColor;
+    color: white;
+}
+
 ////////////////////////////////////////////////////////////////////
 
 // Header

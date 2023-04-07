@@ -89,6 +89,7 @@
             .product_select {
                 width: 100%;
                 color: black;
+                @include divSmallMarginBottom;
 
                 .product_select_box {
                     color: black;
@@ -102,19 +103,11 @@
 
                 .product_available {
                     .isAvailable {
-                        @include flexCenter;
-                        text-align: center;
-                        padding: $divButtonPadding;
-                        border-radius: $smallBorderRadius;
-                        background-color: $themeColorMilk;
+                        @include CatalogProductItemIsAvailableLabel($filterButtonReadyColor);
                     }
 
                     .notAvailable {
-                        @include flexCenter;
-                        padding: $divButtonPadding;
-                        border-radius: $smallBorderRadius;
-
-                        background-color: $filterButtonWaitingColor;
+                        @include CatalogProductItemIsAvailableLabel($filterButtonWaitingColor);
                     }
                 }
 

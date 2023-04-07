@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import s from './CatalogProductItem.module.scss'
+import parse from 'html-react-parser'
 import {useNavigate, useParams, useSearchParams} from 'react-router-dom'
 import {Button, ControlledReactSelect, LoaderScreenForShop} from '../../../../shared/ui'
 import ImageGallery from 'react-image-gallery'
@@ -21,7 +22,10 @@ export const CatalogProductItem = () => {
     const isLoading = useCatalog(s => s.isLoading)
     const currentProduct = useCatalog(s => s.currentProduct)
 
+    // вид отображения
     // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')
+
+    // для стилей описания
     const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)
     const [isDetails, setIsDetails] = useState<boolean>(false)
     const [isDelivery, setIsDelivery] = useState<boolean>(false)
@@ -60,12 +64,21 @@ export const CatalogProductItem = () => {
         },
     ])
 
+    // если нет изображений, чтобы не ломалась вёрстка
+    const [noImages, setNoImages] = useState([
+        {
+            original: SorryNoImage,
+            thumbnail: SorryNoImage,
+        },
+    ])
+
     // const formControl = useForm<any>({
     //     defaultValues: {
     //         currentProduct: {} as CatalogProductItemType,
     //     }
     // })
 
+    // для выбора раздела описания
     const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
                                    isDetails: boolean, isDelivery: boolean) => {
 
@@ -87,21 +100,15 @@ export const CatalogProductItem = () => {
         return (currentProduct &&
             <div className={s.shop_productItem_mainBox}>
                 <div className={s.cloudCategory}>
-                    <div className={s.cloudCategory_item}>
-                        Категория
-                    </div>
-                    <div className={s.cloudCategory_item}>
-                        Категория
-                    </div>
-                    <div className={s.cloudCategory_item}>
-                        Категория
-                    </div>
-                    <div className={s.cloudCategory_item}>
-                        Категория
-                    </div>
-                    <div className={s.cloudCategory_item}>
-                        Категория
-                    </div>
+                    {
+                        currentProduct.productTags.map(tag => {
+                            return (
+                                <div key={tag.id} className={s.cloudCategory_item}>
+                                    {tag.name}
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <div className={s.product}>
                     {/*<div className={s.product_images}>*/}
@@ -110,7 +117,8 @@ export const CatalogProductItem = () => {
                     {/*    />*/}
                     {/*</div>*/}
                     <div className={s.product_images}>
-                        <ImageGallery items={images}
+                        <ImageGallery items={images.length > 0 ? images : noImages}
+                                      // items={currentProduct.productImages}
                                       showPlayButton={false}
                             // showFullscreenButton={false}
                                       showIndex={true}
@@ -133,20 +141,26 @@ export const CatalogProductItem = () => {
                             {/*А так же доступные...*/}
                         </div>
                         <div className={s.product_select}>
-
-                            <Select
-                                className={s.product_select_box}
-                                options={products}
-                                placeholder={'Товар'}
-                                isSearchable={false}
-                                value={selectedProduct ? selectedProduct : null}
-                                onChange={(value) => {
-                                    setSelectedProduct(value)
-                                }}
-                                getOptionLabel={label => label!.name}
-                                getOptionValue={value => value!.name}
-                                noOptionsMessage={() => 'Товар не найден'}
-                            />
+                            {
+                                currentProduct.productOptions.map(option => {
+                                    return (
+                                        <Select
+                                            key={option.id}
+                                            className={s.product_select_box}
+                                            options={products}
+                                            placeholder={option.name}
+                                            isSearchable={false}
+                                            value={selectedProduct ? selectedProduct : null}
+                                            onChange={(value) => {
+                                                setSelectedProduct(value)
+                                            }}
+                                            getOptionLabel={label => label!.name}
+                                            getOptionValue={value => value!.name}
+                                            // noOptionsMessage={() => 'Товар не найден'}
+                                        />
+                                    )
+                                })
+                            }
 
                             {/*<ControlledReactSelect control={formControl}*/}
                             {/*                       name={'productSelect'}*/}
@@ -213,8 +227,7 @@ export const CatalogProductItem = () => {
 
                             </div>
                             <div className={s.product_addToCart}>
-                                <Button onClick={() => {
-                                }}>
+                                <Button onClick={() => {}}>
                                     Добавить в корзину
                                 </Button>
                             </div>
@@ -248,7 +261,7 @@ export const CatalogProductItem = () => {
                     </div>
                     <div className={s.description_content}>
                         {
-                            isCharacteristic ?
+                            isCharacteristic && currentProduct.productSpecifications ?
                                 <div>
                                     {/*Описание характеристики. Давно выяснено, что при оценке дизайна и*/}
                                     {/*композиции читаемый текст мешает сосредоточиться. Lorem Ipsum*/}
@@ -271,7 +284,9 @@ export const CatalogProductItem = () => {
                         }
 
                         {
-                            isDetails ? <div>{currentProduct.productCard.description}</div> : ''
+                            isDetails && currentProduct.productCard.description.length !== 0
+                                ? <div>{parse(currentProduct.productCard.description)}</div> : ''
+                                // ? <div dangerouslySetInnerHTML={{ __html: currentProduct.productCard.description }}/> : ''
                         }
 
                         {

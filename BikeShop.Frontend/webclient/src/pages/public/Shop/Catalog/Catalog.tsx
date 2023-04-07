@@ -190,6 +190,7 @@ export const Catalog = () => {
                                      className={s.content_item}
                                      onClick={() => {
                                          setCurrentProduct(prod)
+                                         console.log('выбранный продукт', prod)
                                          navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)}
                                 }
                                 >
