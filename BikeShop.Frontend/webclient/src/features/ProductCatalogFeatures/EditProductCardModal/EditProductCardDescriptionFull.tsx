@@ -46,7 +46,6 @@ export const EditProductCardDescriptionFull = (props: ControlledProps) => {
                             toolbarClassName={s.editor_toolbar}
                             // editorClassName="editorClassName"
                             editorClassName={s.editorClassName}
-
                         />
                     </div>
                 </div>

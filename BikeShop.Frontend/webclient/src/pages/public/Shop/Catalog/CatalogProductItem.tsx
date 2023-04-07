@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import s from './CatalogProductItem.module.scss'
 import parse from 'html-react-parser'
-import {useNavigate, useParams, useSearchParams} from 'react-router-dom'
 import {Button, ControlledReactSelect, LoaderScreenForShop} from '../../../../shared/ui'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
@@ -11,13 +10,10 @@ import {useForm} from "react-hook-form"
 import Select from "react-select"
 import useCatalog from './CatalogStore'
 import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
-import {useSnackbar} from 'notistack'
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
 export const CatalogProductItem = () => {
-
-    // const params = useParams()
 
     const isLoading = useCatalog(s => s.isLoading)
     const currentProduct = useCatalog(s => s.currentProduct)
@@ -34,7 +30,7 @@ export const CatalogProductItem = () => {
     const amountOfProduct = 10 // есть ли на складе
 
     const [selectedProduct, setSelectedProduct] = useState<any>()
-    const [products, setProducts] = useState(['Велосипед-1', 'Велосипед-2', 'Велосипед-3'])
+    // const [products, setProducts] = useState(['Велосипед-1', 'Велосипед-2', 'Велосипед-3'])
 
     const [images, setImages] = useState([
         {
@@ -110,22 +106,18 @@ export const CatalogProductItem = () => {
                         })
                     }
                 </div>
+
                 <div className={s.product}>
-                    {/*<div className={s.product_images}>*/}
-                    {/*    <img src='https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg'*/}
-                    {/*         alt='product-image'*/}
-                    {/*    />*/}
-                    {/*</div>*/}
                     <div className={s.product_images}>
                         <ImageGallery items={images.length > 0 ? images : noImages}
                                       // items={currentProduct.productImages}
                                       showPlayButton={false}
-                            // showFullscreenButton={false}
+                                      // showFullscreenButton={false}
                                       showIndex={true}
                                       showNav={false}
                                       thumbnailPosition={'left'}
                                       onErrorImageURL={SorryNoImage}
-                            // additionalClass={s.imageGallery}
+                                      // additionalClass={s.imageGallery}
                         />
                     </div>
                     <div className={s.product_info}>
@@ -133,12 +125,6 @@ export const CatalogProductItem = () => {
                         <div className={s.product_price}>{currentProduct.product.retailPrice}</div>
                         <div className={s.product_description}>
                             {currentProduct.productCard.descriptionShort}
-
-                            {/*Описание товара с ограничением в 7 строк.*/}
-                            {/*Эта карточка показывает реакцию при наведении курсора на товар.*/}
-                            {/*Карточка расширяется с анимашкой и перекрывает карточки ниже,*/}
-                            {/*появляется более полное название и частичное описание товара.*/}
-                            {/*А так же доступные...*/}
                         </div>
                         <div className={s.product_select}>
                             {
@@ -147,7 +133,7 @@ export const CatalogProductItem = () => {
                                         <Select
                                             key={option.id}
                                             className={s.product_select_box}
-                                            options={products}
+                                            // options={option}
                                             placeholder={option.name}
                                             isSearchable={false}
                                             value={selectedProduct ? selectedProduct : null}
@@ -235,6 +221,7 @@ export const CatalogProductItem = () => {
 
                     </div>
                 </div>
+
                 <div className={s.description}>
                     <div className={s.description_chapters}>
                         <div className={isCharacteristic ? s.description_active : s.chapters_characteristic}
@@ -263,12 +250,6 @@ export const CatalogProductItem = () => {
                         {
                             isCharacteristic && currentProduct.productSpecifications ?
                                 <div>
-                                    {/*Описание характеристики. Давно выяснено, что при оценке дизайна и*/}
-                                    {/*композиции читаемый текст мешает сосредоточиться. Lorem Ipsum*/}
-                                    {/*используют потому, что тот обеспечивает более или менее стандартное*/}
-                                    {/*заполнение шаблона, а также реальное распределение букв и пробелов в*/}
-                                    {/*абзацах, которое не получается при простой дубликации.*/}
-
                                     {
                                         currentProduct.productSpecifications.map(spec => {
                                             return (

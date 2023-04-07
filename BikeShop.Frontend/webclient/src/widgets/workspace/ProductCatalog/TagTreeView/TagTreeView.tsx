@@ -37,7 +37,6 @@ export const TagTreeView = (props: TagTreeViewProps) => {
     useEffect(() => {
         fetchTags().then((r) => {
             setTreeViewData(r.data.tags as ProductTag[])
-            console.log('tags', r.data.tags)
         })
     }, [])
 

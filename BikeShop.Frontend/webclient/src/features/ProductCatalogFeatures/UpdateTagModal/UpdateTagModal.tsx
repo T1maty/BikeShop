@@ -37,8 +37,6 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         control.setValue('isRetailVisible', tag.isRetailVisible)
         control.setValue('isB2BVisible', tag.isB2BVisible)
         control.setValue('isUniversal', tag.isUniversal)
-
-        console.log(tag)
     }, [tag])
 
     const onSubmit: SubmitHandler<UpdateTag> = (data: UpdateTag) => {

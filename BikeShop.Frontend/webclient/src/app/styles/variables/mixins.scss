@@ -344,6 +344,11 @@
                 height: 40px;
                 border: 1px solid $themeColorMilk;
                 border-radius: $extraSmallBorderRadius;
+
+                // чтобы чекбокс был сбоку
+                display: flex;
+                justify-content: flex-start;
+                padding-left: 15px;
             }
 
             .infoBlock_cancelBtn {

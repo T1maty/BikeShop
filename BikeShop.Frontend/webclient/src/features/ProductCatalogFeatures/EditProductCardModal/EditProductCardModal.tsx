@@ -107,8 +107,8 @@ export const EditProductCardModal = () => {
         getAllSpecifications()
         formControl.setValue('productTags', currentProduct.productTags)
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
-        formControl.setValue("productSpecifications", currentProduct.productSpecifications)
-        formControl.setValue("productCard", {
+        formControl.setValue('productSpecifications', currentProduct.productSpecifications)
+        formControl.setValue('productCard', {
             description: currentProduct.productCard != undefined ? currentProduct.productCard.description : '',
             shortDescription: currentProduct.productCard != undefined ? currentProduct.productCard.descriptionShort : ''
         })
@@ -142,18 +142,18 @@ export const EditProductCardModal = () => {
             })
         })
 
-        console.log("Глобальная установка дефолтных значений")
+        // console.log("Глобальная установка дефолтных значений")
 
         if (currentProduct.productCard != undefined) {
             let contentBlock = htmlToDraft(currentProduct.productCard?.description)
-            console.log('загружаем дефолтное значение', currentProduct.productCard.description)
+            // console.log('загружаем дефолтное значение', currentProduct.productCard.description)
             if (contentBlock) {
                 const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
                 const editorState = EditorState.createWithContent(contentState);
                 setEditorState(editorState)
             }
         }
-        formControl.setValue("productOptions", options)
+        formControl.setValue('productOptions', options)
     }, [currentProduct])
 
     if (isLoading) {
