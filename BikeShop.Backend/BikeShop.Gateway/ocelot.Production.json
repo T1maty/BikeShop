@@ -64,6 +64,21 @@
       ],
       "SwaggerKey": "acts"
     },
+	{
+      "UpstreamPathTemplate": "/api/supplyinvoice/update",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/supplyinvoice/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
   
   
   

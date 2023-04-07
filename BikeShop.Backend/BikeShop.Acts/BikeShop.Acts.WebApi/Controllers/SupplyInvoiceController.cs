@@ -1,7 +1,8 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
 using BikeShop.Acts.Domain.DTO;
 using BikeShop.Acts.Domain.DTO.Requests;
-using BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice;
+using BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice.Create;
+using BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Acts.WebApi.Controllers
@@ -34,6 +35,12 @@ namespace BikeShop.Acts.WebApi.Controllers
         public async Task Execute(int invoiceId, Guid userId)
         {
             await _supplyInvoiceService.Execute(invoiceId, userId);
+        }
+
+        [HttpPut("update")]
+        public async Task<SupplyInvoiceWithProducts> Update(UpdateSupplyInvoiceDTO dto)
+        {
+            return await _supplyInvoiceService.Update(dto);
         }
     }
 }

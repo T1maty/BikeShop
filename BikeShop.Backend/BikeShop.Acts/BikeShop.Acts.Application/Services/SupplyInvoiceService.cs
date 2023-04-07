@@ -1,7 +1,8 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
 using BikeShop.Acts.Application.Refit;
 using BikeShop.Acts.Domain.DTO;
-using BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice;
+using BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice.Create;
+using BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice.Update;
 using BikeShop.Acts.Domain.Entities;
 using BikeShop.Acts.Domain.Refit;
 using BikeShop.Products.Application.Interfaces;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Acts.Application.Services
 {
+
     public class SupplyInvoiceService:ISupplyInvoiceService
     {
         private readonly IApplicationDbContext _context;
@@ -89,6 +91,69 @@ namespace BikeShop.Acts.Application.Services
             }
 
             return result;
+        }
+
+        public async Task<SupplyInvoiceWithProducts> Update(UpdateSupplyInvoiceDTO dto)
+        {
+            var invoice = await _context.SupplyInvoices.FindAsync(dto.SupplyInvoice.Id);
+            var products = await _context.SupplyInvoiceProducts.Where(n => n.SupplyInvoiceId == dto.SupplyInvoice.Id).ToDictionaryAsync(n=>n.Id, n=>n);
+
+            invoice.UpdatedAt = DateTime.Now;
+            invoice.UserUpdatedId = dto.SupplyInvoice.User;
+            invoice.Description = dto.SupplyInvoice.Description;
+
+            var remove = products.Select(n=>n.Value).ToList();
+            var create = new List<SupplyInvoiceProduct>();
+            var result = new List<SupplyInvoiceProduct>();
+
+            foreach (var updateProduct in dto.SupplyInvoiceProducts) {
+                if (products.ContainsKey(updateProduct.Id))
+                {
+                    var product = products[updateProduct.Id];
+                    var nd = updateProduct;
+
+                    product.Quantity = nd.Quantity;
+                    product.IncomePrice = nd.IncomePrice;
+                    product.Barcode = nd.Barcode;
+                    product.UpdatedAt = DateTime.Now;
+                    product.ManufBarcode = nd.ManufBarcode;
+                    product.Total = nd.Quantity * nd.IncomePrice;
+                    product.BrandName = nd.BrandName;
+                    product.CatalogKey = nd.CatalogKey;
+                    product.Description = nd.Description;
+                    product.Name = nd.Name;
+                    product.QuantityUnitName = nd.QuantityUnitName;
+
+                    remove.Remove(product);
+                    result.Add(product);
+                }
+                else
+                {
+                    var product = new SupplyInvoiceProduct();
+
+                    product.Barcode = updateProduct.Barcode;
+                    product.BrandName = updateProduct.BrandName;
+                    product.ManufBarcode = updateProduct.ManufBarcode;
+                    product.ProductId = updateProduct.ProductId;
+                    product.CatalogKey = updateProduct.CatalogKey;
+                    product.Description= updateProduct.Description;
+                    product.IncomePrice= updateProduct.IncomePrice;
+                    product.Name= updateProduct.Name;
+                    product.Quantity= updateProduct.Quantity;
+                    product.QuantityUnitName= updateProduct.QuantityUnitName;
+                    product.SupplyInvoiceId = invoice.Id;
+                    product.Total = updateProduct.Quantity * updateProduct.IncomePrice;
+
+                    create.Add(product);
+                    result.Add(product);
+                }
+            }
+
+            _context.SupplyInvoiceProducts.RemoveRange(remove);
+            await _context.SupplyInvoiceProducts.AddRangeAsync(create);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return new SupplyInvoiceWithProducts { SupplyInvoice = invoice, SupplyInvoiceProducts = result };
         }
     }
 }
