@@ -18,6 +18,8 @@ export const ShoppingCart = () => {
         setProducts(cartProducts.filter(pr => pr.product.id !== productId))
     }
 
+    console.log(cartProducts)
+
     return (
         <div className={s.cart_mainBox}
              onClick={() => {setIsCartOpen(!isCartOpen)}}

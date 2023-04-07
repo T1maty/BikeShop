@@ -1,11 +1,11 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItemType} from "../../../../entities"
+import {CatalogProductItemType, CatalogProductItemTypeForCart} from '../../../../entities'
 
 interface ShoppingCartStore {
-    cartProducts: CatalogProductItemType[]
-    setProducts: (products: CatalogProductItemType[]) => void
+    cartProducts: CatalogProductItemTypeForCart[]
+    setProducts: (products: CatalogProductItemTypeForCart[]) => void
     setProductToCart: (product: CatalogProductItemType) => void
 }
 
@@ -15,7 +15,7 @@ const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((
         state.cartProducts = products
     }),
     setProductToCart: (product) => set(state => {
-        state.cartProducts.push(product)
+        state.cartProducts.push({...product, productCount: 1})
     }),
 })))/*, {
     name: "cartStore",
