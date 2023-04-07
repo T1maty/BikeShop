@@ -2,8 +2,7 @@ import {create} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
 import {AxiosResponse} from 'axios'
-import {CreateServiceResponse, ServiceItem} from "../../entities"
-import {EntitiesAPI} from "../../entities/api/EntitiesAPI"
+import {CreateServiceResponse, EntitiesAPI, ServiceItem} from "../../entities"
 
 interface ArchiveModalStore {
     openArchiveModal: boolean

@@ -82,7 +82,9 @@ export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
         <div className={s.leftSide_burgerMenu}
              onClick={() => {setIsProfileOpen(!isProfileOpen)}}
         >
-            <div className={s.burgerMenu_iconButton}>UserName</div>
+            <div className={s.burgerMenu_iconButton}>
+                UserName
+            </div>
             {
                 isProfileOpen ?
                     <div className={s.burgerMenu_menuList}>
