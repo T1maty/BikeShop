@@ -19,12 +19,14 @@
     .cart_content {
         position: absolute;
         top: 45px;
-        right: -225px;
+        right: -200px;
         background-color: $themeColorGray;
         border-radius: $defaultSmallMargin;
+        border: 1px solid white;
         padding: $defaultLargeMargin;
-        min-width: 350px;
+        min-width: 300px;
         z-index: 100;
+        //@include flexColumnOnly;
 
         .cart_cartList {
             @include divSmallMarginBottom;
@@ -67,7 +69,6 @@
             }
             .emptyCart {
                 @include flexCenter;
-                font-size: 20px;
             }
         }
         .cart_result {

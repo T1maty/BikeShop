@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import s from './Cart.module.scss'
+import React, {useState} from 'react'
+import s from './ShoppingCart.module.scss'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
 import {Button} from "../../../../shared/ui"
-import useCart from "./CartStore"
+import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 
-export const Cart = () => {
+export const ShoppingCart = () => {
 
-    const cartProducts = useCart(s => s.cartProducts)
-    const setProducts = useCart(s => s.setProducts)
+    const cartProducts = useShoppingCart(s => s.cartProducts)
+    const setProducts = useShoppingCart(s => s.setProducts)
 
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false)
 
@@ -28,7 +28,7 @@ export const Cart = () => {
 
             {
                 cartProducts.length !== 0 ?
-                    <div className={s.cart_count}>1</div>
+                    <div className={s.cart_count}>{cartProducts.length}</div>
                     : ''
             }
 
@@ -65,7 +65,7 @@ export const Cart = () => {
                                             </div>
                                         )
                                     })
-                                    : <div className={s.emptyCart}>Корзина пуста</div>
+                                    : <div className={s.emptyCart}>В корзине нет товаров</div>
                             }
                         </div>
 

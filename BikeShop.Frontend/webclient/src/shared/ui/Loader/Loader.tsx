@@ -1,7 +1,6 @@
 import React, {type FC} from 'react'
 import cls from './Loader.module.scss'
 
-
 interface LoaderProps {
     className?: string,
     variant?: VariantLoadingType
@@ -28,11 +27,8 @@ const VariantLoading = {
 
 export type VariantLoadingType = keyof typeof VariantLoading
 
-export const Loader: FC<LoaderProps> = (
-    {
-        className = '',
-        variant = 'loader'
-    }) => {
+export const Loader: FC<LoaderProps> = ({className = '', variant = 'loader'}) => {
+
     const loading = VariantLoading[variant]
 
     return (

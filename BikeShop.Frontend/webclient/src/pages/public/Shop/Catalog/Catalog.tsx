@@ -7,10 +7,9 @@ import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import useCatalog from './CatalogStore'
-import {LoaderScreenForShop} from '../../../../shared/ui'
-import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
+import {ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
-import useCart from '../Cart/CartStore';
+import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -29,7 +28,7 @@ export const Catalog = () => {
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
     const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
 
-    const setProductToCart = useCart(s => s.setProductToCart)
+    const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
@@ -124,8 +123,12 @@ export const Catalog = () => {
         getDefaultProducts()
     }, [])
 
+    // if (isLoading) {
+    //     return <LoaderScreenForShop image={ShopLoaderScreen}/>
+    // } else {
+
     if (isLoading) {
-        return <LoaderScreenForShop image={ShopLoaderScreen}/>
+        return <ShopLoader/>
     } else {
 
         return (
@@ -175,14 +178,16 @@ export const Catalog = () => {
                             </div>
                         </div>
                         <div className={s.filter_viewType}>
-                            {viewType.map(item => (
-                                <div className={s.viewType_item}
-                                     key={item.id}
-                                     onClick={item.func}
-                                >
-                                    <img src={item.icon} alt="view-type_icon"/>
-                                </div>
-                            ))}
+                            {
+                                viewType.map(item => (
+                                    <div className={s.viewType_item}
+                                         key={item.id}
+                                         onClick={item.func}
+                                    >
+                                        <img src={item.icon} alt="view-type_icon"/>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
 
@@ -192,14 +197,13 @@ export const Catalog = () => {
                                 <div key={prod.product.id} className={s.content_item}>
                                     <div className={s.item_content}
                                          onClick={() => {
-                                            console.log('выбранный продукт', prod)
-                                            setCurrentProduct(prod)
-                                            navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)
+                                             console.log('выбранный продукт', prod)
+                                             setCurrentProduct(prod)
+                                             navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)
                                          }}
                                     >
                                         <div className={s.item_image}>
                                             {
-                                                // prod.image === null || prod.image === '' ?
                                                 !prod.productImages ?
                                                     <div className={s.item_noImage}>
                                                         <div className={s.item_noImage_title}>Sorry, no photo!</div>

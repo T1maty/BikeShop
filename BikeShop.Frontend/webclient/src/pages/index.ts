@@ -21,7 +21,7 @@ export {ShopFooter} from './public/Shop/ShopMain/ShopFooter'
 
 export {Catalog} from './public/Shop/Catalog/Catalog'
 export {CatalogProductItem} from './public/Shop/Catalog/CatalogProductItem'
-export {Cart} from './public/Shop/Cart/Cart'
+export {ShoppingCart} from './public/Shop/ShoppingCart/ShoppingCart'
 export {Order} from './public/Shop/Order/Order'
 export {Profile} from './public/Shop/Profile/Profile'
 export {ProfileAvatar} from './public/Shop/Profile/ProfileAvatar'

@@ -3,13 +3,13 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CatalogProductItemType} from "../../../../entities"
 
-interface CartStore {
+interface ShoppingCartStore {
     cartProducts: CatalogProductItemType[]
     setProducts: (products: CatalogProductItemType[]) => void
     setProductToCart: (product: CatalogProductItemType) => void
 }
 
-const useCart = create<CartStore>()(/*persist(*/devtools(immer((set) => ({
+const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((set) => ({
     cartProducts: [],
     setProducts: (products) => set(state => {
         state.cartProducts = products
@@ -22,4 +22,4 @@ const useCart = create<CartStore>()(/*persist(*/devtools(immer((set) => ({
     version: 1
 })*/);
 
-export default useCart;
+export default useShoppingCart;

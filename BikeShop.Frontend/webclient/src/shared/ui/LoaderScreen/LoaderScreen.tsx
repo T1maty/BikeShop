@@ -1,5 +1,5 @@
 import React from "react"
-import {Loader, VariantLoadingType} from "./Loader"
+import {Loader, VariantLoadingType} from "../Loader/Loader"
 import s from './LoaderScreen.module.scss'
 
 interface LoaderScreenProps {

@@ -10,7 +10,7 @@ import {useForm} from "react-hook-form"
 import Select from "react-select"
 import useCatalog from './CatalogStore'
 import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
-import useCart from "../Cart/CartStore"
+import useShoppingCart from "../ShoppingCart/ShoppingCartStore"
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -18,7 +18,7 @@ export const CatalogProductItem = () => {
 
     const isLoading = useCatalog(s => s.isLoading)
     const currentProduct = useCatalog(s => s.currentProduct)
-    const setProductToCart = useCart(s => s.setProductToCart)
+    const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
     // вид отображения
     // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')

@@ -7,12 +7,8 @@ interface PageLoaderProps {
     variant?: VariantLoadingType
 }
 
-export const PageLoader: FC<PageLoaderProps> = (
-    {
-        className = '',
-        variant
-    }
-) => {
+export const PageLoader: FC<PageLoaderProps> = ({className = '', variant}) => {
+
     return (
         <div className={`${cls.PageLoader} ${className}`}>
             <Loader variant={variant}/>
