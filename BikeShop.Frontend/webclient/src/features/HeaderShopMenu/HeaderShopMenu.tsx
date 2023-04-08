@@ -12,39 +12,36 @@ import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorage
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
 import { MenuIcon } from 'shared/ui/IconButtons/MenuIcon'
 import {CreateQuantityUnitModal} from "../CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal"
+import {useComponentVisible} from "../../shared/hooks/useComponentVisible"
 
 export const HeaderShopMenu = () => {
 
     const {t} = useTranslation()
     const navigate = useNavigate()
+    const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
 
     const openShopModal = useCreateShopModal(s => s.setOpenCreateShopModal)
     const openStorageModal = useCreateStorageModal(s => s.setOpenCreateStorageModal)
     const openCurrencyModal = useCreateCurrencyModal(s => s.setOpenCreateCurrencyModal)
     const openQuantityUnitModal = useCreateQuantityUnitModal(s => s.setOpenCreateQuantityUnitModal)
 
-    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
-
     const [menuItems1, setMenuItems1] = useState([
         {
             title: 'Архив',
             func: () => {
                 // navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                // setIsMenuOpen(false)
             }
         },
         {
             title: 'Архив сервисов',
             func: () => {
                 navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
-                setIsMenuOpen(false)
             }
         },
         {
             title: 'Архив чеков',
             func: () => {
                 navigate(BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS)
-                setIsMenuOpen(false)
             }
         },
     ])
@@ -54,7 +51,7 @@ export const HeaderShopMenu = () => {
             title: 'Магазины',
             func: () => {
                 openShopModal(true)
-                setIsMenuOpen(false)
+                setIsComponentVisible(false)
             }
 
         },
@@ -62,21 +59,21 @@ export const HeaderShopMenu = () => {
             title: 'Склады',
             func: () => {
                 openStorageModal(true)
-                setIsMenuOpen(false)
+                setIsComponentVisible(false)
             }
         },
         {
             title: 'Валюты',
             func: () => {
                 openCurrencyModal(true)
-                setIsMenuOpen(false)
+                setIsComponentVisible(false)
             }
         },
         {
             title: 'Ед. измерения',
             func: () => {
                 openQuantityUnitModal(true)
-                setIsMenuOpen(false)
+                setIsComponentVisible(false)
             }
         },
     ])
@@ -138,49 +135,57 @@ export const HeaderShopMenu = () => {
 
             <div className={s.leftSide_burgerMenu}>
                 <div className={s.burgerMenu_iconButton}>
-                    <MenuIcon onClick={() => {setIsMenuOpen(!isMenuOpen)}}/>
+                    <MenuIcon onClick={() => {setIsComponentVisible(!isComponentVisible)}}/>
                 </div>
                 {
-                    isMenuOpen ?
-                        <div className={s.burgerMenu_menuList}>
-                            {menuItems1.map(item => (
+                    isComponentVisible ?
+                        <div className={s.burgerMenu_menuList} ref={ref}>
+                            {
+                                menuItems1.map(item => (
                                 <div className={s.menuList_item}
                                      key={item.title}
                                      onClick={item.func}
                                 >
                                     {item.title}
                                 </div>
-                            ))}
+                            ))
+                            }
                             <hr/>
 
-                            {menuItems2.map(item => (
+                            {
+                                menuItems2.map(item => (
                                 <div className={s.menuList_item}
                                      key={item.title}
                                      onClick={item.func}
                                 >
                                     {item.title}
                                 </div>
-                            ))}
+                            ))
+                            }
                             <hr/>
 
-                            {menuItems3.map(item => (
+                            {
+                                menuItems3.map(item => (
                                 <div className={s.menuList_item}
                                      key={item.title}
                                      onClick={item.func}
                                 >
                                     {item.title}
                                 </div>
-                            ))}
+                            ))
+                            }
                             <hr/>
 
-                            {menuItems4.map(item => (
+                            {
+                                menuItems4.map(item => (
                                 <div className={s.menuList_item}
                                      key={item.title}
                                      onClick={item.func}
                                 >
                                     {item.title}
                                 </div>
-                            ))}
+                            ))
+                            }
                         </div>
 
                         : ''

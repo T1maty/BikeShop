@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 
-export const useComponentVisible = (initialIsVisible: any) => {
+export const useComponentVisible = (initialIsVisible: boolean) => {
 
     const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible)
     const ref = useRef(null)
@@ -11,9 +11,9 @@ export const useComponentVisible = (initialIsVisible: any) => {
         }
     }
 
-    const handleClickOutside = (event: any) => {
+    const handleClickOutside = (event: Event | React.SyntheticEvent) => {
         // @ts-ignore
-        if (ref.current && !ref.current.contains(event.target)) {
+        if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
             setIsComponentVisible(false)
         }
     }
@@ -30,3 +30,46 @@ export const useComponentVisible = (initialIsVisible: any) => {
 
     return { ref, isComponentVisible, setIsComponentVisible }
 }
+
+// FROM MUI
+// const anchorRef = React.useRef<HTMLButtonElement>(null)
+//
+// const handleToggle = () => {
+//     setOpen((prevOpen) => !prevOpen)
+// };
+//
+// const handleClose = (event: Event | React.SyntheticEvent) => {
+//     if (
+//         anchorRef.current &&
+//         anchorRef.current.contains(event.target as HTMLElement))
+//     {
+//         return;
+//     }
+//
+//     setOpen(false)
+// }
+
+// function handleListKeyDown(event: React.KeyboardEvent) {
+//     if (event.key === 'Tab') {
+//         event.preventDefault()
+//         setOpen(false)
+//     } else if (event.key === 'Escape') {
+//         setOpen(false)
+//     }
+// }
+
+// function handleLogOut(event: Event | React.SyntheticEvent) {
+//     handleClose(event)
+//     logout()
+//     navigate(BikeShopPaths.COMMON.LOGIN)
+// }
+//
+// // return focus to the button when we transitioned from !open -> open
+// const prevOpen = React.useRef(open)
+//
+// useEffect(() => {
+//     if (prevOpen.current === true && open === false) {
+//         anchorRef.current!.focus();
+//     }
+//     prevOpen.current = open;
+// }, [open])

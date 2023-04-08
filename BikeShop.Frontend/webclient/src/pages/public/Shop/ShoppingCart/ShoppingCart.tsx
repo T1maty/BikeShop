@@ -9,12 +9,10 @@ import {CatalogProductItemTypeForCart} from "../../../../entities"
 
 export const ShoppingCart = () => {
 
-    const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
+    const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProducts = useShoppingCart(s => s.setProducts)
-
-    // const [isCartOpen, setIsCartOpen] = useState<boolean>(false)
 
     const cartSum = cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0) // сумма корзины
 
@@ -32,9 +30,7 @@ export const ShoppingCart = () => {
 
     return (
         <div className={s.cart_mainBox}>
-            <div /*onClick={() => {setIsCartOpen(!isCartOpen)}}*/
-                onClick={() => {setIsComponentVisible(!isComponentVisible)}}
-            >
+            <div onClick={() => {setIsComponentVisible(!isComponentVisible)}}>
                 <img src={cart} alt="cart-logo"/>
             </div>
 
@@ -45,7 +41,6 @@ export const ShoppingCart = () => {
             }
 
             {
-                // isCartOpen
                 isComponentVisible ?
                     <div className={s.cart_content} ref={ref}>
                         <div className={s.cart_cartList}>
