@@ -11,13 +11,17 @@ import Select from "react-select"
 import useCatalog from './CatalogStore'
 import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
 import useShoppingCart from "../ShoppingCart/ShoppingCartStore"
+import {useSnackbar} from "notistack"
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
 export const CatalogProductItem = () => {
 
+    const {enqueueSnackbar} = useSnackbar()
+
     const isLoading = useCatalog(s => s.isLoading)
     const currentProduct = useCatalog(s => s.currentProduct)
+    const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
     // вид отображения
@@ -89,6 +93,22 @@ export const CatalogProductItem = () => {
     //     // setCurrentMasterId(event.target.value as string)
     //     console.log('клик по селекту товара', event.target.value)
     // }
+
+    const addProductToCartHandler = () => {
+        if (cartProducts.length === 0) {
+            setProductToCart(currentProduct)
+        } else {
+            cartProducts.forEach((prod) => {
+                if (prod.product.id === currentProduct!.product.id) {
+                    enqueueSnackbar('Этот товар уже есть в корзине',
+                        {variant: 'info', autoHideDuration: 3000,
+                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+                } else {
+                    setProductToCart(currentProduct)
+                }
+            })
+        }
+    }
 
     if (isLoading) {
         return <LoaderScreenForShop image={ShopLoaderScreen}/>
@@ -216,7 +236,7 @@ export const CatalogProductItem = () => {
 
                             </div>
                             <div className={s.product_addToCart}>
-                                <Button onClick={() => {setProductToCart(currentProduct)}}>
+                                <Button onClick={addProductToCartHandler}>
                                     Добавить в корзину
                                 </Button>
                             </div>
@@ -256,7 +276,7 @@ export const CatalogProductItem = () => {
                                     {
                                         currentProduct.productSpecifications.map(spec => {
                                             return (
-                                                <div>
+                                                <div key={spec.id}>
                                                     <div style={{fontWeight: 'bold'}}>{spec.name}:</div>
                                                     <div>{spec.description}</div>
                                                 </div>

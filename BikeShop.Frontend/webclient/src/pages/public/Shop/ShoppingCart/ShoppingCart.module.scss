@@ -19,12 +19,13 @@
     .cart_content {
         position: absolute;
         top: 45px;
-        right: -200px;
+        right: -300px;
         background-color: $themeColorGray;
         border-radius: $defaultSmallMargin;
         border: 1px solid white;
         padding: $defaultLargeMargin;
-        min-width: 300px;
+        min-width: 400px;
+        //width: min-content;
         z-index: 100;
         //@include flexColumnOnly;
 
@@ -34,18 +35,18 @@
             max-height: 350px;
             overflow-y: auto;
 
-            .cart_cartListItem {
+            .cartListItem {
                 @include flexBetween;
                 background-color: $themeColorMilk;
                 padding: $defaultSmallMargin;
                 border-radius: $defaultSmallMargin;
 
-                .cart_cartListItem_content {
+                .cartListItem_content {
                     display: flex;
                     align-items: center;
                     gap: 10px;
 
-                    .cart_cartListItem_image {
+                    .cartListItem_image {
                         img {
                             filter: none;
                             height: 50px;
@@ -53,12 +54,37 @@
                         }
                     }
 
-                    .cart_cartListItem_info {
+                    .cartListItem_info {
                         color: black;
+                        margin-right: 5px;
+
+                        .cartListItem_name {
+                            margin-bottom: 5px;
+                        }
+                        .cartListItem_price {
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-start;
+
+                            > div:not(:last-child) {
+                                margin-right: $defaultExtraSmallMargin;
+                            }
+
+                            button {
+                                @include flexCenter;
+                                width: 20px;
+                                height: 20px;
+                            }
+
+                            .cartListItem_quantity {
+                                background-color: white;
+                                padding: 1px 10px;
+                            }
+                        }
                     }
                 }
 
-                .cart_cartListItem_deleteIcon {
+                .cartListItem_deleteIcon {
                     img {
                         filter: none;
                         width: 30px;

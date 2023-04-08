@@ -12,7 +12,7 @@ export const ShoppingCart = () => {
 
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false)
 
-    const cartSum = cartProducts.reduce((acc, obj) => acc + obj.product.retailPrice, 0) // сумма корзины
+    const cartSum = cartProducts.reduce((acc, obj) => acc + obj.totalSum, 0) // сумма корзины
 
     const deleteProductFromCartHandler = (productId: number) => {
         setProducts(cartProducts.filter(pr => pr.product.id !== productId))
@@ -21,10 +21,8 @@ export const ShoppingCart = () => {
     console.log(cartProducts)
 
     return (
-        <div className={s.cart_mainBox}
-             onClick={() => {setIsCartOpen(!isCartOpen)}}
-        >
-            <div>
+        <div className={s.cart_mainBox}>
+            <div onClick={() => {setIsCartOpen(!isCartOpen)}}>
                 <img src={cart} alt="cart-logo"/>
             </div>
 
@@ -43,22 +41,36 @@ export const ShoppingCart = () => {
                                     cartProducts.map(cartProd => {
                                         return (
                                             <div key={cartProd.product.id}
-                                                 className={s.cart_cartListItem}
+                                                 className={s.cartListItem}
                                             >
-                                                <div className={s.cart_cartListItem_content}>
-                                                    <div className={s.cart_cartListItem_image}>
+                                                <div className={s.cartListItem_content}>
+                                                    <div className={s.cartListItem_image}>
                                                         <img src={cartProd.productImages[0].url} alt="product"/>
                                                     </div>
-                                                    <div className={s.cart_cartListItem_info}>
-                                                        <div>
+                                                    <div className={s.cartListItem_info}>
+                                                        <div className={s.cartListItem_name}>
                                                             {cartProd.product.name}
                                                         </div>
-                                                        <div>
-                                                            {cartProd.product.retailPrice} x 1шт. = {cartProd.product.retailPrice*1}
+                                                        <div className={s.cartListItem_price}>
+                                                            <div>{cartProd.product.retailPrice}</div>
+                                                            <div>x</div>
+                                                            <Button // buttonDivWrapper={s.result_orderButton}
+                                                                    onClick={() => {}}
+                                                            >
+                                                                -
+                                                            </Button>
+                                                            <div className={s.cartListItem_quantity}>{cartProd.productCount}</div>
+                                                            <Button // buttonDivWrapper={s.result_orderButton}
+                                                                onClick={() => {}}
+                                                            >
+                                                                +
+                                                            </Button>
+                                                            <div>шт. =</div>
+                                                            <div>{cartProd.totalSum}</div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className={s.cart_cartListItem_deleteIcon}>
+                                                <div className={s.cartListItem_deleteIcon}>
                                                     <img src={RemoveIcon} alt="remove-icon"
                                                          className={s.imageList_deleteItem}
                                                          onClick={() => {deleteProductFromCartHandler(cartProd.product.id)}}

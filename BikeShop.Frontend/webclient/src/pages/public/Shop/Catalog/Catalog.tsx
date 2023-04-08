@@ -10,6 +10,7 @@ import useCatalog from './CatalogStore'
 import {ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
+import {CatalogProductItemType} from "../../../../entities";
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -28,6 +29,7 @@ export const Catalog = () => {
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
     const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
 
+    const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
@@ -111,6 +113,22 @@ export const Catalog = () => {
         setActiveFilter4(activeFilter4)
     }
 
+    const addProductToCartHandler = (product: CatalogProductItemType) => {
+        if (cartProducts.length === 0) {
+            setProductToCart(product)
+        } else {
+            cartProducts.forEach((prod) => {
+                if (prod.product.id === product.product.id) {
+                    enqueueSnackbar('Этот товар уже есть в корзине',
+                        {variant: 'info', autoHideDuration: 3000,
+                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+                } else {
+                    setProductToCart(product)
+                }
+            })
+        }
+    }
+
     useEffect(() => {
         if (errorStatus === 'error') {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
@@ -122,10 +140,6 @@ export const Catalog = () => {
         getTags()
         getDefaultProducts()
     }, [])
-
-    // if (isLoading) {
-    //     return <LoaderScreenForShop image={ShopLoaderScreen}/>
-    // } else {
 
     if (isLoading) {
         return <ShopLoader/>
@@ -198,7 +212,7 @@ export const Catalog = () => {
                                     <div className={s.item_content}
                                          onClick={() => {
                                              console.log('выбранный продукт', prod)
-                                             setCurrentProduct(prod)
+                                             setCurrentProduct(prod) // сетаем продукт в стор
                                              navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)
                                          }}
                                     >
@@ -220,7 +234,7 @@ export const Catalog = () => {
                                     <div className={s.item_buy}>
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
                                         <div className={s.item_cart}
-                                             onClick={() => {setProductToCart(prod)}}
+                                             onClick={() => {addProductToCartHandler(prod)}}
                                         >
                                             <img src={cart} alt="cart-logo"/>
                                         </div>
