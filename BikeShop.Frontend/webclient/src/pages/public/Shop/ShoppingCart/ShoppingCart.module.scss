@@ -77,8 +77,11 @@
                             }
 
                             .cartListItem_quantity {
-                                background-color: white;
+                                display: flex;
+                                justify-content: center;
+                                width: 30px;
                                 padding: 1px 10px;
+                                background-color: white;
                             }
                         }
                     }

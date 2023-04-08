@@ -5,6 +5,7 @@ import {Button} from "../../../../shared/ui"
 import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
+import {CatalogProductItemTypeForCart} from "../../../../entities";
 
 export const ShoppingCart = () => {
 
@@ -15,10 +16,18 @@ export const ShoppingCart = () => {
 
     // const [isCartOpen, setIsCartOpen] = useState<boolean>(false)
 
-    const cartSum = cartProducts.reduce((acc, obj) => acc + obj.totalSum, 0) // сумма корзины
+    const cartSum = cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0) // сумма корзины
 
     const deleteProductFromCartHandler = (productId: number) => {
         setProducts(cartProducts.filter(pr => pr.product.id !== productId))
+    }
+
+    const productCartQuantityHandler = (product: CatalogProductItemTypeForCart, action: number) => {
+        setProducts(cartProducts.map(el => el.product.id === product.product.id ?
+            {...el, productQuantity: el.productQuantity + action,
+                productTotalSum: el.productQuantity * el.product.retailPrice
+            } : el)
+        )
     }
 
     return (
@@ -58,19 +67,26 @@ export const ShoppingCart = () => {
                                                         <div className={s.cartListItem_price}>
                                                             <div>{cartProd.product.retailPrice}</div>
                                                             <div>x</div>
-                                                            <Button // buttonDivWrapper={s.result_orderButton}
-                                                                    onClick={() => {}}
+
+                                                            <Button // buttonDivWrapper={s.cartListItem_decreaseBtn}
+                                                                    disabled={cartProd.productQuantity === 1}
+                                                                    onClick={() => {productCartQuantityHandler(cartProd,-1)}}
                                                             >
                                                                 -
                                                             </Button>
-                                                            <div className={s.cartListItem_quantity}>{cartProd.productCount}</div>
-                                                            <Button // buttonDivWrapper={s.result_orderButton}
-                                                                onClick={() => {}}
+
+                                                            <div className={s.cartListItem_quantity}>
+                                                                {cartProd.productQuantity}
+                                                            </div>
+
+                                                            <Button // buttonDivWrapper={s.cartListItem_increaseBtn}
+                                                                    onClick={() => {productCartQuantityHandler(cartProd, 1)}}
                                                             >
                                                                 +
                                                             </Button>
+
                                                             <div>шт. =</div>
-                                                            <div>{cartProd.totalSum}</div>
+                                                            <div>{cartProd.productTotalSum}</div>
                                                         </div>
                                                     </div>
                                                 </div>

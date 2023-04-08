@@ -16,9 +16,8 @@ const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((
     }),
     setProductToCart: (product) => set(state => {
         state.cartProducts.push({...product,
-            productCount: 1,
-            // totalSum: product.productCount * product.product.retailPrice
-            totalSum: product.product.retailPrice * product.productCount
+            productQuantity: 1,
+            productTotalSum: product.product.retailPrice * 1
         })
     }),
 })))/*, {
