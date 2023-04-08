@@ -24,7 +24,7 @@
         border-radius: $defaultSmallMargin;
         border: 1px solid white;
         padding: $defaultLargeMargin;
-        min-width: 400px;
+        //min-width: 400px;
         //width: min-content;
         z-index: 100;
         //@include flexColumnOnly;
@@ -57,6 +57,7 @@
                     .cartListItem_info {
                         color: black;
                         margin-right: 5px;
+                        min-width: 200px;
 
                         .cartListItem_name {
                             margin-bottom: 5px;
