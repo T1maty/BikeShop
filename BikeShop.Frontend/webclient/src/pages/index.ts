@@ -11,7 +11,7 @@ export {ServiceTable} from './workspace/Service/ServiceTable'
 export {SelectProduct} from './workspace/SelectProductWork/SelectProduct'
 export {SelectWork} from './workspace/SelectProductWork/SelectWork'
 export {ProductsWrapper} from './workspace/ProductsCount/ProductsWrapper'
-export {ArrivalOfProducts} from './workspace/ProductsCount/ArrivalOfProducts'
+export {ArrivalOfProducts} from './workspace/SupplyInvoice/ArrivalOfProducts'
 export {InventoryOfProducts} from './workspace/ProductsCount/InventoryOfProducts'
 
 export {ShopMain} from './public/Shop/ShopMain/ShopMain'
