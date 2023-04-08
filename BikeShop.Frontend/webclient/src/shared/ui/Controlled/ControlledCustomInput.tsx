@@ -6,6 +6,7 @@ import {CustomInput} from '../CustomInput/CustomInput'
 interface ControlledCustomInputProps {
     name: string
     placeholder: string
+    type?: string
     control: UseFormReturn<any>
     rules?: Omit<RegisterOptions<any, any>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
     color?: 'black'
@@ -23,6 +24,7 @@ export const ControlledCustomInput = (props: ControlledCustomInputProps) => {
                 render={({field}: any) =>
                     <CustomInput {...field}
                                  placeholder={props.placeholder}
+                                 type={props.type}
                                  error={!!props.control.formState.errors[props.name]}
                                  helperText={props.control.formState.errors[props.name]?.message}
                                  color={props.color}

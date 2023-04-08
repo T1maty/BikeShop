@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import s from './ShoppingCart.module.scss'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
 import {Button} from "../../../../shared/ui"
@@ -6,15 +6,20 @@ import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
 import {CatalogProductItemTypeForCart} from "../../../../entities"
+import {useNavigate} from 'react-router-dom'
+import {BikeShopPaths} from '../../../../app/routes/paths';
 
 export const ShoppingCart = () => {
 
+    const navigate = useNavigate()
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProducts = useShoppingCart(s => s.setProducts)
+    const shoppingCartSum = useShoppingCart(s => s.shoppingCartSum)
+    const setShoppingCartSum = useShoppingCart(s => s.setShoppingCartSum)
 
-    const cartSum = cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0) // сумма корзины
+    // const cartSum = cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0) // сумма корзины
 
     const deleteProductFromCartHandler = (productId: number) => {
         setProducts(cartProducts.filter(pr => pr.product.id !== productId))
@@ -27,6 +32,10 @@ export const ShoppingCart = () => {
             } : el)
         )
     }
+
+    // useEffect(() => {
+    //     setShoppingCartSum(cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0))
+    // }, [cartProducts])
 
     return (
         <div className={s.cart_mainBox}>
@@ -103,10 +112,13 @@ export const ShoppingCart = () => {
                                 <div className={s.cart_result}>
                                     <fieldset className={s.result_fieldset}>
                                         <legend>Итого</legend>
-                                        <div className={s.result_text}>{cartSum}</div>
+                                        <div className={s.result_text}>{shoppingCartSum}</div>
                                     </fieldset>
                                     <Button buttonDivWrapper={s.result_orderButton}
-                                            onClick={() => {}}
+                                            onClick={() => {
+                                                setIsComponentVisible(false)
+                                                navigate(BikeShopPaths.SHOP.ORDER)}
+                                            }
                                     >
                                         Создать заказ
                                     </Button>

@@ -51,6 +51,7 @@ export const RegistrationPage = () => {
                         <div>
                             <ControlledCustomInput name={'password'}
                                                    placeholder={'Пароль'}
+                                                   type={'password'}
                                                    control={formControl}
                                                    rules={{required: Errors[0].name}}
                             />

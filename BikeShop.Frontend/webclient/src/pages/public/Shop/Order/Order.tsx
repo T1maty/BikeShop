@@ -3,8 +3,12 @@ import s from './Order.module.scss'
 import {Button, ControlledCustomInput} from '../../../../shared/ui'
 import {Errors} from '../../../../entities/errors/workspaceErrors'
 import {SubmitHandler, useForm} from 'react-hook-form'
+import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 
 export const Order = () => {
+
+    const cartProducts = useShoppingCart(s => s.cartProducts)
+    const shoppingCartSum = useShoppingCart(s => s.shoppingCartSum)
 
     // тестовые данные
     const [order, setOrder] = useState([
@@ -80,11 +84,13 @@ export const Order = () => {
                     <div className={s.form_order}>
                         <div className={s.formItem_title}>Заказ</div>
                         <div className={s.orderList}>
-                            {order.map(item => (
-                                <div className={s.order_item} key={item.id}>
-                                    {item.name}
-                                </div>
-                            ))}
+                            {
+                                order.map(item => (
+                                    <div className={s.order_item} key={item.id}>
+                                        {item.name}
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
                     <div className={s.form_delivery}>
@@ -110,8 +116,8 @@ export const Order = () => {
                         <div className={s.result_title}>Итого</div>
                         <div className={s.result_price}>
                             <div className={s.price_item}>
-                                <div>99 товаров на сумму:</div>
-                                <div>999</div>
+                                <div>{cartProducts.length} товаров на сумму:</div>
+                                <div>{shoppingCartSum}</div>
                             </div>
                             <div className={s.price_item}>
                                 <div>Доставка:</div>
@@ -120,7 +126,7 @@ export const Order = () => {
                             <hr/>
                             <div className={s.price_item}>
                                 <div>К оплате:</div>
-                                <div className={s.price_item_total}>9999</div>
+                                <div className={s.price_item_total}>{shoppingCartSum + 0}</div>
                             </div>
                             <hr/>
                             <div className={s.price_confirmButton}>

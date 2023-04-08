@@ -47,12 +47,20 @@ export const RegistrationForm = () => {
                         <ControlledCustomInput name={'phone'}
                                                placeholder={'Номер телефона'}
                                                control={formControl}
-                                               rules={{required: Errors[0].name}}
+                                               rules={{
+                                                   required: 'Поле обязательно для заполнения',
+                                                   minLength: {value: 4, message: 'Минимальная длина 4 символа'},
+                                                   pattern: {
+                                                       value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                                                       message: 'Неверный формат номера телефона'
+                                                   }
+                                               }}
                         />
                     </div>
                     <div>
                         <ControlledCustomInput name={'password'}
                                                placeholder={'Пароль'}
+                                               type={'password'}
                                                control={formControl}
                                                rules={{required: Errors[0].name}}
                         />

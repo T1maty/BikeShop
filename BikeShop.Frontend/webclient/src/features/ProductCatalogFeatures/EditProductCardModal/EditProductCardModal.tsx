@@ -49,7 +49,7 @@ export const EditProductCardModal = () => {
 
     const onSubmit: SubmitHandler<UpdateProductCardFormModel> = (data: UpdateProductCardFormModel) => {
 
-        var DATA = {} as UpdateProductCardRequest
+        const DATA = {} as UpdateProductCardRequest
 
         let options: { optionVariants: ProductOptionVariantBind[] }[] = []
         data.productOptions.forEach(n => {

@@ -21,7 +21,7 @@ interface CreateSpecificationModalStore {
     updateSpecification: (updateData: UpdateSpecification) => any
 }
 
-const useCreateSpecificationModal = create<CreateSpecificationModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useCreateSpecificationModal = create<CreateSpecificationModalStore>()(/*persist(*/devtools(immer((set) => ({
     openCreateSpecificationModal: false,
     setOpenCreateSpecificationModal: (value: boolean) => set({openCreateSpecificationModal: value}),
     isLoading: false,
