@@ -4,13 +4,16 @@ import cart from "../../../../shared/assets/shop/icons/cart.png"
 import {Button} from "../../../../shared/ui"
 import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
+import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
 
 export const ShoppingCart = () => {
+
+    const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(true)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProducts = useShoppingCart(s => s.setProducts)
 
-    const [isCartOpen, setIsCartOpen] = useState<boolean>(false)
+    // const [isCartOpen, setIsCartOpen] = useState<boolean>(false)
 
     const cartSum = cartProducts.reduce((acc, obj) => acc + obj.totalSum, 0) // сумма корзины
 
@@ -18,11 +21,11 @@ export const ShoppingCart = () => {
         setProducts(cartProducts.filter(pr => pr.product.id !== productId))
     }
 
-    console.log(cartProducts)
-
     return (
         <div className={s.cart_mainBox}>
-            <div onClick={() => {setIsCartOpen(!isCartOpen)}}>
+            <div /*onClick={() => {setIsCartOpen(!isCartOpen)}}*/
+                onClick={() => {setIsComponentVisible(!isComponentVisible)}}
+            >
                 <img src={cart} alt="cart-logo"/>
             </div>
 
@@ -33,8 +36,9 @@ export const ShoppingCart = () => {
             }
 
             {
-                isCartOpen ?
-                    <div className={s.cart_content}>
+                // isCartOpen
+                isComponentVisible ?
+                    <div className={s.cart_content} ref={ref} /*onClick={() => {setIsComponentVisible(!isComponentVisible)}}*/>
                         <div className={s.cart_cartList}>
                             {
                                 cartProducts.length !== 0 ?
