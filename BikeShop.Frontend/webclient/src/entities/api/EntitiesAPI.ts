@@ -108,4 +108,17 @@ export const EntitiesAPI = {
             )
         },
     },
+
+    Option: {
+        addNewOption(data: any): any {
+            return (
+                $api.post<{ name: string, variantNames: string[] }, any>('/productcard/createoption', data)
+            )
+        },
+        updateOption(updateData: any): any {
+            return (
+                $api.put<any>('/productcard/updateoption', updateData)
+            )
+        },
+    },
 }
