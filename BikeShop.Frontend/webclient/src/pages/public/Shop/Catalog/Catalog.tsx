@@ -55,52 +55,6 @@ export const Catalog = () => {
         },
     ])
 
-    // тестовые данные
-    // const [products, setProducts] = useState<ProductsType[]>([
-    //     {
-    //         id: '1',
-    //         image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-    //         name: 'Merida',
-    //         price: 500,
-    //         addToCart: cart,
-    //     },
-    //     {
-    //         id: '2',
-    //         image: '',
-    //         name: 'Specialized',
-    //         price: 100500,
-    //         addToCart: cart,
-    //     },
-    //     {
-    //         id: '3',
-    //         image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-    //         name: 'Merida',
-    //         price: 500,
-    //         addToCart: cart,
-    //     },
-    //     {
-    //         id: '4',
-    //         image: '',
-    //         name: 'Specialized',
-    //         price: 100500,
-    //         addToCart: cart,
-    //     },
-    //     {
-    //         id: '5',
-    //         image: 'https://i.pinimg.com/originals/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-    //         name: 'Merida',
-    //         price: 500,
-    //         addToCart: cart,
-    //     },
-    //     {
-    //         id: '6',
-    //         image: '',
-    //         name: 'Specialized',
-    //         price: 100500,
-    //         addToCart: cart,
-    //     },
-    // ])
-
     const filterUniversalHandler = (filterName: FilterProductsType,
                                     activeFilter1: boolean, activeFilter2: boolean,
                                     activeFilter3: boolean, activeFilter4: boolean) => {
@@ -225,9 +179,8 @@ export const Catalog = () => {
                                                             <img src={NoProductImage} alt="no-product-image"/>
                                                         </div>
                                                     </div>
-                                                    : <img src={prod.productImages[0].url} alt="product-image"/>
+                                                    : <img src={prod.productImages[0]?.url} alt="product-image"/>
                                             }
-
                                         </div>
                                         <div className={s.item_title}>{prod.product.name}</div>
                                     </div>

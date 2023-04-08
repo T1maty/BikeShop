@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s from "./MainPage.module.scss"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
-import {ChooseClientModal, CreateProductModal,
+import {ChooseClientModal, CreateProductModal, CreateOptionModal,
     CreateSpecificationModal, EditProductCardModal} from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
@@ -10,6 +10,7 @@ import {User} from "../../../entities"
 import useMainPageStore from "./MainPageStore"
 import useCreateSpecificationModal
     from '../../../features/CRUDModals/CreateSpecificationModal/CreateSpecificationModalStore'
+import useCreateOptionModal from '../../../features/CRUDModals/CreateOptionModal/CreateOptionModalStore'
 
 export const MainPage = () => {
 
@@ -17,6 +18,7 @@ export const MainPage = () => {
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
+    const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -53,6 +55,7 @@ export const MainPage = () => {
             <CreateProductModal/>
             <EditProductCardModal/>
             <CreateSpecificationModal/>
+            <CreateOptionModal/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
@@ -69,7 +72,7 @@ export const MainPage = () => {
                         <Button onClick={() => {setOpenCreateSpecificationModal(true)}}>
                             Прокат
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {setOpenCreateOptionModal(true)}}>
                             Внести на счёт
                         </Button>
                     </div>

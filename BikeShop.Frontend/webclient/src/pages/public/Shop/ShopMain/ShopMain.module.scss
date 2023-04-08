@@ -65,6 +65,10 @@
 
                     > div {
                         @include hoverCursorPointer;
+
+                        &:hover {
+                            color: darkgoldenrod;
+                        }
                     }
                 }
 

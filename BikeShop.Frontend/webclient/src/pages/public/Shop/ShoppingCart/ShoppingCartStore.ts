@@ -7,6 +7,8 @@ interface ShoppingCartStore {
     cartProducts: CatalogProductItemTypeForCart[]
     setProducts: (products: CatalogProductItemTypeForCart[]) => void
     setProductToCart: (product: CatalogProductItemType) => void
+    shoppingCartSum: number
+    setShoppingCartSum: (sum: number) => void
 }
 
 const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((set) => ({
@@ -19,6 +21,10 @@ const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((
             productQuantity: 1,
             productTotalSum: product.product.retailPrice
         })
+    }),
+    shoppingCartSum: 0,
+    setShoppingCartSum: (sum) => set(state => {
+        state.shoppingCartSum = sum
     }),
 })))/*, {
     name: "cartStore",

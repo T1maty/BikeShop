@@ -23,6 +23,7 @@ export {CreateStorageModal} from './CRUDModals/CreateStorageModal/CreateStorageM
 export {CreateCurrencyModal} from './CRUDModals/CreateCurrencyModal/CreateCurrencyModal'
 export {CreateQuantityUnitModal} from './CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal'
 export {CreateSpecificationModal} from './CRUDModals/CreateSpecificationModal/CreateSpecificationModal'
+export {CreateOptionModal} from './CRUDModals/CreateOptionModal/CreateOptionModal'
 
 export {TableProductItem} from './ServiceFeatures/TableProductItem/TableProductItem'
 export {CreateWorkGroupModal} from './WorkCatalogFeatures/CreateWorkGroupModal/CreateWorkGroupModal'
