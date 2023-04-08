@@ -15,7 +15,6 @@ interface TagTreeViewProps {
 export const TagTreeView = (props: TagTreeViewProps) => {
 
     const setTreeViewData = useTagTreeView(s => s.setTreeViewTags)
-    const expanded = useTagTreeView(s => s.expandedTags)
     const setSelect = useTagTreeView(s => s.setSelectedTag)
     const selected = useTagTreeView(s => s.selectedTag)
     const fetchTags = useTagTreeView(s => s.fetchTags)
@@ -24,12 +23,15 @@ export const TagTreeView = (props: TagTreeViewProps) => {
     const treeViewData = useTagTreeView(s => s.treeViewTags)
     const tagsCloud = useProductTagCloudStore(s => s.tags)
     const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
+    const setContextMenuVisible = useTagTreeView(s => s.setContextMenuVisible)
 
     const [selectedN, setSelectedN] = useState()
 
     const setProductsToTableHandler = (node: ProductTag) => {
         setSelect(node.id)
-        let tags = tagsCloud.map((n) => {return n.id})
+        let tags = tagsCloud.map((n) => {
+            return n.id
+        })
         tags.push(node.id)
         setProductsToTable(tags)
     }
@@ -42,7 +44,9 @@ export const TagTreeView = (props: TagTreeViewProps) => {
 
     return (
         <div className={s.tagTreeView_mainBox}
-             onContextMenu={(event) => {event.preventDefault()}}
+             onContextMenu={(event) => {
+                 event.preventDefault()
+             }}
         >
             <UpdateTagModal onSuccess={updateTag}/>
             <CreateTagModal onSuccess={addTag}/>
@@ -53,10 +57,10 @@ export const TagTreeView = (props: TagTreeViewProps) => {
                          selected={selectedN}
                          setSelected={setSelectedN}
                          onNodeClick={setProductsToTableHandler}
-                         onNodeContext={(event) => {
-                         // setSelect(node.id)
-                         // setContext(true, event.clientX, event.clientY)
-                         // setProductsToTableHandler()
+                         onNodeContext={(node, event) => {
+                             setContextMenuVisible(true, event.clientX, event.clientY);
+                             setSelectedN(node)
+                             setProductsToTableHandler(node)
                          }}
                          onNodeDoubleClick={(node) => {
                              props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
