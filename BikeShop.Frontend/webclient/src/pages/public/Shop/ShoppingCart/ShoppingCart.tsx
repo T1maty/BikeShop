@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React from 'react'
 import s from './ShoppingCart.module.scss'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
 import {Button} from "../../../../shared/ui"
 import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
-import {CatalogProductItemTypeForCart} from "../../../../entities";
+import {CatalogProductItemTypeForCart} from "../../../../entities"
 
 export const ShoppingCart = () => {
 
-    const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(true)
+    const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProducts = useShoppingCart(s => s.setProducts)
@@ -47,7 +47,7 @@ export const ShoppingCart = () => {
             {
                 // isCartOpen
                 isComponentVisible ?
-                    <div className={s.cart_content} ref={ref} /*onClick={() => {setIsComponentVisible(!isComponentVisible)}}*/>
+                    <div className={s.cart_content} ref={ref}>
                         <div className={s.cart_cartList}>
                             {
                                 cartProducts.length !== 0 ?
