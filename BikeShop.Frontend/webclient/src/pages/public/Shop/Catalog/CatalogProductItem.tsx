@@ -95,10 +95,10 @@ export const CatalogProductItem = () => {
 
     const addProductToCartHandler = () => {
         if (cartProducts.length === 0) {
-            setProductToCart(currentProduct!)
             enqueueSnackbar('Товар добавлен в корзину',
                 {variant: 'success', autoHideDuration: 2000,
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+            setProductToCart(currentProduct!)
         } else {
             cartProducts.forEach((prod) => {
                 if (prod.product.id === currentProduct!.product.id) {
@@ -106,10 +106,10 @@ export const CatalogProductItem = () => {
                         {variant: 'info', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
                 } else {
-                    setProductToCart(currentProduct!)
                     enqueueSnackbar('Товар добавлен в корзину',
                         {variant: 'success', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+                    setProductToCart(currentProduct!)
                 }
             })
         }

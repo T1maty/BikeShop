@@ -22,6 +22,8 @@ export const Catalog = () => {
 
     const isLoading = useCatalog(s => s.isLoading)
     const errorStatus = useCatalog(s => s.errorStatus)
+    const isDivDisabled = useCatalog(s => s.isDivDisabled)
+    const setIsDivDisabled = useCatalog(s => s.setIsDivDisabled)
 
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
@@ -32,6 +34,7 @@ export const Catalog = () => {
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
+    const [timerId, setTimerId] = useState<number>(0)
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
     const [activeFilter2, setActiveFilter2] = useState<boolean>(false)
@@ -67,12 +70,25 @@ export const Catalog = () => {
         setActiveFilter4(activeFilter4)
     }
 
+    const stopTimer = () => {
+        clearInterval(timerId)
+    }
+
     const addProductToCartHandler = (product: CatalogProductItemType) => {
+        // stopTimer()
+
         if (cartProducts.length === 0) {
+            setIsDivDisabled(true)
             setProductToCart(product)
+
             enqueueSnackbar('Товар добавлен в корзину',
                 {variant: 'success', autoHideDuration: 2000,
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+
+            // const id: number = window.setInterval(() => {
+            //     setIsDivDisabled(false)
+            // }, 3000)
+            // setTimerId(id)
         } else {
             cartProducts.forEach((prod) => {
                 if (prod.product.id === product.product.id) {
@@ -80,14 +96,27 @@ export const Catalog = () => {
                         {variant: 'info', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
                 } else {
+                    // stopTimer()
+
+                    setIsDivDisabled(true)
                     setProductToCart(product)
+
                     enqueueSnackbar('Товар добавлен в корзину',
                         {variant: 'success', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+
+                    // const id: number = window.setInterval(() => {
+                    //     setIsDivDisabled(false)
+                    // }, 3000)
+                    // setTimerId(id)
                 }
             })
         }
     }
+
+    // useEffect(() => {
+    //
+    // },[])
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -192,7 +221,7 @@ export const Catalog = () => {
                                     </div>
                                     <div className={s.item_buy}>
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
-                                        <div className={s.item_cart}
+                                        <div className={isDivDisabled ? s.item_cartDisabled : s.item_cart}
                                              onClick={() => {addProductToCartHandler(prod)}}
                                         >
                                             <img src={cart} alt="cart-logo"/>

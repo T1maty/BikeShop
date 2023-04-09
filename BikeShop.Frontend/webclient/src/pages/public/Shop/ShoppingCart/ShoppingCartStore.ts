@@ -5,7 +5,7 @@ import {CatalogProductItemType, CatalogProductItemTypeForCart} from '../../../..
 
 interface ShoppingCartStore {
     cartProducts: CatalogProductItemTypeForCart[]
-    setProducts: (products: CatalogProductItemTypeForCart[]) => void
+    setCartProducts: (products: CatalogProductItemTypeForCart[]) => void
     setProductToCart: (product: CatalogProductItemType) => void
     shoppingCartSum: number
     setShoppingCartSum: (sum: number) => void
@@ -13,7 +13,7 @@ interface ShoppingCartStore {
 
 const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((set) => ({
     cartProducts: [],
-    setProducts: (products) => set(state => {
+    setCartProducts: (products) => set(state => {
         state.cartProducts = products
     }),
     setProductToCart: (product) => set(state => {

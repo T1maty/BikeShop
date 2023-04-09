@@ -9,7 +9,7 @@ export const App = () => {
 
     return (
         <div className={`app`}>
-            <SnackbarProvider maxSnack={1}>
+            <SnackbarProvider maxSnack={2}>
                 <Suspense>
                     <RouterProvider router={routes}/>
                 </Suspense>

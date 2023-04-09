@@ -15,18 +15,16 @@ export const ShoppingCart = () => {
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
-    const setProducts = useShoppingCart(s => s.setProducts)
+    const setCartProducts = useShoppingCart(s => s.setCartProducts)
     const shoppingCartSum = useShoppingCart(s => s.shoppingCartSum)
     const setShoppingCartSum = useShoppingCart(s => s.setShoppingCartSum)
 
-    // const cartSum = cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0) // сумма корзины
-
     const deleteProductFromCartHandler = (productId: number) => {
-        setProducts(cartProducts.filter(pr => pr.product.id !== productId))
+        setCartProducts(cartProducts.filter(pr => pr.product.id !== productId))
     }
 
     const productCartQuantityHandler = (product: CatalogProductItemTypeForCart, action: number) => {
-        setProducts(cartProducts.map(el => el.product.id === product.product.id ?
+        setCartProducts(cartProducts.map(el => el.product.id === product.product.id ?
             {...el, productQuantity: el.productQuantity + action,
                 productTotalSum: el.productQuantity * el.product.retailPrice
             } : el)

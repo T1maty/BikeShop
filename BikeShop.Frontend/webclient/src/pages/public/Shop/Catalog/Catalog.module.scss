@@ -141,6 +141,7 @@
                     }
                     .item_cart {
                         cursor: pointer;
+                        //pointer-events: none; // для отключения див
 
                         img {
                             width: 20px;
@@ -157,12 +158,20 @@
                         //    }
                         //}
                     }
+                    .item_cartDisabled {
+                        pointer-events: none;
+
+                        //&:hover {
+                        //    cursor: default;
+                        //}
+
+                        img {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
                 }
             }
         }
-        //.right_paginator {
-        //    @include flexCenter;
-        //    border: 1px solid black;
-        //}
     }
 }
