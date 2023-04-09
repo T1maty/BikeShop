@@ -49,7 +49,9 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
     }, [product])
 
     const onSubmit: SubmitHandler<UpdateProduct> = (data: UpdateProduct) => {
+        console.log(data)
         update(data).then((r) => {
+            console.log(r)
             setOpen(false, {} as Product)
             props.onSuccess ? props.onSuccess(data) : true
         }).catch((error => {

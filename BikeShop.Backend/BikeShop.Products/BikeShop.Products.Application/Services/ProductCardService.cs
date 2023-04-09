@@ -89,7 +89,7 @@ namespace BikeShop.Products.Application.Services
 
             var variants = await _context.OptionVariants.Where(n => n.OptionId == dto.id).ToDictionaryAsync(n => n.Id, n => n);
             var list = new List<OptionVariant>();
-            foreach (var variant in dto.variants)
+            foreach (var variant in dto.optionVariants)
             {
                 if (variants.ContainsKey(variant.id))
                 {

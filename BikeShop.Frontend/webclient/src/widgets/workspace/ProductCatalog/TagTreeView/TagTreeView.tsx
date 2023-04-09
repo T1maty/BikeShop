@@ -5,11 +5,14 @@ import {TagTreeViewContextMenu} from "./TagTreeViewContextMenu"
 import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
 import {UniTreeView} from "../../../../shared/ui"
-import useProductTagCloudStore from "../ProductTagCloud/ProductTagCloudStore"
 import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore"
+import Enumerable from "linq";
+import {useSnackbar} from "notistack";
 
 interface TagTreeViewProps {
     onNodeDoubleClick?: (node: any) => void
+    tags?: ProductTag[],
+    setTags?: (value: ProductTag[]) => void
 }
 
 export const TagTreeView = (props: TagTreeViewProps) => {
@@ -21,19 +24,18 @@ export const TagTreeView = (props: TagTreeViewProps) => {
     const addTag = useTagTreeView(s => s.addNewTag)
     const updateTag = useTagTreeView(s => s.updateTag)
     const treeViewData = useTagTreeView(s => s.treeViewTags)
-    const tagsCloud = useProductTagCloudStore(s => s.tags)
     const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
     const setContextMenuVisible = useTagTreeView(s => s.setContextMenuVisible)
 
     const [selectedN, setSelectedN] = useState()
 
+    const {enqueueSnackbar} = useSnackbar()
+
     const setProductsToTableHandler = (node: ProductTag) => {
         setSelect(node.id)
-        let tags = tagsCloud.map((n) => {
-            return n.id
-        })
-        tags.push(node.id)
-        setProductsToTable(tags)
+        let tagsIds = Enumerable.from(props.tags ? props.tags : []).select(n => n.id).toArray()
+        tagsIds.push(node.id)
+        setProductsToTable(tagsIds)
     }
 
     useEffect(() => {
@@ -64,9 +66,17 @@ export const TagTreeView = (props: TagTreeViewProps) => {
                          }}
                          onNodeDoubleClick={(node) => {
                              props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
-                             // addTagToCloud(treeData.filter((n) => {
-                             //     if (n.id == props.nodeId) return n
-                             // })[0])
+                             if (Enumerable.from(props.tags ? props.tags : []).select(n => n.id).contains(node.id)) {
+                                 enqueueSnackbar('Этот тег уже в облаке',
+                                     {
+                                         variant: 'info', autoHideDuration: 2000,
+                                         anchorOrigin: {vertical: 'top', horizontal: 'right'}
+                                     })
+                             } else {
+                                 if (props.setTags != undefined && props.tags != undefined) {
+                                     props.setTags([...props.tags, node])
+                                 }
+                             }
                          }}
             />
         </div>

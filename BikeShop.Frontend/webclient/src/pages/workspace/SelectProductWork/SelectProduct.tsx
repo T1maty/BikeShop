@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI, UniTable} from '../../../shared/ui'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
 import useSelectProduct from "./SelectProductStore";
 import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem";
 import {columns} from "./SlaveTableConfig";
+import {ProductTag} from "../../../entities";
 
 interface SelectProductProps {
     products: ServiceItemProduct[]
@@ -13,6 +14,7 @@ interface SelectProductProps {
 
 export const SelectProduct = (props: SelectProductProps) => {
 
+    const [tags, setTags] = useState<ProductTag[]>([])
 
     const conv = useSelectProduct(s => s.convert);
 
@@ -20,10 +22,10 @@ export const SelectProduct = (props: SelectProductProps) => {
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
                 <div className={s.leftSide_header}>
-                    <ProductTagCloud/>
+                    <ProductTagCloud tags={tags} setTags={setTags}/>
                 </div>
                 <div className={s.leftSide_treeView}>
-                    <TagTreeView/>
+                    <TagTreeView tags={tags} setTags={setTags}/>
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>

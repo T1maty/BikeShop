@@ -1,24 +1,36 @@
 import React from 'react'
-import {ProductTagCloudItem} from "./ProductTagCloudItem"
-import useProductTagCloudStore from "./ProductTagCloudStore"
 import {Button} from "../../../../shared/ui"
+import s from "./ProductTagItem.module.scss";
+import {ProductTag} from "../../../../entities";
 
-export const ProductTagCloud = () => {
+interface props {
+    tags: ProductTag[],
+    setTags: (value: ProductTag[]) => void
+}
 
-    const tags = useProductTagCloudStore(s => s.tags)
-    const clearTags = useProductTagCloudStore(s => s.clearTags)
+export const ProductTagCloud = (props: props) => {
+
 
     return (
         <div>
             <span>Облако тегов</span>
 
-            <Button onClick={() => {clearTags()}}>
+            <Button onClick={() => {
+                props.setTags([])
+            }}>
                 Очистить
             </Button>
 
             {
-                tags.map((n) => {
-                    return (<ProductTagCloudItem key={n.id} tag={n}/>)
+                props.tags.map((n) => {
+                    return (
+                        <div className={s.item}
+                             onDoubleClick={() => {
+                                 props.setTags(props.tags.filter(n1 => n1.id != n.id))
+                             }}
+                        >
+                            {n.name}
+                        </div>)
                 })
             }
         </div>
