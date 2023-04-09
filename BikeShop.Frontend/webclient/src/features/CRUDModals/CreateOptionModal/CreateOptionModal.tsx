@@ -2,8 +2,10 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from '../CreateOptionModal/CreateOptionModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, EditableSpan, LoaderScreen} from '../../../shared/ui'
+import {
+    Button, ControlledCustomCheckbox, ControlledCustomInput,
+    CustomModal, EditableSpan, LoaderScreen
+} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
@@ -40,19 +42,9 @@ export const CreateOptionModal = () => {
         }
     }
 
-    const variants = ['белый', 'синий', 'красный', 'зелёный', 'жёлтый', 'чёрный',
-        'белый', 'синий', 'красный', 'зелёный', 'жёлтый', 'чёрный'
-    ]
-
-    // const result = [
-    //     {name: 'цвет', variants: [{id: 1, title: 'белый'}, {id: 2, title: 'красный'}, {id: 3, title: 'синий'},
-    //             {id: 4, title: 'синий'}, {id: 5, title: 'синий'}, {id: 6, title: 'синий'},
-    //             {id: 7, title: 'синий'}, {id: 8, title: 'синий'}, {id: 9, title: 'синий'}]},
-    //     {name: 'размер', variants: [{id: 1, title: 'S'}, {id: 2, title: 'M'}, {id: 3, title: 'L'}]},
-    //     {name: 'диаметр', variants: [{id: 1, title: '24'}, {id: 2, title: '26'}, {id: 3, title: '29'}]},
-    //     {name: 'диаметр', variants: [{id: 1, title: '24'}, {id: 2, title: '26'}, {id: 3, title: '29'},
-    //             {id: 4, title: '29'}, {id: 5, title: '29'}, {id: 6, title: '29'}]},
-    // ]
+    // const variants = ['белый', 'синий', 'красный', 'зелёный', 'жёлтый', 'чёрный',
+    //     'белый', 'синий', 'красный', 'зелёный', 'жёлтый', 'чёрный']
+    const variants: any = []
 
     useEffect(() => {
         formControl.reset()
@@ -82,60 +74,84 @@ export const CreateOptionModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.optionModal_mainBlock}>
-                    <div className={s.optionModal_createOption}>
-                        <fieldset className={s.createOption_box}>
-                            <legend>Создать опцию</legend>
-                            <div className={s.optionName_row}>
-                                <Button // buttonDivWrapper={s.options_button}
+                    <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                        <div className={s.optionModal_createOption}>
+                            <fieldset className={s.createOption_box}>
+                                <legend>Создать опцию</legend>
+                                <div className={s.optionName_row}>
+                                    {/*<Button // buttonDivWrapper={s.options_button}*/}
+                                    {/*        // onClick={() => {editSpecificationHandler(field)}}*/}
+                                    {/*        // disabled={selectedSpecification === undefined}*/}
+                                    {/*>*/}
+                                    {/*    +*/}
+                                    {/*</Button>*/}
+                                    <ControlledCustomInput name={'optionName'}
+                                                           placeholder={'Название новой опции'}
+                                                           divClassName={s.optionName_rowInput}
+                                                           control={formControl}
+                                        // rules={{required: Errors[0].name}}
+                                    />
+                                </div>
+                                <div className={s.optionVariantName_row}>
+                                    <Button // buttonDivWrapper={s.options_button}
                                         // onClick={() => {editSpecificationHandler(field)}}
                                         // disabled={selectedSpecification === undefined}
-                                >
-                                    +
-                                </Button>
-                                <ControlledCustomInput name={'optionName'}
-                                                       placeholder={'Название новой опции'}
-                                                       divClassName={s.optionName_rowInput}
-                                                       control={formControl}
-                                                       // rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div className={s.optionVariantName_row}>
-                                <Button // buttonDivWrapper={s.options_button}
+                                    >
+                                        +
+                                    </Button>
+                                    <ControlledCustomInput name={'optionVariantName'}
+                                                           placeholder={'Название варианта опции'}
+                                                           divClassName={s.optionVariantName_rowInput}
+                                                           control={formControl}
+                                        // rules={{required: Errors[0].name}}
+                                    />
+                                </div>
+                                <div className={s.optionVariant_list}>
+                                    {
+                                        variants.length === 0 ?
+                                            <div className={s.optionVariant_emptyList}>
+                                                Список опций пуст
+                                            </div> :
+
+                                            variants.map((v: any) => {
+                                                return (
+                                                    <div className={s.optionVariant_item} key={v}>
+                                                        <div className={s.item_text}>
+                                                            {v}
+                                                        </div>
+                                                        <div className={s.item_delete}>
+                                                            <img src={RemoveIcon} alt="remove-icon"
+                                                                // onClick={() => {deleteSpecificationHandler(field, spec)}}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                    }
+                                </div>
+                                <div className={s.createOption_buttonsBlock}>
+                                    <Button buttonDivWrapper={s.buttonsBlock_cancelButton}
+                                            disabled={currentOption === null}
+                                            onClick={() => {setCurrentOption(null)}}
+                                    >
+                                        Отмена
+                                    </Button>
+                                    <Button type={'submit'}
+                                            buttonDivWrapper={s.buttonsBlock_createButton}
                                         // onClick={() => {editSpecificationHandler(field)}}
                                         // disabled={selectedSpecification === undefined}
-                                >
-                                    +
-                                </Button>
-                                <ControlledCustomInput name={'optionVariantName'}
-                                                       placeholder={'Название варианта опции'}
-                                                       divClassName={s.optionVariantName_rowInput}
-                                                       control={formControl}
-                                                       // rules={{required: Errors[0].name}}
-                                />
-                            </div>
-                            <div className={s.optionVariant_list}>
-                                {
-                                    variants.map((v) => {
-                                        return (
-                                            <div className={s.optionVariant_item} key={v}>
-                                                <div className={s.item_text}>
-                                                    {v}
-                                                </div>
-                                                <div className={s.item_delete}>
-                                                    <img src={RemoveIcon} alt="remove-icon"
-                                                         // onClick={() => {deleteSpecificationHandler(field, spec)}}
-                                                    />
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </fieldset>
-                    </div>
+                                    >
+                                        {currentOption === null ? 'Создать опцию' : 'Обновить опцию'}
+                                    </Button>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </form>
 
 
                     <div className={s.optionModal_options}>
@@ -144,20 +160,27 @@ export const CreateOptionModal = () => {
                             {
                                 options.map((option) => {
                                     return (
-                                        <fieldset className={s.optionsList_item} key={option.id}>
-                                            <legend>{option.name}</legend>
-                                            <div className={s.optionsList_VariantsList}>
-                                                {
-                                                    option.optionVariants.map((ov) => {
-                                                        return (
-                                                            <div className={s.variant_item} key={ov.id}>
-                                                                {ov.name}
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                            </div>
-                                        </fieldset>
+                                        <div className={option.id === currentOption?.id ?
+                                                        s.optionFieldset_wrapper_active : s.optionFieldset_wrapper}
+                                             onClick={() => {setCurrentOption(option); console.log(currentOption)}}
+                                        >
+                                            <fieldset className={s.optionsList_item} key={option.id}
+
+                                            >
+                                                <legend>{option.name}</legend>
+                                                <div className={s.optionsList_VariantsList}>
+                                                    {
+                                                        option.optionVariants.map((ov) => {
+                                                            return (
+                                                                <div className={s.variant_item} key={ov.id}>
+                                                                    {ov.name}
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     )
                                 })
                             }

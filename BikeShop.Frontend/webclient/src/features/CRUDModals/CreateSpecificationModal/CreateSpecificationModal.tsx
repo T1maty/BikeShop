@@ -76,19 +76,18 @@ export const CreateSpecificationModal = () => {
                     <div className={s.specificationModal_specifications}>
                         <div className={s.specifications_specificationsList}>
 
-                            {specifications.map(spec => (
-                                <div key={spec.id}
-                                     className={spec.id === currentSpecification?.id ? s.shop_item_active : s.shop_item}
-                                     onClick={() => {
-                                         setCurrentSpecification(spec)
-                                         console.log('выбранная спецификация', spec)
-                                     }}
-                                >
-                                    <div><span>ID:</span> {spec.id}</div>
-                                    <div><span>Название:</span> {spec.name}</div>
-                                    <div><span>Активен:</span> {spec.enabled ? 'Да' : 'Нет'}</div>
-                                </div>
-                            ))}
+                            {
+                                specifications.map(spec => (
+                                    <div key={spec.id}
+                                        className={spec.id === currentSpecification?.id ? s.shop_item_active : s.shop_item}
+                                        onClick={() => {setCurrentSpecification(spec)}}
+                                    >
+                                        <div><span>ID:</span> {spec.id}</div>
+                                        <div><span>Название:</span> {spec.name}</div>
+                                        <div><span>Активен:</span> {spec.enabled ? 'Да' : 'Нет'}</div>
+                                    </div>
+                                ))
+                            }
 
                         </div>
                     </div>

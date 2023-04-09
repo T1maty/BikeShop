@@ -254,6 +254,64 @@
 
 ////////////////////////////////////////////////////////////////////
 
+// Registration
+@mixin registrationBlock($buttonWidth) {
+
+    // custom variants here
+
+    .loginForm_title {
+        margin: 30px 0 30px 0;
+        font-size: 30px;
+        font-weight: bold;
+        color: $themeColorMilk;
+    }
+    .loginForm_form {
+        margin-bottom: $defaultSmallMargin;
+
+        form {
+            > div {
+                margin-bottom: $defaultSmallMargin;
+            }
+        }
+    }
+    .loginForm_submitButton {
+        width: $buttonWidth;
+        display: flex;
+        justify-content: center;
+
+        button {
+            width: 100%;
+            height: 50px;
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////
+
+// LoaderScreen
+@mixin loaderScreenStyles($background) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background: $background;
+
+    .loader {
+        @include flexCenter;
+        height: 100%;
+
+        img {
+            width: 200px;
+            height: auto;
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////
+
 // CreateShopModal
 @mixin createShopStorageModal($itemsColumnHeight, $columnWidth2, $columnWidth3) {
     .shopStorageModal_shops {
@@ -551,58 +609,28 @@
 
 ////////////////////////////////////////////////////////////////////
 
-// Registration
-@mixin registrationBlock($buttonWidth) {
+// CreateOptionModal
+@mixin currentOption($titleColor) {
+    @include hoverCursorPointer;
 
-    // custom variants here
+    .optionsList_item {
+        margin-bottom: 10px;
+        border-radius: $smallBorderRadius;
+        max-height: 100px;
+        overflow: auto;
+        color: $titleColor;
 
-    .loginForm_title {
-        margin: 30px 0 30px 0;
-        font-size: 30px;
-        font-weight: bold;
-        color: $themeColorMilk;
-    }
-    .loginForm_form {
-        margin-bottom: $defaultSmallMargin;
+        .optionsList_VariantsList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
 
-        form {
-            > div {
-                margin-bottom: $defaultSmallMargin;
+            .variant_item {
+                background-color: $themeColorMilk;
+                border-radius: $smallBorderRadius;
+                padding: 5px 10px;
+                color: black;
             }
-        }
-    }
-    .loginForm_submitButton {
-        width: $buttonWidth;
-        display: flex;
-        justify-content: center;
-
-        button {
-            width: 100%;
-            height: 50px;
-        }
-    }
-}
-
-////////////////////////////////////////////////////////////////////
-
-// LoaderScreen
-@mixin loaderScreenStyles($background) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    background: $background;
-
-    .loader {
-        @include flexCenter;
-        height: 100%;
-
-        img {
-            width: 200px;
-            height: auto;
         }
     }
 }

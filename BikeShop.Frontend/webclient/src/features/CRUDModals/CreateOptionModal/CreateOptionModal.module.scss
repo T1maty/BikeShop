@@ -55,6 +55,12 @@
                 //height: 145px; // 3 строки
                 height: 100px; // 2 строки
                 overflow: auto;
+                margin-bottom: 10px;
+
+                .optionVariant_emptyList {
+                    @include flexCenter;
+                    width: 100%;
+                }
 
                 .optionVariant_item {
                     display: flex;
@@ -80,6 +86,26 @@
                     }
                 }
             }
+            .createOption_buttonsBlock {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+
+                button {
+                    min-width: 100%;
+                }
+
+                > div {
+                    width: 50%;
+                }
+
+                //.buttonsBlock_cancelButton {
+                //
+                //}
+                //.buttonsBlock_createButton {
+                //
+                //}
+            }
         }
     }
 
@@ -99,24 +125,11 @@
             overflow: auto;
             max-height: 350px;
 
-            .optionsList_item {
-                margin-bottom: 10px;
-                border-radius: $smallBorderRadius;
-                max-height: 100px;
-                overflow: auto;
-
-                .optionsList_VariantsList {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 10px;
-
-                    .variant_item {
-                        background-color: $themeColorMilk;
-                        border-radius: $smallBorderRadius;
-                        padding: 5px 10px;
-                        color: black;
-                    }
-                }
+            .optionFieldset_wrapper {
+                @include currentOption(white)
+            }
+            .optionFieldset_wrapper_active {
+                @include currentOption($headerColor)
             }
         }
     }

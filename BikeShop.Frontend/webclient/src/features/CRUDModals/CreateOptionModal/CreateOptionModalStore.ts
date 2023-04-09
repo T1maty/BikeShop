@@ -13,7 +13,7 @@ interface CreateOptionModalStore {
     errorStatus: ErrorStatusTypes
 
     currentOption: ProductOptionsWithVariants | null
-    setCurrentOption: (specification: ProductOptionsWithVariants | null) => void
+    setCurrentOption: (option: ProductOptionsWithVariants | null) => void
 
     options: ProductOptionsWithVariants[]
     getOptions: () => void
