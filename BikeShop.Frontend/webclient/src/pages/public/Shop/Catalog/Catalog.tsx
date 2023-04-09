@@ -70,9 +70,9 @@ export const Catalog = () => {
         setActiveFilter4(activeFilter4)
     }
 
-    const stopTimer = () => {
-        clearInterval(timerId)
-    }
+    // const stopTimer = () => {
+    //     clearInterval(timerId)
+    // }
 
     const addProductToCartHandler = (product: CatalogProductItemType) => {
         // stopTimer()
@@ -85,9 +85,9 @@ export const Catalog = () => {
                 {variant: 'success', autoHideDuration: 2000,
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}})
 
-            // const id: number = window.setInterval(() => {
+            // const id: number = window.setTimeout(() => {
             //     setIsDivDisabled(false)
-            // }, 3000)
+            // }, 2000)
             // setTimerId(id)
         } else {
             cartProducts.forEach((prod) => {
@@ -105,18 +105,22 @@ export const Catalog = () => {
                         {variant: 'success', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
 
-                    // const id: number = window.setInterval(() => {
+                    // const id: number = window.setTimeout(() => {
                     //     setIsDivDisabled(false)
-                    // }, 3000)
+                    // }, 2000)
                     // setTimerId(id)
                 }
             })
         }
     }
 
-    // useEffect(() => {
-    //
-    // },[])
+    useEffect(() => {
+        const id: number = window.setTimeout(() => {
+            setIsDivDisabled(false)
+        }, 2000)
+        // setTimerId(id)
+        return () => clearInterval(id)
+    },[isDivDisabled])
 
     useEffect(() => {
         if (errorStatus === 'error') {
