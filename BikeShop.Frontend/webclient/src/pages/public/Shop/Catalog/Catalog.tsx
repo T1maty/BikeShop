@@ -10,6 +10,7 @@ import {ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {CatalogProductItemType} from "../../../../entities";
+import Enumerable from "linq";
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -74,10 +75,7 @@ export const Catalog = () => {
     // }
 
     const addProductToCartHandler = (product: CatalogProductItemType) => {
-        var ids: number[] = []
-        cartProducts.forEach(n => ids.push(n.product.id))
-
-        if (ids.includes(product.product.id)) {
+        if (Enumerable.from(cartProducts).select(n => n.product.id).contains(product.product.id)) {
             enqueueSnackbar('Этот товар уже есть в корзине',
                 {
                     variant: 'info', autoHideDuration: 2000,
