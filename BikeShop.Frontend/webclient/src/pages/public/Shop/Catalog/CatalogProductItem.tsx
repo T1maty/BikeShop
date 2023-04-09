@@ -36,7 +36,6 @@ export const CatalogProductItem = () => {
     const amountOfProduct = 10 // есть ли на складе
 
     const [selectedProduct, setSelectedProduct] = useState<any>()
-    // const [products, setProducts] = useState(['Велосипед-1', 'Велосипед-2', 'Велосипед-3'])
 
     // const [myImages, setMyImages] = useState([
     //     {
@@ -66,7 +65,7 @@ export const CatalogProductItem = () => {
     // ])
 
     // преобразование галереи под нужный тип библиотеки
-    const myImages = currentProduct!.productImages.map(img => {
+    const myImages = currentProduct && currentProduct.productImages.map(img => {
         return {original: img.url, thumbnail: img.url}
     })
 
@@ -97,14 +96,20 @@ export const CatalogProductItem = () => {
     const addProductToCartHandler = () => {
         if (cartProducts.length === 0) {
             setProductToCart(currentProduct!)
+            enqueueSnackbar('Товар добавлен в корзину',
+                {variant: 'success', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}})
         } else {
             cartProducts.forEach((prod) => {
                 if (prod.product.id === currentProduct!.product.id) {
                     enqueueSnackbar('Этот товар уже есть в корзине',
-                        {variant: 'info', autoHideDuration: 3000,
+                        {variant: 'info', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
                 } else {
                     setProductToCart(currentProduct!)
+                    enqueueSnackbar('Товар добавлен в корзину',
+                        {variant: 'success', autoHideDuration: 2000,
+                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
                 }
             })
         }
@@ -130,7 +135,7 @@ export const CatalogProductItem = () => {
 
                 <div className={s.product}>
                     <div className={s.product_images}>
-                        <ImageGallery items={myImages.length > 0 ? myImages : noImages}
+                        <ImageGallery items={myImages && myImages.length > 0 ? myImages : noImages}
                                       showPlayButton={false}
                                       // showFullscreenButton={false}
                                       showIndex={true}

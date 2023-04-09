@@ -70,14 +70,20 @@ export const Catalog = () => {
     const addProductToCartHandler = (product: CatalogProductItemType) => {
         if (cartProducts.length === 0) {
             setProductToCart(product)
+            enqueueSnackbar('Товар добавлен в корзину',
+                {variant: 'success', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}})
         } else {
             cartProducts.forEach((prod) => {
                 if (prod.product.id === product.product.id) {
                     enqueueSnackbar('Этот товар уже есть в корзине',
-                        {variant: 'info', autoHideDuration: 3000,
+                        {variant: 'info', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
                 } else {
                     setProductToCart(product)
+                    enqueueSnackbar('Товар добавлен в корзину',
+                        {variant: 'success', autoHideDuration: 2000,
+                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
                 }
             })
         }

@@ -33,9 +33,9 @@ export const ShoppingCart = () => {
         )
     }
 
-    // useEffect(() => {
-    //     setShoppingCartSum(cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0))
-    // }, [cartProducts])
+    useEffect(() => {
+        setShoppingCartSum(cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0))
+    }, [cartProducts])
 
     return (
         <div className={s.cart_mainBox}>
@@ -62,7 +62,7 @@ export const ShoppingCart = () => {
                                             >
                                                 <div className={s.cartListItem_content}>
                                                     <div className={s.cartListItem_image}>
-                                                        <img src={cartProd.productImages[0].url} alt="product"/>
+                                                        <img src={cartProd.productImages[0]?.url} alt="product"/>
                                                     </div>
                                                     <div className={s.cartListItem_info}>
                                                         <div className={s.cartListItem_name}>
@@ -89,7 +89,7 @@ export const ShoppingCart = () => {
                                                                 +
                                                             </Button>
 
-                                                            <div>шт. =</div>
+                                                            <div className={s.cartListItem_quantityUnit}>шт. =</div>
                                                             <div>{cartProd.productTotalSum}</div>
                                                         </div>
                                                     </div>
