@@ -12,6 +12,7 @@ import useCatalog from './CatalogStore'
 import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
 import useShoppingCart from "../ShoppingCart/ShoppingCartStore"
 import {useSnackbar} from "notistack"
+import Enumerable from 'linq'
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -94,25 +95,40 @@ export const CatalogProductItem = () => {
     // }
 
     const addProductToCartHandler = () => {
-        if (cartProducts.length === 0) {
-            enqueueSnackbar('Товар добавлен в корзину',
-                {variant: 'success', autoHideDuration: 2000,
-                    anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-            setProductToCart(currentProduct!)
+        if (Enumerable.from(cartProducts).select(n => n.product.id).contains(currentProduct!.product.id)) {
+            enqueueSnackbar('Этот товар уже есть в корзине',
+                {
+                    variant: 'info', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}
+                })
         } else {
-            cartProducts.forEach((prod) => {
-                if (prod.product.id === currentProduct!.product.id) {
-                    enqueueSnackbar('Этот товар уже есть в корзине',
-                        {variant: 'info', autoHideDuration: 2000,
-                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-                } else {
-                    enqueueSnackbar('Товар добавлен в корзину',
-                        {variant: 'success', autoHideDuration: 2000,
-                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-                    setProductToCart(currentProduct!)
-                }
-            })
+            setProductToCart(currentProduct!)
+            enqueueSnackbar('Товар добавлен в корзину',
+                {
+                    variant: 'success', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}
+                })
         }
+
+        // if (cartProducts.length === 0) {
+        //     enqueueSnackbar('Товар добавлен в корзину',
+        //         {variant: 'success', autoHideDuration: 2000,
+        //             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+        //     setProductToCart(currentProduct!)
+        // } else {
+        //     cartProducts.forEach((prod) => {
+        //         if (prod.product.id === currentProduct!.product.id) {
+        //             enqueueSnackbar('Этот товар уже есть в корзине',
+        //                 {variant: 'info', autoHideDuration: 2000,
+        //                     anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+        //         } else {
+        //             enqueueSnackbar('Товар добавлен в корзину',
+        //                 {variant: 'success', autoHideDuration: 2000,
+        //                     anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+        //             setProductToCart(currentProduct!)
+        //         }
+        //     })
+        // }
     }
 
     if (isLoading) {

@@ -29,7 +29,7 @@ const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((
         state.shoppingCartSum = sum
     }),
 })))/*, {
-    name: "cartStore",
+    name: "shoppingCartStore",
     version: 1
 })*/);
 

@@ -8,6 +8,7 @@ import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
 import {CatalogProductItemTypeForCart} from "../../../../entities"
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from '../../../../app/routes/paths'
+import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg';
 
 export const ShoppingCart = () => {
 
@@ -60,7 +61,11 @@ export const ShoppingCart = () => {
                                             >
                                                 <div className={s.cartListItem_content}>
                                                     <div className={s.cartListItem_image}>
-                                                        <img src={cartProd.productImages[0]?.url} alt="product"/>
+                                                        <img src={cartProd.productImages.length > 0
+                                                            ? cartProd.productImages[0].url
+                                                            : NoProductImage}
+                                                             alt="product"
+                                                        />
                                                     </div>
                                                     <div className={s.cartListItem_info}>
                                                         <div className={s.cartListItem_name}>

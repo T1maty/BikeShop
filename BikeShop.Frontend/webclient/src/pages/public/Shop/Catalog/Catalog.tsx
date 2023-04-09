@@ -9,8 +9,8 @@ import useCatalog from './CatalogStore'
 import {ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
-import {CatalogProductItemType} from "../../../../entities";
-import Enumerable from "linq";
+import {CatalogProductItemType} from "../../../../entities"
+import Enumerable from "linq"
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -22,8 +22,6 @@ export const Catalog = () => {
 
     const isLoading = useCatalog(s => s.isLoading)
     const errorStatus = useCatalog(s => s.errorStatus)
-    // const isDivDisabled = useCatalog(s => s.isDivDisabled)
-    // const setIsDivDisabled = useCatalog(s => s.setIsDivDisabled)
 
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
@@ -34,7 +32,6 @@ export const Catalog = () => {
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
-    const [timerId, setTimerId] = useState<number>(0)
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
     const [activeFilter2, setActiveFilter2] = useState<boolean>(false)
@@ -70,10 +67,6 @@ export const Catalog = () => {
         setActiveFilter4(activeFilter4)
     }
 
-    // const stopTimer = () => {
-    //     clearInterval(timerId)
-    // }
-
     const addProductToCartHandler = (product: CatalogProductItemType) => {
         if (Enumerable.from(cartProducts).select(n => n.product.id).contains(product.product.id)) {
             enqueueSnackbar('Этот товар уже есть в корзине',
@@ -89,54 +82,7 @@ export const Catalog = () => {
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}
                 })
         }
-
-        /*// stopTimer()
-
-        if (cartProducts.length === 0) {
-            // setIsDivDisabled(true)
-            setProductToCart(product)
-
-            enqueueSnackbar('Товар добавлен в корзину',
-                {variant: 'success', autoHideDuration: 2000,
-                    anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-
-            // const id: number = window.setTimeout(() => {
-            //     setIsDivDisabled(false)
-            // }, 2000)
-            // setTimerId(id)
-        } else {
-            cartProducts.forEach((prod) => {
-                if (prod.product.id === product.product.id) {
-                    enqueueSnackbar('Этот товар уже есть в корзине',
-                        {variant: 'info', autoHideDuration: 2000,
-                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-                    return
-                } else {
-                    // stopTimer()
-
-                    // setIsDivDisabled(true)
-                    setProductToCart(product)
-
-                    enqueueSnackbar('Товар добавлен в корзину',
-                        {variant: 'success', autoHideDuration: 2000,
-                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-
-                    // const id: number = window.setTimeout(() => {
-                    //     setIsDivDisabled(false)
-                    // }, 2000)
-                    // setTimerId(id)
-                }
-            })
-        }*/
     }
-
-    // useEffect(() => {
-    //     const id: number = window.setTimeout(() => {
-    //         setIsDivDisabled(false)
-    //     }, 2000)
-    //     // setTimerId(id)
-    //     return () => clearInterval(id)
-    // },[isDivDisabled])
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -227,14 +173,14 @@ export const Catalog = () => {
                                     >
                                         <div className={s.item_image}>
                                             {
-                                                !prod.productImages ?
+                                                prod.productImages.length < 1 ?
                                                     <div className={s.item_noImage}>
                                                         <div className={s.item_noImage_title}>Sorry, no photo!</div>
                                                         <div className={s.item_noImage_icon}>
                                                             <img src={NoProductImage} alt="no-product-image"/>
                                                         </div>
                                                     </div>
-                                                    : <img src={prod.productImages[0]?.url} alt="product-image"/>
+                                                    : <img src={prod.productImages[0].url} alt="product-image"/>
                                             }
                                         </div>
                                         <div className={s.item_title}>{prod.product.name}</div>
