@@ -80,31 +80,12 @@ export const EditProductCardModal = () => {
         DATA.productTags = tagIds
         console.log('submitData', DATA)
         updateProductCard(DATA)
-
-        // if (isError) {
-        //     enqueueSnackbar('Ошибка сервера: карточка не обновлена!',
-        //         {variant: 'error', autoHideDuration: 3000,
-        //             anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
-        // } else {
-        //     enqueueSnackbar('Карточка обновлена',
-        //         {variant: 'success', autoHideDuration: 3000,
-        //             anchorOrigin: {vertical: 'bottom', horizontal: 'center'}})
-        // }
-
-        // обновление карточки
-        // updateProductCard(data).then((res: any) => {
-        //     enqueueSnackbar('Карточка обновлена', {variant: 'success', autoHideDuration: 3000})
-        // }).catch((error: any) => {
-        //     let message = error(error.response.data.errorDescription).toString()
-        //     // formControl.setError('name', {type: 'serverError', message: message})
-        //     enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //     console.error(error.response.data)
-        // })
     }
 
     useEffect(() => {
         getAllOptions()
         getAllSpecifications()
+
         formControl.setValue('productTags', currentProduct.productTags)
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
         formControl.setValue('productSpecifications', currentProduct.productSpecifications)
@@ -144,11 +125,8 @@ export const EditProductCardModal = () => {
             })
         })
 
-        // console.log("Глобальная установка дефолтных значений")
-
-        if (currentProduct.productCard != undefined) {
+        if (currentProduct.productCard !== undefined) {
             let contentBlock = htmlToDraft(currentProduct.productCard?.description)
-            // console.log('загружаем дефолтное значение', currentProduct.productCard.description)
             if (contentBlock) {
                 const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
                 const editorState = EditorState.createWithContent(contentState);

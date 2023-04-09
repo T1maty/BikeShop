@@ -33,7 +33,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                 name: n.name,
                 productId: 0,
                 sortOrder: 0,
-                description: 'Вводить сюда',
+                description: 'Введите текст',
                 specificationId: n.id,
                 createdAt: n.createdAt,
                 updatedAt: n.updatedAt,
@@ -45,10 +45,8 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
     }
 
     const onChangeSpecificationHandler = (newInputValue: string, field: any, spec: ProductSpecificationBind) => {
-        field.onChange(field.value.map((n: ProductSpecificationBind) => n.specificationId === spec.specificationId ? {
-            ...n,
-            description: newInputValue
-        } : n))
+        field.onChange(field.value.map((n: ProductSpecificationBind) => n.specificationId === spec.specificationId ?
+            {...n, description: newInputValue} : n))
     }
 
     const editSpecificationHandler = (field: any) => {
@@ -57,7 +55,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
     }
 
     const deleteSpecificationHandler = (field: any, spec: ProductSpecificationBind) => {
-        field.onChange(field.value.filter((n: ProductSpecificationBind) => n.specificationId != spec.specificationId))
+        field.onChange(field.value.filter((n: ProductSpecificationBind) => n.specificationId !== spec.specificationId))
     }
 
     return (

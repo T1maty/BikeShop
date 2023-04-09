@@ -9,6 +9,7 @@ import {
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
+import {ProductOptionVariant, ProductSpecificationBind} from "../../../entities";
 
 export const CreateOptionModal = () => {
 
@@ -28,9 +29,10 @@ export const CreateOptionModal = () => {
 
     const formControl = useForm<any>({
         defaultValues: {
+            id: 0, // ИД опции
             name: '', // название опции
-            variantName: '', // инпут с названием варианта опции
-            variantNames: [], // массив строк с названием вариантов опции
+            variantName: '', // инпут для ввода названия варианта опции
+            optionVariants: [], // массив строк с названием вариантов опции
         }
     })
 
@@ -43,13 +45,16 @@ export const CreateOptionModal = () => {
         }
     }
 
-    const variants: any = [] // тестовое
+    const deleteOptionHandler = (optVar: ProductOptionVariant) => {
+        currentOption?.optionVariants.filter((currOpt: ProductOptionVariant) => currOpt.id !== optVar.id)
+    }
 
     useEffect(() => {
         formControl.reset()
         // formControl.setValue('id', currentOption ? currentOption.id : 0)
         // formControl.setValue('name', currentOption ? currentOption.name : '')
-        // formControl.setValue('variantNames', currentOption ? currentOption.variantNames : [])
+        // formControl.setValue('variantName', currentOption ? currentOption.variantName : '')
+        // formControl.setValue('optionVariants', currentOption ? currentOption.optionVariants : [])
     }, [currentOption])
 
     useEffect(() => {
@@ -101,7 +106,7 @@ export const CreateOptionModal = () => {
                                                            placeholder={'Название варианта опции'}
                                                            divClassName={s.optionVariantName_rowInput}
                                                            control={formControl}
-                                                           // rules={{required: Errors[0].name}}
+                                                           rules={{required: Errors[0].name}}
                                     />
                                 </div>
                                 <div className={s.optionVariant_list}>
@@ -111,15 +116,15 @@ export const CreateOptionModal = () => {
                                                 Список опций пуст
                                             </div> :
 
-                                            currentOption.optionVariants.map(currOpt => {
+                                            currentOption.optionVariants.map(optVar => {
                                                 return (
-                                                    <div className={s.optionVariant_item} key={currOpt.id}>
+                                                    <div className={s.optionVariant_item} key={optVar.id}>
                                                         <div className={s.item_text}>
-                                                            {currOpt.name}
+                                                            {optVar.name}
                                                         </div>
                                                         <div className={s.item_delete}>
                                                             <img src={RemoveIcon} alt="remove-icon"
-                                                                // onClick={() => {deleteOptionHandler(field, spec)}}
+                                                                 onClick={() => {deleteOptionHandler(optVar)}}
                                                             />
                                                         </div>
                                                     </div>
