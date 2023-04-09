@@ -1,4 +1,4 @@
-import {ProductOptionVariantBind} from "./ProductOptionVariantBind";
+import {ProductOptionVariantBind} from "./ProductOptionVariantBind"
 
 export interface ProductOptionsUpdate {
     id: number

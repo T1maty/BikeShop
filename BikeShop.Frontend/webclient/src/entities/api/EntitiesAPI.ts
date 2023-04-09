@@ -8,7 +8,7 @@ import {CreateStorageResponse} from "../responses/StorageResponse"
 import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 import {UpdateSpecification} from '../requests/UpdateSpecification'
 import {ProductSpecification} from "../entities/ProductSpecification"
-import {Currency} from "entities"
+import {CreateOption, Currency, UpdateOption} from "entities"
 import {ProductOptionsWithVariants}
     from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
 
@@ -122,14 +122,14 @@ export const EntitiesAPI = {
                 $api.get<ProductOptionsWithVariants[]>('/productcard/getalloptions')
             )
         },
-        addNewOption(data: any): any {
+        addNewOption(data: CreateOption): Promise<AxiosResponse<ProductOptionsWithVariants[], any>> {
             return (
-                $api.post<{ name: string, variantNames: string[] }, any>('/productcard/createoption', data)
+                $api.post<CreateOption, any>('/productcard/createoption', data)
             )
         },
-        updateOption(updateData: any): any {
+        updateOption(updateData: UpdateOption): Promise<AxiosResponse<ProductOptionsWithVariants[], any>> {
             return (
-                $api.put<any>('/productcard/updateoption', updateData)
+                $api.put<UpdateOption, any>('/productcard/updateoption', updateData)
             )
         },
     },

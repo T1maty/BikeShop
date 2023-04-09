@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {EntitiesAPI} from '../../../entities'
+import {CreateOption, EntitiesAPI, UpdateOption} from '../../../entities'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {ProductOptionsWithVariants}
     from '../../ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants'
@@ -18,8 +18,8 @@ interface CreateOptionModalStore {
     options: ProductOptionsWithVariants[]
     getOptions: () => void
 
-    addNewOption: (name: string) => any
-    updateOption: (updateData: any) => any
+    addNewOption: (data: CreateOption) => any
+    updateOption: (updateData: UpdateOption) => any
 }
 
 const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtools(immer((set) => ({
