@@ -10,7 +10,7 @@ namespace BikeShop.Products.Domain.DTO.Requestes.Option
     {
         public int id { get; set; }
         public string name { get; set; }
-        public List<UpdateVariantDTO> variants { get; set; }
+        public List<UpdateVariantDTO> optionVariants { get; set; }
         public bool enabled { get; set; }
     }
 }

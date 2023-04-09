@@ -2,7 +2,7 @@ import React from 'react'
 import s from './CreateProductModal.module.scss'
 import useCreateProductModal from './CreateProductModalStore'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {EnumProductCheckStatus, CreateProduct, Product} from '../../../entities'
+import {CreateProduct, EnumProductCheckStatus, Product} from '../../../entities'
 import {useSnackbar} from 'notistack'
 import {useTranslation} from 'react-i18next'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
@@ -63,15 +63,21 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                setOpen(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.createProductModal_mainBox}>
-                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.createProductModal_inputs}>
                         <div>
                             {
-                                tags.map((n) => {return n.id + ' '})
+                                tags.map((n) => {
+                                    return n.id + ' '
+                                })
                             }
                         </div>
                         <ControlledCustomInput name={'name'}
@@ -115,14 +121,16 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
                     </div>
 
                     <div className={s.createProductModal_buttons}>
-                        <Button onClick={() => {setOpen(false)}}>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>
                             Создать товар
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )

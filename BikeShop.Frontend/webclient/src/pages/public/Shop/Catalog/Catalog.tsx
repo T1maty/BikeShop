@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './Catalog.module.scss'
 import SortThumbnails from '../../../../shared/assets/shop/icons/sort-thumbnails.png'
 import SortList from '../../../../shared/assets/shop/icons/sort-list.png'
 import cart from '../../../../shared/assets/shop/icons/cart.png'
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
-import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import useCatalog from './CatalogStore'
 import {ShopLoader} from '../../../../shared/ui'
@@ -75,26 +74,22 @@ export const Catalog = () => {
     // }
 
     const addProductToCartHandler = (product: CatalogProductItemType) => {
-        if (cartProducts.length !== 0) {
-            cartProducts.forEach((prod) => {
-                if (prod.product.id === product.product.id) {
-                    enqueueSnackbar('Этот товар уже есть в корзине',
-                        {
-                            variant: 'info', autoHideDuration: 2000,
-                            anchorOrigin: {vertical: 'top', horizontal: 'right'}
-                        })
-                } else {
-                    setProductToCart(product)
-                    enqueueSnackbar('Товар добавлен в корзину',
-                        {variant: 'success', autoHideDuration: 2000,
-                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-                }
-            })
+        var ids: number[] = []
+        cartProducts.forEach(n => ids.push(n.product.id))
+
+        if (ids.includes(product.product.id)) {
+            enqueueSnackbar('Этот товар уже есть в корзине',
+                {
+                    variant: 'info', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}
+                })
         } else {
             setProductToCart(product)
             enqueueSnackbar('Товар добавлен в корзину',
-                {variant: 'success', autoHideDuration: 2000,
-                    anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+                {
+                    variant: 'success', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}
+                })
         }
 
         /*// stopTimer()
@@ -250,7 +245,9 @@ export const Catalog = () => {
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
                                         {/*<div className={isDivDisabled ? s.item_cartDisabled : s.item_cart}*/}
                                         <div className={s.item_cart}
-                                             onClick={() => {addProductToCartHandler(prod)}}
+                                             onClick={() => {
+                                                 addProductToCartHandler(prod)
+                                             }}
                                         >
                                             <img src={cart} alt="cart-logo"/>
                                         </div>

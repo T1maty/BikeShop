@@ -3,7 +3,7 @@ import s from './CreateTagModal.module.scss'
 import useCreateTagModal from './CreateTagModalStore'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {CreateTag, ProductTag} from '../../../entities'
-import {ControlledCustomCheckbox, ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 
 interface CreateTagModalProps {
     onSuccess?: (tag: ProductTag) => void
@@ -43,11 +43,15 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                setOpen(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.createTagModal_mainBox}>
-                <div onSubmit={control.handleSubmit(onSubmit)}>
+                <form onSubmit={control.handleSubmit(onSubmit)}>
                 <span>
                     Добавить в:
                     {parentNode.id === undefined ? 'КОРЕНЬ ДЕРЕВА' : parentNode.name}
@@ -88,7 +92,7 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
                     >
                         Создать тег
                     </Button>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )

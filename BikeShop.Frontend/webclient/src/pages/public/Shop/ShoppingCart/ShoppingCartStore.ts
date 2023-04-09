@@ -1,5 +1,5 @@
 import {create} from "zustand"
-import {devtools, persist} from "zustand/middleware"
+import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CatalogProductItemType, CatalogProductItemTypeForCart} from '../../../../entities'
 
@@ -17,7 +17,9 @@ const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((
         state.cartProducts = products
     }),
     setProductToCart: (product) => set(state => {
-        state.cartProducts.push({...product,
+        console.log('addProductToCard', product)
+        state.cartProducts.push({
+            ...product,
             productQuantity: 1,
             productTotalSum: product.product.retailPrice
         })

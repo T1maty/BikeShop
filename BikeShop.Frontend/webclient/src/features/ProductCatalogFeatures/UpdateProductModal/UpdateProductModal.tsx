@@ -60,11 +60,15 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false, {} as Product)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                setOpen(false, {} as Product)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.updateProductModal_mainBox}>
-                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.updateProductModal_inputs}>
                         <div>
                             Артикул товара: {product.id}
@@ -90,14 +94,16 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
                         />
                     </div>
                     <div className={s.updateProductModal_buttons}>
-                        <Button onClick={() => {setOpen(false, {} as Product)}}>
+                        <Button onClick={() => {
+                            setOpen(false, {} as Product)
+                        }}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>
                             Обновить информацию
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )
