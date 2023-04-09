@@ -19,6 +19,8 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
 
+    const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
+
     const createProductSuccessHandler = (product: Product) => {
         let extProd: ProductExtended
         extProd = {} as ProductExtended
@@ -50,6 +52,14 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
                           }}
                           rowOnContext={(row, event) => {
                               setContextVisible(true, event.clientX, event.clientY)
+                              let prd: ProductExtended = {} as ProductExtended
+                              prd.product = (row as Product)
+                              setSelected([prd])
+                          }}
+                          rowOnClick={(row) => {
+                              let prd: ProductExtended = {} as ProductExtended
+                              prd.product = (row as Product)
+                              setSelected([prd])
                           }}
                 />
             </div>

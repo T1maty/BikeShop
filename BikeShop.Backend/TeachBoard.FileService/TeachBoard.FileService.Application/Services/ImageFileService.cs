@@ -44,7 +44,7 @@ public class ImageFileService : IImageFileService
         var uploadParams = new ImageUploadParams
         {
             File = new FileDescription(file.FileName, stream), // (nameOfTheFile, its content in stream);
-            Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face"),
+            //Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face"),
             PublicId = publicId
         };
 

@@ -18,7 +18,7 @@ interface productCatalogTableStore {
     setRowsPerPage: (value: number) => void
     isRowSelected: (id: number) => boolean
     selectedRows: ProductExtended[]
-    setSelectedRows: (ids: number[]) => void
+    setSelectedRows: (value: ProductExtended[]) => void
 
     getProducts: (tags: string[]) => void
     addNewProduct: (product: ProductExtended) => void
@@ -57,16 +57,16 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
         if (inf.length > 0) return true
         else return false
     },
+
     selectedRows: [],
-    setSelectedRows: (ids) => set({
-        selectedRows: get().rows.filter(n => {
-            if (ids.includes(n.product.id)) return n
-        })
-    }),
+    setSelectedRows: (value) => set({selectedRows: value}
+    ),
 
     getProducts: (tags) => {
         let value = ""
-        tags.forEach((n) => {value = value.concat(n + '-')})
+        tags.forEach((n) => {
+            value = value.concat(n + '-')
+        })
         value = value.slice(0, -1)
         set({isLoading: true})
 

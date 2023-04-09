@@ -15,7 +15,7 @@ interface TableProps {
 
     isLoading?: boolean
     className?: string
-    rowOnClick?: (row: object) => object
+    rowOnClick?: (row: object) => void
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     rowOnDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
 
@@ -37,6 +37,7 @@ export const UniTable = (props: TableProps) => {
 
     const [selected, setSelected] = useState([])
 
+
     return (
         <div>
             <table className={`${props.className} ${cls.table}`}>
@@ -52,8 +53,8 @@ export const UniTable = (props: TableProps) => {
                                              columns={props.columns}
                                              onRowDoubleClick={props.rowOnDoubleClick}
                                              rowOnContext={props.rowOnContext}
-                                             selected={props.selected ? props.selected : selected}
-                                             setSelected={props.setSelected ? props.setSelected : setSelected}
+                                             selected={props.selected != undefined ? props.selected : selected}
+                                             setSelected={props.setSelected != undefined ? props.setSelected : setSelected}
                             />
                         })
                         : <tr style={{height: 250, display: "flex", justifyContent: 'center'}}>
@@ -88,17 +89,17 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
 const TableRow = memo((props: TableRowProps) => {
 
     return (
-        <tr className={`${[props.selected].includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
+        <tr className={`${props.selected.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
             onDoubleClick={(event) => {
                 props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
             }}
 
             onContextMenu={(event) => {
-                props.setSelected(props.row)
+                props.setSelected([props.row])
                 props.rowOnContext ? props.rowOnContext(props.row, event) : true
             }}
             onClick={() => {
-                props.setSelected(props.row)
+                props.setSelected([props.row])
             }}
         >
             {
