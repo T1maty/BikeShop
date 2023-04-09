@@ -113,9 +113,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {
-                                        editSpecificationHandler(field)
-                                    }}
+                                    onClick={() => {editSpecificationHandler(field)}}
                                     disabled={selectedSpecification === undefined}
                             >
                                 +

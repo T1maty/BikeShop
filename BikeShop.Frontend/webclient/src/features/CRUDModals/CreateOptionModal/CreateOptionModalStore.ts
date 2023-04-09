@@ -77,6 +77,7 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
             set({isLoading: false})
             set({errorStatus: 'success'})
         }).catch((error: any) => {
+            console.log(error)
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})

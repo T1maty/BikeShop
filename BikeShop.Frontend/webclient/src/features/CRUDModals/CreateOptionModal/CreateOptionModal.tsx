@@ -9,7 +9,10 @@ import {
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
-import {ProductOptionVariant, ProductSpecificationBind} from "../../../entities";
+import {ProductOptionVariant} from "../../../entities"
+import {
+    ProductOptionsWithVariants
+} from '../../ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants';
 
 export const CreateOptionModal = () => {
 
@@ -41,20 +44,29 @@ export const CreateOptionModal = () => {
             addNewOption(data)
         }
         if (currentOption !== null) {
+            console.log('submit data', data)
+            data.enabled = true
             updateOption(data)
         }
     }
 
     const deleteOptionHandler = (optVar: ProductOptionVariant) => {
-        currentOption?.optionVariants.filter((currOpt: ProductOptionVariant) => currOpt.id !== optVar.id)
+        setCurrentOption({...currentOption!,
+            optionVariants: currentOption!.optionVariants.filter((ov: ProductOptionVariant) => ov.id !== optVar.id)})
+    }
+
+    const addOptionVariantHandler = () => {
+        formControl.setValue('optionVariants', 'variantName')
+        formControl.reset(formControl.resetField('variantName'))
+        console.log(formControl.control)
     }
 
     useEffect(() => {
         formControl.reset()
-        // formControl.setValue('id', currentOption ? currentOption.id : 0)
-        // formControl.setValue('name', currentOption ? currentOption.name : '')
+        formControl.setValue('id', currentOption ? currentOption.id : 0)
+        formControl.setValue('name', currentOption ? currentOption.name : '')
         // formControl.setValue('variantName', currentOption ? currentOption.variantName : '')
-        // formControl.setValue('optionVariants', currentOption ? currentOption.optionVariants : [])
+        formControl.setValue('optionVariants', currentOption ? currentOption.optionVariants : [])
     }, [currentOption])
 
     useEffect(() => {
@@ -78,9 +90,7 @@ export const CreateOptionModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
+                onClose={() => {setOpen(false)}}
             >
                 <div className={s.optionModal_mainBlock}>
                     <form onSubmit={formControl.handleSubmit(onSubmit)}>
@@ -97,7 +107,7 @@ export const CreateOptionModal = () => {
                                 </div>
                                 <div className={s.optionVariantName_row}>
                                     <Button // buttonDivWrapper={s.options_button}
-                                            // onClick={() => {editSpecificationHandler(field)}}
+                                            onClick={addOptionVariantHandler}
                                             // disabled={selectedSpecification === undefined}
                                     >
                                         +
@@ -106,7 +116,7 @@ export const CreateOptionModal = () => {
                                                            placeholder={'Название варианта опции'}
                                                            divClassName={s.optionVariantName_rowInput}
                                                            control={formControl}
-                                                           rules={{required: Errors[0].name}}
+                                                           // rules={{required: Errors[0].name}}
                                     />
                                 </div>
                                 <div className={s.optionVariant_list}>
@@ -160,7 +170,7 @@ export const CreateOptionModal = () => {
                                     return (
                                         <div className={option.id === currentOption?.id ?
                                                         s.optionFieldset_wrapper_active : s.optionFieldset_wrapper}
-                                             onClick={() => {setCurrentOption(option); console.log(currentOption)}}
+                                             onClick={() => {setCurrentOption(option)}}
                                         >
                                             <fieldset className={s.optionsList_item} key={option.id}
 
