@@ -88,7 +88,7 @@ export const ShoppingCart = () => {
                                                             </Button>
 
                                                             <div className={s.cartListItem_quantityUnit}>шт. =</div>
-                                                            <div>{cartProd.productTotalSum}</div>
+                                                            <div className={s.cartListItem_productTotalSum}>{cartProd.productTotalSum}</div>
                                                         </div>
                                                     </div>
                                                 </div>

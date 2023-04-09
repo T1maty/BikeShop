@@ -8,8 +8,8 @@ interface UseCatalogStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     errorStatus: ErrorStatusTypes
-    isDivDisabled: boolean
-    setIsDivDisabled: (value: boolean) => void
+    // isDivDisabled: boolean
+    // setIsDivDisabled: (value: boolean) => void
 
     tags: ProductTag[]
     getTags: () => void
@@ -25,8 +25,8 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
     isLoading: false,
     setIsLoading: (value: boolean) => set({isLoading: value}),
     errorStatus: 'default',
-    isDivDisabled: false,
-    setIsDivDisabled: (value) => set({isDivDisabled: value}),
+    // isDivDisabled: false,
+    // setIsDivDisabled: (value) => set({isDivDisabled: value}),
 
     tags: [],
     getTags: () => {

@@ -22,8 +22,8 @@ export const Catalog = () => {
 
     const isLoading = useCatalog(s => s.isLoading)
     const errorStatus = useCatalog(s => s.errorStatus)
-    const isDivDisabled = useCatalog(s => s.isDivDisabled)
-    const setIsDivDisabled = useCatalog(s => s.setIsDivDisabled)
+    // const isDivDisabled = useCatalog(s => s.isDivDisabled)
+    // const setIsDivDisabled = useCatalog(s => s.setIsDivDisabled)
 
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
@@ -75,10 +75,32 @@ export const Catalog = () => {
     // }
 
     const addProductToCartHandler = (product: CatalogProductItemType) => {
-        // stopTimer()
+        if (cartProducts.length !== 0) {
+            cartProducts.forEach((prod) => {
+                if (prod.product.id === product.product.id) {
+                    enqueueSnackbar('Этот товар уже есть в корзине',
+                        {
+                            variant: 'info', autoHideDuration: 2000,
+                            anchorOrigin: {vertical: 'top', horizontal: 'right'}
+                        })
+                } else {
+                    setProductToCart(product)
+                    enqueueSnackbar('Товар добавлен в корзину',
+                        {variant: 'success', autoHideDuration: 2000,
+                            anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+                }
+            })
+        } else {
+            setProductToCart(product)
+            enqueueSnackbar('Товар добавлен в корзину',
+                {variant: 'success', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+        }
+
+        /*// stopTimer()
 
         if (cartProducts.length === 0) {
-            setIsDivDisabled(true)
+            // setIsDivDisabled(true)
             setProductToCart(product)
 
             enqueueSnackbar('Товар добавлен в корзину',
@@ -95,10 +117,11 @@ export const Catalog = () => {
                     enqueueSnackbar('Этот товар уже есть в корзине',
                         {variant: 'info', autoHideDuration: 2000,
                             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
+                    return
                 } else {
                     // stopTimer()
 
-                    setIsDivDisabled(true)
+                    // setIsDivDisabled(true)
                     setProductToCart(product)
 
                     enqueueSnackbar('Товар добавлен в корзину',
@@ -111,16 +134,16 @@ export const Catalog = () => {
                     // setTimerId(id)
                 }
             })
-        }
+        }*/
     }
 
-    useEffect(() => {
-        const id: number = window.setTimeout(() => {
-            setIsDivDisabled(false)
-        }, 2000)
-        // setTimerId(id)
-        return () => clearInterval(id)
-    },[isDivDisabled])
+    // useEffect(() => {
+    //     const id: number = window.setTimeout(() => {
+    //         setIsDivDisabled(false)
+    //     }, 2000)
+    //     // setTimerId(id)
+    //     return () => clearInterval(id)
+    // },[isDivDisabled])
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -225,7 +248,8 @@ export const Catalog = () => {
                                     </div>
                                     <div className={s.item_buy}>
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
-                                        <div className={isDivDisabled ? s.item_cartDisabled : s.item_cart}
+                                        {/*<div className={isDivDisabled ? s.item_cartDisabled : s.item_cart}*/}
+                                        <div className={s.item_cart}
                                              onClick={() => {addProductToCartHandler(prod)}}
                                         >
                                             <img src={cart} alt="cart-logo"/>
