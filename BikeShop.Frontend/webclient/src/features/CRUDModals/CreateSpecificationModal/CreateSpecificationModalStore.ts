@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {EntitiesAPI, ProductCardAPI, Specification} from '../../../entities'
+import {EntitiesAPI, Specification} from '../../../entities'
 import {UpdateSpecification} from '../../../entities/requests/UpdateSpecification'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
@@ -35,7 +35,7 @@ const useCreateSpecificationModal = create<CreateSpecificationModalStore>()(/*pe
     specifications: [],
     getSpecifications: () => {
         set({isLoading: true})
-        ProductCardAPI.getSpecifications().then(res => {
+        EntitiesAPI.Specification.getSpecifications().then(res => {
             set(state => {
                 state.specifications = res.data
                 console.log('все спецификации', state.specifications)
@@ -67,7 +67,7 @@ const useCreateSpecificationModal = create<CreateSpecificationModalStore>()(/*pe
     updateSpecification: (updateData) => {
         set({isLoading: true})
         EntitiesAPI.Specification.updateSpecification(updateData).then((res: any) => {
-            ProductCardAPI.getSpecifications().then(res => {
+            EntitiesAPI.Specification.getSpecifications().then(res => {
                 set(state => {
                     state.specifications = res.data
                     state.currentSpecification = null

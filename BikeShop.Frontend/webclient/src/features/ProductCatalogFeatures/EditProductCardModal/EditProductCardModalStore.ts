@@ -1,9 +1,9 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
-import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest";
-import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
+import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
+import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest"
+import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -68,7 +68,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     allOptions: [],
     getAllOptions: () => {
         set({isLoading: true})
-        ProductCardAPI.getOptions().then(res => {
+        EntitiesAPI.Option.getOptions().then(res => {
             set(state => {
                 state.allOptions = res.data
                 console.log('все доступные опции', state.allOptions)
@@ -82,7 +82,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     allSpecifications: [],
     getAllSpecifications: () => {
         set({isLoading: true})
-        ProductCardAPI.getSpecifications().then(res => {
+        EntitiesAPI.Specification.getSpecifications().then(res => {
             set(state => {
                 state.allSpecifications = res.data
                 console.log('все доступные спецификации', state.allSpecifications)

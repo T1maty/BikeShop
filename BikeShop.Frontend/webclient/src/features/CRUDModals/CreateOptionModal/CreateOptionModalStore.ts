@@ -1,11 +1,10 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {EntitiesAPI, ProductCardAPI} from '../../../entities'
+import {EntitiesAPI} from '../../../entities'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {
-    ProductOptionsWithVariants
-} from '../../ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants'
+import {ProductOptionsWithVariants}
+    from '../../ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants'
 
 interface CreateOptionModalStore {
     openCreateOptionModal: boolean
@@ -37,7 +36,7 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
     options: [],
     getOptions: () => {
         set({isLoading: true})
-        ProductCardAPI.getOptions().then(res => {
+        EntitiesAPI.Option.getOptions().then(res => {
             set(state => {
                 state.options = res.data
                 console.log('все опции', state.options)
@@ -69,9 +68,8 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
     updateOption: (updateData) => {
         set({isLoading: true})
         EntitiesAPI.Option.updateOption(updateData).then((res: any) => {
-            ProductCardAPI.getSpecifications().then(res => {
+            EntitiesAPI.Option.getOptions().then(res => {
                 set(state => {
-                    // @ts-ignore
                     state.options = res.data
                     state.currentOption = null
                 })

@@ -1,5 +1,5 @@
-import {AxiosResponse} from "axios"
 import {$api} from "shared"
+import {AxiosResponse} from "axios"
 import {CreateShopResponse} from "../responses/ShopResponse"
 import {CreateShop, UpdateShop} from "../requests/CreateShop"
 import {GetQuantityUnitResponse} from "../responses/QuantityUnitResponse"
@@ -9,6 +9,8 @@ import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 import {UpdateSpecification} from '../requests/UpdateSpecification'
 import {ProductSpecification} from "../entities/ProductSpecification"
 import {Currency} from "entities"
+import {ProductOptionsWithVariants}
+    from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
 
 export const EntitiesAPI = {
     Archive: {
@@ -97,6 +99,11 @@ export const EntitiesAPI = {
     },
 
     Specification: {
+        getSpecifications(): Promise<AxiosResponse<ProductSpecification[]>> {
+            return (
+                $api.get<ProductSpecification[]>('/productcard/getallspecifications')
+            )
+        },
         addNewSpecification(name: string): Promise<AxiosResponse<ProductSpecification, any>> {
             return (
                 $api.post<{ name: string }, any>(`/productcard/createspecification?name=${name}`)
@@ -110,6 +117,11 @@ export const EntitiesAPI = {
     },
 
     Option: {
+        getOptions(): Promise<AxiosResponse<ProductOptionsWithVariants[]>> {
+            return (
+                $api.get<ProductOptionsWithVariants[]>('/productcard/getalloptions')
+            )
+        },
         addNewOption(data: any): any {
             return (
                 $api.post<{ name: string, variantNames: string[] }, any>('/productcard/createoption', data)

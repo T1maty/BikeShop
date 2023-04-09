@@ -7,7 +7,7 @@ import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
 import {CatalogProductItemTypeForCart} from "../../../../entities"
 import {useNavigate} from 'react-router-dom'
-import {BikeShopPaths} from '../../../../app/routes/paths';
+import {BikeShopPaths} from '../../../../app/routes/paths'
 
 export const ShoppingCart = () => {
 

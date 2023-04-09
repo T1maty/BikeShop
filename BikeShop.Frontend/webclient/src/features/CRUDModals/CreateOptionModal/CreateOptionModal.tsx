@@ -2,13 +2,11 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from '../CreateOptionModal/CreateOptionModal.module.scss'
-import {
-    Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, EditableSpan, LoaderScreen
-} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput,
+    CustomModal, EditableSpan, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
-import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg';
+import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 
 export const CreateOptionModal = () => {
 
@@ -46,20 +44,21 @@ export const CreateOptionModal = () => {
         'белый', 'синий', 'красный', 'зелёный', 'жёлтый', 'чёрный'
     ]
 
-    const result = [
-        {name: 'цвет', variants: [{id: 1, title: 'белый'}, {id: 2, title: 'красный'}, {id: 3, title: 'синий'},
-                {id: 4, title: 'синий'}, {id: 5, title: 'синий'}, {id: 6, title: 'синий'},
-                {id: 7, title: 'синий'}, {id: 8, title: 'синий'}, {id: 9, title: 'синий'}]},
-        {name: 'размер', variants: [{id: 1, title: 'S'}, {id: 2, title: 'M'}, {id: 3, title: 'L'}]},
-        {name: 'диаметр', variants: [{id: 1, title: '24'}, {id: 2, title: '26'}, {id: 3, title: '29'}]},
-        {name: 'диаметр', variants: [{id: 1, title: '24'}, {id: 2, title: '26'}, {id: 3, title: '29'},
-                {id: 4, title: '29'}, {id: 5, title: '29'}, {id: 6, title: '29'}]},
-    ]
+    // const result = [
+    //     {name: 'цвет', variants: [{id: 1, title: 'белый'}, {id: 2, title: 'красный'}, {id: 3, title: 'синий'},
+    //             {id: 4, title: 'синий'}, {id: 5, title: 'синий'}, {id: 6, title: 'синий'},
+    //             {id: 7, title: 'синий'}, {id: 8, title: 'синий'}, {id: 9, title: 'синий'}]},
+    //     {name: 'размер', variants: [{id: 1, title: 'S'}, {id: 2, title: 'M'}, {id: 3, title: 'L'}]},
+    //     {name: 'диаметр', variants: [{id: 1, title: '24'}, {id: 2, title: '26'}, {id: 3, title: '29'}]},
+    //     {name: 'диаметр', variants: [{id: 1, title: '24'}, {id: 2, title: '26'}, {id: 3, title: '29'},
+    //             {id: 4, title: '29'}, {id: 5, title: '29'}, {id: 6, title: '29'}]},
+    // ]
 
     useEffect(() => {
         formControl.reset()
         // formControl.setValue('id', currentOption ? currentOption.id : 0)
         // formControl.setValue('name', currentOption ? currentOption.name : '')
+        // formControl.setValue('variantNames', currentOption ? currentOption.variantNames : [])
     }, [currentOption])
 
     useEffect(() => {
@@ -140,18 +139,19 @@ export const CreateOptionModal = () => {
 
 
                     <div className={s.optionModal_options}>
+                        <div className={s.options_title}>Список доступных опций</div>
                         <div className={s.optionModal_optionsList}>
                             {
-                                result.map((res) => {
+                                options.map((option) => {
                                     return (
-                                        <fieldset className={s.optionsList_item}>
-                                            <legend>{res.name}</legend>
+                                        <fieldset className={s.optionsList_item} key={option.id}>
+                                            <legend>{option.name}</legend>
                                             <div className={s.optionsList_VariantsList}>
                                                 {
-                                                    res.variants.map((v) => {
+                                                    option.optionVariants.map((ov) => {
                                                         return (
-                                                            <div className={s.variant_item} key={v.id}>
-                                                                {v.title}
+                                                            <div className={s.variant_item} key={ov.id}>
+                                                                {ov.name}
                                                             </div>
                                                         )
                                                     })
