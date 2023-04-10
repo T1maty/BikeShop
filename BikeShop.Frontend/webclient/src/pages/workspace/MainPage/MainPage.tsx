@@ -11,6 +11,8 @@ import useMainPageStore from "./MainPageStore"
 import useCreateSpecificationModal
     from '../../../features/CRUDModals/CreateSpecificationModal/CreateSpecificationModalStore'
 import useCreateOptionModal from '../../../features/CRUDModals/CreateOptionModal/CreateOptionModalStore'
+import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore'
+import {SupplyInvoiceArchiveModal} from '../../../features/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 
 export const MainPage = () => {
 
@@ -19,6 +21,7 @@ export const MainPage = () => {
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
     const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
+    const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModalStore)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -56,6 +59,7 @@ export const MainPage = () => {
             <EditProductCardModal/>
             <CreateSpecificationModal/>
             <CreateOptionModal/>
+            <SupplyInvoiceArchiveModal/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
@@ -83,7 +87,7 @@ export const MainPage = () => {
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)}}>
                             Каталог услуг
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
                             Заказы
                         </Button>
                         <Button onClick={() => {}}>

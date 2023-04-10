@@ -1,0 +1,83 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.supplyInvoiceArchiveModal_mainBlock {
+    @include defaultModalStyle;
+    width: 550px;
+
+    .supplyInvoiceArchiveModal_title {
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .supplyInvoiceArchiveModal_list {
+        @include divLargeMarginBottom;
+        max-height: 550px;
+        overflow: auto;
+        padding-right: 10px;
+
+        .supplyInvoiceArchiveModal_item {
+            @include flexOnlyBetween;
+            background-color: $themeColorGray;
+            border: 1px solid $themeColorMilk;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
+            @include hoverCursorPointer;
+
+            .status_WaitingPayment {
+                @include supplyInvoiceStatus($bgColorProfileStatusWaitingPayment);
+            }
+            .status_Ready {
+                @include supplyInvoiceStatus($bgColorProfileStatusReady);
+            }
+            .status_Canceled {
+                @include supplyInvoiceStatus($bgColorProfileStatusCanceled);
+            }
+
+            .item_content {
+                width: 90%;
+                //color: black;
+
+                .item_contentTop {
+                    @include flexBetween;
+                    font-weight: bold;
+                    font-size: 20px;
+                    margin-bottom: $defaultSmallMargin;
+
+                    > div:not(:last-child) {
+                        border-right: 2px solid $themeColorMilk;
+                        padding-right: 10px;
+                    }
+
+                    .item_contentTop_number {
+
+                    }
+                    .item_contentTop_qty {
+
+                    }
+                    .item_contentTop_totalNum {
+
+                    }
+                    .item_contentTop_sum {
+
+                    }
+                }
+                .item_contentBottom {
+                    @include flexBetween;
+
+                    .item_contentBottom_info {
+                        line-height: $minLineHeight;
+                    }
+                    .item_contentBottom_date {
+                        @include divSmallMarginBottom;
+                        line-height: $minLineHeight;
+                        border-left: 2px solid $themeColorMilk;
+                        padding-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

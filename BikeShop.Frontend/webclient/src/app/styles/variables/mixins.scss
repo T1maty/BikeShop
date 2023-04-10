@@ -652,3 +652,29 @@
         }
     }
 }
+
+////////////////////////////////////////////////////////////////////
+
+// ShopProfile Order
+@mixin orderStatus($bgColor) {
+    @include flexCenter;
+    background-color: $bgColor;
+    border-radius: $extraSmallBorderRadius;
+    margin-right: $defaultSmallMargin;
+    width: 20px;
+    height: 50px;
+}
+
+// SupplyInvoiceArchiveModal
+@mixin supplyInvoiceStatus($bgColor) {
+    @include flexCenter;
+    background-color: $bgColor;
+    border-radius: $extraSmallBorderRadius;
+    margin-right: $defaultSmallMargin;
+    width: 20px;
+    padding: $defaultSmallMargin;
+    //min-height: 100%;
+    color: black;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
