@@ -36,7 +36,7 @@ export const CatalogProductItem = () => {
     const [isDetails, setIsDetails] = useState<boolean>(false)
     const [isDelivery, setIsDelivery] = useState<boolean>(false)
 
-    const [selectedProduct, setSelectedProduct] = useState<any>()
+    const [selectedProductOption, setSelectedProductOption] = useState<ProductOptionVariantBind>()
 
     // тестовые изображения
     // const [myImages, setMyImages] = useState([
@@ -201,31 +201,10 @@ export const CatalogProductItem = () => {
                                         })
                                     }
 
-                                    {/*{*/}
-                                    {/*    currentProduct.productOptions.map(option => {*/}
-                                    {/*        return (*/}
-                                    {/*            <Select*/}
-                                    {/*                key={option.id}*/}
-                                    {/*                className={s.product_select_box}*/}
-                                    {/*                // options={option}*/}
-                                    {/*                placeholder={option.name}*/}
-                                    {/*                isSearchable={false}*/}
-                                    {/*                value={selectedProduct ? selectedProduct : null}*/}
-                                    {/*                onChange={(value) => {*/}
-                                    {/*                    setSelectedProduct(value)*/}
-                                    {/*                }}*/}
-                                    {/*                getOptionLabel={label => label!.name}*/}
-                                    {/*                getOptionValue={value => value!.name}*/}
-                                    {/*                // noOptionsMessage={() => 'Товар не найден'}*/}
-                                    {/*            />*/}
-                                    {/*        )*/}
-                                    {/*    })*/}
-                                    {/*}*/}
-
                                     {/*<ControlledReactSelect control={formControl}*/}
-                                    {/*                       name={'productSelect'}*/}
-                                    {/*                       className={s.product_select_box}*/}
-                                    {/*                       placeholder={'Товар'}*/}
+                                    {/*                       name={'selectedProductOptions'}*/}
+                                    {/*                       className={s.product_selectBox}*/}
+                                    {/*                       placeholder={'Характеристика'}*/}
                                     {/*                       isSearchable={false}*/}
                                     {/*                       // disabled={currentService === null && !isCreating}*/}
                                     {/*                       value={formControl.getFieldState('productSelect')}*/}
@@ -236,7 +215,7 @@ export const CatalogProductItem = () => {
                                     {/*                               label: el.label,*/}
                                     {/*                           }*/}
                                     {/*                       })}*/}
-                                    {/*                       noOptionsMessage={() => 'Товар не найден'}*/}
+                                    {/*                       noOptionsMessage={() => 'Характеристика не найдена'}*/}
                                     {/*/>*/}
                                 </div>
 
