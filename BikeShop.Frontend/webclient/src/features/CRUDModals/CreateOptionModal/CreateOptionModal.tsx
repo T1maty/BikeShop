@@ -2,17 +2,11 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from '../CreateOptionModal/CreateOptionModal.module.scss'
-import {
-    Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, EditableSpan, LoaderScreen
-} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal, EditableSpan, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 import {ProductOptionVariant} from "../../../entities"
-import {
-    ProductOptionsWithVariants
-} from '../../ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants';
 
 export const CreateOptionModal = () => {
 

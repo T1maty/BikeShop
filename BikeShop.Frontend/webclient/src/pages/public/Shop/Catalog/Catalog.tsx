@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import s from './Catalog.module.scss'
 import SortThumbnails from '../../../../shared/assets/shop/icons/sort-thumbnails.png'
 import SortList from '../../../../shared/assets/shop/icons/sort-list.png'
-import cart from '../../../../shared/assets/shop/icons/cart.png'
+import Cart from '../../../../shared/assets/shop/icons/cart.png'
+import CartFull from '../../../../shared/assets/shop/icons/cart-full.svg'
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import {useNavigate} from 'react-router-dom'
 import useCatalog from './CatalogStore'
@@ -187,13 +188,12 @@ export const Catalog = () => {
                                     </div>
                                     <div className={s.item_buy}>
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
-                                        {/*<div className={isDivDisabled ? s.item_cartDisabled : s.item_cart}*/}
                                         <div className={s.item_cart}
-                                             onClick={() => {
-                                                 addProductToCartHandler(prod)
-                                             }}
+                                             onClick={() => {addProductToCartHandler(prod)}}
                                         >
-                                            <img src={cart} alt="cart-logo"/>
+                                            <img src={Enumerable.from(cartProducts).select(n => n.product.id).contains(prod.product.id)
+                                                ? CartFull : Cart} alt="cart-logo"
+                                            />
                                         </div>
                                     </div>
                                 </div>
