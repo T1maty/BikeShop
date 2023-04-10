@@ -188,7 +188,7 @@ export const CatalogProductItem = () => {
                                                     className={s.product_selectBox}
                                                     // options={getSpecificationsHandler(field)}
                                                     placeholder={'Характеристика'}
-                                                    isSearchable={true}
+                                                    isSearchable={false}
                                                     // value={selectedSpecification ? selectedSpecification : null}
                                                     // onChange={(value) => {
                                                     //     setSelectedSpecification(value as ProductSpecificationBind)
