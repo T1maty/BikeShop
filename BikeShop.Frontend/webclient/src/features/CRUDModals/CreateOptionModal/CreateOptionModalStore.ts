@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CreateOption, EntitiesAPI, UpdateOption} from '../../../entities'
+import {CreateOption, EntitiesAPI, ProductOptionVariant, UpdateOption} from '../../../entities'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {ProductOptionsWithVariants}
     from '../../ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants'
@@ -14,10 +14,11 @@ interface CreateOptionModalStore {
 
     currentOption: ProductOptionsWithVariants | null
     setCurrentOption: (option: ProductOptionsWithVariants | null) => void
+    // optionVariants: ProductOptionVariant[]
+    // setOptionVariants: (optionVariant: ProductOptionVariant) => void
 
     options: ProductOptionsWithVariants[]
     getOptions: () => void
-
     addNewOption: (data: CreateOption) => any
     updateOption: (updateData: UpdateOption) => any
 }
@@ -30,6 +31,10 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
 
     currentOption: null,
     setCurrentOption: (option) => {set({currentOption: option})},
+    // optionVariants: [],
+    // setOptionVariants: (optionVariant) => {set(state => {
+    //     state.optionVariants.push(optionVariant)
+    // })},
 
     options: [],
     getOptions: () => {
@@ -47,7 +52,6 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
             set({isLoading: false})
         })
     },
-
     addNewOption: (data) => {
         set({isLoading: true})
         EntitiesAPI.Option.addNewOption(data).then((res: any) => {
@@ -57,6 +61,7 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
             set({isLoading: false})
             set({errorStatus: 'success'})
         }).catch((error: any) => {
+            console.log(error)
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})
@@ -75,7 +80,6 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
             set({isLoading: false})
             set({errorStatus: 'success'})
         }).catch((error: any) => {
-            console.log(error)
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})

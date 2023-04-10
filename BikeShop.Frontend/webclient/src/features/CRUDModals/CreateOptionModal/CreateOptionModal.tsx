@@ -6,7 +6,7 @@ import {Button, ControlledCustomInput, CustomModal, EditableSpan, LoaderScreen, 
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
-import {ProductOptionVariant, UpdateOption} from '../../../entities'
+import {CreateOption, ProductOptionVariant, UpdateOption} from '../../../entities'
 
 export const CreateOptionModal = () => {
 
@@ -19,12 +19,16 @@ export const CreateOptionModal = () => {
 
     const currentOption = useCreateOptionModal(s => s.currentOption)
     const setCurrentOption = useCreateOptionModal(s => s.setCurrentOption)
+    // const optionVariants = useCreateOptionModal(s => s.optionVariants)
+    // const setOptionVariants = useCreateOptionModal(s => s.setOptionVariants)
+
     const options = useCreateOptionModal(s => s.options)
     const getOptions = useCreateOptionModal(s => s.getOptions)
     const addNewOption = useCreateOptionModal(s => s.addNewOption)
     const updateOption = useCreateOptionModal(s => s.updateOption)
 
     const [optionVariantName, setOptionVariantName] = useState<string>('')
+    // const [variantNames, setVariantNames] = useState<string[]>([])
 
     const formControl = useForm<UpdateOption>({
         defaultValues: {
@@ -34,9 +38,28 @@ export const CreateOptionModal = () => {
         }
     })
 
-    const onSubmit: SubmitHandler<UpdateOption> = (data: UpdateOption) => {
+    const onSubmit: SubmitHandler<UpdateOption> = (data: any) => {
         if (currentOption === null) {
+            console.log(data)
+
+            const newVariant = {
+                id: 0,
+                name: optionVariantName, // название вариации
+                optionId: 0,
+                optionName: formControl.getValues('name'), // название опции
+                createdAt: '',
+                updatedAt: '',
+                enabled: true
+            }
+
+            data.optionVariants = [newVariant]
+            setOptionVariantName('')
+            addNewOption(data)
+
+            // setVariantNames([...variantNames, optionVariantName])
+            // data.variantNames = variantNames
             // addNewOption(data)
+            // setOptionVariantName('')
         }
         if (currentOption !== null) {
             data.enabled = true
@@ -95,6 +118,7 @@ export const CreateOptionModal = () => {
 
     useEffect(() => {
         getOptions()
+        console.log(options)
     }, [])
 
     if (isLoading) {
@@ -122,7 +146,7 @@ export const CreateOptionModal = () => {
                                 <div className={s.optionVariantName_row}>
                                     <Button // buttonDivWrapper={s.options_button}
                                             onClick={addOptionVariantHandler}
-                                            // disabled={selectedSpecification === undefined}
+                                            disabled={currentOption === null}
                                     >
                                         +
                                     </Button>

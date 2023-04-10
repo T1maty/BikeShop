@@ -625,6 +625,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            margin-right: 40px; // чтобы не наезжало на кнопку
 
             .variant_item {
                 background-color: $themeColorMilk;
