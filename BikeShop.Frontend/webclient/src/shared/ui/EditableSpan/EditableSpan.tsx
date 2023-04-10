@@ -4,12 +4,18 @@ import s from './EditableSpan.module.scss'
 type EditableSpanPropsType = {
     title: string
     onChangeInput: (newInputValue: string) => void
+    inputDivClassName?: any
     inputClassName?: any
     spanClassName?: any
 }
 
-export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title, onChangeInput,
-                                                                             inputClassName, spanClassName}) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({
+                                                                             title,
+                                                                             onChangeInput,
+                                                                             inputDivClassName,
+                                                                             inputClassName,
+                                                                             spanClassName
+                                                                         }) => {
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [inputTitle, setInputTitle] = useState<string>('')
@@ -41,24 +47,27 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
 
     useEffect(() => {
         // if (inputTitle.length < 1 && inputTitle.length > 100) {
-            // setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-            // setLabel(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+        // setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
+        // setLabel(`${MESSAGE_INPUT_VALUE_LENGTH}`)
         // }
     }, [])
 
     return (
         editMode
-            ? <input
-                className={inputClassName ? inputClassName : s.editableSpan_input}
-                value={inputTitle}
-                onChange={onChangeInputHandler}
-                onBlur={onClickNotEditSpanHandler}
-                onKeyDown={enterChangeTitle}
-                autoFocus
-                // error={!!error}
-            />
+            ?
+            <div className={inputDivClassName ? inputDivClassName : ''}>
+                <input
+                    className={inputClassName ? inputClassName : s.editableSpan_input}
+                    value={inputTitle}
+                    onChange={onChangeInputHandler}
+                    onBlur={onClickNotEditSpanHandler}
+                    onKeyDown={enterChangeTitle}
+                    autoFocus
+                    // error={!!error}
+                />
+            </div>
             : <span onDoubleClick={onClickEditSpanHandler}
-                    className={spanClassName ? spanClassName: s.editableSpan_text}>
+                    className={spanClassName ? spanClassName : s.editableSpan_text}>
                 {title}
         </span>
     );
