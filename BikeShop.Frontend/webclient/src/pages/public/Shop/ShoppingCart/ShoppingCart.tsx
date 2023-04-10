@@ -27,7 +27,7 @@ export const ShoppingCart = () => {
     const productCartQuantityHandler = (product: CatalogProductItemTypeForCart, action: number) => {
         setCartProducts(cartProducts.map(el => el.product.id === product.product.id ?
             {...el, productQuantity: el.productQuantity + action,
-                productTotalSum: (el.productQuantity * el.product.retailPrice)
+                productTotalSum: ((el.productQuantity + action) * el.product.retailPrice)
             } : el)
         )
     }
@@ -35,8 +35,6 @@ export const ShoppingCart = () => {
     useEffect(() => {
         setShoppingCartSum(cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0))
     }, [cartProducts])
-
-    console.log(cartProducts)
 
     return (
         <div className={s.cart_mainBox}>
