@@ -11,9 +11,9 @@ export const EditProductCardDescriptionShort = (props: ControlledProps) => {
 
     return (
         <Controller
-            name={props.name}
-            control={props.control.control}
-            render={({field}: any) =>
+                name={props.name}
+                control={props.control.control}
+                render={({field}: any) =>
 
                 <div className={s.shortEditor}>
                     <div className={s.shortEditor_title}>Краткое описание товара:</div>

@@ -4,9 +4,12 @@ import s from './EditableSpan.module.scss'
 type EditableSpanPropsType = {
     title: string
     onChangeInput: (newInputValue: string) => void
+    inputClassName?: any
+    spanClassName?: any
 }
 
-export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title, onChangeInput}) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title, onChangeInput,
+                                                                             inputClassName, spanClassName}) => {
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [inputTitle, setInputTitle] = useState<string>('')
@@ -46,7 +49,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
     return (
         editMode
             ? <input
-                className={s.editableSpan_input}
+                className={inputClassName ? inputClassName : s.editableSpan_input}
                 value={inputTitle}
                 onChange={onChangeInputHandler}
                 onBlur={onClickNotEditSpanHandler}
@@ -55,7 +58,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
                 // error={!!error}
             />
             : <span onDoubleClick={onClickEditSpanHandler}
-                    className={s.editableSpan_text}>
+                    className={spanClassName ? spanClassName: s.editableSpan_text}>
                 {title}
         </span>
     );
