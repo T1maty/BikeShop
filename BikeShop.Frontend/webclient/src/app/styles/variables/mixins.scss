@@ -619,6 +619,7 @@
         max-height: 100px;
         overflow: auto;
         color: $titleColor;
+        position: relative;
 
         .optionsList_VariantsList {
             display: flex;
@@ -630,6 +631,22 @@
                 border-radius: $smallBorderRadius;
                 padding: 5px 10px;
                 color: black;
+            }
+        }
+
+        .optionsList_deleteList {
+            position: absolute;
+            top: -2px;
+            right: 4px;
+
+            img {
+                width: 40px;
+                height: 40px;
+
+                &:hover {
+                    cursor: pointer;
+                    filter: contrast(3);
+                }
             }
         }
     }

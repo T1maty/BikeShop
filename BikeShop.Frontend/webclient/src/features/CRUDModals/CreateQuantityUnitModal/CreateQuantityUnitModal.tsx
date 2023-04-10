@@ -25,7 +25,7 @@ export const CreateQuantityUnitModal = () => {
     const addQuantityUnit = useCreateQuantityUnitModal(s => s.addQuantityUnit)
     const updateQuantityUnit = useCreateQuantityUnitModal(s => s.updateQuantityUnit)
 
-    const formControl = useForm<any>({
+    const formControl = useForm<UpdateQuantityUnit>({
         defaultValues: {
             id: 0,
             name: '',

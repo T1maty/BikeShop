@@ -1,6 +1,5 @@
 import {ProductSpecificationBind, ProductTag} from "entities"
-import {ProductOptionsWithVariants} from "./ProductOptionsWithVariants";
-
+import {ProductOptionsWithVariants} from "./ProductOptionsWithVariants"
 
 export interface UpdateProductCardFormModel {
     id: number

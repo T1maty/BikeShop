@@ -2,11 +2,12 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from '../CreateOptionModal/CreateOptionModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal, EditableSpan, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput,
+    CustomModal, EditableSpan, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
-import {ProductOptionVariant} from "../../../entities"
+import {ProductOptionVariant, UpdateOption} from '../../../entities'
 
 export const CreateOptionModal = () => {
 
@@ -24,18 +25,18 @@ export const CreateOptionModal = () => {
     const addNewOption = useCreateOptionModal(s => s.addNewOption)
     const updateOption = useCreateOptionModal(s => s.updateOption)
 
-    const formControl = useForm<any>({
+    const formControl = useForm<UpdateOption>({
         defaultValues: {
             id: 0, // ИД опции
             name: '', // название опции
-            variantName: '', // инпут для ввода названия варианта опции
+            // variantName: '', // инпут для ввода названия варианта опции
             optionVariants: [], // массив строк с названием вариантов опции
         }
     })
 
-    const onSubmit: SubmitHandler<any> = (data: any) => {
+    const onSubmit: SubmitHandler<UpdateOption> = (data: UpdateOption) => {
         if (currentOption === null) {
-            addNewOption(data)
+            // addNewOption(data)
         }
         if (currentOption !== null) {
             console.log('submit data', data)
@@ -50,8 +51,8 @@ export const CreateOptionModal = () => {
     }
 
     const addOptionVariantHandler = () => {
-        formControl.setValue('optionVariants', 'variantName')
-        formControl.reset(formControl.resetField('variantName'))
+        // formControl.setValue('optionVariants', 'variantName')
+        // formControl.reset(formControl.resetField('variantName'))
         console.log(formControl.control)
     }
 
@@ -60,6 +61,7 @@ export const CreateOptionModal = () => {
         formControl.setValue('id', currentOption ? currentOption.id : 0)
         formControl.setValue('name', currentOption ? currentOption.name : '')
         // formControl.setValue('variantName', currentOption ? currentOption.variantName : '')
+        // @ts-ignore
         formControl.setValue('optionVariants', currentOption ? currentOption.optionVariants : [])
     }, [currentOption])
 
@@ -106,12 +108,12 @@ export const CreateOptionModal = () => {
                                     >
                                         +
                                     </Button>
-                                    <ControlledCustomInput name={'variantName'}
-                                                           placeholder={'Название варианта опции'}
-                                                           divClassName={s.optionVariantName_rowInput}
-                                                           control={formControl}
-                                                           // rules={{required: Errors[0].name}}
-                                    />
+                                    {/*<ControlledCustomInput name={'variantName'}*/}
+                                    {/*                       placeholder={'Название варианта опции'}*/}
+                                    {/*                       divClassName={s.optionVariantName_rowInput}*/}
+                                    {/*                       control={formControl}*/}
+                                    {/*                       // rules={{required: Errors[0].name}}*/}
+                                    {/*/>*/}
                                 </div>
                                 <div className={s.optionVariant_list}>
                                     {
@@ -164,23 +166,30 @@ export const CreateOptionModal = () => {
                                     return (
                                         <div className={option.id === currentOption?.id ?
                                                         s.optionFieldset_wrapper_active : s.optionFieldset_wrapper}
-                                             onClick={() => {setCurrentOption(option)}}
+                                             // onClick={() => {setCurrentOption(option)}}
                                         >
                                             <fieldset className={s.optionsList_item} key={option.id}
 
                                             >
                                                 <legend>{option.name}</legend>
-                                                <div className={s.optionsList_VariantsList}>
-                                                    {
-                                                        option.optionVariants.map((ov) => {
-                                                            return (
-                                                                <div className={s.variant_item} key={ov.id}>
-                                                                    {ov.name}
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
+                                                    <div className={s.optionsList_VariantsList}
+                                                         onClick={() => {setCurrentOption(option)}}
+                                                    >
+                                                        {
+                                                            option.optionVariants.map((ov) => {
+                                                                return (
+                                                                    <div className={s.variant_item} key={ov.id}>
+                                                                        {ov.name}
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                    <div className={s.optionsList_deleteList}>
+                                                        <img src={RemoveIcon} alt="remove-icon"
+                                                             onClick={() => {}}
+                                                        />
+                                                    </div>
                                             </fieldset>
                                         </div>
                                     )

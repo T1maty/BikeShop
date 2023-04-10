@@ -1,4 +1,4 @@
-import {ProductOptionVariantBind, ProductSpecificationBind} from "../../../../entities";
+import {ProductOptionVariantBind, ProductSpecificationBind} from "../../../../entities"
 
 export interface UpdateProductCardRequest {
     id: number
