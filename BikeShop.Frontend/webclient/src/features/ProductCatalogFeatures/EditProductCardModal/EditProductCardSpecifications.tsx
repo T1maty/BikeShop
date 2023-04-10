@@ -22,11 +22,10 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
 
     const getSpecificationsHandler = (field: any) => {
         let ids: number[] = []
-        field.value.forEach((n: ProductSpecificationBind) => {
-            ids.push(n.specificationId)
-        })
+        field.value.forEach((n: ProductSpecificationBind) => {ids.push(n.specificationId)})
 
         let availableSpecs: ProductSpecificationBind[] = []
+        
         allSpecifications.filter(n => !ids.includes(n.id)).forEach(n => {
             let s: ProductSpecificationBind = {
                 id: 0,

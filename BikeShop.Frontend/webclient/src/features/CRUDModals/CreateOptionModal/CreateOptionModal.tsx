@@ -161,7 +161,6 @@ export const CreateOptionModal = () => {
                                     name={'optionVariants'}
                                     control={formControl.control}
                                     render={({field}: any) =>
-
                                         <div className={s.optionVariant_list}>
                                             {
                                                 field.value === null ?
@@ -191,10 +190,8 @@ export const CreateOptionModal = () => {
                                                     })
                                             }
                                         </div>
-
                                     }
                                 />
-
 
                                 <div className={s.createOption_buttonsBlock}>
                                     <Button buttonDivWrapper={s.buttonsBlock_cancelButton}
@@ -213,7 +210,6 @@ export const CreateOptionModal = () => {
                             </fieldset>
                         </div>
                     </form>
-
 
                     <div className={s.optionModal_options}>
                         <div className={s.options_title}>Список доступных опций</div>
@@ -241,9 +237,7 @@ export const CreateOptionModal = () => {
                                                     }
                                                 </div>
                                                 <div className={s.optionsList_deleteList}>
-                                                    <img src={RemoveIcon} alt="remove-icon"
-                                                         onClick={() => {}}
-                                                    />
+                                                    <img src={RemoveIcon} alt="remove-icon" onClick={() => {}}/>
                                                 </div>
                                             </fieldset>
                                         </div>

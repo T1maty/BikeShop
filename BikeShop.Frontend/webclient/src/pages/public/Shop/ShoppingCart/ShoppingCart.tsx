@@ -4,11 +4,11 @@ import cart from "../../../../shared/assets/shop/icons/cart.png"
 import {Button} from "../../../../shared/ui"
 import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
+import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
 import {CatalogProductItemTypeForCart} from "../../../../entities"
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from '../../../../app/routes/paths'
-import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg';
 
 export const ShoppingCart = () => {
 
@@ -35,6 +35,8 @@ export const ShoppingCart = () => {
     useEffect(() => {
         setShoppingCartSum(cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0))
     }, [cartProducts])
+
+    console.log('товары в корзине', cartProducts)
 
     return (
         <div className={s.cart_mainBox}>

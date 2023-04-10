@@ -1,6 +1,6 @@
-import {
-    ProductOptionsWithVariants
-} from "../../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants";
+import {ProductOptionsWithVariants}
+    from "../../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
+import {ProductOptionVariantBind} from './ProductOptionVariantBind'
 
 export interface CatalogProductItemType {
     product: {
@@ -44,7 +44,8 @@ export interface CatalogProductItemType {
             updatedAt: string
         }
     ],
-    productOptions: ProductOptionsWithVariants[],
+    productOptions: ProductOptionVariantBind[],
+    // productOptions: ProductOptionsWithVariants[],
     productImages: [
         {
             id: number

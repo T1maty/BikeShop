@@ -17,11 +17,12 @@ const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((
         state.cartProducts = products
     }),
     setProductToCart: (product) => set(state => {
-        console.log('addProductToCard', product)
+        console.log('добавленный товар', product)
         state.cartProducts.push({
             ...product,
             productQuantity: 1,
-            productTotalSum: product.product.retailPrice
+            productTotalSum: product.product.retailPrice,
+            selectedProductOptions: []
         })
     }),
     shoppingCartSum: 0,
