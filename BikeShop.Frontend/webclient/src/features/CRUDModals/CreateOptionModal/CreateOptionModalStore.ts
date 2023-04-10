@@ -29,9 +29,7 @@ const useCreateOptionModal = create<CreateOptionModalStore>()(/*persist(*/devtoo
     errorStatus: 'default',
 
     currentOption: null,
-    setCurrentOption: (option) => {
-        set({currentOption: option})
-    },
+    setCurrentOption: (option) => {set({currentOption: option})},
 
     options: [],
     getOptions: () => {

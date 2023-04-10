@@ -54,6 +54,7 @@ export const EditProductCardModal = () => {
         let options: { optionVariants: ProductOptionVariantBind[] }[] = []
         data.productOptions.forEach(n => {
             let variants: ProductOptionVariantBind[] = []
+
             n.optionVariants.forEach(j => {
                 variants.push({
                     id: 0,
@@ -78,7 +79,7 @@ export const EditProductCardModal = () => {
             shortDescription: data.productCard.shortDescription
         }
         DATA.productTags = tagIds
-        console.log('submitData', DATA)
+
         updateProductCard(DATA)
     }
 
@@ -90,8 +91,8 @@ export const EditProductCardModal = () => {
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
         formControl.setValue('productSpecifications', currentProduct.productSpecifications)
         formControl.setValue('productCard', {
-            description: currentProduct.productCard != undefined ? currentProduct.productCard.description : '',
-            shortDescription: currentProduct.productCard != undefined ? currentProduct.productCard.descriptionShort : ''
+            description: currentProduct.productCard !== undefined ? currentProduct.productCard.description : '',
+            shortDescription: currentProduct.productCard !== undefined ? currentProduct.productCard.descriptionShort : ''
         })
 
         setImages(currentProduct.productImages)

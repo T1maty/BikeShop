@@ -1,11 +1,8 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm, Controller} from 'react-hook-form'
 import s from '../CreateOptionModal/CreateOptionModal.module.scss'
-import {
-    Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, EditableSpan, LoaderScreen
-} from '../../../shared/ui'
+import {Button, ControlledCustomInput, CustomModal, EditableSpan, LoaderScreen, CustomInput} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
@@ -27,12 +24,13 @@ export const CreateOptionModal = () => {
     const addNewOption = useCreateOptionModal(s => s.addNewOption)
     const updateOption = useCreateOptionModal(s => s.updateOption)
 
+    const [optionVariantName, setOptionVariantName] = useState<string>('')
+
     const formControl = useForm<UpdateOption>({
         defaultValues: {
-            id: 0, // ИД опции
-            name: '', // название опции
-            // variantName: '', // инпут для ввода названия варианта опции
-            optionVariants: [], // массив строк с названием вариантов опции
+            id: 0,
+            name: '',
+            optionVariants: [],
         }
     })
 
@@ -41,17 +39,26 @@ export const CreateOptionModal = () => {
             // addNewOption(data)
         }
         if (currentOption !== null) {
-            console.log('submit data', data)
             data.enabled = true
             updateOption(data)
         }
     }
 
-    // добавление варианта опции
+    // добавление варианта опции при обновлении
     const addOptionVariantHandler = () => {
-        // formControl.setValue('optionVariants', 'variantName')
-        // formControl.reset(formControl.resetField('variantName'))
-        console.log(formControl.control)
+        setCurrentOption({
+            ...currentOption!,
+            optionVariants: [...currentOption!.optionVariants, {
+                id: 0,
+                name: optionVariantName,
+                optionId: currentOption!.id,
+                optionName: currentOption!.name,
+                createdAt: '',
+                updatedAt: '',
+                enabled: true
+            }]
+        })
+        setOptionVariantName('')
     }
 
     // удаление варианта опции
@@ -72,7 +79,6 @@ export const CreateOptionModal = () => {
         formControl.reset()
         formControl.setValue('id', currentOption ? currentOption.id : 0)
         formControl.setValue('name', currentOption ? currentOption.name : '')
-        // formControl.setValue('variantName', currentOption ? currentOption.variantName : '')
         // @ts-ignore
         formControl.setValue('optionVariants', currentOption ? currentOption.optionVariants : [])
     }, [currentOption])
@@ -115,17 +121,16 @@ export const CreateOptionModal = () => {
                                 </div>
                                 <div className={s.optionVariantName_row}>
                                     <Button // buttonDivWrapper={s.options_button}
-                                        onClick={addOptionVariantHandler}
-                                        // disabled={selectedSpecification === undefined}
+                                            onClick={addOptionVariantHandler}
+                                            // disabled={selectedSpecification === undefined}
                                     >
                                         +
                                     </Button>
-                                    {/*<ControlledCustomInput name={'variantName'}*/}
-                                    {/*                       placeholder={'Название варианта опции'}*/}
-                                    {/*                       divClassName={s.optionVariantName_rowInput}*/}
-                                    {/*                       control={formControl}*/}
-                                    {/*                       // rules={{required: Errors[0].name}}*/}
-                                    {/*/>*/}
+                                    <CustomInput value={optionVariantName}
+                                                 onChange={(e) => {setOptionVariantName(e.currentTarget.value)}}
+                                                 placeholder={'Название варианта опции'}
+                                                 divClassName={s.optionVariantName_rowInput}
+                                    />
                                 </div>
 
                                 <Controller
@@ -154,9 +159,7 @@ export const CreateOptionModal = () => {
                                                                 </div>
                                                                 <div className={s.item_delete}>
                                                                     <img src={RemoveIcon} alt="remove-icon"
-                                                                         onClick={() => {
-                                                                             deleteOptionVariantHandler(optVar)
-                                                                         }}
+                                                                         onClick={() => {deleteOptionVariantHandler(optVar)}}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -178,8 +181,7 @@ export const CreateOptionModal = () => {
                                     </Button>
                                     <Button type={'submit'}
                                             buttonDivWrapper={s.buttonsBlock_createButton}
-                                        // onClick={() => {editSpecificationHandler(field)}}
-                                        // disabled={selectedSpecification === undefined}
+                                            // disabled={selectedSpecification === undefined}
                                     >
                                         {currentOption === null ? 'Создать опцию' : 'Обновить опцию'}
                                     </Button>
@@ -195,18 +197,14 @@ export const CreateOptionModal = () => {
                             {
                                 options.map((option) => {
                                     return (
-                                        <div className={option.id === currentOption?.id ?
-                                            s.optionFieldset_wrapper_active : s.optionFieldset_wrapper}
-                                            // onClick={() => {setCurrentOption(option)}}
+                                        <div key={option.id}
+                                             className={option.id === currentOption?.id ?
+                                             s.optionFieldset_wrapper_active : s.optionFieldset_wrapper}
                                         >
-                                            <fieldset className={s.optionsList_item} key={option.id}
-
-                                            >
+                                            <fieldset className={s.optionsList_item}>
                                                 <legend>{option.name}</legend>
                                                 <div className={s.optionsList_VariantsList}
-                                                     onClick={() => {
-                                                         setCurrentOption(option)
-                                                     }}
+                                                     onClick={() => {setCurrentOption(option)}}
                                                 >
                                                     {
                                                         option.optionVariants.map((ov) => {
@@ -220,8 +218,7 @@ export const CreateOptionModal = () => {
                                                 </div>
                                                 <div className={s.optionsList_deleteList}>
                                                     <img src={RemoveIcon} alt="remove-icon"
-                                                         onClick={() => {
-                                                         }}
+                                                         onClick={() => {}}
                                                     />
                                                 </div>
                                             </fieldset>
@@ -236,35 +233,3 @@ export const CreateOptionModal = () => {
         )
     }
 }
-
-// <div className={s.optionVariant_list}>
-//     {
-//         currentOption === null ?
-//             <div className={s.optionVariant_emptyList}>
-//                 Список опций пуст
-//             </div> :
-//
-//             currentOption.optionVariants.map(optVar => {
-//                 return (
-//                     <div className={s.optionVariant_item} key={optVar.id}>
-//                         <div className={s.item_text}>
-//                             {/*{optVar.name}*/}
-//
-//                             <EditableSpan title={optVar.name}
-//                                           onChangeInput={(newInputValue) => {
-//                                               editOptionVariantHandler(newInputValue, field, spec)
-//                                           }}
-//                                           inputClassName={s.inputClassName}
-//                                           spanClassName={s.spanClassName}
-//                             />
-//                         </div>
-//                         <div className={s.item_delete}>
-//                             <img src={RemoveIcon} alt="remove-icon"
-//                                  onClick={() => {deleteOptionVariantHandler(optVar)}}
-//                             />
-//                         </div>
-//                     </div>
-//                 )
-//             })
-//     }
-// </div>
