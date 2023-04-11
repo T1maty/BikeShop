@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
     ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
-    EditProductCardModal, EmployeeSalaryModal, SupplyInvoiceArchiveModal
+    EditProductCardModal, EmployeeSalaryModal, EndWorkDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -15,6 +15,7 @@ import useCreateSpecificationModal
 import useCreateOptionModal from '../../../features/CRUDModals/CreateOptionModal/CreateOptionModalStore'
 import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore'
 import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore"
+import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 
 export const MainPage = () => {
 
@@ -25,6 +26,7 @@ export const MainPage = () => {
     const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
     const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
     const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
+    const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -64,6 +66,7 @@ export const MainPage = () => {
             <CreateOptionModal/>
             <SupplyInvoiceArchiveModal/>
             <EmployeeSalaryModal/>
+            <EndWorkDayModal/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
@@ -189,8 +192,7 @@ export const MainPage = () => {
                             </div>
                             <div className={s.bottom_right_two}>
                                 <Button buttonDivWrapper={s.right_two_button}
-                                        onClick={() => {
-                                        }}>
+                                        onClick={() => {setOpenEndWorkDayModal(true)}}>
                                     Закончить смену
                                 </Button>
                                 <div className={s.right_two_span}>

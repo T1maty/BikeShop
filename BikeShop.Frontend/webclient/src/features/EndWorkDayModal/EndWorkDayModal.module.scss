@@ -1,0 +1,54 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.endWorkDayModal_mainBlock {
+    @include defaultModalStyle;
+    width: 520px;
+
+    .endWorkDayModal_title {
+        @include modalTitle;
+    }
+
+    .endWorkDayModal_content {
+        @include flexOnlyBetween;
+        gap: $defaultLargeMargin;
+
+        .content_report {
+            @include flexColumnOnly;
+            justify-content: space-between;
+
+            .report {
+                border: 1px solid $themeColorMilk;
+                border-radius: $smallBorderRadius;
+                padding: $defaultLargeMargin;
+                margin-bottom: $defaultLargeMargin;
+                width: 250px;
+                height: 120px;
+            }
+            .makeVideoBtn {
+                width: 100%;
+
+                button {
+                    width: 100%;
+                    height: 50px;
+                }
+            }
+        }
+        .content_info {
+            .infoBlock {
+                //line-height: $minLineHeight;
+                @include divSmallMarginBottom;
+                margin-bottom: $defaultLargeMargin;
+            }
+            .buttonsBlock {
+                width: 100%;
+                @include flexColumnOnly;
+                gap: $defaultSmallMargin;
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

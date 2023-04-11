@@ -92,6 +92,13 @@
     margin-bottom: $defaultSmallMargin;
 }
 
+@mixin modalTitle() {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: $defaultLargeMargin;
+}
+
 // button styles
 @mixin defaultMediumButton() {
     width: 100%;
@@ -103,6 +110,7 @@
     padding: $defaultLargeMargin 0;
 }
 
+// hover styles
 @mixin hoverCursorPointer {
     &:hover {
         cursor: pointer;
