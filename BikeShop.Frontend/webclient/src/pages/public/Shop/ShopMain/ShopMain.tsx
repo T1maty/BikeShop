@@ -26,6 +26,7 @@ import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
 import {RegistrationForm} from '../RegistrationForm/RegistrationForm'
+import {ShoppingCart} from '../ShoppingCart/ShoppingCart';
 
 export const ShopMain = () => {
 
@@ -83,7 +84,8 @@ export const ShopMain = () => {
                             </div>
 
                             <div><img src={language} alt="language-logo"/></div>
-                            <div><img src={cart} alt="cart-logo"/></div>
+                            {/*<div><img src={cart} alt="cart-logo"/></div>*/}
+                            <ShoppingCart/>
 
                             <LoginBlock isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>
                         </div>
