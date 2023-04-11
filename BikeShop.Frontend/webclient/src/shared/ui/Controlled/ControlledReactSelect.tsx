@@ -37,13 +37,9 @@ export const ControlledReactSelect = (props: ControlledReactSelectProps) => {
                         value={field.value}
 
                         // onChange={props.onChangeSelect}
-                        // onChange={(event) => {
-                        //     field.onChange(event.target.value)
-                        // }}
                         onChange={(value: any) => {
                             field.onChange(value)
-                            console.log('значение из селекта', value)
-                            // props.onChangeSelect
+                            // console.log('значение из селекта', value)
                         }}
                         noOptionsMessage={props.noOptionsMessage}
                     />
