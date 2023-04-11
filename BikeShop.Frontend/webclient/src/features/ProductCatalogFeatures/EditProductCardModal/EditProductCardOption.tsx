@@ -15,7 +15,7 @@ interface ControlledProps {
     disabled?: boolean
 }
 
-type SelectedOptionVariantType = {
+export type SelectedOptionVariantType = {
     id: number
     value: ProductOptionVariant
 }

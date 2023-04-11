@@ -13,7 +13,8 @@ import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBike
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {useSnackbar} from 'notistack'
 import Enumerable from 'linq'
-import {ProductOptionVariantBind, ProductSpecificationBind} from '../../../../entities'
+import {ProductOptionVariantBind} from '../../../../entities'
+import {SelectedOptionVariantType} from 'features/ProductCatalogFeatures/EditProductCardModal/EditProductCardOption'
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -30,6 +31,8 @@ export const CatalogProductItem = () => {
 
     // вид отображения
     // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')
+
+    const [selectedOptionVariant, setSelectedOptionVariant] = useState<SelectedOptionVariantType[]>([])
 
     // для стилей описания товара
     const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)
@@ -197,26 +200,28 @@ export const CatalogProductItem = () => {
                                                     // getOptionValue={value => value!.name}
                                                     noOptionsMessage={() => 'Характеристика не найдена'}
                                                 />
+
+                                                // <ControlledReactSelect control={formControl}
+                                                //                        name={'selectedProductOptions'}
+                                                //                        className={s.product_selectBox}
+                                                //                        placeholder={'Характеристика'}
+                                                //                        isSearchable={false}
+                                                //                         // disabled={currentService === null && !isCreating}
+                                                //                        value={formControl.getFieldState('selectedProductOptions')}
+                                                //                        onChangeSelect={(value: any) => {
+                                                //                            formControl.setValue('productSelect', value)
+                                                //                        }}
+                                                //                        data={currentProduct.productOptions.map((el: any) => {
+                                                //                            return {
+                                                //                                value: el.value,
+                                                //                                label: el.label,
+                                                //                            }
+                                                //                        })}
+                                                //                        noOptionsMessage={() => 'Характеристика не найдена'}
+                                                // />
                                             )
                                         })
                                     }
-
-                                    {/*<ControlledReactSelect control={formControl}*/}
-                                    {/*                       name={'selectedProductOptions'}*/}
-                                    {/*                       className={s.product_selectBox}*/}
-                                    {/*                       placeholder={'Характеристика'}*/}
-                                    {/*                       isSearchable={false}*/}
-                                    {/*                       // disabled={currentService === null && !isCreating}*/}
-                                    {/*                       value={formControl.getFieldState('productSelect')}*/}
-                                    {/*                       onChangeSelect={(value: any) => {formControl.setValue('productSelect', value)}}*/}
-                                    {/*                       data={products.map((el: any) => {*/}
-                                    {/*                           return {*/}
-                                    {/*                               value: el.value,*/}
-                                    {/*                               label: el.label,*/}
-                                    {/*                           }*/}
-                                    {/*                       })}*/}
-                                    {/*                       noOptionsMessage={() => 'Характеристика не найдена'}*/}
-                                    {/*/>*/}
                                 </div>
 
                             {/*}*/}
