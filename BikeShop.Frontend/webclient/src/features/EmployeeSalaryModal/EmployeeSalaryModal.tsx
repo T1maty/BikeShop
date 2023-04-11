@@ -4,7 +4,7 @@ import {Button, ControlledCustomInput, CustomModal, LoaderScreen} from '../../sh
 import {useSnackbar} from 'notistack'
 import useEmployeeSalaryModal from "./EmployeeSalaryModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {Errors} from "../../entities/errors/workspaceErrors";
+import {Errors} from "../../entities/errors/workspaceErrors"
 
 export const EmployeeSalaryModal = () => {
 
