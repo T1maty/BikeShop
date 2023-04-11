@@ -85,10 +85,7 @@ export const CreateShopModal = () => {
                             {shops.map(shop => (
                                 <div key={shop.id}
                                      className={shop.id === currentShop?.id ? s.shop_item_active : s.shop_item}
-                                     onClick={() => {
-                                         setCurrentShop(shop);
-                                         console.log(shop)
-                                     }}
+                                     onClick={() => {setCurrentShop(shop)}}
                                 >
                                     <div><span>ID:</span> {shop.id}</div>
                                     <div><span>Название:</span> {shop.name}</div>

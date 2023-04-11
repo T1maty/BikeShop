@@ -162,6 +162,12 @@
 }
 
 // div styles
+@mixin divExtraSmallMarginBottom() {
+    > div:not(:last-child) {
+        margin-bottom: $defaultExtraSmallMargin;
+    }
+}
+
 @mixin divSmallMarginBottom() {
     > div:not(:last-child) {
         margin-bottom: $defaultSmallMargin;

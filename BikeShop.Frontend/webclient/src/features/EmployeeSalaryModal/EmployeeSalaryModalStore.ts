@@ -9,7 +9,8 @@ interface EmployeeSalaryModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    employeeInfo: any[]
+    currentEmployee: any | null
+    setCurrentEmployee: (employee: any | null) => void
     getEmployeeInfo: () => void
 }
 
@@ -21,7 +22,10 @@ const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/de
     isLoading: false,
     errorStatus: 'default',
 
-    employeeInfo: [],
+    currentEmployee: null,
+    setCurrentEmployee: (employee) => {
+        set({currentEmployee: employee})
+    },
     getEmployeeInfo: () => {
         // set({isLoading: true})
         // ArchiveAPI.getArchive().then((res: any) => {
