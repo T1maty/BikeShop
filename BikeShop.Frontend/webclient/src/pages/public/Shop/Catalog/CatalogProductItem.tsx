@@ -84,6 +84,7 @@ export const CatalogProductItem = () => {
     })
 
     const onSubmit: SubmitHandler<any> = (data: any) => {
+        console.log('submit catalog product item', data)
         // code here ?
     }
 
