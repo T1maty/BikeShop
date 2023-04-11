@@ -9,6 +9,7 @@ export {ChooseDiscountModal} from './ChooseDiscountModal/ChooseDiscountModal'
 export {EmployeeSalaryModal} from './EmployeeSalaryModal/EmployeeSalaryModal'
 export {SupplyInvoiceArchiveModal} from './SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 export {EndWorkDayModal} from './EndWorkDayModal/EndWorkDayModal'
+export {ReportDayModal} from './ReportDayModal/ReportDayModal'
 
 export {EditProductCardModal} from './ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
 export {AddProductCardTagModal} from './ProductCatalogFeatures/AddProductCardTagModal/AddProductCardTagModal'

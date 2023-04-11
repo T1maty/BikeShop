@@ -1,0 +1,45 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.reportDayModal_mainBlock {
+    @include defaultModalStyle;
+    width: 300px;
+
+    .reportDayModal_title {
+        @include modalTitle;
+        margin-bottom: $defaultSmallMargin;
+        text-decoration: underline;
+    }
+    .reportDayModal_date {
+        margin-bottom: $defaultLargeMargin;
+    }
+    .reportDayModal_info {
+        //@include divLargeMarginBottom;
+        > div {
+            margin-bottom: $defaultLargeMargin;
+        }
+
+        .info_contentItem {
+            line-height: $minLineHeight;
+
+            .content_text {
+                text-align: left;
+            }
+            .content_price {
+                text-align: right;
+                font-weight: bold;
+                font-size: 20px;
+            }
+        }
+    }
+    .reportDayModal_total {
+        margin-bottom: $defaultLargeMargin;
+        text-align: center;
+        font-size: 20px;
+    }
+    .reportDayModal_cancelBtn {
+        button {
+            width: 100%;
+        }
+    }
+}
