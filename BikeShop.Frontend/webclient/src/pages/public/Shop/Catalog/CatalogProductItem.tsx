@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import s from './CatalogProductItem.module.scss'
 import parse from 'html-react-parser'
+import {useParams} from 'react-router-dom'
 import {Button, LoaderScreenForShop} from '../../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import ImageGallery from 'react-image-gallery'
@@ -26,11 +27,15 @@ export const CatalogProductItem = () => {
     const {enqueueSnackbar} = useSnackbar()
 
     const isLoading = useCatalog(s => s.isLoading)
+    const getCurrentProduct = useCatalog(s => s.getCurrentProduct)
     const currentProduct = useCatalog(s => s.currentProduct)
+
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
     const amountOfProduct = 10 // есть ли на складе
+
+    const params = useParams<'productId'>()
 
     // вид отображения
     // const [descriptionView, setDescriptionView] = useState<DescriptionViewType>('Characteristic')
@@ -43,28 +48,26 @@ export const CatalogProductItem = () => {
     const [isDelivery, setIsDelivery] = useState<boolean>(false)
 
     // преобразование галереи под нужный тип библиотеки
-    const myImages = currentProduct && currentProduct.productImages.map(img => {
+    const myImages = currentProduct?.productImages && currentProduct.productImages.map(img => {
         return {original: img.url, thumbnail: img.url}
     })
 
     // если нет изображений, чтобы не ломалась вёрстка
     const noImages = [{original: SorryNoImage, thumbnail: SorryNoImage}]
 
-    const formControl = useForm<any>({
-        defaultValues: {
-            selectedProductOptions: [],
-        }
-    })
-
-    const onSubmit: SubmitHandler<any> = (data: any) => {
-        console.log('submit catalog product item', data)
-        // code here ?
-    }
+    // const formControl = useForm<any>({
+    //     defaultValues: {
+    //         selectedProductOptions: [],
+    //     }
+    // })
+    //
+    // const onSubmit: SubmitHandler<any> = (data: any) => {
+    //     // code here ?
+    // }
 
     // для выбора раздела описания товара
     const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
                                    isDetails: boolean, isDelivery: boolean) => {
-
         // setDescriptionView(descriptionTitle)
         setIsCharacteristic(isCharacteristic)
         setIsDetails(isDetails)
@@ -73,11 +76,11 @@ export const CatalogProductItem = () => {
 
     const onChangeOptionsVariantHandler = (value: SingleValue<SelectedOptionVariantType>) => {
         if (value != undefined) {
-            let buf = selectedOptionVariant.filter(n => n.id != value.value.optionId)
-            console.log('Сетаем вариант', value)
+            let buf = selectedOptionVariant.filter(n => n.id !== value.value.optionId)
+            // console.log('Сетаем вариант', value)
             buf.push(value)
             setSelectedOptionVariant(buf)
-            console.log('стейт селекта', selectedOptionVariant)
+            // console.log('стейт селекта', selectedOptionVariant)
         }
     }
 
@@ -98,16 +101,17 @@ export const CatalogProductItem = () => {
         }
     }
 
-    const getOptionsHandler = () => {
-
-    }
-
     useEffect(() => {
         // formControl.reset()
         // formControl.setValue('selectedProductOptions', currentProduct?.productOptions)
     }, [])
 
-    if (isLoading) {
+    useEffect(() => {
+        getCurrentProduct(+params.productId!)
+    }, [params])
+
+    // так как нужно преобразовать массив изображений, необходимо сделать доп. проверку myImages
+    if (isLoading || !myImages) {
         return <LoaderScreenForShop image={ShopLoaderScreen}/>
     } else {
 
@@ -129,13 +133,13 @@ export const CatalogProductItem = () => {
                     <div className={s.product_images}>
                         <ImageGallery items={myImages && myImages.length > 0 ? myImages : noImages}
                                       showPlayButton={false}
-                            // showFullscreenButton={false}
+                                      // showFullscreenButton={false}
                                       showIndex={true}
                                       showNav={false}
                                       showBullets={true}
                                       thumbnailPosition={'left'}
                                       onErrorImageURL={SorryNoImage}
-                            // additionalClass={s.imageGallery}
+                                      // additionalClass={s.imageGallery}
                         />
                     </div>
                     <div className={s.product_info}>
@@ -145,33 +149,28 @@ export const CatalogProductItem = () => {
                             {currentProduct.productCard.descriptionShort}
                         </div>
 
-                        {/*<Controller*/}
-                        {/*    name={'selectedProductOptions'}*/}
-                        {/*    control={formControl.control}*/}
-                        {/*    render={({field}: any) =>*/}
-
                         <div className={s.product_select}>
                             {
-                                Enumerable.from(currentProduct.productOptions).distinct(n => n.optionId).toArray()
+                                Enumerable.from(currentProduct.productOptions)
+                                    .distinct(n => n.optionId)
+                                    .toArray()
                                     .map((po: ProductOptionVariantBind) => {
                                         return (
                                             <Select
                                                 key={po.id}
                                                 className={s.product_selectBox}
+                                                placeholder={po.optionName}
+                                                isSearchable={false}
                                                 options={Enumerable.from(currentProduct.productOptions)
                                                     .where(n => n.optionId === po.optionId)
                                                     .select(n => {
                                                         return {id: n.optionId, value: n} as SelectedOptionVariantType
                                                     }).toArray()}
-                                                placeholder={po.optionName}
-                                                isSearchable={false}
-
                                                 value={selectedOptionVariant.find(n => n.id === po.optionId)
                                                     ? selectedOptionVariant.find(n => n.id === po.optionId) : null}
                                                 onChange={(value) => {
                                                     onChangeOptionsVariantHandler(value)
                                                 }}
-
                                                 getOptionLabel={label => label!.value.name}
                                                 getOptionValue={value => value!.value.name}
                                                 noOptionsMessage={() => 'Характеристика не найдена'}
@@ -181,9 +180,6 @@ export const CatalogProductItem = () => {
                                     })
                             }
                         </div>
-
-                        {/*}*/}
-                        {/*/>*/}
 
                         <div className={s.product_buy}>
                             <div className={s.product_available}>

@@ -1,7 +1,8 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItemType, ProductTag, ShopAPI} from '../../../../entities'
+import {CatalogProductItemType, ProductCardAPI, ProductFullData,
+    ProductTag, ShopAPI} from '../../../../entities'
 import {ErrorStatusTypes} from '../../../../entities/enumerables/ErrorStatusTypes'
 
 interface UseCatalogStore {
@@ -15,8 +16,11 @@ interface UseCatalogStore {
     defaultProducts: CatalogProductItemType[]
     getDefaultProducts: () => void
 
+    // currentProduct: ProductFullData | null
     currentProduct: CatalogProductItemType | null
+    // setCurrentProduct: (product: ProductFullData | null) => void
     setCurrentProduct: (product: CatalogProductItemType | null) => void
+    getCurrentProduct: (productId: number) => void
 }
 
 const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -47,7 +51,6 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         ShopAPI.getDefaultProducts().then(res => {
             set(state => {
                 state.defaultProducts = res.data
-                console.log('все дефолтные товары', state.defaultProducts)
             })
             set({isLoading: false})
         }).catch((error: any) => {
@@ -58,9 +61,25 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         })
     },
 
+    // currentProduct: {} as ProductFullData,
     currentProduct: {} as CatalogProductItemType,
     setCurrentProduct: (product) => {
         set({currentProduct: product})
+    },
+    getCurrentProduct: (productId: number) => {
+        set({isLoading: true})
+        ProductCardAPI.getProductCardById(productId).then(res => {
+            set(state => {
+                // @ts-ignore
+                state.currentProduct = res.data
+            })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({isLoading: false})
+            set({errorStatus: 'default'})
+        })
     },
 })))/*, {
     name: "useCatalog",

@@ -171,7 +171,7 @@ export const Catalog = () => {
                                          onClick={() => {
                                              console.log('выбранный продукт', prod)
                                              setCurrentProduct(prod) // сетаем продукт в стор
-                                             navigate(`/shop/catalog/${prod.product.category}/${prod.product.id}`)
+                                             navigate(`/shop/catalog/${prod.product.id}`)
                                          }}
                                     >
                                         <div className={s.item_image}>
