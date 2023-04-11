@@ -7,10 +7,7 @@
     min-width: 600px;
 
     .employeeSalaryModal_title {
-        font-weight: bold;
-        font-size: 20px;
-        text-align: center;
-        margin-bottom: 20px;
+        @include modalTitle;
     }
 
     .employeeSalaryModal_content {

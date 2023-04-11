@@ -6,10 +6,7 @@
     width: 550px;
 
     .supplyInvoiceArchiveModal_title {
-        font-weight: bold;
-        font-size: 20px;
-        text-align: center;
-        margin-bottom: 20px;
+        @include modalTitle;
     }
 
     .supplyInvoiceArchiveModal_list {
