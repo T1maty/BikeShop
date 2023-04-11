@@ -1,23 +1,20 @@
 import React, {useState} from 'react'
 import s from "./MainPage.module.scss"
+import {BikeShopPaths} from "../../../app/routes/paths"
+import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    ChooseClientModal,
-    CreateOptionModal,
-    CreateProductModal,
-    CreateSpecificationModal,
-    EditProductCardModal
+    ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
+    EditProductCardModal, EmployeeSalaryModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
-import {BikeShopPaths} from "../../../app/routes/paths"
-import {User} from "../../../entities"
 import useMainPageStore from "./MainPageStore"
 import useCreateSpecificationModal
     from '../../../features/CRUDModals/CreateSpecificationModal/CreateSpecificationModalStore'
 import useCreateOptionModal from '../../../features/CRUDModals/CreateOptionModal/CreateOptionModalStore'
 import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore'
-import {SupplyInvoiceArchiveModal} from '../../../features/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
+import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore"
 
 export const MainPage = () => {
 
@@ -26,7 +23,8 @@ export const MainPage = () => {
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
     const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
-    const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModalStore)
+    const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
+    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -65,6 +63,7 @@ export const MainPage = () => {
             <CreateSpecificationModal/>
             <CreateOptionModal/>
             <SupplyInvoiceArchiveModal/>
+            <EmployeeSalaryModal/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
@@ -73,23 +72,16 @@ export const MainPage = () => {
                         }}>
                             Создать заказ
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Добавить горячего клиента
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
                             Ремонты
                         </Button>
-                        <Button onClick={() => {
-                            setOpenCreateSpecificationModal(true)
-                        }}>
+                        <Button onClick={() => {setOpenCreateSpecificationModal(true)}}>
                             Прокат
                         </Button>
-                        <Button onClick={() => {
-                            setOpenCreateOptionModal(true)
-                        }}>
+                        <Button onClick={() => {setOpenCreateOptionModal(true)}}>
                             Внести на счёт
                         </Button>
                     </div>
@@ -97,29 +89,20 @@ export const MainPage = () => {
                         <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                             Каталог товаров
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)}}>
                             Каталог услуг
                         </Button>
 
-                        <Button onClick={() => {
-                            setOpenSupplyInvoiceArchiveModal(true)
-                        }}>
-
+                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
                             Заказы
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {setOpenEmployeeSalaryModal(true)}}>
                             Прокаты
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Счета клиентов
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>
                             Новая приходная накладная
                         </Button>
                     </div>

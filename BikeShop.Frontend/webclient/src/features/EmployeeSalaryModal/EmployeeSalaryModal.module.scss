@@ -1,0 +1,18 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.employeeSalaryModal_mainBlock {
+    @include defaultModalStyle;
+    width: 550px;
+
+    .employeeSalaryModal_title {
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .employeeSalaryModal_content {
+
+    }
+}

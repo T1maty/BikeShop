@@ -5,8 +5,8 @@ import {ArchiveAPI} from '../../entities'
 import {ErrorStatusTypes} from "../../entities/enumerables/ErrorStatusTypes"
 
 interface SupplyInvoiceArchiveModalStore {
-    openSupplyInvoiceArchiveModalStore: boolean
-    setOpenSupplyInvoiceArchiveModalStore: (value: boolean) => void
+    openSupplyInvoiceArchiveModal: boolean
+    setOpenSupplyInvoiceArchiveModal: (value: boolean) => void
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
@@ -15,9 +15,9 @@ interface SupplyInvoiceArchiveModalStore {
 }
 
 const useSupplyInvoiceArchiveModal = create<SupplyInvoiceArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    openSupplyInvoiceArchiveModalStore: false,
-    setOpenSupplyInvoiceArchiveModalStore: (value: boolean) => set({
-        openSupplyInvoiceArchiveModalStore: value
+    openSupplyInvoiceArchiveModal: false,
+    setOpenSupplyInvoiceArchiveModal: (value: boolean) => set({
+        openSupplyInvoiceArchiveModal: value
     }),
     isLoading: false,
     errorStatus: 'default',

@@ -11,8 +11,8 @@ export const SupplyInvoiceArchiveModal = () => {
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
 
-    const open = useSupplyInvoiceArchiveModal(s => s.openSupplyInvoiceArchiveModalStore)
-    const setOpen = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModalStore)
+    const open = useSupplyInvoiceArchiveModal(s => s.openSupplyInvoiceArchiveModal)
+    const setOpen = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
     const isLoading = useSupplyInvoiceArchiveModal(s => s.isLoading)
     const errorStatus = useSupplyInvoiceArchiveModal(s => s.errorStatus)
     const getArchive = useSupplyInvoiceArchiveModal(s => s.getArchive)
