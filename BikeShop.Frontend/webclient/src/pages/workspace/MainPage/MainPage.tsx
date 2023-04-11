@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
     ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
-    EditProductCardModal, EmployeeSalaryModal, EndWorkDayModal, SupplyInvoiceArchiveModal
+    EditProductCardModal, EmployeeSalaryModal, EndWorkDayModal, ReportDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -16,6 +16,7 @@ import useCreateOptionModal from '../../../features/CRUDModals/CreateOptionModal
 import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore'
 import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
+import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalStore"
 
 export const MainPage = () => {
 
@@ -27,6 +28,7 @@ export const MainPage = () => {
     const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
     const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
+    const setOpenReportDayModal = useReportDayModal(s => s.setOpenReportDayModal)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -67,6 +69,7 @@ export const MainPage = () => {
             <SupplyInvoiceArchiveModal/>
             <EmployeeSalaryModal/>
             <EndWorkDayModal/>
+            <ReportDayModal/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
@@ -136,13 +139,9 @@ export const MainPage = () => {
                 <div className={s.content_rightSide}>
                     <div className={s.rightSide_top}>
                         <div className={s.rightSide_top_search}>
-                            <ChooseClientModal extraCallback={(user: User) => {
-                                chooseClientHandler(user)
-                            }}/>
+                            <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
                             <Button buttonDivWrapper={s.search_chooseClientButton}
-                                    onClick={() => {
-                                        setOpenClientModal(true)
-                                    }}
+                                    onClick={() => {setOpenClientModal(true)}}
                             >
                                 Выбрать клиента
                             </Button>
@@ -157,22 +156,18 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_top_result}>
                             <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                    onClick={() => {
-                                        navigate(BikeShopPaths.WORKSPACE.CASHBOX)
-                                    }}>
+                                    onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
                                 Открыть кассу
                             </Button>
                             <Button buttonDivWrapper={s.result_cancelBtn}
-                                    onClick={() => {
-                                    }}>
+                                    onClick={() => {}}>
                                 X
                             </Button>
                             <div className={s.result_span}>
                                 Цена
                             </div>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {
-                                    }}>
+                                    onClick={() => {setOpenReportDayModal(true)}}>
                                 К оплате
                             </Button>
                         </div>
