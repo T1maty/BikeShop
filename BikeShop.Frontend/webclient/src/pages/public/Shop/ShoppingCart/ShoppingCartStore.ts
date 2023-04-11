@@ -1,12 +1,12 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItemType, CatalogProductItemTypeForCart} from '../../../../entities'
+import {CatalogProductItemType, CatalogProductItemTypeForCart, ProductOptionVariantBind} from '../../../../entities'
 
 interface ShoppingCartStore {
     cartProducts: CatalogProductItemTypeForCart[]
     setCartProducts: (products: CatalogProductItemTypeForCart[]) => void
-    setProductToCart: (product: CatalogProductItemType) => void
+    setProductToCart: (product: CatalogProductItemType, optionVariants: ProductOptionVariantBind[]) => void
     shoppingCartSum: number
     setShoppingCartSum: (sum: number) => void
 }
@@ -16,13 +16,13 @@ const useShoppingCart = create<ShoppingCartStore>()(/*persist(*/devtools(immer((
     setCartProducts: (products) => set(state => {
         state.cartProducts = products
     }),
-    setProductToCart: (product) => set(state => {
+    setProductToCart: (product, optionVariants) => set(state => {
         console.log('добавленный товар', product)
         state.cartProducts.push({
             ...product,
             productQuantity: 1,
             productTotalSum: product.product.retailPrice,
-            selectedProductOptions: []
+            selectedProductOptions: optionVariants
         })
     }),
     shoppingCartSum: 0,

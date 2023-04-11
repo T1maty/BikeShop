@@ -1,8 +1,8 @@
 import {CatalogProductItemType} from './CatalogProductItemType'
-import {ProductOptionsForShoppingCart} from '../../../pages/public/Shop/ShoppingCart/models/ProductOptionsForShoppingCart'
+import {ProductOptionVariantBind} from "./ProductOptionVariantBind";
 
 export interface CatalogProductItemTypeForCart extends CatalogProductItemType {
     productQuantity: number
     productTotalSum: number
-    selectedProductOptions: ProductOptionsForShoppingCart[]
+    selectedProductOptions: ProductOptionVariantBind[]
 }

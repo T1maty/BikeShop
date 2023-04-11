@@ -6,14 +6,18 @@ import {SubmitHandler, useForm} from 'react-hook-form'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import SorryNoImage from '../../../../shared/assets/shop/images/sorryNoImage.jpg'
-import Select from 'react-select'
+import Select, {SingleValue} from 'react-select'
 import useCatalog from './CatalogStore'
 import ShopLoaderScreen from '../../../../shared/assets/shop/icons/isLoadingBikeShop-03.gif'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {useSnackbar} from 'notistack'
 import Enumerable from 'linq'
 import {ProductOptionVariantBind} from '../../../../entities'
-import {SelectedOptionVariantType} from 'features/ProductCatalogFeatures/EditProductCardModal/EditProductCardOption'
+
+type SelectedOptionVariantType = {
+    id: number
+    value: ProductOptionVariantBind
+}
 
 // type DescriptionViewType = 'Characteristic' | 'Details' | 'Delivery'
 
@@ -37,36 +41,6 @@ export const CatalogProductItem = () => {
     const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)
     const [isDetails, setIsDetails] = useState<boolean>(false)
     const [isDelivery, setIsDelivery] = useState<boolean>(false)
-
-    const [selectedProductOption, setSelectedProductOption] = useState<ProductOptionVariantBind>()
-
-    // тестовые изображения
-    // const [myImages, setMyImages] = useState([
-    //     {
-    //         original: 'https://wallpapercave.com/wp/wp2118883.jpg',
-    //         thumbnail: 'https://wallpapercave.com/wp/wp2118883.jpg',
-    //     },
-    //     {
-    //         original: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-    //         thumbnail: 'https://i.pinimg.com/736x/74/cf/2e/74cf2eb33969be3c522581d9b48e376e.jpg',
-    //     },
-    //     {
-    //         original: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
-    //         thumbnail: 'https://i.pinimg.com/736x/a1/73/82/a1738256e54b5aa431b646967257c1e9--red-bull-world-cup.jpg',
-    //     },
-    //     {
-    //         original: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
-    //         thumbnail: 'https://i.pinimg.com/736x/37/cb/da/37cbda77cb69ad92ada1c6fc58c5bca0--mtb-downhill-mountainbiking.jpg',
-    //     },
-    //     {
-    //         original: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
-    //         thumbnail: 'https://ep1.pinkbike.org/p4pb15005029/p4pb15005029.jpg',
-    //     },
-    //     {
-    //         original: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
-    //         thumbnail: 'https://twentysix.ru/uploads/images/00/05/02/2016/10/12/c81810e528.jpg',
-    //     },
-    // ])
 
     // преобразование галереи под нужный тип библиотеки
     const myImages = currentProduct && currentProduct.productImages.map(img => {
@@ -97,6 +71,16 @@ export const CatalogProductItem = () => {
         setIsDelivery(isDelivery)
     }
 
+    const onChangeOptionsVariantHandler = (value: SingleValue<SelectedOptionVariantType>) => {
+        if (value != undefined) {
+            let buf = selectedOptionVariant.filter(n => n.id != value.value.optionId)
+            console.log('Сетаем вариант', value)
+            buf.push(value)
+            setSelectedOptionVariant(buf)
+            console.log('стейт селекта', selectedOptionVariant)
+        }
+    }
+
     const addProductToCartHandler = () => {
         if (Enumerable.from(cartProducts).select(n => n.product.id).contains(currentProduct!.product.id)) {
             enqueueSnackbar('Этот товар уже есть в корзине',
@@ -105,7 +89,7 @@ export const CatalogProductItem = () => {
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}
                 })
         } else {
-            setProductToCart(currentProduct!)
+            setProductToCart(currentProduct!, Enumerable.from(selectedOptionVariant).select(n => n.value).toArray())
             enqueueSnackbar('Товар добавлен в корзину',
                 {
                     variant: 'success', autoHideDuration: 2000,
@@ -174,15 +158,22 @@ export const CatalogProductItem = () => {
                                             <Select
                                                 key={po.id}
                                                 className={s.product_selectBox}
-                                                options={Enumerable.from(currentProduct.productOptions).where(n => n.optionId === po.optionId).toArray()}
+                                                options={Enumerable.from(currentProduct.productOptions)
+                                                    .where(n => n.optionId === po.optionId)
+                                                    .select(n => {
+                                                        return {id: n.optionId, value: n} as SelectedOptionVariantType
+                                                    }).toArray()}
                                                 placeholder={po.optionName}
                                                 isSearchable={false}
-                                                // value={selectedSpecification ? selectedSpecification : null}
-                                                // onChange={(value) => {
-                                                //     setSelectedSpecification(value as ProductSpecificationBind)
-                                                // }}
-                                                getOptionLabel={label => label!.name}
-                                                getOptionValue={value => value!.name}
+
+                                                value={selectedOptionVariant.find(n => n.id === po.optionId)
+                                                    ? selectedOptionVariant.find(n => n.id === po.optionId) : null}
+                                                onChange={(value) => {
+                                                    onChangeOptionsVariantHandler(value)
+                                                }}
+
+                                                getOptionLabel={label => label!.value.name}
+                                                getOptionValue={value => value!.value.name}
                                                 noOptionsMessage={() => 'Характеристика не найдена'}
                                             />
 

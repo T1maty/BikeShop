@@ -76,7 +76,7 @@ export const Catalog = () => {
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}
                 })
         } else {
-            setProductToCart(product)
+            //setProductToCart(product)
             enqueueSnackbar('Товар добавлен в корзину',
                 {
                     variant: 'success', autoHideDuration: 2000,
@@ -191,10 +191,13 @@ export const Catalog = () => {
                                     <div className={s.item_buy}>
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
                                         <div className={s.item_cart}
-                                             onClick={() => {addProductToCartHandler(prod)}}
+                                             onClick={() => {
+                                                 addProductToCartHandler(prod)
+                                             }}
                                         >
-                                            <img src={Enumerable.from(cartProducts).select(n => n.product.id).contains(prod.product.id)
-                                                ? CartFull : Cart} alt="cart-logo"
+                                            <img
+                                                src={Enumerable.from(cartProducts).select(n => n.product.id).contains(prod.product.id)
+                                                    ? CartFull : Cart} alt="cart-logo"
                                             />
                                         </div>
                                     </div>

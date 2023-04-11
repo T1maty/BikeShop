@@ -15,7 +15,7 @@ interface ControlledProps {
     disabled?: boolean
 }
 
-export type SelectedOptionVariantType = {
+type SelectedOptionVariantType = {
     id: number
     value: ProductOptionVariant
 }
@@ -33,7 +33,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
     // доступные опции и варианты
     const availableOptions = (field: any) => {
         let optionIds: number[] = []
-        field.value.forEach((n: ProductOption) => {optionIds.push(n.id)})
+        field.value.forEach((n: ProductOption) => {
+            optionIds.push(n.id)
+        })
         return allOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
     }
 
@@ -45,7 +47,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
         let buf = optionItem?.optionVariants.filter(n => !ids.includes(n.id))
 
         let result: { id: number, value: any }[] = []
-        buf?.forEach(n => {result.push({id: option.id, value: n})})
+        buf?.forEach(n => {
+            result.push({id: option.id, value: n})
+        })
 
         return result
     }
@@ -148,7 +152,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                         </div>
                                                         <div className={s.rowItems_chooseItem}>
                                                             <Button buttonDivWrapper={s.options_button}
-                                                                    onClick={() => {addOptionVariantHandler(field, option)}}
+                                                                    onClick={() => {
+                                                                        addOptionVariantHandler(field, option)
+                                                                    }}
                                                                     disabled={selectedOptionVariant.find(n => n.id === option.id) === undefined}
                                                             >
                                                                 +
@@ -177,7 +183,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {addOptionListHandler(field)}}
+                                    onClick={() => {
+                                        addOptionListHandler(field)
+                                    }}
                                     disabled={selectedOption === null}
                             >
                                 +
@@ -188,7 +196,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
-                                onChange={(value: any) => {setSelectedOption(value)}}
+                                onChange={(value: any) => {
+                                    setSelectedOption(value)
+                                }}
                                 getOptionLabel={label => label!.name}
                                 getOptionValue={value => value!.name}
                                 noOptionsMessage={() => 'Опция не найдена'}
