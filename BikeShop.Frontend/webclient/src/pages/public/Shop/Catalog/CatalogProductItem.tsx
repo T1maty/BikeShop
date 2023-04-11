@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import s from './CatalogProductItem.module.scss'
 import parse from 'html-react-parser'
-import {Button, ControlledReactSelect, LoaderScreenForShop} from '../../../../shared/ui'
-import {SubmitHandler, useForm, Controller} from 'react-hook-form'
+import {Button, LoaderScreenForShop} from '../../../../shared/ui'
+import {SubmitHandler, useForm} from 'react-hook-form'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
-import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import SorryNoImage from '../../../../shared/assets/shop/images/sorryNoImage.jpg'
 import Select from 'react-select'
 import useCatalog from './CatalogStore'
@@ -113,26 +112,10 @@ export const CatalogProductItem = () => {
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}
                 })
         }
+    }
 
-        // if (cartProducts.length === 0) {
-        //     enqueueSnackbar('Товар добавлен в корзину',
-        //         {variant: 'success', autoHideDuration: 2000,
-        //             anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-        //     setProductToCart(currentProduct!)
-        // } else {
-        //     cartProducts.forEach((prod) => {
-        //         if (prod.product.id === currentProduct!.product.id) {
-        //             enqueueSnackbar('Этот товар уже есть в корзине',
-        //                 {variant: 'info', autoHideDuration: 2000,
-        //                     anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-        //         } else {
-        //             enqueueSnackbar('Товар добавлен в корзину',
-        //                 {variant: 'success', autoHideDuration: 2000,
-        //                     anchorOrigin: {vertical: 'top', horizontal: 'right'}})
-        //             setProductToCart(currentProduct!)
-        //         }
-        //     })
-        // }
+    const getOptionsHandler = () => {
+
     }
 
     useEffect(() => {
@@ -162,13 +145,13 @@ export const CatalogProductItem = () => {
                     <div className={s.product_images}>
                         <ImageGallery items={myImages && myImages.length > 0 ? myImages : noImages}
                                       showPlayButton={false}
-                                      // showFullscreenButton={false}
+                            // showFullscreenButton={false}
                                       showIndex={true}
                                       showNav={false}
                                       showBullets={true}
                                       thumbnailPosition={'left'}
                                       onErrorImageURL={SorryNoImage}
-                                      // additionalClass={s.imageGallery}
+                            // additionalClass={s.imageGallery}
                         />
                     </div>
                     <div className={s.product_info}>
@@ -183,49 +166,32 @@ export const CatalogProductItem = () => {
                         {/*    control={formControl.control}*/}
                         {/*    render={({field}: any) =>*/}
 
-                                <div className={s.product_select}>
-                                    {
-                                        currentProduct.productOptions.map((po: ProductOptionVariantBind) => {
-                                            return (
-                                                <Select
-                                                    key={po.id}
-                                                    className={s.product_selectBox}
-                                                    // options={getSpecificationsHandler(field)}
-                                                    placeholder={'Характеристика'}
-                                                    isSearchable={false}
-                                                    // value={selectedSpecification ? selectedSpecification : null}
-                                                    // onChange={(value) => {
-                                                    //     setSelectedSpecification(value as ProductSpecificationBind)
-                                                    // }}
-                                                    // getOptionLabel={label => label!.name}
-                                                    // getOptionValue={value => value!.name}
-                                                    noOptionsMessage={() => 'Характеристика не найдена'}
-                                                />
+                        <div className={s.product_select}>
+                            {
+                                Enumerable.from(currentProduct.productOptions).distinct(n => n.optionId).toArray()
+                                    .map((po: ProductOptionVariantBind) => {
+                                        return (
+                                            <Select
+                                                key={po.id}
+                                                className={s.product_selectBox}
+                                                options={Enumerable.from(currentProduct.productOptions).where(n => n.optionId === po.optionId).toArray()}
+                                                placeholder={po.optionName}
+                                                isSearchable={false}
+                                                // value={selectedSpecification ? selectedSpecification : null}
+                                                // onChange={(value) => {
+                                                //     setSelectedSpecification(value as ProductSpecificationBind)
+                                                // }}
+                                                getOptionLabel={label => label!.name}
+                                                getOptionValue={value => value!.name}
+                                                noOptionsMessage={() => 'Характеристика не найдена'}
+                                            />
 
-                                                // <ControlledReactSelect control={formControl}
-                                                //                        name={'selectedProductOptions'}
-                                                //                        className={s.product_selectBox}
-                                                //                        placeholder={'Характеристика'}
-                                                //                        isSearchable={false}
-                                                //                         // disabled={currentService === null && !isCreating}
-                                                //                        value={formControl.getFieldState('selectedProductOptions')}
-                                                //                        onChangeSelect={(value: any) => {
-                                                //                            formControl.setValue('productSelect', value)
-                                                //                        }}
-                                                //                        data={currentProduct.productOptions.map((el: any) => {
-                                                //                            return {
-                                                //                                value: el.value,
-                                                //                                label: el.label,
-                                                //                            }
-                                                //                        })}
-                                                //                        noOptionsMessage={() => 'Характеристика не найдена'}
-                                                // />
-                                            )
-                                        })
-                                    }
-                                </div>
+                                        )
+                                    })
+                            }
+                        </div>
 
-                            {/*}*/}
+                        {/*}*/}
                         {/*/>*/}
 
                         <div className={s.product_buy}>
