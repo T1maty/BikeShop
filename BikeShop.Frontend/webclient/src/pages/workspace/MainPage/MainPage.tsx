@@ -2,8 +2,13 @@ import React, {useState} from 'react'
 import s from "./MainPage.module.scss"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
-import {ChooseClientModal, CreateProductModal, CreateOptionModal,
-    CreateSpecificationModal, EditProductCardModal} from '../../../features'
+import {
+    ChooseClientModal,
+    CreateOptionModal,
+    CreateProductModal,
+    CreateSpecificationModal,
+    EditProductCardModal
+} from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {User} from "../../../entities"
@@ -64,19 +69,27 @@ export const MainPage = () => {
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Создать заказ
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Добавить горячего клиента
                         </Button>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                        }}>
                             Ремонты
                         </Button>
-                        <Button onClick={() => {setOpenCreateSpecificationModal(true)}}>
+                        <Button onClick={() => {
+                            setOpenCreateSpecificationModal(true)
+                        }}>
                             Прокат
                         </Button>
-                        <Button onClick={() => {setOpenCreateOptionModal(true)}}>
+                        <Button onClick={() => {
+                            setOpenCreateOptionModal(true)
+                        }}>
                             Внести на счёт
                         </Button>
                     </div>
@@ -84,20 +97,30 @@ export const MainPage = () => {
                         <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                             Каталог товаров
                         </Button>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)}}>
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
+                        }}>
                             Каталог услуг
                         </Button>
-                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
+
+                        <Button onClick={() => {
+                            setOpenSupplyInvoiceArchiveModal(true)
+                        }}>
+
                             Заказы
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Прокаты
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Счета клиентов
                         </Button>
-                        <Button onClick={() => {}}>
-                            Перемещение
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                        }}>
+                            Новая приходная накладная
                         </Button>
                     </div>
                 </div>
@@ -127,9 +150,13 @@ export const MainPage = () => {
                 <div className={s.content_rightSide}>
                     <div className={s.rightSide_top}>
                         <div className={s.rightSide_top_search}>
-                            <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                            <ChooseClientModal extraCallback={(user: User) => {
+                                chooseClientHandler(user)
+                            }}/>
                             <Button buttonDivWrapper={s.search_chooseClientButton}
-                                    onClick={() => {setOpenClientModal(true)}}
+                                    onClick={() => {
+                                        setOpenClientModal(true)
+                                    }}
                             >
                                 Выбрать клиента
                             </Button>
@@ -144,18 +171,22 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_top_result}>
                             <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                    onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
-                                Выбрать кассу
+                                    onClick={() => {
+                                        navigate(BikeShopPaths.WORKSPACE.CASHBOX)
+                                    }}>
+                                Открыть кассу
                             </Button>
                             <Button buttonDivWrapper={s.result_cancelBtn}
-                                    onClick={() => {}}>
+                                    onClick={() => {
+                                    }}>
                                 X
                             </Button>
                             <div className={s.result_span}>
                                 Цена
                             </div>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {}}>
+                                    onClick={() => {
+                                    }}>
                                 К оплате
                             </Button>
                         </div>
@@ -175,7 +206,8 @@ export const MainPage = () => {
                             </div>
                             <div className={s.bottom_right_two}>
                                 <Button buttonDivWrapper={s.right_two_button}
-                                        onClick={() => {}}>
+                                        onClick={() => {
+                                        }}>
                                     Закончить смену
                                 </Button>
                                 <div className={s.right_two_span}>

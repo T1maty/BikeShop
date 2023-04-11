@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using BikeShop.Shop.Application.Implemetations;
 using BikeShop.Shop.Application.Interfaces;
 using BikeShop.Shop.Application.Services;
 using MediatR;
@@ -13,6 +14,7 @@ public static class DependencyInjection
         services.AddMediatR(Assembly.GetExecutingAssembly());
         
         services.AddScoped<IGetAllServices, GetAllService>();
+        services.AddScoped<IShiftService, ShiftService>();
         
         return services;
     }
