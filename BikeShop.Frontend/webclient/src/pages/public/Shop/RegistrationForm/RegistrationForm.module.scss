@@ -1,0 +1,21 @@
+﻿@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.loginForm_mainBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: -100px;
+    margin-left: 200px;
+    background-color: $themeColorDark;
+    border: 1px solid white;
+    width: 350px;
+    height: 300px;
+    @include flexColumn;
+
+    @include registrationBlock(240px); // main layout styles
+
+    @media(max-width: 767px) {
+        display: none;
+    }
+}
