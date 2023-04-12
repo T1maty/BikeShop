@@ -14,4 +14,8 @@
     @include flexColumn;
 
     @include registrationBlock(240px); // main layout styles
+
+    @media(max-width: 767px) {
+        display: none;
+    }
 }
