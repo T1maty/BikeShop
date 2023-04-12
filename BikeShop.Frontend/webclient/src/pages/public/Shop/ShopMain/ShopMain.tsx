@@ -105,7 +105,7 @@ export const ShopMain = () => {
                                 Каталог
                             </div>
                             <div>Мастерская</div>
-                            <div>Фото</div>
+                            <div>Фотографии</div>
                             <div>Контакты</div>
                         </div>
                     </div>
