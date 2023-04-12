@@ -2,13 +2,9 @@
 @import '../../../../app/styles/variables/variables';
 
 .shop_wrapper {
-    //@include defaultContainer;
-    min-height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    @include defaultContainer;
 
-    //.shop_mainBox {
+    .shop_mainBox {
 
         .header {
             position: relative;
@@ -53,52 +49,33 @@
 
         .content {
             background-color: green;
-            flex: 1 1 auto; // прибиваем футер вниз
 
             .menu {
+                @include flexBetween;
                 background-color: $themeShopColorGray;
                 height: 80px;
+                padding: $containerShopPadding;
+                font-size: 32px;
+                font-weight: bold;
+                color: black;
 
-                @media(max-width: 650px) {
-                    height: 50px;
+                .menu_items {
+                    @include flexBetween;
+                    gap: 50px;
+
+                    > div {
+                        @include hoverCursorPointer;
+
+                        &:hover {
+                            color: darkgoldenrod;
+                        }
+                    }
                 }
-                @media(max-width: 463px) {
-                    height: 50px;
-                }
 
-                .container {
-                    @include defaultContainer; // ограничивающий контейнер
-
-                    .menu_items {
-                        @include flexBetween;
-                        height: 80px;
-                        font-size: 32px;
-                        font-weight: bold;
-                        color: black;
-
-                        @media(max-width: 1400px) {
-                            padding: 0 50px;
-                        }
-
-                        @media(max-width: 767px) {
-                            font-size: 26px;
-                            padding: 0 20px;
-                        }
-                        @media(max-width: 650px) {
-                            height: 50px;
-                            font-size: 18px;
-                        }
-                        @media(max-width: 463px) {
-                            height: 50px;
-                            font-size: 14px;
-                        }
-
-                        > div {
-                            @include hoverCursorPointer;
-                            &:hover {
-                                color: darkgoldenrod;
-                            }
-                        }
+                .menu_social {
+                    img {
+                        width: 60px;
+                        height: 60px;
                     }
                 }
             }
@@ -161,8 +138,8 @@
         .map {
             position: relative;
             img {
-                width: 100%;
+                width: 1400px;
             }
         }
-    //}
+    }
 }
