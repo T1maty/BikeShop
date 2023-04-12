@@ -3,10 +3,10 @@
 // container mixins
 @mixin defaultContainer() {
     //border: 1px solid white;
+    //box-sizing: border-box;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 15px;
-    box-sizing: border-box;
 }
 
 @mixin wrapperMainBlock() {
