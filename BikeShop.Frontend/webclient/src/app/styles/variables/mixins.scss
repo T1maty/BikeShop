@@ -5,6 +5,8 @@
     //border: 1px solid white;
     max-width: 1400px;
     margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
 }
 
 @mixin wrapperMainBlock() {

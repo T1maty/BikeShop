@@ -51,7 +51,7 @@ export const ShopMain = () => {
 
     return (
         <div className={s.shop_wrapper}>
-            <div className={s.shop_mainBox}>
+            {/*<div className={s.shop_mainBox}>*/}
                 <div className={s.header}>
                     {/*<div className={s.header_slider}>*/}
                     {/*    <img src={headerPhoto} alt="header-photo"/>*/}
@@ -100,9 +100,9 @@ export const ShopMain = () => {
                             <div>Фото</div>
                             <div>Контакты</div>
                         </div>
-                        <div className={s.menu_social}>
-                            <img src={socialLogo} alt="social-logo"/>
-                        </div>
+                        {/*<div className={s.menu_social}>*/}
+                        {/*    <img src={socialLogo} alt="social-logo"/>*/}
+                        {/*</div>*/}
                     </div>
 
                     <div className={s.catalog}>
@@ -141,7 +141,7 @@ export const ShopMain = () => {
                 </div>
 
                 <ShopFooter/>
-            </div>
+            {/*</div>*/}
         </div>
-    );
-};
+    )
+}

@@ -2,9 +2,13 @@
 @import '../../../../app/styles/variables/variables';
 
 .shop_wrapper {
-    @include defaultContainer;
+    //@include defaultContainer;
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
-    .shop_mainBox {
+    //.shop_mainBox {
 
         .header {
             position: relative;
@@ -49,6 +53,7 @@
 
         .content {
             background-color: green;
+            flex: 1 1 auto; // прибиваем футер вниз
 
             .menu {
                 @include flexBetween;
@@ -141,5 +146,5 @@
                 width: 1400px;
             }
         }
-    }
+    //}
 }

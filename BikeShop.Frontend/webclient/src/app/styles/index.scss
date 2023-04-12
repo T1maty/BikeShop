@@ -1,11 +1,12 @@
 @import "reset";
 @import "./variables/global";
+@import "./variables/variables";
 @import "./themes/normal";
 @import "./themes/dark";
 
 .app {
     overflow: auto;
-    background-color: black;
+    background-color: $themeColorGray;
     color: white;
 }
 
