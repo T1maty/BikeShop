@@ -109,9 +109,7 @@ export const ShopMain = () => {
                 <div className={s.menu}>
                     <div className={s.container}>
                         <div className={s.menu_items}>
-                            <div onClick={() => {
-                                navigate(BikeShopPaths.SHOP.CATALOG)
-                            }}>
+                            <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG)}}>
                                 Каталог
                             </div>
                             <div>Мастерская</div>
@@ -124,25 +122,25 @@ export const ShopMain = () => {
                 <div className={s.catalog}>
                     <div className={s.container}>
                         <div className={s.catalog_items}>
-                            {/*<div className={s.catalog_item}>*/}
-                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
-                            {/*</div>*/}
-                            {/*<div className={s.catalog_item}>*/}
-                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
-                            {/*</div>*/}
-                            {/*<div className={s.catalog_item}>*/}
-                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
-                            {/*</div>*/}
-                            <div className={s.catalog_item}>
+                            <div className={s.catalog_item1}>
                                 <img src={testImage1} alt="catalog-spares"/>
                             </div>
-                            <div className={`${s.catalog_items} ${s.catalog_items_big}`}>
+                            <div className={s.catalog_item2}>
+                                <img src={testImage1} alt="catalog-spares"/>
+                            </div>
+                            <div className={s.catalog_item3}>
+                                <img src={testImage1} alt="catalog-spares"/>
+                            </div>
+                            <div className={s.catalog_item4}>
+                                <img src={testImage1} alt="catalog-spares"/>
+                            </div>
+                            <div className={s.catalog_item5}>
                                 <img src={testImage2} alt="catalog-spares"/>
                             </div>
-                            <div className={`${s.catalog_items} ${s.catalog_items_long1}`}>
+                            <div className={s.catalog_item6}>
                                 <img src={testImage3} alt="catalog-accessories"/>
                             </div>
-                            <div className={`${s.catalog_items} ${s.catalog_items_long2}`}>
+                            <div className={s.catalog_item7}>
                                 <img src={testImage3} alt="catalog-food"/>
                             </div>
                         </div>

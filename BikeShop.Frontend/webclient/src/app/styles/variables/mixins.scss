@@ -9,6 +9,14 @@
     //padding: 0 15px;
 }
 
+@mixin defaultContainerForShop() {
+    //border: 1px solid white;
+    //box-sizing: border-box;
+    max-width: 1400px;
+    margin: 0 auto;
+    //padding: 0 15px;
+}
+
 @mixin wrapperMainBlock() {
     min-height: calc(100vh - var(--navbar-height));
     padding: $defaultLargeMargin;

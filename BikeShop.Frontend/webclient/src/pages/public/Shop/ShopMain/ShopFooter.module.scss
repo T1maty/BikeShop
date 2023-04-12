@@ -5,18 +5,19 @@
     background-color: $themeShopColorDark;
 
     .container {
-        @include defaultContainer; // ограничивающий контейнер
+        @include defaultContainerForShop; // ограничивающий контейнер
 
         .footer_body {
             display: flex;
             flex-wrap: wrap;
-            margin: 0 -15px -15px -30px; //*
+            //margin: 0 -15px -15px -30px; //*
 
             .links_column {
                 flex: 0 1 25%;
                 justify-content: center;
-                margin: 0 0 30px 0; //*
-                padding: 0 15px; //*
+                //margin: 0 0 30px 0; //*
+                //padding: 0 15px; //*
+                padding: 20px;
 
                 @media(max-width: 767px) {
                     flex: 0 1 50%;
@@ -27,7 +28,7 @@
 
                 .links_item {
                     text-align: center;
-                    padding: 15px 0 0; // отступ внутри для фулл
+                    //padding: 15px 0 0; // отступ внутри для фулл
 
                     .item_title {
                         font-weight: bold;

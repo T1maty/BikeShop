@@ -71,25 +71,28 @@
                 }
 
                 .container {
-                    @include defaultContainer; // ограничивающий контейнер
+                    @include defaultContainerForShop; // ограничивающий контейнер
 
                     .menu_items {
-                        @include flexBetween;
-                        gap: 10px;
+                        //@include flexBetween;
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        //gap: 10px;
                         height: 80px;
                         font-size: 32px;
                         font-weight: bold;
                         color: black;
 
                         @media(max-width: 1400px) {
-                            padding: 0 50px;
+                            //padding: 0 50px;
                         }
                         @media(max-width: 943px) {
                             font-size: 26px;
                         }
                         @media(max-width: 820px) {
                             font-size: 22px;
-                            padding: 0 20px;
+                            //padding: 0 20px;
                         }
                         @media(max-width: 650px) {
                             height: 50px;
@@ -119,30 +122,50 @@
                 //display: grid;
 
                 .container {
-                    @include defaultContainer; // ограничивающий контейнер
+                    @include defaultContainerForShop; // ограничивающий контейнер
                     padding: 0;
 
                     .catalog_items {
                         display: grid;
-                        //gap: 20px;
-                        grid-template-columns: repeat(2, 1fr);
-                        grid-template-rows: repeat(2, 350px);
-                        //grid-template-areas:
-                        //    'block1 block2'
-                        //    'block3 block4';
+                        gap: 20px;
+                        grid-template-columns: repeat(4, 350px);
+                        grid-template-rows: repeat(3, 350px);
+                        grid-template-areas:
+                            'photo1 photo2 photo5 photo5'
+                            'photo3 photo4 photo5 photo5'
+                            'photo6 photo6 photo7 photo7';
 
-                        .catalog_item {
-                            //grid-area: block1;
+                        .catalog_item1 {
+                            grid-area: photo1;
                         }
-                        .catalog_items_big {
-                            //grid-area: block2;
+                        .catalog_item2 {
+                            grid-area: photo2;
                         }
-                        .catalog_items_long1 {
-                            //grid-area: block3;
+                        .catalog_item3 {
+                            grid-area: photo3;
                         }
-                        .catalog_items_long2 {
-                            //grid-area: block4;
+                        .catalog_item4 {
+                            grid-area: photo4;
                         }
+                        .catalog_item5 {
+                            grid-area: photo5;
+                        }
+                        .catalog_item6 {
+                            grid-area: photo6;
+                        }
+                        .catalog_item7 {
+                            grid-area: photo7;
+                        }
+
+                        //.catalog_item_big {
+                        //
+                        //}
+                        //.catalog_item_long1 {
+                        //
+                        //}
+                        //.catalog_item_long2 {
+                        //
+                        //}
                     }
 
                     // незаконченный вариант-2
