@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom"
 import {LoginData} from "../../../entities"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import useAuthUser from '../useAuthUser'
-import {ControlledCustomInput, Button} from '../../../shared/ui'
+import {Button, ControlledCustomInput} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 
 export const LoginPage = () => {
@@ -66,17 +66,20 @@ export const LoginPage = () => {
                                                    rules={{required: Errors[0].name}}
                             />
                         </div>
+                        <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
+                            Вход
+                        </Button>
                     </form>
                 </div>
                 <div className={s.loginForm_buttons}>
                     <Button buttonDivWrapper={s.loginForm_registerButton}
-                            onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
+                            onClick={() => {
+                                navigate(BikeShopPaths.COMMON.REGISTRATION)
+                            }}
                     >
                         Регистрация
                     </Button>
-                    <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
-                        Вход
-                    </Button>
+
                 </div>
 
             </div>

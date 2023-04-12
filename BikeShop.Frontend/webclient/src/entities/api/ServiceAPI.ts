@@ -8,7 +8,7 @@ import {UpdateServiceStatus} from '../requests/UpdateService'
 export const ServiceAPI = {
     getMasters(): any {
         return (
-            $api.get<GetUsersResponse[]>('/service/find')
+            $api.get<GetUsersResponse[]>('/user/find')
         )
     },
     getAllServicesInfo(): Promise<AxiosResponse<ServiceItem[]>> {
