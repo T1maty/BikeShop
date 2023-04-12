@@ -12,6 +12,5 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
         public bool enabled { get; set; }
         public int OptionVariantId { get; set; }
         public int SortOrder { get; set; }
-        public int LinkProductId { get; set; }
     }
 }
