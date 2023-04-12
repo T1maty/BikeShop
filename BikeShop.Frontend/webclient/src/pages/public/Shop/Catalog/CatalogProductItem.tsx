@@ -110,7 +110,8 @@ export const CatalogProductItem = () => {
         getCurrentProduct(+params.productId!)
     }, [params])
 
-    // так как нужно преобразовать массив изображений, необходимо сделать доп. проверку myImages
+    // так как нужно преобразовать массив изображений,
+    // то необходимо сделать дополнительную проверку для myImages
     if (isLoading || !myImages) {
         return <LoaderScreenForShop image={ShopLoaderScreen}/>
     } else {

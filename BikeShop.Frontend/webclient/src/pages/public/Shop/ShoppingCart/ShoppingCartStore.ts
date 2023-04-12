@@ -1,12 +1,12 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItemType, CatalogProductItemTypeForCart, ProductOptionVariantBind} from '../../../../entities'
+import {ShoppingCartProductType, ProductFullData, ProductOptionVariantBind} from '../../../../entities'
 
 interface ShoppingCartStore {
-    cartProducts: CatalogProductItemTypeForCart[]
-    setCartProducts: (products: CatalogProductItemTypeForCart[]) => void
-    setProductToCart: (product: CatalogProductItemType, optionVariants: ProductOptionVariantBind[]) => void
+    cartProducts: ShoppingCartProductType[]
+    setCartProducts: (products: ShoppingCartProductType[]) => void
+    setProductToCart: (product: ProductFullData, optionVariants: ProductOptionVariantBind[]) => void
     shoppingCartSum: number
     setShoppingCartSum: (sum: number) => void
 }

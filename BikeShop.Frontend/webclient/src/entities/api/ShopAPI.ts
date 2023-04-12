@@ -1,7 +1,7 @@
 import {$api} from "../../shared"
 import {ProductTag} from "../entities/ProductTag"
 import {AxiosResponse} from "axios"
-import {CatalogProductItemType} from "../models/Product/CatalogProductItemType"
+import {ProductFullData} from "../models/ProductFullData"
 
 export const ShopAPI = {
     getTags(): Promise<AxiosResponse<ProductTag[]>> {
@@ -9,9 +9,9 @@ export const ShopAPI = {
             $api.get<ProductTag[]>('/public/gettags')
         )
     },
-    getDefaultProducts(): Promise<AxiosResponse<CatalogProductItemType[]>> {
+    getDefaultProducts(): Promise<AxiosResponse<ProductFullData[]>> {
         return (
-            $api.get<CatalogProductItemType[]>('/public/defaultproducts?Quantity=10')
+            $api.get<ProductFullData[]>('/public/defaultproducts?Quantity=10')
         )
     },
 }

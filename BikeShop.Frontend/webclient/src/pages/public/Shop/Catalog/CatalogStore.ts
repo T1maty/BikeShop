@@ -1,8 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogProductItemType, ProductCardAPI, ProductFullData,
-    ProductTag, ShopAPI} from '../../../../entities'
+import {ProductCardAPI, ProductFullData, ProductTag, ShopAPI} from '../../../../entities'
 import {ErrorStatusTypes} from '../../../../entities/enumerables/ErrorStatusTypes'
 
 interface UseCatalogStore {
@@ -13,13 +12,11 @@ interface UseCatalogStore {
     tags: ProductTag[]
     getTags: () => void
 
-    defaultProducts: CatalogProductItemType[]
+    defaultProducts: ProductFullData[]
     getDefaultProducts: () => void
 
-    // currentProduct: ProductFullData | null
-    currentProduct: CatalogProductItemType | null
-    // setCurrentProduct: (product: ProductFullData | null) => void
-    setCurrentProduct: (product: CatalogProductItemType | null) => void
+    currentProduct: ProductFullData | null
+    setCurrentProduct: (product: ProductFullData | null) => void
     getCurrentProduct: (productId: number) => void
 }
 
@@ -61,8 +58,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         })
     },
 
-    // currentProduct: {} as ProductFullData,
-    currentProduct: {} as CatalogProductItemType,
+    currentProduct: {} as ProductFullData,
     setCurrentProduct: (product) => {
         set({currentProduct: product})
     },

@@ -10,7 +10,7 @@ import useCatalog from './CatalogStore'
 import {ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
-import {CatalogProductItemType} from "../../../../entities"
+import {ProductFullData} from "../../../../entities"
 import Enumerable from "linq"
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
@@ -59,7 +59,6 @@ export const Catalog = () => {
     const filterUniversalHandler = (filterName: FilterProductsType,
                                     activeFilter1: boolean, activeFilter2: boolean,
                                     activeFilter3: boolean, activeFilter4: boolean) => {
-
         // setFilter(services.filter(serv => serv.status === filterName))
         setFilterStatus(filterName)
         setActiveFilter1(activeFilter1)
@@ -68,7 +67,7 @@ export const Catalog = () => {
         setActiveFilter4(activeFilter4)
     }
 
-    const addProductToCartHandler = (product: CatalogProductItemType) => {
+    const addProductToCartHandler = (product: ProductFullData) => {
         if (Enumerable.from(cartProducts).select(n => n.product.id).contains(product.product.id)) {
             enqueueSnackbar('Этот товар уже есть в корзине',
                 {
@@ -76,13 +75,19 @@ export const Catalog = () => {
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}
                 })
         } else {
-            //setProductToCart(product)
+            setProductToCart(product, product.productOptions)
             enqueueSnackbar('Товар добавлен в корзину',
                 {
                     variant: 'success', autoHideDuration: 2000,
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}
                 })
         }
+    }
+
+    const setCurrentProductToStore = (product: ProductFullData) => {
+        console.log('выбранный продукт', product)
+        setCurrentProduct(product)
+        navigate(`/shop/catalog/${product.product.id}`)
     }
 
     useEffect(() => {
@@ -168,11 +173,7 @@ export const Catalog = () => {
                             defaultProducts.map(prod => (
                                 <div key={prod.product.id} className={s.content_item}>
                                     <div className={s.item_content}
-                                         onClick={() => {
-                                             console.log('выбранный продукт', prod)
-                                             setCurrentProduct(prod) // сетаем продукт в стор
-                                             navigate(`/shop/catalog/${prod.product.id}`)
-                                         }}
+                                         onClick={() => {setCurrentProductToStore(prod)}}
                                     >
                                         <div className={s.item_image}>
                                             {
@@ -191,9 +192,7 @@ export const Catalog = () => {
                                     <div className={s.item_buy}>
                                         <div className={s.item_price}>{prod.product.retailPrice}</div>
                                         <div className={s.item_cart}
-                                             onClick={() => {
-                                                 addProductToCartHandler(prod)
-                                             }}
+                                             onClick={() => {addProductToCartHandler(prod)}}
                                         >
                                             <img
                                                 src={Enumerable.from(cartProducts).select(n => n.product.id).contains(prod.product.id)

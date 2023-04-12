@@ -6,7 +6,7 @@ import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import {useComponentVisible} from "../../../../shared/hooks/useComponentVisible"
-import {CatalogProductItemTypeForCart} from "../../../../entities"
+import {ShoppingCartProductType} from "../../../../entities"
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 
@@ -24,7 +24,7 @@ export const ShoppingCart = () => {
         setCartProducts(cartProducts.filter(pr => pr.product.id !== productId))
     }
 
-    const productCartQuantityHandler = (product: CatalogProductItemTypeForCart, action: number) => {
+    const productCartQuantityHandler = (product: ShoppingCartProductType, action: number) => {
         setCartProducts(cartProducts.map(el => el.product.id === product.product.id ?
             {...el, productQuantity: el.productQuantity + action,
                 productTotalSum: ((el.productQuantity + action) * el.product.retailPrice)

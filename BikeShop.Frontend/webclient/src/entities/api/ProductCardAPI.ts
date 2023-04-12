@@ -16,7 +16,7 @@ export const ProductCardAPI = {
         )
     },
     uploadNewImage(data: any): Promise<any> {
-        const productId = 1 // надо поставить динамический
+        const productId = 1 // надо поставить динамический id
         return (
             $api.post<any>(`/product/addimagetoproduct?productId=${productId}`, data)
         )
