@@ -55,6 +55,8 @@ export const ShopMain = () => {
     const userLastName = 'Петров'
     const userFirstName = 'Василий'
 
+    const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
+
     return (
         <div className={s.shop_wrapper}>
             <div className={s.header}>
@@ -123,38 +125,27 @@ export const ShopMain = () => {
                     <div className={s.container}>
 
                         <div className={s.catalog_items}>
-                            {/*<div className={s.catalog_group1}>*/}
-                                <div className={s.catalog_item}>
-                                    <img src={testImage1} alt="catalog-spares"/>
-                                </div>
-                                <div className={s.catalog_item}>
-                                    <img src={testImage1} alt="catalog-spares"/>
-                                </div>
-                                <div className={s.catalog_item}>
-                                    <img src={testImage1} alt="catalog-spares"/>
-                                </div>
-                                <div className={s.catalog_item}>
-                                    <img src={testImage1} alt="catalog-spares"/>
-                                </div>
-                                <div className={s.catalog_item}>
-
-                                </div>
-                            {/*</div>*/}
-                            {/*<div className={s.catalog_group2}>*/}
-                                <div className={s.catalog_item_big}>
-                                    <img src={testImage1} alt="catalog-accessories"/>
-                                </div>
-                            {/*</div>*/}
-                            {/*<div className={s.catalog_group3}>*/}
-                                <div className={s.catalog_item}>
-                                    <img src={testImage3} alt="catalog-accessories"/>
-                                </div>
-                            {/*</div>*/}
-                            {/*<div className={s.catalog_group4}>*/}
-                                <div className={s.catalog_item}>
-                                    <img src={testImage3} alt="catalog-food"/>
-                                </div>
-                            {/*</div>*/}
+                            <div className={s.catalog_item}>
+                                <img src={testImage1} alt="catalog-spares"/>
+                            </div>
+                            <div className={s.catalog_item}>
+                                <img src={testImage1} alt="catalog-spares"/>
+                            </div>
+                            <div className={s.catalog_item}>
+                                <img src={testImage1} alt="catalog-spares"/>
+                            </div>
+                            <div className={s.catalog_item}>
+                                <img src={testImage1} alt="catalog-spares"/>
+                            </div>
+                            <div className={`${s.catalog_items} ${s.catalog_items_big}`}>
+                                <img src={testImage2} alt="catalog-spares"/>
+                            </div>
+                            <div className={`${s.catalog_items} ${s.catalog_items_long1}`}>
+                                <img src={testImage3} alt="catalog-accessories"/>
+                            </div>
+                            <div className={`${s.catalog_items} ${s.catalog_items_long2}`}>
+                                <img src={testImage3} alt="catalog-food"/>
+                            </div>
                         </div>
                     </div>
                 </div>
