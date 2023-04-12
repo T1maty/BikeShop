@@ -102,7 +102,7 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
 const TableRow = memo((props: TableRowProps) => {
 
     return (
-        <tr className={`${props.selected.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
+        <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
             onDoubleClick={(event) => {
                 props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
             }}

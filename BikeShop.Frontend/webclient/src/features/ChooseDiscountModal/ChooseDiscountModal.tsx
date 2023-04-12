@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import s from './ChooseDiscountModal.module.scss'
-import {Button, ControlledReactSelect, CustomModal} from '../../shared/ui'
+import {Button, CustomModal} from '../../shared/ui'
 import useChooseDiscountModal from './ChooseDiscountModalStore'
-import {SubmitHandler, useForm} from "react-hook-form"
 import Select from "react-select"
 
 export const ChooseDiscountModal = () => {
@@ -31,7 +30,9 @@ export const ChooseDiscountModal = () => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
         >
             <div className={s.discountModal_mainBox}>
                 <div className={s.discountModal_selectBlock}>
@@ -41,7 +42,9 @@ export const ChooseDiscountModal = () => {
                         placeholder={'Скидка'}
                         isSearchable={false}
                         value={selectedDiscount}
-                        onChange={(value: any) => {setSelectedDiscount(value)}}
+                        onChange={(value: any) => {
+                            setSelectedDiscount(value)
+                        }}
                     />
 
                     {/*<ControlledReactSelect control={formControl}*/}
@@ -62,8 +65,11 @@ export const ChooseDiscountModal = () => {
                 </div>
 
                 <div className={s.discountModal_buttonsBlock}>
-                    <Button onClick={() => {}}>Выбрать скидку</Button>
-                    <Button onClick={() => {setOpen(false)}}>Отмена</Button>
+                    <Button onClick={() => {
+                    }}>Выбрать скидку</Button>
+                    <Button onClick={() => {
+                        setOpen(false)
+                    }}>Отмена</Button>
                 </div>
             </div>
         </CustomModal>

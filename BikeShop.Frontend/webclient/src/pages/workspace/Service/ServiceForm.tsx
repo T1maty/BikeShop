@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
-import {Button, ControlledClientCard, ControlledCustomInput, ControlledReactSelect,} from '../../../shared/ui'
+import {Button, ControlledClientCard, ControlledCustomInput,} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
 import {CreateService, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
@@ -11,6 +11,7 @@ import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {useSnackbar} from "notistack"
 import useAuth from "../../auth/useAuthUser"
+import Select from "react-select";
 
 export const ServiceForm = () => {
 
@@ -71,8 +72,10 @@ export const ServiceForm = () => {
         //     })
         // }
         if (isCreating) {
-            console.log('create IF works, new data =', data)
+
             data.shopId = 1
+            setIsCreating(false)
+            console.log('create IF works, new data =', data)
             addNewService(data)
         }
 
@@ -158,23 +161,32 @@ export const ServiceForm = () => {
                                                divClassName={s.content_detailsInput}
                                                disabled={currentService === null && !isCreating}
                         />
-                        <ControlledReactSelect control={formControl}
-                                               name={'userMasterId'}
-                                               className={s.select_box}
-                                               placeholder={'Мастер'}
-                                               isSearchable
-                                               disabled={currentService === null && !isCreating}
-                                               value={formControl.getFieldState('userMasterId')}
-                                               onChangeSelect={(value: any) => {formControl.setValue('userMasterId', value)}}
-                                               data={masters.map((el: any) => {
-                                                   return {
-                                                       // id: el.id,
-                                                       value: el.value,
-                                                       label: el.label,
-                                                   }
-                                               })}
-                                               noOptionsMessage={() => 'Мастер не найден'}
-                        />
+
+
+                        <div>
+                            <Controller
+                                name={'userMasterId'}
+                                control={formControl.control}
+                                render={({field}: any) =>
+                                    <Select
+                                        className={s.select_box}
+                                        placeholder={'Мастер'}
+                                        options={masters}
+                                        isDisabled={currentService === null && !isCreating}
+                                        isSearchable
+                                        value={masters.find(n => n.id === field.value)}
+                                        onChange={(value: any) => {
+                                            field.onChange(value.id)
+                                        }}
+                                        noOptionsMessage={() => 'Мастер не найден'}
+                                        getOptionLabel={label => label!.firstName}
+                                        getOptionValue={value => value!.firstName}
+                                    />
+                                }
+                            />
+                        </div>
+
+
                         <div className={s.content_buttons}>
                             <div className={s.content_saveBtn}>
                                 {
@@ -206,7 +218,7 @@ export const ServiceForm = () => {
                                               disabled={!isCreating}
                                               state={openClientModal}
                                               setState={setOpenClientModal}
-                                              rules={{validate: (value: User) => value.id !== null}}
+                                              rules={{validate: (value: User) => value?.id !== null}}
                         />
                         <Button buttonDivWrapper={s.clientCard_cancelButton}
                                 disabled={currentService === null && !isCreating}
@@ -224,7 +236,9 @@ export const ServiceForm = () => {
                         <div className={s.rightSide_tables}>
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор товаров'}
-                                          serviceTableCallback={() => {setOpenSelectProductModal(true)}}
+                                          serviceTableCallback={() => {
+                                              setOpenSelectProductModal(true)
+                                          }}
                                           disabledButton={(currentService === null && !isCreating)}
                                           summ={summProducts}
                             />
@@ -240,7 +254,9 @@ export const ServiceForm = () => {
                         <div className={s.rightSide_tables}>
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор услуг'}
-                                          serviceTableCallback={() => {setOpenSelectWorkModal(true)}}
+                                          serviceTableCallback={() => {
+                                              setOpenSelectWorkModal(true)
+                                          }}
                                           disabledButton={(currentService === null && !isCreating)}
                                           summ={summWorks}
                             />

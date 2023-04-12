@@ -8,8 +8,8 @@ export const WorkCatalogTable = (props: { onRowDoubleClick?: (row: any) => void 
 
     const isLoading = useWorkCatalog(s => s.isLoading)
     const works = useWorkCatalog(s => s.works)
-    const selectedRow = useWorkCatalog(s => s.selectedRow)
-    const setSelectedRow = useWorkCatalog(s => s.setSelectedRow)
+    //const selectedRow = useWorkCatalog(s => s.selectedRow)
+    //const setSelectedRow = useWorkCatalog(s => s.setSelectedRow)
 
     const [XY, setXY] = useState({x: 0, y: 0})
     const [visibility, setVisibility] = useState(false)
@@ -30,7 +30,7 @@ export const WorkCatalogTable = (props: { onRowDoubleClick?: (row: any) => void 
                           setXY({x: event.clientX, y: event.clientY})
                       }}
                       rowOnDoubleClick={props.onRowDoubleClick}
-                      selected={selectedRow} setSelected={setSelectedRow}/>
+            />
         </div>
     )
 }

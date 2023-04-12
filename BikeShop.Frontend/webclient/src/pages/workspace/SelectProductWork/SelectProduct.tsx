@@ -77,7 +77,7 @@ export const SelectProduct = (props: SelectProductProps) => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    <UniTable rows={props.products} columns={columns}/>
+                    <UniTable rows={props.products} columns={columns} setRows={props.setProducts}/>
                 </div>
             </div>
         </div>
