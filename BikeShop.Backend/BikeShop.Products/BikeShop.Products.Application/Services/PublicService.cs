@@ -74,7 +74,7 @@ namespace BikeShop.Products.Application.Services
                 {
                     product = product,
                     productCard = productCards.ContainsKey(product.Id) ? productCards[product.Id] : null,
-                    productOptions = productOptions.Where(n => binded.Contains(n.ProductId)||> n.ProductId == product.Id).ToList(),
+                    productOptions = productOptions.Where(n => binded.Contains(n.ProductId)|| n.ProductId == product.Id).ToList(),
                     productSpecifications = productSpecifications.Where(n => n.ProductId == bindedIds[product.Id].ProductId).ToList(),
                     productImages = productImages.Where(n => n.ProductId == product.Id).ToList(),
                     productTags = productTags.Where(n=>n.ProductId == product.Id).Select(n=>n.ProductTag).ToList(),
