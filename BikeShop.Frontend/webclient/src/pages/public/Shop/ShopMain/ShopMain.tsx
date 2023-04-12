@@ -123,17 +123,16 @@ export const ShopMain = () => {
 
                 <div className={s.catalog}>
                     <div className={s.container}>
-
                         <div className={s.catalog_items}>
-                            <div className={s.catalog_item}>
-                                <img src={testImage1} alt="catalog-spares"/>
-                            </div>
-                            <div className={s.catalog_item}>
-                                <img src={testImage1} alt="catalog-spares"/>
-                            </div>
-                            <div className={s.catalog_item}>
-                                <img src={testImage1} alt="catalog-spares"/>
-                            </div>
+                            {/*<div className={s.catalog_item}>*/}
+                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item}>*/}
+                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item}>*/}
+                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
                             <div className={s.catalog_item}>
                                 <img src={testImage1} alt="catalog-spares"/>
                             </div>

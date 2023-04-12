@@ -120,27 +120,28 @@
 
                 .container {
                     @include defaultContainer; // ограничивающий контейнер
+                    padding: 0;
 
                     .catalog_items {
                         display: grid;
-                        gap: 20px;
-                        grid-template-columns: repeat(2, minmax(350px, 1fr));
-                        grid-template-rows: repeat(3, minmax(350px, 1fr));
-                        grid-template-areas:
-                            'block1 block2'
-                            'block3 block4';
+                        //gap: 20px;
+                        grid-template-columns: repeat(2, 1fr);
+                        grid-template-rows: repeat(2, 350px);
+                        //grid-template-areas:
+                        //    'block1 block2'
+                        //    'block3 block4';
 
                         .catalog_item {
-                            grid-area: block1;
+                            //grid-area: block1;
                         }
                         .catalog_items_big {
-                            grid-area: block2;
+                            //grid-area: block2;
                         }
                         .catalog_items_long1 {
-                            grid-area: block3;
+                            //grid-area: block3;
                         }
                         .catalog_items_long2 {
-                            grid-area: block4;
+                            //grid-area: block4;
                         }
                     }
 
