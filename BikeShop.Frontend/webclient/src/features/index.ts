@@ -12,7 +12,7 @@ export {EndWorkDayModal} from './EndWorkDayModal/EndWorkDayModal'
 export {ReportDayModal} from './ReportDayModal/ReportDayModal'
 
 export {EditProductCardModal} from './ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
-export {AddProductCardTagModal} from './ProductCatalogFeatures/AddProductCardTagModal/AddProductCardTagModal'
+export {ChooseProductTagModal} from './ProductCatalogFeatures/AddProductCardTagModal/AddProductCardTagModal'
 export {CreateProductModal} from './ProductCatalogFeatures/CreateProductModal/CreateProductModal'
 export {CreateTagModal} from './ProductCatalogFeatures/CreateTagModal/CreateTagModal'
 export {UpdateTagModal} from './ProductCatalogFeatures/UpdateTagModal/UpdateTagModal'

@@ -2,7 +2,7 @@ import React from 'react'
 import s from './CreateWorkModal.module.scss'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {CreateWork, Work} from '../../../entities'
-import {ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
+import {Button, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import {$api} from '../../../shared'
 import {useSnackbar} from 'notistack'
 import {useWorkCatalog} from '../../../widgets/workspace/WorkCatalog/TableCatalogStore'
@@ -49,11 +49,15 @@ export const CreateWorkModal = (props: CreateWorkModalProps) => {
     return (
         <CustomModal
             open={props.visibility}
-            onClose={() => {props.setVisibility(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                props.setVisibility(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.createWorkModal_mainBox}>
-                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.createWorkModal_inputs}>
                         <ControlledCustomInput name={'name'}
                                                placeholder={'Название услуги'}
@@ -72,7 +76,9 @@ export const CreateWorkModal = (props: CreateWorkModalProps) => {
                         />
                     </div>
                     <div className={s.createWorkModal_buttons}>
-                        <Button onClick={() => {props.setVisibility(false)}}
+                        <Button onClick={() => {
+                            props.setVisibility(false)
+                        }}
                                 buttonDivWrapper={s.createWorkModal_cancelBtn}
                         >
                             Отмена
@@ -83,7 +89,7 @@ export const CreateWorkModal = (props: CreateWorkModalProps) => {
                             Создать услугу
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )

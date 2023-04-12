@@ -35,7 +35,7 @@ export const columns: Column[] = [
         label: 'Цена',
         minWidth: 70,
         align: 'left',
-        isEditable: false,
+        isEditable: true,
         isNumber: true
     },
     {

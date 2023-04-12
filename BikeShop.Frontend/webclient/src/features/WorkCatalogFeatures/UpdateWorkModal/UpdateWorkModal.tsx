@@ -4,7 +4,7 @@ import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {UpdateWork, Work} from '../../../entities'
 import {$api} from '../../../shared'
-import {ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
+import {Button, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import {useWorkCatalog} from '../../../widgets/workspace/WorkCatalog/TableCatalogStore'
 
 interface UpdateWorkModalProps {
@@ -60,11 +60,15 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
     return (
         <CustomModal
             open={props.visibility}
-            onClose={() => {props.setVisibility(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                props.setVisibility(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.updateWorkModal_mainBox}>
-                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.updateWorkModal_inputs}>
                         <div>
                             {selectedRow.name}
@@ -86,14 +90,16 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
                         />
                     </div>
                     <div className={s.updateWorkModal_buttons}>
-                        <Button onClick={() => {props.setVisibility(false)}}>
+                        <Button onClick={() => {
+                            props.setVisibility(false)
+                        }}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>
                             Обновить услугу
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )

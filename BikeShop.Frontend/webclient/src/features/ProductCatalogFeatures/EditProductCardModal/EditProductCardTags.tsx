@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
-import {AddProductCardTagModal} from "../AddProductCardTagModal/AddProductCardTagModal"
+import {ChooseProductTagModal} from "../AddProductCardTagModal/AddProductCardTagModal"
 import {Controller, UseFormReturn} from "react-hook-form"
 import {ProductTag} from "../../../entities";
 import {useSnackbar} from "notistack";
@@ -35,7 +35,7 @@ export const EditProductCardTags = (props: ControlledProps) => {
                         >
                             Добавить тег
                         </Button>
-                        <AddProductCardTagModal setOpen={setOpen} open={open} onTagDoubleClick={(tag) => {
+                        <ChooseProductTagModal setOpen={setOpen} open={open} onTagDoubleClick={(tag) => {
                             if (field.value.find((n: ProductTag) => n.id === tag.id) === undefined) {
                                 field.onChange([...field.value, tag])
                                 setOpen(false)

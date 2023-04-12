@@ -9,12 +9,14 @@ interface AddProductCardTagModalProps {
     onTagDoubleClick?: (tag: any) => void
 }
 
-export const AddProductCardTagModal: React.FC<AddProductCardTagModalProps> = ({onTagDoubleClick, open, setOpen}) => {
+export const ChooseProductTagModal: React.FC<AddProductCardTagModalProps> = ({onTagDoubleClick, open, setOpen}) => {
 
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
         >
             <div className={s.addProductCardTagModal_mainBox}>
                 <div className={s.addProductCardTagModal_content}>
