@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import s from "./ShopFooter.module.scss"
 import socialLogoWhite from "../../../../shared/assets/shop/icons/logo_instagram-white.png"
 

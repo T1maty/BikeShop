@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+﻿import React, {useState} from 'react'
 import s from './ShopMain.module.scss'
 
 import headerPhoto from '../../../../shared/assets/shop/images/header_photo.png'
