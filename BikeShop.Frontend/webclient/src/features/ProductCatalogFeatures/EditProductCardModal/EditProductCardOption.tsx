@@ -35,20 +35,35 @@ export const EditProductCardOption = (props: ControlledProps) => {
     const availableOptions = (field: any) => {
         let enumr = Enumerable.from(field.value as ProductOptionVariantBind[])
         let options = allOptions.filter((n: ProductOption) => !(enumr.where(m => m.productId == currentProduct.product.id).select(m => m.optionId).contains(n.id)))
-        return options.filter(n => enumr.where(m => m.optionId == n.id).length < n.optionVariants.length)
+        return options.filter(n => enumr.where(m => m.optionId == n.id).toArray().length < n.optionVariants.length)
 
     }
 
     // функции для опций
     const addOptionListHandler = (field: any) => {
-        let enumr = Enumerable.from(field.value as ProductOptionVariantBind[]).select(n => n.id)
-        field.onChange([...field.value])
+        let enumr = Enumerable.from(field.value as ProductOptionVariantBind[]).select(n => n.id).toArray()
+        let r = selectedOption.optionVariants.filter((n: ProductOptionVariant) => !enumr.includes(n.id))[0]
+
+        let variant: ProductOptionVariantBind
+        variant = {
+            productId: currentProduct.product.id,
+            id: 0,
+            name: r.name,
+            optionId: r.optionId,
+            optionVariantId: r.id,
+            optionName: r.optionName,
+            createdAt: Date.now().toString(),
+            sortOrder: 0,
+            updatedAt: Date.now().toString(),
+            enabled: true,
+        }
+
+        field.onChange([...field.value, variant])
         setSelectedOption(null)
     }
 
-    const deleteOptionListHandler = (field: any, option: ProductOption) => {
-        field.onChange(field.value.filter((n: ProductOption) => n.id != option.id))
-        setSelectedOptionVariant([{id: 0, value: {} as ProductOptionVariant}])
+    const deleteOptionHandler = (field: any, optionId: number, productId: number) => {
+        field.onChange(field.value.filter((n: ProductOptionVariantBind) => n.optionId != optionId || n.productId != productId))
     }
 
     // функции для разновидностей опций
@@ -103,7 +118,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                     field.value.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id).map((optionVariant: ProductOptionVariantBind, index: number) => {
                                         return (
                                             <div className={s.optionsList_item}
-                                                 key={optionVariant.id}
+                                                 key={index}
                                             >
                                                 <fieldset className={s.options_box}>
                                                     <legend style={{color: 'white'}}>
@@ -116,15 +131,37 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                         isSearchable={true}
                                                         value={optionVariant}
                                                         onChange={(value) => {
-                                                            let newOptions = field.value
-                                                            newOptions[index] = value as ProductOptionVariantBind
-                                                            field.onChange(newOptions)
+                                                            let r = value as ProductOptionVariant
+                                                            let base = field.value as ProductOptionVariantBind[]
+
+                                                            let variant: ProductOptionVariantBind
+                                                            variant = {
+                                                                productId: currentProduct.product.id,
+                                                                id: 0,
+                                                                name: r.name,
+                                                                optionId: r.optionId,
+                                                                optionVariantId: r.id,
+                                                                optionName: r.optionName,
+                                                                createdAt: Date.now().toString(),
+                                                                sortOrder: 0,
+                                                                updatedAt: Date.now().toString(),
+                                                                enabled: true,
+                                                            }
+
+                                                            let target = base.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id).filter((n: ProductOptionVariantBind) => n.optionId === value?.optionId)[0]
+                                                            let ind = base.indexOf(target)
+                                                            base[ind] = variant
+                                                            console.log(variant)
+                                                            field.onChange(base)
                                                         }}
                                                         getOptionLabel={label => label!.name}
                                                         getOptionValue={value => value!.name}
                                                         noOptionsMessage={() => 'Доступных вариантов нету'}
                                                     />
                                                 </fieldset>
+                                                <Button onClick={() => {
+                                                    deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)
+                                                }}>Х</Button>
                                             </div>
                                         )
                                     })
