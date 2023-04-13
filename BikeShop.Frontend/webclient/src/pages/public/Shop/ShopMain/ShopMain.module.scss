@@ -105,13 +105,16 @@
 
                 .container {
                     @include defaultContainerForShop; // ограничивающий контейнер
-                    //padding: 0 40px;
+                    padding: 0 40px;
+
+                    @media(max-width: 540px) {
+                        padding: 0 20px;
+                    }
 
                     .menu_items {
-                        //@include flexBetween;
                         display: flex;
-                        justify-content: space-around;
-                        //justify-content: space-between;
+                        //justify-content: space-around;
+                        justify-content: space-between;
                         align-items: center;
                         height: 80px;
                         font-size: 32px;
@@ -119,7 +122,7 @@
                         color: black;
 
                         @media(max-width: 1400px) {
-
+                            //
                         }
                         @media(max-width: 943px) {
                             font-size: 26px;
@@ -170,7 +173,7 @@
                             }
                         }
 
-                        padding: 20px 20px 150px;
+                        padding: 20px 40px 150px;
 
                         @media(max-width: 767px) {
                             padding: 20px;
