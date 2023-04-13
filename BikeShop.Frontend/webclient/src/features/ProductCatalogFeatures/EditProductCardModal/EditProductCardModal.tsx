@@ -82,7 +82,7 @@ export const EditProductCardModal = () => {
 
         setImages(currentProduct.productImages)
 
-        formControl.setValue('productOptions', currentProduct.productOptions?.filter(n => n.productId === currentProduct.product.id))
+        formControl.setValue('productOptions', currentProduct.productOptions)
 
         if (currentProduct.productCard !== undefined) {
             let contentBlock = htmlToDraft(currentProduct.productCard?.description)

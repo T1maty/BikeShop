@@ -33,11 +33,10 @@ export const EditProductCardOption = (props: ControlledProps) => {
 
     // доступные опции и варианты
     const availableOptions = (field: any) => {
-        let optionIds: number[] = []
-        field.value.forEach((n: ProductOption) => {
-            optionIds.push(n.id)
-        })
-        return allOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
+        let enumr = Enumerable.from(field.value as ProductOptionVariantBind[])
+        let options = allOptions.filter((n: ProductOption) => !(enumr.where(m => m.productId == currentProduct.product.id).select(m => m.optionId).contains(n.id)))
+        return options.filter(n => enumr.where(m => m.optionId == n.id).length < n.optionVariants.length)
+
     }
 
     // функции для опций
@@ -100,7 +99,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                         Для добавления выберите опции
                                     </div> :
 
-                                    field.value.map((optionVariant: ProductOptionVariantBind, index: number) => {
+                                    field.value.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id).map((optionVariant: ProductOptionVariantBind, index: number) => {
                                         return (
                                             <div className={s.optionsList_item}
                                                  key={optionVariant.id}
@@ -109,7 +108,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                     <legend>{optionVariant.optionName}</legend>
                                                     <Select
                                                         className={s.options_search}
-                                                        options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable.from(currentProduct.productOptions).select(n1 => n1.id).contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
+                                                        options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable.from(field.value as ProductOptionVariantBind[]).select(n1 => n1.id).contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
                                                         placeholder="Разновидность опции"
                                                         isSearchable={true}
                                                         value={optionVariant}
