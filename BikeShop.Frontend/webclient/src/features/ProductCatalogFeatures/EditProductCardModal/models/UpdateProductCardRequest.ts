@@ -1,4 +1,4 @@
-import {ProductOptionVariantBind, ProductSpecificationBind} from "../../../../entities"
+import {Product, ProductOptionVariantBind, ProductSpecificationBind} from "../../../../entities"
 
 export interface UpdateProductCardRequest {
     id: number
@@ -7,4 +7,5 @@ export interface UpdateProductCardRequest {
     productOptions: ProductOptionVariantBind[]
     productSpecifications: ProductSpecificationBind[]
     productTags: string[]
+    bindedProducts: Product[]
 }

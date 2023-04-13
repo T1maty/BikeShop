@@ -1,4 +1,4 @@
-import {ProductOptionVariantBind, ProductSpecificationBind, ProductTag} from "entities"
+import {Product, ProductOptionVariantBind, ProductSpecificationBind, ProductTag} from "entities"
 
 export interface UpdateProductCardFormModel {
     id: number
@@ -7,4 +7,5 @@ export interface UpdateProductCardFormModel {
     productOptions: ProductOptionVariantBind[]
     productSpecifications: ProductSpecificationBind[]
     productTags: ProductTag[]
+    bindedProducts: Product[]
 }
