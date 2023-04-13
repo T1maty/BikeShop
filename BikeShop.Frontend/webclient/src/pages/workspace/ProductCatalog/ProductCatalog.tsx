@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
-import {Button, InputUI} from '../../../shared/ui'
+import {Button, CustomSearchInput, InputUI} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
@@ -17,6 +17,8 @@ export const ProductCatalog = () => {
 
     const [tags, setTags] = useState<ProductTag[]>([])
 
+    const [value, setValue] = useState('') // заглушка для инпута
+
     useEffect(() => {
         if (isError) {
             enqueueSnackbar('Ошибка сервера: карточка не загружена!',
@@ -28,7 +30,6 @@ export const ProductCatalog = () => {
     }, [isError])
 
     return (
-        // <div className={s.productCatalogTableWrapper}>
         <div className={s.productCatalogTable_mainBlock}>
             <EditProductCardModal/>
 
@@ -43,37 +44,28 @@ export const ProductCatalog = () => {
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
-                    {/*<div className={s.searchRow_chooseBtn}>*/}
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Отображение
                     </Button>
-                    {/*</div>*/}
-                    <div className={s.searchRow_searchInput}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {
-                        }}/>
-                    </div>
-                    <Button buttonDivWrapper={s.searchRow_allProductsBtn} onClick={() => {
-                    }}>
+                    <CustomSearchInput placeholder={'Поиск...'}
+                                       divClassName={s.searchRow_searchInput}
+                                       value={value}
+                                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                           setValue(e.currentTarget.value)}}
+                                       clearInputValue={() => {setValue('')}}
+                    />
+                    <Button buttonDivWrapper={s.searchRow_allProductsBtn} onClick={() => {}}>
                         Все товары
                     </Button>
-                    {/*<div className={s.header_notSortedBtn}>*/}
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Неотсортированные
                     </Button>
-                    {/*</div>*/}
                 </div>
 
-                <div className={s.rightSide_table} onContextMenu={(event) => {
-                    event.preventDefault()
-                }}>
-                    <ProductCatalogTable onRowDoubleClick={(row: any) => {
-                        getProductCard(row.id)
-                    }}/>
+                <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
+                    <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
                 </div>
             </div>
         </div>
-        // </div>
     )
 }

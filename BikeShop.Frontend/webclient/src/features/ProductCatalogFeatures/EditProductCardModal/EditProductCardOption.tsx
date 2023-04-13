@@ -5,7 +5,7 @@ import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
 import {ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
-import Enumerable from "linq";
+import Enumerable from "linq"
 
 interface ControlledProps {
     name: string
@@ -24,10 +24,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
     const allOptions = useEditProductCardModal(s => s.allOptions)
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
 
-    // текущие значения селектов
-    // опция
+    // текущие значения селектов // опция
     const [selectedOption, setSelectedOption] = useState<any>(null)
-
 
     // доступные опции и варианты
     const availableOptions = (field: any) => {
@@ -71,17 +69,18 @@ export const EditProductCardOption = (props: ControlledProps) => {
                 control={props.control.control}
                 render={({field}: any) =>
 
-                    // <div className={s.rightSide_productOptions}>
                     <>
                         <div className={s.productOptions_optionsList}>
                             {
-                                field.value.length === 0 ? <div style={{
-                                        width: '350px', textAlign: 'center', wordBreak: 'break-word'
+                                field.value.length === 0 ? <div style={{width: '350px',
+                                        textAlign: 'center', wordBreak: 'break-word'
                                     }}>
                                         Для добавления выберите опции
                                     </div> :
 
-                                    field.value.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id).map((optionVariant: ProductOptionVariantBind, index: number) => {
+                                    field.value
+                                        .filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id)
+                                        .map((optionVariant: ProductOptionVariantBind, index: number) => {
                                         return (
                                             <div className={s.optionsList_item}
                                                  key={index}
@@ -92,7 +91,10 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                     </legend>
                                                     <Select
                                                         className={s.options_search}
-                                                        options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable.from(field.value as ProductOptionVariantBind[]).select(n1 => n1.id).contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
+                                                        options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable
+                                                            .from(field.value as ProductOptionVariantBind[])
+                                                            .select(n1 => n1.id)
+                                                            .contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
                                                         placeholder="Разновидность опции"
                                                         isSearchable={true}
                                                         value={optionVariant}
@@ -114,7 +116,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 enabled: true,
                                                             }
 
-                                                            let target = base.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id).filter((n: ProductOptionVariantBind) => n.optionId === value?.optionId)[0]
+                                                            let target = base.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id)
+                                                                .filter((n: ProductOptionVariantBind) => n.optionId === value?.optionId)[0]
                                                             let ind = base.indexOf(target)
                                                             base[ind] = variant
                                                             console.log(variant)
@@ -126,8 +129,10 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                     />
                                                 </fieldset>
                                                 <Button onClick={() => {
-                                                    deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)
-                                                }}>Х</Button>
+                                                    deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)}}
+                                                >
+                                                    Х
+                                                </Button>
                                             </div>
                                         )
                                     })
@@ -135,9 +140,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {
-                                        addOptionListHandler(field)
-                                    }}
+                                    onClick={() => {addOptionListHandler(field)}}
                                     disabled={selectedOption === null}
                             >
                                 +
@@ -148,16 +151,13 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                 placeholder="Опции"
                                 isSearchable={true}
                                 value={selectedOption}
-                                onChange={(value: any) => {
-                                    setSelectedOption(value)
-                                }}
+                                onChange={(value: any) => {setSelectedOption(value)}}
                                 getOptionLabel={label => label!.name}
                                 getOptionValue={value => value!.name}
                                 noOptionsMessage={() => 'Опция не найдена'}
                             />
                         </div>
                     </>
-                    // </div>
                 }
             />
         </div>
