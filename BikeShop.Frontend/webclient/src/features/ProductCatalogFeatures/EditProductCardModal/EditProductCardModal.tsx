@@ -13,8 +13,7 @@ import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
 import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest"
-import {ProductImage, ProductOptionVariantBind} from "../../../entities"
-import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
+import {ProductImage} from "../../../entities"
 import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull"
 import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort"
 
@@ -51,22 +50,6 @@ export const EditProductCardModal = () => {
 
         const DATA = {} as UpdateProductCardRequest
 
-        let options: { optionVariants: ProductOptionVariantBind[] }[] = []
-        data.productOptions.forEach(n => {
-            let variants: ProductOptionVariantBind[] = []
-
-            n.optionVariants.forEach(j => {
-                variants.push({
-                    id: 0,
-                    enabled: true,
-                    linkProductId: 0,
-                    sortOrder: 0,
-                    optionVariantId: j.id
-                } as ProductOptionVariantBind)
-            })
-            options.push({optionVariants: variants})
-        })
-
         let tagIds: string[] = []
         data.productTags.forEach(n => {
             tagIds.push(n.id)
@@ -75,7 +58,7 @@ export const EditProductCardModal = () => {
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
         DATA.productSpecifications = data.productSpecifications
-        DATA.productOptions = options
+        DATA.productOptions = data.productOptions
         DATA.productCard = {
             description: data.productCard.description,
             shortDescription: data.productCard.shortDescription
@@ -99,34 +82,7 @@ export const EditProductCardModal = () => {
 
         setImages(currentProduct.productImages)
 
-        let options: ProductOptionsWithVariants[] = []
-        let ids: number[] = []
-
-        currentProduct.productOptions?.filter(n => n.productId === currentProduct.product.id).forEach(n => {
-            let newOption: ProductOptionsWithVariants
-
-            if (!ids.includes(n.optionId)) {
-                newOption = {
-                    id: n.optionId,
-                    name: n.optionName,
-                    optionVariants: [],
-                    createdAt: '',
-                    updatedAt: '',
-                    enabled: true,
-                }
-                ids.push(n.optionId)
-                options.push(newOption)
-            }
-            options.find(n1 => n1.id === n.optionId)?.optionVariants.push({
-                id: n.optionVariantId,
-                name: n.name,
-                optionId: n.optionId,
-                optionName: n.optionName,
-                createdAt: n.createdAt,
-                updatedAt: n.updatedAt,
-                enabled: n.enabled
-            })
-        })
+        formControl.setValue('productOptions', currentProduct.productOptions?.filter(n => n.productId === currentProduct.product.id))
 
         if (currentProduct.productCard !== undefined) {
             let contentBlock = htmlToDraft(currentProduct.productCard?.description)
@@ -136,7 +92,7 @@ export const EditProductCardModal = () => {
                 setEditorState(editorState)
             }
         }
-        formControl.setValue('productOptions', options)
+
     }, [currentProduct])
 
     if (isLoading) {

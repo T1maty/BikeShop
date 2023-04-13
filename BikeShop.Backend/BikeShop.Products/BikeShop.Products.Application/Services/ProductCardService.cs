@@ -75,10 +75,7 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<ProductCardDTO> GetProductCard(int productId)
         {
-            var product = await _context.Products.FindAsync(productId);
-            var list = new List<Product>{ product };
-
-            return (await _publicService.getCards(list))[0];
+            return await _publicService.getProductCard(productId);
         }
 
         public async Task<OptionDTO> UpdateOption(UpdateOptionDTO dto)

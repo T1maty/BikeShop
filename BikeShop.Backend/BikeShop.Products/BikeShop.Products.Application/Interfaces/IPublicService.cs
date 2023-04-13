@@ -16,5 +16,6 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<List<ProductCardDTO>> GetProducts(List<int> ids);
 
         public Task<List<ProductCardDTO>> getCards(List<Product> products);
+        public Task<ProductCardDTO> getProductCard(int Id);
     }
 }

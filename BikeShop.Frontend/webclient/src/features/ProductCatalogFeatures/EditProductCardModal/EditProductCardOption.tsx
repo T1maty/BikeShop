@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
-import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {ProductOption, ProductOptionVariant} from "../../../entities"
+import {ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
+import Enumerable from "linq";
 
 interface ControlledProps {
     name: string
@@ -23,6 +23,7 @@ type SelectedOptionVariantType = {
 export const EditProductCardOption = (props: ControlledProps) => {
 
     const allOptions = useEditProductCardModal(s => s.allOptions)
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
 
     // текущие значения селектов
     // опция
@@ -37,21 +38,6 @@ export const EditProductCardOption = (props: ControlledProps) => {
             optionIds.push(n.id)
         })
         return allOptions.filter((n: ProductOption) => !optionIds.includes(n.id))
-    }
-
-    const availableVariants = (option: ProductOptionsWithVariants) => {
-        let optionItem = allOptions.find(n => n.id === option.id)
-        let ids: number[] = []
-        option.optionVariants?.map(n => ids.push(n.id))
-
-        let buf = optionItem?.optionVariants.filter(n => !ids.includes(n.id))
-
-        let result: { id: number, value: any }[] = []
-        buf?.forEach(n => {
-            result.push({id: option.id, value: n})
-        })
-
-        return result
     }
 
     // функции для опций
@@ -114,67 +100,28 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                         Для добавления выберите опции
                                     </div> :
 
-                                    field.value.map((option: ProductOptionsWithVariants) => {
+                                    field.value.map((optionVariant: ProductOptionVariantBind, index: number) => {
                                         return (
                                             <div className={s.optionsList_item}
-                                                 key={option.id}
+                                                 key={optionVariant.id}
                                             >
                                                 <fieldset className={s.options_box}>
-                                                    <legend>{option.name}</legend>
-                                                    <div className={s.options_rowItems}>
-                                                        <div className={s.rowItems_item}>
-                                                            <div className={s.item_deleteFullItem}
-                                                                 onClick={() => {
-                                                                     deleteOptionListHandler(field, option)
-                                                                 }}
-                                                            >
-                                                                Удалить опцию
-                                                            </div>
-                                                            {
-                                                                option.optionVariants?.map((variant: ProductOptionVariant) => {
-                                                                    return (
-                                                                        <div className={s.item_content}
-                                                                             style={{marginBottom: '5px'}}
-                                                                             key={variant.id}
-                                                                        >
-                                                                            <div className={s.item_title}>
-                                                                                {variant.name}
-                                                                            </div>
-                                                                            <img src={RemoveIcon} alt="remove-icon"
-                                                                                 onClick={() => {
-                                                                                     setOptionsVariantHandler(field, option, variant)
-                                                                                 }}
-                                                                            />
-                                                                        </div>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </div>
-                                                        <div className={s.rowItems_chooseItem}>
-                                                            <Button buttonDivWrapper={s.options_button}
-                                                                    onClick={() => {
-                                                                        addOptionVariantHandler(field, option)
-                                                                    }}
-                                                                    disabled={selectedOptionVariant.find(n => n.id === option.id) === undefined}
-                                                            >
-                                                                +
-                                                            </Button>
-                                                            <Select
-                                                                className={s.options_search}
-                                                                options={availableVariants(option)}
-                                                                placeholder="Разновидность опции"
-                                                                isSearchable={true}
-                                                                value={selectedOptionVariant.find(n => n.id === option.id)
-                                                                    ? selectedOptionVariant.find(n => n.id === option.id) : null}
-                                                                onChange={(value) => {
-                                                                    onChangeOptionsVariantHandler(value, option)
-                                                                }}
-                                                                getOptionLabel={label => label!.value.name}
-                                                                getOptionValue={value => value!.value.name}
-                                                                noOptionsMessage={() => 'Опция не найдена'}
-                                                            />
-                                                        </div>
-                                                    </div>
+                                                    <legend>{optionVariant.optionName}</legend>
+                                                    <Select
+                                                        className={s.options_search}
+                                                        options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable.from(currentProduct.productOptions).select(n1 => n1.id).contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
+                                                        placeholder="Разновидность опции"
+                                                        isSearchable={true}
+                                                        value={optionVariant}
+                                                        onChange={(value) => {
+                                                            let newOptions = field.value
+                                                            newOptions[index] = value as ProductOptionVariantBind
+                                                            field.onChange(newOptions)
+                                                        }}
+                                                        getOptionLabel={label => label!.name}
+                                                        getOptionValue={value => value!.name}
+                                                        noOptionsMessage={() => 'Доступных вариантов нету'}
+                                                    />
                                                 </fieldset>
                                             </div>
                                         )

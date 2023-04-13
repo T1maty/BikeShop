@@ -4,7 +4,7 @@ export interface UpdateProductCardRequest {
     id: number
     checkStatus: string
     productCard: { description: string, shortDescription: string }
-    productOptions: { optionVariants: ProductOptionVariantBind[] }[]
+    productOptions: ProductOptionVariantBind[]
     productSpecifications: ProductSpecificationBind[]
     productTags: string[]
 }

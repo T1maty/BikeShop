@@ -85,5 +85,30 @@ namespace BikeShop.Products.Application.Services
 
             return response;
         }
+
+        public async Task<ProductCardDTO> getProductCard(int Id)
+        {
+            var result = new ProductCardDTO();
+
+            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == Id).FirstAsync();
+            int masterId = Id;
+            //slaves contains master id
+            List<int> slaveIds = new List<int> { Id };
+            if (bind != null)
+            {
+                masterId = bind.ProductId;
+                slaveIds = await _context.ProductBinds.Where(n => n.ProductId == masterId).Select(n => n.ChildrenId).ToListAsync();
+            }
+
+            result.product = await _context.Products.FindAsync(masterId);
+            result.productCard = await _context.ProductsCards.Where(n=>n.ProductId == masterId).FirstOrDefaultAsync();
+            result.productOptions = await _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
+            result.productSpecifications = await _context.ProductSpecifications.Where(n => n.ProductId == masterId).ToListAsync();
+            result.productImages = await _context.ProductImgs.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
+            result.productTags = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).Include(n=>n.ProductTag).Select(n=>n.ProductTag).ToListAsync();
+            result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
+
+            return result;
+        }
     }
 }

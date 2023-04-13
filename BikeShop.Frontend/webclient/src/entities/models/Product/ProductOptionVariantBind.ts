@@ -7,7 +7,6 @@ export interface ProductOptionVariantBind {
     optionName: string
     createdAt: string
     sortOrder: number
-    linkProductId: number
     updatedAt: string
     enabled: boolean
 }
