@@ -4,6 +4,24 @@
 .chooseProductModal_mainBox {
     @include defaultModalStyle;
     width: 1400px;
-    background-color: $themeColorGray;
+    background-color: $themeColorDark;
     padding: 0;
+
+    .chooseProductModal_wrapper {
+        @include flexOnlyBetween;
+        padding: $defaultLargeMargin;
+        gap: 20px;
+        height: 70vh;
+
+        .chooseProductModal_tagTreeView {
+            //border: 1px solid white;
+            background-color: $themeColorGray;
+            border-radius: $smallBorderRadius;
+            width: 25%;
+        }
+        .chooseProductModal_catalogTable {
+            //border: 1px solid white;
+            width: 75%;
+        }
+    }
 }

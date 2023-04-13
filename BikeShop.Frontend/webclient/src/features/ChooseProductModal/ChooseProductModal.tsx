@@ -21,8 +21,14 @@ export const ChooseProductModal = (props: props) => {
             onClose={() => {props.setOpen ? props.setOpen(false) : setOpen(false)}}
         >
             <div className={s.chooseProductModal_mainBox}>
-                <TagTreeView/>
-                <ProductCatalogTable onRowDoubleClick={(row: ProductExtended) => {props.addData(row)}}/>
+                <div className={s.chooseProductModal_wrapper}>
+                    <div className={s.chooseProductModal_tagTreeView}>
+                        <TagTreeView/>
+                    </div>
+                    <div className={s.chooseProductModal_catalogTable}>
+                        <ProductCatalogTable onRowDoubleClick={(row: ProductExtended) => {props.addData(row)}}/>
+                    </div>
+                </div>
             </div>
         </CustomModal>
     )

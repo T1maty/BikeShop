@@ -126,8 +126,11 @@
                     padding: 0;
 
                     .catalog_items {
+                        > div {
+                            border: 1px solid black;
+                        }
                         display: grid;
-                        gap: 20px;
+                        //gap: 20px;
                         grid-template-columns: repeat(4, 350px);
                         grid-template-rows: repeat(3, 350px);
                         grid-template-areas:
@@ -149,12 +152,18 @@
                         }
                         .catalog_item5 {
                             grid-area: photo5;
+                            grid-column: span 2;
+                            grid-row: span 2;
                         }
                         .catalog_item6 {
                             grid-area: photo6;
+                            grid-column: span 2;
+                            grid-row: span 1;
                         }
                         .catalog_item7 {
                             grid-area: photo7;
+                            grid-column: span 2;
+                            grid-row: span 1;
                         }
 
                         //.catalog_item_big {
