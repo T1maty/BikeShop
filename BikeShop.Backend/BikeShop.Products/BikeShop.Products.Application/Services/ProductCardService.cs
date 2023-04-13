@@ -127,6 +127,13 @@ namespace BikeShop.Products.Application.Services
             productCard.Description = dto.productCard.description;
             productCard.DescriptionShort = dto.productCard.shortDescription;
 
+            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == dto.Id).FirstAsync();
+            //slaves contains master id
+            List<int> slaveIds = new List<int> { dto.Id };
+            if (bind != null)
+            {
+                slaveIds = await _context.ProductBinds.Where(n => n.ProductId == bind.ProductId).Select(n => n.ChildrenId).ToListAsync();
+            }
 
             var vIds = dto.productOptions.Select(n1 => n1.id);
             var variantBinds = await _context.ProductOptionVariantBinds.Where(n => vIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
@@ -156,7 +163,7 @@ namespace BikeShop.Products.Application.Services
             await _context.ProductOptionVariantBinds.AddRangeAsync(newBinds);
 
             //Удаляем все бинды у товара, которых нету.
-            var forRemove = _context.ProductOptionVariantBinds.Where(n => n.ProductId == dto.Id).Where(n => !vIds.Contains(n.Id));
+            var forRemove = _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).Where(n => !vIds.Contains(n.Id));
             _context.ProductOptionVariantBinds.RemoveRange(forRemove);
 
 

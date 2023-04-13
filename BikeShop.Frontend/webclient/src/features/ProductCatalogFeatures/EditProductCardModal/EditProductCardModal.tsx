@@ -66,7 +66,7 @@ export const EditProductCardModal = () => {
         DATA.productTags = tagIds
 
         console.log('submitData', DATA)
-        //updateProductCard(DATA)
+        updateProductCard(DATA)
     }
 
     useEffect(() => {
