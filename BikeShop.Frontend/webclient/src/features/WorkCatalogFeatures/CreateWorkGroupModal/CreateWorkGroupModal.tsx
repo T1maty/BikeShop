@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './CreateWorkGroupModal.module.scss'
-import {ControlledCustomCheckbox, ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {CreateWorkGroup, Group} from '../../../entities'
@@ -46,11 +46,15 @@ export const CreateWorkGroupModal = (props: CreateWorkGroupModalProps) => {
     return (
         <CustomModal
             open={props.visibility}
-            onClose={() => {props.setVisibility(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                props.setVisibility(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.createWorkGroupModal_mainBox}>
-                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.createWorkGroupModal_inputs}>
                         <div>
                             {props.parent.name != undefined ? 'Создаем потомка для ' + props.parent.name : 'Создаем в корне'}
@@ -66,14 +70,16 @@ export const CreateWorkGroupModal = (props: CreateWorkGroupModalProps) => {
                         />
                     </div>
                     <div className={s.updateWorkGroupModal_buttons}>
-                        <Button onClick={() => {props.setVisibility(false)}}>
+                        <Button onClick={() => {
+                            props.setVisibility(false)
+                        }}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>
                             Создать группу
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )

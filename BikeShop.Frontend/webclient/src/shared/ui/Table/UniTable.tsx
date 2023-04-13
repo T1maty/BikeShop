@@ -1,16 +1,21 @@
 import React, {memo, useState} from "react"
 import cls from "./UniTable.module.scss"
 import {Loader} from "../Loader/Loader"
+import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {useSnackbar} from "notistack";
 
 export interface Column {
     id: string
     label: string
     minWidth?: number
     align?: 'right' | 'left'
+    isEditable?: boolean
+    isNumber?: boolean
 }
 
 interface TableProps {
     rows: any[]
+    setRows?: (rows: any[]) => void
     columns: Column[]
 
     isLoading?: boolean
@@ -25,6 +30,7 @@ interface TableProps {
 
 interface TableRowProps {
     row?: any
+    setRow: (row: any) => void
     columns: Column[]
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
@@ -36,6 +42,7 @@ interface TableRowProps {
 export const UniTable = (props: TableProps) => {
 
     const [selected, setSelected] = useState([])
+    const {enqueueSnackbar} = useSnackbar()
 
 
     return (
@@ -50,6 +57,12 @@ export const UniTable = (props: TableProps) => {
                         props.rows?.map((item: any, index) => {
                             return <TableRow key={index}
                                              row={item}
+                                             setRow={(newRow: any) => {
+                                                 let newData = props.rows
+                                                 newData[index] = newRow
+                                                 console.log(newData)
+                                                 props.setRows ? props.setRows(newData) : true
+                                             }}
                                              columns={props.columns}
                                              onRowDoubleClick={props.rowOnDoubleClick}
                                              rowOnContext={props.rowOnContext}
@@ -89,7 +102,7 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
 const TableRow = memo((props: TableRowProps) => {
 
     return (
-        <tr className={`${props.selected.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
+        <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
             onDoubleClick={(event) => {
                 props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
             }}
@@ -104,8 +117,25 @@ const TableRow = memo((props: TableRowProps) => {
         >
             {
                 props.columns.map((item, index) => {
-                    return <td key={index}>
-                        {props.row[item.id]}
+                    return <td key={index}>{
+                        item.isEditable ?
+                            <EditableSpan title={props.row[item.id]} onChangeInput={(newInputValue) => {
+                                if (item.isNumber) {
+                                    let newValue = Number.parseFloat(newInputValue).toString()
+                                    let newRow = props.row
+                                    if (newValue != 'NaN') {
+                                        newRow[item.id] = newValue
+                                        console.log('updated')
+                                    }
+                                    props.setRow(newRow)
+
+                                }
+
+                            }}/>
+                            :
+                            props.row[item.id]
+                    }
+
                     </td>
                 })
             }

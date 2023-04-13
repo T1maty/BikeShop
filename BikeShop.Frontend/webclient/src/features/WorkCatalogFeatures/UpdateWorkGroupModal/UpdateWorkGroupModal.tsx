@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
 import s from './UpdateWorkGroupModal.module.scss'
-import {ControlledCustomCheckbox, ControlledCustomInput, CustomModal, Button} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import {useWorkCatalog} from '../../../widgets/workspace/WorkCatalog/TableCatalogStore'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {UpdateWorkGroup, Group} from '../../../entities'
+import {Group, UpdateWorkGroup} from '../../../entities'
 import {$api} from '../../../shared'
 
 interface UpdateWorkGroupModalProps {
@@ -55,11 +55,15 @@ export const UpdateWorkGroupModal = (props: UpdateWorkGroupModalProps) => {
     return (
         <CustomModal
             open={props.visibility}
-            onClose={() => {props.setVisibility(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                props.setVisibility(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.updateWorkGroupModal_mainBox}>
-                <div onSubmit={formControl.handleSubmit(onSubmit)}>
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.updateWorkGroupModal_inputs}>
                         <div className={s.updateWorkGroupModal_groupName}>
                             {'Обновляемая группа: ' + props.target.name}
@@ -68,23 +72,25 @@ export const UpdateWorkGroupModal = (props: UpdateWorkGroupModalProps) => {
                                                placeholder={'Название группы'}
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
-                                               // divClassName={s.updateWorkGroupModal_input}
+                            // divClassName={s.updateWorkGroupModal_input}
                         />
                         <ControlledCustomCheckbox name={'isCollapsed'}
                                                   label={'Свёрнуть по умолчанию'}
                                                   control={formControl}
-                                                  // divClassName={s.updateWorkGroupModal_checkbox}
+                            // divClassName={s.updateWorkGroupModal_checkbox}
                         />
                     </div>
                     <div className={s.createWorkModal_buttons}>
-                        <Button onClick={() => {props.setVisibility(false)}}>
+                        <Button onClick={() => {
+                            props.setVisibility(false)
+                        }}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>
                             Обновить группу
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )

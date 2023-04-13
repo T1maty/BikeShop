@@ -10,12 +10,15 @@ interface ControlledReactSelectProps {
     data: any[]
     isSearchable?: boolean
     disabled?: boolean
-    value: any
-    onChangeSelect: (value: any) => void
+    onChangeSelect?: (value: any) => void
     noOptionsMessage?: (obj: { inputValue: string }) => ReactNode | undefined
 
+    value?: (data: any[], fieldValue: any) => any
     divClassName?: any
     className?: any
+
+    getOptionLabel: (value: any) => string
+    getOptionValue: (value: any) => string
 }
 
 export const ControlledReactSelect = (props: ControlledReactSelectProps) => {
@@ -32,16 +35,17 @@ export const ControlledReactSelect = (props: ControlledReactSelectProps) => {
                         options={props.data}
                         isDisabled={props.disabled ? props.disabled : false}
                         isSearchable={props.isSearchable ? props.isSearchable : false}
-
-                        // value={props.value}
-                        value={field.value}
-
-                        // onChange={props.onChangeSelect}
+                        value={props.value ? props.value(props.data, field.value) : field.value}
                         onChange={(value: any) => {
-                            field.onChange(value)
-                            // console.log('значение из селекта', value)
+                            if (props.onChangeSelect != undefined) {
+                                props.onChangeSelect(value)
+                            } else {
+                                field.onChange(value)
+                            }
                         }}
                         noOptionsMessage={props.noOptionsMessage}
+                        getOptionLabel={label => props.getOptionLabel(label)}
+                        getOptionValue={value => props.getOptionValue(value)}
                     />
                 }
             />

@@ -34,7 +34,7 @@ namespace BikeShop.Products.Application.Services
             await _context.SaveChangesAsync(new CancellationToken());
 
             var variants = new List<OptionVariant>();
-            foreach (var item in dto.variantNames)
+            foreach (var item in dto.optionVariants)
             {
                 variants.Add(new OptionVariant { Name = item, OptionName = dto.name, OptionId =  option.Id});
             }
@@ -144,7 +144,6 @@ namespace BikeShop.Products.Application.Services
                     //Редактирум все существующие бинды
                     var ent = variantBinds[variant.id];
                     ent.SortOrder = variant.SortOrder;
-                    ent.LinkProductId = variant.LinkProductId;
                     ent.Enabled = variant.enabled;
                     ent.UpdatedAt = DateTime.Now;
                 }
@@ -153,7 +152,7 @@ namespace BikeShop.Products.Application.Services
                     //Создаем новые бинды
                     var vari = allVariants[variant.OptionVariantId];
                     var opt = allOptions[vari.OptionId];
-                    newBinds.Add(new ProductOptionVariantBind { LinkProductId = variant.LinkProductId, OptionVariantId = variant.OptionVariantId, ProductId = dto.Id, SortOrder = variant.SortOrder, Name = vari.Name, OptionId = opt.Id, OptionName = opt.Name});
+                    newBinds.Add(new ProductOptionVariantBind {OptionVariantId = variant.OptionVariantId, ProductId = dto.Id, SortOrder = variant.SortOrder, Name = vari.Name, OptionId = opt.Id, OptionName = opt.Name});
                 }
             }
 

@@ -16,7 +16,7 @@ export const SelectWork = (props: props) => {
 
     const {getGroup} = useWorkCatalog(state => state)
 
-    const [selected, setSelected] = useState({})
+    const [selected, setSelected] = useState([])
 
 
     useEffect(() => {
@@ -85,7 +85,8 @@ export const SelectWork = (props: props) => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    <UniTable rows={props.works} columns={columns} selected={selected} setSelected={setSelected}/>
+                    <UniTable rows={props.works} setRows={props.setWorks} columns={columns} selected={selected}
+                              setSelected={setSelected}/>
                 </div>
             </div>
         </div>

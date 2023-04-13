@@ -12,7 +12,6 @@ namespace BikeShop.Products.Domain.Entities
         public int OptionId { get; set; }
         public int ProductId { get; set; }
         public int SortOrder { get; set;}
-        public int LinkProductId { get; set; }
         public string Name { get; set; }
         public string OptionName { get; set; }
     }

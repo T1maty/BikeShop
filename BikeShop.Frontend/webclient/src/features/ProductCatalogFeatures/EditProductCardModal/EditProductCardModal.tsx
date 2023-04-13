@@ -68,7 +68,9 @@ export const EditProductCardModal = () => {
         })
 
         let tagIds: string[] = []
-        data.productTags.forEach(n => {tagIds.push(n.id)})
+        data.productTags.forEach(n => {
+            tagIds.push(n.id)
+        })
 
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
@@ -100,7 +102,7 @@ export const EditProductCardModal = () => {
         let options: ProductOptionsWithVariants[] = []
         let ids: number[] = []
 
-        currentProduct.productOptions?.forEach(n => {
+        currentProduct.productOptions?.filter(n => n.productId === currentProduct.product.id).forEach(n => {
             let newOption: ProductOptionsWithVariants
 
             if (!ids.includes(n.optionId)) {
@@ -144,7 +146,9 @@ export const EditProductCardModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.editProductCardModal_mainBlock}>
@@ -175,7 +179,9 @@ export const EditProductCardModal = () => {
                                                            name={'productSpecifications'}
                             />
                             <div className={s.rightSide_mainButtons}>
-                                <Button onClick={() => {setOpen(false)}}>
+                                <Button onClick={() => {
+                                    setOpen(false)
+                                }}>
                                     Отмена
                                 </Button>
                                 <Button type={'submit'}>

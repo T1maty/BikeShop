@@ -22,7 +22,10 @@ export const RegistrationPage = () => {
     })
 
     const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
-        register(data).then(() => {navigate(BikeShopPaths.COMMON.LOGIN)})
+        console.log('submit', data)
+        register(data).then(() => {
+            navigate(BikeShopPaths.COMMON.LOGIN)
+        })
     }
 
     return (
@@ -61,13 +64,16 @@ export const RegistrationPage = () => {
                                                   control={formControl}
                                                   divClassName={s.checkbox_block}
                         />
+                        <Button type={'submit'} buttonDivWrapper={s.loginForm_submitButton}>
+                            Зарегистрироваться
+                        </Button>
                     </form>
                 </div>
-                <Button type={'submit'} buttonDivWrapper={s.loginForm_submitButton}>
-                    Зарегистрироваться
-                </Button>
+
                 <div className={s.haveAccount}
-                     onClick={() => {navigate(BikeShopPaths.COMMON.LOGIN)}}
+                     onClick={() => {
+                         navigate(BikeShopPaths.COMMON.LOGIN)
+                     }}
                 >
                     Я уже зарегистрирован
                 </div>
