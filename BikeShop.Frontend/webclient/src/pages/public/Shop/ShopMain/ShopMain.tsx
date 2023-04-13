@@ -1,8 +1,9 @@
 ﻿import React, {useState} from 'react'
 import s from './ShopMain.module.scss'
 
-import HeaderPhoto from '../../../../shared/assets/shop/images/header_photo.png'
-import HeaderPhoto2 from '../../../../shared/assets/shop/images/shop-MainPagePhoto.jpg'
+import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.png'
+import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
+import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
 import SocialLogo from '../../../../shared/assets/shop/icons/logo_instagram.png'
 import Map from '../../../../shared/assets/shop/images/map-01.png'
 import BurgerMenu from '../../../../shared/assets/shop/icons/menu.png'
@@ -41,7 +42,7 @@ export const ShopMain = () => {
 
     const [sliderImages, setSliderImages] = useState([
         {
-            original: HeaderPhoto,
+            original: HeaderPhoto1,
             thumbnail: '',
         },
         {
@@ -55,13 +56,14 @@ export const ShopMain = () => {
     const userLastName = 'Петров'
     const userFirstName = 'Василий'
 
-    const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
+    // вариант совмещения двух и более классов в одном
+    // const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
 
     return (
         <div className={s.shop_wrapper}>
             <div className={s.header}>
                 <div className={s.header_slider}>
-                    <img src={HeaderPhoto} alt="header-photo"/>
+                    <img src={HeaderPhotoWide} alt="header-photo"/>
                 </div>
                 {/*<div className={s.header_slider}>*/}
                 {/*    <ImageGallery items={sliderImages}*/}

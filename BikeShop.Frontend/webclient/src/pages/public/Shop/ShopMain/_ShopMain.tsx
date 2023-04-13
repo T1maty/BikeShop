@@ -1,7 +1,7 @@
 ﻿import React, {useState} from 'react'
 import s from './_ShopMain.module.scss'
 
-import headerPhoto from '../../../../shared/assets/shop/images/header_photo.png'
+import headerPhoto from '../../../../shared/assets/shop/images/header-photo_01.png'
 import socialLogo from '../../../../shared/assets/shop/icons/logo_instagram.png'
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
 import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
