@@ -65,7 +65,7 @@ namespace BikeShop.Products.Application.Services
         {
             var result = new ProductCardDTO();
 
-            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == Id).FirstAsync();
+            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == Id).FirstOrDefaultAsync();
             int masterId = Id;
             //slaves contains master id
             List<int> slaveIds = new List<int> { Id };
@@ -81,7 +81,7 @@ namespace BikeShop.Products.Application.Services
             result.productSpecifications = await _context.ProductSpecifications.Where(n => n.ProductId == masterId).ToListAsync();
             result.productImages = await _context.ProductImgs.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
             result.productTags = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).Include(n=>n.ProductTag).Select(n=>n.ProductTag).Distinct().ToListAsync();
-            result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
+            if(bind != null) result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
 
             return result;
         }
