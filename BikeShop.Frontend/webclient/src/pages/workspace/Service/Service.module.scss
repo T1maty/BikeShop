@@ -1,9 +1,6 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-//.serviceWrapper {
-//    @include defaultContainer;
-
 .serviceBlock {
     @include wrapperMainBlock;
     display: flex;
@@ -21,9 +18,6 @@
             width: 100%;
 
             .buttons_filter {
-                //@include flexBetween;
-                //gap: 5px;
-                //flex-wrap: wrap;
                 width: 100%;
                 margin-bottom: $defaultLargeMargin;
 
@@ -32,7 +26,6 @@
                 button {
                     width: 100%;
                     padding: 5px 10px;
-                    //margin: 0 5px;
                 }
             }
 
@@ -59,13 +52,11 @@
                 .content_inProcessButtons {
                     @include flexOnlyBetween;
                     gap: $defaultSmallMargin;
-                    //flex-wrap: wrap;
                 }
 
                 .content_doneButtons {
                     @include flexOnlyBetween;
                     gap: $defaultSmallMargin;
-                    //flex-wrap: wrap;
                 }
             }
 
@@ -127,7 +118,6 @@
                 @include flexColumnOnly;
                 justify-content: space-between;
                 width: 60%;
-                //height: 100%;
 
                 .content_detailsInput {
                     margin-bottom: $defaultLargeMargin;
@@ -137,9 +127,8 @@
                         min-height: 80px;
                     }
                 }
-
-                .content_masterInput {
-                    margin-bottom: $defaultLargeMargin;
+                .content_selectMaster {
+                    color: black
                 }
 
                 .content_buttons {
@@ -170,23 +159,7 @@
                 @include flexColumnOnly;
                 justify-content: space-between;
                 width: 40%;
-                //height: 100%;
 
-                //.clientCard_buttons {
-                //    @include flexOnlyBetween;
-                //    width: 100%;
-                //    gap: $defaultLargeMargin;
-                //
-                //    .clientCard_changeClientBtn {
-                //        margin-top: $defaultSmallMargin;
-                //        width: 100%;
-                //
-                //        button {
-                //            width: 100%;
-                //            height: 50px;
-                //        }
-                //    }
-                //}
                 .clientCard_cancelButton {
                     @include flexCenter;
                     margin-top: $defaultSmallMargin;
@@ -208,5 +181,3 @@
         }
     }
 }
-
-//}

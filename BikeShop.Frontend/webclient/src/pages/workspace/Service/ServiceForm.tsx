@@ -11,7 +11,7 @@ import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {useSnackbar} from "notistack"
 import useAuth from "../../auth/useAuthUser"
-import Select from "react-select";
+import Select from "react-select"
 
 export const ServiceForm = () => {
 
@@ -56,21 +56,6 @@ export const ServiceForm = () => {
 
     const onSubmit: SubmitHandler<CreateService> = (data: CreateService) => {
         // создание сервиса
-        // if (isCreating) {
-        //     console.log('create IF works, new data =', data)
-        //     data.shopId = 1
-        //
-        //     addNewService(data).then((res: any) => {
-        //         setIsCreating(false)
-        //         enqueueSnackbar('Ремонт добавлен', {variant: 'success', autoHideDuration: 3000})
-        //
-        //     }).catch((error: any) => {
-        //         let message = error(error.response.data.errorDescription).toString()
-        //         formControl.setError('name', {type: 'serverError', message: message})
-        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //         console.error(error.response.data)
-        //     })
-        // }
         if (isCreating) {
 
             data.shopId = 1
@@ -80,18 +65,6 @@ export const ServiceForm = () => {
         }
 
         // обновление сервиса
-        // if (!isCreating) {
-        //     console.log('update IF works, updateData = ', data)
-        //
-        //     updateService(data).then((res: any) => {
-        //         enqueueSnackbar('Ремонт обновлён', {variant: 'success', autoHideDuration: 3000})
-        //     }).catch((error: any) => {
-        //         let message = error(error.response.data.errorDescription).toString()
-        //         formControl.setError('name', {type: 'serverError', message: message})
-        //         enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-        //         console.error(error.response.data)
-        //     })
-        // }
         if (!isCreating) {
             console.log('update IF works, updateData = ', data)
             updateService(data)
@@ -161,9 +134,7 @@ export const ServiceForm = () => {
                                                divClassName={s.content_detailsInput}
                                                disabled={currentService === null && !isCreating}
                         />
-
-
-                        <div>
+                        <div className={s.content_selectMaster}>
                             <Controller
                                 name={'userMasterId'}
                                 control={formControl.control}
@@ -185,7 +156,6 @@ export const ServiceForm = () => {
                                 }
                             />
                         </div>
-
 
                         <div className={s.content_buttons}>
                             <div className={s.content_saveBtn}>
@@ -229,41 +199,39 @@ export const ServiceForm = () => {
                     </div>
                 </div>
 
+                <div className={s.rightSide_tables}>
                 <Controller
                     name={'serviceProducts'}
                     control={formControl.control}
                     render={({field}: any) =>
-                        <div className={s.rightSide_tables}>
+                        <>
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор товаров'}
-                                          serviceTableCallback={() => {
-                                              setOpenSelectProductModal(true)
-                                          }}
+                                          serviceTableCallback={() => {setOpenSelectProductModal(true)}}
                                           disabledButton={(currentService === null && !isCreating)}
                                           summ={summProducts}
                             />
                             <SelectProductModal products={field.value}
                                                 setProducts={field.onChange}/>
-                        </div>
+                        </>
                     }
                 />
                 <Controller
                     name={'serviceWorks'}
                     control={formControl.control}
                     render={({field}: any) =>
-                        <div className={s.rightSide_tables}>
+                        <>
                             <ServiceTable data={field.value}
                                           buttonTitle={'Редактор услуг'}
-                                          serviceTableCallback={() => {
-                                              setOpenSelectWorkModal(true)
-                                          }}
+                                          serviceTableCallback={() => {setOpenSelectWorkModal(true)}}
                                           disabledButton={(currentService === null && !isCreating)}
                                           summ={summWorks}
                             />
                             <SelectWorkModal works={field.value} setWorks={field.onChange}/>
-                        </div>
+                        </>
                     }
                 />
+                </div>
             </form>
         </div>
     )

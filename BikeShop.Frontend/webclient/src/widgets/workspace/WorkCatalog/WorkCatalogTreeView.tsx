@@ -21,14 +21,13 @@ export const WorkCatalogTreeView = () => {
     return (
         <>
             <WorkCatalogTreeViewContext x={XY.x} y={XY.y}
-                                        visibility={visibility} setVisibility={setVisibility}
+                                        visibility={visibility}
+                                        setVisibility={setVisibility}
             />
             <UniTreeView data={group}
                          selected={selected}
                          setSelected={setSelected}
-                         onNodeClick={(node) => {
-                             getWork(node.id)
-                         }}
+                         onNodeClick={(node) => {getWork(node.id)}}
                          onNodeContext={(item, event) => {
                              setVisibility(true)
                              setXY({x: event.clientX, y: event.clientY})
