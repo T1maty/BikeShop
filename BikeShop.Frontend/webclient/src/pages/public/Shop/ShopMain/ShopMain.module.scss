@@ -89,7 +89,7 @@
         }
 
         .content {
-            background-color: green;
+            background-color: $themeColorDark;
             flex: 1 1 auto; // прибиваем футер вниз
 
             .menu {
@@ -187,6 +187,18 @@
                             'photo1 photo2 photo5 photo5'
                             'photo3 photo4 photo5 photo5'
                             'photo6 photo6 photo7 photo7';
+
+                        @media(max-width: 767px) {
+                            grid-template-columns: repeat(2, minmax(50px, 1fr));
+                            grid-template-rows: repeat(6, minmax(350px, auto));
+                            grid-template-areas:
+                            'photo5 photo5'
+                            'photo5 photo5'
+                            'photo1 photo2'
+                            'photo3 photo4'
+                            'photo6 photo6'
+                            'photo7 photo7';
+                        }
 
                         .catalog_item1 {
                             grid-area: photo1;
