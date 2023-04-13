@@ -106,7 +106,9 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                  key={optionVariant.id}
                                             >
                                                 <fieldset className={s.options_box}>
-                                                    <legend>{optionVariant.optionName}</legend>
+                                                    <legend style={{color: 'white'}}>
+                                                        {optionVariant.optionName}
+                                                    </legend>
                                                     <Select
                                                         className={s.options_search}
                                                         options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable.from(currentProduct.productOptions).select(n1 => n1.id).contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
