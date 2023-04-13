@@ -105,27 +105,27 @@
 
                 .container {
                     @include defaultContainerForShop; // ограничивающий контейнер
+                    //padding: 0 40px;
 
                     .menu_items {
                         //@include flexBetween;
                         display: flex;
                         justify-content: space-around;
+                        //justify-content: space-between;
                         align-items: center;
-                        //gap: 10px;
                         height: 80px;
                         font-size: 32px;
                         font-weight: bold;
                         color: black;
 
                         @media(max-width: 1400px) {
-                            //padding: 0 50px;
+
                         }
                         @media(max-width: 943px) {
                             font-size: 26px;
                         }
                         @media(max-width: 820px) {
                             font-size: 22px;
-                            //padding: 0 20px;
                         }
                         @media(max-width: 650px) {
                             height: 50px;
@@ -151,21 +151,35 @@
             }
 
             .catalog {
-                //padding: 70px 70px 200px 70px;
-                //display: grid;
-
                 .container {
                     @include defaultContainerForShop; // ограничивающий контейнер
                     padding: 0;
 
                     .catalog_items {
                         > div {
-                            border: 1px solid black;
+                            //border: 1px solid black;
+                            position: relative;
+
+                            img {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
                         }
+
+                        padding: 20px 20px 150px;
+
+                        @media(max-width: 767px) {
+                            padding: 20px;
+                        }
+
                         display: grid;
-                        //gap: 20px;
-                        grid-template-columns: repeat(4, 350px);
-                        grid-template-rows: repeat(3, 350px);
+                        gap: 20px;
+                        grid-template-columns: repeat(4, minmax(50px, auto));
+                        grid-template-rows: repeat(3, minmax(350px, auto));
                         grid-template-areas:
                             'photo1 photo2 photo5 photo5'
                             'photo3 photo4 photo5 photo5'
@@ -185,18 +199,18 @@
                         }
                         .catalog_item5 {
                             grid-area: photo5;
-                            grid-column: span 2;
-                            grid-row: span 2;
+                            //grid-column: span 2;
+                            //grid-row: span 2;
                         }
                         .catalog_item6 {
                             grid-area: photo6;
-                            grid-column: span 2;
-                            grid-row: span 1;
+                            //grid-column: span 2;
+                            //grid-row: span 1;
                         }
                         .catalog_item7 {
                             grid-area: photo7;
-                            grid-column: span 2;
-                            grid-row: span 1;
+                            //grid-column: span 2;
+                            //grid-row: span 1;
                         }
 
                         //.catalog_item_big {
@@ -209,35 +223,6 @@
                         //
                         //}
                     }
-
-                    // незаконченный вариант-2
-                    //.catalog_items {
-                    //    display: grid;
-                    //    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-                    //    gap: 10px;
-                    //
-                    //    .catalog_item {
-                    //        position: relative;
-                    //        padding: 0 0 85% 0;
-                    //
-                    //        img {
-                    //            position: absolute;
-                    //            top: 0;
-                    //            left: 0;
-                    //            width: 100%;
-                    //            height: 100%;
-                    //            object-fit: cover;
-                    //        }
-                    //    }
-                    //    .catalog_item_big {
-                    //        grid-column: span 2;
-                    //        grid-row: span 1;
-                    //    }
-                    //    .catalog_item_long {
-                    //        grid-column: span 2;
-                    //        grid-row: span 1;
-                    //    }
-                    //}
 
                     // незаконченный вариант-1 (из видео)
                     //.catalog_items {
@@ -263,56 +248,6 @@
                     //        grid-row: span 2;
                     //    }
                     //
-                    //}
-
-                    // первый вариант (не адаптив)
-                    //.catalog_group1 {
-                    //    display: grid;
-                    //    grid-template-columns: 1fr 1fr 1fr;
-                    //    grid-template-rows: 1fr 1fr;
-                    //    gap: $defaultLargeMargin;
-                    //    margin-bottom: $defaultLargeMargin;
-                    //    @include hoverCursorPointerOpacity;
-                    //
-                    //    //> div {
-                    //    //    position: relative;
-                    //    //
-                    //    //    img {
-                    //    //        position: absolute;
-                    //    //        top: 0;
-                    //    //        left: 0;
-                    //    //        width: 100%;
-                    //    //        height: 100%;
-                    //    //        object-fit: cover;
-                    //    //    }
-                    //    //}
-                    //
-                    //    .catalog_item1 {
-                    //        grid-row: span 2;
-                    //    }
-                    //
-                    //    .catalog_item2 {
-                    //    }
-                    //
-                    //    .catalog_item3 {
-                    //    }
-                    //
-                    //    .catalog_item4 {
-                    //    }
-                    //
-                    //    .catalog_item5 {
-                    //    }
-                    //}
-                    //
-                    //.catalog_group2 {
-                    //    display: grid;
-                    //    grid-template-columns: 1fr 1fr;
-                    //    gap: $defaultLargeMargin;
-                    //    @include hoverCursorPointerOpacity;
-                    //
-                    //    .catalog_item {
-                    //
-                    //    }
                     //}
                 }
             }
