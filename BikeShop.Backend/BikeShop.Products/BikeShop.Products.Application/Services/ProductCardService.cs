@@ -127,14 +127,13 @@ namespace BikeShop.Products.Application.Services
             productCard.Description = dto.productCard.description;
             productCard.DescriptionShort = dto.productCard.shortDescription;
 
-            var variants = new List<OptionVariantDTO>();
-            dto.productOptions.ForEach(n => n.optionVariants.ForEach(n1 =>variants.Add(n1)));
-            var vIds = variants.Select(n1 => n1.id);
+
+            var vIds = dto.productOptions.Select(n1 => n1.id);
             var variantBinds = await _context.ProductOptionVariantBinds.Where(n => vIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
 
             var newBinds = new List<ProductOptionVariantBind>();
 
-            foreach (var variant in variants)
+            foreach (var variant in dto.productOptions)
             {
                 if (variant.id != 0)
                 {
@@ -149,7 +148,7 @@ namespace BikeShop.Products.Application.Services
                     //Создаем новые бинды
                     var vari = allVariants[variant.OptionVariantId];
                     var opt = allOptions[vari.OptionId];
-                    newBinds.Add(new ProductOptionVariantBind {OptionVariantId = variant.OptionVariantId, ProductId = dto.Id, SortOrder = variant.SortOrder, Name = vari.Name, OptionId = opt.Id, OptionName = opt.Name});
+                    newBinds.Add(new ProductOptionVariantBind {OptionVariantId = variant.OptionVariantId, ProductId = variant.productId, SortOrder = variant.SortOrder, Name = vari.Name, OptionId = opt.Id, OptionName = opt.Name});
                 }
             }
 

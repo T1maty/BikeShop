@@ -5,7 +5,6 @@ import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
 import {ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
-import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
 import Enumerable from "linq";
 
 interface ControlledProps {
@@ -28,8 +27,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
     // текущие значения селектов
     // опция
     const [selectedOption, setSelectedOption] = useState<any>(null)
-    // разновидность опции
-    const [selectedOptionVariant, setSelectedOptionVariant] = useState<SelectedOptionVariantType[]>([])
+
 
     // доступные опции и варианты
     const availableOptions = (field: any) => {
@@ -64,38 +62,6 @@ export const EditProductCardOption = (props: ControlledProps) => {
 
     const deleteOptionHandler = (field: any, optionId: number, productId: number) => {
         field.onChange(field.value.filter((n: ProductOptionVariantBind) => n.optionId != optionId || n.productId != productId))
-    }
-
-    // функции для разновидностей опций
-    const onChangeOptionsVariantHandler = (value: any, option: ProductOption) => {
-        if (value != undefined) {
-            let buf = selectedOptionVariant.filter(n => n.id != option.id)
-            buf.push({id: option.id, value: value.value})
-            setSelectedOptionVariant(buf)
-        }
-    }
-
-    const setOptionsVariantHandler = (field: any, option: ProductOptionsWithVariants,
-                                      variant: ProductOptionVariant) => {
-        let options = field.value.map((n: ProductOptionsWithVariants) => n.id === option.id ?
-            {
-                ...n,
-                optionVariants: n.optionVariants.filter(n => n.id != variant.id),
-            } : n)
-
-        field.onChange(options)
-        setSelectedOptionVariant([])
-    }
-
-    const addOptionVariantHandler = (field: any, option: ProductOptionsWithVariants) => {
-        let options = field.value.map((n: ProductOptionsWithVariants) => n.id === option.id ?
-            {
-                ...n, optionVariants: n.optionVariants != undefined
-                    ? [...n.optionVariants, selectedOptionVariant.find(n => n.id === option.id)?.value]
-                    : [selectedOptionVariant.find(n => n.id === option.id)?.value]
-            } : n)
-        field.onChange(options)
-        setSelectedOptionVariant([])
     }
 
     return (

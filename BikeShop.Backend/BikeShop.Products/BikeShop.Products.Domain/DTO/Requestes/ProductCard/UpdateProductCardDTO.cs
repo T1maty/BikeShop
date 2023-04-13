@@ -10,7 +10,7 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
     {
         public int Id { get; set; }
         public string CheckStatus { get; set; }
-        public List<ProductOptionsDTO> productOptions { get; set; }
+        public List<OptionVariantDTO> productOptions { get; set; }
 
         public List<ProductSpecidicationDTO> productSpecifications { get; set; }
 
