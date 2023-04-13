@@ -41,7 +41,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
 
     // функции для опций
     const addOptionListHandler = (field: any) => {
-        field.onChange([...field.value, {...selectedOption, optionVariants: []}])
+        let enumr = Enumerable.from(field.value as ProductOptionVariantBind[]).select(n => n.id)
+        field.onChange([...field.value])
         setSelectedOption(null)
     }
 
