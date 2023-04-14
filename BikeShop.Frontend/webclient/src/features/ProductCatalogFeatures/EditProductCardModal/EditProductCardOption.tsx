@@ -73,7 +73,8 @@ export const EditProductCardOption = (props: ControlledProps) => {
                     <>
                         <div className={s.productOptions_optionsList}>
                             {
-                                field.value.length === 0 ? <div style={{width: '350px',
+                                field.value.length === 0 ? <div style={{
+                                        width: '350px',
                                         textAlign: 'center', wordBreak: 'break-word', color: 'white'
                                     }}>
                                         Для добавления выберите опции
@@ -82,72 +83,70 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                     field.value
                                         .filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id)
                                         .map((optionVariant: ProductOptionVariantBind, index: number) => {
-                                        return (
-                                            <div className={s.optionsList_item}
-                                                 key={index}
-                                            >
-                                                <fieldset className={s.options_box}>
-                                                    <legend style={{color: 'white'}}>
-                                                        {optionVariant.optionName}
-                                                    </legend>
-                                                    <Select
-                                                        className={s.options_search}
-                                                        options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable
-                                                            .from(field.value as ProductOptionVariantBind[])
-                                                            .select(n1 => n1.id)
-                                                            .contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
-                                                        placeholder="Разновидность опции"
-                                                        isSearchable={true}
-                                                        value={optionVariant}
-                                                        onChange={(value) => {
-                                                            let r = value as ProductOptionVariant
-                                                            let base = field.value as ProductOptionVariantBind[]
+                                            return (
+                                                <div className={s.optionsList_item}
+                                                     key={index}
+                                                >
+                                                    <fieldset className={s.options_box}>
+                                                        <legend style={{color: 'white'}}>
+                                                            {optionVariant.optionName}
+                                                        </legend>
+                                                        <Select
+                                                            className={s.options_search}
+                                                            options={allOptions.filter(n => n.id == optionVariant.optionId && !(Enumerable
+                                                                .from(field.value as ProductOptionVariantBind[])
+                                                                .select(n1 => n1.id)
+                                                                .contains(n.id)))[0]?.optionVariants as ProductOptionVariantBind[]}
+                                                            placeholder={'Разновидность опции'}
+                                                            isSearchable={true}
+                                                            value={optionVariant}
+                                                            onChange={(value) => {
+                                                                let r = value as ProductOptionVariant
+                                                                let base = field.value as ProductOptionVariantBind[]
 
-                                                            let variant: ProductOptionVariantBind
-                                                            variant = {
-                                                                productId: currentProduct.product.id,
-                                                                id: 0,
-                                                                name: r.name,
-                                                                optionId: r.optionId,
-                                                                optionVariantId: r.id,
-                                                                optionName: r.optionName,
-                                                                sortOrder: 0,
-                                                                enabled: true,
-                                                                createdAt: Date.now().toString(),
-                                                                updatedAt: Date.now().toString(),
-                                                            }
+                                                                let variant: ProductOptionVariantBind
+                                                                variant = {
+                                                                    productId: currentProduct.product.id,
+                                                                    id: 0,
+                                                                    name: r.name,
+                                                                    optionId: r.optionId,
+                                                                    optionVariantId: r.id,
+                                                                    optionName: r.optionName,
+                                                                    sortOrder: 0,
+                                                                    enabled: true,
+                                                                    createdAt: Date.now().toString(),
+                                                                    updatedAt: Date.now().toString(),
+                                                                }
 
-                                                            let target = base.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id)
-                                                                .filter((n: ProductOptionVariantBind) => n.optionId === value?.optionId)[0]
-                                                            let ind = base.indexOf(target)
-                                                            base[ind] = variant
-                                                            console.log(variant)
-                                                            field.onChange(base)
-                                                        }}
-                                                        getOptionLabel={label => label!.name}
-                                                        getOptionValue={value => value!.name}
-                                                        noOptionsMessage={() => 'Доступных вариантов нету'}
-                                                    />
-                                                </fieldset>
-                                                <div className={s.item_deleteDetailsItem}>
-                                                    <img src={RemoveIcon} alt="remove-icon"
-                                                         onClick={() => {
-                                                             deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)}}
-                                                    />
+                                                                let target = base.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id)
+                                                                    .filter((n: ProductOptionVariantBind) => n.optionId === value?.optionId)[0]
+                                                                let ind = base.indexOf(target)
+                                                                base[ind] = variant
+                                                                field.onChange(base)
+                                                                console.log(variant)
+                                                            }}
+                                                            getOptionLabel={label => label!.name}
+                                                            getOptionValue={value => value!.name}
+                                                            noOptionsMessage={() => 'Доступных вариантов нету'}
+                                                        />
+                                                    </fieldset>
+                                                    <div className={s.item_deleteDetailsItem}>
+                                                        <img src={RemoveIcon} alt="remove-icon"
+                                                             onClick={() => {
+                                                                 deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)
+                                                             }}
+                                                        />
+                                                    </div>
                                                 </div>
-                                                {/*<Button onClick={() => {*/}
-                                                {/*    deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)}}*/}
-                                                {/*>*/}
-                                                {/*    Х*/}
-                                                {/*</Button>*/}
-                                            </div>
-                                        )
-                                    })
+                                            )
+                                        })
                             }
                         </div>
                         <div className={s.productOptions_selectRow}>
                             <Button buttonDivWrapper={s.options_button}
-                                    onClick={() => {addOptionListHandler(field)}}
+                                    onClick={() => {
+                                        addOptionListHandler(field)
+                                    }}
                                     disabled={selectedOption === null}
                             >
                                 +
@@ -155,10 +154,12 @@ export const EditProductCardOption = (props: ControlledProps) => {
                             <Select
                                 className={s.options_search}
                                 options={availableOptions(field)}
-                                placeholder="Опции"
+                                placeholder={'Опции'}
                                 isSearchable={true}
                                 value={selectedOption}
-                                onChange={(value: any) => {setSelectedOption(value)}}
+                                onChange={(value: any) => {
+                                    setSelectedOption(value)
+                                }}
                                 getOptionLabel={label => label!.name}
                                 getOptionValue={value => value!.name}
                                 noOptionsMessage={() => 'Опция не найдена'}

@@ -4,8 +4,8 @@ import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button} from "../../../shared/ui"
 import {ChooseProductTagModal} from "../AddProductCardTagModal/AddProductCardTagModal"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {ProductTag} from "../../../entities";
-import {useSnackbar} from "notistack";
+import {ProductTag} from "../../../entities"
+import {useSnackbar} from "notistack"
 
 interface ControlledProps {
     name: string

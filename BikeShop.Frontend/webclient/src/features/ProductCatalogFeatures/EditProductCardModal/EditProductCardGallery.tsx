@@ -6,12 +6,12 @@ import useEditProductCardModal from "./EditProductCardModalStore"
 import {ProductImage} from '../../../entities'
 import {$api} from "../../../shared"
 
-interface prp {
+interface ProductCardGalleryProps {
     images: ProductImage[]
     setImages: (value: ProductImage[]) => void
 }
 
-export const EditProductCardGallery = (props: prp) => {
+export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
 
