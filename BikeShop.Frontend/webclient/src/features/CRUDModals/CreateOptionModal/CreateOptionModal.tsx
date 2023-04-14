@@ -182,7 +182,7 @@ export const CreateOptionModal = () => {
                                     <Button type={'submit'}
                                             buttonDivWrapper={s.buttonsBlock_createButton}
                                             disabled={currentOption === null && optionVariantName.length === 0
-                                                // || currentOption !== null && optionVariants.length === 0 // надо пофиксить
+                                                || currentOption !== null && currentOption.optionVariants.length === 0
                                             }
                                     >
                                         {currentOption === null ? 'Создать опцию' : 'Обновить опцию'}
