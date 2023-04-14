@@ -80,7 +80,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                                  key={index}
                                             >
                                                 <fieldset className={s.options_box}>
-                                                    <legend>{spec.name}</legend>
+                                                    <legend style={{color: 'white'}}>{spec.name}</legend>
                                                     <div className={s.options_rowItems}>
                                                         <div className={s.rowItems_item}>
                                                             <div style={{
@@ -88,7 +88,7 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                                                 alignItems: 'center',
                                                                 justifyContent: 'space-between'
                                                             }}>
-                                                                <div className={s.item_content}>
+                                                                <div className={s.item_content} style={{color: 'white'}}>
                                                                     <EditableSpan title={spec.description}
                                                                                   onChangeInput={(newInputValue) => {
                                                                                       onChangeSpecificationHandler(newInputValue, field, spec)

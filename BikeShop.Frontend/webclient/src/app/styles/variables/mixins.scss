@@ -482,10 +482,12 @@
         .optionsList_item {
             margin-bottom: $defaultSmallMargin;
             padding-right: 10px;
-            //width: 360px;
+            @include flexBetween;
+            gap: 10px;
 
             .options_box {
                 border-radius: $smallBorderRadius;
+                width: 100%;
 
                 .options_rowItems {
                     > div {
@@ -513,7 +515,6 @@
 
                         .item_content {
                             @include flexBetween;
-                            //margin-bottom: $defaultSmallMargin;
 
                             .item_title {
 
@@ -571,6 +572,17 @@
                             color: black;
                             font-size: 14px;
                         }
+                    }
+                }
+            }
+            .item_deleteDetailsItem {
+                img {
+                    width: 25px;
+                    height: 25px;
+
+                    &:hover {
+                        cursor: pointer;
+                        filter: contrast(3);
                     }
                 }
             }

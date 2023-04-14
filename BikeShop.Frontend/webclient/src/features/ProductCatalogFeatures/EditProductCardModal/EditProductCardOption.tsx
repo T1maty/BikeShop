@@ -6,6 +6,7 @@ import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
 import {ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
 import Enumerable from "linq"
+import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg";
 
 interface ControlledProps {
     name: string
@@ -73,7 +74,7 @@ export const EditProductCardOption = (props: ControlledProps) => {
                         <div className={s.productOptions_optionsList}>
                             {
                                 field.value.length === 0 ? <div style={{width: '350px',
-                                        textAlign: 'center', wordBreak: 'break-word'
+                                        textAlign: 'center', wordBreak: 'break-word', color: 'white'
                                     }}>
                                         Для добавления выберите опции
                                     </div> :
@@ -110,10 +111,10 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                                 optionId: r.optionId,
                                                                 optionVariantId: r.id,
                                                                 optionName: r.optionName,
-                                                                createdAt: Date.now().toString(),
                                                                 sortOrder: 0,
-                                                                updatedAt: Date.now().toString(),
                                                                 enabled: true,
+                                                                createdAt: Date.now().toString(),
+                                                                updatedAt: Date.now().toString(),
                                                             }
 
                                                             let target = base.filter((n: ProductOptionVariantBind) => n.productId === currentProduct.product.id)
@@ -128,11 +129,17 @@ export const EditProductCardOption = (props: ControlledProps) => {
                                                         noOptionsMessage={() => 'Доступных вариантов нету'}
                                                     />
                                                 </fieldset>
-                                                <Button onClick={() => {
-                                                    deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)}}
-                                                >
-                                                    Х
-                                                </Button>
+                                                <div className={s.item_deleteDetailsItem}>
+                                                    <img src={RemoveIcon} alt="remove-icon"
+                                                         onClick={() => {
+                                                             deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)}}
+                                                    />
+                                                </div>
+                                                {/*<Button onClick={() => {*/}
+                                                {/*    deleteOptionHandler(field, optionVariant.optionId, currentProduct.product.id)}}*/}
+                                                {/*>*/}
+                                                {/*    Х*/}
+                                                {/*</Button>*/}
                                             </div>
                                         )
                                     })
