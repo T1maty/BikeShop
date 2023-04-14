@@ -6,7 +6,7 @@ import {Button, ControlledCustomInput, CustomModal, EditableSpan, LoaderScreen, 
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
-import {CreateOption, ProductOptionVariant, UpdateOption} from '../../../entities'
+import {ProductOptionVariant, UpdateOption} from '../../../entities'
 
 export const CreateOptionModal = () => {
 
@@ -19,8 +19,6 @@ export const CreateOptionModal = () => {
 
     const currentOption = useCreateOptionModal(s => s.currentOption)
     const setCurrentOption = useCreateOptionModal(s => s.setCurrentOption)
-    // const optionVariants = useCreateOptionModal(s => s.optionVariants)
-    // const setOptionVariants = useCreateOptionModal(s => s.setOptionVariants)
 
     const options = useCreateOptionModal(s => s.options)
     const getOptions = useCreateOptionModal(s => s.getOptions)
@@ -28,7 +26,6 @@ export const CreateOptionModal = () => {
     const updateOption = useCreateOptionModal(s => s.updateOption)
 
     const [optionVariantName, setOptionVariantName] = useState<string>('')
-    // const [variantNames, setVariantNames] = useState<string[]>([])
 
     const formControl = useForm<UpdateOption>({
         defaultValues: {
@@ -40,26 +37,9 @@ export const CreateOptionModal = () => {
 
     const onSubmit: SubmitHandler<UpdateOption> = (data: any) => {
         if (currentOption === null) {
-            console.log(data)
-
-            const newVariant = {
-                id: 0,
-                name: optionVariantName, // название вариации
-                optionId: 0,
-                optionName: formControl.getValues('name'), // название опции
-                createdAt: '',
-                updatedAt: '',
-                enabled: true
-            }
-
-            data.optionVariants = [newVariant]
+            data.optionVariants = [...data.optionVariants, optionVariantName]
             setOptionVariantName('')
             addNewOption(data)
-
-            // setVariantNames([...variantNames, optionVariantName])
-            // data.variantNames = variantNames
-            // addNewOption(data)
-            // setOptionVariantName('')
         }
         if (currentOption !== null) {
             data.enabled = true
@@ -144,8 +124,7 @@ export const CreateOptionModal = () => {
                                     />
                                 </div>
                                 <div className={s.optionVariantName_row}>
-                                    <Button // buttonDivWrapper={s.options_button}
-                                            onClick={addOptionVariantHandler}
+                                    <Button onClick={addOptionVariantHandler}
                                             disabled={currentOption === null}
                                     >
                                         +
@@ -202,7 +181,9 @@ export const CreateOptionModal = () => {
                                     </Button>
                                     <Button type={'submit'}
                                             buttonDivWrapper={s.buttonsBlock_createButton}
-                                            // disabled={selectedSpecification === undefined}
+                                            disabled={currentOption === null && optionVariantName.length === 0
+                                                // || currentOption !== null && optionVariants.length === 0 // надо пофиксить
+                                            }
                                     >
                                         {currentOption === null ? 'Создать опцию' : 'Обновить опцию'}
                                     </Button>
@@ -220,11 +201,12 @@ export const CreateOptionModal = () => {
                                         <div key={option.id}
                                              className={option.id === currentOption?.id ?
                                              s.optionFieldset_wrapper_active : s.optionFieldset_wrapper}
+                                             onDoubleClick={() => {setCurrentOption(option)}}
                                         >
                                             <fieldset className={s.optionsList_item}>
                                                 <legend>{option.name}</legend>
                                                 <div className={s.optionsList_VariantsList}
-                                                     onClick={() => {setCurrentOption(option)}}
+                                                     // onClick={() => {setCurrentOption(option)}}
                                                 >
                                                     {
                                                         option.optionVariants.map((ov) => {

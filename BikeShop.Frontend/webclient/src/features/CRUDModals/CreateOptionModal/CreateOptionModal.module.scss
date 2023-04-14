@@ -146,7 +146,7 @@
                 @include currentOption(white)
             }
             .optionFieldset_wrapper_active {
-                @include currentOption($headerColor)
+                @include currentOption(orange)
             }
         }
     }
