@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI, UniTable} from '../../../shared/ui'
-import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets";
-import useSelectProduct from "./SelectProductStore";
-import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem";
-import {columns} from "./SlaveTableConfig";
-import {ProductTag} from "../../../entities";
+import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
+import useSelectProduct from "./SelectProductStore"
+import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem"
+import {columns} from "./SlaveTableConfig"
+import {ProductTag} from "../../../entities"
 
 interface SelectProductProps {
     products: ServiceItemProduct[]

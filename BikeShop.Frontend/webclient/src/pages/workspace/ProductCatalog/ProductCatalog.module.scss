@@ -17,16 +17,16 @@
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             margin-bottom: $defaultLargeMargin;
-            padding: $defaultLargeMargin;
+            padding: 15px;
             width: 100%;
-            height: 20%;
+            height: 25%;
         }
 
         .leftSide_tree {
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             width: 100%;
-            height: 80%;
+            height: 75%;
             overflow: auto;
         }
     }
