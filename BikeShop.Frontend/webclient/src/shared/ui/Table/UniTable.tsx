@@ -1,8 +1,8 @@
 import React, {memo, useState} from "react"
 import cls from "./UniTable.module.scss"
 import {Loader} from "../Loader/Loader"
-import {EditableSpan} from "../EditableSpan/EditableSpan";
-import {useSnackbar} from "notistack";
+import {EditableSpan} from "../EditableSpan/EditableSpan"
+import {useSnackbar} from "notistack"
 
 export interface Column {
     id: string
@@ -44,7 +44,6 @@ export const UniTable = (props: TableProps) => {
     const [selected, setSelected] = useState([])
     const {enqueueSnackbar} = useSnackbar()
 
-
     return (
         <div>
             <table className={`${props.className} ${cls.table}`}>
@@ -70,7 +69,7 @@ export const UniTable = (props: TableProps) => {
                                              setSelected={props.setSelected != undefined ? props.setSelected : setSelected}
                             />
                         })
-                        : <tr style={{height: 250, display: "flex", justifyContent: 'center'}}>
+                        : <tr style={{height: 250, display: 'flex', justifyContent: 'center'}}>
                             <td><Loader variant={"ellipsis"}/></td>
                         </tr>
                 }
@@ -86,10 +85,10 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
     const {theadData} = props
 
     return (
-        <tr className={cls.head__items}>
+        <tr className={cls.head_items}>
             {
                 theadData.map((item: Column, index) =>
-                    <td key={index} title={item.id} className={cls.head__item}>
+                    <td key={index} title={item.id} className={cls.head_item}>
                         {item.label}
                     </td>
                 )
@@ -102,7 +101,7 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
 const TableRow = memo((props: TableRowProps) => {
 
     return (
-        <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body__items}`}
+        <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
             onDoubleClick={(event) => {
                 props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
             }}
@@ -117,25 +116,25 @@ const TableRow = memo((props: TableRowProps) => {
         >
             {
                 props.columns.map((item, index) => {
-                    return <td key={index}>{
-                        item.isEditable ?
-                            <EditableSpan title={props.row[item.id]} onChangeInput={(newInputValue) => {
-                                if (item.isNumber) {
-                                    let newValue = Number.parseFloat(newInputValue).toString()
-                                    let newRow = props.row
-                                    if (newValue != 'NaN') {
-                                        newRow[item.id] = newValue
-                                        console.log('updated')
-                                    }
-                                    props.setRow(newRow)
-
-                                }
-
-                            }}/>
-                            :
-                            props.row[item.id]
-                    }
-
+                    return <td key={index}>
+                        {
+                            item.isEditable ?
+                                <EditableSpan title={props.row[item.id]}
+                                              onChangeInput={(newInputValue) => {
+                                                  if (item.isNumber) {
+                                                      let newValue = Number.parseFloat(newInputValue).toString()
+                                                      let newRow = props.row
+                                                      if (newValue != 'NaN') {
+                                                          newRow[item.id] = newValue
+                                                          console.log('updated')
+                                                      }
+                                                      props.setRow(newRow)
+                                                  }
+                                              }}
+                                              inputClassName={cls.inputClassName}
+                                />
+                                : props.row[item.id]
+                        }
                     </td>
                 })
             }

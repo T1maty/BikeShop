@@ -30,7 +30,7 @@
   overflow: auto;
 }
 
-.head__item {
+.head_item {
   padding: 10px;
   border-right: 1px solid rgb(81, 81, 81);
 }
@@ -40,15 +40,15 @@
   text-align: center;
 }
 
-.body__items {
+.body_items {
   border-bottom: 1px solid rgb(81, 81, 81);
 }
 
-.body__items:hover {
+.body_items:hover {
   background-color: rgb(18, 18, 18);
 }
 
-.body__item {
+.body_item {
   padding: 5px;
 }
 
@@ -58,4 +58,10 @@
 
 .rowSelectedBackground:hover {
   background: #4b4b4b;
+}
+
+.inputClassName {
+  height: 30px;
+  width: 150px;
+  padding: 5px;
 }
