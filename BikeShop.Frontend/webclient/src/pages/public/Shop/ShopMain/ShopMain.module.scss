@@ -179,26 +179,37 @@
                             padding: 20px;
                         }
 
+                        // вариант-2
                         display: grid;
                         gap: 20px;
                         grid-template-columns: repeat(4, minmax(50px, auto));
-                        grid-template-rows: repeat(3, minmax(350px, auto));
+                        grid-template-rows: repeat(3, minmax(250px, auto));
                         grid-template-areas:
-                            'photo1 photo2 photo5 photo5'
-                            'photo3 photo4 photo5 photo5'
-                            'photo6 photo6 photo7 photo7';
+                            'photo1 photo2 photo3 photo3'
+                            'photo4 photo5 photo5 photo6'
+                            'photo7 photo7 photo8 photo9';
 
-                        @media(max-width: 767px) {
-                            grid-template-columns: repeat(2, minmax(50px, 1fr));
-                            grid-template-rows: repeat(6, minmax(350px, auto));
+                        @media(max-width: 1200px) {
+                            grid-template-columns: repeat(3, minmax(50px, 1fr));
+                            grid-template-rows: repeat(4, minmax(250px, auto));
                             grid-template-areas:
-                            'photo5 photo5'
-                            'photo5 photo5'
-                            'photo1 photo2'
-                            'photo3 photo4'
-                            'photo6 photo6'
-                            'photo7 photo7';
+                            'photo1 photo3 photo3'
+                            'photo5 photo5 photo6'
+                            'photo2 photo4 photo9'
+                            'photo8 photo8 photo7';
                         }
+
+                        //@media(max-width: 767px) {
+                        //    grid-template-columns: repeat(2, minmax(50px, 1fr));
+                        //    grid-template-rows: repeat(6, minmax(350px, auto));
+                        //    grid-template-areas:
+                        //    'photo5 photo5'
+                        //    'photo5 photo5'
+                        //    'photo1 photo2'
+                        //    'photo3 photo4'
+                        //    'photo6 photo6'
+                        //    'photo7 photo7';
+                        //}
 
                         .catalog_item1 {
                             grid-area: photo1;
@@ -208,6 +219,8 @@
                         }
                         .catalog_item3 {
                             grid-area: photo3;
+                            grid-column: span 2;
+                            grid-row: span 1;
                         }
                         .catalog_item4 {
                             grid-area: photo4;
@@ -215,18 +228,72 @@
                         .catalog_item5 {
                             grid-area: photo5;
                             grid-column: span 2;
-                            grid-row: span 2;
+                            grid-row: span 1;
                         }
                         .catalog_item6 {
                             grid-area: photo6;
-                            grid-column: span 2;
-                            grid-row: span 1;
                         }
                         .catalog_item7 {
                             grid-area: photo7;
                             grid-column: span 2;
                             grid-row: span 1;
                         }
+                        .catalog_item8 {
+                            grid-area: photo8;
+                        }
+                        .catalog_item9 {
+                            grid-area: photo9;
+                        }
+
+                        // вариант-1
+                        //display: grid;
+                        //gap: 20px;
+                        //grid-template-columns: repeat(4, minmax(50px, auto));
+                        //grid-template-rows: repeat(3, minmax(350px, auto));
+                        //grid-template-areas:
+                        //    'photo1 photo2 photo5 photo5'
+                        //    'photo3 photo4 photo5 photo5'
+                        //    'photo6 photo6 photo7 photo7';
+                        //
+                        //@media(max-width: 767px) {
+                        //    grid-template-columns: repeat(2, minmax(50px, 1fr));
+                        //    grid-template-rows: repeat(6, minmax(350px, auto));
+                        //    grid-template-areas:
+                        //    'photo5 photo5'
+                        //    'photo5 photo5'
+                        //    'photo1 photo2'
+                        //    'photo3 photo4'
+                        //    'photo6 photo6'
+                        //    'photo7 photo7';
+                        //}
+                        //
+                        //.catalog_item1 {
+                        //    grid-area: photo1;
+                        //}
+                        //.catalog_item2 {
+                        //    grid-area: photo2;
+                        //}
+                        //.catalog_item3 {
+                        //    grid-area: photo3;
+                        //}
+                        //.catalog_item4 {
+                        //    grid-area: photo4;
+                        //}
+                        //.catalog_item5 {
+                        //    grid-area: photo5;
+                        //    grid-column: span 2;
+                        //    grid-row: span 2;
+                        //}
+                        //.catalog_item6 {
+                        //    grid-area: photo6;
+                        //    grid-column: span 2;
+                        //    grid-row: span 1;
+                        //}
+                        //.catalog_item7 {
+                        //    grid-area: photo7;
+                        //    grid-column: span 2;
+                        //    grid-row: span 1;
+                        //}
                     }
 
                     // вариант из видео

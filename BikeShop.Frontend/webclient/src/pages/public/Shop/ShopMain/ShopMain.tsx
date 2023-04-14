@@ -20,6 +20,8 @@ import catalogSpares from '../../../../shared/assets/shop/images/catalog-spares.
 import testImage1 from '../../../../shared/assets/shop/images/testImage-square.png'
 import testImage2 from '../../../../shared/assets/shop/images/testImage-squareBig.png'
 import testImage3 from '../../../../shared/assets/shop/images/testImage-rectangle.png'
+import testImage4 from '../../../../shared/assets/shop/images/testImage-square-2.png'
+import testImage5 from '../../../../shared/assets/shop/images/testImage-rectangle-2.png'
 import catalogClothes from '../../../../shared/assets/shop/images/catalog-clothes.png'
 import catalogChemistry from '../../../../shared/assets/shop/images/catalog-chemistry.png'
 import catalogAccessories from '../../../../shared/assets/shop/images/catalog-accessories.png'
@@ -124,27 +126,60 @@ export const ShopMain = () => {
                 <div className={s.catalog}>
                     <div className={s.container}>
                         <div className={s.catalog_items}>
+                            {/*вариант-2*/}
                             <div className={s.catalog_item1}>
-                                <img src={testImage1} alt="catalog-spares"/>
+                                <img src={testImage4} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item2}>
-                                <img src={testImage1} alt="catalog-spares"/>
+                                <img src={testImage4} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item3}>
-                                <img src={testImage1} alt="catalog-spares"/>
+                                <img src={testImage5} alt="catalog-spares"/>
                             </div>
+
                             <div className={s.catalog_item4}>
-                                <img src={testImage1} alt="catalog-spares"/>
+                                <img src={testImage4} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item5}>
-                                <img src={testImage2} alt="catalog-spares"/>
+                                <img src={testImage5} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item6}>
-                                <img src={testImage3} alt="catalog-accessories"/>
+                                <img src={testImage4} alt="catalog-accessories"/>
                             </div>
+
                             <div className={s.catalog_item7}>
-                                <img src={testImage3} alt="catalog-food"/>
+                                <img src={testImage5} alt="catalog-food"/>
                             </div>
+                            <div className={s.catalog_item8}>
+                                <img src={testImage4} alt="catalog-accessories"/>
+                            </div>
+                            <div className={s.catalog_item9}>
+                                <img src={testImage4} alt="catalog-accessories"/>
+                            </div>
+
+
+                            {/*вариант-1*/}
+                            {/*<div className={s.catalog_item1}>*/}
+                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item2}>*/}
+                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item3}>*/}
+                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item4}>*/}
+                            {/*    <img src={testImage1} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item5}>*/}
+                            {/*    <img src={testImage2} alt="catalog-spares"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item6}>*/}
+                            {/*    <img src={testImage3} alt="catalog-accessories"/>*/}
+                            {/*</div>*/}
+                            {/*<div className={s.catalog_item7}>*/}
+                            {/*    <img src={testImage3} alt="catalog-food"/>*/}
+                            {/*</div>*/}
                         </div>
                     </div>
                 </div>
