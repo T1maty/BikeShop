@@ -31,6 +31,7 @@ export type {PaymentData} from './models/PaymentData'
 ///////////////////////////////////
 
 export type {ProductFullData} from './models/ProductFullData'
+export type {UniTableColumn} from './UniTableColumn'
 
 ///////////////////////////////////
 //          Requests             //

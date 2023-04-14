@@ -64,6 +64,7 @@ export const EditProductCardModal = () => {
             shortDescription: data.productCard.shortDescription
         }
         DATA.productTags = tagIds
+        DATA.bindedProducts = []
 
         console.log('submitData', DATA)
         updateProductCard(DATA)

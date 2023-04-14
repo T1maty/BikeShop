@@ -47,7 +47,7 @@ namespace BikeShop.Acts.Application.Services
 
             foreach (var prod in dto.SupplyInvoiceProducts)
             {
-                product.Add(new SupplyInvoiceProduct { SupplyInvoiceId = invoce.Id, BrandName = prod.BrandName, Description = prod.Description, ProductId = prod.ProductId, Barcode = prod.Barcode, CatalogKey = prod.CatalogKey, IncomePrice = prod.IncomePrice, ManufBarcode = prod.ManufBarcode, Name = prod.Name, Quantity = prod.Quantity, QuantityUnitName = prod.QuantityUnitName, Total = prod.Quantity * prod.IncomePrice });
+                product.Add(new SupplyInvoiceProduct { SupplyInvoiceId = invoce.Id, BrandName = prod.BrandName, Description = prod.Description, ProductId = prod.ProductId, Barcode = prod.Barcode, CatalogKey = prod.CatalogKey, IncomePrice = prod.IncomePrice, ManufBarcode = prod.ManufacturerBarcode, Name = prod.Name, Quantity = prod.Quantity, QuantityUnitName = prod.QuantityUnitName, Total = prod.Quantity * prod.IncomePrice });
             }
 
 
@@ -116,7 +116,7 @@ namespace BikeShop.Acts.Application.Services
                     product.IncomePrice = nd.IncomePrice;
                     product.Barcode = nd.Barcode;
                     product.UpdatedAt = DateTime.Now;
-                    product.ManufBarcode = nd.ManufBarcode;
+                    product.ManufBarcode = nd.ManufacturerBarcode;
                     product.Total = nd.Quantity * nd.IncomePrice;
                     product.BrandName = nd.BrandName;
                     product.CatalogKey = nd.CatalogKey;
@@ -133,7 +133,7 @@ namespace BikeShop.Acts.Application.Services
 
                     product.Barcode = updateProduct.Barcode;
                     product.BrandName = updateProduct.BrandName;
-                    product.ManufBarcode = updateProduct.ManufBarcode;
+                    product.ManufBarcode = updateProduct.ManufacturerBarcode;
                     product.ProductId = updateProduct.ProductId;
                     product.CatalogKey = updateProduct.CatalogKey;
                     product.Description= updateProduct.Description;

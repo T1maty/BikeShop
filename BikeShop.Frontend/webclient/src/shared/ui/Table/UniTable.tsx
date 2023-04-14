@@ -16,7 +16,7 @@ export interface Column {
 interface TableProps {
     rows: any[]
     setRows?: (rows: any[]) => void
-    columns: Column[]
+    columns: any[]
 
     isLoading?: boolean
     className?: string
@@ -31,7 +31,7 @@ interface TableProps {
 interface TableRowProps {
     row?: any
     setRow: (row: any) => void
-    columns: Column[]
+    columns: any[]
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
 

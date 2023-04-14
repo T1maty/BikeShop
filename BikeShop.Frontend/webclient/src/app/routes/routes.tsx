@@ -1,13 +1,27 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    ArrivalOfProducts, Cashbox, Catalog, CatalogProductItem, InventoryOfProducts,
-    LoginPage, MainPage, Order, ProductCatalog, ProductsWrapper, Profile,
-    RegistrationPage, Service, ShopMain, ShopWrapper, WorkCatalog
+    ArrivalOfProducts,
+    Cashbox,
+    Catalog,
+    CatalogProductItem,
+    InventoryOfProducts,
+    LoginPage,
+    MainPage,
+    Order,
+    ProductCatalog,
+    ProductsWrapper,
+    Profile,
+    RegistrationPage,
+    Service,
+    ShopMain,
+    ShopWrapper,
+    WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
-import {BarcodeScannerListenerProvider}
-    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+import {
+    BarcodeScannerListenerProvider
+} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 import {CheckAct, WorkAct} from 'widgets'
 
 // @ts-ignore
@@ -126,9 +140,9 @@ export const routes = createBrowserRouter([
     {
         path: BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS,
         element: <WorkspaceHeaderProvider>
-            <ProductsWrapper title={'Новый акт прихода товара'} isUploadFile={true}>
-                <ArrivalOfProducts/>
-            </ProductsWrapper>
+
+            <ArrivalOfProducts/>
+
         </WorkspaceHeaderProvider>
     },
     {
