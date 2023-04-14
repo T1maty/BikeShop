@@ -2,7 +2,8 @@ import React, {useEffect} from 'react'
 import s from './UpdateTagModal.module.scss'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {UpdateTag} from '../../../entities'
-import {ControlledCustomCheckbox, ControlledCustomInput, Button, CustomModal} from '../../../shared/ui'
+import {ControlledCustomCheckbox, ControlledCustomInput,
+    Button, CustomModal} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useUpdateTagModal from './UpdateTagModalStore'
 

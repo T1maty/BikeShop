@@ -43,26 +43,19 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
+            onClose={() => {setOpen(false)}}
+            onContextMenu={(event) => {event.preventDefault()}}
         >
             <div className={s.createTagModal_mainBox}>
-                <form onSubmit={control.handleSubmit(onSubmit)}>
-                <span>
-                    Добавить в:
-                    {parentNode.id === undefined ? 'КОРЕНЬ ДЕРЕВА' : parentNode.name}
-                </span>
+                <form onSubmit={control.handleSubmit(onSubmit)} className={s.createTagModal_form}>
+                    <div className={s.createTagModal_title}>
+                        Добавить в: {parentNode.id === undefined ? 'Корень дерева' : parentNode.name}
+                    </div>
                     <ControlledCustomInput name={'name'}
                                            placeholder={'Название тега'}
                                            control={control}
                                            rules={{required: 'Введите название нового тега'}}
                     />
-                    <br/>
-                    <br/>
                     <ControlledCustomInput name={'sortOrder'}
                                            placeholder={'Порядок сортировки'}
                                            control={control}
@@ -74,19 +67,15 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
                     <ControlledCustomCheckbox name={'isRetailVisible'}
                                               label={'Видим в интернет-магазине'}
                                               control={control}
-                        // divClassName={s.infoBlock_checkbox}
                     />
                     <ControlledCustomCheckbox name={'isB2BVisible'}
                                               label={'Видим в B2B'}
                                               control={control}
-                        // divClassName={s.infoBlock_checkbox}
                     />
                     <ControlledCustomCheckbox name={'isUniversal'}
                                               label={'Универсальный тег'}
                                               control={control}
-                        // divClassName={s.infoBlock_checkbox}
                     />
-                    <br/>
                     <Button type={'submit'}
                             buttonDivWrapper={s.infoBlock_cancelBtn}
                     >

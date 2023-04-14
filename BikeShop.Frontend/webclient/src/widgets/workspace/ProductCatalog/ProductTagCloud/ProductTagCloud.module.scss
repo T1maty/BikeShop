@@ -23,7 +23,9 @@
         .tagsList_item {
             background-color: $themeColorGray;
             border-radius: $smallBorderRadius;
+            @include flexCenter;
             padding: 5px 5px 5px 7px;
+            height: 30px;
 
             &:hover {
                 background: #272727;

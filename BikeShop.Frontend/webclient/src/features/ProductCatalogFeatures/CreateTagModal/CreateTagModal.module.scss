@@ -3,4 +3,13 @@
 
 .createTagModal_mainBox {
     @include defaultModalStyle;
+
+    .createTagModal_form {
+        @include divSmallMarginBottom;
+
+        button {
+            height: 40px;
+            width: 100%;
+        }
+    }
 }

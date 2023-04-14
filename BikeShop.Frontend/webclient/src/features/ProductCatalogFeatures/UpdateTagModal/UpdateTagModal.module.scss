@@ -5,6 +5,11 @@
     @include defaultModalStyle;
 
     .updateTagModal_inputs {
+        @include divSmallMarginBottom;
 
+        button {
+            height: 40px;
+            width: 100%;
+        }
     }
 }
