@@ -53,7 +53,7 @@ export const EditProductCardModal = () => {
         getAllOptions()
         getAllSpecifications()
 
-        formControl.setValue('id', currentProduct.product.id)
+        formControl.setValue('id', currentProduct.product?.id)
         formControl.setValue('productTags', currentProduct.productTags)
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
         formControl.setValue('productSpecifications', currentProduct.productSpecifications)

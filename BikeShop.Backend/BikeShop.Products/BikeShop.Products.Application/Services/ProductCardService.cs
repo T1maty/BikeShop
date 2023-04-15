@@ -189,6 +189,13 @@ namespace BikeShop.Products.Application.Services
                 }
             }
 
+            var existProdBinds = _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToListAsync();
+
+            foreach (var prod in dto.bindedProducts)
+            {
+
+            }
+
             //Добавляем новые спецификаии
             await _context.ProductSpecifications.AddRangeAsync(newSpecs);
             
