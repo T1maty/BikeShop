@@ -73,8 +73,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                 <div className={s.editProductCardOptionBind}>
 
-                    <ChooseProductModal addData={() => {
+                    <ChooseProductModal addData={(product) => {
                         sV(false)
+                        field.onChange([...field.value, product])
                     }} open={v} setOpen={sV}/>
 
 
