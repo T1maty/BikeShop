@@ -127,7 +127,7 @@ namespace BikeShop.Products.Application.Services
             productCard.Description = dto.productCard.description;
             productCard.DescriptionShort = dto.productCard.shortDescription;
 
-            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == dto.Id).FirstAsync();
+            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == dto.Id).FirstOrDefaultAsync();
             //slaves contains master id
             List<int> slaveIds = new List<int> { dto.Id };
             if (bind != null)
@@ -189,18 +189,29 @@ namespace BikeShop.Products.Application.Services
                 }
             }
 
-            var existProdBinds = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n=>n.ChildrenId, n=>n);
-            List<ProductBind> newProdBinds = new List<ProductBind>();
-            foreach (var prod in dto.bindedProducts)
+            
+            if (dto.bindedProducts.Count == 1)
             {
-                if (!existProdBinds.ContainsKey(prod.Id))
-                {
-                    newProdBinds.Add(new ProductBind { ProductId = product.Id, ChildrenId = prod.Id });
-                    existProdBinds.Remove(prod.Id);
-                }
+                _context.ProductBinds.RemoveRange(_context.ProductBinds.Where(n => n.ProductId == dto.Id));
             }
-            _context.ProductBinds.RemoveRange(existProdBinds.Values.ToList());
-            await _context.ProductBinds.AddRangeAsync(newProdBinds);
+            else
+            {
+                var existProdBinds = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n => n.ChildrenId, n => n);
+                List<ProductBind> newProdBinds = new List<ProductBind>();
+
+                foreach (var prod in dto.bindedProducts)
+                {
+                    if (!existProdBinds.ContainsKey(prod.Id))
+                    {
+                        newProdBinds.Add(new ProductBind { ProductId = product.Id, ChildrenId = prod.Id });
+                        existProdBinds.Remove(prod.Id);
+                    }
+                }
+                _context.ProductBinds.RemoveRange(existProdBinds.Values.ToList());
+                await _context.ProductBinds.AddRangeAsync(newProdBinds);
+            }
+
+            
 
             //Добавляем новые спецификаии
             await _context.ProductSpecifications.AddRangeAsync(newSpecs);
