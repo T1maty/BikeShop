@@ -189,12 +189,17 @@ namespace BikeShop.Products.Application.Services
                 }
             }
 
-            var existProdBinds = _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToListAsync();
-
+            var existProdBinds = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n=>n.ChildrenId, n=>n);
+            List<ProductBind> newProdBinds = new List<ProductBind>();
             foreach (var prod in dto.bindedProducts)
             {
-
+                if (!existProdBinds.ContainsKey(prod.Id))
+                {
+                    newProdBinds.Add(new ProductBind { ProductId = product.Id, ChildrenId = prod.Id });
+                }
             }
+
+            await _context.ProductBinds.AddRangeAsync(newProdBinds);
 
             //Добавляем новые спецификаии
             await _context.ProductSpecifications.AddRangeAsync(newSpecs);
