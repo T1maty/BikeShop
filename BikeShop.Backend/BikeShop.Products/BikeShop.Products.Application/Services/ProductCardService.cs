@@ -196,7 +196,8 @@ namespace BikeShop.Products.Application.Services
             var forRemoveSpecs = _context.ProductSpecifications.Where(n => n.ProductId == dto.Id).Where(n => !specIds.Contains(n.Id));
             _context.ProductSpecifications.RemoveRange(forRemoveSpecs);
 
-            var atbIDs = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).ToDictionaryAsync(n=>n.ProductTagId, n=>n);
+
+            var atbIDs = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).ToDictionaryAsync(n=>n.Id, n=>n);
             var newTagBinds = new List<TagToProductBind>();
             
             foreach (var tagBinds in dto.productTags)
