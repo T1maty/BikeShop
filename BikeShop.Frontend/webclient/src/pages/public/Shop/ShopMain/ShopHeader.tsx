@@ -7,7 +7,8 @@ import {LoginBlock} from '../LoginBlock/LoginBlock'
 import {CustomSearchInput} from "../../../../shared/ui"
 import {ShoppingCart} from "../ShoppingCart/ShoppingCart"
 import ShopLogo from "../../../../shared/assets/shop/icons/ShopLogo.svg"
-import BurgerMenu from '../../../../shared/assets/shop/icons/menu.png'
+import BurgerMenu from '../../../../shared/assets/workspace/burger-light.svg'
+// import BurgerMenu from '../../../../shared/assets/shop/icons/menu.png'
 
 interface ShopHeaderProps {
     isAuth: boolean
@@ -44,7 +45,9 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                 </div>
 
                 <div className={s.burgerMenu}>
-                    <img src={BurgerMenu} alt="burger-menu"/>
+                    <div>
+                        <img src={BurgerMenu} alt="burger-menu"/>
+                    </div>
                 </div>
 
             </div>

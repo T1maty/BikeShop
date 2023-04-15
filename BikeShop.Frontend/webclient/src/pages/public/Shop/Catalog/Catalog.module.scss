@@ -3,7 +3,6 @@
 
 .catalog_mainBox {
     padding: 20px 0;
-    //background-color: orange;
     min-height: 80vh; // надо пофиксить ?!
 
     .container {
@@ -16,7 +15,7 @@
         .catalog_left {
             border: 1px solid black;
             width: 25%;
-            height: 69vh; // возможно надо пофиксить
+            height: 69vh; // надо пофиксить ?!
         }
 
         .catalog_right {
@@ -106,14 +105,18 @@
                     }
 
                     .item_content {
+                        padding-top: 10px;
+
                         .item_image {
                             text-align: center;
                             min-height: 200px;
                             width: 100%; // чтобы область клика была вся ширина
 
                             img {
-                                width: auto;
+                                //width: auto;
+                                width: 200px;
                                 height: 200px;
+                                object-fit: cover;
                             }
                         }
 
@@ -159,22 +162,10 @@
                                 width: 20px;
                                 height: 20px;
                             }
-
-                            //&:hover {
-                            //    background-color: $themeColorDark;
-                            //    border-radius: 50%;
-                            //    //padding: 5px;
-                            //
-                            //    img {
-                            //        filter: invert(100%);
-                            //    }
-                            //}
                         }
                     }
                 }
             }
         }
     }
-
-
 }

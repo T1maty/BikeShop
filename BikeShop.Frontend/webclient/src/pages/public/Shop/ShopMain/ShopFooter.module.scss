@@ -5,7 +5,7 @@
     background-color: $themeShopColorDark;
 
     .container {
-        //@include defaultContainerForShop; // ограничивающий контейнер
+        @include defaultContainerForShop; // ограничивающий контейнер
 
         .footer_body {
             display: flex;

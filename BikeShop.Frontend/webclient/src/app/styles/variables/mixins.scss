@@ -2,19 +2,14 @@
 
 // container mixins
 @mixin defaultContainer() {
-    //border: 1px solid white;
-    //box-sizing: border-box;
     max-width: 1400px;
     margin: 0 auto;
-    //padding: 0 15px;
 }
 
 @mixin defaultContainerForShop() {
-    //border: 1px solid white;
-    //box-sizing: border-box;
     max-width: 1400px;
     margin: 0 auto;
-    //padding: 0 20px;
+    padding: 0 50px;
 }
 
 @mixin wrapperMainBlock() {

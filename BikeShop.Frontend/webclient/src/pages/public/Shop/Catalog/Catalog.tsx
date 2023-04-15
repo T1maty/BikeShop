@@ -175,9 +175,7 @@ export const Catalog = () => {
                                     defaultProducts.map(prod => (
                                         <div key={prod.product.id} className={s.content_item}>
                                             <div className={s.item_content}
-                                                 onClick={() => {
-                                                     setCurrentProductToStore(prod)
-                                                 }}
+                                                 onClick={() => {setCurrentProductToStore(prod)}}
                                             >
                                                 <div className={s.item_image}>
                                                     {

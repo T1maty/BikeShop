@@ -8,13 +8,11 @@
     min-height: 100vh; /*чтобы прибить футер к низу*/
     min-width: 100%;
 
-    // можно задать свойство здесь или в каждом children
+    // можно задать свойство flex здесь или в каждом children
     .shop_main {
         flex: 1 1 auto; /*чтобы прибить футер к низу*/
         color: black;
         //background-color: $themeColorSomeWhite;
         background-color: white;
-        //padding: $containerShopPadding;
-        //@include defaultContainerForShop; // ограничивающий контейнер
     }
 }

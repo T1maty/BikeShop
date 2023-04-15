@@ -151,11 +151,6 @@
 
                 .container {
                     @include defaultContainerForShop; // ограничивающий контейнер
-                    padding: 0 40px;
-
-                    @media(max-width: 540px) {
-                        padding: 0 20px;
-                    }
 
                     .menu_items {
                         display: flex;
@@ -222,7 +217,7 @@
                         padding: 20px 40px 150px;
 
                         @media(max-width: 767px) {
-                            padding: 20px;
+                            padding: 20px 40px;
                         }
 
                         display: grid;
