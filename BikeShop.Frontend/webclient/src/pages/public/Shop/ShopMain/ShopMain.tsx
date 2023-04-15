@@ -1,18 +1,15 @@
 ﻿import React, {useState} from 'react'
 import s from './ShopMain.module.scss'
+import {useNavigate} from 'react-router-dom'
+import {BikeShopPaths} from "../../../../app/routes/paths"
+import ImageGallery from 'react-image-gallery'
+import 'react-image-gallery/styles/css/image-gallery.css'
+import {RegistrationForm} from '../RegistrationForm/RegistrationForm'
 
 import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.png'
 import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
-import SocialLogo from '../../../../shared/assets/shop/icons/logo_instagram.png'
 import Map from '../../../../shared/assets/shop/images/map-01.png'
-import BurgerMenu from '../../../../shared/assets/shop/icons/menu.png'
-import Position from '../../../../shared/assets/shop/icons/position.png'
-import ShopLogo from '../../../../shared/assets/shop/icons/ShopLogo.svg'
-import SearchIcon from '../../../../shared/assets/shop/icons/search.png'
-import Cart from '../../../../shared/assets/shop/icons/cart.png'
-import Language from '../../../../shared/assets/shop/icons/lang.png'
-import Profile from '../../../../shared/assets/shop/icons/profile.png'
 
 import testImage1 from '../../../../shared/assets/shop/images/testImage-rectangle-21.jpg'
 import testImage2 from '../../../../shared/assets/shop/images/testImage-rectangle-22.jpg'
@@ -33,21 +30,9 @@ import testImage9 from '../../../../shared/assets/shop/images/testImage-square-2
 // import catalogAccessories from '../../../../shared/assets/shop/images/catalog-accessories.png'
 // import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
 
-import {useNavigate} from 'react-router-dom'
-import {BikeShopPaths} from "../../../../app/routes/paths"
-import {ShopFooter} from "./ShopFooter"
-import {CustomSearchInput} from 'shared/ui'
-import ImageGallery from 'react-image-gallery'
-import 'react-image-gallery/styles/css/image-gallery.css'
-import {LoginBlock} from '../LoginBlock/LoginBlock'
-import {RegistrationForm} from '../RegistrationForm/RegistrationForm'
-import {ShoppingCart} from '../ShoppingCart/ShoppingCart'
-import {ShopHeader} from "./ShopHeader"
-
 export const ShopMain = () => {
 
     const navigate = useNavigate()
-    const [search, setSearch] = useState<boolean>(false)
 
     const [sliderImages, setSliderImages] = useState([
         {
@@ -60,66 +45,11 @@ export const ShopMain = () => {
         },
     ])
 
-    // тестовые данные
-    const isAuth = false
-    const userLastName = 'Петров'
-    const userFirstName = 'Василий'
-
     // вариант совмещения двух и более классов в одном
     // const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
 
     return (
         <div className={s.shop_wrapper}>
-            {/*<div className={s.header}>*/}
-            {/*    <div className={s.header_slider}>*/}
-            {/*        <img src={HeaderPhotoWide} alt="header-photo"/>*/}
-            {/*    </div>*/}
-            {/*    /!*<div className={s.header_slider}>*!/*/}
-            {/*    /!*    <ImageGallery items={sliderImages}*!/*/}
-            {/*    /!*                  showPlayButton={false}*!/*/}
-            {/*    /!*                  showFullscreenButton={false}*!/*/}
-            {/*    /!*                  showThumbnails={false}*!/*/}
-            {/*    /!*                  autoPlay={true}*!/*/}
-            {/*    /!*                  slideDuration={3000}*!/*/}
-            {/*    /!*    />*!/*/}
-            {/*    /!*</div>*!/*/}
-
-            {/*    <div className={s.header_icons}>*/}
-            {/*        <div className={s.header_icons_left}*/}
-            {/*             onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}*/}
-            {/*        >*/}
-            {/*            <img src={ShopLogo} alt="shop-logo"/>*/}
-            {/*        </div>*/}
-            {/*        <div className={s.header_icons_right}>*/}
-            {/*            {*/}
-            {/*                search ? <CustomSearchInput placeholder={'Поиск товара'}*/}
-            {/*                                            color={'black'}*/}
-            {/*                                            clearInputValue={() => {}}*/}
-            {/*                        />*/}
-            {/*                    : ''*/}
-            {/*            }*/}
-            {/*            <div onClick={() => {setSearch(!search)}}>*/}
-            {/*                <img src={SearchIcon} alt="search-logo"/>*/}
-            {/*            </div>*/}
-            {/*            <div>*/}
-            {/*                <img src={Language} alt="language-logo"/>*/}
-            {/*            </div>*/}
-            {/*            <ShoppingCart/>*/}
-            {/*            <LoginBlock isAuth={isAuth}*/}
-            {/*                        userLastName={userLastName}*/}
-            {/*                        userFirstName={userFirstName}*/}
-            {/*            />*/}
-            {/*        </div>*/}
-
-            {/*        /!*<div className={s.burgerMenu}>*!/*/}
-            {/*        /!*    <div>*!/*/}
-            {/*        /!*        <img src={BurgerMenu} alt="burger-menu"/>*!/*/}
-            {/*        /!*    </div>*!/*/}
-            {/*        /!*</div>*!/*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-
-            {/*<ShopHeader isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>*/}
 
             <div className={s.header_slider}>
                 <img src={HeaderPhotoWide} alt="header-photo"/>

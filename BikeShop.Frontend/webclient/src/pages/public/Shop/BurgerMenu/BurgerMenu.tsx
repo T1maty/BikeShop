@@ -1,14 +1,16 @@
 import React from 'react'
 import s from './BurgerMenu.module.scss'
+import {BikeShopPaths} from '../../../../app/routes/paths'
+import {useNavigate} from 'react-router-dom'
 
 interface BurgerMenuProps {
-    // title: string
-    // items: any[]
     menuActive: any
     setMenuActive: (value: boolean) => void
 }
 
 export const BurgerMenu: React.FC<BurgerMenuProps> = ({menuActive, setMenuActive}) => {
+
+    const navigate = useNavigate()
 
     return ( menuActive &&
         <div className={menuActive ? s.burgerMenu_box_active : s.burgerMenu_box}
@@ -20,20 +22,12 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({menuActive, setMenuActive
                     BikeShop
                 </div>
                 <div className={s.burgerMenu_items}>
-                    <div>Главная</div>
-                    <div>Каталог</div>
+                    <div onClick={() => {navigate(BikeShopPaths.SHOP.HOME); setMenuActive(false)}}>Главная</div>
+                    <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG); setMenuActive(false)}}>
+                        Каталог
+                    </div>
                     <div>Контакты</div>
                 </div>
-
-                {/*<ul>*/}
-                {/*    {items.map(el => {*/}
-                {/*        return (*/}
-                {/*            <li>*/}
-                {/*                <a href={el.href}>{el.value}</a>*/}
-                {/*            </li>*/}
-                {/*        )*/}
-                {/*    })}*/}
-                {/*</ul>*/}
             </div>
         </div>
     )
