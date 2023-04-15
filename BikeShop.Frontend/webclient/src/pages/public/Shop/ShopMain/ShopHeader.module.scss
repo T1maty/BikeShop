@@ -1,59 +1,66 @@
 @import '../../../../app/styles/variables/mixins';
 @import '../../../../app/styles/variables/variables';
 
+.shop_wrapper {
+    position: relative;
 
-.shop_headerMain {
-    background-color: $themeColorDark;
+    .shop_headerMain {
+        background-color: $themeColorDark;
 
-    .container {
-        @include defaultContainerForShop; // ограничивающий контейнер
+        .container {
+            @include defaultContainerForShop; // ограничивающий контейнер
 
-        .shop_header {
-            height: var(--navbar-shop-height);
-            @include flexBetween;
-
-            .shop_header_left {
-                @include hoverCursorPointer;
-
-                img {
-                    width: 50px;
-                    height: auto;
-
-                    border: 2px solid white;
-                    border-radius: 50%;
-                    padding: 2px;
-                }
-            }
-
-            .shop_header_right {
+            .shop_header {
+                height: var(--navbar-shop-height);
                 @include flexBetween;
-                gap: $defaultExtraLargeMargin;
 
-                > div:not(:first-child) {
+                .shop_header_left {
+                    @include hoverCursorPointer;
+
                     img {
-                        filter: invert(100%);
-                        @include hoverCursorPointer;
+                        width: 50px;
+                        height: auto;
+
+                        border: 2px solid white;
+                        border-radius: 50%;
+                        padding: 2px;
                     }
                 }
+
+                .shop_header_right {
+                    @include flexBetween;
+                    gap: $defaultExtraLargeMargin;
+
+                    > div:not(:first-child) {
+                        img {
+                            filter: invert(100%);
+                            @include hoverCursorPointer;
+                        }
+                    }
+                }
+
+                @media(max-width: 920px) {
+                    display: none;
+                }
             }
 
-            @media(max-width: 920px) {
+            .burgerMenu {
                 display: none;
-            }
-        }
+                //position: fixed;
+                //z-index: 50;
 
-        .burgerMenu {
-            display: none;
+                @media(max-width: 920px) {
+                    height: var(--navbar-shop-height);
+                    display: flex;
+                    align-items: center;
 
-            @media(max-width: 920px) {
-                height: var(--navbar-shop-height);
-                display: flex;
-                align-items: center;
+                    .burgerMenu_button {
+                        @include hoverCursorPointer;
 
-                .burgerMenu_button {
-                    img {
-                        width: 30px;
-                        height: 30px;
+                        img {
+                            width: 30px;
+                            height: 30px;
+                        }
                     }
                 }
             }
