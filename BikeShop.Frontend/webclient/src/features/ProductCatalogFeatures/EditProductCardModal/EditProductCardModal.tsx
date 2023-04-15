@@ -7,7 +7,6 @@ import htmlToDraft from "html-to-draftjs"
 import {ContentState, EditorState} from "draft-js"
 import {Button, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
-import {EditProductCardOption} from "./EditProductCardOption"
 import {EditProductCardGallery} from "./EditProductCardGallery"
 import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
@@ -87,6 +86,9 @@ export const EditProductCardModal = () => {
 
         formControl.setValue('productOptions', currentProduct.productOptions)
 
+        console.log(currentProduct.bindedProducts)
+        formControl.setValue('bindedProducts', currentProduct.bindedProducts)
+
         if (currentProduct.productCard !== undefined) {
             let contentBlock = htmlToDraft(currentProduct.productCard?.description)
             if (contentBlock) {
@@ -105,7 +107,9 @@ export const EditProductCardModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
 
@@ -129,10 +133,7 @@ export const EditProductCardModal = () => {
                             </div>
 
                             <div className={s.editProductCardModal_rightSide}>
-                                <EditProductCardOption divClassName={s.rightSide_productDetails}
-                                                       control={formControl}
-                                                       name={'productOptions'}
-                                />
+
                                 <EditProductCardSpecifications divClassName={s.rightSide_productOptions}
                                                                control={formControl}
                                                                name={'productSpecifications'}
@@ -150,7 +151,7 @@ export const EditProductCardModal = () => {
                             </div>
                         </div>
 
-                        <EditProductCardOptionBind product={currentProduct}/>
+                        <EditProductCardOptionBind product={currentProduct} control={formControl}/>
                     </div>
                 </form>
             </CustomModal>

@@ -12,4 +12,5 @@ export interface ProductFullData {
     productOptions: ProductOptionVariantBind[]
     productImages: ProductImage[]
     productTags: ProductTag[]
+    bindedProducts: Product[]
 }
