@@ -46,8 +46,6 @@
 
             .burgerMenu {
                 display: none;
-                //position: fixed;
-                //z-index: 50;
 
                 @media(max-width: 920px) {
                     height: var(--navbar-shop-height);

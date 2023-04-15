@@ -10,7 +10,7 @@ import {ShoppingCartProductType} from "../../../../entities"
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 
-export const ShoppingCart = () => {
+export const ShoppingCart = React.memo(() => {
 
     const navigate = useNavigate()
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
@@ -136,4 +136,4 @@ export const ShoppingCart = () => {
             }
         </div>
     )
-}
+})

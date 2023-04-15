@@ -48,7 +48,7 @@
 
                     .cartListItem_image {
                         img {
-                            filter: none;
+                            filter: none !important;
                             height: 50px;
                             width: auto;
                         }
@@ -96,7 +96,7 @@
 
                 .cartListItem_deleteIcon {
                     img {
-                        filter: none;
+                        filter: none !important;
                         width: 30px;
                         height: 30px;
                     }

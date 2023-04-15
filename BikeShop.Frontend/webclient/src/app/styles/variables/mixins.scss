@@ -334,44 +334,46 @@
 // BurgerMenu
 @mixin burgerMenuAllStyles($transform) {
     position: fixed;
+    top: 80px; // высота хедера
+    left: 0;
     width: 100vw;
     height: 100vh;
     transform: $transform;
-    transition: all 0.5s;
-
-    // если будет относительно window ?
-    //top: 50px;
-    //left: 0;
+    //transition: all 0.5s;
+    z-index: 30;
 
     .burgerMenu_blur {
         width: 100vw;
         height: 100vh;
         backdrop-filter: blur(1px);
-        left: 30%; // ранво ширине бургер-меню
+        left: 40%; // равно ширине бургер-меню
         position: absolute;
 
-        @media (max-width: 768px) {
+        @media (max-width: 445px) {
             backdrop-filter: none;
         }
     }
     .burgerMenu_content {
-        width: 30%; // ширина бургер-меню
+        width: 40%; // ширина бургер-меню
         height: 100%;
         background-color: black;
         //opacity: 0.9;
-        transition: all 1s;
+        //transition: all 1s;
 
-        @media (max-width: 768px) {
+        @media (max-width: 445px) {
             width: 100%;
         }
 
         .burgerMenu_title {
             padding: 10px 0;
             text-align: center;
+            font-weight: bold;
+            font-size: 18px;
         }
         .burgerMenu_items {
             padding: 20px;
             @include divSmallMarginBottom;
+            @include hoverCursorPointer;
         }
     }
 }

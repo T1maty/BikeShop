@@ -7,8 +7,10 @@ import {LoginBlock} from '../LoginBlock/LoginBlock'
 import {CustomSearchInput} from "../../../../shared/ui"
 import {ShoppingCart} from "../ShoppingCart/ShoppingCart"
 import ShopLogo from "../../../../shared/assets/shop/icons/ShopLogo.svg"
-import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
+import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
+import BurgerMenuIcon from '../../../../shared/assets/shop/icons/menu-03.svg'
 // import BurgerMenuIcon from '../../../../shared/assets/shop/icons/menu.png'
+// import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
 import {BurgerMenu} from "../BurgerMenu/BurgerMenu"
 
 interface ShopHeaderProps {
@@ -50,7 +52,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
 
                     <div className={s.burgerMenu} onClick={() => {setMenuActive(!menuActive)}}>
                         <div className={s.burgerMenu_button}>
-                            <img src={BurgerMenuIcon} alt="burger-menu"/>
+                            <img src={menuActive ? CancelIcon : BurgerMenuIcon} alt="burger-menu"/>
                         </div>
                     </div>
                 </div>

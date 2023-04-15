@@ -2,155 +2,180 @@
 @import '../../../../app/styles/variables/variables';
 
 .order_mainBox {
-    @include flexColumn;
-    gap: $defaultLargeMargin;
+    padding: 20px 0;
 
-    .order_title {
-        font-weight: bold;
-        font-size: 24px;
-        //align-self: flex-start;
-    }
-
-    .order_content {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        //width: 100%;
+    .container {
+        @include defaultContainerForShop; // ограничивающий контейнер
+        @include flexColumn;
         gap: $defaultLargeMargin;
 
-        .content_form {
-            @include flexColumn;
-            width: 70%;
-            border: 1px solid black;
-
-            @include divLargeMarginBottom;
-            > div:first-child {
-                padding: 20px 20px 0 20px;
-            }
-            > div {
-                border: 1px solid black;
-                padding: $defaultLargeMargin;
-                border-radius: $smallBorderRadius;
-                width: 500px;
-                font-weight: bold;
-            }
-
-            .formItem_title {
-                margin-bottom: $defaultSmallMargin;
-            }
-            .form_contacts {
-                .contacts_items {
-                    .contacts_lastName {
-
-                    }
-                    .contacts_firstName {
-
-                    }
-                    .contacts_patronymic {
-
-                    }
-                    .contacts_phone {
-
-                    }
-                    .contacts_email {
-
-                    }
-                }
-            }
-            .form_order {
-                .orderList {
-                    @include divSmallMarginBottom;
-
-                    .order_item {
-                        background-color: $themeColorMilk;
-                        border-radius: $smallBorderRadius;
-                        padding: $defaultSmallMargin;
-                        color: white;
-                        font-weight: normal;
-                    }
-                }
-            }
-            .form_delivery {
-
-            }
+        .order_title {
+            font-weight: bold;
+            font-size: 24px;
+            //align-self: flex-start;
         }
-        .content_info {
-            @include flexColumn;
-            width: 350px;
-            border: 1px solid black;
 
-            @include divLargeMarginBottom;
-            > div {
-                background-color: $themeColorMilk;
-                border-radius: $smallBorderRadius;
-                padding: $defaultLargeMargin;
-                width: 100%;
-            }
+        .order_content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            //width: 100%;
+            gap: $defaultLargeMargin;
 
-            .info_discount {
-                @include flexOnlyBetween;
-
-                .discount_title {
-
-                }
-                .discount_button {
-                    @include hoverCursorPointer;
-                    color: blue;
-                    text-decoration: underline;
-                }
-            }
-            .info_account {
+            .content_form {
                 @include flexColumn;
+                width: 70%;
+                border: 1px solid black;
 
-                > div:not(:first-child) {
-                    align-self: flex-start;
+                @include divLargeMarginBottom;
+
+                > div:first-child {
+                    padding: 20px 20px 0 20px;
                 }
-                .account_title {
+
+                > div {
+                    border: 1px solid black;
+                    padding: $defaultLargeMargin;
+                    border-radius: $smallBorderRadius;
+                    width: 500px;
                     font-weight: bold;
-                    margin-bottom: 5px;
-                }
-                .account_name {
-
-                }
-                .account_balance {
-
-                }
-                .account_limit {
-
-                }
-            }
-            .info_result {
-                @include flexColumn;
-
-                > div:not(:first-child) {
-                    align-self: flex-start;
                 }
 
-                .result_title {
-                    font-weight: bold;
-                    margin-bottom: 5px;
+                .formItem_title {
+                    margin-bottom: $defaultSmallMargin;
                 }
-                .result_price {
 
-                    .price_item {
-                        @include flexOnlyBetween;
-                        align-items: center;
-                        gap: $defaultExtraLargeMargin;
+                .form_contacts {
+                    .contacts_items {
+                        .contacts_lastName {
 
-                        .price_item_total {
-                            font-weight: bold;
-                            font-size: 24px;
+                        }
+
+                        .contacts_firstName {
+
+                        }
+
+                        .contacts_patronymic {
+
+                        }
+
+                        .contacts_phone {
+
+                        }
+
+                        .contacts_email {
+
                         }
                     }
-                    .price_confirmButton {
-                        display: flex;
-                        justify-content: center;
-                        margin-top: $defaultLargeMargin;
+                }
 
-                        button {
-                            background-color: $bgColorButtonConfirm;
-                            padding: 10px;
-                            font-weight: bold;
+                .form_order {
+                    .orderList {
+                        @include divSmallMarginBottom;
+
+                        .order_item {
+                            background-color: $themeColorMilk;
+                            border-radius: $smallBorderRadius;
+                            padding: $defaultSmallMargin;
+                            color: white;
+                            font-weight: normal;
+                        }
+                    }
+                }
+
+                .form_delivery {
+
+                }
+            }
+
+            .content_info {
+                @include flexColumn;
+                width: 350px;
+                border: 1px solid black;
+
+                @include divLargeMarginBottom;
+
+                > div {
+                    background-color: $themeColorMilk;
+                    border-radius: $smallBorderRadius;
+                    padding: $defaultLargeMargin;
+                    width: 100%;
+                }
+
+                .info_discount {
+                    @include flexOnlyBetween;
+
+                    .discount_title {
+
+                    }
+
+                    .discount_button {
+                        @include hoverCursorPointer;
+                        color: blue;
+                        text-decoration: underline;
+                    }
+                }
+
+                .info_account {
+                    @include flexColumn;
+
+                    > div:not(:first-child) {
+                        align-self: flex-start;
+                    }
+
+                    .account_title {
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                    }
+
+                    .account_name {
+
+                    }
+
+                    .account_balance {
+
+                    }
+
+                    .account_limit {
+
+                    }
+                }
+
+                .info_result {
+                    @include flexColumn;
+
+                    > div:not(:first-child) {
+                        align-self: flex-start;
+                    }
+
+                    .result_title {
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                    }
+
+                    .result_price {
+
+                        .price_item {
+                            @include flexOnlyBetween;
+                            align-items: center;
+                            gap: $defaultExtraLargeMargin;
+
+                            .price_item_total {
+                                font-weight: bold;
+                                font-size: 24px;
+                            }
+                        }
+
+                        .price_confirmButton {
+                            display: flex;
+                            justify-content: center;
+                            margin-top: $defaultLargeMargin;
+
+                            button {
+                                background-color: $bgColorButtonConfirm;
+                                padding: 10px;
+                                font-weight: bold;
+                            }
                         }
                     }
                 }
