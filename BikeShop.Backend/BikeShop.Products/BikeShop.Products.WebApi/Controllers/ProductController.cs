@@ -144,7 +144,7 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productService.GetProductsByIdsArray(Ids);
         }
 
-        [HttpGet("unsorterd")]
+        [HttpGet("unsorted")]
         public async Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId)
         {
             return await _productService.GetUnsorted(srorageId);

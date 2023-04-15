@@ -23,6 +23,8 @@ interface productCatalogTableStore {
     getProducts: (tags: string[]) => void
     addNewProduct: (product: ProductExtended) => void
     updateRow: (rowData: UpdateProduct) => void
+
+    setNotSortedToTable: () => void
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
@@ -92,6 +94,14 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
             row.product.retailVisibility = rowData.retailVisibility
         })
     },
+
+    setNotSortedToTable: () => {
+        set({isLoading: true})
+        CatalogAPI.getUnsorted(1).then((r) => {
+            set({rows: r.data})
+            set({isLoading: false})
+        })
+    }
 }))), {
     name: "creatProductModalStore",
     version: 1

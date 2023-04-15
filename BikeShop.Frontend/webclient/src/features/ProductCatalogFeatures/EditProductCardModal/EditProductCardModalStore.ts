@@ -16,6 +16,7 @@ interface EditProductCardModalStore {
     getProductCard: (productId: number) => void
     updateProductCard: (data: UpdateProductCardFormModel) => void
 
+
     isError: boolean
     setIsError: (value: boolean) => void
 
@@ -90,8 +91,11 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             set({isLoading: false})
         }).catch((error: any) => {
             console.log('спецификации не получены')
+            set({isLoading: false})
         })
     },
+
+
 })))/*, {
     name: "editProductCardModal",
     version: 1
