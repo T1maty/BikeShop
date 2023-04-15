@@ -69,7 +69,6 @@ export const ShopMain = () => {
     // const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
 
     return (
-        // <>
         <div className={s.shop_wrapper}>
             {/*<div className={s.header}>*/}
             {/*    <div className={s.header_slider}>*/}
@@ -182,8 +181,6 @@ export const ShopMain = () => {
                 <RegistrationForm/>
             </div>
 
-            {/*<ShopFooter/>*/}
         </div>
-        // </>
     )
 }

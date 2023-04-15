@@ -31,5 +31,6 @@ export {ProfileServices} from './public/Shop/Profile/ProfileServices'
 export {ProfilePurchases} from './public/Shop/Profile/ProfilePurchases'
 
 export {LoginBlock} from './public/Shop/LoginBlock/LoginBlock'
+export {BurgerMenu} from './public/Shop/BurgerMenu/BurgerMenu'
 
 

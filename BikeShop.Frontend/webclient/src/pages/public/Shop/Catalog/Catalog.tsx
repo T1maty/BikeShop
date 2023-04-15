@@ -112,8 +112,20 @@ export const Catalog = () => {
             <div className={s.catalog_mainBox}>
 
                 <div className={s.container}>
-                        <div className={s.catalog_left}>Категории</div>
-
+                        <div className={s.catalog_left}>
+                            <div className={s.tags_title}>Категории</div>
+                            <div className={s.tagsList}>
+                                {
+                                    tags.map(tag => {
+                                        return (
+                                            <div className={s.tagsList_item}>
+                                                {tag.name}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
 
                         <div className={s.catalog_right}>
                             <div className={s.right_cloudCategory}>

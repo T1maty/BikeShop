@@ -1,0 +1,9 @@
+@import '../../../../app/styles/variables/mixins';
+
+.burgerMenu_box {
+    @include burgerMenuAllStyles(translateX(-130%))
+}
+
+.burgerMenu_box_active {
+    @include burgerMenuAllStyles(translateX(0))
+}
