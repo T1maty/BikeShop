@@ -17,6 +17,8 @@ import useEditProductCardModal from "./EditProductCardModalStore";
 import Enumerable from "linq";
 import {ChooseProductModal} from "../../ChooseProductModal/ChooseProductModal";
 import {ProductTagBindDTO} from "./models/ProductTagBindDTO";
+import {ChooseProductTagModal} from "../AddProductCardTagModal/AddProductCardTagModal";
+import {useSnackbar} from "notistack";
 
 interface ProductCardOptionBindProps {
     product: ProductFullData
@@ -27,10 +29,12 @@ interface ProductCardOptionBindProps {
 
 export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => {
 
+    const {enqueueSnackbar} = useSnackbar()
+
     const [selectedOption, setSelectedOption] = useState<any>(null)
     const [v, sV] = useState(false)
+    const [v2, sV2] = useState<{ id: number, state: boolean }[]>([])
     const allOptions = useEditProductCardModal(s => s.allOptions)
-
 
     const addVariantHandler = (control: any, product: Product) => {
         let value = control.getValues('productOptions')
@@ -72,6 +76,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                     <ChooseProductModal addData={() => {
                         sV(false)
                     }} open={v} setOpen={sV}/>
+
+
                     <Button buttonDivWrapper={s.addButton}
                             onClick={() => {
                                 sV(true)
@@ -240,11 +246,16 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                     <div className={s.content_tags}>
                                                         <fieldset className={s.tags_wrapperBox}>
                                                             <legend>Теги</legend>
+
                                                             <Button buttonDivWrapper={s.tags_addButton}
                                                                     onClick={() => {
+                                                                        sV2([...v2.filter(n => n.id != bindedProduct.id), {
+                                                                            id: bindedProduct.id,
+                                                                            state: true
+                                                                        }])
                                                                     }}
                                                             >
-                                                                Х
+                                                                +
                                                             </Button>
 
                                                             <Controller
@@ -253,18 +264,47 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                 render={({field}: any) =>
                                                                     <>
                                                                         <div className={s.tags_list}>
-                                                                            {field.value?.filter((n: ProductTagBindDTO) => {
+                                                                            <ChooseProductTagModal
+                                                                                open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
+                                                                                setOpen={(value) => {
+                                                                                    sV2([...v2.filter(n => n.id != bindedProduct.id), {
+                                                                                        id: bindedProduct.id,
+                                                                                        state: value
+                                                                                    }])
+                                                                                }}
+                                                                                onTagDoubleClick={(tag) => {
+                                                                                    sV2([...v2.filter(n => n.id != bindedProduct.id), {
+                                                                                        id: bindedProduct.id,
+                                                                                        state: false
+                                                                                    }])
+                                                                                    if (!Enumerable.from(field.value as ProductTagBindDTO[]).select(n => n.productTag.id).contains(tag.id)) {
+                                                                                        field.onChange([...field.value, {
+                                                                                            productTag: tag,
+                                                                                            productId: bindedProduct.id
+                                                                                        } as ProductTagBindDTO])
+                                                                                    } else {
+                                                                                        enqueueSnackbar('Такой тег уже есть у товара', {
+                                                                                            variant: 'warning',
+                                                                                            autoHideDuration: 3000
+                                                                                        })
+                                                                                    }
 
+                                                                                }
+                                                                                }/>
+                                                                            {field.value?.filter((n: ProductTagBindDTO) =>
+                                                                                n.productId == bindedProduct.id
+                                                                            ).map((n: ProductTagBindDTO, index: number) => {
+
+                                                                                return (
+                                                                                    <div className={s.tags_listItem}
+                                                                                         key={index}>
+                                                                                        {n.productTag.name}
+                                                                                        <Button onClick={() => {
+                                                                                            field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
+                                                                                        }}>х</Button>
+                                                                                    </div>
+                                                                                )
                                                                             })}
-                                                                            <div className={s.tags_listItem}>
-                                                                                Тег1
-                                                                            </div>
-                                                                            <div className={s.tags_listItem}>
-                                                                                Тег2
-                                                                            </div>
-                                                                            <div className={s.tags_listItem}>
-                                                                                Тег3
-                                                                            </div>
                                                                         </div>
                                                                     </>}/>
 
