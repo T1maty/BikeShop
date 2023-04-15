@@ -2,164 +2,179 @@
 @import '../../../../app/styles/variables/variables';
 
 .catalog_mainBox {
-    @include flexOnlyBetween;
-    gap: $defaultLargeMargin;
-    // можно задать свойство в каждом children или в ShopWrapper
-    //flex: 1 1 auto; // чтобы прибить футер к низу
+    padding: 20px 0;
+    //background-color: orange;
+    min-height: 80vh; // надо пофиксить ?!
 
-    .catalog_left {
-        border: 1px solid black;
-        width: 25%;
-        height: 69vh; // возможно надо пофиксить
-    }
-    .catalog_right {
-        @include flexColumn;
-        //border: 1px solid black;
-        width: 75%;
+    .container {
+        @include defaultContainerForShop; // ограничивающий контейнер
+        @include flexOnlyBetween;
+        gap: $defaultLargeMargin;
+        // можно задать свойство в каждом children или в ShopWrapper
+        //flex: 1 1 auto; // чтобы прибить футер к низу
 
-        > div {
-            width: 100%;
-        }
-        @include divLargeMarginBottom;
-
-        .right_cloudCategory {
-
-            .cloudCategory_title {
-                font-weight: bold;
-                margin-bottom: $defaultSmallMargin;
-            }
-            .cloudCategory_content {
-                background-color: $themeColorDark;
-                border-radius: $largeBorderRadius;
-                padding: $defaultLargeMargin;
-                color: white;
-            }
+        .catalog_left {
+            border: 1px solid black;
+            width: 25%;
+            height: 69vh; // возможно надо пофиксить
         }
 
-        .right_filters {
-            @include flexBetween;
-            gap: $defaultLargeMargin;
+        .catalog_right {
+            @include flexColumn;
+            //border: 1px solid black;
+            width: 75%;
 
             > div {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: $defaultLargeMargin;
+                width: 100%;
             }
 
-            .filter_buttons {
-                .filter_item {
-                    border: 2px solid $themeColorDark;
-                    border-radius: $defaultLargeMargin;
-                    padding: $divButtonPadding;
+            @include divLargeMarginBottom;
 
-                    &:hover {
-                        background-color: $themeColorDark;
-                        color: white;
-                        cursor: pointer;
-                    }
+            .right_cloudCategory {
+
+                .cloudCategory_title {
+                    font-weight: bold;
+                    margin-bottom: $defaultSmallMargin;
                 }
 
-                .filter_itemActive {
-                    border: 2px solid $themeColorDark;
-                    border-radius: $defaultLargeMargin;
+                .cloudCategory_content {
                     background-color: $themeColorDark;
-                    padding: 5px 10px;
+                    border-radius: $largeBorderRadius;
+                    padding: $defaultLargeMargin;
                     color: white;
                 }
-
             }
-            .filter_viewType {
-                .viewType_item {
-                    @include hoverCursorPointer;
-                }
-            }
-        }
 
-        .right_content {
-            //flex: 1 1 auto;
-            //border: 1px solid black;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: $defaultLargeMargin;
-
-            .content_item {
-                @include flexColumn;
-                border: 1px solid black;
-                background-color: white;
-                min-width: 300px;
-                @include hoverCursorPointer;
+            .right_filters {
+                @include flexBetween;
+                gap: $defaultLargeMargin;
 
                 > div {
-                    margin-bottom: $defaultLargeMargin;
-                }
-
-                .item_content {
-                    .item_image {
-                        text-align: center;
-                        min-height: 200px;
-                        width: 100%; // чтобы область клика была вся ширина
-
-                        img {
-                            width: auto;
-                            height: 200px;
-                        }
-                    }
-                    // заглушка, если нету фотографии
-                    .item_noImage {
-                        @include flexColumn;
-
-                        .item_noImage_title {
-                            padding: 20px 0 10px 0;
-                        }
-
-                        img {
-                            width: auto;
-                            height: 120px;
-                        }
-                    }
-
-                    .item_title {
-                        font-weight: bold;
-                        text-align: center;
-                        margin-top: 10px;
-                    }
-                }
-
-                .item_buy {
                     display: flex;
                     align-items: center;
-                    justify-content: flex-end;
+                    flex-wrap: wrap;
                     gap: $defaultLargeMargin;
-                    width: 100%;
-                    padding: 0 $defaultLargeMargin;
+                }
 
-                    .item_price {
-                        color: red;
-                        font-weight: bold;
+                .filter_buttons {
+                    .filter_item {
+                        border: 2px solid $themeColorDark;
+                        border-radius: $defaultLargeMargin;
+                        padding: $divButtonPadding;
+
+                        &:hover {
+                            background-color: $themeColorDark;
+                            color: white;
+                            cursor: pointer;
+                        }
                     }
-                    .item_cart {
-                        cursor: pointer;
-                        //pointer-events: none; // для отключения див
 
-                        img {
-                            width: 20px;
-                            height: 20px;
+                    .filter_itemActive {
+                        border: 2px solid $themeColorDark;
+                        border-radius: $defaultLargeMargin;
+                        background-color: $themeColorDark;
+                        padding: 5px 10px;
+                        color: white;
+                    }
+
+                }
+
+                .filter_viewType {
+                    .viewType_item {
+                        @include hoverCursorPointer;
+                    }
+                }
+            }
+
+            .right_content {
+                //flex: 1 1 auto;
+                //border: 1px solid black;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: $defaultLargeMargin;
+
+                .content_item {
+                    @include flexColumn;
+                    border: 1px solid black;
+                    background-color: white;
+                    min-width: 300px;
+                    @include hoverCursorPointer;
+
+                    > div {
+                        margin-bottom: $defaultLargeMargin;
+                    }
+
+                    .item_content {
+                        .item_image {
+                            text-align: center;
+                            min-height: 200px;
+                            width: 100%; // чтобы область клика была вся ширина
+
+                            img {
+                                width: auto;
+                                height: 200px;
+                            }
                         }
 
-                        //&:hover {
-                        //    background-color: $themeColorDark;
-                        //    border-radius: 50%;
-                        //    //padding: 5px;
-                        //
-                        //    img {
-                        //        filter: invert(100%);
-                        //    }
-                        //}
+                        // заглушка, если нету фотографии
+                        .item_noImage {
+                            @include flexColumn;
+
+                            .item_noImage_title {
+                                padding: 20px 0 10px 0;
+                            }
+
+                            img {
+                                width: auto;
+                                height: 120px;
+                            }
+                        }
+
+                        .item_title {
+                            font-weight: bold;
+                            text-align: center;
+                            margin-top: 10px;
+                        }
+                    }
+
+                    .item_buy {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        gap: $defaultLargeMargin;
+                        width: 100%;
+                        padding: 0 $defaultLargeMargin;
+
+                        .item_price {
+                            color: red;
+                            font-weight: bold;
+                        }
+
+                        .item_cart {
+                            cursor: pointer;
+                            //pointer-events: none; // для отключения див
+
+                            img {
+                                width: 20px;
+                                height: 20px;
+                            }
+
+                            //&:hover {
+                            //    background-color: $themeColorDark;
+                            //    border-radius: 50%;
+                            //    //padding: 5px;
+                            //
+                            //    img {
+                            //        filter: invert(100%);
+                            //    }
+                            //}
+                        }
                     }
                 }
             }
         }
     }
+
+
 }

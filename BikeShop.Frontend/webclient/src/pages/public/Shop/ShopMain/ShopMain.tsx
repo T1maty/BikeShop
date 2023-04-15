@@ -41,7 +41,8 @@ import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
 import {RegistrationForm} from '../RegistrationForm/RegistrationForm'
-import {ShoppingCart} from '../ShoppingCart/ShoppingCart';
+import {ShoppingCart} from '../ShoppingCart/ShoppingCart'
+import {ShopHeader} from "./ShopHeader"
 
 export const ShopMain = () => {
 
@@ -68,54 +69,61 @@ export const ShopMain = () => {
     // const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
 
     return (
+        // <>
         <div className={s.shop_wrapper}>
-            <div className={s.header}>
-                <div className={s.header_slider}>
-                    <img src={HeaderPhotoWide} alt="header-photo"/>
-                </div>
-                {/*<div className={s.header_slider}>*/}
-                {/*    <ImageGallery items={sliderImages}*/}
-                {/*                  showPlayButton={false}*/}
-                {/*                  showFullscreenButton={false}*/}
-                {/*                  showThumbnails={false}*/}
-                {/*                  autoPlay={true}*/}
-                {/*                  slideDuration={3000}*/}
-                {/*    />*/}
-                {/*</div>*/}
-                <div className={s.header_icons}>
-                    <div className={s.header_icons_left}
-                         onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
-                    >
-                        <img src={ShopLogo} alt="shop-logo"/>
-                    </div>
-                    <div className={s.header_icons_right}>
-                        {
-                            search ? <CustomSearchInput placeholder={'Поиск товара'}
-                                                        color={'black'}
-                                                        clearInputValue={() => {
-                                                        }}/>
-                                : ''
-                        }
-                        <div onClick={() => {
-                            setSearch(!search)
-                        }}>
-                            <img src={SearchIcon} alt="search-logo"/>
-                        </div>
-                        <div>
-                            <img src={Language} alt="language-logo"/>
-                        </div>
-                        <ShoppingCart/>
-                        <LoginBlock isAuth={isAuth}
-                                    userLastName={userLastName}
-                                    userFirstName={userFirstName}
-                        />
-                    </div>
+            {/*<div className={s.header}>*/}
+            {/*    <div className={s.header_slider}>*/}
+            {/*        <img src={HeaderPhotoWide} alt="header-photo"/>*/}
+            {/*    </div>*/}
+            {/*    /!*<div className={s.header_slider}>*!/*/}
+            {/*    /!*    <ImageGallery items={sliderImages}*!/*/}
+            {/*    /!*                  showPlayButton={false}*!/*/}
+            {/*    /!*                  showFullscreenButton={false}*!/*/}
+            {/*    /!*                  showThumbnails={false}*!/*/}
+            {/*    /!*                  autoPlay={true}*!/*/}
+            {/*    /!*                  slideDuration={3000}*!/*/}
+            {/*    /!*    />*!/*/}
+            {/*    /!*</div>*!/*/}
 
-                    <div className={s.burgerMenu}>
-                        =
-                    </div>
-                </div>
+            {/*    <div className={s.header_icons}>*/}
+            {/*        <div className={s.header_icons_left}*/}
+            {/*             onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}*/}
+            {/*        >*/}
+            {/*            <img src={ShopLogo} alt="shop-logo"/>*/}
+            {/*        </div>*/}
+            {/*        <div className={s.header_icons_right}>*/}
+            {/*            {*/}
+            {/*                search ? <CustomSearchInput placeholder={'Поиск товара'}*/}
+            {/*                                            color={'black'}*/}
+            {/*                                            clearInputValue={() => {}}*/}
+            {/*                        />*/}
+            {/*                    : ''*/}
+            {/*            }*/}
+            {/*            <div onClick={() => {setSearch(!search)}}>*/}
+            {/*                <img src={SearchIcon} alt="search-logo"/>*/}
+            {/*            </div>*/}
+            {/*            <div>*/}
+            {/*                <img src={Language} alt="language-logo"/>*/}
+            {/*            </div>*/}
+            {/*            <ShoppingCart/>*/}
+            {/*            <LoginBlock isAuth={isAuth}*/}
+            {/*                        userLastName={userLastName}*/}
+            {/*                        userFirstName={userFirstName}*/}
+            {/*            />*/}
+            {/*        </div>*/}
 
+            {/*        /!*<div className={s.burgerMenu}>*!/*/}
+            {/*        /!*    <div>*!/*/}
+            {/*        /!*        <img src={BurgerMenu} alt="burger-menu"/>*!/*/}
+            {/*        /!*    </div>*!/*/}
+            {/*        /!*</div>*!/*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+
+            {/*<ShopHeader isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>*/}
+
+            <div className={s.header_slider}>
+                <img src={HeaderPhotoWide} alt="header-photo"/>
             </div>
 
             <div className={s.content}>
@@ -174,7 +182,8 @@ export const ShopMain = () => {
                 <RegistrationForm/>
             </div>
 
-            <ShopFooter/>
+            {/*<ShopFooter/>*/}
         </div>
+        // </>
     )
 }

@@ -6,6 +6,8 @@ import {useNavigate} from 'react-router-dom'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
 import {CustomSearchInput} from "../../../../shared/ui"
 import {ShoppingCart} from "../ShoppingCart/ShoppingCart"
+import ShopLogo from "../../../../shared/assets/shop/icons/ShopLogo.svg"
+import BurgerMenu from '../../../../shared/assets/shop/icons/menu.png'
 
 interface ShopHeaderProps {
     isAuth: boolean
@@ -18,21 +20,33 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
     const navigate = useNavigate()
 
     return (
-        <div className={s.shop_header}>
-            <div className={s.shop_header_left}
-                 onClick={() => {navigate(BikeShopPaths.SHOP.HOME)}}
-            >
-                BikeShop
-            </div>
+        <div className={s.shop_headerMain}>
+            <div className={s.container}>
 
-            <div className={s.shop_header_right}>
-                <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
+                <div className={s.shop_header}>
+                    <div className={s.shop_header_left}
+                         onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
+                    >
+                        <img src={ShopLogo} alt="shop-logo"/>
+                    </div>
 
-                <div><img src={language} alt="language-logo"/></div>
+                    <div className={s.shop_header_right}>
+                        <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
 
-                <ShoppingCart/>
+                        <div>
+                            <img src={language} alt="language-logo"/>
+                        </div>
 
-                <LoginBlock isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>
+                        <ShoppingCart/>
+
+                        <LoginBlock isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>
+                    </div>
+                </div>
+
+                <div className={s.burgerMenu}>
+                    <img src={BurgerMenu} alt="burger-menu"/>
+                </div>
+
             </div>
         </div>
     )
