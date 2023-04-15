@@ -96,7 +96,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                 })
 
                 productCard.productImages.forEach((n) => {
-                    props.control.setValue('productImages', [...props.control.getValues('productImages'), n])
                     props.setImages([...props.images, n])
                     console.log('слияние image', n)
                 })

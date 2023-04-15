@@ -199,7 +199,7 @@ namespace BikeShop.Products.Application.Services
                     existProdBinds.Remove(prod.Id);
                 }
             }
-            _context.ProductBinds.RemoveRange(existProdBinds.Values);
+            _context.ProductBinds.RemoveRange(existProdBinds.Values.ToList());
             await _context.ProductBinds.AddRangeAsync(newProdBinds);
 
             //Добавляем новые спецификаии
