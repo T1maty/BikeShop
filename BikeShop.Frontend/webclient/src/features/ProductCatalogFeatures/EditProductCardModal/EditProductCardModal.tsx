@@ -50,11 +50,6 @@ export const EditProductCardModal = () => {
 
         const DATA = {} as UpdateProductCardRequest
 
-        let tagIds: string[] = []
-        data.productTags.forEach(n => {
-            tagIds.push(n.id)
-        })
-
         DATA.id = currentProduct.product.id
         DATA.checkStatus = data.checkStatus
         DATA.productSpecifications = data.productSpecifications
@@ -63,8 +58,8 @@ export const EditProductCardModal = () => {
             description: data.productCard.description,
             shortDescription: data.productCard.shortDescription
         }
-        DATA.productTags = tagIds
-        DATA.bindedProducts = []
+        DATA.productTags = data.productTags
+        DATA.bindedProducts = data.bindedProducts
 
         console.log('submitData', DATA)
         updateProductCard(DATA)
@@ -151,7 +146,8 @@ export const EditProductCardModal = () => {
                             </div>
                         </div>
 
-                        <EditProductCardOptionBind product={currentProduct} control={formControl}/>
+                        <EditProductCardOptionBind product={currentProduct} control={formControl} images={images}
+                                                   setImages={setImages}/>
                     </div>
                 </form>
             </CustomModal>

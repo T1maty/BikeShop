@@ -1,4 +1,5 @@
 import {Product, ProductOptionVariantBind, ProductSpecificationBind} from "../../../../entities"
+import {ProductTagBindDTO} from "./ProductTagBindDTO";
 
 export interface UpdateProductCardRequest {
     id: number
@@ -6,6 +7,6 @@ export interface UpdateProductCardRequest {
     productCard: { description: string, shortDescription: string }
     productOptions: ProductOptionVariantBind[]
     productSpecifications: ProductSpecificationBind[]
-    productTags: string[]
+    productTags: ProductTagBindDTO[]
     bindedProducts: Product[]
 }

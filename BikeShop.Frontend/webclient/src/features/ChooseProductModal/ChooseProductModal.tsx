@@ -7,7 +7,7 @@ import {CustomModal, UniTable} from "../../shared/ui"
 interface props {
     open?: boolean,
     setOpen?: (value: boolean) => void,
-    data: any[],
+    data?: any[],
     addData: (value: any) => void
     slaveColumns?: any[]
     setDataSlaveTable?: (value: any[]) => void
@@ -34,8 +34,12 @@ export const ChooseProductModal = (props: props) => {
                             props.addData(row)
                         }}/>
                         <br/>
-                        <UniTable rows={props.data} columns={props.slaveColumns ? props.slaveColumns : []}
-                                  setRows={props.setDataSlaveTable}/>
+                        {
+                            (props.data != undefined && props.slaveColumns != undefined) ?
+                                <UniTable rows={props.data} columns={props.slaveColumns ? props.slaveColumns : []}
+                                          setRows={props.setDataSlaveTable}/> : <div>No slave table</div>
+                        }
+
                     </div>
                 </div>
             </div>

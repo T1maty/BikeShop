@@ -3,7 +3,7 @@ import {ProductCard} from "../entities/ProductCard"
 import {ProductSpecificationBind} from "../entities/ProductSpecificationBind"
 import {ProductOptionVariantBind} from "./Product/ProductOptionVariantBind"
 import {ProductImage} from "../entities/ProductImage"
-import {ProductTag} from "../entities/ProductTag"
+import {ProductTagBindDTO} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductTagBindDTO";
 
 export interface ProductFullData {
     product: Product
@@ -11,6 +11,6 @@ export interface ProductFullData {
     productSpecifications: ProductSpecificationBind[]
     productOptions: ProductOptionVariantBind[]
     productImages: ProductImage[]
-    productTags: ProductTag[]
+    productTags: ProductTagBindDTO[]
     bindedProducts: Product[]
 }

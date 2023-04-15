@@ -3,7 +3,6 @@ import s from './CatalogProductItem.module.scss'
 import parse from 'html-react-parser'
 import {useParams} from 'react-router-dom'
 import {Button, LoaderScreenForShop} from '../../../../shared/ui'
-import {SubmitHandler, useForm} from 'react-hook-form'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import SorryNoImage from '../../../../shared/assets/shop/images/sorryNoImage.jpg'
@@ -122,8 +121,8 @@ export const CatalogProductItem = () => {
                     {
                         currentProduct.productTags.map(tag => {
                             return (
-                                <div key={tag.id} className={s.cloudCategory_item}>
-                                    {tag.name}
+                                <div key={tag.productTag.id} className={s.cloudCategory_item}>
+                                    {tag.productTag.name}
                                 </div>
                             )
                         })
@@ -134,13 +133,13 @@ export const CatalogProductItem = () => {
                     <div className={s.product_images}>
                         <ImageGallery items={myImages && myImages.length > 0 ? myImages : noImages}
                                       showPlayButton={false}
-                                      // showFullscreenButton={false}
+                            // showFullscreenButton={false}
                                       showIndex={true}
                                       showNav={false}
                                       showBullets={true}
                                       thumbnailPosition={'left'}
                                       onErrorImageURL={SorryNoImage}
-                                      // additionalClass={s.imageGallery}
+                            // additionalClass={s.imageGallery}
                         />
                     </div>
                     <div className={s.product_info}>

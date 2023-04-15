@@ -2,7 +2,9 @@ import React, {useState} from 'react'
 import s from "./EditProductCardOptionBind.module.scss"
 import {
     Product,
+    ProductCardAPI,
     ProductFullData,
+    ProductImage,
     ProductOption,
     ProductOptionVariant,
     ProductOptionVariantBind
@@ -13,21 +15,25 @@ import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg";
 import Select from "react-select";
 import useEditProductCardModal from "./EditProductCardModalStore";
 import Enumerable from "linq";
+import {ChooseProductModal} from "../../ChooseProductModal/ChooseProductModal";
+import {ProductTagBindDTO} from "./models/ProductTagBindDTO";
 
 interface ProductCardOptionBindProps {
     product: ProductFullData
     control: UseFormReturn<any>
+    images: ProductImage[]
+    setImages: (value: ProductImage[]) => void
 }
 
 export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => {
 
     const [selectedOption, setSelectedOption] = useState<any>(null)
-    const currentProduct = useEditProductCardModal(s => s.currentProduct)
+    const [v, sV] = useState(false)
     const allOptions = useEditProductCardModal(s => s.allOptions)
+
 
     const addVariantHandler = (control: any, product: Product) => {
         let value = control.getValues('productOptions')
-        let enumr = Enumerable.from(value as ProductOptionVariantBind[]).select(n => n.id).toArray()
         let r = selectedOption.optionVariants.filter((n: ProductOptionVariant) => !Enumerable.from(control.getValues('productOptions') as ProductOptionVariantBind[]).select(m => m.optionVariantId).contains(n.id))[0]
 
         let variant: ProductOptionVariantBind
@@ -63,14 +69,18 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                 <div className={s.editProductCardOptionBind}>
 
+                    <ChooseProductModal addData={() => {
+                        sV(false)
+                    }} open={v} setOpen={sV}/>
                     <Button buttonDivWrapper={s.addButton}
                             onClick={() => {
+                                sV(true)
                             }}
                     >
                         Добавить бинд товара
                     </Button>
                     {
-                        field.value?.map((bindedProduct: Product) => {
+                        field.value?.map((bindedProduct: Product, index: number) => {
                             return (
                                 <>
                                     <div className={s.optionBind_productBlock}>
@@ -79,9 +89,53 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                 <img src={RemoveIcon} alt="remove-icon" onClick={() => {
                                                 }}/>
                                             </div>
+
                                             <div className={s.productImage}>
-                                                <img src={props.product.productImages[0]?.url} alt="product-image"/>
+                                                <img
+                                                    src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
+                                                    alt="product-image"/>
+
+                                                {index > 0 ? <div>
+                                                    <div className={s.imageGallery_addImage}>
+                                                        <input type="file" id="file"
+                                                               accept="image/png, image/jpeg"
+                                                               onChange={(e) => {
+                                                                   let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
+
+                                                                   if (e.target.files && e.target.files.length) {
+                                                                       const file = e.target.files[0]
+                                                                       if (file.size < 7000000) {
+                                                                           let formData = new FormData();
+                                                                           formData.append('imageFile', file)
+                                                                           ProductCardAPI.uploadNewImage(formData, bindedProduct.id).then((r) => {
+                                                                               if (id != undefined) {
+                                                                                   ProductCardAPI.deleteImage(id).then(() => {
+                                                                                       props.setImages([...props.images.filter(n => n.id != id), r.data])
+                                                                                   })
+                                                                               } else {
+                                                                                   props.setImages([...props.images, r.data])
+                                                                               }
+
+                                                                           })
+
+                                                                       } else {
+                                                                           console.error('Error: ', 'Файл слишком большого размера')
+                                                                       }
+                                                                   }
+                                                               }}
+                                                               className={s.inputFile}
+                                                        />
+                                                    </div>
+
+                                                    <Button onClick={() => {
+                                                        let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
+                                                        ProductCardAPI.deleteImage(id).then(() => {
+                                                            props.setImages(props.images.filter(n => n.id != id))
+                                                        })
+                                                    }}>Удалить картинку</Button>
+                                                </div> : <></>}
                                             </div>
+
                                         </div>
 
 
@@ -185,24 +239,36 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                     <div className={s.content_tags}>
                                                         <fieldset className={s.tags_wrapperBox}>
-                                                            <legend>Индивидуальные теги</legend>
+                                                            <legend>Теги</legend>
                                                             <Button buttonDivWrapper={s.tags_addButton}
                                                                     onClick={() => {
                                                                     }}
                                                             >
                                                                 Х
                                                             </Button>
-                                                            <div className={s.tags_list}>
-                                                                <div className={s.tags_listItem}>
-                                                                    Тег1
-                                                                </div>
-                                                                <div className={s.tags_listItem}>
-                                                                    Тег2
-                                                                </div>
-                                                                <div className={s.tags_listItem}>
-                                                                    Тег3
-                                                                </div>
-                                                            </div>
+
+                                                            <Controller
+                                                                name={"productTags"}
+                                                                control={props.control.control}
+                                                                render={({field}: any) =>
+                                                                    <>
+                                                                        <div className={s.tags_list}>
+                                                                            {field.value?.filter((n: ProductTagBindDTO) => {
+
+                                                                            })}
+                                                                            <div className={s.tags_listItem}>
+                                                                                Тег1
+                                                                            </div>
+                                                                            <div className={s.tags_listItem}>
+                                                                                Тег2
+                                                                            </div>
+                                                                            <div className={s.tags_listItem}>
+                                                                                Тег3
+                                                                            </div>
+                                                                        </div>
+                                                                    </>}/>
+
+
                                                         </fieldset>
                                                     </div>
                                                 </div>

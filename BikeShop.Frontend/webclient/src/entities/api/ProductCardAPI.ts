@@ -1,8 +1,9 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
 import {ProductFullData} from '../index'
-import {UpdateProductCardRequest}
-    from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardRequest"
+import {
+    UpdateProductCardRequest
+} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardRequest"
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {
@@ -15,10 +16,14 @@ export const ProductCardAPI = {
             $api.put('/productcard/updateproductcard', data)
         )
     },
-    uploadNewImage(data: any): Promise<any> {
-        const productId = 1 // надо поставить динамический id
+    uploadNewImage(data: any, productId: number): Promise<any> {
         return (
             $api.post<any>(`/product/addimagetoproduct?productId=${productId}`, data)
+        )
+    },
+    deleteImage(imageId: number): Promise<any> {
+        return (
+            $api.post<any>(`/product/deleteimage?imageId=${imageId}`)
         )
     },
 }

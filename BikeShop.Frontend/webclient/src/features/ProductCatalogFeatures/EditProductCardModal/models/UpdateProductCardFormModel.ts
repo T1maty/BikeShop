@@ -1,4 +1,5 @@
-import {Product, ProductOptionVariantBind, ProductSpecificationBind, ProductTag} from "entities"
+import {Product, ProductOptionVariantBind, ProductSpecificationBind} from "entities"
+import {ProductTagBindDTO} from "./ProductTagBindDTO";
 
 export interface UpdateProductCardFormModel {
     id: number
@@ -6,6 +7,6 @@ export interface UpdateProductCardFormModel {
     productCard: { description: string, shortDescription: string }
     productOptions: ProductOptionVariantBind[]
     productSpecifications: ProductSpecificationBind[]
-    productTags: ProductTag[]
+    productTags: ProductTagBindDTO[]
     bindedProducts: Product[]
 }

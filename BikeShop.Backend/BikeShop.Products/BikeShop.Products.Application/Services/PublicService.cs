@@ -1,4 +1,5 @@
 ﻿using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.Domain.Enums;
@@ -80,7 +81,7 @@ namespace BikeShop.Products.Application.Services
             result.productOptions = await _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
             result.productSpecifications = await _context.ProductSpecifications.Where(n => n.ProductId == masterId).ToListAsync();
             result.productImages = await _context.ProductImgs.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
-            result.productTags = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).Include(n=>n.ProductTag).Select(n=>n.ProductTag).Distinct().ToListAsync();
+            result.productTags = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).Include(n=>n.ProductTag).Select(n=>new ProductTagBindDTO { ProductTag = n.ProductTag, ProductId = n.ProductId }).ToListAsync();
             if(bind != null) result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
 
             return result;
