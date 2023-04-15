@@ -64,6 +64,55 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         return options.filter(n => enumr.where(m => m.optionId == n.id).toArray().length < n.optionVariants.length)
     }
 
+    const addProductBind = (product: Product, field: any) => {
+        if (Enumerable.from(field.value as Product[]).select(n => n.id).contains(product.id)) {
+            enqueueSnackbar('Этот товар уже в бинде', {
+                variant: 'warning',
+                autoHideDuration: 3000
+            })
+            return
+        }
+        ProductCardAPI.getProductCardById(product.id).then((r) => {
+            let productCard = r.data
+            if (productCard.product.id == product.id && productCard.bindedProducts.length === 1) {
+                let optionsIds = Enumerable.from(props.control.getValues('productOptions') as ProductOptionVariantBind[]).select(n => n.optionVariantId).toArray()
+                let tagIds = Enumerable.from(props.control.getValues('productTags') as ProductTagBindDTO[]).select(n => n.productTag.id).toArray()
+
+                productCard.productOptions.forEach(n => {
+                    if (!optionsIds.includes(n.optionVariantId)) {
+                        optionsIds.push(n.optionVariantId)
+                        props.control.setValue('productOptions', [...props.control.getValues('productOptions'), n])
+                        console.log('слияние опции', n)
+                    }
+
+                })
+
+                productCard.productTags.forEach((n) => {
+                    if (!tagIds.includes(n.productTag.id)) {
+                        tagIds.push(n.productTag.id)
+                        props.control.setValue('productTags', [...props.control.getValues('productTags'), n])
+                        console.log('слияние тега', n)
+                    }
+                })
+
+                field.onChange([...field.value, productCard.product])
+
+                enqueueSnackbar('Бинд добавлен', {
+                    variant: 'success',
+                    autoHideDuration: 3000
+                })
+
+                sV(false)
+            } else {
+                enqueueSnackbar('Этот товар уже в бинде', {
+                    variant: 'warning',
+                    autoHideDuration: 3000
+                })
+            }
+        })
+
+    }
+
     return (
         <Controller
             name={"bindedProducts"}
@@ -74,8 +123,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                 <div className={s.editProductCardOptionBind}>
 
                     <ChooseProductModal addData={(product) => {
-                        sV(false)
-                        field.onChange([...field.value, product])
+
+                        addProductBind(product, field)
                     }} open={v} setOpen={sV}/>
 
 
