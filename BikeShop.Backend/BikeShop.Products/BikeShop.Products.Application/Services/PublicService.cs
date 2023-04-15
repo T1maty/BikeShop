@@ -83,7 +83,8 @@ namespace BikeShop.Products.Application.Services
             result.productImages = await _context.ProductImgs.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
             result.productTags = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).Include(n=>n.ProductTag).Select(n=>new ProductTagBindDTO { ProductTag = n.ProductTag, ProductId = n.ProductId, Id = n.Id }).ToListAsync();
             if(bind != null) result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
-
+            if(bind == null) result.bindedProducts = new List<Product> { result.product };
+ 
             return result;
         }
     }
