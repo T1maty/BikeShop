@@ -196,9 +196,10 @@ namespace BikeShop.Products.Application.Services
                 if (!existProdBinds.ContainsKey(prod.Id))
                 {
                     newProdBinds.Add(new ProductBind { ProductId = product.Id, ChildrenId = prod.Id });
+                    existProdBinds.Remove(prod.Id);
                 }
             }
-
+            _context.ProductBinds.RemoveRange(existProdBinds.Values);
             await _context.ProductBinds.AddRangeAsync(newProdBinds);
 
             //Добавляем новые спецификаии

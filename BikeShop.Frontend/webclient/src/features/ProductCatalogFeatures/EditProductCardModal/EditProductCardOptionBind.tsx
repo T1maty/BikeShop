@@ -95,6 +95,12 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                     }
                 })
 
+                productCard.productImages.forEach((n) => {
+                    props.control.setValue('productImages', [...props.control.getValues('productImages'), n])
+                    props.setImages([...props.images, n])
+                    console.log('слияние image', n)
+                })
+
                 field.onChange([...field.value, productCard.product])
 
                 enqueueSnackbar('Бинд добавлен', {
@@ -142,8 +148,15 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                     <div className={s.optionBind_productBlock}>
                                         <div className={s.productBlock_control}>
                                             <div className={s.contentBlock_deleteImg}>
-                                                <img src={RemoveIcon} alt="remove-icon" onClick={() => {
-                                                }}/>
+                                                {index > 0 ?
+                                                    <img src={RemoveIcon} alt="remove-icon" onClick={() => {
+                                                        field.onChange(field.value.filter((n: Product) => n.id != bindedProduct.id))
+                                                        props.control.setValue('productOptions', props.control.getValues('productOptions').filter((n: ProductOptionVariantBind) => n.productId != bindedProduct.id))
+                                                        props.control.setValue('productTags', props.control.getValues('productTags').filter((n: ProductTagBindDTO) => n.productId != bindedProduct.id))
+                                                        props.setImages(props.images.filter(n => n.productId != bindedProduct.id))
+                                                    }}/>
+                                                    : <div></div>
+                                                }
                                             </div>
 
                                             <div className={s.productImage}>
@@ -207,6 +220,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                         <fieldset className={s.options_wrapperBox}>
                                                             <legend>Опции</legend>
                                                             <Controller
+                                                                key={index}
                                                                 name={'productOptions'}
                                                                 control={props.control.control}
                                                                 render={({field}: any) =>
@@ -214,12 +228,13 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                         {
                                                                             props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id).map((variant: ProductOptionVariantBind) => {
                                                                                 return (
-                                                                                    <div>
+                                                                                    <div key={index}>
                                                                                         {variant.optionName}
                                                                                         <Button onClick={() => {
                                                                                             field.onChange(field.value.filter((n: ProductOptionVariantBind) => n.optionId != variant.optionId || n.productId != bindedProduct.id))
                                                                                         }}>удалить</Button>
                                                                                         <Select
+                                                                                            key={index}
                                                                                             className={s.options_search}
                                                                                             options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
                                                                                                 .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[]).select(m => m.optionVariantId).contains(n.id)) as ProductOptionVariantBind[])}
@@ -309,12 +324,14 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                             </Button>
 
                                                             <Controller
+                                                                key={index}
                                                                 name={"productTags"}
                                                                 control={props.control.control}
                                                                 render={({field}: any) =>
                                                                     <>
                                                                         <div className={s.tags_list}>
                                                                             <ChooseProductTagModal
+                                                                                key={index}
                                                                                 open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
                                                                                 setOpen={(value) => {
                                                                                     sV2([...v2.filter(n => n.id != bindedProduct.id), {
