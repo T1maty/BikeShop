@@ -45,7 +45,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                 </div>
 
                 <div className={s.burgerMenu}>
-                    <div>
+                    <div className={s.burgerMenu_button}>
                         <img src={BurgerMenu} alt="burger-menu"/>
                     </div>
                 </div>

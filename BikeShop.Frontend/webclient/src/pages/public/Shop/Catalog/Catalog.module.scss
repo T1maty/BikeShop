@@ -13,15 +13,29 @@
         //flex: 1 1 auto; // чтобы прибить футер к низу
 
         .catalog_left {
-            border: 1px solid black;
-            width: 25%;
-            height: 69vh; // надо пофиксить ?!
+            //border: 1px solid black;
+            width: 15%;
+            //height: 69vh; // надо пофиксить ?!
+            height: 100%; // надо пофиксить ?!
+
+            .tags_title {
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .tagsList {
+                padding-left: 10px;
+                @include divSmallMarginBottom;
+
+                .tagsList_item {
+                    //line-height: $minLineHeight;
+                }
+            }
         }
 
         .catalog_right {
             @include flexColumn;
             //border: 1px solid black;
-            width: 75%;
+            width: 85%;
 
             > div {
                 width: 100%;

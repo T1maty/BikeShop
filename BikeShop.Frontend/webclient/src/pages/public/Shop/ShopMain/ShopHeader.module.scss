@@ -37,7 +37,7 @@
                 }
             }
 
-            @media(max-width: 993px) {
+            @media(max-width: 920px) {
                 display: none;
             }
         }
@@ -45,14 +45,16 @@
         .burgerMenu {
             display: none;
 
-            @media(max-width: 993px) {
+            @media(max-width: 920px) {
                 height: var(--navbar-shop-height);
                 display: flex;
                 align-items: center;
 
-                img {
-                    width: 40px;
-                    height: 40px;
+                .burgerMenu_button {
+                    img {
+                        width: 30px;
+                        height: 30px;
+                    }
                 }
             }
         }
