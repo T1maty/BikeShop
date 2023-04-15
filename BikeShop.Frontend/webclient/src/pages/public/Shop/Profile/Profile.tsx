@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import s from './Profile.module.scss'
-import {ProfileInfo} from "./ProfileInfo"
-import {ProfileOrders} from "./ProfileOrders"
-import {ProfilePurchases} from "./ProfilePurchases"
-import {ProfileServices} from "./ProfileServices"
+import {ProfileInfo} from './ProfileInfo'
+import {ProfileOrders} from './ProfileOrders'
+import {ProfilePurchases} from './ProfilePurchases'
+import {ProfileServices} from './ProfileServices'
 import {ProfileAvatar} from './ProfileAvatar';
 
 
@@ -27,68 +27,72 @@ export const Profile = () => {
         setIsActivePurchases(isActivePurchases)
     }
 
-    // const userLastName = 'Петров'
-    // const userFirstName = 'Василий'
-    //
-    // const generateAvatarName = (lastName: string, firstName: string) => {
-    //     return (lastName[0]+firstName[0]).toUpperCase()
-    // }
-
     useEffect(() => {
         setIsActiveProfile(true)
     }, [])
 
     return (
         <div className={s.profile_mainBox}>
-            <div className={s.profile_menu}>
-                <div className={isActiveProfile ? s.menu_user_active : s.menu_user}
-                     onClick={()=> {chooseMenuItemHandler('Orders',
-                         true, false,false, false)}}
-                >
-                    {/*<div className={s.user_image}>{generateAvatarName(userLastName, userFirstName)}</div>*/}
-                    <ProfileAvatar lastName={'Петров'} firstName={'Василий'}/>
-                    <div className={s.user_info}>
-                        <div className={s.info_name}>Петров Василий Иванович</div>
-                        <div className={s.info_text}>Здесь будет какая-то информация</div>
+            <div className={s.container}>
+
+                <div className={s.profile_menu}>
+                    <div className={isActiveProfile ? s.menu_user_active : s.menu_user}
+                         onClick={() => {
+                             chooseMenuItemHandler('Orders',
+                                 true, false, false, false)
+                         }}
+                    >
+                        <ProfileAvatar lastName={'Петров'} firstName={'Василий'}/>
+                        <div className={s.user_info}>
+                            <div className={s.info_name}>Петров Василий Иванович</div>
+                            <div className={s.info_text}>Здесь будет какая-то информация</div>
+                        </div>
+                    </div>
+                    <div className={s.menu_list}>
+                        <div className={isActiveOrders ? s.menu_listItem_active : s.menu_listItem}
+                             onClick={() => {
+                                 chooseMenuItemHandler('Orders',
+                                     false, true, false, false)
+                             }}
+                        >
+                            <div className={s.listItem_icon}>I</div>
+                            <div className={s.listItem_title}>Заказы</div>
+                        </div>
+                        <div className={isActiveServices ? s.menu_listItem_active : s.menu_listItem}
+                             onClick={() => {
+                                 chooseMenuItemHandler('Services',
+                                     false, false, true, false)
+                             }}
+                        >
+                            <div className={s.listItem_icon}>I</div>
+                            <div className={s.listItem_title}>Ремонты</div>
+                        </div>
+                        <div className={isActivePurchases ? s.menu_listItem_active : s.menu_listItem}
+                             onClick={() => {
+                                 chooseMenuItemHandler('Purchases',
+                                     false, false, false, true)
+                             }}
+                        >
+                            <div className={s.listItem_icon}>I</div>
+                            <div className={s.listItem_title}>Покупки</div>
+                        </div>
                     </div>
                 </div>
-                <div className={s.menu_list}>
-                    <div className={isActiveOrders ? s.menu_listItem_active : s.menu_listItem}
-                         onClick={()=> {chooseMenuItemHandler('Orders',
-                             false, true, false, false)}}
-                    >
-                        <div className={s.listItem_icon}>I</div>
-                        <div className={s.listItem_title}>Заказы</div>
-                    </div>
-                    <div className={isActiveServices ? s.menu_listItem_active : s.menu_listItem}
-                         onClick={()=> {chooseMenuItemHandler('Services',
-                             false, false,true, false)}}
-                    >
-                        <div className={s.listItem_icon}>I</div>
-                        <div className={s.listItem_title}>Ремонты</div>
-                    </div>
-                    <div className={isActivePurchases ? s.menu_listItem_active : s.menu_listItem}
-                         onClick={()=> {chooseMenuItemHandler('Purchases',
-                             false, false, false, true)}}
-                    >
-                        <div className={s.listItem_icon}>I</div>
-                        <div className={s.listItem_title}>Покупки</div>
-                    </div>
+                <div className={s.profile_content}>
+                    {
+                        isActiveProfile ? <ProfileInfo/> : ''
+                    }
+                    {
+                        isActiveOrders ? <ProfileOrders/> : ''
+                    }
+                    {
+                        isActiveServices ? <ProfileServices/> : ''
+                    }
+                    {
+                        isActivePurchases ? <ProfilePurchases/> : ''
+                    }
                 </div>
-            </div>
-            <div className={s.profile_content}>
-                {
-                    isActiveProfile ? <ProfileInfo/> : ''
-                }
-                {
-                    isActiveOrders ? <ProfileOrders/> : ''
-                }
-                {
-                    isActiveServices ? <ProfileServices/> : ''
-                }
-                {
-                    isActivePurchases ? <ProfilePurchases/> : ''
-                }
+
             </div>
         </div>
     )

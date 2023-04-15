@@ -2,183 +2,188 @@
 @import '../../../../app/styles/variables/variables';
 
 .shop_productItem_mainBox {
-    @include flexColumn;
+    padding: 20px 0;
 
-    > div {
-        //border: 1px solid black;
-        width: 100%;
-    }
+    .container {
+        @include defaultContainerForShop; // ограничивающий контейнер
+        @include flexColumn;
 
-    .cloudCategory {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: $defaultLargeMargin;
-        margin-bottom: $defaultLargeMargin;
-
-        .cloudCategory_item {
-            color: white;
-            background-color: $themeColorGray;
-            border-radius: $smallBorderRadius;
-            padding: $divButtonPadding;
-        }
-    }
-
-    .product {
-        @include flexOnlyBetween;
-        gap: $defaultExtraLargeMargin;
-        margin-bottom: $defaultExtraLargeMargin;
-
-        // тестировочный стиль
-        //.product_images {
-        //    width: 60%;
-        //    display: flex;
-        //    justify-content: flex-end;
-        //
-        //    img {
-        //        max-width: 600px;
-        //        height: auto;
-        //    }
-        //}
-        .product_images {
-            width: 60%;
-            display: flex;
-            justify-content: flex-end;
-
-            //img {
-            //    max-width: 600px;
-            //    height: auto;
-            //}
-
-            .imageGallery {
-                max-height: 350px;
-                overflow-y: hidden;
-
-                //.image-gallery-slide {
-                //    width: 100%;
-                //    height: auto;
-                //    max-height: 80vh;
-                //    object-fit: cover;
-                //    overflow: hidden;
-                //    object-position: center center;
-                //}
-            }
-        }
-
-        .product_info {
+        > div {
             //border: 1px solid black;
-            @include flexColumn;
-            @include divLargeMarginBottom;
-            width: 40%;
+            width: 100%;
+        }
 
-            .product_title {
-                font-weight: bold;
-                font-size: 20px;
+        .cloudCategory {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: $defaultLargeMargin;
+            margin-bottom: $defaultLargeMargin;
+
+            .cloudCategory_item {
+                color: white;
+                background-color: $themeColorGray;
+                border-radius: $smallBorderRadius;
+                padding: $divButtonPadding;
             }
+        }
 
-            .product_price {
-                font-weight: bold;
-                font-size: 24px;
-                color: red;
-            }
+        .product {
+            @include flexOnlyBetween;
+            gap: $defaultExtraLargeMargin;
+            margin-bottom: $defaultExtraLargeMargin;
 
-            .product_description {
-                line-height: 1.3;
-            }
+            // тестировочный стиль
+            //.product_images {
+            //    width: 60%;
+            //    display: flex;
+            //    justify-content: flex-end;
+            //
+            //    img {
+            //        max-width: 600px;
+            //        height: auto;
+            //    }
+            //}
+            .product_images {
+                width: 60%;
+                display: flex;
+                justify-content: flex-end;
 
-            .product_select {
-                width: 80%;
-                color: black;
-                @include divSmallMarginBottom;
+                //img {
+                //    max-width: 600px;
+                //    height: auto;
+                //}
 
-                .product_selectBox {
-                    color: black;
+                .imageGallery {
+                    max-height: 350px;
+                    overflow-y: hidden;
+
+                    //.image-gallery-slide {
+                    //    width: 100%;
+                    //    height: auto;
+                    //    max-height: 80vh;
+                    //    object-fit: cover;
+                    //    overflow: hidden;
+                    //    object-position: center center;
+                    //}
                 }
             }
 
-            .product_buy {
+            .product_info {
+                //border: 1px solid black;
+                @include flexColumn;
+                @include divLargeMarginBottom;
+                width: 40%;
+
+                .product_title {
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+
+                .product_price {
+                    font-weight: bold;
+                    font-size: 24px;
+                    color: red;
+                }
+
+                .product_description {
+                    line-height: 1.3;
+                }
+
+                .product_select {
+                    width: 80%;
+                    color: black;
+                    @include divSmallMarginBottom;
+
+                    .product_selectBox {
+                        color: black;
+                    }
+                }
+
+                .product_buy {
+                    @include flexOnlyBetween;
+                    align-items: center;
+                    gap: $defaultExtraLargeMargin;
+
+                    .product_available {
+                        .isAvailable {
+                            @include CatalogProductItemIsAvailableLabel($filterButtonReadyColor);
+                        }
+
+                        .notAvailable {
+                            @include CatalogProductItemIsAvailableLabel($filterButtonWaitingColor);
+                        }
+                    }
+
+                    .product_addToCart {
+                        button {
+                            padding: 10px;
+                            background-color: $bgColorButtonConfirm;
+                            border-radius: $smallBorderRadius;
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+
+        .description {
+
+            .description_chapters {
                 @include flexOnlyBetween;
                 align-items: center;
-                gap: $defaultExtraLargeMargin;
 
-                .product_available {
-                    .isAvailable {
-                        @include CatalogProductItemIsAvailableLabel($filterButtonReadyColor);
-                    }
-
-                    .notAvailable {
-                        @include CatalogProductItemIsAvailableLabel($filterButtonWaitingColor);
-                    }
+                > div {
+                    width: 100%;
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: bold;
+                    opacity: 50%;
+                    padding: 10px 0;
+                    @include hoverCursorPointer;
                 }
 
-                .product_addToCart {
-                    button {
-                        padding: 10px;
-                        background-color: $bgColorButtonConfirm;
-                        border-radius: $smallBorderRadius;
-                        font-weight: bold;
-                    }
+                // универсальный стиль active
+                .description_active {
+                    background-color: white;
+                    border-bottom: 2px solid black;
+                    opacity: 100%;
+                }
+
+                .chapters_characteristic {
+
+                }
+
+                .characteristic_active {
+                    background-color: white;
+                    opacity: 100%;
+                }
+
+                .chapters_details {
+                    //border-right: 1px solid black;
+                }
+
+                .details_active {
+                    background-color: white;
+                    opacity: 100%;
+                }
+
+                .chapters_delivery {
+
+                }
+
+                .delivery_active {
+                    background-color: white;
+                    opacity: 100%;
                 }
             }
-        }
-    }
 
-    .description {
-
-        .description_chapters {
-            @include flexOnlyBetween;
-            align-items: center;
-
-            > div {
-                width: 100%;
-                text-align: center;
-                font-size: 24px;
-                font-weight: bold;
-                opacity: 50%;
-                padding: 10px 0;
-                @include hoverCursorPointer;
-            }
-
-            // универсальный стиль active
-            .description_active {
+            .description_content {
                 background-color: white;
-                border-bottom: 2px solid black;
-                opacity: 100%;
+                padding: $defaultLargeMargin;
+                min-height: 150px;
+                line-height: 1.3;
             }
-
-            .chapters_characteristic {
-
-            }
-
-            .characteristic_active {
-                background-color: white;
-                opacity: 100%;
-            }
-
-            .chapters_details {
-                //border-right: 1px solid black;
-            }
-
-            .details_active {
-                background-color: white;
-                opacity: 100%;
-            }
-
-            .chapters_delivery {
-
-            }
-
-            .delivery_active {
-                background-color: white;
-                opacity: 100%;
-            }
-        }
-
-        .description_content {
-            background-color: white;
-            padding: $defaultLargeMargin;
-            min-height: 150px;
-            line-height: 1.3;
         }
     }
 }
