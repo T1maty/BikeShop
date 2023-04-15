@@ -2,8 +2,8 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
-import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest"
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
+import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel";
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -14,7 +14,7 @@ interface EditProductCardModalStore {
 
     currentProduct: ProductFullData
     getProductCard: (productId: number) => void
-    updateProductCard: (data: UpdateProductCardRequest) => void
+    updateProductCard: (data: UpdateProductCardFormModel) => void
 
     isError: boolean
     setIsError: (value: boolean) => void

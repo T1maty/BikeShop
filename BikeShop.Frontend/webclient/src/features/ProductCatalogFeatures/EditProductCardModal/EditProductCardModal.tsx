@@ -8,10 +8,8 @@ import {ContentState, EditorState} from "draft-js"
 import {Button, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {EditProductCardSpecifications} from "./EditProductCardSpecifications"
 import {EditProductCardGallery} from "./EditProductCardGallery"
-import {EditProductCardTags} from "./EditProductCardTags"
 import {EditProductCardStatus} from "./EditProductCardStatus"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
-import {UpdateProductCardRequest} from "./models/UpdateProductCardRequest"
 import {ProductImage} from "../../../entities"
 import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull"
 import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort"
@@ -47,22 +45,8 @@ export const EditProductCardModal = () => {
     })
 
     const onSubmit: SubmitHandler<UpdateProductCardFormModel> = (data: UpdateProductCardFormModel) => {
-
-        const DATA = {} as UpdateProductCardRequest
-
-        DATA.id = currentProduct.product.id
-        DATA.checkStatus = data.checkStatus
-        DATA.productSpecifications = data.productSpecifications
-        DATA.productOptions = data.productOptions
-        DATA.productCard = {
-            description: data.productCard.description,
-            shortDescription: data.productCard.shortDescription
-        }
-        DATA.productTags = data.productTags
-        DATA.bindedProducts = data.bindedProducts
-
-        console.log('submitData', DATA)
-        updateProductCard(DATA)
+        console.log('submitData', data)
+        updateProductCard(data)
     }
 
     useEffect(() => {
@@ -111,7 +95,6 @@ export const EditProductCardModal = () => {
                     <div className={s.editProductCardModal}>
                         <div className={s.editProductCardModal_mainBlock}>
                             <div className={s.editProductCardModal_leftSide}>
-                                <EditProductCardTags control={formControl} name={'productTags'}/>
                                 <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                                 <EditProductCardGallery images={images} setImages={setImages}/>
                             </div>

@@ -199,26 +199,22 @@ namespace BikeShop.Products.Application.Services
             var atbIDs = await _context.TagToProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n=>n.ProductTagId, n=>n);
             var newTagBinds = new List<TagToProductBind>();
             
-            foreach (var id in dto.productTags)
+            foreach (var tagBinds in dto.productTags)
             {
-                if (atbIDs.ContainsKey(id))
+                if (atbIDs.ContainsKey(tagBinds.Id))
                 {
-                    atbIDs.Remove(id);
+                    atbIDs.Remove(tagBinds.Id);
                 }
                 else
                 {
-                    newTagBinds.Add(new TagToProductBind { ProductId = dto.Id, ProductTagId = id });
+                    newTagBinds.Add(new TagToProductBind { ProductId = tagBinds.ProductId, ProductTagId = tagBinds.ProductTag.Id });
                 }
             }
 
             _context.TagToProductBinds.RemoveRange(atbIDs.Values);
             await _context.TagToProductBinds.AddRangeAsync(newTagBinds);
-
-
-
-
-
             await _context.SaveChangesAsync(new CancellationToken());
+
             return new ProductCardDTO();
         }
 

@@ -2,8 +2,8 @@ import {AxiosResponse} from "axios"
 import {$api} from "shared"
 import {ProductFullData} from '../index'
 import {
-    UpdateProductCardRequest
-} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardRequest"
+    UpdateProductCardFormModel
+} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardFormModel";
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {
@@ -11,7 +11,7 @@ export const ProductCardAPI = {
             $api.get<ProductFullData>(`/productcard/getproductcard?productId=${productId}`)
         )
     },
-    updateProductCard(data: UpdateProductCardRequest): any {
+    updateProductCard(data: UpdateProductCardFormModel): any {
         return (
             $api.put('/productcard/updateproductcard', data)
         )
