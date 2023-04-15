@@ -144,6 +144,12 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productService.GetProductsByIdsArray(Ids);
         }
 
+        [HttpGet("unsorterd")]
+        public async Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId)
+        {
+            return await _productService.GetUnsorted(srorageId);
+        }
+
         [HttpPost("addimagetoproduct")]
         public async Task<ProductImg> AddImageToProduct(int productId, [FromForm]IFormFile imageFile)
         {

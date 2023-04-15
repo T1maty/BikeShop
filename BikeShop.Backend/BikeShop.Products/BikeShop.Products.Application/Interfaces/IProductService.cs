@@ -14,4 +14,5 @@ public interface IProductService
     public Task<ProductImg> AddImageToProduct(int productId, IFormFile imageFile);
     public Task DeleteImage(int imageId);
     public Task<ProductImg> UpdateImage(ProductImageDTO dto);
+    public Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId);
 }

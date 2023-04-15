@@ -125,5 +125,29 @@ namespace BikeShop.Products.Application.Services
             await _context.SaveChangesAsync(new CancellationToken());
             return ent;
         }
+
+        public async Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId)
+        {
+            var ids = _context.TagToProductBinds.Select(n => n.ProductId);
+            var products = await _context.Products.Where(product => !ids.Contains(product.Id))
+            .ToListAsync();
+
+            var quantityUnits = await _context.QuantityUnits.ToDictionaryAsync(n => n.Id, n => n);
+            var storage = await _context.StorageProducts.Where(n => n.StorageId == srorageId).Where(n => products.Select(j => j.Id).Contains(n.ProductId)).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
+
+            var res = new List<ProductQuantityDTO>();
+
+            foreach (var prod in products)
+            {
+                res.Add(new ProductQuantityDTO
+                {
+                    Product = prod,
+                    QuantityUnit = prod.QuantityUnitId == 0 ? null : quantityUnits[prod.QuantityUnitId],
+                    Quantity = storage.ContainsKey(prod.Id) ? storage[prod.Id] : 0
+                });
+            }
+
+            return res;
+        }
     }
 }

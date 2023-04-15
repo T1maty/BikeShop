@@ -228,6 +228,21 @@
       ],
       "SwaggerKey": "products"
     },
+	{
+      "UpstreamPathTemplate": "/api/product/unsorted",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/product/unsorted",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
     {
       "UpstreamPathTemplate": "/api/product/getbybarcode/{barcode}",
       "UpstreamHttpMethod": [
