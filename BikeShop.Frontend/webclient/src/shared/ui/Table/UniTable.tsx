@@ -57,7 +57,8 @@ export const UniTable = (props: TableProps) => {
                             return <TableRow key={index}
                                              row={item}
                                              setRow={(newRow: any) => {
-                                                 let newData = props.rows
+                                                 let newData: any[] = []
+                                                 Object.assign(newData, props.rows)
                                                  newData[index] = newRow
                                                  console.log(newData)
                                                  props.setRows ? props.setRows(newData) : true

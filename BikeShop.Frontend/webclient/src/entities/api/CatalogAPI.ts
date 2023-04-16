@@ -25,7 +25,7 @@ export const CatalogAPI = {
     },
     getUnsorted(storageId: number): Promise<AxiosResponse<ProductExtended[]>> {
         return (
-            $api.post<ProductExtended[]>('/product/unsorted', storageId)
+            $api.get<ProductExtended[]>(`/product/unsorted?srorageId=${storageId}`)
         )
     },
 }

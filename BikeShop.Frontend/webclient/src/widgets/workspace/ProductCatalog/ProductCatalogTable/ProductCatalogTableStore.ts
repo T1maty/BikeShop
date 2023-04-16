@@ -98,7 +98,11 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     setNotSortedToTable: () => {
         set({isLoading: true})
         CatalogAPI.getUnsorted(1).then((r) => {
+            console.log(r.data)
             set({rows: r.data})
+            set({isLoading: false})
+        }).catch((r) => {
+            console.log(r)
             set({isLoading: false})
         })
     }

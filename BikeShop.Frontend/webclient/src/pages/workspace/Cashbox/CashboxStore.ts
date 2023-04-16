@@ -12,6 +12,7 @@ interface CashboxStore {
     setUser: (user: User) => void
 
     bill: NewBillDTO,
+    products: any[],
     setProducts: (value: BillProductDTO[]) => void
     addProduct: (value: any) => void
 }
@@ -19,6 +20,7 @@ interface CashboxStore {
 const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, get) => ({
     bill: {} as NewBillDTO,
     isLoading: false,
+    products: [],
     addProduct: (value) => {
         let newValue: BillProductDTO = {
             ...value,
@@ -50,7 +52,7 @@ const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, 
     },
     setProducts: (value) => {
         set(state => {
-            state.bill.products = value
+            state.products = value
         })
     },
     setIsLoading: (value: boolean) => set({

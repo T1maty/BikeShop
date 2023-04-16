@@ -3,7 +3,6 @@ import s from '../ProductsCount/ProductsWrapper.module.scss'
 import {Button, UniTable} from "../../../shared/ui";
 import {columns} from "./SupplyInvoiceTableConfig";
 import {ChooseProductModal} from "../../../features";
-import Enumerable from "linq";
 import {SupplyInvoiceCreateModel} from "./models/SupplyInvoiceCreateModel";
 import {ProductExtended} from "../../../entities";
 import {$api} from "../../../shared";
@@ -82,20 +81,9 @@ export const ArrivalOfProducts = () => {
 
             <div className={s.arrivalOfProducts_rightSide}>
 
-                <ChooseProductModal setDataSlaveTable={setData} slaveColumns={columns} data={data} addData={(value) => {
-                    let ent = Enumerable.from(data).where(n => n.id === value.id).toArray()
-                    if (ent.length > 0) {
-                        console.log(value)
-                        let newData = data
-                        let row = newData.find(n => n.id === value.id)
-                        console.log(row)
-
-                        row.quantity++
-                        setData(newData)
-                    } else {
-                        setData([...data, {...value, quantity: 1}])
-                    }
-                }} open={vis} setOpen={setVis}/>
+                <ChooseProductModal setDataSlaveTable={setData} slaveColumns={columns} data={data} open={vis}
+                                    setData={setData}
+                                    setOpen={setVis}/>
                 <UniTable rows={data} columns={columns} setRows={setData}/>
 
             </div>

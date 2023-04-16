@@ -1,11 +1,6 @@
-export interface Column {
-    id: 'productId' | 'name' | 'retailPrice' | 'quantityUnitName' | 'discount' | 'total' | 'quantity';
-    label: string;
-    minWidth?: number;
-    align?: 'right' | 'left';
-}
+import {UniTableColumn} from "../../../entities";
 
-export const columns: Column[] = [
+export const columns: UniTableColumn[] = [
     {
         id: 'productId',
         label: 'Артикул',
@@ -23,6 +18,8 @@ export const columns: Column[] = [
         label: 'Количество',
         minWidth: 70,
         align: 'right',
+        isNumber: true,
+        isEditable: true
     },
     {
         id: 'quantityUnitName',

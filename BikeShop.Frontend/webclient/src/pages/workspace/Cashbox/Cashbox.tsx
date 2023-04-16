@@ -20,15 +20,14 @@ export const Cashbox = () => {
     const setUser = useCashboxStore(s => s.setUser)
     const bill = useCashboxStore(s => s.bill)
     const addProduct = useCashboxStore(s => s.addProduct)
+    const setData = useCashboxStore(s => s.setProducts)
+    const data = useCashboxStore(s => s.products)
 
     const [open, setOpen] = useState(false);
     const [openPay, setOpenPay] = useState(false);
     const [sum, setSum] = useState(0)
 
-    let data: {}[] = []
-    bill.products?.forEach(n => {
-        data.push({...n, total: (n.quantity * n.price - n.discount)})
-    })
+    const [dt, sDt] = useState<any[]>([])
 
     useEffect(() => {
         let sum = 0;
@@ -41,6 +40,10 @@ export const Cashbox = () => {
         setSum(sum)
 
     }, [bill])
+
+    useEffect(() => {
+        setData([])
+    }, [])
 
     const paymentResultHandler = (value: PaymentData) => {
         let res = {...bill, ...value}
@@ -138,7 +141,8 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock_rightSideWrapper}>
                 <div className={s.cashboxMainBlock_rightSideHeader}>
-                    <ChooseProductModal open={open} setOpen={setOpen} data={bill.products} addData={addProduct}/>
+                    <ChooseProductModal open={open} setOpen={setOpen} setData={setData} data={data}
+                                        slaveColumns={columns}/>
                     <Button buttonDivWrapper={s.header_chooseBtn}
                             onClick={() => {
                                 setOpen(true)
