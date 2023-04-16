@@ -130,8 +130,11 @@ export const EditProductCardModal = () => {
                             </div>
                         </div>
 
-                        <EditProductCardOptionBind product={currentProduct} control={formControl} images={images}
-                                                   setImages={setImages}/>
+                        <EditProductCardOptionBind product={currentProduct}
+                                                   control={formControl}
+                                                   images={images}
+                                                   setImages={setImages}
+                        />
                     </div>
                 </form>
             </CustomModal>
