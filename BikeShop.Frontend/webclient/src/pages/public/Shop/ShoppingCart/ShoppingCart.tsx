@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import s from './ShoppingCart.module.scss'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
-import {Button} from "../../../../shared/ui"
+import {Button, DeleteButton} from '../../../../shared/ui'
 import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
@@ -100,6 +100,7 @@ export const ShoppingCart = React.memo(() => {
                                                     </div>
                                                 </div>
                                                 <div className={s.cartListItem_deleteIcon}>
+                                                    {/*<DeleteButton size={30} onClick={() => {deleteProductFromCartHandler(cartProd.product.id)}}/>*/}
                                                     <img src={RemoveIcon} alt="remove-icon"
                                                          className={s.imageList_deleteItem}
                                                          onClick={() => {deleteProductFromCartHandler(cartProd.product.id)}}

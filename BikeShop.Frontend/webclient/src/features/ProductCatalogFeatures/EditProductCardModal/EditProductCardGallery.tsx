@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
-import {Button} from "../../../shared/ui"
+import {Button, DeleteButton} from '../../../shared/ui'
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {ProductImage} from '../../../entities'
 import {$api} from "../../../shared"
-import {ConfirmModal} from '../../ConfirmModal/ConfirmModal';
-import useConfirmModal from '../../ConfirmModal/ConfirmModalStore';
+import {ConfirmModal} from '../../ConfirmModal/ConfirmModal'
+import useConfirmModal from '../../ConfirmModal/ConfirmModalStore'
 
 interface ProductCardGalleryProps {
     images: ProductImage[]
@@ -101,6 +101,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                          onClick={() => {setOpenConfirmModal(true)}}
                                          // onClick={() => {deleteImageHandler(img.id)}}
                                     />
+                                    {/*<DeleteButton size={20} absolute={true} onClick={() => {setOpenConfirmModal(true)}}/>*/}
                                 </div>
                             )
                         })

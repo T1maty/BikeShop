@@ -1,8 +1,39 @@
 .deleteBox {
-    img {
+    .deleteImg {
+        &:hover {
+            cursor: pointer;
+            filter: contrast(3);
+        }
+    }
+
+    .deleteImgAbsolute {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 5px;
+
         &:hover {
             cursor: pointer;
             filter: contrast(3);
         }
     }
 }
+
+//.deleteImg {
+//    &:hover {
+//        cursor: pointer;
+//        filter: contrast(3);
+//    }
+//}
+//
+//.deleteImgAbsolute {
+//    position: absolute;
+//    top: 0;
+//    right: 0;
+//    margin: 5px;
+//
+//    &:hover {
+//        cursor: pointer;
+//        filter: contrast(3);
+//    }
+//}

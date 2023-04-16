@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import s from "./EditProductCardModal.module.scss"
-import {Button, EditableSpan} from "../../../shared/ui"
+import {Button, DeleteButton, EditableSpan} from '../../../shared/ui'
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
@@ -96,11 +96,13 @@ export const EditProductCardSpecifications = (props: ControlledProps) => {
                                                                     />
                                                                 </div>
                                                                 <div className={s.item_deleteDetailsItem}>
-                                                                    <img src={RemoveIcon} alt="remove-icon"
-                                                                         onClick={() => {
-                                                                             deleteSpecificationHandler(field, spec)
-                                                                         }}
-                                                                    />
+                                                                    <DeleteButton size={25} onClick={() => {deleteSpecificationHandler(field, spec)}}/>
+
+                                                                    {/*<img src={RemoveIcon} alt="remove-icon"*/}
+                                                                    {/*     onClick={() => {*/}
+                                                                    {/*         deleteSpecificationHandler(field, spec)*/}
+                                                                    {/*     }}*/}
+                                                                    {/*/>*/}
                                                                 </div>
                                                             </div>
                                                         </div>
