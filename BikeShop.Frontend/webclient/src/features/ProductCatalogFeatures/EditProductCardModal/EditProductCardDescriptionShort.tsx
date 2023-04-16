@@ -1,5 +1,5 @@
 import React from 'react'
-import s from "./EditProductCardModal.module.scss"
+import s from "./EditProductCardDescriptionShort.module.scss"
 import {Controller, UseFormReturn} from "react-hook-form"
 
 interface ControlledProps {
@@ -15,9 +15,11 @@ export const EditProductCardDescriptionShort = (props: ControlledProps) => {
                 control={props.control.control}
                 render={({field}: any) =>
 
-                <div className={s.shortEditor}>
-                    <div className={s.shortEditor_title}>Краткое описание товара:</div>
-                    <div className={s.shortEditor_textarea}>
+                <div className={s.shortDescription}>
+                    <div className={s.shortDescription_title}>
+                        Краткое описание товара:
+                    </div>
+                    <div className={s.shortDescription_textarea}>
                             <textarea placeholder={'Введите текст...'}
                                       value={field.value.shortDescription}
                                       onChange={(v) => {

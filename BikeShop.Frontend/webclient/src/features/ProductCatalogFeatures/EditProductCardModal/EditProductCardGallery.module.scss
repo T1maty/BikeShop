@@ -1,0 +1,71 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.imageGallery {
+    @include defaultBlockStyles($themeColorMilk);
+    @include flexColumn;
+    justify-content: center;
+
+    .imageGallery_imageList {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        height: 100%;
+        overflow-y: auto;
+
+        .imageList_item {
+            position: relative;
+
+            &:hover {
+                cursor: pointer;
+                opacity: 0.5;
+            }
+
+            img {
+                width: 140px;
+            }
+
+            .active_image {
+                opacity: 0.5;
+                border: 1px solid white;
+            }
+
+            .imageList_imageCount {
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 5px;
+                padding: 2px 5px;
+                background-color: white;
+            }
+
+            .imageList_deleteItem {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin: 5px;
+                width: 20px;
+                height: 20px;
+
+                &:hover {
+                    cursor: pointer;
+                    filter: contrast(3);
+                }
+            }
+        }
+    }
+
+    .imageGallery_buttons {
+        .imageGallery_sortButtons {
+            margin-top: $defaultLargeMargin;
+            @include flexOnlyBetween;
+            gap: $defaultLargeMargin;
+        }
+
+        .imageGallery_addImage {
+            margin-top: $defaultLargeMargin;
+            @include inputTypeFile($themeColorGray);
+        }
+    }
+}

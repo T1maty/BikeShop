@@ -1,0 +1,34 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.fullEditor {
+    @include defaultBlockStyles($themeColorMilk);
+
+    .descriptionEditor_title {
+        font-weight: bold;
+        font-size: 18px;
+        color: black;
+        margin-bottom: $defaultSmallMargin;
+    }
+
+    .descriptionEditor_editorTextarea {
+        .editorClassName {
+            min-height: 170px;
+            max-height: 300px;
+            overflow-y: auto;
+            color: black;
+        }
+
+        .editor_toolbar {
+            background-color: $themeColorMilk;
+            border: 1px solid $themeColorDark;
+            color: black;
+
+            .rdw-image-wrapper {
+                .rdw-image-modal {
+                    background-color: $themeColorMilk;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,113 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.productSpecifications {
+    @include defaultBlockStyles($themeColorGray);
+    margin-bottom: $defaultLargeMargin;
+
+    > div:not(:last-child) {
+        @include flexColumnOnly;
+        margin-bottom: $defaultSmallMargin;
+        min-height: 80%;
+    }
+
+    .specificationsList {
+        overflow-y: auto;
+        max-height: 250px;
+        color: black;
+
+        .emptyList {
+            text-align: center;
+            word-break: break-word;
+            color: white;
+            overflow: hidden;
+        }
+
+        .specificationsList_item {
+            margin-bottom: $defaultSmallMargin;
+            padding-right: 10px;
+            @include flexBetween;
+            gap: 10px;
+
+            .specification_box {
+                border-radius: $smallBorderRadius;
+                width: 100%;
+
+                .specifications_rowItems {
+                    .rowItems_item {
+                        .item_deleteFullItem {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            @include hoverCursorPointer;
+                            margin-bottom: $defaultSmallMargin;
+                            padding: 5px;
+                            border: 1px solid white;
+                            border-radius: $extraSmallBorderRadius;
+                            background-color: #ff6b6b;
+                            color: white;
+
+                            &:hover {
+                                background-color: red;
+                            }
+                        }
+
+                        .item_content {
+                            @include flexBetween;
+                            color: white;
+
+                            .inputEditableSpan {
+                                width: 300px;
+                                height: 40px;
+                                font-size: 16px;
+                            }
+                        }
+                    }
+
+                    .rowItems_chooseItem {
+                        @include flexBetween;
+                        gap: $defaultLargeMargin;
+
+                        .options_button {
+                            button {
+                                @include flexCenter;
+                                width: 40px;
+                                height: 40px;
+                                font-size: 40px;
+                            }
+                        }
+
+                        // селект разновидность опции
+                        .options_search {
+                            width: 100%;
+                            color: black;
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .productOptions_selectRow {
+        @include flexBetween;
+        gap: $defaultLargeMargin;
+        height: 50px;
+
+        .options_button {
+            button {
+                @include flexCenter;
+                width: 40px;
+                height: 40px;
+                font-size: 40px;
+            }
+        }
+
+        // селект опции
+        .options_search {
+            width: 100%;
+            color: black;
+            font-size: 14px;
+        }
+    }
+}

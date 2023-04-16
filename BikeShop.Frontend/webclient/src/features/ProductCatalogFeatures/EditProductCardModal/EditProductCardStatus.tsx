@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import s from "./EditProductCardModal.module.scss"
+import s from "./EditProductCardStatus.module.scss"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
@@ -30,7 +30,7 @@ export const EditProductCardStatus = (props: ControlledProps) => {
             control={props.control.control}
             render={({field}: any) =>
 
-                <div className={s.rightSide_productStatus}>
+                <div className={s.productStatus}>
                     <div className={s.productStatus_title}>
                         Статус товара:
                     </div>
@@ -41,9 +41,7 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                             options={checkStatus}
                             defaultValue={checkStatus.find(n => n.name === currentProduct.product.checkStatus)}
                             value={checkStatus.find(s => s.name === field.value)}
-                            onChange={(value) => {
-                                value ? field.onChange(value.name) : false
-                            }}
+                            onChange={(value) => {value ? field.onChange(value.name) : false}}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             isSearchable={false}

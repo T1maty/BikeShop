@@ -1,0 +1,21 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.productStatus {
+    @include flexBetween;
+    width: 100%;
+    border: 2px solid $themeColorMilk;
+    border-radius: $smallBorderRadius;
+    padding: $defaultSmallMargin;
+    margin-bottom: $defaultLargeMargin;
+
+    .productStatus_title {
+        width: 35%;
+        color: white;
+    }
+
+    .productStatus_select {
+        width: 65%;
+        color: black;
+    }
+}
