@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import s from "./EditProductCardModal.module.scss"
+import s from "./EditProductCardStatus.module.scss"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
@@ -30,7 +30,7 @@ export const EditProductCardStatus = (props: ControlledProps) => {
             control={props.control.control}
             render={({field}: any) =>
 
-                <div className={s.rightSide_productStatus}>
+                <div className={s.productStatus}>
                     <div className={s.productStatus_title}>
                         Статус товара:
                     </div>

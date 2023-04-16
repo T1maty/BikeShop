@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react'
-import s from "./EditProductCardModal.module.scss"
+import s from "./EditProductCardGallery.module.scss"
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import {Button, DeleteButton} from '../../../shared/ui'
 import useEditProductCardModal from "./EditProductCardModalStore"
@@ -76,7 +76,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
     }
 
     return (
-        <div className={s.leftSide_imageGallery}>
+        <div className={s.imageGallery}>
 
             <ConfirmModal title={'Вы действительно хотите удалить изображение?'} extraCallback={deleteImageHandler}/>
 

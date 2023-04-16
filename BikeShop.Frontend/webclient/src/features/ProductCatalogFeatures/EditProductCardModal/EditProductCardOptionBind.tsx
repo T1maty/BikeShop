@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import s from "./EditProductCardModal.module.scss"
+import s from "./EditProductCardOptionBind.module.scss"
 import {ProductCardAPI, Product, ProductFullData, ProductImage,
     ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
 import {Controller, UseFormReturn} from "react-hook-form"
@@ -127,7 +127,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
             control={props.control.control}
             render={({field}: any) =>
 
-                <div className={s.editProductCardOptionBind}>
+                <div className={s.optionBind}>
 
                     <ChooseProductModal addData={(product) => {
                         addProductBind(product, field)}} open={v} setOpen={sV}

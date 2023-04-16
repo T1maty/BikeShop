@@ -1,0 +1,31 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.fullEditor {
+    .descriptionEditor_title {
+        font-weight: bold;
+        font-size: 18px;
+        color: black;
+        margin-bottom: $defaultSmallMargin;
+    }
+
+    .descriptionEditor_editorTextarea {
+        .editorClassName {
+            max-height: 310px;
+            overflow-y: auto;
+            color: black;
+        }
+
+        .editor_toolbar {
+            background-color: $themeColorMilk;
+            border: 1px solid $themeColorDark;
+            color: black;
+
+            .rdw-image-wrapper {
+                .rdw-image-modal {
+                    background-color: $themeColorMilk;
+                }
+            }
+        }
+    }
+}

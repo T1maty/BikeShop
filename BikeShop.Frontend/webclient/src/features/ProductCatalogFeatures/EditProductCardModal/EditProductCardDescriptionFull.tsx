@@ -1,5 +1,5 @@
 import React from 'react'
-import s from "./EditProductCardModal.module.scss"
+import s from "./EditProductCardDescriptionFull.module.scss"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import draftToHtml from 'draftjs-to-html'
 import {Editor} from "react-draft-wysiwyg"

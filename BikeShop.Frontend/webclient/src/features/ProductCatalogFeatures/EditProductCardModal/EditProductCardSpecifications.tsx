@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
-import s from "./EditProductCardModal.module.scss"
+import s from "./EditProductCardSpecifications.module.scss"
 import {Button, DeleteButton, EditableSpan} from '../../../shared/ui'
-import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {Controller, UseFormReturn} from "react-hook-form"
