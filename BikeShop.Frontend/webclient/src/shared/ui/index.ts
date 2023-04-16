@@ -1,6 +1,7 @@
 export {UniTable} from './Table/UniTable'
 
 export {Button} from './Button/Button'
+export {DeleteButton} from './DeleteButton/DeleteButton'
 export {ShopLoader} from './Loader/ShopLoader'
 export {LoaderScreen} from './LoaderScreen/LoaderScreen'
 export {LoaderScreenForShop} from './LoaderScreen/LoaderScreenForShop'

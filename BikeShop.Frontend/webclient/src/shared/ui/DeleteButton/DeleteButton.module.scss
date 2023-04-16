@@ -1,0 +1,8 @@
+.deleteBox {
+    img {
+        &:hover {
+            cursor: pointer;
+            filter: contrast(3);
+        }
+    }
+}

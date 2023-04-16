@@ -3,7 +3,7 @@ import s from "./EditProductCardModal.module.scss"
 import {ProductCardAPI, Product, ProductFullData, ProductImage,
     ProductOption, ProductOptionVariant, ProductOptionVariantBind} from "../../../entities"
 import {Controller, UseFormReturn} from "react-hook-form"
-import {Button} from "../../../shared/ui"
+import {Button, DeleteButton} from '../../../shared/ui'
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
 import Select from "react-select"
 import useEditProductCardModal from "./EditProductCardModalStore"
@@ -379,13 +379,10 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                         <div className={s.item_name}>
                                                                                             {n.productTag.name}
                                                                                         </div>
-                                                                                        <div className={s.item_deleteItem}>
-                                                                                            <img src={RemoveIcon} alt="remove-icon"
-                                                                                                 onClick={() => {
-                                                                                                     field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}
-                                                                                                 }
-                                                                                            />
-                                                                                        </div>
+
+                                                                                        <DeleteButton size={20} onClick={() => {
+                                                                                            field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}}
+                                                                                        />
 
                                                                                         {/*<Button onClick={() => {*/}
                                                                                         {/*    field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}}*/}
