@@ -4,10 +4,11 @@ import {Button, CustomModal} from '../../shared/ui'
 import useConfirmModal from './ConfirmModalStore'
 
 interface ConfirmModalProps {
-    extraCallback: () => void
+    title: string
+    extraCallback: (data?: any) => void
 }
 
-export const ConfirmModal: React.FC<ConfirmModalProps> = ({extraCallback}) => {
+export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback}) => {
 
     const open = useConfirmModal(s => s.openConfirmModal)
     const setOpen = useConfirmModal(s => s.setOpenConfirmModal)
@@ -24,7 +25,8 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({extraCallback}) => {
         >
             <div className={s.confirmModal_mainBox}>
                 <div className={s.confirmModal_title}>
-                    Вы действительно хотите сделать изменения?
+                    {/*Вы действительно хотите сделать изменения?*/}
+                    {title}
                 </div>
                 <div className={s.confirmModal_buttons}>
                     <Button  onClick={confirmButtonHandler}>

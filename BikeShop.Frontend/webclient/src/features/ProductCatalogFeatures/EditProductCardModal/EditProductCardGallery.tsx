@@ -5,6 +5,8 @@ import {Button} from "../../../shared/ui"
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {ProductImage} from '../../../entities'
 import {$api} from "../../../shared"
+import {ConfirmModal} from '../../ConfirmModal/ConfirmModal';
+import useConfirmModal from '../../ConfirmModal/ConfirmModalStore';
 
 interface ProductCardGalleryProps {
     images: ProductImage[]
@@ -14,6 +16,7 @@ interface ProductCardGalleryProps {
 export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
+    const setOpenConfirmModal = useConfirmModal(s => s.setOpenConfirmModal)
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
 
@@ -48,7 +51,6 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
         }).catch((r) => {
             console.log(r)
         })
-
     }
 
     const onMoveBackwardHandler = (imgKey: number) => {
@@ -75,6 +77,9 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
     return (
         <div className={s.leftSide_imageGallery}>
+
+            <ConfirmModal title={'Вы действительно хотите удалить изображение?'} extraCallback={deleteImageHandler}/>
+
             <div className={s.imageGallery_imageList}>
                 {
                     props.images?.length === 0 ? <div>Фотографий нет</div> :
@@ -83,9 +88,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                             return (
                                 <div key={img.id}
                                      className={s.imageList_item}
-                                     onDoubleClick={() => {
-                                         setImageHandler(key)
-                                     }}
+                                     onDoubleClick={() => {setImageHandler(key)}}
                                 >
                                     <img className={currentImageKey === key ? s.active_image : ''}
                                          src={img.url} alt="img-thumbnail"
@@ -95,9 +98,8 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                     </div>
                                     <img src={RemoveIcon} alt="remove-icon"
                                          className={s.imageList_deleteItem}
-                                         onClick={() => {
-                                             deleteImageHandler(img.id)
-                                         }}
+                                         onClick={() => {setOpenConfirmModal(true)}}
+                                         // onClick={() => {deleteImageHandler(img.id)}}
                                     />
                                 </div>
                             )
@@ -107,17 +109,13 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
             <div className={s.imageGallery_buttons}>
                 <div className={s.imageGallery_sortButtons}>
                     <Button disabled={currentImageKey === null || currentImageKey === 0}
-                            onClick={() => {
-                                onMoveBackwardHandler(currentImageKey)
-                            }}
+                            onClick={() => {onMoveBackwardHandler(currentImageKey)}}
                     >
                         Переместить назад
                     </Button>
                     <Button
                         disabled={currentImageKey === null || currentImageKey === (props.images.length - 1)}
-                        onClick={() => {
-                            onMoveForwardHandler(currentImageKey)
-                        }}
+                        onClick={() => {onMoveForwardHandler(currentImageKey)}}
                     >
                         Переместить вперёд
                     </Button>
@@ -125,9 +123,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                 <div className={s.imageGallery_addImage}>
                     <input type="file" id="file"
                            accept="image/png, image/jpeg"
-                           onChange={(v) => {
-                               uploadImageHandler(v)
-                           }}
+                           onChange={(v) => {uploadImageHandler(v)}}
                            className={s.inputFile}
                     />
                 </div>

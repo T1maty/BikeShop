@@ -4,9 +4,11 @@
 .confirmModal_mainBox {
     @include defaultModalStyle;
     @include flexColumn;
+    width: 350px;
 
     .confirmModal_title {
         margin-bottom: $defaultLargeMargin;
+        text-align: center;
     }
     .confirmModal_buttons {
         display: flex;
@@ -16,5 +18,4 @@
             padding: $defaultSmallMargin;
         }
     }
-
 }
