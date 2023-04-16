@@ -21,13 +21,11 @@ export const Cashbox = () => {
     const bill = useCashboxStore(s => s.bill)
     const addProduct = useCashboxStore(s => s.addProduct)
     const setData = useCashboxStore(s => s.setProducts)
-    const data = useCashboxStore(s => s.products)
 
     const [open, setOpen] = useState(false);
     const [openPay, setOpenPay] = useState(false);
     const [sum, setSum] = useState(0)
 
-    const [dt, sDt] = useState<any[]>([])
 
     useEffect(() => {
         let sum = 0;
@@ -141,7 +139,7 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock_rightSideWrapper}>
                 <div className={s.cashboxMainBlock_rightSideHeader}>
-                    <ChooseProductModal open={open} setOpen={setOpen} setData={setData} data={data}
+                    <ChooseProductModal open={open} setOpen={setOpen} setData={setData} data={bill.products}
                                         slaveColumns={columns}/>
                     <Button buttonDivWrapper={s.header_chooseBtn}
                             onClick={() => {
@@ -158,7 +156,7 @@ export const Cashbox = () => {
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideMiddle}>
-                    <UniTable rows={data} columns={columns}/>
+                    <UniTable rows={bill.products} columns={columns} setRows={setData}/>
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideBottom}>

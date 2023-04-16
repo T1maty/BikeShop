@@ -22,8 +22,14 @@ namespace BikeShop.Shop.WebApi.Controllers
             return await _shiftService.GetUserStatus(UserId);
         }
 
+        [HttpPost("openshift")]
+        public async Task StartShift()
+        {
+
+        }
+
         [HttpPost("action")]
-        public async Task ShiftAction()
+        public async Task FinishShift()
         {
 
         }

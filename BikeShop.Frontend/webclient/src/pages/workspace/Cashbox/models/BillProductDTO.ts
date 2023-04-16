@@ -9,4 +9,5 @@ export interface BillProductDTO {
     currencySymbol: string
     price: number
     discount: number
+    total: number
 }

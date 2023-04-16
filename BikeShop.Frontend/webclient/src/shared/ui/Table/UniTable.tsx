@@ -124,7 +124,7 @@ const TableRow = memo((props: TableRowProps) => {
                                               onChangeInput={(newInputValue) => {
                                                   if (item.isNumber) {
                                                       let newValue = Number.parseFloat(newInputValue).toString()
-                                                      let newRow = props.row
+                                                      let newRow = {...props.row}
                                                       if (newValue != 'NaN') {
                                                           newRow[item.id] = newValue
                                                           console.log('updated')
