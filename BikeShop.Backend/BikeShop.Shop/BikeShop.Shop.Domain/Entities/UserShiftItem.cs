@@ -10,6 +10,6 @@ namespace BikeShop.Shop.Domain.Entities
     {
         public Guid UserId { get; set; }
         public string Action { get; set; }
-        public DateTime Time { get; set; }
+        public DateTime Time { get; set; } = DateTime.Now;
     }
 }

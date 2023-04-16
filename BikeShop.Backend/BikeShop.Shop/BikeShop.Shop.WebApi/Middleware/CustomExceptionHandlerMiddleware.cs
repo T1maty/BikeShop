@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using BikeShop.Products.Application.Common.Errors;
 using BikeShop.Shop.Application.Exception;
 
 namespace BikeShop.Shop.WebApi.Middleware;
@@ -39,10 +40,10 @@ public class CustomExceptionHandlerMiddleware
                 statusCode = HttpStatusCode.BadRequest;
                 result = alreadyExistsException;
                 break;
-            // case InvalidFormatException invalidFormatException:
-            //     statusCode = HttpStatusCode.BadRequest;
-            //     result = invalidFormatException;
-            //     break;
+            case BaseError baseError:
+                statusCode = HttpStatusCode.BadRequest;
+                result = baseError;
+                break;
             default:
                 Console.WriteLine(exception);
                 break;
