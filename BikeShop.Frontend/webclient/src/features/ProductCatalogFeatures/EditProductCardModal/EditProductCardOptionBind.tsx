@@ -127,7 +127,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
             control={props.control.control}
             render={({field}: any) =>
 
-
                 <div className={s.editProductCardOptionBind}>
 
                     <ChooseProductModal addData={(product) => {
@@ -163,7 +162,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                             <div className={s.productImage}>
                                                 <img
                                                     src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
-                                                    alt="product-image"/>
+                                                    alt="product-image"
+                                                />
 
                                                 {
                                                     index > 0 ? <div>
@@ -244,6 +244,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                         >
                                                                                             Удалить
                                                                                         </Button>
+
                                                                                         <Select
                                                                                             key={index}
                                                                                             className={s.options_search}
@@ -315,7 +316,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                 +
                                                                             </Button>
                                                                         </div>
-                                                                    </>}/>
+                                                                    </>
+                                                                }
+                                                            />
                                                             <br/>
                                                         </fieldset>
                                                     </div>
@@ -326,10 +329,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                             <Button buttonDivWrapper={s.tags_addButton}
                                                                     onClick={() => {
-                                                                        sV2([...v2.filter(n => n.id != bindedProduct.id), {
-                                                                            id: bindedProduct.id,
-                                                                            state: true
-                                                                        }])
+                                                                        sV2([...v2.filter(n => n.id != bindedProduct.id),
+                                                                            {id: bindedProduct.id, state: true}])
                                                                     }}
                                                             >
                                                                 +
@@ -345,24 +346,20 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                             <ChooseProductTagModal
                                                                                 key={index}
                                                                                 open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
+
                                                                                 setOpen={(value) => {
-                                                                                    sV2([...v2.filter(n => n.id != bindedProduct.id), {
-                                                                                        id: bindedProduct.id,
-                                                                                        state: value
-                                                                                    }])
+                                                                                    sV2([...v2.filter(n => n.id != bindedProduct.id),
+                                                                                        {id: bindedProduct.id, state: value}])
                                                                                 }}
+
                                                                                 onTagDoubleClick={(tag) => {
-                                                                                    sV2([...v2.filter(n => n.id != bindedProduct.id), {
-                                                                                        id: bindedProduct.id,
-                                                                                        state: false
-                                                                                    }])
+                                                                                    sV2([...v2.filter(n => n.id != bindedProduct.id),
+                                                                                        {id: bindedProduct.id, state: false}])
                                                                                     if (!Enumerable.from(field.value as ProductTagBindDTO[])
                                                                                         .select(n => n.productTag.id)
                                                                                         .contains(tag.id)) {
-                                                                                        field.onChange([...field.value, {
-                                                                                            productTag: tag,
-                                                                                            productId: bindedProduct.id
-                                                                                        } as ProductTagBindDTO])
+                                                                                        field.onChange([...field.value,
+                                                                                            {productTag: tag, productId: bindedProduct.id} as ProductTagBindDTO])
                                                                                     } else {
                                                                                         enqueueSnackbar('Такой тег уже есть у товара', {
                                                                                             variant: 'warning',
@@ -377,13 +374,24 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                                                 return (
                                                                                     <div className={s.tags_listItem}
-                                                                                         key={index}>
-                                                                                        {n.productTag.name}
-                                                                                        <Button onClick={() => {
-                                                                                            field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}}
-                                                                                        >
-                                                                                            х
-                                                                                        </Button>
+                                                                                         key={index}
+                                                                                    >
+                                                                                        <div className={s.item_name}>
+                                                                                            {n.productTag.name}
+                                                                                        </div>
+                                                                                        <div className={s.item_deleteItem}>
+                                                                                            <img src={RemoveIcon} alt="remove-icon"
+                                                                                                 onClick={() => {
+                                                                                                     field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}
+                                                                                                 }
+                                                                                            />
+                                                                                        </div>
+
+                                                                                        {/*<Button onClick={() => {*/}
+                                                                                        {/*    field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}}*/}
+                                                                                        {/*>*/}
+                                                                                        {/*    х*/}
+                                                                                        {/*</Button>*/}
                                                                                     </div>
                                                                                 )})
                                                                             }

@@ -13,7 +13,7 @@ import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
 import {ProductImage} from "../../../entities"
 import {EditProductCardDescriptionFull} from "./EditProductCardDescriptionFull"
 import {EditProductCardDescriptionShort} from "./EditProductCardDescriptionShort"
-import {EditProductCardOptionBind} from "./EditProductCardOptionBind";
+import {EditProductCardOptionBind} from "./EditProductCardOptionBind"
 
 export const EditProductCardModal = () => {
 
@@ -87,9 +87,7 @@ export const EditProductCardModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
+                onClose={() => {setOpen(false)}}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
 
@@ -118,9 +116,7 @@ export const EditProductCardModal = () => {
                                                                name={'productSpecifications'}
                                 />
                                 <div className={s.rightSide_mainButtons}>
-                                    <Button onClick={() => {
-                                        setOpen(false)
-                                    }}>
+                                    <Button onClick={() => {setOpen(false)}}>
                                         Отмена
                                     </Button>
                                     <Button type={'submit'}>
