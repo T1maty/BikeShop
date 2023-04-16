@@ -22,8 +22,8 @@
         .editProductCardModal_mainBlock {
             display: grid;
             gap: 20px;
-            grid-template-columns: repeat(2, minmax(500px, 1fr));
-            grid-template-rows: repeat(3, minmax(250px, auto));
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: repeat(3, auto);
             grid-template-areas:
                     'gallery description'
                     'optionBind optionBind'
@@ -32,17 +32,34 @@
             .imageGallery {
                 grid-area: gallery;
             }
-            .description {
+            .description_wrapper {
                 grid-area: description;
             }
-            .optionBind {
+            .optionBind_wrapper {
                 grid-area: optionBind;
+                grid-column: span 2;
+                grid-row: span 1;
             }
             .fullEditor {
                 grid-area: descFull;
             }
-            .specs {
+            .specs_wrapper {
                 grid-area: specs;
+
+                //.productSpecifications {
+                //
+                //}
+
+                .mainButtons {
+                    @include flexOnlyBetween;
+                    gap: $defaultLargeMargin;
+                    width: 100%;
+                    z-index: 0; // чтобы кнопка была под селектом
+
+                    button {
+                        width: 200px;
+                    }
+                }
             }
 
         }

@@ -5,7 +5,6 @@
     @include defaultBlockStyles($themeColorMilk);
     @include flexColumn;
     justify-content: center;
-    height: 65%;
 
     .imageGallery_imageList {
         display: flex;

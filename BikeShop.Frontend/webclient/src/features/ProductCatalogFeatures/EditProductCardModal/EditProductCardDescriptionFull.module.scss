@@ -2,6 +2,8 @@
 @import '../../../app/styles/variables/variables';
 
 .fullEditor {
+    @include defaultBlockStyles($themeColorMilk);
+
     .descriptionEditor_title {
         font-weight: bold;
         font-size: 18px;
@@ -11,7 +13,8 @@
 
     .descriptionEditor_editorTextarea {
         .editorClassName {
-            max-height: 310px;
+            min-height: 170px;
+            max-height: 300px;
             overflow-y: auto;
             color: black;
         }

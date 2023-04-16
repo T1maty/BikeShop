@@ -3,28 +3,34 @@
 
 .optionBind {
     background-color: $themeColorMilk;
-    padding: $defaultSmallMargin;
+    padding: $defaultLargeMargin;
     border-radius: $smallBorderRadius;
 
-    .addButton {
-        width: 100%;
+    .optionBind_header {
+        @include flexBetween;
         margin-bottom: $defaultSmallMargin;
+        color: black;
 
-        button {
-            width: 100%;
+        .headerOptions_search {
+            width: 400px;
+        }
+
+        .addBindButton {
+            button {
+                width: 300px;
+            }
         }
     }
 
     .optionBind_productBlock {
         @include flexOnlyBetween;
         gap: $defaultSmallMargin;
-        flex-direction: row-reverse;
+        //flex-direction: row-reverse;
 
         .productBlock_control {
             .contentBlock_deleteImg {
                 display: flex;
                 justify-content: flex-end;
-                margin-bottom: $defaultLargeMargin;
 
                 img {
                     width: 40px;
@@ -50,6 +56,7 @@
             background-color: $themeColorGray;
             border-radius: $smallBorderRadius;
             padding: $defaultSmallMargin;
+            width: 100%;
 
             .productContent_info {
                 margin-bottom: $defaultSmallMargin;
@@ -63,9 +70,11 @@
                 .contentBlock_content {
                     @include flexOnlyBetween;
                     gap: $defaultSmallMargin;
+                    width: 100%;
 
                     .content_options {
-                        width: 250px;
+                        //width: 250px;
+                        width: 40%;
 
                         .options_wrapperBox {
                             border-radius: $smallBorderRadius;
@@ -96,7 +105,8 @@
                     }
 
                     .content_tags {
-                        width: 250px;
+                        //width: 250px;
+                        width: 40%;
 
                         .tags_wrapperBox {
                             border-radius: $smallBorderRadius;
@@ -129,18 +139,6 @@
                                     .item_name {
                                         margin-right: 5px;
                                     }
-
-                                    //.item_deleteItem {
-                                    //    img {
-                                    //        width: 20px;
-                                    //        height: 20px;
-                                    //
-                                    //        &:hover {
-                                    //            cursor: pointer;
-                                    //            filter: contrast(3);
-                                    //        }
-                                    //    }
-                                    //}
                                 }
                             }
                         }

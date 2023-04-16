@@ -2,7 +2,7 @@
 @import '../../../app/styles/variables/variables';
 
 .shortDescription {
-    margin-bottom: $defaultSmallMargin;
+    @include defaultBlockStyles($themeColorMilk);
 
     .shortDescription_title {
         font-weight: bold;
@@ -12,7 +12,7 @@
     }
 
     .shortDescription_textarea {
-        height: 100px;
+        height: 120px;
 
         textarea {
             resize: none;

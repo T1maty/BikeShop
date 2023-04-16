@@ -506,155 +506,155 @@
 ////////////////////////////////////////////////////////////////////
 
 // EditProductCardModal
-@mixin selectOptionsBlock() {
-    @include defaultBlockStyles($themeColorGray);
-    height: 50%;
-
-    > div:not(:last-child) {
-        @include flexColumnOnly;
-        margin-bottom: $defaultSmallMargin;
-        min-height: 80%;
-    }
-
-    .productOptions_optionsList {
-        overflow-y: auto;
-        max-height: 180px;
-        //width: 360px;
-        overflow-x: hidden;
-        color: black;
-
-        .optionsList_item {
-            margin-bottom: $defaultSmallMargin;
-            padding-right: 10px;
-            @include flexBetween;
-            gap: 10px;
-
-            .options_box {
-                border-radius: $smallBorderRadius;
-                width: 100%;
-
-                .options_rowItems {
-                    > div {
-                        //margin: $defaultSmallMargin 0;
-                    }
-
-                    .rowItems_item {
-                        .item_deleteFullItem {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            @include hoverCursorPointer;
-                            margin-bottom: $defaultSmallMargin;
-                            padding: 5px;
-                            border: 1px solid white;
-                            border-radius: $extraSmallBorderRadius;
-                            background-color: #ff6b6b;
-                            color: white;
-
-                            &:hover {
-                                background-color: red;
-                            }
-
-                        }
-
-                        .item_content {
-                            @include flexBetween;
-
-                            .item_title {
-
-                            }
-
-                            .item_delete {
-                                padding: 5px;
-                                background-color: red;
-                                border: 1px solid white;
-                                border-radius: $extraSmallBorderRadius;
-                                color: white;
-                                @include hoverCursorPointer;
-                            }
-
-                            img {
-                                width: 20px;
-                                height: 20px;
-
-                                &:hover {
-                                    cursor: pointer;
-                                    filter: contrast(3);
-                                }
-                            }
-                        }
-
-                        .item_deleteDetailsItem {
-                            img {
-                                width: 25px;
-                                height: 25px;
-
-                                &:hover {
-                                    cursor: pointer;
-                                    filter: contrast(3);
-                                }
-                            }
-                        }
-                    }
-
-                    .rowItems_chooseItem {
-                        @include flexBetween;
-                        gap: $defaultLargeMargin;
-
-                        .options_button {
-                            button {
-                                @include flexCenter;
-                                width: 40px;
-                                height: 40px;
-                                font-size: 40px;
-                            }
-                        }
-
-                        // селект разновидность опции
-                        .options_search {
-                            width: 100%;
-                            color: black;
-                            font-size: 14px;
-                        }
-                    }
-                }
-            }
-            .item_deleteDetailsItem {
-                img {
-                    width: 25px;
-                    height: 25px;
-
-                    &:hover {
-                        cursor: pointer;
-                        filter: contrast(3);
-                    }
-                }
-            }
-        }
-    }
-
-    .productOptions_selectRow {
-        @include flexBetween;
-        gap: $defaultLargeMargin;
-        height: 50px;
-
-        .options_button {
-            button {
-                @include flexCenter;
-                width: 40px;
-                height: 40px;
-                font-size: 40px;
-            }
-        }
-
-        // селект опции
-        .options_search {
-            width: 100%;
-            color: black;
-            font-size: 14px;
-        }
-    }
-}
+//@mixin selectOptionsBlock() {
+//    @include defaultBlockStyles($themeColorGray);
+//    height: 50%;
+//
+//    > div:not(:last-child) {
+//        @include flexColumnOnly;
+//        margin-bottom: $defaultSmallMargin;
+//        min-height: 80%;
+//    }
+//
+//    .productOptions_optionsList {
+//        overflow-y: auto;
+//        max-height: 180px;
+//        //width: 360px;
+//        overflow-x: hidden;
+//        color: black;
+//
+//        .optionsList_item {
+//            margin-bottom: $defaultSmallMargin;
+//            padding-right: 10px;
+//            @include flexBetween;
+//            gap: 10px;
+//
+//            .options_box {
+//                border-radius: $smallBorderRadius;
+//                width: 100%;
+//
+//                .options_rowItems {
+//                    > div {
+//                        //margin: $defaultSmallMargin 0;
+//                    }
+//
+//                    .rowItems_item {
+//                        .item_deleteFullItem {
+//                            display: flex;
+//                            align-items: center;
+//                            justify-content: center;
+//                            @include hoverCursorPointer;
+//                            margin-bottom: $defaultSmallMargin;
+//                            padding: 5px;
+//                            border: 1px solid white;
+//                            border-radius: $extraSmallBorderRadius;
+//                            background-color: #ff6b6b;
+//                            color: white;
+//
+//                            &:hover {
+//                                background-color: red;
+//                            }
+//
+//                        }
+//
+//                        .item_content {
+//                            @include flexBetween;
+//
+//                            .item_title {
+//
+//                            }
+//
+//                            .item_delete {
+//                                padding: 5px;
+//                                background-color: red;
+//                                border: 1px solid white;
+//                                border-radius: $extraSmallBorderRadius;
+//                                color: white;
+//                                @include hoverCursorPointer;
+//                            }
+//
+//                            img {
+//                                width: 20px;
+//                                height: 20px;
+//
+//                                &:hover {
+//                                    cursor: pointer;
+//                                    filter: contrast(3);
+//                                }
+//                            }
+//                        }
+//
+//                        .item_deleteDetailsItem {
+//                            img {
+//                                width: 25px;
+//                                height: 25px;
+//
+//                                &:hover {
+//                                    cursor: pointer;
+//                                    filter: contrast(3);
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    .rowItems_chooseItem {
+//                        @include flexBetween;
+//                        gap: $defaultLargeMargin;
+//
+//                        .options_button {
+//                            button {
+//                                @include flexCenter;
+//                                width: 40px;
+//                                height: 40px;
+//                                font-size: 40px;
+//                            }
+//                        }
+//
+//                        // селект разновидность опции
+//                        .options_search {
+//                            width: 100%;
+//                            color: black;
+//                            font-size: 14px;
+//                        }
+//                    }
+//                }
+//            }
+//            .item_deleteDetailsItem {
+//                img {
+//                    width: 25px;
+//                    height: 25px;
+//
+//                    &:hover {
+//                        cursor: pointer;
+//                        filter: contrast(3);
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    .productOptions_selectRow {
+//        @include flexBetween;
+//        gap: $defaultLargeMargin;
+//        height: 50px;
+//
+//        .options_button {
+//            button {
+//                @include flexCenter;
+//                width: 40px;
+//                height: 40px;
+//                font-size: 40px;
+//            }
+//        }
+//
+//        // селект опции
+//        .options_search {
+//            width: 100%;
+//            color: black;
+//            font-size: 14px;
+//        }
+//    }
+//}
 
 ////////////////////////////////////////////////////////////////////
 

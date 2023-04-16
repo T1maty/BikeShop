@@ -41,9 +41,7 @@ export const EditProductCardStatus = (props: ControlledProps) => {
                             options={checkStatus}
                             defaultValue={checkStatus.find(n => n.name === currentProduct.product.checkStatus)}
                             value={checkStatus.find(s => s.name === field.value)}
-                            onChange={(value) => {
-                                value ? field.onChange(value.name) : false
-                            }}
+                            onChange={(value) => {value ? field.onChange(value.name) : false}}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             isSearchable={false}

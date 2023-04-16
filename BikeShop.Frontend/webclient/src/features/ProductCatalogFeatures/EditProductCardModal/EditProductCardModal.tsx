@@ -95,18 +95,20 @@ export const EditProductCardModal = () => {
                             <div className={s.editProductCardModal_mainBlock}>
 
                                 <EditProductCardGallery images={images} setImages={setImages}/>
-                                <div className={s.description}>
+                                <div className={s.description_wrapper}>
                                     <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                                     <EditProductCardDescriptionShort name={'productCard'}
                                                                      control={formControl}
                                     />
                                 </div>
 
-                                <EditProductCardOptionBind product={currentProduct}
-                                                           control={formControl}
-                                                           images={images}
-                                                           setImages={setImages}
-                                />
+                                <div className={s.optionBind_wrapper}>
+                                    <EditProductCardOptionBind product={currentProduct}
+                                                               control={formControl}
+                                                               images={images}
+                                                               setImages={setImages}
+                                    />
+                                </div>
 
                                 <EditProductCardDescriptionFull name={'productCard'}
                                                                 control={formControl}
@@ -114,9 +116,8 @@ export const EditProductCardModal = () => {
                                                                 setEditorState={setEditorState}
                                 />
 
-                                <div className={s.specs}>
-                                    <EditProductCardSpecifications divClassName={s.rightSide_productOptions}
-                                                                   control={formControl}
+                                <div className={s.specs_wrapper}>
+                                    <EditProductCardSpecifications control={formControl}
                                                                    name={'productSpecifications'}
                                     />
                                     <div className={s.mainButtons}>

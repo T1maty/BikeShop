@@ -16,7 +16,9 @@ export const EditProductCardDescriptionShort = (props: ControlledProps) => {
                 render={({field}: any) =>
 
                 <div className={s.shortDescription}>
-                    <div className={s.shortDescription_title}>Краткое описание товара:</div>
+                    <div className={s.shortDescription_title}>
+                        Краткое описание товара:
+                    </div>
                     <div className={s.shortDescription_textarea}>
                             <textarea placeholder={'Введите текст...'}
                                       value={field.value.shortDescription}
