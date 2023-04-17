@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm, Controller} from 'react-hook-form'
 import s from '../CreateOptionModal/CreateOptionModal.module.scss'
-import {Button, ControlledCustomInput, CustomModal, EditableSpan, LoaderScreen, CustomInput} from '../../../shared/ui'
+import {Button, ControlledCustomInput, CustomModal,
+    EditableSpan, LoaderScreen, CustomInput} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateOptionModal from './CreateOptionModalStore'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
@@ -98,7 +99,6 @@ export const CreateOptionModal = () => {
 
     useEffect(() => {
         getOptions()
-        console.log(options)
     }, [])
 
     if (isLoading) {

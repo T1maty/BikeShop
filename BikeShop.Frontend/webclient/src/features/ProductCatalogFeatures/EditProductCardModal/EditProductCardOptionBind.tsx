@@ -131,7 +131,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                 <div className={s.optionBind}>
 
-                    <ChooseProductModal addData={(product) => {addProductBind(product, field)}} open={v} setOpen={sV}/>
+                    <ChooseProductModal addData={(product) => {
+                        addProductBind(product, field)
+                    }} open={v} setOpen={sV}/>
 
                     <div className={s.optionBind_header}>
                         <div>Группа товаров</div>
@@ -143,13 +145,17 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                             placeholder={'Товары'}
                             isSearchable={true}
                             value={selectedOption}
-                            onChange={(value: any) => {setSelectedOption(value)}}
+                            onChange={(value: any) => {
+                                setSelectedOption(value)
+                            }}
                             getOptionLabel={label => label!.name}
                             getOptionValue={value => value!.name}
                             noOptionsMessage={() => 'Товар не найден'}
                         />
 
-                        <Button buttonDivWrapper={s.addBindButton} onClick={() => {sV(true)}}>
+                        <Button buttonDivWrapper={s.addBindButton} onClick={() => {
+                            sV(true)
+                        }}>
                             Добавить бинд товара
                         </Button>
                     </div>
@@ -249,66 +255,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                             control={props.control.control}
                                                             render={({field}: any) =>
                                                                 <>
-                                                                    {
-                                                                        props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
-                                                                            .map((variant: ProductOptionVariantBind) => {
-                                                                                return (
-                                                                                    <div key={index}>
-                                                                                        {variant.optionName}
-                                                                                        <Button onClick={() => {
-                                                                                            field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
-                                                                                                n.optionId != variant.optionId || n.productId != bindedProduct.id))
-                                                                                        }}
-                                                                                        >
-                                                                                            Удалить
-                                                                                        </Button>
-
-                                                                                        <Select
-                                                                                            key={index}
-                                                                                            className={s.options_search}
-                                                                                            placeholder={'Варианты'}
-
-                                                                                            options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
-                                                                                                .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[]).select(m => m.optionVariantId).contains(n.id)) as ProductOptionVariantBind[])}
-
-                                                                                            onChange={(newValue) => {
-                                                                                                let r = newValue as ProductOptionVariant
-                                                                                                let base = field.value as ProductOptionVariantBind[]
-
-                                                                                                let variant: ProductOptionVariantBind
-                                                                                                variant = {
-                                                                                                    productId: bindedProduct.id,
-                                                                                                    id: 0,
-                                                                                                    name: r.name,
-                                                                                                    optionId: r.optionId,
-                                                                                                    optionVariantId: r.id,
-                                                                                                    optionName: r.optionName,
-                                                                                                    sortOrder: 0,
-                                                                                                    enabled: true,
-                                                                                                    createdAt: Date.now().toString(),
-                                                                                                    updatedAt: Date.now().toString(),
-                                                                                                }
-
-                                                                                                let target = base.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
-                                                                                                    .filter((n: ProductOptionVariantBind) => n.optionId === newValue?.optionId)[0]
-                                                                                                let ind = base.indexOf(target)
-                                                                                                base[ind] = variant
-                                                                                                field.onChange(base)
-                                                                                                console.log(variant)
-                                                                                            }}
-
-                                                                                            isSearchable={true}
-                                                                                            defaultValue={variant}
-                                                                                            getOptionLabel={label => label!.name}
-                                                                                            getOptionValue={value => value!.name}
-                                                                                            noOptionsMessage={() => 'Доступных вариантов нету'}
-                                                                                        />
-                                                                                        <br/>
-                                                                                    </div>
-                                                                                )
-                                                                            })
-                                                                    }
-
                                                                     <div className={s.options_selectRow}>
 
                                                                         <div className={s.options_select}>
@@ -338,10 +284,73 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                             +
                                                                         </Button>
                                                                     </div>
+
+                                                                    <div className={s.options_scrollContainer}>
+                                                                        <div className={s.options_list}>
+                                                                            {
+                                                                                props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
+                                                                                    .map((variant: ProductOptionVariantBind) => {
+                                                                                        return (
+                                                                                            <div key={index}>
+                                                                                                {variant.optionName}
+                                                                                                <Button onClick={() => {
+                                                                                                    field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
+                                                                                                        n.optionId != variant.optionId || n.productId != bindedProduct.id))
+                                                                                                }}
+                                                                                                >
+                                                                                                    Удалить
+                                                                                                </Button>
+
+                                                                                                <Select
+                                                                                                    key={index}
+                                                                                                    className={s.options_search}
+                                                                                                    placeholder={'Варианты'}
+
+                                                                                                    options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
+                                                                                                        .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[]).select(m => m.optionVariantId).contains(n.id)) as ProductOptionVariantBind[])}
+
+                                                                                                    onChange={(newValue) => {
+                                                                                                        let r = newValue as ProductOptionVariant
+                                                                                                        let base = field.value as ProductOptionVariantBind[]
+
+                                                                                                        let variant: ProductOptionVariantBind
+                                                                                                        variant = {
+                                                                                                            productId: bindedProduct.id,
+                                                                                                            id: 0,
+                                                                                                            name: r.name,
+                                                                                                            optionId: r.optionId,
+                                                                                                            optionVariantId: r.id,
+                                                                                                            optionName: r.optionName,
+                                                                                                            sortOrder: 0,
+                                                                                                            enabled: true,
+                                                                                                            createdAt: Date.now().toString(),
+                                                                                                            updatedAt: Date.now().toString(),
+                                                                                                        }
+
+                                                                                                        let target = base.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
+                                                                                                            .filter((n: ProductOptionVariantBind) => n.optionId === newValue?.optionId)[0]
+                                                                                                        let ind = base.indexOf(target)
+                                                                                                        base[ind] = variant
+                                                                                                        field.onChange(base)
+                                                                                                        console.log(variant)
+                                                                                                    }}
+
+                                                                                                    isSearchable={true}
+                                                                                                    defaultValue={variant}
+                                                                                                    getOptionLabel={label => label!.name}
+                                                                                                    getOptionValue={value => value!.name}
+                                                                                                    noOptionsMessage={() => 'Доступных вариантов нету'}
+                                                                                                />
+                                                                                                <br/>
+                                                                                            </div>
+                                                                                        )
+                                                                                    })
+                                                                            }
+                                                                        </div>
+                                                                    </div>
                                                                 </>
                                                             }
                                                         />
-                                                        <br/>
                                                     </fieldset>
                                                 </div>
 
@@ -363,7 +372,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                             name={'productTags'}
                                                             control={props.control.control}
                                                             render={({field}: any) =>
-                                                                <>
+                                                                <div className={s.tags_scrollContainer}>
+
                                                                     <div className={s.tags_list}>
                                                                         <ChooseProductTagModal
                                                                             key={index}
@@ -424,7 +434,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                         }
 
                                                                     </div>
-                                                                </>
+
+                                                                </div>
                                                             }
                                                         />
                                                     </fieldset>

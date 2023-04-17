@@ -25,7 +25,6 @@
     .optionBind_productBlock {
         @include flexOnlyBetween;
         gap: $defaultSmallMargin;
-        //flex-direction: row-reverse;
 
         .productBlock_control {
             .contentBlock_deleteImg {
@@ -56,7 +55,6 @@
             background-color: $themeColorGray;
             border-radius: $smallBorderRadius;
             padding: $defaultSmallMargin;
-            margin-bottom: $defaultLargeMargin;
             width: 100%;
 
             .productContent_info {
@@ -68,13 +66,17 @@
                 @include flexOnlyBetween;
                 gap: 10px;
 
+                //overflow-y: scroll;
+                //height: 300px;
+                //padding-right: 5px;
+
                 .contentBlock_content {
                     @include flexOnlyBetween;
                     gap: $defaultSmallMargin;
                     width: 100%;
 
+                    // опции
                     .content_options {
-                        //width: 250px;
                         width: 50%;
 
                         .options_wrapperBox {
@@ -100,18 +102,27 @@
                                 }
                             }
 
-                            .options_list {
+                            .options_scrollContainer {
+                                overflow-y: auto;
+                                height: 300px;
+                                padding-right: 5px;
+
+                                .options_list {
+                                    //background-color: orange;
+                                    //height: 280px;
+                                }
                             }
+
                         }
                     }
 
+                    // теги
                     .content_tags {
-                        //width: 250px;
                         width: 50%;
 
                         .tags_wrapperBox {
                             border-radius: $smallBorderRadius;
-                            height: 100%; // пофиксить ?!
+                            //height: 100%; // пофиксить ?!
 
                             .tags_addButton {
                                 margin-bottom: $defaultSmallMargin;
@@ -122,24 +133,29 @@
                                 }
                             }
 
-                            .tags_list {
-                                display: flex;
-                                flex-wrap: wrap;
-                                gap: $defaultSmallMargin;
-                                height: 150px;
-                                overflow: auto;
-                                margin-bottom: $defaultSmallMargin;
-                                padding-right: $defaultSmallMargin;
+                            .tags_scrollContainer {
+                                overflow-y: auto;
+                                height: 300px;
+                                padding-right: 5px;
 
-                                .tags_listItem {
-                                    background-color: $themeColorMilk;
-                                    border-radius: $smallBorderRadius;
-                                    @include flexCenter;
-                                    padding: 5px 5px 5px 7px;
-                                    height: 30px;
+                                .tags_list {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: $defaultSmallMargin;
+                                    overflow: auto;
+                                    margin-bottom: $defaultSmallMargin;
+                                    padding-right: $defaultSmallMargin;
 
-                                    .item_name {
-                                        margin-right: 5px;
+                                    .tags_listItem {
+                                        background-color: $themeColorMilk;
+                                        border-radius: $smallBorderRadius;
+                                        @include flexCenter;
+                                        padding: 5px 5px 5px 7px;
+                                        height: 30px;
+
+                                        .item_name {
+                                            margin-right: 5px;
+                                        }
                                     }
                                 }
                             }

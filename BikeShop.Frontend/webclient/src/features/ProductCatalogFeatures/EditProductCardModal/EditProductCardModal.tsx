@@ -64,10 +64,7 @@ export const EditProductCardModal = () => {
         })
 
         setImages(currentProduct.productImages)
-
         formControl.setValue('productOptions', currentProduct.productOptions)
-
-        console.log(currentProduct.bindedProducts)
         formControl.setValue('bindedProducts', currentProduct.bindedProducts)
 
         if (currentProduct.productCard !== undefined) {
@@ -96,8 +93,9 @@ export const EditProductCardModal = () => {
                         <div className={s.editProductCardModal_mainBlock}>
                             <div className={s.editProductCardModal_header}>
                                 <div className={s.productInfo}>
-                                    {currentProduct.product.name} {'|'} {''}
-                                    Catalog Key: {currentProduct.product.catalogKey}
+                                    Product Info
+                                    {/*{currentProduct.product.name} {'|'} {''}*/}
+                                    {/*Catalog Key: {currentProduct.product.catalogKey}*/}
                                 </div>
                                 <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                                 <EditProductCardModalMainButtons setOpen={setOpen}/>
