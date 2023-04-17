@@ -27,7 +27,7 @@
         gap: $defaultSmallMargin;
         margin-top: $defaultSmallMargin;
 
-        .productBlock_deleteImg {
+        .productBlock_deleteBindProduct {
             display: flex;
             justify-content: flex-end;
 
@@ -43,37 +43,53 @@
         }
 
         .productBlock_imageBlock {
-            border: 1px solid white;
+            //border: 1px solid white;
+            background-color: $themeColorGray;
+            padding: $defaultLargeMargin;
+            border-radius: $smallBorderRadius;
 
             .productImage {
-                img {
-                    width: 100px;
-                    height: 100px;
-                    object-fit: cover;
+                //display: flex;
+                //align-items: center;
+
+                .productImage_mainImage {
+                    @include flexCenter;
+                    margin-bottom: $defaultSmallMargin;
+
+                    // заглушка, если нету фотографии
+                    //.item_noImage {
+                    //    @include flexColumn;
+                    //
+                    //    .item_noImage_title {
+                    //        padding: 20px 0 10px 0;
+                    //    }
+                    //
+                    //    img {
+                    //        width: auto;
+                    //        height: 120px;
+                    //    }
+                    //}
+
+                    img {
+                        width: 100px;
+                        height: 100px;
+                        object-fit: cover;
+                    }
                 }
 
-                // заглушка, если нету фотографии
-                //.item_noImage {
-                //    @include flexColumn;
-                //
-                //    .item_noImage_title {
-                //        padding: 20px 0 10px 0;
-                //    }
-                //
-                //    img {
-                //        width: auto;
-                //        height: 120px;
-                //    }
-                //}
+                .addBindedImage_box {
+                    //position: relative;
+                    //
+                    //.addBindedImage_deleteItem {
+                    //    @include deleteIconButton;
+                    //}
 
-                .addImage_box {
-                    //@include flexBetween;
-
-                    .deletePhoto {
+                    .deleteBindedPhoto {
+                        @include flexCenter;
                         margin-bottom: $defaultSmallMargin;
                     }
-                    .addImage {
-                        @include inputTypeFile($themeColorGray);
+                    .addBindedImage {
+                        @include inputTypeFile($themeColorMilk);
                     }
                 }
             }

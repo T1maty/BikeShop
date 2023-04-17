@@ -27,8 +27,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
     const {enqueueSnackbar} = useSnackbar()
 
-    const [selectedOption, setSelectedOption] = useState<any>(null)
     const allOptions = useEditProductCardModal(s => s.allOptions)
+
+    const [selectedOption, setSelectedOption] = useState<any>(null)
 
     const [v, sV] = useState(false)
     const [v2, sV2] = useState<{ id: number, state: boolean }[]>([])
@@ -235,9 +236,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                 <div className={s.optionBind}>
 
-                    <ChooseProductModal addData={(product) => {
-                        addProductBind(product, field)
-                    }} open={v} setOpen={sV}/>
+                    <ChooseProductModal open={v} setOpen={sV}
+                                        addData={(product) => {addProductBind(product, field)}}
+                    />
 
                     <div className={s.optionBind_header}>
                         <div>Группа товаров</div>
@@ -257,9 +258,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                             noOptionsMessage={() => 'Товар не найден'}
                         />
 
-                        <Button buttonDivWrapper={s.addBindButton} onClick={() => {
-                            sV(true)
-                        }}>
+                        <Button buttonDivWrapper={s.addBindButton} onClick={() => {sV(true)}}>
                             Добавить бинд товара
                         </Button>
                     </div>
@@ -270,7 +269,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                 <div className={s.optionBind_productBlock}>
                                     {
                                         index > 0 ?
-                                            <div className={s.productBlock_deleteImg}>
+                                            <div className={s.productBlock_deleteBindProduct}>
                                                 <img src={RemoveIcon}
                                                      alt="remove-icon"
                                                      onClick={() => {deleteBindedProductHandler(field, bindedProduct)}}
@@ -282,39 +281,49 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                         <div className={s.productImage}>
                                             {
-                                                // props.images.length === 0 ?
-                                                //      <div className={s.item_noImage}>
-                                                //          <div className={s.item_noImage_title}>
-                                                //             Sorry, no photo!
-                                                //          </div>
-                                                //         <div className={s.item_noImage_icon}>
-                                                //             <img src={NoProductImage} alt="no-product-image"/>
-                                                //         </div>
-                                                //     </div> :
+                                                <div className={s.productImage_mainImage}>
 
-                                                <img
-                                                    src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
-                                                    alt="product-image"
-                                                />
+                                                {/*props.images.length === 0 ?*/}
+                                                {/*      <div className={s.item_noImage}>*/}
+                                                {/*          <div className={s.item_noImage_title}>*/}
+                                                {/*             Sorry, no photo!*/}
+                                                {/*          </div>*/}
+                                                {/*         <div className={s.item_noImage_icon}>*/}
+                                                {/*             <img src={NoProductImage} alt="no-product-image"/>*/}
+                                                {/*         </div>*/}
+                                                {/*     </div> :*/}
+
+                                                    <img
+                                                        src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
+                                                        alt="product-image"
+                                                    />
+                                                </div>
                                             }
 
                                             {
                                                 index > 0 ?
-                                                    <div className={s.addImage_box}>
-                                                        <Button buttonDivWrapper={s.deletePhoto}
+                                                    <div className={s.addBindedImage_box}>
+                                                        {/*<img src={RemoveIcon} alt="remove-icon"*/}
+                                                        {/*     className={s.addBindedImage_deleteItem}*/}
+                                                        {/*     onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}*/}
+                                                        {/*/>*/}
+
+                                                        <Button buttonDivWrapper={s.deleteBindedPhoto}
                                                                 onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}
                                                         >
                                                             Удалить фото
                                                         </Button>
 
-                                                    <div className={s.addImage}>
-                                                        <input type="file" id="file"
-                                                               accept="image/png, image/jpeg"
-                                                               className={s.inputFile}
-                                                               onChange={(e) => {uploadBindedPhotoHandler(e, bindedProduct)}}
-                                                        />
-                                                    </div>
-                                                </div> : ''
+                                                        <div className={s.addBindedImage}>
+                                                            <input type="file" id="file"
+                                                                   accept="image/png, image/jpeg"
+                                                                   className={s.inputFile}
+                                                                   onChange={(e) => {
+                                                                       uploadBindedPhotoHandler(e, bindedProduct)
+                                                                   }}
+                                                            />
+                                                        </div>
+                                                    </div> : ''
                                             }
                                         </div>
                                     </div>
