@@ -27,7 +27,7 @@
         gap: $defaultSmallMargin;
         margin-top: $defaultSmallMargin;
 
-        .contentBlock_deleteImg {
+        .productBlock_deleteImg {
             display: flex;
             justify-content: flex-end;
 
@@ -53,18 +53,18 @@
                 }
 
                 // заглушка, если нету фотографии
-                .item_noImage {
-                    @include flexColumn;
-
-                    .item_noImage_title {
-                        padding: 20px 0 10px 0;
-                    }
-
-                    img {
-                        width: auto;
-                        height: 120px;
-                    }
-                }
+                //.item_noImage {
+                //    @include flexColumn;
+                //
+                //    .item_noImage_title {
+                //        padding: 20px 0 10px 0;
+                //    }
+                //
+                //    img {
+                //        width: auto;
+                //        height: 120px;
+                //    }
+                //}
 
                 .addImage_box {
                     //@include flexBetween;

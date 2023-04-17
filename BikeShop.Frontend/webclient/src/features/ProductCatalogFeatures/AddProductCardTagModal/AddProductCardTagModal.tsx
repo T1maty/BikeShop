@@ -14,9 +14,7 @@ export const ChooseProductTagModal: React.FC<AddProductCardTagModalProps> = ({on
     return (
         <CustomModal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
         >
             <div className={s.addProductCardTagModal_mainBox}>
                 <div className={s.addProductCardTagModal_content}>

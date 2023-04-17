@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import s from './EditProductCardOptionBind.module.scss'
 import {
     ProductCardAPI, Product, ProductFullData, ProductImage,
@@ -33,6 +33,13 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
     const [v, sV] = useState(false)
     const [v2, sV2] = useState<{ id: number, state: boolean }[]>([])
 
+    const availableOptions = (control: any, product: Product) => {
+        let enumr = Enumerable.from(control.getValues('productOptions') as ProductOptionVariantBind[])
+        let options = allOptions.filter((n: ProductOption) => !(enumr.where(m => m.productId == product.id)
+            .select(m => m.optionId).contains(n.id)))
+        return options.filter(n => enumr.where(m => m.optionId == n.id).toArray().length < n.optionVariants.length)
+    }
+
     const addVariantHandler = (control: any, product: Product) => {
         let value = control.getValues('productOptions')
 
@@ -61,11 +68,32 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         setSelectedOption(null)
     }
 
-    const availableOptions = (control: any, product: Product) => {
-        let enumr = Enumerable.from(control.getValues('productOptions') as ProductOptionVariantBind[])
-        let options = allOptions.filter((n: ProductOption) => !(enumr.where(m => m.productId == product.id)
-            .select(m => m.optionId).contains(n.id)))
-        return options.filter(n => enumr.where(m => m.optionId == n.id).toArray().length < n.optionVariants.length)
+    const onChangeOptionsVariants = (field: any, bindedProduct: Product, newValue: any) => {
+        let r = newValue as ProductOptionVariant
+        let base = field.value as ProductOptionVariantBind[]
+
+        let variant: ProductOptionVariantBind
+
+        variant = {
+            productId: bindedProduct.id,
+            id: 0,
+            name: r.name,
+            optionId: r.optionId,
+            optionVariantId: r.id,
+            optionName: r.optionName,
+            sortOrder: 0,
+            enabled: true,
+            createdAt: Date.now().toString(),
+            updatedAt: Date.now().toString(),
+        }
+
+        let target = base.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
+            .filter((n: ProductOptionVariantBind) => n.optionId === newValue?.optionId)[0]
+
+        let ind = base.indexOf(target)
+        base[ind] = variant
+        field.onChange(base)
+        console.log(variant)
     }
 
     const addProductBind = (product: Product, field: any) => {
@@ -79,6 +107,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
         ProductCardAPI.getProductCardById(product.id).then((r) => {
             let productCard = r.data
+
             if (productCard.product.id == product.id && productCard.bindedProducts.length === 1) {
                 let optionsIds = Enumerable.from(props.control.getValues('productOptions') as ProductOptionVariantBind[])
                     .select(n => n.optionVariantId).toArray()
@@ -124,6 +153,80 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         })
     }
 
+    const deleteBindedProductHandler = (field: any, bindedProduct: Product) => {
+        field.onChange(field.value.filter((n: Product) => n.id != bindedProduct.id))
+        props.control.setValue('productOptions', props.control.getValues('productOptions')
+            .filter((n: ProductOptionVariantBind) => n.productId != bindedProduct.id))
+        props.control.setValue('productTags', props.control.getValues('productTags')
+            .filter((n: ProductTagBindDTO) => n.productId != bindedProduct.id))
+        props.setImages(props.images.filter(n => n.productId != bindedProduct.id))
+    }
+
+    const uploadBindedPhotoHandler = (e: ChangeEvent<HTMLInputElement>, bindedProduct: Product) => {
+        let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
+
+        if (e.target.files && e.target.files.length) {
+            const file = e.target.files[0]
+
+            if (file.size < 7000000) {
+                let formData = new FormData();
+                formData.append('imageFile', file)
+
+                ProductCardAPI.uploadNewImage(formData, bindedProduct.id).then((r) => {
+                    if (id != undefined) {
+                        ProductCardAPI.deleteImage(id).then(() => {
+                            props.setImages([...props.images.filter(n => n.id != id), r.data])
+                        })
+                    } else {
+                        props.setImages([...props.images, r.data])
+                    }
+                })
+
+            } else {
+                console.error('Error: ', 'Файл слишком большого размера')
+            }
+        }
+    }
+
+    const deleteBindedPhotoHandler = (bindedProduct: Product) => {
+        let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
+
+        ProductCardAPI.deleteImage(id).then(() => {
+            props.setImages(props.images.filter(n => n.id != id))
+        })
+    }
+
+    const setOpenProductTagModalHandler = (bindedProduct: Product, value: boolean) => {
+        sV2([...v2.filter(n => n.id != bindedProduct.id),
+            {id: bindedProduct.id, state: value}])
+    }
+
+    const onTagDoubleClickHandler = (field: any, bindedProduct: Product, tag: any) => {
+        sV2([...v2.filter(n => n.id != bindedProduct.id),
+            {
+                id: bindedProduct.id,
+                state: false
+            }])
+        if (!Enumerable.from(field.value as ProductTagBindDTO[])
+            .select(n => n.productTag.id)
+            .contains(tag.id)) {
+            field.onChange([...field.value,
+                {
+                    productTag: tag,
+                    productId: bindedProduct.id
+                } as ProductTagBindDTO])
+        } else {
+            enqueueSnackbar('Такой тег уже есть у товара', {
+                variant: 'warning',
+                autoHideDuration: 3000
+            })
+        }
+    }
+
+    const deleteTagHandler = (field: any, n: ProductTagBindDTO) => {
+        field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
+    }
+
     return (
         <Controller
             name={'bindedProducts'}
@@ -154,7 +257,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                             noOptionsMessage={() => 'Товар не найден'}
                         />
 
-                        <Button buttonDivWrapper={s.addBindButton} onClick={() => {sV(true)}}>
+                        <Button buttonDivWrapper={s.addBindButton} onClick={() => {
+                            sV(true)
+                        }}>
                             Добавить бинд товара
                         </Button>
                     </div>
@@ -163,27 +268,19 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                         field.value?.map((bindedProduct: Product, index: number) => {
                             return (
                                 <div className={s.optionBind_productBlock}>
-                                    <div className={s.contentBlock_deleteImg}>
-                                        {
-                                            index > 0 ?
+                                    {
+                                        index > 0 ?
+                                            <div className={s.productBlock_deleteImg}>
                                                 <img src={RemoveIcon}
                                                      alt="remove-icon"
-                                                     onClick={() => {
-                                                         field.onChange(field.value.filter((n: Product) => n.id != bindedProduct.id))
-                                                         props.control.setValue('productOptions', props.control.getValues('productOptions')
-                                                             .filter((n: ProductOptionVariantBind) => n.productId != bindedProduct.id))
-                                                         props.control.setValue('productTags', props.control.getValues('productTags')
-                                                             .filter((n: ProductTagBindDTO) => n.productId != bindedProduct.id))
-                                                         props.setImages(props.images.filter(n => n.productId != bindedProduct.id))
-                                                     }}
-                                                /> : ''
-                                        }
-                                    </div>
+                                                     onClick={() => {deleteBindedProductHandler(field, bindedProduct)}}
+                                                />
+                                            </div> : ''
+                                    }
 
                                     <div className={s.productBlock_imageBlock}>
 
                                         <div className={s.productImage}>
-
                                             {
                                                 // props.images.length === 0 ?
                                                 //      <div className={s.item_noImage}>
@@ -195,55 +292,26 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                 //         </div>
                                                 //     </div> :
 
-                                                    <img
-                                                        src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
-                                                        alt="product-image"
-                                                    />
+                                                <img
+                                                    src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
+                                                    alt="product-image"
+                                                />
                                             }
 
                                             {
-                                                index > 0 ? <div className={s.addImage_box}>
-                                                    <Button buttonDivWrapper={s.deletePhoto}
-                                                            onClick={() => {
-                                                                let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
-
-                                                                ProductCardAPI.deleteImage(id).then(() => {
-                                                                    props.setImages(props.images.filter(n => n.id != id))
-                                                                })
-                                                            }}
-                                                    >
-                                                        Удалить фото
-                                                    </Button>
+                                                index > 0 ?
+                                                    <div className={s.addImage_box}>
+                                                        <Button buttonDivWrapper={s.deletePhoto}
+                                                                onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}
+                                                        >
+                                                            Удалить фото
+                                                        </Button>
 
                                                     <div className={s.addImage}>
                                                         <input type="file" id="file"
                                                                accept="image/png, image/jpeg"
                                                                className={s.inputFile}
-                                                               onChange={(e) => {
-                                                                   let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
-
-                                                                   if (e.target.files && e.target.files.length) {
-                                                                       const file = e.target.files[0]
-
-                                                                       if (file.size < 7000000) {
-                                                                           let formData = new FormData();
-                                                                           formData.append('imageFile', file)
-
-                                                                           ProductCardAPI.uploadNewImage(formData, bindedProduct.id).then((r) => {
-                                                                               if (id != undefined) {
-                                                                                   ProductCardAPI.deleteImage(id).then(() => {
-                                                                                       props.setImages([...props.images.filter(n => n.id != id), r.data])
-                                                                                   })
-                                                                               } else {
-                                                                                   props.setImages([...props.images, r.data])
-                                                                               }
-                                                                           })
-
-                                                                       } else {
-                                                                           console.error('Error: ', 'Файл слишком большого размера')
-                                                                       }
-                                                                   }
-                                                               }}
+                                                               onChange={(e) => {uploadBindedPhotoHandler(e, bindedProduct)}}
                                                         />
                                                     </div>
                                                 </div> : ''
@@ -280,9 +348,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                 placeholder={'Опции'}
                                                                                 isSearchable={true}
                                                                                 value={selectedOption}
-                                                                                onChange={(value: any) => {
-                                                                                    setSelectedOption(value)
-                                                                                }}
+                                                                                onChange={(value: any) => {setSelectedOption(value)}}
                                                                                 getOptionLabel={label => label!.name}
                                                                                 getOptionValue={value => value!.name}
                                                                                 noOptionsMessage={() => 'Опция не найдена'}
@@ -290,9 +356,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                         </div>
                                                                         <Button
                                                                             buttonDivWrapper={s.options_addButton}
-                                                                            onClick={() => {
-                                                                                addVariantHandler(props.control, bindedProduct)
-                                                                            }}
+                                                                            onClick={() => {addVariantHandler(props.control, bindedProduct)}}
                                                                             disabled={selectedOption === null || props.control.getValues('productOptions')
                                                                                 .filter((n: ProductOptionVariantBind) => n.productId == bindedProduct.id)
                                                                                 .find((n: ProductOptionVariantBind) => n.optionId == selectedOption.id) != undefined}
@@ -310,45 +374,22 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                             <div key={index}
                                                                                                  className={s.options_listItem}
                                                                                             >
-                                                                                                <div className={s.listItem_title}>
+                                                                                                <div
+                                                                                                    className={s.listItem_title}>
                                                                                                     {variant.optionName}
                                                                                                 </div>
 
-                                                                                                <div className={s.listItem_selectWithButton}>
+                                                                                                <div
+                                                                                                    className={s.listItem_selectWithButton}>
                                                                                                     <Select
                                                                                                         key={index}
                                                                                                         className={s.options_search}
                                                                                                         placeholder={'Варианты'}
-
                                                                                                         options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
-                                                                                                            .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[]).select(m => m.optionVariantId).contains(n.id)) as ProductOptionVariantBind[])}
-
-                                                                                                        onChange={(newValue) => {
-                                                                                                            let r = newValue as ProductOptionVariant
-                                                                                                            let base = field.value as ProductOptionVariantBind[]
-
-                                                                                                            let variant: ProductOptionVariantBind
-                                                                                                            variant = {
-                                                                                                                productId: bindedProduct.id,
-                                                                                                                id: 0,
-                                                                                                                name: r.name,
-                                                                                                                optionId: r.optionId,
-                                                                                                                optionVariantId: r.id,
-                                                                                                                optionName: r.optionName,
-                                                                                                                sortOrder: 0,
-                                                                                                                enabled: true,
-                                                                                                                createdAt: Date.now().toString(),
-                                                                                                                updatedAt: Date.now().toString(),
-                                                                                                            }
-
-                                                                                                            let target = base.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
-                                                                                                                .filter((n: ProductOptionVariantBind) => n.optionId === newValue?.optionId)[0]
-                                                                                                            let ind = base.indexOf(target)
-                                                                                                            base[ind] = variant
-                                                                                                            field.onChange(base)
-                                                                                                            console.log(variant)
-                                                                                                        }}
-
+                                                                                                            .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])
+                                                                                                                .select(m => m.optionVariantId)
+                                                                                                                .contains(n.id)) as ProductOptionVariantBind[])}
+                                                                                                        onChange={(newValue) => {onChangeOptionsVariants(field, bindedProduct, newValue)}}
                                                                                                         isSearchable={true}
                                                                                                         defaultValue={variant}
                                                                                                         getOptionLabel={label => label!.name}
@@ -356,11 +397,10 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                         noOptionsMessage={() => 'Доступных вариантов нету'}
                                                                                                     />
 
-                                                                                                    <Button
-                                                                                                        onClick={() => {
-                                                                                                            field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
-                                                                                                                n.optionId != variant.optionId || n.productId != bindedProduct.id))
-                                                                                                        }}
+                                                                                                    <Button onClick={() => {
+                                                                                                                field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
+                                                                                                                    n.optionId != variant.optionId || n.productId != bindedProduct.id))
+                                                                                                            }}
                                                                                                     >
                                                                                                         Удалить
                                                                                                     </Button>
@@ -401,55 +441,21 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                         <ChooseProductTagModal
                                                                             key={index}
                                                                             open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
-
-                                                                            setOpen={(value) => {
-                                                                                sV2([...v2.filter(n => n.id != bindedProduct.id),
-                                                                                    {
-                                                                                        id: bindedProduct.id,
-                                                                                        state: value
-                                                                                    }])
-                                                                            }}
-
-                                                                            onTagDoubleClick={(tag) => {
-                                                                                sV2([...v2.filter(n => n.id != bindedProduct.id),
-                                                                                    {
-                                                                                        id: bindedProduct.id,
-                                                                                        state: false
-                                                                                    }])
-                                                                                if (!Enumerable.from(field.value as ProductTagBindDTO[])
-                                                                                    .select(n => n.productTag.id)
-                                                                                    .contains(tag.id)) {
-                                                                                    field.onChange([...field.value,
-                                                                                        {
-                                                                                            productTag: tag,
-                                                                                            productId: bindedProduct.id
-                                                                                        } as ProductTagBindDTO])
-                                                                                } else {
-                                                                                    enqueueSnackbar('Такой тег уже есть у товара', {
-                                                                                        variant: 'warning',
-                                                                                        autoHideDuration: 3000
-                                                                                    })
-                                                                                }
-                                                                            }}
+                                                                            setOpen={(value) => {setOpenProductTagModalHandler(bindedProduct, value)}}
+                                                                            onTagDoubleClick={(tag) => {onTagDoubleClickHandler(field, bindedProduct, tag)}}
                                                                         />
 
                                                                         {
-                                                                            field.value?.filter((n: ProductTagBindDTO) =>
-                                                                                n.productId == bindedProduct.id).map((n: ProductTagBindDTO, index: number) => {
-
+                                                                            field.value?.filter((n: ProductTagBindDTO) => n.productId == bindedProduct.id).map((n: ProductTagBindDTO, index: number) => {
                                                                                 return (
                                                                                     <div className={s.tags_listItem}
                                                                                          key={index}
                                                                                     >
-                                                                                        <div
-                                                                                            className={s.item_name}>
+                                                                                        <div className={s.item_name}>
                                                                                             {n.productTag.name}
                                                                                         </div>
-
                                                                                         <DeleteButton size={20}
-                                                                                                      onClick={() => {
-                                                                                                          field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
-                                                                                                      }}
+                                                                                                      onClick={() => {field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}}
                                                                                         />
                                                                                     </div>
                                                                                 )
