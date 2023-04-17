@@ -22,46 +22,38 @@
         .editProductCardModal_mainBlock {
             display: grid;
             gap: 20px;
-            grid-template-columns: 2fr 1fr;
-            grid-template-rows: repeat(3, auto);
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 50px auto auto;
             grid-template-areas:
-                    'gallery description'
-                    'optionBind optionBind'
-                    'descFull specs';
+                    'info status buttons'
+                    'optionBind optionBind optionBind'
+                    'gallery fullEditor specs';
+
+            .productInfo {
+                grid-area: info;
+                display: flex;
+                align-items: center;
+            }
+            .productStatus {
+                grid-area: status;
+            }
+            .mainButtons {
+                grid-area: buttons;
+            }
+
+            .optionBind_wrapper {
+                grid-area: optionBind;
+            }
 
             .imageGallery {
                 grid-area: gallery;
             }
-            .description_wrapper {
-                grid-area: description;
-            }
-            .optionBind_wrapper {
-                grid-area: optionBind;
-                grid-column: span 2;
-                grid-row: span 1;
-            }
             .fullEditor {
-                grid-area: descFull;
+                grid-area: fullEditor;
             }
             .specs_wrapper {
                 grid-area: specs;
-
-                //.productSpecifications {
-                //
-                //}
-
-                .mainButtons {
-                    @include flexOnlyBetween;
-                    gap: $defaultLargeMargin;
-                    width: 100%;
-                    z-index: 0; // чтобы кнопка была под селектом
-
-                    button {
-                        width: 200px;
-                    }
-                }
             }
-
         }
     }
 }

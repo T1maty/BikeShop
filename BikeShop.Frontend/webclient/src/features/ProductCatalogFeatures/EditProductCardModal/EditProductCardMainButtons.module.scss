@@ -1,0 +1,14 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.mainButtons {
+    @include flexOnlyBetween;
+    gap: $defaultLargeMargin;
+    width: 100%;
+    height: 50px;
+    z-index: 0; // чтобы кнопка была под селектом
+
+    button {
+        width: 200px;
+    }
+}

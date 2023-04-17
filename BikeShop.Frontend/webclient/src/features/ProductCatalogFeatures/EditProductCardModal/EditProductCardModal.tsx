@@ -14,6 +14,7 @@ import {ProductImage} from '../../../entities'
 import {EditProductCardDescriptionFull} from './EditProductCardDescriptionFull'
 import {EditProductCardDescriptionShort} from './EditProductCardDescriptionShort'
 import {EditProductCardOptionBind} from './EditProductCardOptionBind'
+import {EditProductCardModalMainButtons} from './EditProductCardModalMainButtons';
 
 export const EditProductCardModal = () => {
 
@@ -94,13 +95,9 @@ export const EditProductCardModal = () => {
                         <div className={s.editProductCardModal_container}>
                             <div className={s.editProductCardModal_mainBlock}>
 
-                                <EditProductCardGallery images={images} setImages={setImages}/>
-                                <div className={s.description_wrapper}>
-                                    <EditProductCardStatus control={formControl} name={'checkStatus'}/>
-                                    <EditProductCardDescriptionShort name={'productCard'}
-                                                                     control={formControl}
-                                    />
-                                </div>
+                                <div className={s.productInfo}>Product Info</div>
+                                <EditProductCardStatus control={formControl} name={'checkStatus'}/>
+                                <EditProductCardModalMainButtons setOpen={setOpen}/>
 
                                 <div className={s.optionBind_wrapper}>
                                     <EditProductCardOptionBind product={currentProduct}
@@ -110,66 +107,20 @@ export const EditProductCardModal = () => {
                                     />
                                 </div>
 
+                                <EditProductCardGallery images={images} setImages={setImages}/>
                                 <EditProductCardDescriptionFull name={'productCard'}
                                                                 control={formControl}
                                                                 editorState={editorState}
                                                                 setEditorState={setEditorState}
                                 />
-
                                 <div className={s.specs_wrapper}>
+                                    <EditProductCardDescriptionShort name={'productCard'}
+                                                                     control={formControl}
+                                    />
                                     <EditProductCardSpecifications control={formControl}
                                                                    name={'productSpecifications'}
                                     />
-                                    <div className={s.mainButtons}>
-                                        <Button onClick={() => {setOpen(false)}}>
-                                            Отмена
-                                        </Button>
-                                        <Button type={'submit'}>
-                                            Сохранить
-                                        </Button>
-                                    </div>
                                 </div>
-
-
-                                {/*прежний враиант*/}
-                                {/*<div className={s.editProductCardModal_leftSide}>*/}
-                                {/*    <EditProductCardStatus control={formControl} name={'checkStatus'}/>*/}
-                                {/*    <EditProductCardGallery images={images} setImages={setImages}/>*/}
-                                {/*</div>*/}
-
-                                {/*<div className={s.leftSide_descriptionEditor}>*/}
-                                {/*    <EditProductCardDescriptionShort name={'productCard'}*/}
-                                {/*                                     control={formControl}*/}
-                                {/*    />*/}
-                                {/*    <EditProductCardDescriptionFull name={'productCard'}*/}
-                                {/*                                    control={formControl}*/}
-                                {/*                                    editorState={editorState}*/}
-                                {/*                                    setEditorState={setEditorState}*/}
-                                {/*    />*/}
-                                {/*</div>*/}
-
-                                {/*<div className={s.editProductCardModal_rightSide}>*/}
-                                {/*    <EditProductCardSpecifications divClassName={s.rightSide_productOptions}*/}
-                                {/*                                   control={formControl}*/}
-                                {/*                                   name={'productSpecifications'}*/}
-                                {/*    />*/}
-                                {/*    <div className={s.rightSide_mainButtons}>*/}
-                                {/*        <Button onClick={() => {setOpen(false)}}>*/}
-                                {/*            Отмена*/}
-                                {/*        </Button>*/}
-                                {/*        <Button type={'submit'}>*/}
-                                {/*            Сохранить*/}
-                                {/*        </Button>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*</div>*/}
-
-                                {/*<EditProductCardOptionBind product={currentProduct}*/}
-                                {/*                           control={formControl}*/}
-                                {/*                           images={images}*/}
-                                {/*                           setImages={setImages}*/}
-                                {/*/>*/}
-
 
                             </div>
                         </div>

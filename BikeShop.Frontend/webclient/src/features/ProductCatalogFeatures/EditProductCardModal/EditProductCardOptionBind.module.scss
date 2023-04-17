@@ -56,6 +56,7 @@
             background-color: $themeColorGray;
             border-radius: $smallBorderRadius;
             padding: $defaultSmallMargin;
+            margin-bottom: $defaultLargeMargin;
             width: 100%;
 
             .productContent_info {
@@ -74,11 +75,11 @@
 
                     .content_options {
                         //width: 250px;
-                        width: 40%;
+                        width: 50%;
 
                         .options_wrapperBox {
                             border-radius: $smallBorderRadius;
-                            height: 173px; // пофиксить
+                            height: 100%; // пофиксить ?!
 
                             .options_selectRow {
                                 @include flexCenter;
@@ -106,10 +107,11 @@
 
                     .content_tags {
                         //width: 250px;
-                        width: 40%;
+                        width: 50%;
 
                         .tags_wrapperBox {
                             border-radius: $smallBorderRadius;
+                            height: 100%; // пофиксить ?!
 
                             .tags_addButton {
                                 margin-bottom: $defaultSmallMargin;
