@@ -22,13 +22,15 @@ import testImage7 from '../../../../shared/assets/shop/images/testImage-square-2
 import testImage8 from '../../../../shared/assets/shop/images/testImage-square-28.jpg'
 import testImage9 from '../../../../shared/assets/shop/images/testImage-square-29.jpg'
 
-// import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
-// import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
-// import catalogSpares from '../../../../shared/assets/shop/images/catalog-spares.png'
-// import catalogClothes from '../../../../shared/assets/shop/images/catalog-clothes.png'
-// import catalogChemistry from '../../../../shared/assets/shop/images/catalog-chemistry.png'
-// import catalogAccessories from '../../../../shared/assets/shop/images/catalog-accessories.png'
-// import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
+import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
+import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
+import catalogSpares from '../../../../shared/assets/shop/images/catalog-spares.png'
+import catalogClothes from '../../../../shared/assets/shop/images/catalog-clothes.png'
+import catalogChemistry from '../../../../shared/assets/shop/images/catalog-chemistry.png'
+import catalogAccessories from '../../../../shared/assets/shop/images/catalog-accessories.png'
+import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
+import catalogRaznoe from '../../../../shared/assets/shop/images/catalog-raznoe.png'
+import catalogSamokat from '../../../../shared/assets/shop/images/catalog-samokat.png'
 
 export const ShopMain = () => {
 
@@ -73,33 +75,33 @@ export const ShopMain = () => {
                     <div className={s.container}>
                         <div className={s.catalog_items}>
                             <div className={s.catalog_item4}>
-                                <img src={testImage4} alt="catalog-spares"/>
+                                <img src={catalogSpares} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item5}>
-                                <img src={testImage5} alt="catalog-spares"/>
+                                <img src={catalogProtection} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item1}>
-                                <img src={testImage1} alt="catalog-spares"/>
+                                <img src={catalogBikes} alt="catalog-spares"/>
                             </div>
 
                             <div className={s.catalog_item6}>
-                                <img src={testImage6} alt="catalog-spares"/>
+                                <img src={catalogClothes} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item2}>
-                                <img src={testImage2} alt="catalog-spares"/>
+                                <img src={catalogSamokat} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item7}>
-                                <img src={testImage7} alt="catalog-accessories"/>
+                                <img src={catalogRaznoe} alt="catalog-accessories"/>
                             </div>
 
                             <div className={s.catalog_item3}>
-                                <img src={testImage3} alt="catalog-food"/>
+                                <img src={catalogAccessories} alt="catalog-food"/>
                             </div>
                             <div className={s.catalog_item8}>
-                                <img src={testImage8} alt="catalog-accessories"/>
+                                <img src={catalogChemistry} alt="catalog-accessories"/>
                             </div>
                             <div className={s.catalog_item9}>
-                                <img src={testImage9} alt="catalog-accessories"/>
+                                <img src={catalogFood} alt="catalog-accessories"/>
                             </div>
                         </div>
                     </div>
