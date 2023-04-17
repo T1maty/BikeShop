@@ -2,44 +2,38 @@
 @import '../../../app/styles/variables/variables';
 
 .editProductCardModal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    padding: $defaultLargeMargin;
-    transform: translate(-50%, -50%);
-    background-color: $themeColorDark;
-    border-radius: $largeBorderRadius;
-    border: 1px solid white;
-    color: white;
+    @include defaultModalStyle;
     min-width: 1400px;
 
-    // контейнер для скролла
-    .editProductCardModal_container {
-        overflow-y: scroll;
-        height: 85vh;
-        padding-right: 5px;
+    .editProductCardModal_mainBlock {
+        @include flexColumnOnly;
 
-        .editProductCardModal_mainBlock {
-            display: grid;
-            gap: 20px;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 50px auto auto;
-            grid-template-areas:
-                    'info status buttons'
-                    'optionBind optionBind optionBind'
-                    'gallery fullEditor specs';
+        .editProductCardModal_header {
+            @include flexBetween;
+            margin-bottom: $defaultLargeMargin;
+            max-height: 50px;
 
             .productInfo {
-                grid-area: info;
-                display: flex;
-                align-items: center;
+                width: 400px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
-            .productStatus {
-                grid-area: status;
-            }
-            .mainButtons {
-                grid-area: buttons;
-            }
+        }
+
+        //контейнер для скролла
+        .editProductCardModal_scrollContainer {
+            overflow-y: scroll;
+            height: 75vh;
+            padding-right: 5px;
+
+            display: grid;
+            gap: $defaultLargeMargin;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                    'optionBind optionBind optionBind'
+                    'gallery fullEditor specs';
 
             .optionBind_wrapper {
                 grid-area: optionBind;
@@ -48,9 +42,11 @@
             .imageGallery {
                 grid-area: gallery;
             }
+
             .fullEditor {
                 grid-area: fullEditor;
             }
+
             .specs_wrapper {
                 grid-area: specs;
             }

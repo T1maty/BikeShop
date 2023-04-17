@@ -3,7 +3,8 @@
 
 .productStatus {
     @include flexBetween;
-    width: 100%;
+    //width: 100%;
+    width: 400px;
     border: 2px solid $themeColorMilk;
     border-radius: $smallBorderRadius;
     padding: $defaultSmallMargin;
@@ -14,7 +15,7 @@
     }
 
     .productStatus_select {
-        width: 65%;
+        width: 230px;
         color: black;
     }
 }

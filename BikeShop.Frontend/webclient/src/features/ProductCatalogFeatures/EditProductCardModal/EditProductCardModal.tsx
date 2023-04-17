@@ -5,7 +5,7 @@ import {SubmitHandler, useForm} from 'react-hook-form'
 import {useSnackbar} from 'notistack'
 import htmlToDraft from 'html-to-draftjs'
 import {ContentState, EditorState} from 'draft-js'
-import {Button, CustomModal, LoaderScreen} from '../../../shared/ui'
+import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {EditProductCardSpecifications} from './EditProductCardSpecifications'
 import {EditProductCardGallery} from './EditProductCardGallery'
 import {EditProductCardStatus} from './EditProductCardStatus'
@@ -14,7 +14,7 @@ import {ProductImage} from '../../../entities'
 import {EditProductCardDescriptionFull} from './EditProductCardDescriptionFull'
 import {EditProductCardDescriptionShort} from './EditProductCardDescriptionShort'
 import {EditProductCardOptionBind} from './EditProductCardOptionBind'
-import {EditProductCardModalMainButtons} from './EditProductCardModalMainButtons';
+import {EditProductCardModalMainButtons} from './EditProductCardModalMainButtons'
 
 export const EditProductCardModal = () => {
 
@@ -92,13 +92,18 @@ export const EditProductCardModal = () => {
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.editProductCardModal}>
-                        <div className={s.editProductCardModal_container}>
-                            <div className={s.editProductCardModal_mainBlock}>
 
-                                <div className={s.productInfo}>Product Info</div>
+                        <div className={s.editProductCardModal_mainBlock}>
+                            <div className={s.editProductCardModal_header}>
+                                <div className={s.productInfo}>
+                                    {currentProduct.product.name} {'|'} {''}
+                                    Catalog Key: {currentProduct.product.catalogKey}
+                                </div>
                                 <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                                 <EditProductCardModalMainButtons setOpen={setOpen}/>
+                            </div>
 
+                            <div className={s.editProductCardModal_scrollContainer}>
                                 <div className={s.optionBind_wrapper}>
                                     <EditProductCardOptionBind product={currentProduct}
                                                                control={formControl}
@@ -106,7 +111,6 @@ export const EditProductCardModal = () => {
                                                                setImages={setImages}
                                     />
                                 </div>
-
                                 <EditProductCardGallery images={images} setImages={setImages}/>
                                 <EditProductCardDescriptionFull name={'productCard'}
                                                                 control={formControl}
@@ -121,9 +125,9 @@ export const EditProductCardModal = () => {
                                                                    name={'productSpecifications'}
                                     />
                                 </div>
-
                             </div>
                         </div>
+
                     </div>
                 </form>
             </CustomModal>
