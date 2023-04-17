@@ -14,10 +14,16 @@
             max-height: 50px;
 
             .productInfo {
+                @include flexCenter;
                 width: 400px;
+                height: 60px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+
+                border: 2px solid $themeColorMilk;
+                border-radius: $smallBorderRadius;
+                padding: $defaultSmallMargin;
             }
         }
 

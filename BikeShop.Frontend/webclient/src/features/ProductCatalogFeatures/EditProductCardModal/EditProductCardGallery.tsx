@@ -93,15 +93,16 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                     <img className={currentImageKey === key ? s.active_image : ''}
                                          src={img.url} alt="img-thumbnail"
                                     />
+
                                     <div className={s.imageList_imageCount}>
                                         {key + 1}/{props.images.length}
                                     </div>
+
                                     <img src={RemoveIcon} alt="remove-icon"
                                          className={s.imageList_deleteItem}
                                          onClick={() => {setOpenConfirmModal(true)}}
                                          // onClick={() => {deleteImageHandler(img.id)}}
                                     />
-                                    {/*<DeleteButton size={20} absolute={true} onClick={() => {setOpenConfirmModal(true)}}/>*/}
                                 </div>
                             )
                         })

@@ -3,7 +3,7 @@
 
 .productSpecifications {
     @include defaultBlockStyles($themeColorGray);
-    margin-bottom: $defaultLargeMargin;
+    min-height: 285px;
 
     > div:not(:last-child) {
         @include flexColumnOnly;
@@ -13,7 +13,7 @@
 
     .specificationsList {
         overflow-y: auto;
-        max-height: 250px;
+        max-height: 200px;
         color: black;
 
         .emptyList {
