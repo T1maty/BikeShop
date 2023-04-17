@@ -11,17 +11,6 @@ import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
 import Map from '../../../../shared/assets/shop/images/map-01.png'
 
-import testImage1 from '../../../../shared/assets/shop/images/testImage-rectangle-21.jpg'
-import testImage2 from '../../../../shared/assets/shop/images/testImage-rectangle-22.jpg'
-import testImage3 from '../../../../shared/assets/shop/images/testImage-rectangle-23.jpg'
-
-import testImage4 from '../../../../shared/assets/shop/images/testImage-square-24.jpg'
-import testImage5 from '../../../../shared/assets/shop/images/testImage-square-25.jpg'
-import testImage6 from '../../../../shared/assets/shop/images/testImage-square-26.jpg'
-import testImage7 from '../../../../shared/assets/shop/images/testImage-square-27.jpg'
-import testImage8 from '../../../../shared/assets/shop/images/testImage-square-28.jpg'
-import testImage9 from '../../../../shared/assets/shop/images/testImage-square-29.jpg'
-
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
 import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
 import catalogSpares from '../../../../shared/assets/shop/images/catalog-spares.png'
