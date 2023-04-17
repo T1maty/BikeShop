@@ -25,28 +25,56 @@
     .optionBind_productBlock {
         @include flexOnlyBetween;
         gap: $defaultSmallMargin;
+        margin-top: $defaultSmallMargin;
 
-        .productBlock_control {
-            .contentBlock_deleteImg {
-                display: flex;
-                justify-content: flex-end;
+        .contentBlock_deleteImg {
+            display: flex;
+            justify-content: flex-end;
 
-                img {
-                    width: 40px;
-                    height: 40px;
+            img {
+                width: 40px;
+                height: 40px;
 
-                    &:hover {
-                        cursor: pointer;
-                        filter: contrast(3);
-                    }
+                &:hover {
+                    cursor: pointer;
+                    filter: contrast(3);
                 }
             }
+        }
+
+        .productBlock_imageBlock {
+            border: 1px solid white;
 
             .productImage {
                 img {
                     width: 100px;
                     height: 100px;
                     object-fit: cover;
+                }
+
+                // заглушка, если нету фотографии
+                .item_noImage {
+                    @include flexColumn;
+
+                    .item_noImage_title {
+                        padding: 20px 0 10px 0;
+                    }
+
+                    img {
+                        width: auto;
+                        height: 120px;
+                    }
+                }
+
+                .addImage_box {
+                    //@include flexBetween;
+
+                    .deletePhoto {
+                        margin-bottom: $defaultSmallMargin;
+                    }
+                    .addImage {
+                        @include inputTypeFile($themeColorGray);
+                    }
                 }
             }
         }
@@ -66,10 +94,6 @@
                 @include flexOnlyBetween;
                 gap: 10px;
 
-                //overflow-y: scroll;
-                //height: 300px;
-                //padding-right: 5px;
-
                 .contentBlock_content {
                     @include flexOnlyBetween;
                     gap: $defaultSmallMargin;
@@ -77,11 +101,11 @@
 
                     // опции
                     .content_options {
-                        width: 50%;
+                        width: 60%; // ширина блока
 
                         .options_wrapperBox {
                             border-radius: $smallBorderRadius;
-                            height: 100%; // пофиксить ?!
+                            height: 100%;
 
                             .options_selectRow {
                                 @include flexCenter;
@@ -91,6 +115,7 @@
 
                                 .options_select {
                                     width: 100%;
+                                    color: black;
                                 }
 
                                 .options_addButton {
@@ -104,12 +129,30 @@
 
                             .options_scrollContainer {
                                 overflow-y: auto;
-                                height: 300px;
+                                height: 300px; // высота скролл-блока
                                 padding-right: 5px;
 
                                 .options_list {
-                                    //background-color: orange;
-                                    //height: 280px;
+                                    color: black;
+
+                                    .options_listItem {
+                                        @include flexBetween;
+                                        margin-bottom: $defaultSmallMargin;
+
+                                        .listItem_title {
+                                            color: white;
+                                        }
+                                        .listItem_selectWithButton {
+                                            @include flexBetween;
+                                            gap: $defaultLargeMargin;
+
+                                            .options_search {
+                                                width: 250px;
+                                            }
+
+                                            @include deleteButton;
+                                        }
+                                    }
                                 }
                             }
 
@@ -118,11 +161,10 @@
 
                     // теги
                     .content_tags {
-                        width: 50%;
+                        width: 40%; // ширина блока
 
                         .tags_wrapperBox {
                             border-radius: $smallBorderRadius;
-                            //height: 100%; // пофиксить ?!
 
                             .tags_addButton {
                                 margin-bottom: $defaultSmallMargin;
@@ -135,7 +177,7 @@
 
                             .tags_scrollContainer {
                                 overflow-y: auto;
-                                height: 300px;
+                                height: 300px; // высота скролл-блока
                                 padding-right: 5px;
 
                                 .tags_list {

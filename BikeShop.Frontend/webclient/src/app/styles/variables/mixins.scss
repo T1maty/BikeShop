@@ -58,13 +58,12 @@
     border-radius: $largeBorderRadius;
     border: 1px solid white;
     color: white;
-    //box-shadow: 24;
 }
 
 ////////////////////////////////////////////////////////////////////
 
 // mixins for UI components //
-// textField size
+// textField with border
 @mixin defaultFiledStyle() {
     @include flexCenter;
     max-width: 250px;
@@ -115,6 +114,28 @@
     padding: $defaultLargeMargin 0;
 }
 
+@mixin deleteButton() {
+    button {
+        background-color: #ff6b6b;
+        &:hover {
+            background-color: red;
+        }
+    }
+}
+
+@mixin editProfileButton {
+    button {
+        padding: 10px;
+        background-color: #32DA75;
+        border-radius: $smallBorderRadius;
+        font-weight: bold;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
+
 // hover styles
 @mixin hoverCursorPointer {
     &:hover {
@@ -144,33 +165,6 @@
     &:hover {
         cursor: pointer;
         color: orange;
-    }
-}
-
-@mixin editProfileButton {
-    button {
-        padding: 10px;
-        background-color: #32DA75;
-        border-radius: $smallBorderRadius;
-        font-weight: bold;
-
-        &:hover {
-            opacity: 0.7;
-        }
-    }
-}
-
-@mixin workAndProductModalsButtonBlock() {
-    display: flex;
-    gap: 20px;
-
-    button {
-        height: 40px;
-        width: 100%;
-    }
-
-    > div {
-        width: 100%;
     }
 }
 
@@ -226,50 +220,28 @@
     }
 }
 
+@mixin workAndProductModalsButtonBlock() {
+    display: flex;
+    gap: 20px;
+
+    button {
+        height: 40px;
+        width: 100%;
+    }
+
+    > div {
+        width: 100%;
+    }
+}
+
 @mixin CatalogProductItemIsAvailableLabel($bgColor) {
     @include flexCenter;
     text-align: center;
-    //padding: $divButtonPadding;
     padding: $defaultSmallMargin;
     border-radius: $smallBorderRadius;
     background-color: $bgColor;
     color: white;
 }
-
-////////////////////////////////////////////////////////////////////
-
-// Header
-//@mixin burgerMenuStyles() {
-//    .leftSide_burgerMenu {
-//        position: relative;
-//
-//        .burgerMenu_iconButton {
-//            @include hoverCursorPointer;
-//            font-weight: bold;
-//            font-size: 20px;
-//            user-select: none;
-//        }
-//        .burgerMenu_menuList {
-//            position: absolute;
-//            top: 25px;
-//            right: -25px;
-//            background-color: var(--header-color);
-//            border-radius: $defaultSmallMargin;
-//            border: 1px solid white;
-//            padding: $defaultLargeMargin;
-//            min-width: 130px;
-//            z-index: 100;
-//
-//            .menuList_item {
-//                padding: 3px 0;
-//                &:hover {
-//                    cursor: pointer;
-//                    background-color: $themeColorGray;
-//                }
-//            }
-//        }
-//    }
-//}
 
 ////////////////////////////////////////////////////////////////////
 

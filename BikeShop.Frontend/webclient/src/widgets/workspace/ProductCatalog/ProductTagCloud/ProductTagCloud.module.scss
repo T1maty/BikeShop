@@ -5,13 +5,7 @@
     .productTagCloud_header {
         @include flexBetween;
         margin-bottom: 10px;
-
-        button {
-            background-color: #ff6b6b;
-            &:hover {
-                background-color: red;
-            }
-        }
+        @include deleteButton;
     }
     .productTagCloud_tagsList {
         display: flex;

@@ -82,7 +82,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
             <div className={s.imageGallery_imageList}>
                 {
-                    props.images?.length === 0 ? <div>Фотографий нет</div> :
+                    props.images?.length === 0 ? <div className={s.emptyList}>Фотографий нет</div> :
 
                         props.images?.map((img: ProductImage, key: number) => {
                             return (

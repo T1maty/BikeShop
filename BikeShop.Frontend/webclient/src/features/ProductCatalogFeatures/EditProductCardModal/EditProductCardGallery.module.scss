@@ -14,6 +14,10 @@
         max-height: 290px;
         overflow-y: auto;
 
+        .emptyList {
+            overflow: hidden;
+        }
+
         .imageList_item {
             position: relative;
 
