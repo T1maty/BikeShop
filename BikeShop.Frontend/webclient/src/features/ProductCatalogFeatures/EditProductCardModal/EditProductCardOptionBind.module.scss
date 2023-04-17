@@ -27,74 +27,6 @@
         gap: $defaultSmallMargin;
         margin-top: $defaultSmallMargin;
 
-        .productBlock_deleteBindProduct {
-            display: flex;
-            justify-content: flex-end;
-
-            img {
-                width: 40px;
-                height: 40px;
-
-                &:hover {
-                    cursor: pointer;
-                    filter: contrast(3);
-                }
-            }
-        }
-
-        .productBlock_imageBlock {
-            //border: 1px solid white;
-            background-color: $themeColorGray;
-            padding: $defaultLargeMargin;
-            border-radius: $smallBorderRadius;
-
-            .productImage {
-                //display: flex;
-                //align-items: center;
-
-                .productImage_mainImage {
-                    @include flexCenter;
-                    margin-bottom: $defaultSmallMargin;
-
-                    // заглушка, если нету фотографии
-                    //.item_noImage {
-                    //    @include flexColumn;
-                    //
-                    //    .item_noImage_title {
-                    //        padding: 20px 0 10px 0;
-                    //    }
-                    //
-                    //    img {
-                    //        width: auto;
-                    //        height: 120px;
-                    //    }
-                    //}
-
-                    img {
-                        width: 100px;
-                        height: 100px;
-                        object-fit: cover;
-                    }
-                }
-
-                .addBindedImage_box {
-                    //position: relative;
-                    //
-                    //.addBindedImage_deleteItem {
-                    //    @include deleteIconButton;
-                    //}
-
-                    .deleteBindedPhoto {
-                        @include flexCenter;
-                        margin-bottom: $defaultSmallMargin;
-                    }
-                    .addBindedImage {
-                        @include inputTypeFile($themeColorMilk);
-                    }
-                }
-            }
-        }
-
         .productBlock_productContent {
             background-color: $themeColorGray;
             border-radius: $smallBorderRadius;
@@ -109,6 +41,69 @@
             .productContent_contentBlock {
                 @include flexOnlyBetween;
                 gap: 10px;
+
+                .productBlock_deleteBindProduct {
+                    display: flex;
+                    justify-content: flex-end;
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+
+                        &:hover {
+                            cursor: pointer;
+                            filter: contrast(3);
+                        }
+                    }
+                }
+
+                .productBlock_imageBlock {
+                    padding: $defaultLargeMargin;
+
+                    .productImage {
+
+                        .productImage_mainImage {
+                            @include flexCenter;
+                            margin-bottom: $defaultSmallMargin;
+
+                            // заглушка, если нету фотографии
+                            //.item_noImage {
+                            //    @include flexColumn;
+                            //
+                            //    .item_noImage_title {
+                            //        padding: 20px 0 10px 0;
+                            //    }
+                            //
+                            //    img {
+                            //        width: auto;
+                            //        height: 120px;
+                            //    }
+                            //}
+
+                            img {
+                                width: 100px;
+                                height: 100px;
+                                object-fit: cover;
+                            }
+                        }
+
+                        .addBindedImage_box {
+                            //position: relative;
+                            //
+                            //.addBindedImage_deleteItem {
+                            //    @include deleteIconButton;
+                            //}
+
+                            .deleteBindedPhoto {
+                                @include flexCenter;
+                                margin-bottom: $defaultSmallMargin;
+                            }
+                            .addBindedImage {
+                                @include inputTypeFile($themeColorMilk);
+                            }
+                        }
+                    }
+                }
 
                 .contentBlock_content {
                     @include flexOnlyBetween;

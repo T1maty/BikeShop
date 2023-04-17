@@ -14,7 +14,7 @@ import {ChooseProductModal} from '../../ChooseProductModal/ChooseProductModal'
 import {ProductTagBindDTO} from './models/ProductTagBindDTO'
 import {ChooseProductTagModal} from '../AddProductCardTagModal/AddProductCardTagModal'
 import {useSnackbar} from 'notistack'
-import NoProductImage from '../../../shared/assets/shop/icons/bicycle-02.svg';
+import NoProductImage from '../../../shared/assets/shop/icons/bicycle-02.svg'
 
 interface ProductCardOptionBindProps {
     product: ProductFullData
@@ -267,67 +267,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                         field.value?.map((bindedProduct: Product, index: number) => {
                             return (
                                 <div className={s.optionBind_productBlock}>
-                                    {
-                                        index > 0 ?
-                                            <div className={s.productBlock_deleteBindProduct}>
-                                                <img src={RemoveIcon}
-                                                     alt="remove-icon"
-                                                     onClick={() => {deleteBindedProductHandler(field, bindedProduct)}}
-                                                />
-                                            </div> : ''
-                                    }
-
-                                    <div className={s.productBlock_imageBlock}>
-
-                                        <div className={s.productImage}>
-                                            {
-                                                <div className={s.productImage_mainImage}>
-
-                                                {/*props.images.length === 0 ?*/}
-                                                {/*      <div className={s.item_noImage}>*/}
-                                                {/*          <div className={s.item_noImage_title}>*/}
-                                                {/*             Sorry, no photo!*/}
-                                                {/*          </div>*/}
-                                                {/*         <div className={s.item_noImage_icon}>*/}
-                                                {/*             <img src={NoProductImage} alt="no-product-image"/>*/}
-                                                {/*         </div>*/}
-                                                {/*     </div> :*/}
-
-                                                    <img
-                                                        src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
-                                                        alt="product-image"
-                                                    />
-                                                </div>
-                                            }
-
-                                            {
-                                                index > 0 ?
-                                                    <div className={s.addBindedImage_box}>
-                                                        {/*<img src={RemoveIcon} alt="remove-icon"*/}
-                                                        {/*     className={s.addBindedImage_deleteItem}*/}
-                                                        {/*     onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}*/}
-                                                        {/*/>*/}
-
-                                                        <Button buttonDivWrapper={s.deleteBindedPhoto}
-                                                                onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}
-                                                        >
-                                                            Удалить фото
-                                                        </Button>
-
-                                                        <div className={s.addBindedImage}>
-                                                            <input type="file" id="file"
-                                                                   accept="image/png, image/jpeg"
-                                                                   className={s.inputFile}
-                                                                   onChange={(e) => {
-                                                                       uploadBindedPhotoHandler(e, bindedProduct)
-                                                                   }}
-                                                            />
-                                                        </div>
-                                                    </div> : ''
-                                            }
-                                        </div>
-                                    </div>
-
 
                                     <div className={s.productBlock_productContent}>
                                         <div className={s.productContent_info}>
@@ -337,6 +276,66 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                         </div>
 
                                         <div className={s.productContent_contentBlock}>
+                                            {
+                                                index > 0 ?
+                                                    <div className={s.productBlock_deleteBindProduct}>
+                                                        <img src={RemoveIcon}
+                                                             alt="remove-icon"
+                                                             onClick={() => {deleteBindedProductHandler(field, bindedProduct)}}
+                                                        />
+                                                    </div> : ''
+                                            }
+                                            <div className={s.productBlock_imageBlock}>
+
+                                                <div className={s.productImage}>
+                                                    {
+                                                        <div className={s.productImage_mainImage}>
+
+                                                            {/*props.images.length === 0 ?*/}
+                                                            {/*      <div className={s.item_noImage}>*/}
+                                                            {/*          <div className={s.item_noImage_title}>*/}
+                                                            {/*             Sorry, no photo!*/}
+                                                            {/*          </div>*/}
+                                                            {/*         <div className={s.item_noImage_icon}>*/}
+                                                            {/*             <img src={NoProductImage} alt="no-product-image"/>*/}
+                                                            {/*         </div>*/}
+                                                            {/*     </div> :*/}
+
+                                                            <img
+                                                                src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
+                                                                alt="product-image"
+                                                            />
+                                                        </div>
+                                                    }
+
+                                                    {
+                                                        index > 0 ?
+                                                            <div className={s.addBindedImage_box}>
+                                                                {/*<img src={RemoveIcon} alt="remove-icon"*/}
+                                                                {/*     className={s.addBindedImage_deleteItem}*/}
+                                                                {/*     onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}*/}
+                                                                {/*/>*/}
+
+                                                                <Button buttonDivWrapper={s.deleteBindedPhoto}
+                                                                        onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}
+                                                                >
+                                                                    Удалить фото
+                                                                </Button>
+
+                                                                <div className={s.addBindedImage}>
+                                                                    <input type="file" id="file"
+                                                                           accept="image/png, image/jpeg"
+                                                                           className={s.inputFile}
+                                                                           onChange={(e) => {
+                                                                               uploadBindedPhotoHandler(e, bindedProduct)
+                                                                           }}
+                                                                    />
+                                                                </div>
+                                                            </div> : ''
+                                                    }
+                                                </div>
+                                            </div>
+
                                             <div className={s.contentBlock_content}>
                                                 <div className={s.content_options}>
                                                     <fieldset className={s.options_wrapperBox}>
