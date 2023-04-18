@@ -8,6 +8,7 @@ import {CustomSearchInput} from "../../../../shared/ui"
 import {ShoppingCart} from "../ShoppingCart/ShoppingCart"
 import ShopLogo from "../../../../shared/assets/shop/icons/ShopLogo.svg"
 import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
+import SearchIcon from '../../../../shared/assets/shop/icons/search.png'
 import BurgerMenuIcon from '../../../../shared/assets/shop/icons/menu-03.svg'
 // import BurgerMenuIcon from '../../../../shared/assets/shop/icons/menu.png'
 // import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
@@ -38,7 +39,12 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                         </div>
 
                         <div className={s.shop_header_right}>
-                            <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
+                            <div className={s.searchField}>
+                                <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
+                            </div>
+                            <div className={s.searchIcon}>
+                                <img src={SearchIcon} alt="search-icon"/>
+                            </div>
 
                             <div>
                                 <img src={language} alt="language-logo"/>

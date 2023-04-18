@@ -8,15 +8,23 @@
     .container {
         @include defaultContainerForShop; // ограничивающий контейнер
         @include flexOnlyBetween;
-        gap: $defaultLargeMargin;
+        gap: 60px;
         // можно задать свойство в каждом children или в ShopWrapper
         //flex: 1 1 auto; // чтобы прибить футер к низу
 
+        @media (max-width: 590px) {
+            gap: 30px;
+            padding: 0 20px;
+        }
+
         .catalog_left {
-            //border: 1px solid black;
-            width: 15%;
+            //width: 15%;
             //height: 69vh; // надо пофиксить ?!
             height: 100%; // надо пофиксить ?!
+
+            //@media (max-width: 590px) {
+            //    display: none;
+            //}
 
             .tags_title {
                 font-weight: bold;
@@ -34,8 +42,7 @@
 
         .catalog_right {
             @include flexColumn;
-            //border: 1px solid black;
-            width: 85%;
+            //width: 85%;
 
             > div {
                 width: 100%;
@@ -44,6 +51,10 @@
             @include divLargeMarginBottom;
 
             .right_cloudCategory {
+
+                @media (max-width: 390px) {
+                    width: 250px;
+                }
 
                 .cloudCategory_title {
                     font-weight: bold;
@@ -55,12 +66,21 @@
                     border-radius: $largeBorderRadius;
                     padding: $defaultLargeMargin;
                     color: white;
+
+                    @media (max-width: 390px) {
+                        width: 200px;
+                    }
                 }
             }
 
             .right_filters {
                 @include flexBetween;
                 gap: $defaultLargeMargin;
+
+                @media (max-width: 390px) {
+                    width: 250px;
+                    flex-wrap: wrap;
+                }
 
                 > div {
                     display: flex;
@@ -70,6 +90,10 @@
                 }
 
                 .filter_buttons {
+                    @media (max-width: 390px) {
+                        width: 200px;
+                    }
+
                     .filter_item {
                         border: 2px solid $themeColorDark;
                         border-radius: $defaultLargeMargin;
@@ -107,12 +131,24 @@
                 flex-wrap: wrap;
                 gap: $defaultLargeMargin;
 
+                @media (max-width: 390px) {
+                    justify-content: left;
+                }
+
                 .content_item {
                     @include flexColumn;
                     border: 1px solid black;
                     background-color: white;
                     min-width: 300px;
                     @include hoverCursorPointer;
+
+                    @media (max-width: 490px) {
+                        min-width: 200px;
+                    }
+
+                    @media (max-width: 390px) {
+                        //min-width: 150px;
+                    }
 
                     > div {
                         margin-bottom: $defaultLargeMargin;
@@ -123,14 +159,29 @@
 
                         .item_image {
                             text-align: center;
-                            min-height: 200px;
+                            //min-height: 200px;
                             width: 100%; // чтобы область клика была вся ширина
 
                             img {
-                                //width: auto;
                                 width: 200px;
                                 height: 200px;
                                 object-fit: cover;
+                            }
+
+                            @media (max-width: 490px) {
+                                img {
+                                    width: 150px;
+                                    height: 150px;
+                                    object-fit: cover;
+                                }
+                            }
+
+                            @media (max-width: 390px) {
+                                img {
+                                    width: 100px;
+                                    height: 100px;
+                                    object-fit: cover;
+                                }
                             }
                         }
 
@@ -152,6 +203,7 @@
                             font-weight: bold;
                             text-align: center;
                             margin-top: 10px;
+                            padding: 5px;
                         }
                     }
 
