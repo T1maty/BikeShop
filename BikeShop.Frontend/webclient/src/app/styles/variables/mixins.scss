@@ -363,6 +363,24 @@
             padding: 20px;
             @include divSmallMarginBottom;
             @include hoverCursorPointer;
+
+            .menu_item {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                .item_icon {
+                    img {
+                        width: 25px;
+                        height: 25px;
+                    }
+                }
+                .item_title {
+                    &:hover {
+                        color: orange;
+                    }
+                }
+            }
         }
     }
 }

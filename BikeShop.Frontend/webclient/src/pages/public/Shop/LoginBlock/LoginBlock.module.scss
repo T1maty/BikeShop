@@ -18,6 +18,11 @@
     .profileIcon {
         display: none;
 
+        img {
+            width: 27px;
+            height: 27px;
+        }
+
         @media(max-width: 590px) {
             display: flex;
         }

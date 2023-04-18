@@ -5,6 +5,7 @@
     //position: relative;
     position: fixed;
     width: 100%;
+    z-index: 50;
 
     .shopHeader_main {
         background-color: $themeColorDark;
@@ -89,8 +90,10 @@
 .searchInputBox {
 
     input {
-        width: calc(100% - 12px);
+        //width: calc(100% - 12px);
+        width: 100%;
         padding: 5px 10px;
         font-size: 16px;
+        height: 40px;
     }
 }

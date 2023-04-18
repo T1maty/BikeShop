@@ -25,7 +25,6 @@ interface ShopHeaderProps {
 
 export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, userFirstName,
                                                           searchActive, setSearchActive}) => {
-
     const navigate = useNavigate()
 
     const [menuActive, setMenuActive] = useState<boolean>(false)
@@ -53,7 +52,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
 
                         <div className={s.shop_header_right}>
                             <div className={s.searchField}>
-                                <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
+                                <CustomSearchInput placeholder={'Поиск товара...'} clearInputValue={() => {}}/>
                             </div>
                             <div className={s.searchIcon} onClick={() => {setSearchActive(!searchActive)}}>
                                 <img src={SearchIcon} alt="search-icon"/>
@@ -65,7 +64,10 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
 
                             <ShoppingCart/>
 
-                            <LoginBlock isAuth={isAuth} userLastName={userLastName} userFirstName={userFirstName}/>
+                            <LoginBlock isAuth={true}
+                                        userLastName={userLastName}
+                                        userFirstName={userFirstName}
+                            />
                         </div>
                     </div>
 
@@ -82,7 +84,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
             {
                 searchActive &&
                 <div className={s.searchInputBox}>
-                    <input type='text' placeholder={'Название товара...'}/>
+                    <input type='text' placeholder={'Поиск товара...'} autoFocus/>
                 </div>
             }
         </div>
