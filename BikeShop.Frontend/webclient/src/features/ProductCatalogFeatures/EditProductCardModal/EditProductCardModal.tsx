@@ -95,7 +95,9 @@ export const EditProductCardModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.editProductCardModal}>

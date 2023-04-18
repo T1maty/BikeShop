@@ -14,6 +14,7 @@ public static class DependencyInjection
         services.AddMediatR(Assembly.GetExecutingAssembly());
         
         services.AddScoped<IGetAllServices, GetAllService>();
+        services.AddScoped<IScheduleService, ScheduleService>();
         services.AddScoped<IShiftService, ShiftService>();
         
         return services;

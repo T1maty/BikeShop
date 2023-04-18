@@ -1,8 +1,13 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from './EditProductCardOptionBind.module.scss'
 import {
-    ProductCardAPI, Product, ProductFullData, ProductImage,
-    ProductOption, ProductOptionVariant, ProductOptionVariantBind
+    Product,
+    ProductCardAPI,
+    ProductFullData,
+    ProductImage,
+    ProductOption,
+    ProductOptionVariant,
+    ProductOptionVariantBind
 } from '../../../entities'
 import {Controller, UseFormReturn} from 'react-hook-form'
 import {Button, DeleteButton, LoaderScreen} from '../../../shared/ui'
@@ -14,7 +19,6 @@ import {ChooseProductModal} from '../../ChooseProductModal/ChooseProductModal'
 import {ProductTagBindDTO} from './models/ProductTagBindDTO'
 import {ChooseProductTagModal} from '../AddProductCardTagModal/AddProductCardTagModal'
 import {useSnackbar} from 'notistack'
-import NoProductImage from '../../../shared/assets/shop/icons/bicycle-02.svg'
 
 interface ProductCardOptionBindProps {
     product: ProductFullData
@@ -241,7 +245,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                     <div className={s.optionBind}>
 
                         <ChooseProductModal open={v} setOpen={sV}
-                                            addData={(product) => {addProductBind(product, field)}}
+                                            addData={(product) => {
+                                                addProductBind(product, field)
+                                            }}
                         />
 
                         <div className={s.optionBind_header}>
@@ -357,7 +363,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                             <legend>Опции</legend>
 
                                                             <Controller
-                                                                key={index}
                                                                 name={'productOptions'}
                                                                 control={props.control.control}
                                                                 render={({field}: any) =>
@@ -398,8 +403,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                     props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
                                                                                         .map((variant: ProductOptionVariantBind) => {
                                                                                             return (
-                                                                                                <div key={index}
-                                                                                                     className={s.options_listItem}
+                                                                                                <div
+                                                                                                    className={s.options_listItem}
                                                                                                 >
                                                                                                     <div
                                                                                                         className={s.listItem_title}>
@@ -409,7 +414,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                     <div
                                                                                                         className={s.listItem_selectWithButton}>
                                                                                                         <Select
-                                                                                                            key={index}
+
                                                                                                             className={s.options_search}
                                                                                                             placeholder={'Варианты'}
                                                                                                             options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
@@ -461,7 +466,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                             </Button>
 
                                                             <Controller
-                                                                key={index}
+
                                                                 name={'productTags'}
                                                                 control={props.control.control}
                                                                 render={({field}: any) =>
@@ -469,7 +474,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                                         <div className={s.tags_list}>
                                                                             <ChooseProductTagModal
-                                                                                key={index}
+                                                                                
                                                                                 open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
                                                                                 setOpen={(value) => {
                                                                                     setOpenProductTagModalHandler(bindedProduct, value)
@@ -485,7 +490,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                         return (
                                                                                             <div
                                                                                                 className={s.tags_listItem}
-                                                                                                key={index}
+
                                                                                             >
                                                                                                 <div
                                                                                                     className={s.item_name}>
@@ -498,7 +503,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                 />
                                                                                             </div>
                                                                                         )
-                                                                                })
+                                                                                    })
                                                                             }
 
                                                                         </div>

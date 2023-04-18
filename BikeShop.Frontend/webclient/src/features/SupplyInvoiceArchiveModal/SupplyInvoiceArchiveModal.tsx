@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import s from './SupplyInvoiceArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../shared/ui'
 import useSupplyInvoiceArchiveModal from './SupplyInvoiceArchiveModalStore'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
-import {BikeShopPaths} from '../../app/routes/paths'
+import {SupplyInvoiceDTO} from "../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
+import Enumerable from "linq";
+import useSupplyInvoice from "../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore";
+import {BikeShopPaths} from "../../app/routes/paths";
 
 export const SupplyInvoiceArchiveModal = () => {
 
@@ -16,22 +19,10 @@ export const SupplyInvoiceArchiveModal = () => {
     const isLoading = useSupplyInvoiceArchiveModal(s => s.isLoading)
     const errorStatus = useSupplyInvoiceArchiveModal(s => s.errorStatus)
     const getArchive = useSupplyInvoiceArchiveModal(s => s.getArchive)
+    const archive = useSupplyInvoiceArchiveModal(s => s.archive)
 
-    const [data, setData] = useState<any>([
-        {id: 100, status: 'Ожидает', qty: 28, totalNum: 59, sum: 9999,
-            info: 'blalfldflfsldflsf sfsdfs sfsfs', created: '21/04/2023', updated: '22/04/2023'},
-        {id: 200, status: 'Отменён', qty: 58, totalNum: 69, sum: 9999999,
-            info: 'blalfldfgdg dgyry545s sfsfs', created: '21/04/2023', updated: '22/04/2023'},
-        {id: 300, status: 'Применён', qty: 158, totalNum: 189, sum: 109999,
-            info: 'blalfldflfrete gergf sfsdfs sfsfs dfg dgfd dfffffffffff fgfg453453 rg f dfgd dg d',
-            created: '21/04/2023', updated: '22/04/2023'},
-        {id: 400, status: 'Применён', qty: 158, totalNum: 189, sum: 109999,
-            info: 'blalfldflfrete gergf sfsdfs sfsfs dfg dgfd dfffffffffff fgfg453453 rg f dfgd dg d',
-            created: '21/04/2023', updated: '22/04/2023'},
-        {id: 500, status: 'Применён', qty: 158, totalNum: 189, sum: 109999,
-            info: 'blalfldflfrete gergf sfsdfs sfsfs dfg dgfd dfffffffffff fgfg453453 rg f dfgd dg d',
-            created: '21/04/2023', updated: '22/04/2023'},
-    ])
+    const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
+    const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -40,7 +31,8 @@ export const SupplyInvoiceArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        // getArchive()
+        getArchive()
+        //console.log('архив приходов', archive)
     }, [])
 
     if (isLoading) {
@@ -50,52 +42,58 @@ export const SupplyInvoiceArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.supplyInvoiceArchiveModal_mainBlock}>
                     <div className={s.supplyInvoiceArchiveModal_title}>Приходные накладные</div>
                     <div className={s.supplyInvoiceArchiveModal_list}>
                         {
-                            data.map((el: any) => {
+                            archive.map((el: SupplyInvoiceDTO) => {
                                 return (
-                                    <div className={s.supplyInvoiceArchiveModal_item} key={el.id}
-                                         onDoubleClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}
+                                    <div className={s.supplyInvoiceArchiveModal_item} key={el.supplyInvoice.id}
+                                         onDoubleClick={() => {
+                                             setIsCreating(false)
+                                             setCurrentSupplyInvoice(el);
+                                             navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                         }}
                                     >
                                         <div className={
                                             // s.item_status
-                                            el.status === 'Ожидает' ? s.status_WaitingPayment :
-                                                el.status === 'Применён' ? s.status_Ready :
-                                                    el.status === 'Отменён' ? s.status_Canceled : ''
+                                            el.supplyInvoice.sypplyActStatus === 'Created' ? s.status_WaitingPayment :
+                                                el.supplyInvoice.sypplyActStatus === 'Executed' ? s.status_Ready :
+                                                    el.supplyInvoice.sypplyActStatus === 'Canceled' ? s.status_Canceled : ''
                                         }>
-                                            {el.status}
+                                            {el.supplyInvoice.sypplyActStatus}
                                         </div>
                                         <div className={s.item_content}>
                                             <div className={s.item_contentTop}>
                                                 <div className={s.item_contentTop_number}>
-                                                    №{el.id}
+                                                    №{el.supplyInvoice.id}
                                                 </div>
                                                 <div className={s.item_contentTop_qty}>
-                                                    {el.qty} поз.
+                                                    {el.supplyInvoiceProducts.length} поз.
                                                 </div>
                                                 <div className={s.item_contentTop_totalNum}>
-                                                    {el.totalNum} ед.
+                                                    {Enumerable.from(el.supplyInvoiceProducts).select(n => n.quantity).sum()} ед.
                                                 </div>
                                                 <div className={s.item_contentTop_sum}>
-                                                    {el.sum} ГРН.
+                                                    {el.supplyInvoice.total} ГРН.
                                                 </div>
                                             </div>
                                             <div className={s.item_contentBottom}>
                                                 <div className={s.item_contentBottom_info}>
-                                                    {el.info}
+                                                    {el.supplyInvoice.description}
                                                 </div>
                                                 <div className={s.item_contentBottom_date}>
                                                     <div>
                                                         <div>Создан:</div>
-                                                        <div>{el.created}</div>
+                                                        <div>{el.supplyInvoice.createdAt}</div>
                                                     </div>
                                                     <div>
                                                         <div>Изменён:</div>
-                                                        <div>{el.updated}</div>
+                                                        <div>{el.supplyInvoice.updatedAt}</div>
                                                     </div>
                                                 </div>
                                             </div>
