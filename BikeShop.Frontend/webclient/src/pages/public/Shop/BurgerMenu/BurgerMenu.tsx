@@ -6,6 +6,7 @@ import ShopLogo from "../../../../shared/assets/shop/icons/ShopLogo.svg"
 import CatalogIcon from "../../../../shared/assets/shop/icons/catalog-icon-01.svg"
 import PhotosIcon from "../../../../shared/assets/shop/icons/photos-icon-01.svg"
 import ContactsIcon from "../../../../shared/assets/shop/icons/contacts-icon-01.svg"
+import LanguageIcon from "../../../../shared/assets/shop/icons/language-icon-white.svg"
 import ProfileIcon from '../../../../shared/assets/shop/icons/profile-icon-02-white.svg'
 import LoginIcon from '../../../../shared/assets/shop/icons/login-icon-02-white.svg'
 
@@ -57,6 +58,15 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({menuActive, setMenuActive
         },
         {
             id: 5,
+            icon: LanguageIcon,
+            title: 'Язык',
+            func: () => {
+                // navigate(BikeShopPaths.SHOP.CATALOG)
+                setMenuActive(false)
+            }
+        },
+        {
+            id: 6,
             icon: ProfileIcon,
             title: 'Профиль',
             func: () => {
@@ -65,7 +75,7 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({menuActive, setMenuActive
             }
         },
         {
-            id: 6,
+            id: 7,
             icon: LoginIcon,
             title: 'Выход',
             func: () => {

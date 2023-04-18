@@ -64,7 +64,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                                 <img src={SearchIcon} alt="search-icon"/>
                             </div>
 
-                            <div>
+                            <div className={s.language}>
                                 <img src={language} alt="language-logo"/>
                             </div>
 

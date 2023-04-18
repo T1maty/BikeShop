@@ -361,7 +361,7 @@
         }
         .burgerMenu_items {
             padding: 20px;
-            @include divSmallMarginBottom;
+            @include divLargeMarginBottom;
             @include hoverCursorPointer;
 
             .menu_item {
