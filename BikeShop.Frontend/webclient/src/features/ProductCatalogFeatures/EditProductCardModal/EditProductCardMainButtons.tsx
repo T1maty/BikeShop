@@ -6,7 +6,7 @@ interface MainButtonsProps {
     setOpen: (value: boolean) => void
 }
 
-export const EditProductCardModalMainButtons: React.FC<MainButtonsProps> = ({setOpen}) => {
+export const EditProductCardMainButtons: React.FC<MainButtonsProps> = ({setOpen}) => {
 
     return (
         <div className={s.mainButtons}>

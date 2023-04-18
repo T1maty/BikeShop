@@ -14,7 +14,7 @@ import {ProductImage} from '../../../entities'
 import {EditProductCardDescriptionFull} from './EditProductCardDescriptionFull'
 import {EditProductCardDescriptionShort} from './EditProductCardDescriptionShort'
 import {EditProductCardOptionBind} from './EditProductCardOptionBind'
-import {EditProductCardModalMainButtons} from './EditProductCardModalMainButtons'
+import {EditProductCardMainButtons} from './EditProductCardMainButtons'
 
 export const EditProductCardModal = () => {
 
@@ -80,7 +80,7 @@ export const EditProductCardModal = () => {
 
     useEffect(() => {
         if (errorStatus === 'success') {
-            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+            enqueueSnackbar('Изменения сохранены', {variant: 'success', autoHideDuration: 3000})
             
         }
         if (errorStatus === 'error') {
@@ -110,7 +110,7 @@ export const EditProductCardModal = () => {
                                     {/*Catalog Key: {currentProduct.product.catalogKey}*/}
                                 </div>
                                 <EditProductCardStatus control={formControl} name={'checkStatus'}/>
-                                <EditProductCardModalMainButtons setOpen={setOpen}/>
+                                <EditProductCardMainButtons setOpen={setOpen}/>
                             </div>
 
                             <div className={s.editProductCardModal_scrollContainer}>
