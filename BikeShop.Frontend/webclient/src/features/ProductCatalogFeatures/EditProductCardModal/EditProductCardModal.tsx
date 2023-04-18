@@ -81,7 +81,7 @@ export const EditProductCardModal = () => {
     useEffect(() => {
         if (errorStatus === 'success') {
             enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
-            formControl.reset()
+            
         }
         if (errorStatus === 'error') {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
