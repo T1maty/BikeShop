@@ -67,7 +67,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
 
     useEffect(() => {
         if (fio.length > 0 || phoneNumber.length > 0) {
-            findUser({fio, phoneNumber});
+            findUser({fio, phoneNumber})
         }
     }, [searchClientByFIO, searchClientByPhone])
 

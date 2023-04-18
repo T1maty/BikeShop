@@ -1,12 +1,12 @@
 @import '../../../../app/styles/variables/mixins';
 @import '../../../../app/styles/variables/variables';
 
-.shop_wrapper {
+.shopHeader_wrapper {
     //position: relative;
     position: fixed;
     width: 100%;
 
-    .shop_headerMain {
+    .shopHeader_main {
         background-color: $themeColorDark;
 
         .container {
@@ -86,6 +86,11 @@
         }
     }
 }
+.searchInputBox {
 
-
-
+    input {
+        width: calc(100% - 12px);
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+}
