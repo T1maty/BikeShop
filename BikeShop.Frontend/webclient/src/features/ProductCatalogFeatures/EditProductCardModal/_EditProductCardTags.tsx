@@ -12,7 +12,7 @@ interface ControlledProps {
     control: UseFormReturn<any>
 }
 
-export const EditProductCardTags = (props: ControlledProps) => {
+export const _EditProductCardTags = (props: ControlledProps) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const [open, setOpen] = useState(false)

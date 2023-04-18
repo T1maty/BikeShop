@@ -5,15 +5,8 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    ChooseClientModal,
-    CreateOptionModal,
-    CreateProductModal,
-    CreateSpecificationModal,
-    EditProductCardModal,
-    EmployeeSalaryModal,
-    EndWorkDayModal,
-    ReportDayModal,
-    SupplyInvoiceArchiveModal
+    ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
+    EditProductCardModal, EmployeeSalaryModal, EndWorkDayModal, ReportDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -55,18 +48,12 @@ export const MainPage = () => {
     ])
 
     const chooseClientHandler = (user: User) => {
-        // setServiceUser(user)
         setUser(user)
         setIsClientChosen(true)
         setOpenClientModal(false)
     }
 
-    const createServiceHandler = () => {
-        setOpenClientModal(true)
-    }
-
     return (
-        // <div className={s.mainPageWrapper}>
         <div className={s.mainPageMainBlock}>
 
             <CreateProductModal/>
@@ -234,6 +221,5 @@ export const MainPage = () => {
             </div>
 
         </div>
-        // </div>
     )
 }

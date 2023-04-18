@@ -4,6 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -12,6 +13,7 @@ interface EditProductCardModalStore {
     setIsLoading: (value: boolean) => void
     isError: boolean
     setIsError: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
 
     currentProduct: ProductFullData
     getProductCard: (productId: number) => void
@@ -31,6 +33,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
     setIsLoading: (value) => set({isLoading: value}),
     isError: false,
     setIsError: (value) => set({isError: value}),
+    errorStatus: 'default',
 
     currentProduct: {} as ProductFullData,
     getProductCard: (productId: number) => {
@@ -43,23 +46,22 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             set({isLoading: false})
             set({openEditProductCardModal: true})
         }).catch((error: any) => {
-            set({isError: true})
+            set({errorStatus: 'error'})
         }).finally(() => {
             set({isLoading: false})
-            set({isError: false})
+            set({errorStatus: 'default'})
         })
     },
     updateProductCard: (data) => {
         set({isLoading: true})
         ProductCardAPI.updateProductCard(data).then((res: any) => {
             set({isLoading: false})
-            console.log('карточка обновлена')
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
-            // set({isError: true})
-            console.log('карточка не обновлена', error)
+            set({errorStatus: 'error'})
         }).finally(() => {
             set({isLoading: false})
-            // set({isError: false})
+            set({errorStatus: 'default'})
         })
     },
 
@@ -69,11 +71,13 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         EntitiesAPI.Option.getOptions().then(res => {
             set(state => {
                 state.allOptions = res.data
-                console.log('все доступные опции', state.allOptions)
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('опции не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
         })
     },
 
@@ -83,16 +87,15 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         EntitiesAPI.Specification.getSpecifications().then(res => {
             set(state => {
                 state.allSpecifications = res.data
-                console.log('все доступные спецификации', state.allSpecifications)
             })
             set({isLoading: false})
         }).catch((error: any) => {
-            console.log('спецификации не получены')
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
             set({isLoading: false})
         })
     },
-
-
 })))/*, {
     name: "editProductCardModal",
     version: 1

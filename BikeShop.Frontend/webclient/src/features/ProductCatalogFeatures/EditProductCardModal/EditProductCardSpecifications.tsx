@@ -16,6 +16,7 @@ interface ControlledProps {
 export const EditProductCardSpecifications = (props: ControlledProps) => {
 
     const allSpecifications = useEditProductCardModal(s => s.allSpecifications)
+
     const [selectedSpecification, setSelectedSpecification] = useState<ProductSpecificationBind>()
 
     const getSpecificationsHandler = (field: any) => {

@@ -6,9 +6,9 @@ import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
 import {EditProductCardModal} from "../../../features"
 import {useSnackbar} from "notistack"
-import {ProductTag} from "../../../entities";
+import {ProductTag} from "../../../entities"
 import useProductCatalogTableStore
-    from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableStore";
+    from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableStore"
 
 export const ProductCatalog = () => {
 
@@ -16,10 +16,9 @@ export const ProductCatalog = () => {
 
     const getProductCard = useEditProductCardModal(s => s.getProductCard)
     const isError = useEditProductCardModal(s => s.isError)
-    const snstt = useProductCatalogTableStore(s => s.setNotSortedToTable)
+    const setNotSortedToTable = useProductCatalogTableStore(s => s.setNotSortedToTable)
 
     const [tags, setTags] = useState<ProductTag[]>([])
-
     const [value, setValue] = useState('') // заглушка для инпута
 
     useEffect(() => {
@@ -65,7 +64,7 @@ export const ProductCatalog = () => {
                     }}>
                         Все товары
                     </Button>
-                    <Button onClick={snstt}>
+                    <Button onClick={setNotSortedToTable}>
                         Неотсортированные
                     </Button>
                 </div>

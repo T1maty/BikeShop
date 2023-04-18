@@ -26,6 +26,7 @@ export const EditProductCardModal = () => {
     const open = useEditProductCardModal(s => s.openEditProductCardModal)
     const setOpen = useEditProductCardModal(s => s.setOpenEditProductCardModal)
     const isLoading = useEditProductCardModal(s => s.isLoading)
+    const errorStatus = useEditProductCardModal(s => s.errorStatus)
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const getAllOptions = useEditProductCardModal(s => s.getAllOptions)
@@ -62,10 +63,10 @@ export const EditProductCardModal = () => {
             description: currentProduct.productCard !== undefined ? currentProduct.productCard.description : '',
             shortDescription: currentProduct.productCard !== undefined ? currentProduct.productCard.descriptionShort : ''
         })
-
-        setImages(currentProduct.productImages)
         formControl.setValue('productOptions', currentProduct.productOptions)
         formControl.setValue('bindedProducts', currentProduct.bindedProducts)
+
+        setImages(currentProduct.productImages)
 
         if (currentProduct.productCard !== undefined) {
             let contentBlock = htmlToDraft(currentProduct.productCard?.description)
@@ -75,8 +76,17 @@ export const EditProductCardModal = () => {
                 setEditorState(editorState)
             }
         }
-
     }, [currentProduct])
+
+    useEffect(() => {
+        if (errorStatus === 'success') {
+            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+            formControl.reset()
+        }
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>

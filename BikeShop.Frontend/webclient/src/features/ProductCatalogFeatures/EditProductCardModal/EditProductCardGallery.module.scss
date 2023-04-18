@@ -74,6 +74,7 @@
         .imageGallery_addImage {
             margin-top: $defaultLargeMargin;
             @include inputTypeFile($themeColorGray);
+            color: black;
         }
     }
 }

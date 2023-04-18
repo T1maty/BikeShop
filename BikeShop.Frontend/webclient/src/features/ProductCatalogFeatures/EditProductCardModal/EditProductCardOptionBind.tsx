@@ -486,22 +486,24 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                             />
 
                                                                             {
-                                                                                field.value?.filter((n: ProductTagBindDTO) => n.productId == bindedProduct.id).map((n: ProductTagBindDTO, index: number) => {
-                                                                                    return (
-                                                                                        <div className={s.tags_listItem}
-                                                                                             key={index}
-                                                                                        >
+                                                                                field.value?.filter((n: ProductTagBindDTO) => n.productId == bindedProduct.id)
+                                                                                    .map((n: ProductTagBindDTO, index: number) => {
+                                                                                        return (
                                                                                             <div
-                                                                                                className={s.item_name}>
-                                                                                                {n.productTag.name}
+                                                                                                className={s.tags_listItem}
+                                                                                                key={index}
+                                                                                            >
+                                                                                                <div
+                                                                                                    className={s.item_name}>
+                                                                                                    {n.productTag.name}
+                                                                                                </div>
+                                                                                                <DeleteButton size={20}
+                                                                                                              onClick={() => {
+                                                                                                                  field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
+                                                                                                              }}
+                                                                                                />
                                                                                             </div>
-                                                                                            <DeleteButton size={20}
-                                                                                                          onClick={() => {
-                                                                                                              field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
-                                                                                                          }}
-                                                                                            />
-                                                                                        </div>
-                                                                                    )
+                                                                                        )
                                                                                 })
                                                                             }
 
