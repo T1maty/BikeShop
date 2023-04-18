@@ -81,7 +81,7 @@ export const EditProductCardModal = () => {
     useEffect(() => {
         if (errorStatus === 'success') {
             enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
-            formControl.reset()
+            
         }
         if (errorStatus === 'error') {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
@@ -95,7 +95,9 @@ export const EditProductCardModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.editProductCardModal}>

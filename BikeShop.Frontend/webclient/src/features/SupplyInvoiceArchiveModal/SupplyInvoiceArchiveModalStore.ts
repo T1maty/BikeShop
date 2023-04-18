@@ -1,8 +1,9 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {ArchiveAPI} from '../../entities'
 import {ErrorStatusTypes} from "../../entities/enumerables/ErrorStatusTypes"
+import {SupplyInvoiceDTO} from "../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
+import {SupplyInvoiceAPI} from "../../entities/api/Acts/SupplyInvoiceAPI";
 
 interface SupplyInvoiceArchiveModalStore {
     openSupplyInvoiceArchiveModal: boolean
@@ -10,7 +11,7 @@ interface SupplyInvoiceArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    archive: any[]
+    archive: SupplyInvoiceDTO[]
     getArchive: () => void
 }
 
@@ -25,7 +26,8 @@ const useSupplyInvoiceArchiveModal = create<SupplyInvoiceArchiveModalStore>()(/*
     archive: [],
     getArchive: () => {
         set({isLoading: true})
-        ArchiveAPI.getArchive().then((res: any) => {
+        SupplyInvoiceAPI.getByShop(1, 100).then((res: any) => {
+            console.log("архив приходов", res.data)
             set(state => {
                 state.archive = res.data
             })

@@ -6,12 +6,21 @@ import {ChooseProductModal} from "../../../features";
 import {SupplyInvoiceCreateModel} from "./models/SupplyInvoiceCreateModel";
 import {ProductExtended} from "../../../entities";
 import {$api} from "../../../shared";
+import useSupplyInvoice from "./models/SupplyInvoiceStore";
+import Enumerable from "linq";
+import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
 
 export const ArrivalOfProducts = () => {
 
     const [data, setData] = useState<any[]>([]);
-    const [vis, setVis] = useState(false);
-    const [isCreating, setIsCreating] = useState(false);
+    const {visible, setVisible} = useSupplyInvoice(s => s);
+    const [vis, setVis] = useState(false)
+
+    const currentSupplyInvoice = useSupplyInvoice(s => s.currentSupplyInvoice)
+    const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
+    const isCreating = useSupplyInvoice(s => s.isCreating)
+    const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
+    const setProducts = useSupplyInvoice(s => s.setProducts)
 
 
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +35,9 @@ export const ArrivalOfProducts = () => {
 
 
             <div className={s.arrivalOfProducts_leftSide}>
-                <div className={s.leftSide_title}>Новый приход товара</div>
+
+                <div
+                    className={s.leftSide_title}>{isCreating ? "Новый приход товара" : currentSupplyInvoice.supplyInvoice.id}</div>
                 {
                     false ?
                         <div className={s.leftSide_uploadFile}>
@@ -46,9 +57,10 @@ export const ArrivalOfProducts = () => {
                 </div>
                 <div className={s.leftSide_metrika}>
                     <div className={s.metrika_title}>Метрика:</div>
-                    <div>Позиций: 999</div>
-                    <div>Товаров: 999</div>
-                    <div>Приходная сумма: 99999</div>
+                    <div>Позиций: {currentSupplyInvoice.supplyInvoiceProducts?.length}</div>
+                    <div>Единиц: {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.quantity).sum()}</div>
+                    <div>Приходная
+                        сумма: {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.total).sum()}</div>
                     <div>Расходы: 99</div>
                     <div>Итого: 99999999</div>
                 </div>
@@ -73,6 +85,8 @@ export const ArrivalOfProducts = () => {
                         Сохранить акт
                     </Button>
                     <Button buttonDivWrapper={s.button_cancel} onClick={() => {
+                        setCurrentSupplyInvoice({supplyInvoiceProducts: []} as unknown as SupplyInvoiceDTO)
+                        setIsCreating(true)
                     }}>
                         Отмена
                     </Button>
@@ -81,10 +95,11 @@ export const ArrivalOfProducts = () => {
 
             <div className={s.arrivalOfProducts_rightSide}>
 
-                <ChooseProductModal setDataSlaveTable={setData} slaveColumns={columns} data={data} open={vis}
-                                    setData={setData}
+                <ChooseProductModal setDataSlaveTable={setProducts} slaveColumns={columns}
+                                    data={currentSupplyInvoice.supplyInvoiceProducts} open={vis}
+                                    setData={setProducts}
                                     setOpen={setVis}/>
-                <UniTable rows={data} columns={columns} setRows={setData}/>
+                <UniTable rows={currentSupplyInvoice.supplyInvoiceProducts} columns={columns} setRows={setData}/>
 
             </div>
         </div>

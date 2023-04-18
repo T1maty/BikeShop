@@ -68,6 +68,7 @@ namespace BikeShop.Shop.Application.Implemetations
             var lastAction = await _context.UserShiftItems.Where(n => n.UserId == UserId).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
             if (lastAction == null) throw ShiftErrors.LastActionNotFound;
             data.LastAction = lastAction;
+            data.Hours = await GetHours(UserId, DateTime.MinValue, DateTime.Now);
             data.Schedule = await _context.ShopScheduleItems.Where(n=>n.UserId == UserId).Where(n=>n.Start.Date == DateTime.Now.Date).FirstOrDefaultAsync();
             return data;
         }
