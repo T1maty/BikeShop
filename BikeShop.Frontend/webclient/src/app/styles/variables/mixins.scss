@@ -333,20 +333,22 @@
         width: 100vw;
         height: 100vh;
         backdrop-filter: blur(1px);
-        left: 40%; // равно ширине бургер-меню
+        left: 50%; // равно ширине бургер-меню
         position: absolute;
 
+        // меню на всю ширину
         @media (max-width: 445px) {
             backdrop-filter: none;
         }
     }
     .burgerMenu_content {
-        width: 40%; // ширина бургер-меню
+        width: 50%; // ширина бургер-меню
         height: 100%;
         background-color: black;
-        //opacity: 0.9;
+        opacity: 0.9;
         //transition: all 1s;
 
+        // меню на всю ширину
         @media (max-width: 445px) {
             width: 100%;
         }

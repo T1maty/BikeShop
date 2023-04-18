@@ -9,9 +9,9 @@ import {ShoppingCart} from "../ShoppingCart/ShoppingCart"
 import ShopLogo from "../../../../shared/assets/shop/icons/ShopLogo.svg"
 import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
 import SearchIcon from '../../../../shared/assets/shop/icons/search.png'
-import BurgerMenuIcon from '../../../../shared/assets/shop/icons/menu-03.svg'
+// import BurgerMenuIcon from '../../../../shared/assets/shop/icons/menu-03.svg'
 // import BurgerMenuIcon from '../../../../shared/assets/shop/icons/menu.png'
-// import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
+import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
 import {BurgerMenu} from "../BurgerMenu/BurgerMenu"
 
 interface ShopHeaderProps {

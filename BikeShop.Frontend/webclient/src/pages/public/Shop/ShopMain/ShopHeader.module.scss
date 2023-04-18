@@ -45,21 +45,21 @@
                     }
 
                     .searchField {
-                        @media(max-width: 890px) {
+                        @media(max-width: 870px) {
                             display: none;
                         }
                     }
                     .searchIcon {
                         display: none;
 
-                        @media(max-width: 890px) {
+                        @media(max-width: 870px) {
                             display: flex;
                         }
                     }
                 }
 
-                // появление бургера
-                @media(max-width: 590px) {
+                // появление бургера!
+                @media(max-width: 490px) {
                     display: none;
                 }
             }
@@ -67,8 +67,8 @@
             .burgerMenu {
                 display: none;
 
-                // появление бургера
-                @media(max-width: 590px) {
+                // появление бургера!
+                @media(max-width: 490px) {
                     height: var(--navbar-shop-height);
                     display: flex;
                     align-items: center;

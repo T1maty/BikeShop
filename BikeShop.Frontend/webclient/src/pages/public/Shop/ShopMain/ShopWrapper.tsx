@@ -12,7 +12,7 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
 
     return (
         <div className={s.shop_wrapper}>
-            <ShopHeader isAuth={false} userLastName={'Петров'} userFirstName={'Василий'}/>
+            <ShopHeader isAuth={true} userLastName={'Петров'} userFirstName={'Василий'}/>
             <div className={s.shop_main}>
                 {children}
             </div>
