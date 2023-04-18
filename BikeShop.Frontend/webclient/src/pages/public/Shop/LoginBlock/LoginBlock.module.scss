@@ -32,9 +32,10 @@
             @include hoverCursorPointer;
         }
 
-        .loginBlock_profileIcon {
-            margin-right: $defaultSmallMargin;
+        @media(max-width: 590px) {
+            display: none;
         }
+
         .loginBlock_enter {
             margin-right: $defaultExtraLargeMargin;
 
@@ -46,6 +47,22 @@
             &:hover {
                 color: orange;
             }
+        }
+    }
+
+    .loginBlock_icons {
+        @include flexOnlyBetween;
+        align-items: center;
+        gap: 40px;
+        display: none;
+
+        @media(max-width: 590px) {
+            display: flex;
+        }
+
+        img {
+            width: 30px;
+            height: 30px;
         }
     }
 }
