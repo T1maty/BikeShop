@@ -206,6 +206,10 @@ namespace BikeShop.Products.Application.Services
                         newProdBinds.Add(new ProductBind { ProductId = product.Id, ChildrenId = prod.Id });
                         existProdBinds.Remove(prod.Id);
                     }
+                    else
+                    {
+                        existProdBinds.Remove(prod.Id);
+                    }
                 }
                 _context.ProductBinds.RemoveRange(existProdBinds.Values.ToList());
                 await _context.ProductBinds.AddRangeAsync(newProdBinds);
