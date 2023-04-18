@@ -44,6 +44,12 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                 <div className={s.container}>
 
                     <div className={s.shop_header}>
+                        <div className={s.burgerMenu} onClick={() => {setMenuActive(!menuActive)}}>
+                            <div className={s.burgerMenu_button}>
+                                <img src={menuActive ? CancelIcon : BurgerMenuIcon} alt="burger-menu"/>
+                            </div>
+                        </div>
+
                         <div className={s.shop_header_left}
                              onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
                         >
@@ -68,12 +74,6 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                                         userLastName={userLastName}
                                         userFirstName={userFirstName}
                             />
-                        </div>
-                    </div>
-
-                    <div className={s.burgerMenu} onClick={() => {setMenuActive(!menuActive)}}>
-                        <div className={s.burgerMenu_button}>
-                            <img src={menuActive ? CancelIcon : BurgerMenuIcon} alt="burger-menu"/>
                         </div>
                     </div>
                 </div>

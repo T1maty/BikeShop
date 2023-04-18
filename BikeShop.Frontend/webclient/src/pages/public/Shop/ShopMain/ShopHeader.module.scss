@@ -13,7 +13,7 @@
         .container {
             @include defaultContainerForShop; // ограничивающий контейнер
 
-            @media (max-width: 590px) {
+            @media (max-width: 490px) {
                 padding: 0 20px;
             }
 
@@ -46,29 +46,29 @@
                     }
 
                     .searchField {
-                        @media(max-width: 870px) {
+                        @media(max-width: 910px) {
                             display: none;
                         }
                     }
                     .searchIcon {
                         display: none;
 
-                        @media(max-width: 870px) {
+                        @media(max-width: 910px) {
                             display: flex;
                         }
                     }
                 }
 
-                // появление бургера!
-                @media(max-width: 490px) {
-                    display: none;
-                }
+                // появление бургера
+                //@media(max-width: 490px) {
+                //    display: none;
+                //}
             }
 
             .burgerMenu {
                 display: none;
 
-                // появление бургера!
+                // появление бургера
                 @media(max-width: 490px) {
                     height: var(--navbar-shop-height);
                     display: flex;

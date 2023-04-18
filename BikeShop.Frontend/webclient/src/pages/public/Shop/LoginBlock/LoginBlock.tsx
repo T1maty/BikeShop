@@ -3,6 +3,7 @@ import s from './LoginBlock.module.scss'
 import {ProfileAvatar} from '../Profile/ProfileAvatar'
 import ProfileIcon from '../../../../shared/assets/shop/icons/profile-icon-02.svg'
 import LoginIcon from '../../../../shared/assets/shop/icons/login-icon-02.svg'
+import LogoutIcon from '../../../../shared/assets/shop/icons/logout-icon.svg'
 import RegistrationIcon from '../../../../shared/assets/shop/icons/register-icon-05.svg'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
@@ -28,13 +29,23 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                             navigate(BikeShopPaths.SHOP.PROFILE)
                         }}>
                             <ProfileAvatar lastName={userLastName} firstName={userFirstName}/>
-                            <div>{userLastName} {''} {userFirstName}</div>
+                            <div className={s.userName}>
+                                {userLastName} {''} {userFirstName}
+                            </div>
+                            <div className={s.logout} onClick={logout}>
+                                <img src={LogoutIcon} alt="logout-icon"/>
+                            </div>
                         </div>
 
-                        <div className={s.profileIcon} onClick={() => {
+                        <div className={s.profileIconsBlock} onClick={() => {
                             navigate(BikeShopPaths.SHOP.PROFILE)
                         }}>
-                            <img src={ProfileIcon} alt="profile-logo"/>
+                            <div className={s.profile}>
+                                <img src={ProfileIcon} alt="profile-logo"/>
+                            </div>
+                            <div className={s.logout} onClick={logout}>
+                                <img src={LogoutIcon} alt="logout-icon"/>
+                            </div>
                         </div>
                     </>
                     :
