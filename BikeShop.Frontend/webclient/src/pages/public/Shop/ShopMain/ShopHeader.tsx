@@ -45,6 +45,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                             </div>
                             <div className={s.searchIcon} onClick={() => {setSearchActive(!searchActive)}}>
                                 <img src={SearchIcon} alt="search-icon"/>
+                                {searchActive && <input type="text"/>}
                             </div>
 
                             <div>

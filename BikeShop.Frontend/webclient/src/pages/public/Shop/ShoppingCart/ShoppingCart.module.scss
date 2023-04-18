@@ -19,15 +19,22 @@
     .cart_content {
         position: absolute;
         top: 45px;
-        right: -300px;
+        right: -50px;
         background-color: $themeColorGray;
-        border-radius: $defaultSmallMargin;
+        //border-radius: $defaultSmallMargin;
         border: 1px solid white;
         padding: $defaultLargeMargin;
         //min-width: 400px;
         //width: min-content;
         z-index: 100;
         //@include flexColumnOnly;
+
+        @media(max-width: 790px) {
+            right: -150px;
+        }
+        @media(max-width: 590px) {
+            right: -50px;
+        }
 
         .cart_cartList {
             @include divSmallMarginBottom;
@@ -111,6 +118,8 @@
             .emptyCart {
                 @include flexCenter;
                 overflow: hidden;
+                text-align: center;
+                min-width: 100px;
             }
         }
 
