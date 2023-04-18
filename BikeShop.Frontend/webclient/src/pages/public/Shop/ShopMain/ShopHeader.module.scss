@@ -45,21 +45,21 @@
                     }
 
                     .searchField {
-                        @media(max-width: 920px) {
+                        @media(max-width: 890px) {
                             display: none;
                         }
                     }
                     .searchIcon {
                         display: none;
 
-                        @media(max-width: 920px) {
+                        @media(max-width: 890px) {
                             display: flex;
                         }
                     }
                 }
 
                 // появление бургера
-                @media(max-width: 650px) {
+                @media(max-width: 590px) {
                     display: none;
                 }
             }
@@ -68,7 +68,7 @@
                 display: none;
 
                 // появление бургера
-                @media(max-width: 650px) {
+                @media(max-width: 590px) {
                     height: var(--navbar-shop-height);
                     display: flex;
                     align-items: center;

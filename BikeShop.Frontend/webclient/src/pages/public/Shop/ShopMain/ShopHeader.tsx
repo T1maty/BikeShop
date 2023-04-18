@@ -25,6 +25,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
     const navigate = useNavigate()
 
     const [menuActive, setMenuActive] = useState<boolean>(false)
+    const [searchActive, setSearchActive] = useState<boolean>(false)
 
     return (
         <div className={s.shop_wrapper}>
@@ -42,7 +43,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                             <div className={s.searchField}>
                                 <CustomSearchInput placeholder={'Поиск товара'} clearInputValue={() => {}}/>
                             </div>
-                            <div className={s.searchIcon}>
+                            <div className={s.searchIcon} onClick={() => {setSearchActive(!searchActive)}}>
                                 <img src={SearchIcon} alt="search-icon"/>
                             </div>
 

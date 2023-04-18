@@ -29,9 +29,9 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                     </div>
                     :
                     <div className={s.right_loginBlock}>
-                        <div className={s.loginBlock_profileIcon}>
-                            <img src={profile} alt="profile-logo"/>
-                        </div>
+                        {/*<div className={s.loginBlock_profileIcon}>*/}
+                        {/*    <img src={profile} alt="profile-logo"/>*/}
+                        {/*</div>*/}
                         <div className={s.loginBlock_enter}
                              onClick={() => {
                                  logout()
