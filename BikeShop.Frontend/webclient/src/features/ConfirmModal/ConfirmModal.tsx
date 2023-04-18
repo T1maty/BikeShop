@@ -25,7 +25,6 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback}
         >
             <div className={s.confirmModal_mainBox}>
                 <div className={s.confirmModal_title}>
-                    {/*Вы действительно хотите сделать изменения?*/}
                     {title}
                 </div>
                 <div className={s.confirmModal_buttons}>
@@ -40,5 +39,5 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback}
                 </div>
             </div>
         </CustomModal>
-    );
-};
+    )
+}

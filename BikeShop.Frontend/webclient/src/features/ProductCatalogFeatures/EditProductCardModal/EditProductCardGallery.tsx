@@ -62,14 +62,14 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
         setIsLoading(true)
         ProductCardAPI.deleteImage(imgId).then((r) => {
             console.log(imgId, r)
-            setIsLoading(false)
-            enqueueSnackbar('Фотография удалена', {variant: 'success', autoHideDuration: 3000})
             props.setImages(props.images.filter((img: ProductImage) => img.id !== imgId))
             setCurrentImageKey(null)
+            setIsLoading(false)
+            enqueueSnackbar('Фотография удалена', {variant: 'success', autoHideDuration: 3000})
         }).catch((r) => {
             console.log(r)
             setIsLoading(false)
-            enqueueSnackbar('Ошибка загрузки', {variant: 'error', autoHideDuration: 3000})
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
         }).finally(() => {
             setIsLoading(false)
         })
@@ -104,9 +104,6 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
         return (
             <div className={s.imageGallery}>
 
-                <ConfirmModal title={'Вы действительно хотите удалить изображение?'}
-                              extraCallback={deleteImageHandler}/>
-
                 <div className={s.imageGallery_imageList}>
                     {
                         props.images?.length === 0 ? <div className={s.emptyList}>Фотографий нет</div> :
@@ -115,9 +112,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                 return (
                                     <div key={img.id}
                                          className={s.imageList_item}
-                                         onDoubleClick={() => {
-                                             setImageHandler(key)
-                                         }}
+                                         onDoubleClick={() => {setImageHandler(key)}}
                                     >
                                         <img className={currentImageKey === key ? s.active_image : ''}
                                              src={img.url} alt="img-thumbnail"
@@ -129,11 +124,12 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
                                         <img src={RemoveIcon} alt="remove-icon"
                                              className={s.imageList_deleteItem}
-                                             onClick={() => {
-                                                 setOpenConfirmModal(true)
-                                             }}
+                                             onClick={() => {setOpenConfirmModal(true)}}
                                             // onClick={() => {deleteImageHandler(img.id)}}
                                         />
+                                        <ConfirmModal title={'Вы действительно хотите удалить изображение?'}
+                                                      extraCallback={() => {deleteImageHandler(img.id)}}/>
+
                                     </div>
                                 )
                             })
