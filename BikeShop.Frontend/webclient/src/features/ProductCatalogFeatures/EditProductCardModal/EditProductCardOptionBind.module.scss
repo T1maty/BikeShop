@@ -97,6 +97,7 @@
                             .deleteBindedPhoto {
                                 @include flexCenter;
                                 margin-bottom: $defaultSmallMargin;
+                                @include deleteButton;
                             }
                             .addBindedImage {
                                 //@include inputTypeFile($themeColorMilk);
@@ -154,7 +155,7 @@
 
                             .options_scrollContainer {
                                 overflow-y: auto;
-                                height: 140px; // высота скролл-блока
+                                height: 150px; // высота скролл-блока
                                 padding-right: 5px;
 
                                 .options_list {
@@ -202,7 +203,7 @@
 
                             .tags_scrollContainer {
                                 overflow-y: auto;
-                                height: 140px; // высота скролл-блока
+                                height: 150px; // высота скролл-блока
                                 padding-right: 5px;
 
                                 .tags_list {

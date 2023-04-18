@@ -17,5 +17,9 @@
         button {
             padding: $defaultSmallMargin;
         }
+
+        .confirmModal_cancelButton {
+            @include deleteButton;
+        }
     }
 }

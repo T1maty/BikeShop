@@ -32,9 +32,11 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback}
                     <Button  onClick={confirmButtonHandler}>
                         Подтвердить
                     </Button>
-                    <Button  onClick={() => {setOpen(false)}}>
-                        Отмена
-                    </Button>
+                    <div className={s.confirmModal_cancelButton}>
+                        <Button  onClick={() => {setOpen(false)}}>
+                            Отмена
+                        </Button>
+                    </div>
                 </div>
             </div>
         </CustomModal>

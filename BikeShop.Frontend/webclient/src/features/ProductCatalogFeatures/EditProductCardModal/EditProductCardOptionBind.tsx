@@ -228,10 +228,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         }
     }
 
-    const deleteTagHandler = (field: any, n: ProductTagBindDTO) => {
-        field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
-    }
-
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
     } else {
@@ -245,9 +241,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                     <div className={s.optionBind}>
 
                         <ChooseProductModal open={v} setOpen={sV}
-                                            addData={(product) => {
-                                                addProductBind(product, field)
-                                            }}
+                                            addData={(product) => {addProductBind(product, field)}}
                         />
 
                         <div className={s.optionBind_header}>
