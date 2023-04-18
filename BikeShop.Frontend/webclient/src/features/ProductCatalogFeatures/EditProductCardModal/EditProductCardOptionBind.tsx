@@ -5,7 +5,7 @@ import {
     ProductOption, ProductOptionVariant, ProductOptionVariantBind
 } from '../../../entities'
 import {Controller, UseFormReturn} from 'react-hook-form'
-import {Button, DeleteButton} from '../../../shared/ui'
+import {Button, DeleteButton, LoaderScreen} from '../../../shared/ui'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 import Select from 'react-select'
 import useEditProductCardModal from './EditProductCardModalStore'
@@ -28,6 +28,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
     const {enqueueSnackbar} = useSnackbar()
 
     const allOptions = useEditProductCardModal(s => s.allOptions)
+    const isLoading = useEditProductCardModal(s => s.isLoading)
+    const setIsLoading = useEditProductCardModal(s => s.setIsLoading)
 
     const [selectedOption, setSelectedOption] = useState<any>(null)
 
@@ -173,6 +175,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                 let formData = new FormData();
                 formData.append('imageFile', file)
 
+                setIsLoading(true)
                 ProductCardAPI.uploadNewImage(formData, bindedProduct.id).then((r) => {
                     if (id != undefined) {
                         ProductCardAPI.deleteImage(id).then(() => {
@@ -181,10 +184,11 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                     } else {
                         props.setImages([...props.images, r.data])
                     }
+                    setIsLoading(false)
                 })
-
             } else {
                 console.error('Error: ', 'Файл слишком большого размера')
+                setIsLoading(false)
             }
         }
     }
@@ -228,265 +232,297 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
     }
 
-    return (
-        <Controller
-            name={'bindedProducts'}
-            control={props.control.control}
-            render={({field}: any) =>
+    if (isLoading) {
+        return <LoaderScreen variant={'ellipsis'}/>
+    } else {
 
-                <div className={s.optionBind}>
+        return (
+            <Controller
+                name={'bindedProducts'}
+                control={props.control.control}
+                render={({field}: any) =>
 
-                    <ChooseProductModal open={v} setOpen={sV}
-                                        addData={(product) => {addProductBind(product, field)}}
-                    />
+                    <div className={s.optionBind}>
 
-                    <div className={s.optionBind_header}>
-                        <div>Группа товаров</div>
-
-                        {/*надо исправить*/}
-                        <Select
-                            className={s.headerOptions_search}
-                            // options={availableOptions(props.control, bindedProduct)}
-                            placeholder={'Товары'}
-                            isSearchable={true}
-                            value={selectedOption}
-                            onChange={(value: any) => {
-                                setSelectedOption(value)
-                            }}
-                            getOptionLabel={label => label!.name}
-                            getOptionValue={value => value!.name}
-                            noOptionsMessage={() => 'Товар не найден'}
+                        <ChooseProductModal open={v} setOpen={sV}
+                                            addData={(product) => {
+                                                addProductBind(product, field)
+                                            }}
                         />
 
-                        <Button buttonDivWrapper={s.addBindButton} onClick={() => {sV(true)}}>
-                            Добавить бинд товара
-                        </Button>
-                    </div>
+                        <div className={s.optionBind_header}>
+                            <div>Группа товаров</div>
 
-                    {
-                        field.value?.map((bindedProduct: Product, index: number) => {
-                            return (
-                                <div className={s.optionBind_productBlock}>
+                            {/*надо исправить*/}
+                            <Select
+                                className={s.headerOptions_search}
+                                // options={availableOptions(props.control, bindedProduct)}
+                                placeholder={'Товары'}
+                                isSearchable={true}
+                                value={selectedOption}
+                                onChange={(value: any) => {
+                                    setSelectedOption(value)
+                                }}
+                                getOptionLabel={label => label!.name}
+                                getOptionValue={value => value!.name}
+                                noOptionsMessage={() => 'Товар не найден'}
+                            />
 
-                                    <div className={s.productBlock_productContent}>
-                                        <div className={s.productContent_info}>
-                                            ID: {bindedProduct.id} {'|'} {''}
-                                            {bindedProduct.name} {'|'} {''}
-                                            Catalog Key: {bindedProduct.catalogKey}
-                                        </div>
+                            <Button buttonDivWrapper={s.addBindButton} onClick={() => {
+                                sV(true)
+                            }}>
+                                Добавить бинд товара
+                            </Button>
+                        </div>
 
-                                        <div className={s.productContent_contentBlock}>
-                                            {
-                                                index > 0 ?
-                                                    <div className={s.productBlock_deleteBindProduct}>
-                                                        <img src={RemoveIcon}
-                                                             alt="remove-icon"
-                                                             onClick={() => {deleteBindedProductHandler(field, bindedProduct)}}
-                                                        />
-                                                    </div> : ''
-                                            }
-                                            <div className={s.productBlock_imageBlock}>
+                        {
+                            field.value?.map((bindedProduct: Product, index: number) => {
+                                return (
+                                    <div className={s.optionBind_productBlock}>
 
-                                                <div className={s.productImage}>
-                                                    {
-                                                        <div className={s.productImage_mainImage}>
-
-                                                            {/*props.images.length === 0 ?*/}
-                                                            {/*      <div className={s.item_noImage}>*/}
-                                                            {/*          <div className={s.item_noImage_title}>*/}
-                                                            {/*             Sorry, no photo!*/}
-                                                            {/*          </div>*/}
-                                                            {/*         <div className={s.item_noImage_icon}>*/}
-                                                            {/*             <img src={NoProductImage} alt="no-product-image"/>*/}
-                                                            {/*         </div>*/}
-                                                            {/*     </div> :*/}
-
-                                                            <img
-                                                                src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
-                                                                alt="product-image"
-                                                            />
-                                                        </div>
-                                                    }
-
-                                                    {
-                                                        index > 0 ?
-                                                            <div className={s.addBindedImage_box}>
-                                                                {/*<img src={RemoveIcon} alt="remove-icon"*/}
-                                                                {/*     className={s.addBindedImage_deleteItem}*/}
-                                                                {/*     onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}*/}
-                                                                {/*/>*/}
-
-                                                                <Button buttonDivWrapper={s.deleteBindedPhoto}
-                                                                        onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}
-                                                                >
-                                                                    Удалить фото
-                                                                </Button>
-
-                                                                <div className={s.addBindedImage}>
-                                                                    <input type="file" id="file"
-                                                                           accept="image/png, image/jpeg"
-                                                                           className={s.inputFile}
-                                                                           onChange={(e) => {
-                                                                               uploadBindedPhotoHandler(e, bindedProduct)
-                                                                           }}
-                                                                    />
-                                                                </div>
-                                                            </div> : ''
-                                                    }
-                                                </div>
+                                        <div className={s.productBlock_productContent}>
+                                            <div className={s.productContent_info}>
+                                                ID: {bindedProduct.id} {'|'} {''}
+                                                {bindedProduct.name} {'|'} {''}
+                                                Catalog Key: {bindedProduct.catalogKey}
                                             </div>
 
-                                            <div className={s.contentBlock_content}>
-                                                <div className={s.content_options}>
-                                                    <fieldset className={s.options_wrapperBox}>
-                                                        <legend>Опции</legend>
+                                            <div className={s.productContent_contentBlock}>
+                                                {
+                                                    index > 0 ?
+                                                        <div className={s.productBlock_deleteBindProduct}>
+                                                            <img src={RemoveIcon}
+                                                                 alt="remove-icon"
+                                                                 onClick={() => {
+                                                                     deleteBindedProductHandler(field, bindedProduct)
+                                                                 }}
+                                                            />
+                                                        </div> : ''
+                                                }
+                                                <div className={s.productBlock_imageBlock}>
 
-                                                        <Controller
-                                                            key={index}
-                                                            name={'productOptions'}
-                                                            control={props.control.control}
-                                                            render={({field}: any) =>
-                                                                <>
-                                                                    <div className={s.options_selectRow}>
+                                                    <div className={s.productImage}>
+                                                        {
+                                                            <div className={s.productImage_mainImage}>
 
-                                                                        <div className={s.options_select}>
-                                                                            <Select
-                                                                                className={s.options_search}
-                                                                                options={availableOptions(props.control, bindedProduct)}
-                                                                                placeholder={'Опции'}
-                                                                                isSearchable={true}
-                                                                                value={selectedOption}
-                                                                                onChange={(value: any) => {setSelectedOption(value)}}
-                                                                                getOptionLabel={label => label!.name}
-                                                                                getOptionValue={value => value!.name}
-                                                                                noOptionsMessage={() => 'Опция не найдена'}
-                                                                            />
-                                                                        </div>
-                                                                        <Button
-                                                                            buttonDivWrapper={s.options_addButton}
-                                                                            onClick={() => {addVariantHandler(props.control, bindedProduct)}}
-                                                                            disabled={selectedOption === null || props.control.getValues('productOptions')
-                                                                                .filter((n: ProductOptionVariantBind) => n.productId == bindedProduct.id)
-                                                                                .find((n: ProductOptionVariantBind) => n.optionId == selectedOption.id) != undefined}
-                                                                        >
-                                                                            +
-                                                                        </Button>
+                                                                {/*props.images.length === 0 ?*/}
+                                                                {/*      <div className={s.item_noImage}>*/}
+                                                                {/*          <div className={s.item_noImage_title}>*/}
+                                                                {/*             Sorry, no photo!*/}
+                                                                {/*          </div>*/}
+                                                                {/*         <div className={s.item_noImage_icon}>*/}
+                                                                {/*             <img src={NoProductImage} alt="no-product-image"/>*/}
+                                                                {/*         </div>*/}
+                                                                {/*     </div> :*/}
+
+                                                                <img
+                                                                    src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
+                                                                    alt="product-image"
+                                                                />
+                                                            </div>
+                                                        }
+
+                                                        {
+                                                            index > 0 ?
+                                                                <div className={s.addBindedImage_box}>
+                                                                    {/*<img src={RemoveIcon} alt="remove-icon"*/}
+                                                                    {/*     className={s.addBindedImage_deleteItem}*/}
+                                                                    {/*     onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}*/}
+                                                                    {/*/>*/}
+
+                                                                    <Button buttonDivWrapper={s.deleteBindedPhoto}
+                                                                            onClick={() => {
+                                                                                deleteBindedPhotoHandler(bindedProduct)
+                                                                            }}
+                                                                    >
+                                                                        Удалить фото
+                                                                    </Button>
+
+                                                                    <div className={s.addBindedImage}>
+                                                                        <input type="file" id="bindFile"
+                                                                               accept="image/png, image/jpeg"
+                                                                               className={s.inputFile}
+                                                                               onChange={(e) => {
+                                                                                   uploadBindedPhotoHandler(e, bindedProduct)
+                                                                               }}
+                                                                               style={{display: 'none'}}
+                                                                        />
+                                                                        <label htmlFor="bindFile"
+                                                                               className={s.inputButton}>
+                                                                            Выбрать файл
+                                                                        </label>
                                                                     </div>
+                                                                </div> : ''
+                                                        }
+                                                    </div>
+                                                </div>
 
-                                                                    <div className={s.options_scrollContainer}>
-                                                                        <div className={s.options_list}>
-                                                                            {
-                                                                                props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
-                                                                                    .map((variant: ProductOptionVariantBind) => {
-                                                                                        return (
-                                                                                            <div key={index}
-                                                                                                 className={s.options_listItem}
-                                                                                            >
-                                                                                                <div
-                                                                                                    className={s.listItem_title}>
-                                                                                                    {variant.optionName}
-                                                                                                </div>
+                                                <div className={s.contentBlock_content}>
+                                                    <div className={s.content_options}>
+                                                        <fieldset className={s.options_wrapperBox}>
+                                                            <legend>Опции</legend>
 
-                                                                                                <div
-                                                                                                    className={s.listItem_selectWithButton}>
-                                                                                                    <Select
-                                                                                                        key={index}
-                                                                                                        className={s.options_search}
-                                                                                                        placeholder={'Варианты'}
-                                                                                                        options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
-                                                                                                            .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])
-                                                                                                                .select(m => m.optionVariantId)
-                                                                                                                .contains(n.id)) as ProductOptionVariantBind[])}
-                                                                                                        onChange={(newValue) => {onChangeOptionsVariants(field, bindedProduct, newValue)}}
-                                                                                                        isSearchable={true}
-                                                                                                        defaultValue={variant}
-                                                                                                        getOptionLabel={label => label!.name}
-                                                                                                        getOptionValue={value => value!.name}
-                                                                                                        noOptionsMessage={() => 'Доступных вариантов нету'}
-                                                                                                    />
+                                                            <Controller
+                                                                key={index}
+                                                                name={'productOptions'}
+                                                                control={props.control.control}
+                                                                render={({field}: any) =>
+                                                                    <>
+                                                                        <div className={s.options_selectRow}>
 
-                                                                                                    <Button onClick={() => {
+                                                                            <div className={s.options_select}>
+                                                                                <Select
+                                                                                    className={s.options_search}
+                                                                                    options={availableOptions(props.control, bindedProduct)}
+                                                                                    placeholder={'Опции'}
+                                                                                    isSearchable={true}
+                                                                                    value={selectedOption}
+                                                                                    onChange={(value: any) => {
+                                                                                        setSelectedOption(value)
+                                                                                    }}
+                                                                                    getOptionLabel={label => label!.name}
+                                                                                    getOptionValue={value => value!.name}
+                                                                                    noOptionsMessage={() => 'Опция не найдена'}
+                                                                                />
+                                                                            </div>
+                                                                            <Button
+                                                                                buttonDivWrapper={s.options_addButton}
+                                                                                onClick={() => {
+                                                                                    addVariantHandler(props.control, bindedProduct)
+                                                                                }}
+                                                                                disabled={selectedOption === null || props.control.getValues('productOptions')
+                                                                                    .filter((n: ProductOptionVariantBind) => n.productId == bindedProduct.id)
+                                                                                    .find((n: ProductOptionVariantBind) => n.optionId == selectedOption.id) != undefined}
+                                                                            >
+                                                                                +
+                                                                            </Button>
+                                                                        </div>
+
+                                                                        <div className={s.options_scrollContainer}>
+                                                                            <div className={s.options_list}>
+                                                                                {
+                                                                                    props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
+                                                                                        .map((variant: ProductOptionVariantBind) => {
+                                                                                            return (
+                                                                                                <div key={index}
+                                                                                                     className={s.options_listItem}
+                                                                                                >
+                                                                                                    <div
+                                                                                                        className={s.listItem_title}>
+                                                                                                        {variant.optionName}
+                                                                                                    </div>
+
+                                                                                                    <div
+                                                                                                        className={s.listItem_selectWithButton}>
+                                                                                                        <Select
+                                                                                                            key={index}
+                                                                                                            className={s.options_search}
+                                                                                                            placeholder={'Варианты'}
+                                                                                                            options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
+                                                                                                                .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])
+                                                                                                                    .select(m => m.optionVariantId)
+                                                                                                                    .contains(n.id)) as ProductOptionVariantBind[])}
+                                                                                                            onChange={(newValue) => {
+                                                                                                                onChangeOptionsVariants(field, bindedProduct, newValue)
+                                                                                                            }}
+                                                                                                            isSearchable={true}
+                                                                                                            defaultValue={variant}
+                                                                                                            getOptionLabel={label => label!.name}
+                                                                                                            getOptionValue={value => value!.name}
+                                                                                                            noOptionsMessage={() => 'Доступных вариантов нету'}
+                                                                                                        />
+
+                                                                                                        <Button
+                                                                                                            onClick={() => {
                                                                                                                 field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
                                                                                                                     n.optionId != variant.optionId || n.productId != bindedProduct.id))
                                                                                                             }}
-                                                                                                    >
-                                                                                                        Удалить
-                                                                                                    </Button>
+                                                                                                        >
+                                                                                                            Удалить
+                                                                                                        </Button>
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                        )
-                                                                                    })
-                                                                            }
+                                                                                            )
+                                                                                        })
+                                                                                }
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                        />
-                                                    </fieldset>
-                                                </div>
+                                                                    </>
+                                                                }
+                                                            />
+                                                        </fieldset>
+                                                    </div>
 
-                                                <div className={s.content_tags}>
-                                                    <fieldset className={s.tags_wrapperBox}>
-                                                        <legend>Теги</legend>
+                                                    <div className={s.content_tags}>
+                                                        <fieldset className={s.tags_wrapperBox}>
+                                                            <legend>Теги</legend>
 
-                                                        <Button buttonDivWrapper={s.tags_addButton}
-                                                                onClick={() => {
-                                                                    sV2([...v2.filter(n => n.id != bindedProduct.id),
-                                                                        {id: bindedProduct.id, state: true}])
-                                                                }}
-                                                        >
-                                                            Добавить теги
-                                                        </Button>
+                                                            <Button buttonDivWrapper={s.tags_addButton}
+                                                                    onClick={() => {
+                                                                        sV2([...v2.filter(n => n.id != bindedProduct.id),
+                                                                            {id: bindedProduct.id, state: true}])
+                                                                    }}
+                                                            >
+                                                                Добавить теги
+                                                            </Button>
 
-                                                        <Controller
-                                                            key={index}
-                                                            name={'productTags'}
-                                                            control={props.control.control}
-                                                            render={({field}: any) =>
-                                                                <div className={s.tags_scrollContainer}>
+                                                            <Controller
+                                                                key={index}
+                                                                name={'productTags'}
+                                                                control={props.control.control}
+                                                                render={({field}: any) =>
+                                                                    <div className={s.tags_scrollContainer}>
 
-                                                                    <div className={s.tags_list}>
-                                                                        <ChooseProductTagModal
-                                                                            key={index}
-                                                                            open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
-                                                                            setOpen={(value) => {setOpenProductTagModalHandler(bindedProduct, value)}}
-                                                                            onTagDoubleClick={(tag) => {onTagDoubleClickHandler(field, bindedProduct, tag)}}
-                                                                        />
+                                                                        <div className={s.tags_list}>
+                                                                            <ChooseProductTagModal
+                                                                                key={index}
+                                                                                open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
+                                                                                setOpen={(value) => {
+                                                                                    setOpenProductTagModalHandler(bindedProduct, value)
+                                                                                }}
+                                                                                onTagDoubleClick={(tag) => {
+                                                                                    onTagDoubleClickHandler(field, bindedProduct, tag)
+                                                                                }}
+                                                                            />
 
-                                                                        {
-                                                                            field.value?.filter((n: ProductTagBindDTO) => n.productId == bindedProduct.id).map((n: ProductTagBindDTO, index: number) => {
-                                                                                return (
-                                                                                    <div className={s.tags_listItem}
-                                                                                         key={index}
-                                                                                    >
-                                                                                        <div className={s.item_name}>
-                                                                                            {n.productTag.name}
+                                                                            {
+                                                                                field.value?.filter((n: ProductTagBindDTO) => n.productId == bindedProduct.id).map((n: ProductTagBindDTO, index: number) => {
+                                                                                    return (
+                                                                                        <div className={s.tags_listItem}
+                                                                                             key={index}
+                                                                                        >
+                                                                                            <div
+                                                                                                className={s.item_name}>
+                                                                                                {n.productTag.name}
+                                                                                            </div>
+                                                                                            <DeleteButton size={20}
+                                                                                                          onClick={() => {
+                                                                                                              field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
+                                                                                                          }}
+                                                                                            />
                                                                                         </div>
-                                                                                        <DeleteButton size={20}
-                                                                                                      onClick={() => {field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))}}
-                                                                                        />
-                                                                                    </div>
-                                                                                )
-                                                                            })
-                                                                        }
+                                                                                    )
+                                                                                })
+                                                                            }
+
+                                                                        </div>
 
                                                                     </div>
-
-                                                                </div>
-                                                            }
-                                                        />
-                                                    </fieldset>
+                                                                }
+                                                            />
+                                                        </fieldset>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            )
-                        })
-                    }
-                </div>
-            }
-        />
-    )
+                                )
+                            })
+                        }
+                    </div>
+                }
+            />
+        )
+    }
 }
