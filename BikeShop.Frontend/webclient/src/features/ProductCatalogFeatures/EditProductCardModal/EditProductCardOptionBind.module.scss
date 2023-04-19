@@ -174,8 +174,15 @@
                                             gap: $defaultLargeMargin;
 
                                             .options_search {
+                                                position: relative;
+
                                                 width: 250px;
                                                 // убрать скролл для списка!
+
+                                                // ?!
+                                                .menu {
+                                                    position: absolute;
+                                                }
                                             }
 
                                             @include deleteButton;
