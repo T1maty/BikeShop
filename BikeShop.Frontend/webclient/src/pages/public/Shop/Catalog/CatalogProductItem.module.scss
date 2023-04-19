@@ -19,6 +19,18 @@
             justify-content: flex-start;
             gap: $defaultLargeMargin;
             margin-bottom: $defaultLargeMargin;
+            flex-wrap: wrap;
+
+            @media (max-width: 550px) {
+                justify-content: center;
+            }
+
+            .cloudCategory_noTags {
+                color: white;
+                background-color: $themeColorGray;
+                border-radius: $smallBorderRadius;
+                padding: $divButtonPadding;
+            }
 
             .cloudCategory_item {
                 color: white;
@@ -29,30 +41,28 @@
         }
 
         .product {
+            border: 1px solid black;
             @include flexOnlyBetween;
             gap: $defaultExtraLargeMargin;
             margin-bottom: $defaultExtraLargeMargin;
 
-            // тестировочный стиль
-            //.product_images {
-            //    width: 60%;
-            //    display: flex;
-            //    justify-content: flex-end;
-            //
-            //    img {
-            //        max-width: 600px;
-            //        height: auto;
-            //    }
-            //}
+            @media (max-width: 690px) {
+                flex-wrap: wrap;
+            }
+
             .product_images {
-                width: 60%;
+                border: 1px solid black;
+                width: 65%;
                 display: flex;
                 justify-content: flex-end;
 
-                //img {
-                //    max-width: 600px;
-                //    height: auto;
-                //}
+                @media (max-width: 890px) {
+                    width: 70%;
+                }
+
+                @media (max-width: 690px) {
+                    width: 100%;
+                }
 
                 .imageGallery {
                     max-height: 350px;
@@ -70,10 +80,17 @@
             }
 
             .product_info {
-                //border: 1px solid black;
+                border: 1px solid black;
                 @include flexColumn;
                 @include divLargeMarginBottom;
-                width: 40%;
+
+                @media (max-width: 890px) {
+                    width: 50%;
+                }
+
+                @media (max-width: 690px) {
+                    width: 100%;
+                }
 
                 .product_title {
                     font-weight: bold;
@@ -91,7 +108,7 @@
                 }
 
                 .product_select {
-                    width: 80%;
+                    width: 100%;
                     color: black;
                     @include divSmallMarginBottom;
 
@@ -106,6 +123,10 @@
                     gap: $defaultExtraLargeMargin;
 
                     .product_available {
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+
                         .isAvailable {
                             @include CatalogProductItemIsAvailableLabel($filterButtonReadyColor);
                         }
@@ -141,6 +162,16 @@
                     opacity: 50%;
                     padding: 10px 0;
                     @include hoverCursorPointer;
+
+                    @media (max-width: 690px) {
+                        font-size: 18px;
+                    }
+                    @media (max-width: 510px) {
+                        font-size: 16px;
+                    }
+                    @media (max-width: 450px) {
+                        font-size: 12px;
+                    }
                 }
 
                 // универсальный стиль active
@@ -160,7 +191,7 @@
                 }
 
                 .chapters_details {
-                    //border-right: 1px solid black;
+
                 }
 
                 .details_active {

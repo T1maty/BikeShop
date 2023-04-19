@@ -85,7 +85,6 @@ export const Catalog = () => {
     }
 
     const setCurrentProductToStore = (product: ProductFullData) => {
-        console.log('выбранный продукт', product)
         setCurrentProduct(product)
         navigate(`/shop/catalog/${product.product.id}`)
     }

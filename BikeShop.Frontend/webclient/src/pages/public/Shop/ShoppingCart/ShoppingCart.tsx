@@ -36,8 +36,6 @@ export const ShoppingCart = React.memo(() => {
         setShoppingCartSum(cartProducts.reduce((acc, obj) => acc + obj.productTotalSum, 0))
     }, [cartProducts])
 
-    console.log('товары в корзине', cartProducts)
-
     return (
         <div className={s.cart_mainBox}>
             <div onClick={() => {setIsComponentVisible(!isComponentVisible)}}>

@@ -31,7 +31,7 @@ export const CatalogProductItem = () => {
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
-    const amountOfProduct = 10 // есть ли на складе
+    const amountOfProduct = 0 // есть ли на складе
 
     const params = useParams<'productId'>()
 
@@ -52,16 +52,6 @@ export const CatalogProductItem = () => {
 
     // если нет изображений, чтобы не ломалась вёрстка
     const noImages = [{original: SorryNoImage, thumbnail: SorryNoImage}]
-
-    // const formControl = useForm<any>({
-    //     defaultValues: {
-    //         selectedProductOptions: [],
-    //     }
-    // })
-    //
-    // const onSubmit: SubmitHandler<any> = (data: any) => {
-    //     // code here ?
-    // }
 
     // для выбора раздела описания товара
     const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
@@ -100,12 +90,8 @@ export const CatalogProductItem = () => {
     }
 
     useEffect(() => {
-        // formControl.reset()
-        // formControl.setValue('selectedProductOptions', currentProduct?.productOptions)
-    }, [])
-
-    useEffect(() => {
         getCurrentProduct(+params.productId!)
+        console.log(currentProduct)
     }, [params])
 
     // так как нужно преобразовать массив изображений,
@@ -120,6 +106,8 @@ export const CatalogProductItem = () => {
 
                     <div className={s.cloudCategory}>
                         {
+                            currentProduct.productTags.length === 0 ?
+                                <div className={s.cloudCategory_noTags}>У данного товара нет тегов</div> :
                             currentProduct.productTags.map(tag => {
                                 return (
                                     <div key={tag.productTag.id} className={s.cloudCategory_item}>
@@ -134,15 +122,16 @@ export const CatalogProductItem = () => {
                         <div className={s.product_images}>
                             <ImageGallery items={myImages && myImages.length > 0 ? myImages : noImages}
                                           showPlayButton={false}
-                                // showFullscreenButton={false}
+                                          // showFullscreenButton={false}
                                           showIndex={true}
                                           showNav={false}
                                           showBullets={true}
                                           thumbnailPosition={'left'}
                                           onErrorImageURL={SorryNoImage}
-                                // additionalClass={s.imageGallery}
+                                          // additionalClass={s.imageGallery}
                             />
                         </div>
+
                         <div className={s.product_info}>
                             <div className={s.product_title}>{currentProduct.product.name}</div>
                             <div className={s.product_price}>{currentProduct.product.retailPrice}</div>
@@ -200,7 +189,6 @@ export const CatalogProductItem = () => {
                                     </Button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 

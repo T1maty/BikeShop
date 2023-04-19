@@ -9,7 +9,7 @@
 @mixin defaultContainerForShop() {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 50px;
+    padding: 0 40px;
 }
 
 @mixin wrapperMainBlock() {
@@ -255,6 +255,7 @@
     padding: $defaultSmallMargin;
     border-radius: $smallBorderRadius;
     background-color: $bgColor;
+    line-height: 1.1;
     color: white;
 }
 

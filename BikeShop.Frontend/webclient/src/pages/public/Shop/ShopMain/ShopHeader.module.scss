@@ -20,6 +20,7 @@
             .shop_header {
                 height: var(--navbar-shop-height);
                 @include flexBetween;
+                padding-right: 10px; // костыль для правого края фуллскрин!
 
                 .shop_header_left {
                     @include hoverCursorPointer;
