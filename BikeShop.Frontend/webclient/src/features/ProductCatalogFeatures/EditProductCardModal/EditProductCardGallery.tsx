@@ -34,12 +34,11 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                 formData.append('imageFile', file)
 
                 setIsLoading(true)
-                ProductCardAPI.uploadNewImage(formData, currentProduct.product.id).then((r) => {
-                    props.setImages([...props.images, r.data])
+                ProductCardAPI.uploadNewImage(formData, currentProduct.product.id).then((res) => {
+                    props.setImages([...props.images, res.data])
                     setIsLoading(false)
                     enqueueSnackbar('Фотография загружена', {variant: 'success', autoHideDuration: 3000})
-                }).catch((r) => {
-                    console.log(r)
+                }).catch((error) => {
                     setIsLoading(false)
                     enqueueSnackbar('Ошибка загрузки', {variant: 'error', autoHideDuration: 3000})
                 }).finally(() => {
@@ -60,14 +59,13 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
     const deleteImageHandler = (imgId: number) => {
         setIsLoading(true)
-        ProductCardAPI.deleteImage(imgId).then((r) => {
-            console.log(imgId, r)
+        ProductCardAPI.deleteImage(imgId).then((res) => {
+            console.log('id from function', imgId, res)
             props.setImages(props.images.filter((img: ProductImage) => img.id !== imgId))
-            setCurrentImageKey(null)
+            // setCurrentImageKey(null)
             setIsLoading(false)
             enqueueSnackbar('Фотография удалена', {variant: 'success', autoHideDuration: 3000})
-        }).catch((r) => {
-            console.log(r)
+        }).catch((error) => {
             setIsLoading(false)
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
         }).finally(() => {
@@ -97,13 +95,14 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
         setCurrentImageKey(null)
     }
 
+    console.log(props.images)
+
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
     } else {
 
         return (
             <div className={s.imageGallery}>
-
                 <div className={s.imageGallery_imageList}>
                     {
                         props.images?.length === 0 ? <div className={s.emptyList}>Фотографий нет</div> :
@@ -125,30 +124,28 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                         <img src={RemoveIcon} alt="remove-icon"
                                              className={s.imageList_deleteItem}
                                              onClick={() => {setOpenConfirmModal(true)}}
-                                            // onClick={() => {deleteImageHandler(img.id)}}
+                                             // onClick={() => {deleteImageHandler(img.id); console.log('id from click', img.id)}}
                                         />
                                         <ConfirmModal title={'Вы действительно хотите удалить изображение?'}
-                                                      extraCallback={() => {deleteImageHandler(img.id)}}/>
+                                                      extraCallback={() => {deleteImageHandler(img.id); console.log('id from click', img.id)}}
+                                        />
 
                                     </div>
                                 )
                             })
                     }
                 </div>
+
                 <div className={s.imageGallery_buttons}>
                     <div className={s.imageGallery_sortButtons}>
                         <Button disabled={currentImageKey === null || currentImageKey === 0}
-                                onClick={() => {
-                                    onMoveBackwardHandler(currentImageKey)
-                                }}
+                                onClick={() => {onMoveBackwardHandler(currentImageKey)}}
                         >
                             Переместить назад
                         </Button>
                         <Button
                             disabled={currentImageKey === null || currentImageKey === (props.images.length - 1)}
-                            onClick={() => {
-                                onMoveForwardHandler(currentImageKey)
-                            }}
+                            onClick={() => {onMoveForwardHandler(currentImageKey)}}
                         >
                             Переместить вперёд
                         </Button>
@@ -156,9 +153,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                     <div className={s.imageGallery_addImage}>
                         <input type="file" id="file"
                                accept="image/png, image/jpeg"
-                               onChange={(v) => {
-                                   uploadImageHandler(v)
-                               }}
+                               onChange={(v) => {uploadImageHandler(v)}}
                                className={s.inputFile}
                         />
                     </div>

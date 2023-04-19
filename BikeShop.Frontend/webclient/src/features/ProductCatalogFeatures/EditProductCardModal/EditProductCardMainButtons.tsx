@@ -11,7 +11,7 @@ export const EditProductCardMainButtons: React.FC<MainButtonsProps> = ({setOpen}
     return (
         <div className={s.mainButtons}>
             <Button onClick={() => {setOpen(false)}}>
-                Отмена
+                Закрыть
             </Button>
             <Button type={'submit'}>
                 Сохранить

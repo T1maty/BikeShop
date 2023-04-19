@@ -5,7 +5,7 @@ import useConfirmModal from './ConfirmModalStore'
 
 interface ConfirmModalProps {
     title: string
-    extraCallback: (data?: any) => void
+    extraCallback: () => void
 }
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback}) => {
