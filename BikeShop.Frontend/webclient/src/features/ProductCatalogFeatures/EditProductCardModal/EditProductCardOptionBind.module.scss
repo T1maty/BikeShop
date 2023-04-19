@@ -177,9 +177,10 @@
                                                 width: 250px;
 
                                                 // убрать скролл для списка!
-                                                //> * {
-                                                //    overflow-y: auto;
-                                                //}
+                                                > * {
+                                                    //height: 100%;
+                                                    //overflow-y: inherit;
+                                                }
                                             }
 
                                             @include deleteButton;

@@ -31,7 +31,7 @@ export const CatalogProductItem = () => {
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
-    const amountOfProduct = 0 // есть ли на складе
+    const amountOfProduct = 10 // есть ли на складе
 
     const params = useParams<'productId'>()
 
@@ -122,13 +122,12 @@ export const CatalogProductItem = () => {
                         <div className={s.product_images}>
                             <ImageGallery items={myImages && myImages.length > 0 ? myImages : noImages}
                                           showPlayButton={false}
-                                          // showFullscreenButton={false}
                                           showIndex={true}
-                                          showNav={false}
-                                          showBullets={true}
+                                          showNav={true}
+                                          showBullets={false}
                                           thumbnailPosition={'left'}
                                           onErrorImageURL={SorryNoImage}
-                                          // additionalClass={s.imageGallery}
+                                          additionalClass={s.imageGallery}
                             />
                         </div>
 

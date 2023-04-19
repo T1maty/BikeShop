@@ -54,6 +54,7 @@
                 width: 65%;
                 display: flex;
                 justify-content: flex-end;
+                max-height: 430px;
 
                 @media (max-width: 890px) {
                     width: 70%;
@@ -64,17 +65,43 @@
                 }
 
                 .imageGallery {
-                    max-height: 350px;
-                    overflow-y: hidden;
+                    background-color: #1c508a;
+                    width: 100%;
 
-                    //.image-gallery-slide {
-                    //    width: 100%;
-                    //    height: auto;
-                    //    max-height: 80vh;
-                    //    object-fit: cover;
-                    //    overflow: hidden;
-                    //    object-position: center center;
-                    //}
+                    // фон при фуллскрине
+                    .image-gallery-content {
+                        background-color: #2f2f2f;
+                    }
+
+                    .image-gallery-slide-wrapper {
+                        // стрелки
+                        //.image-gallery-icon {
+                        //    .image-gallery-svg {
+                        //        img {
+                        //            height: 80px;
+                        //            width: 40px;
+                        //        }
+                        //    }
+                        //}
+
+                        // блок с фотографией
+                        .image-gallery-swipe {
+                            .image-gallery-slides {
+                                .image-gallery-slide {
+                                    img {
+                                        max-height: 428px;
+                                    }
+
+                                    // класс для изображения ?
+                                    //.image-gallery-image {
+                                    //    img {
+                                    //        max-height: 428px;
+                                    //    }
+                                    //}
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -162,14 +189,14 @@
                     padding: 10px 0;
                     @include hoverCursorPointer;
 
-                    @media (max-width: 690px) {
+                    @media (max-width: 590px) {
                         font-size: 18px;
                     }
-                    @media (max-width: 510px) {
+                    @media (max-width: 450px) {
                         font-size: 16px;
                     }
-                    @media (max-width: 450px) {
-                        font-size: 12px;
+                    @media (max-width: 390px) {
+                        font-size: 14px;
                     }
                 }
 
