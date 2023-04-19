@@ -413,6 +413,11 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                                                                     <div className={s.listItem_selectWithButton}>
                                                                                                         <Select className={s.options_search}
+                                                                                                                classNames={{
+                                                                                                                    control: (state) =>
+                                                                                                                        state.isFocused ? 'border-red-600' : 'border-grey-300',
+                                                                                                                }}
+
                                                                                                                 placeholder={'Варианты'}
                                                                                                                 options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
                                                                                                                     .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])

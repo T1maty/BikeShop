@@ -175,12 +175,7 @@
 
                                             .options_search {
                                                 width: 250px;
-
                                                 // убрать скролл для списка!
-                                                > * {
-                                                    //height: 100%;
-                                                    //overflow-y: inherit;
-                                                }
                                             }
 
                                             @include deleteButton;
