@@ -9,7 +9,6 @@
         @include flexColumn;
 
         > div {
-            //border: 1px solid black;
             width: 100%;
         }
 
@@ -41,7 +40,7 @@
         }
 
         .product {
-            border: 1px solid black;
+            //border: 1px solid black;
             @include flexOnlyBetween;
             gap: $defaultExtraLargeMargin;
             margin-bottom: $defaultExtraLargeMargin;
@@ -80,7 +79,7 @@
             }
 
             .product_info {
-                border: 1px solid black;
+                //border: 1px solid black;
                 @include flexColumn;
                 @include divLargeMarginBottom;
 

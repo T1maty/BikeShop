@@ -411,24 +411,21 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                         {variant.optionName}
                                                                                                     </div>
 
-                                                                                                    <div
-                                                                                                        className={s.listItem_selectWithButton}>
-                                                                                                        <Select
-
-                                                                                                            className={s.options_search}
-                                                                                                            placeholder={'Варианты'}
-                                                                                                            options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
-                                                                                                                .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])
-                                                                                                                    .select(m => m.optionVariantId)
-                                                                                                                    .contains(n.id)) as ProductOptionVariantBind[])}
-                                                                                                            onChange={(newValue) => {
-                                                                                                                onChangeOptionsVariants(field, bindedProduct, newValue)
-                                                                                                            }}
-                                                                                                            isSearchable={true}
-                                                                                                            defaultValue={variant}
-                                                                                                            getOptionLabel={label => label!.name}
-                                                                                                            getOptionValue={value => value!.name}
-                                                                                                            noOptionsMessage={() => 'Доступных вариантов нету'}
+                                                                                                    <div className={s.listItem_selectWithButton}>
+                                                                                                        <Select className={s.options_search}
+                                                                                                                placeholder={'Варианты'}
+                                                                                                                options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
+                                                                                                                    .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])
+                                                                                                                        .select(m => m.optionVariantId)
+                                                                                                                        .contains(n.id)) as ProductOptionVariantBind[])}
+                                                                                                                onChange={(newValue) => {
+                                                                                                                    onChangeOptionsVariants(field, bindedProduct, newValue)
+                                                                                                                }}
+                                                                                                                isSearchable={true}
+                                                                                                                defaultValue={variant}
+                                                                                                                getOptionLabel={label => label!.name}
+                                                                                                                getOptionValue={value => value!.name}
+                                                                                                                noOptionsMessage={() => 'Доступных вариантов нету'}
                                                                                                         />
 
                                                                                                         <Button

@@ -43,7 +43,7 @@ export const CatalogProductItem = () => {
     // для стилей описания товара
     const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)
     const [isDetails, setIsDetails] = useState<boolean>(false)
-    const [isDelivery, setIsDelivery] = useState<boolean>(false)
+    // const [isDelivery, setIsDelivery] = useState<boolean>(false)
 
     // преобразование галереи под нужный тип библиотеки
     const myImages = currentProduct?.productImages && currentProduct.productImages.map(img => {
@@ -55,11 +55,11 @@ export const CatalogProductItem = () => {
 
     // для выбора раздела описания товара
     const setDescriptionHandler = (/*descriptionTitle: DescriptionViewType,*/ isCharacteristic: boolean,
-                                   isDetails: boolean, isDelivery: boolean) => {
+                                   isDetails: boolean/*, isDelivery: boolean*/) => {
         // setDescriptionView(descriptionTitle)
         setIsCharacteristic(isCharacteristic)
         setIsDetails(isDetails)
-        setIsDelivery(isDelivery)
+        // setIsDelivery(isDelivery)
     }
 
     const onChangeOptionsVariantHandler = (value: SingleValue<SelectedOptionVariantType>) => {
@@ -196,25 +196,25 @@ export const CatalogProductItem = () => {
                         <div className={s.description_chapters}>
                             <div className={isCharacteristic ? s.description_active : s.chapters_characteristic}
                                  onClick={() => {
-                                     setDescriptionHandler(true, false, false)
+                                     setDescriptionHandler(true, false)
                                  }}
                             >
                                 Характеристики
                             </div>
                             <div className={isDetails ? s.description_active : s.chapters_details}
                                  onClick={() => {
-                                     setDescriptionHandler(false, true, false)
+                                     setDescriptionHandler(false, true)
                                  }}
                             >
                                 Описание
                             </div>
-                            <div className={isDelivery ? s.description_active : s.chapters_delivery}
-                                 onClick={() => {
-                                     setDescriptionHandler(false, false, true)
-                                 }}
-                            >
-                                Доставка
-                            </div>
+                            {/*<div className={isDelivery ? s.description_active : s.chapters_delivery}*/}
+                            {/*     onClick={() => {*/}
+                            {/*         setDescriptionHandler(false, false, true)*/}
+                            {/*     }}*/}
+                            {/*>*/}
+                            {/*    Доставка*/}
+                            {/*</div>*/}
                         </div>
                         <div className={s.description_content}>
                             {
@@ -240,9 +240,9 @@ export const CatalogProductItem = () => {
                                 // ? <div dangerouslySetInnerHTML={{ __html: currentProduct.productCard.description }}/> : ''
                             }
 
-                            {
-                                isDelivery ? <div>Доставка</div> : ''
-                            }
+                            {/*{*/}
+                            {/*    isDelivery ? <div>Доставка</div> : ''*/}
+                            {/*}*/}
                         </div>
                     </div>
 

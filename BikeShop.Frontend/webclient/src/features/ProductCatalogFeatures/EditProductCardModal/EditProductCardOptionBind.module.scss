@@ -101,6 +101,7 @@
                             }
                             .addBindedImage {
                                 //@include inputTypeFile($themeColorMilk);
+
                                 .inputButton {
                                     display: flex;
                                     text-align: center;
@@ -174,6 +175,11 @@
 
                                             .options_search {
                                                 width: 250px;
+
+                                                // убрать скролл для списка!
+                                                //> * {
+                                                //    overflow-y: auto;
+                                                //}
                                             }
 
                                             @include deleteButton;
