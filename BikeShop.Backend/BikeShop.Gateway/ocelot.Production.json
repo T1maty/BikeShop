@@ -1064,7 +1064,7 @@
 {
       "UpstreamPathTemplate": "/api/shift/gethours",
       "UpstreamHttpMethod": [
-        "Post"
+        "Get"
       ],
       "DownstreamPathTemplate": "/shift/gethours",
       "DownstreamScheme": "http",
@@ -1079,7 +1079,7 @@
 {
       "UpstreamPathTemplate": "/api/shift/getuserstatus",
       "UpstreamHttpMethod": [
-        "Post"
+        "Get"
       ],
       "DownstreamPathTemplate": "/shift/getuserstatus",
       "DownstreamScheme": "http",
