@@ -7,11 +7,11 @@ import useSupplyInvoice from "./models/SupplyInvoiceStore";
 import Enumerable from "linq";
 import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
 import {SupplyInvoiceAPI} from "../../../entities/api/Acts/SupplyInvoiceAPI";
+import {ProductQuantity} from "../../../entities";
+import {SupplyInvoiceProduct} from "../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct";
 
 export const ArrivalOfProducts = () => {
 
-    const [data, setData] = useState<any[]>([]);
-    const {visible, setVisible} = useSupplyInvoice(s => s);
     const [vis, setVis] = useState(false)
 
     const currentSupplyInvoice = useSupplyInvoice(s => s.currentSupplyInvoice)
@@ -75,12 +75,15 @@ export const ArrivalOfProducts = () => {
 
                         if (isCreating) {
                             SupplyInvoiceAPI.create(data).then((r: any) => {
+                                setIsCreating(false)
+                                setCurrentSupplyInvoice(r.data)
                                 console.log(r)
                             }).catch((r: any) => {
                                 console.log(r)
                             })
                         } else {
                             SupplyInvoiceAPI.update(data).then((r: any) => {
+                                setCurrentSupplyInvoice(r.data)
                                 console.log(r)
                             }).catch((r: any) => {
                                 console.log(r)
@@ -92,7 +95,13 @@ export const ArrivalOfProducts = () => {
                         Сохранить акт
                     </Button>
                     <Button buttonDivWrapper={s.button_cancel} onClick={() => {
-                        setCurrentSupplyInvoice({supplyInvoiceProducts: []} as unknown as SupplyInvoiceDTO)
+                        setCurrentSupplyInvoice({
+                            supplyInvoiceProducts: [], supplyInvoice: {
+                                shopId: 1,
+                                user: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                                description: '',
+                            }
+                        } as unknown as SupplyInvoiceDTO)
                         setIsCreating(true)
                     }}>
                         Отмена
@@ -103,10 +112,39 @@ export const ArrivalOfProducts = () => {
             <div className={s.arrivalOfProducts_rightSide}>
 
                 <ChooseProductModal slaveColumns={columns}
+                                    setDataSlaveTable={setProducts}
                                     data={currentSupplyInvoice.supplyInvoiceProducts} open={vis}
-                                    setData={setProducts}
+                                    addData={(value: any) => {
+                                        let n = value as ProductQuantity
+                                        let finded = false
+                                        let newData = currentSupplyInvoice.supplyInvoiceProducts.map((np: SupplyInvoiceProduct) => {
+                                            if (n.id === np.productId) {
+                                                finded = true
+                                                return ({...np, quantity: np.quantity + 1})
+                                            } else return np
+                                        })
+                                        if (!finded) newData.push({
+                                            supplyInvoiceId: 0,
+                                            productId: n.id,
+                                            name: n.name,
+                                            description: '',
+                                            catalogKey: n.catalogKey,
+                                            barcode: n.barcode,
+                                            manufBarcode: n.manufacturerBarcode ? n.manufacturerBarcode : '',
+                                            quantityUnitName: n.quantityUnitName,
+                                            incomePrice: n.incomePrice,
+                                            brandName: 'No',
+                                            quantity: 1,
+                                            total: n.incomePrice * n.quantity,
+                                            id: 0,
+                                            createdAt: Date.now().toString(),
+                                            updatedAt: Date.now().toString(),
+                                            enabled: true
+                                        } as SupplyInvoiceProduct)
+                                        setProducts(newData)
+                                    }}
                                     setOpen={setVis}/>
-                <UniTable rows={currentSupplyInvoice.supplyInvoiceProducts} columns={columns} setRows={setData}/>
+                <UniTable rows={currentSupplyInvoice.supplyInvoiceProducts} columns={columns} setRows={setProducts}/>
 
             </div>
         </div>

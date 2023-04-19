@@ -47,7 +47,7 @@ namespace BikeShop.Acts.Application.Services
 
             foreach (var prod in dto.SupplyInvoiceProducts)
             {
-                product.Add(new SupplyInvoiceProduct { SupplyInvoiceId = invoce.Id, BrandName = prod.BrandName, Description = prod.Description, ProductId = prod.ProductId, Barcode = prod.Barcode, CatalogKey = prod.CatalogKey, IncomePrice = prod.IncomePrice, ManufBarcode = prod.ManufacturerBarcode, Name = prod.Name, Quantity = prod.Quantity, QuantityUnitName = prod.QuantityUnitName, Total = prod.Quantity * prod.IncomePrice });
+                product.Add(new SupplyInvoiceProduct { SupplyInvoiceId = invoce.Id, BrandName = prod.BrandName, Description = prod.Description, ProductId = prod.ProductId, Barcode = prod.Barcode, CatalogKey = prod.CatalogKey, IncomePrice = prod.IncomePrice, ManufBarcode = prod.ManufBarcode, Name = prod.Name, Quantity = prod.Quantity, QuantityUnitName = prod.QuantityUnitName, Total = prod.Quantity * prod.IncomePrice });
             }
 
 

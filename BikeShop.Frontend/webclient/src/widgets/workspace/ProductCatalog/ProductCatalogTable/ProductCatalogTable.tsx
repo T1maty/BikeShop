@@ -33,7 +33,8 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
         return {
             ...item.product,
             quantity: item.quantity,
-            quantityUnitName: item.quantityUnit?.name ? item.quantityUnit?.name : 'Error'
+            quantityUnitName: item.quantityUnit?.name ? item.quantityUnit?.name : 'Error',
+            quantityId: item.quantityUnit?.id ? item.quantityUnit?.id : 0
         }
     })
 

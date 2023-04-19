@@ -13,7 +13,7 @@ namespace BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice.Create
         public string? Description { get; set; } = string.Empty;
         public string CatalogKey { get; set; }
         public string Barcode { get; set; }
-        public string ManufacturerBarcode { get; set; }
+        public string ManufBarcode { get; set; }
         public string QuantityUnitName { get; set; }
         public decimal IncomePrice { get; set; }
         public string? BrandName { get; set; } = "NoBrand";

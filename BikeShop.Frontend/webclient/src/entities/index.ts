@@ -6,6 +6,7 @@ export type {ProductOption} from './entities/ProductOption'
 export type {ProductOptionVariant} from './entities/ProductOptionVariant'
 export type {ProductTag} from './entities/ProductTag'
 export type {ProductImage} from './entities/ProductImage'
+export type {ProductQuantity} from './entities/ProductQuantity'
 
 ///////////////
 export type {LoginData} from './models/Auth/LoginData'
