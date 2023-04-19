@@ -5,9 +5,8 @@ import {Button, CustomSearchInput, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
-import {FinancialInteractionAPI, PaymentData, User} from '../../../entities'
+import {FinancialInteractionAPI, PaymentData, useAuth, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig";
-import useAuthUser from "../../auth/useAuthUser";
 
 export const Cashbox = () => {
 
@@ -15,7 +14,7 @@ export const Cashbox = () => {
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
 
-    const logUser = useAuthUser(s => s.user)
+    const logUser = useAuth(s => s.user)
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
     const bill = useCashboxStore(s => s.bill)

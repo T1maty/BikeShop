@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput,} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {CreateService, User} from "../../../entities"
+import {CreateService, useAuth, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, useForm} from "react-hook-form"
@@ -10,7 +10,6 @@ import useService from "./ServiceStore"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {useSnackbar} from "notistack"
-import useAuth from "../../auth/useAuthUser"
 import Select from "react-select"
 
 export const ServiceForm = () => {
@@ -200,37 +199,41 @@ export const ServiceForm = () => {
                 </div>
 
                 <div className={s.rightSide_tables}>
-                <Controller
-                    name={'serviceProducts'}
-                    control={formControl.control}
-                    render={({field}: any) =>
-                        <>
-                            <ServiceTable data={field.value}
-                                          buttonTitle={'Редактор товаров'}
-                                          serviceTableCallback={() => {setOpenSelectProductModal(true)}}
-                                          disabledButton={(currentService === null && !isCreating)}
-                                          summ={summProducts}
-                            />
-                            <SelectProductModal products={field.value}
-                                                setProducts={field.onChange}/>
-                        </>
-                    }
-                />
-                <Controller
-                    name={'serviceWorks'}
-                    control={formControl.control}
-                    render={({field}: any) =>
-                        <>
-                            <ServiceTable data={field.value}
-                                          buttonTitle={'Редактор услуг'}
-                                          serviceTableCallback={() => {setOpenSelectWorkModal(true)}}
-                                          disabledButton={(currentService === null && !isCreating)}
-                                          summ={summWorks}
-                            />
-                            <SelectWorkModal works={field.value} setWorks={field.onChange}/>
-                        </>
-                    }
-                />
+                    <Controller
+                        name={'serviceProducts'}
+                        control={formControl.control}
+                        render={({field}: any) =>
+                            <>
+                                <ServiceTable data={field.value}
+                                              buttonTitle={'Редактор товаров'}
+                                              serviceTableCallback={() => {
+                                                  setOpenSelectProductModal(true)
+                                              }}
+                                              disabledButton={(currentService === null && !isCreating)}
+                                              summ={summProducts}
+                                />
+                                <SelectProductModal products={field.value}
+                                                    setProducts={field.onChange}/>
+                            </>
+                        }
+                    />
+                    <Controller
+                        name={'serviceWorks'}
+                        control={formControl.control}
+                        render={({field}: any) =>
+                            <>
+                                <ServiceTable data={field.value}
+                                              buttonTitle={'Редактор услуг'}
+                                              serviceTableCallback={() => {
+                                                  setOpenSelectWorkModal(true)
+                                              }}
+                                              disabledButton={(currentService === null && !isCreating)}
+                                              summ={summWorks}
+                                />
+                                <SelectWorkModal works={field.value} setWorks={field.onChange}/>
+                            </>
+                        }
+                    />
                 </div>
             </form>
         </div>

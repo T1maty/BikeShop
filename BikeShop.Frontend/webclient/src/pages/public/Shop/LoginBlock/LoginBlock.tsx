@@ -7,7 +7,7 @@ import LogoutIcon from '../../../../shared/assets/shop/icons/logout-icon.svg'
 import RegistrationIcon from '../../../../shared/assets/shop/icons/register-icon-05.svg'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
-import useAuthUser from '../../../auth/useAuthUser'
+import {useAuth} from "../../../../entities";
 
 interface LoginBlockProps {
     isAuth: boolean
@@ -18,7 +18,7 @@ interface LoginBlockProps {
 export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, userFirstName}) => {
 
     const navigate = useNavigate()
-    const logout = useAuthUser(s => s.logout)
+    const logout = useAuth(s => s.logout)
 
     return (
         <div className={s.loginBlock_mainBox}>

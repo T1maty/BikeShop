@@ -2,18 +2,14 @@ import React from "react"
 import s from '../LoginPage/LoginPage.module.scss'
 import {SubmitHandler, useForm} from "react-hook-form"
 import {useNavigate} from "react-router-dom"
-import {LoginData} from "../../../entities"
+import {LoginData, useAuth} from "../../../entities"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import useAuthUser from '../useAuthUser'
 import {Button, ControlledCustomInput} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 
 export const LoginPage = () => {
 
-    const login = useAuthUser(s => s.login)
-    const setUser = useAuthUser(s => s.setUser)
-    const loginToShop = useAuthUser(s => s.loginToShop)
-
+    const login = useAuth(s => s.login)
     const navigate = useNavigate()
 
     const formControl = useForm<LoginData>({
@@ -24,16 +20,13 @@ export const LoginPage = () => {
     })
 
     const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
-        login(data).then((r) => {
-            localStorage.setItem('accessToken', r.data.accessToken)
-            setUser(r.data.user)
-            if (r.data.user.shopId != 0) {
-                loginToShop(r.data.user.shopId)
+
+        login(data, (data) => {
+            if (data.user.shopId > 0)
                 navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
-            } else {
-                navigate(BikeShopPaths.SHOP.PROFILE)
-            }
+            else navigate(BikeShopPaths.SHOP.PROFILE)
         })
+
     }
 
     return (

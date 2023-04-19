@@ -28,6 +28,12 @@ export type {QuantityUnit} from './models/Others/QuantityUnit'
 export type {PaymentData} from './models/PaymentData'
 
 ///////////////////////////////////
+//           GlobalStores              //
+///////////////////////////////////
+
+export {useAuth} from './globalStore/AuthStore'
+
+///////////////////////////////////
 //           Models              //
 ///////////////////////////////////
 

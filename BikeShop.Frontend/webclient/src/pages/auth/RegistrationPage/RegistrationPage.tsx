@@ -2,16 +2,15 @@ import React from 'react'
 import s from './RegistrationPage.module.scss'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {useNavigate} from 'react-router-dom'
-import {RegistrationData} from '../../../entities'
+import {RegistrationData, useAuth} from '../../../entities'
 import {BikeShopPaths} from '../../../app/routes/paths'
-import useAuthUser from '../useAuthUser'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 
 export const RegistrationPage = () => {
 
     const navigate = useNavigate()
-    const register = useAuthUser(s => s.register)
+    const register = useAuth(s => s.register)
 
     const formControl = useForm<RegistrationData>({
         defaultValues: {
@@ -23,7 +22,7 @@ export const RegistrationPage = () => {
 
     const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
         console.log('submit', data)
-        register(data).then(() => {
+        register(data, () => {
             navigate(BikeShopPaths.COMMON.LOGIN)
         })
     }

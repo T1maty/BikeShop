@@ -3,18 +3,17 @@ import s from './RegistrationForm.module.scss'
 import {Button, ControlledCustomInput} from '../../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from '../../../../entities/errors/workspaceErrors'
-import {RegistrationData} from '../../../../entities'
+import {RegistrationData, useAuth} from '../../../../entities'
 import {useSnackbar} from 'notistack'
-import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
-import useAuthUser from '../../../auth/useAuthUser'
+
 
 export const RegistrationForm = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
     const navigate = useNavigate()
-    const register = useAuthUser(s => s.register)
+    const register = useAuth(s => s.register)
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -24,7 +23,8 @@ export const RegistrationForm = () => {
     })
 
     const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
-        register(data).then((res: any) => {
+        register(data)/*
+            .then((res: any) => {
             enqueueSnackbar('Вы успешно зарегистрировались',
                 {variant: 'success', autoHideDuration: 3000})
             // navigate(BikeShopPaths.COMMON.LOGIN)
@@ -33,7 +33,7 @@ export const RegistrationForm = () => {
             formControl.setError('name', {type: 'serverError', message: message})
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
             console.error(error.response.data)
-        })
+        })*/
     }
 
     return (

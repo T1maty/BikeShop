@@ -7,15 +7,15 @@ import {Clock} from "../../../../shared/ui/Clock/Clock"
 import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon"
 import {Badge} from "../../../../shared/ui/Badge/Badge"
 import {BikeShopPaths} from "../../../../app/routes/paths"
-import useAuthUser from '../../../../pages/auth/useAuthUser'
+import {useAuth} from "../../../../entities";
 
 export const Header = () => {
 
     const {t} = useTranslation()
     const navigate = useNavigate()
 
-    const user = useAuthUser(s => s.user)
-    const shop = useAuthUser(s => s.shop)
+    const user = useAuth(s => s.user)
+    const shop = useAuth(s => s.shop)
 
     return (
         <div className={s.appBar}>
@@ -23,7 +23,9 @@ export const Header = () => {
                 <div className={s.leftSide}>
                     <HeaderShopMenu/>
                     <div className={s.leftSide_shopTitle}
-                         onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
+                         onClick={() => {
+                             navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+                         }}
                     >
                         {shop ? shop.name : 'Магазин не выбран'}
                     </div>
