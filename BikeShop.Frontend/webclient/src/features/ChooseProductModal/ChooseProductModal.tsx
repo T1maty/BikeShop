@@ -11,7 +11,6 @@ interface props {
     addData?: (value: any) => void
     setData?: (value: any[]) => void
     slaveColumns?: any[]
-    setDataSlaveTable?: (value: any[]) => void
 }
 
 export const ChooseProductModal = (props: props) => {
@@ -55,7 +54,7 @@ export const ChooseProductModal = (props: props) => {
                         {
                             (props.data != undefined && props.slaveColumns != undefined) ?
                                 <UniTable rows={props.data} columns={props.slaveColumns ? props.slaveColumns : []}
-                                          setRows={props.setDataSlaveTable}/> : <div>No slave table</div>
+                                          setRows={props.setData}/> : <div>No slave table</div>
                         }
 
                     </div>

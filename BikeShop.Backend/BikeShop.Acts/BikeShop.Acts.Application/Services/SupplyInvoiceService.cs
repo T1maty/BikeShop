@@ -116,7 +116,7 @@ namespace BikeShop.Acts.Application.Services
                     product.IncomePrice = nd.IncomePrice;
                     product.Barcode = nd.Barcode;
                     product.UpdatedAt = DateTime.Now;
-                    product.ManufBarcode = nd.ManufacturerBarcode;
+                    product.ManufBarcode = nd.ManufBarcode;
                     product.Total = nd.Quantity * nd.IncomePrice;
                     product.BrandName = nd.BrandName;
                     product.CatalogKey = nd.CatalogKey;
@@ -133,7 +133,7 @@ namespace BikeShop.Acts.Application.Services
 
                     product.Barcode = updateProduct.Barcode;
                     product.BrandName = updateProduct.BrandName;
-                    product.ManufBarcode = updateProduct.ManufacturerBarcode;
+                    product.ManufBarcode = updateProduct.ManufBarcode;
                     product.ProductId = updateProduct.ProductId;
                     product.CatalogKey = updateProduct.CatalogKey;
                     product.Description= updateProduct.Description;

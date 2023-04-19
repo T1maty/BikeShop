@@ -3,12 +3,10 @@ import s from '../ProductsCount/ProductsWrapper.module.scss'
 import {Button, UniTable} from "../../../shared/ui";
 import {columns} from "./SupplyInvoiceTableConfig";
 import {ChooseProductModal} from "../../../features";
-import {SupplyInvoiceCreateModel} from "./models/SupplyInvoiceCreateModel";
-import {ProductExtended} from "../../../entities";
-import {$api} from "../../../shared";
 import useSupplyInvoice from "./models/SupplyInvoiceStore";
 import Enumerable from "linq";
 import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
+import {SupplyInvoiceAPI} from "../../../entities/api/Acts/SupplyInvoiceAPI";
 
 export const ArrivalOfProducts = () => {
 
@@ -66,20 +64,29 @@ export const ArrivalOfProducts = () => {
                 </div>
                 <div className={s.leftSide_footerButtons}>
                     <Button buttonDivWrapper={s.button_save} onClick={() => {
-                        let dataS: SupplyInvoiceCreateModel = {
-                            supplyInvoiceProducts: data as unknown as ProductExtended[],
+                        let data = {
+                            ...currentSupplyInvoice,
                             supplyInvoice: {
-                                shopId: 1,
-                                user: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                description: "string"
+                                ...currentSupplyInvoice.supplyInvoice,
+                                user: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
                             }
                         }
-                        console.log(dataS)
-                        $api.post('/supplyinvoice/create', dataS).then((r) => {
-                            console.log(r)
-                        }).catch((r) => {
-                            console.log(r)
-                        })
+                        console.log(data)
+
+                        if (isCreating) {
+                            SupplyInvoiceAPI.create(data).then((r: any) => {
+                                console.log(r)
+                            }).catch((r: any) => {
+                                console.log(r)
+                            })
+                        } else {
+                            SupplyInvoiceAPI.update(data).then((r: any) => {
+                                console.log(r)
+                            }).catch((r: any) => {
+                                console.log(r)
+                            })
+                        }
+
 
                     }}>
                         Сохранить акт
@@ -95,7 +102,7 @@ export const ArrivalOfProducts = () => {
 
             <div className={s.arrivalOfProducts_rightSide}>
 
-                <ChooseProductModal setDataSlaveTable={setProducts} slaveColumns={columns}
+                <ChooseProductModal slaveColumns={columns}
                                     data={currentSupplyInvoice.supplyInvoiceProducts} open={vis}
                                     setData={setProducts}
                                     setOpen={setVis}/>
