@@ -72,36 +72,35 @@
                     .image-gallery-content {
                         background-color: #2f2f2f;
                     }
-
-                    .image-gallery-slide-wrapper {
-                        // стрелки
-                        //.image-gallery-icon {
-                        //    .image-gallery-svg {
-                        //        img {
-                        //            height: 80px;
-                        //            width: 40px;
-                        //        }
-                        //    }
-                        //}
-
-                        // блок с фотографией
-                        .image-gallery-swipe {
-                            .image-gallery-slides {
-                                .image-gallery-slide {
-                                    img {
-                                        max-height: 428px;
-                                    }
-
-                                    // класс для изображения ?
-                                    //.image-gallery-image {
-                                    //    img {
-                                    //        max-height: 428px;
-                                    //    }
-                                    //}
-                                }
-                            }
-                        }
+                    .image-gallery-image {
+                        max-height: 430px;
                     }
+
+                    // не работает
+                    //.image-gallery-slide-wrapper {
+                    //    //.image-gallery-icon {
+                    //    //    .image-gallery-left-nav,
+                    //    //    .image-gallery-right-nav {
+                    //    //        .image-gallery-svg {
+                    //    //            height: 80px;
+                    //    //        }
+                    //    //    }
+                    //    //}
+                    //
+                    //    // блок с фотографией
+                    //    .image-gallery-swipe {
+                    //        .image-gallery-slides {
+                    //            .image-gallery-slide {
+                    //                // класс для изображения ?
+                    //                //.image-gallery-image {
+                    //                //    img {
+                    //                //        max-height: 428px;
+                    //                //    }
+                    //                //}
+                    //            }
+                    //        }
+                    //    }
+                    //}
                 }
             }
 
