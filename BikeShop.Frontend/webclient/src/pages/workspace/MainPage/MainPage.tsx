@@ -5,8 +5,7 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    CheckModal,
-    ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
+    CheckModal, ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
     EditProductCardModal, EmployeeSalaryModal, EndWorkDayModal, ReportDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
@@ -19,7 +18,8 @@ import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/Employ
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalStore"
 import useCheckModal from "../../../features/CheckModal/CheckModalStore"
-import {CheckForShop, ActServiceWork, ActGetStuffToService, ActGetStuffFromService, CheckForServiceWork} from "../../../widgets"
+import {CheckForShop, ActServiceWork, ActGetStuffToService,
+    ActGetStuffFromService, CheckForServiceWork} from "../../../widgets"
 
 export const MainPage = () => {
 
@@ -69,10 +69,6 @@ export const MainPage = () => {
             <EndWorkDayModal/>
             <ReportDayModal/>
 
-            <CheckModal>
-                <ActGetStuffFromService/>
-            </CheckModal>
-
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
@@ -92,6 +88,7 @@ export const MainPage = () => {
                             Внести на счёт
                         </Button>
                     </div>
+
                     <div className={s.header_leftSide_info}>
                         <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                             Каталог товаров
@@ -103,16 +100,19 @@ export const MainPage = () => {
                         <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
                             Архив приходных
                         </Button>
-                        <Button onClick={() => {
-                            setOpenEmployeeSalaryModal(true)}}>
+                        <Button onClick={() => {setOpenEmployeeSalaryModal(true)}}>
                             Настройка зарплаты
                         </Button>
-                        <Button onClick={() => {setOpenCheckModal(true)}}>
+                        <Button onClick={() => {}}>
                             Счета клиентов
                         </Button>
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>
                             Новая приходная накладная
                         </Button>
+
+                        <CheckModal name={'Акт передачи техники (модалка)'}>
+                            <ActGetStuffToService/>
+                        </CheckModal>
                     </div>
                 </div>
 
@@ -131,7 +131,9 @@ export const MainPage = () => {
                         {
                             tasks.map(t => {
                                 return (
-                                    <div key={t.id} className={s.tasks_taskItem}>{t.task}</div>
+                                    <div key={t.id} className={s.tasks_taskItem}>
+                                        {t.task}
+                                    </div>
                                 )
                             })
                         }
