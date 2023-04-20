@@ -5,6 +5,7 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
+    CheckModal,
     ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
     EditProductCardModal, EmployeeSalaryModal, EndWorkDayModal, ReportDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
@@ -17,6 +18,7 @@ import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchive
 import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalStore"
+import useCheckModal from "../../../features/CheckModal/CheckModalStore"
 
 export const MainPage = () => {
 
@@ -29,6 +31,7 @@ export const MainPage = () => {
     const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
     const setOpenReportDayModal = useReportDayModal(s => s.setOpenReportDayModal)
+    const setOpenCheckModal = useCheckModal(s => s.setOpenCheckModal)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -64,31 +67,24 @@ export const MainPage = () => {
             <EmployeeSalaryModal/>
             <EndWorkDayModal/>
             <ReportDayModal/>
+            <CheckModal/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Создать заказ
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Добавить горячего клиента
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
                             Ремонты
                         </Button>
-                        <Button onClick={() => {
-                            setOpenCreateSpecificationModal(true)
-                        }}>
+                        <Button onClick={() => {setOpenCreateSpecificationModal(true)}}>
                             Прокат
                         </Button>
-                        <Button onClick={() => {
-                            setOpenCreateOptionModal(true)
-                        }}>
+                        <Button onClick={() => {setOpenCreateOptionModal(true)}}>
                             Внести на счёт
                         </Button>
                     </div>
@@ -96,29 +92,21 @@ export const MainPage = () => {
                         <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                             Каталог товаров
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)}}>
                             Каталог услуг
                         </Button>
 
-                        <Button onClick={() => {
-                            setOpenSupplyInvoiceArchiveModal(true)
-                        }}>
+                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
                             Архив приходных
                         </Button>
                         <Button onClick={() => {
-                            setOpenEmployeeSalaryModal(true)
-                        }}>
+                            setOpenEmployeeSalaryModal(true)}}>
                             Настройка зарплаты
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {setOpenCheckModal(true)}}>
                             Счета клиентов
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>
                             Новая приходная накладная
                         </Button>
                     </div>
@@ -149,13 +137,9 @@ export const MainPage = () => {
                 <div className={s.content_rightSide}>
                     <div className={s.rightSide_top}>
                         <div className={s.rightSide_top_search}>
-                            <ChooseClientModal extraCallback={(user: User) => {
-                                chooseClientHandler(user)
-                            }}/>
+                            <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
                             <Button buttonDivWrapper={s.search_chooseClientButton}
-                                    onClick={() => {
-                                        setOpenClientModal(true)
-                                    }}
+                                    onClick={() => {setOpenClientModal(true)}}
                             >
                                 Выбрать клиента
                             </Button>
@@ -170,23 +154,18 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_top_result}>
                             <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                    onClick={() => {
-                                        navigate(BikeShopPaths.WORKSPACE.CASHBOX)
-                                    }}>
+                                    onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
                                 Открыть кассу
                             </Button>
-                            <Button buttonDivWrapper={s.result_cancelBtn}
-                                    onClick={() => {
-                                    }}>
+                            <Button buttonDivWrapper={s.result_cancelBtn} onClick={() => {}}>
                                 X
                             </Button>
                             <div className={s.result_span}>
                                 Цена
                             </div>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {
-                                        setOpenReportDayModal(true)
-                                    }}>
+                                    onClick={() => {setOpenReportDayModal(true)}}
+                            >
                                 К оплате
                             </Button>
                         </div>
@@ -206,9 +185,7 @@ export const MainPage = () => {
                             </div>
                             <div className={s.bottom_right_two}>
                                 <Button buttonDivWrapper={s.right_two_button}
-                                        onClick={() => {
-                                            setOpenEndWorkDayModal(true)
-                                        }}>
+                                        onClick={() => {setOpenEndWorkDayModal(true)}}>
                                     Закончить смену
                                 </Button>
                                 <div className={s.right_two_span}>

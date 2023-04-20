@@ -1,0 +1,22 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.checkModal_mainBox {
+    @include defaultModalStyle;
+    @include flexColumn;
+    width: 350px;
+
+    .checkModal_buttons {
+        display: flex;
+        gap: $defaultExtraLargeMargin;
+
+        //button {
+        //    padding: $defaultSmallMargin;
+        //}
+    }
+
+    .checkModal_content {
+        //margin-bottom: $defaultLargeMargin;
+        //text-align: center;
+    }
+}
