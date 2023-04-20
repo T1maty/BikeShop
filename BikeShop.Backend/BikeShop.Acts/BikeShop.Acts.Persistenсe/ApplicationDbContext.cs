@@ -10,6 +10,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     
     public DbSet<SupplyInvoice> SupplyInvoices { get; set; }
     public DbSet<SupplyInvoiceProduct> SupplyInvoiceProducts { get; set; }
+    public DbSet<Encashment> Encashments { get; set; }
+    public DbSet<CashboxAction> CashboxActions { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

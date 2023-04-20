@@ -32,6 +32,7 @@ export type {PaymentData} from './models/PaymentData'
 ///////////////////////////////////
 
 export {useAuth} from './globalStore/AuthStore'
+export {LocalStorage} from './globalStore/LocalStorage'
 
 ///////////////////////////////////
 //           Models              //

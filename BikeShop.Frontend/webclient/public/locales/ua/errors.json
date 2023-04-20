@@ -1,4 +1,6 @@
 {
   "Language": "UA",
-  "Product with given manufacturer barcode already exists": "Товар з таким штрихкодом виробника вже існує"
+  "Product with given manufacturer barcode already exists": "Товар з таким штрихкодом виробника вже існує",
+  "user_not_found": "Користувача не знайдено",
+  "incorrect_password": "Помилка у паролі"
 }

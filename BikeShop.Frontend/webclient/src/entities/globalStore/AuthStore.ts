@@ -14,7 +14,7 @@ interface ChooseDiscountModalStore {
     user: User | undefined
     shop: Shop | undefined
 
-    login: (loginData: LoginData, callback?: (value: LoginResponse) => void) => void
+    login: (loginData: LoginData, callback?: (value: LoginResponse) => void, onFailure?: (value: AxiosResponse) => void) => void
     logout: () => Promise<AxiosResponse>
     register: (data: RegistrationData, onSuccess?: (response: AxiosResponse) => void, onFailure?: (response: AxiosResponse) => void) => void
     loginToShop: (shopId: number) => void
@@ -24,13 +24,17 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
     user: undefined,
     shop: undefined,
 
-    login: (loginData, callback) => {
+    login: (loginData, callback, onFailure) => {
         AuthAPI.Login.login(loginData).then((r: AxiosResponse<LoginResponse>) => {
+            console.log(r)
             localStorage.setItem('accessToken', r.data.accessToken)
             localStorage.setItem('userId', r.data.user.id)
             localStorage.setItem('shopId', r.data.user.shopId.toString())
             callback ? callback(r.data) : false
-        })
+        }).catch(((r: AxiosResponse<LoginResponse>) => {
+            console.log(r)
+            onFailure ? onFailure(r) : false
+        }))
     },
 
     logout: () => {
@@ -40,6 +44,8 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
             state.shop = undefined
         })
         localStorage.removeItem('accessToken')
+        localStorage.removeItem('userId')
+        localStorage.removeItem('shopId')
         return AuthAPI.Login.logout()
     },
 

@@ -10,6 +10,8 @@ public interface IApplicationDbContext
 {
     public DbSet<SupplyInvoice> SupplyInvoices { get; set; }
     public DbSet<SupplyInvoiceProduct> SupplyInvoiceProducts { get; set; }
+    public DbSet<Encashment> Encashments { get; set; }
+    public DbSet<CashboxAction> CashboxActions { get; set; }
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

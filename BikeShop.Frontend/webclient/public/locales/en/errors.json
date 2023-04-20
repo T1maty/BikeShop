@@ -1,4 +1,6 @@
 {
   "Language": "EN",
-  "Product with given manufacturer barcode already exists": "Product with given manufacturer barcode already exists"
+  "Product with given manufacturer barcode already exists": "Product with given manufacturer barcode already exists",
+  "user_not_found": "User not found",
+  "incorrect_password": "Wrong password"
 }

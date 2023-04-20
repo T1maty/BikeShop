@@ -27,9 +27,9 @@ export const ShiftAPI = {
             $api.get<SupplyInvoiceDTO>(`/shift/shift`)
         )
     },
-    getUserStatus(): any {
+    getUserStatus(userId: string): any {
         return (
-            $api.get<SupplyInvoiceDTO>(`/shift/`)
+            $api.get<SupplyInvoiceDTO>(`/shift/getuserstatus?UserId=${userId}`)
         )
     },
 }

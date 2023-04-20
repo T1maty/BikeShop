@@ -6,9 +6,11 @@ import {LoginData, useAuth} from "../../../entities"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {Button, ControlledCustomInput} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
+import {useTranslation} from "react-i18next";
 
 export const LoginPage = () => {
 
+    const {t} = useTranslation('errors')
     const login = useAuth(s => s.login)
     const navigate = useNavigate()
 
@@ -20,12 +22,18 @@ export const LoginPage = () => {
     })
 
     const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
-
-        login(data, (data) => {
-            if (data.user.shopId > 0)
-                navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
-            else navigate(BikeShopPaths.SHOP.PROFILE)
-        })
+        login(data,
+            (data) => {
+                if (data.user.shopId > 0)
+                    navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+                else navigate(BikeShopPaths.SHOP.PROFILE)
+            },
+            (r: any) => {
+                formControl.setError(r.response.data.reasonField, {
+                    type: 'serverError',
+                    message: t(r.response.data.error).toString()
+                })
+            })
 
     }
 
