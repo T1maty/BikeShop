@@ -1,4 +1,6 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
+using BikeShop.Acts.Domain.DTO.Requests.CashboxAction;
+using BikeShop.Acts.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Acts.WebApi.Controllers
@@ -16,15 +18,15 @@ namespace BikeShop.Acts.WebApi.Controllers
         }
 
         [HttpGet("getbyshop")]
-        public async Task GetByShop(int ShopId, int Take)
+        public async Task<List<CashboxAction>> GetByShop(int ShopId, int Take)
         {
-            await _actionService.GetByShop(ShopId, Take);
+            return await _actionService.GetByShop(ShopId, Take);
         }
 
         [HttpPost("create")]
-        public async Task Create()
+        public async Task<CashboxAction> Create(CreateCashboxActionDTO dto)
         {
-
+            return await _actionService.Create(dto);
         }
     }
 }

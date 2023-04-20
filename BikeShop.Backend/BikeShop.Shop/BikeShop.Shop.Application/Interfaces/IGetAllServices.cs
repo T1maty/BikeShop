@@ -8,4 +8,5 @@ public interface IGetAllServices
     public Task<bool> Login(LoginDTO dto);
 
     public Task<int> GetStorageId(int ShopId);
+    public Task<Domain.Entities.Shop> GetById(int ShopId);
 }

@@ -110,4 +110,11 @@ public class ShopController : ControllerBase
         return await _getAllServices.GetStorageId(ShopId);
 
     }
+
+    [HttpGet("getbyid")]
+    public async Task<Domain.Entities.Shop> GetById(int ShopId)
+    {
+        return await _getAllServices.GetById(ShopId);
+
+    }
 }

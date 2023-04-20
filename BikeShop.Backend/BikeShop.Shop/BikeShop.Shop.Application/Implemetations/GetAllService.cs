@@ -27,6 +27,11 @@ public class GetAllService : IGetAllServices
         return dto;
     }
 
+    public async Task<Domain.Entities.Shop> GetById(int ShopId)
+    {
+        return await _context.Shops.FindAsync(ShopId);
+    }
+
     public async Task<int> GetStorageId(int ShopId)
     {
         var ent = await _context.Shops.FindAsync(ShopId);

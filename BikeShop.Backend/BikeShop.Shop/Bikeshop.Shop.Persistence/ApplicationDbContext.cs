@@ -9,6 +9,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<BikeShop.Shop.Domain.Entities.Shop> Shops { get; set; }
     public DbSet<ShopScheduleItem> ShopScheduleItems { get; set; }
     public DbSet<UserShiftItem> UserShiftItems { get; set; }
+    public DbSet<CashboxHistory> CashboxHistories { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

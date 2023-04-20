@@ -1,0 +1,34 @@
+﻿using BikeShop.Shop.Application.Interfaces;
+using BikeShop.Shop.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BikeShop.Shop.Application.Implemetations
+{
+    public class CashboxService : ICashboxService
+    {
+        private readonly IApplicationDbContext _context;
+
+        public CashboxService(IApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<CashboxHistory> Action(int ShopId, string Source, int SourceId, decimal CashAction, decimal TerminalAction)
+        {
+            var shop = await _context.Shops.FindAsync(ShopId);
+            if (shop == null) throw new System.Exception();
+
+            var ent = new CashboxHistory { ShopId = ShopId, CashAction = CashAction, TerminalAction = TerminalAction, Source = Source, SourceId = SourceId };
+            shop.CashboxCash += CashAction;
+            shop.CashboxTerminal += TerminalAction;
+            await _context.CashboxHistories.AddAsync(ent);
+            await _context.SaveChangesAsync(new CancellationToken());
+            
+            return ent;
+        }
+    }
+}
