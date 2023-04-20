@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react'
-import s from './ActStylesForModal.module.scss'
+import React from 'react'
+import s from './CheckStyles.module.scss'
 
-export const ShopCheck = () => {
+export const CheckForShop = () => {
+
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>
+
                 <div className={s.workAct_date}>
                     <div className={s.date_title}>
                         Чек №999
@@ -25,6 +27,7 @@ export const ShopCheck = () => {
                 <div className={s.workAct_result}>
                     К оплате: 10 999 $
                 </div>
+
             </div>
         </div>
     )

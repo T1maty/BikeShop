@@ -22,7 +22,10 @@ export const BikeShopPaths = {
         INVENTORY_OF_PRODUCTS: '/workspace/inventory-of-products',
 
         SHOP_CHECK: '/workspace/shop-check',
+
         WORK_CHECK: '/workspace/work-check',
         WORK_ACT: '/workspace/work-act',
+        GET_STUFF_TO_SERVICE_ACT: '/workspace/get-stuff-to-service-act',
+        GET_STUFF_FROM_SERVICE_ACT: '/workspace/get-stuff-from-service-act',
     },
 }

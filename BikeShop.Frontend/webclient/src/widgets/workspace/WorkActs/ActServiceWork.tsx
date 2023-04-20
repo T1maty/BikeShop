@@ -1,8 +1,9 @@
 import React from 'react'
-import s from './ActStylesForModal.module.scss'
+import s from './ActServiceWork.module.scss'
 import {ActHeader} from "./ActHeader"
 
 export const ActServiceWork = () => {
+
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>

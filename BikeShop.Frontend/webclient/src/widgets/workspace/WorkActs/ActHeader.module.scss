@@ -1,0 +1,32 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.workAct_header {
+    display: flex;
+    width: 100%;
+    line-height: $minLineHeight;
+
+    .header_customer {
+        @include workActHeaderBlock;
+    }
+
+    .header_master {
+        @include workActHeaderBlock;
+    }
+}
+
+@include workActDateBlock;
+
+.workAct_title {
+    //font-size: 18px;
+    line-height: $minLineHeight;
+    //text-align: center;
+
+    .title_title {
+        font-weight: bold;
+    }
+
+    .title_info {
+
+    }
+}

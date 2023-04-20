@@ -261,7 +261,7 @@
     color: white;
 }
 
-// ShopProfile
+// ShopProfile //
 // menuItem
 @mixin shopProfileMenuItem() {
     @include hoverProfileMenuItem;
@@ -559,6 +559,21 @@
 ////////////////////////////////////////////////////////////////////
 
 // WorkActs
+@mixin workActWrapperBlock {
+    display: flex;
+    justify-content: center;
+    color: black;
+}
+
+@mixin workActMainBlock {
+    min-width: 400px;
+    height: 100%;
+    border: 1px solid black;
+    background-color: white;
+    padding: $defaultSmallMargin;
+    @include divSmallMarginBottom;
+}
+
 @mixin workActHeaderBlock {
     width: 50%;
 
@@ -585,6 +600,21 @@
     .works_result {
         text-align: right;
         line-height: $minLineHeight;
+    }
+}
+
+@mixin workActDateBlock() {
+    .workAct_date {
+        font-size: 18px;
+        line-height: $minLineHeight;
+        text-align: center;
+
+        .date_title {
+            font-weight: bold;
+        }
+        .date_date {
+
+        }
     }
 }
 

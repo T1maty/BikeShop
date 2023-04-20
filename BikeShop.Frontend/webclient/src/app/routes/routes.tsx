@@ -8,7 +8,8 @@ import {
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
 import {BarcodeScannerListenerProvider}
     from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
-import {ActCheckForWork, ActServiceWork, ShopCheck} from 'widgets'
+import {CheckForServiceWork, ActServiceWork,
+    ActGetStuffToService, CheckForShop, ActGetStuffFromService} from 'widgets'
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -133,14 +134,22 @@ export const routes = createBrowserRouter([
 
     {
         path: BikeShopPaths.WORKSPACE.SHOP_CHECK,
-        element: <ShopCheck/>
+        element: <CheckForShop/>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_CHECK,
-        element: <ActCheckForWork/>
+        element: <CheckForServiceWork/>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_ACT,
         element: <ActServiceWork/>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.GET_STUFF_TO_SERVICE_ACT,
+        element: <ActGetStuffToService/>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.GET_STUFF_FROM_SERVICE_ACT,
+        element: <ActGetStuffFromService/>
     },
 ])

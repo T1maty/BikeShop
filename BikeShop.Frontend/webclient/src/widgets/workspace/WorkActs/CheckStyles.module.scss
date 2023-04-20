@@ -2,43 +2,12 @@
 @import '../../../app/styles/variables/variables';
 
 .workAct_wrapper {
-    display: flex;
-    justify-content: center;
-    color: black;
+    @include workActWrapperBlock;
 
     .workAct_mainBox {
-        min-width: 400px;
-        height: 100%;
-        border: 1px solid white;
-        background-color: white;
-        padding: $defaultSmallMargin;
-        @include divSmallMarginBottom;
+        @include workActMainBlock;
 
-        .workAct_header {
-            display: flex;
-            width: 100%;
-            line-height: $minLineHeight;
-
-            .header_customer {
-                @include workActHeaderBlock;
-            }
-            .header_master {
-                @include workActHeaderBlock;
-            }
-        }
-
-        .workAct_date {
-            font-size: 18px;
-            line-height: $minLineHeight;
-            text-align: center;
-
-            .date_title {
-                font-weight: bold;
-            }
-            .date_date {
-
-            }
-        }
+        @include workActDateBlock;
 
         .workAct_title {
             font-size: 18px;
@@ -48,6 +17,7 @@
             .title_title {
                 font-weight: bold;
             }
+
             .title_info {
 
             }
@@ -69,7 +39,6 @@
             text-align: right;
             width: 100%;
         }
-
         .workAct_result {
             width: 100%;
             text-align: center;
