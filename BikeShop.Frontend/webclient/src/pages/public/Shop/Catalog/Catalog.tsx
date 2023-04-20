@@ -101,7 +101,7 @@ export const Catalog = () => {
         getDefaultProducts()
     }, [])
 
-    console.log(defaultProducts)
+    // console.log(defaultProducts)
 
     if (isLoading) {
         return <ShopLoader/>

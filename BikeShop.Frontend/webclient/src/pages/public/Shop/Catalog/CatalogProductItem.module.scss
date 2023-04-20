@@ -56,6 +56,10 @@
                 justify-content: flex-end;
                 max-height: 430px;
 
+                img {
+                    max-height: 428px;
+                }
+
                 @media (max-width: 890px) {
                     width: 70%;
                 }
@@ -64,6 +68,7 @@
                     width: 100%;
                 }
 
+                // additionalClass
                 .imageGallery {
                     background-color: #1c508a;
                     width: 100%;

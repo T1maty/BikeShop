@@ -127,7 +127,7 @@ export const CatalogProductItem = () => {
                                           showBullets={false}
                                           thumbnailPosition={'left'}
                                           onErrorImageURL={SorryNoImage}
-                                          additionalClass={s.imageGallery}
+                                          // additionalClass={s.imageGallery}
                             />
                         </div>
 

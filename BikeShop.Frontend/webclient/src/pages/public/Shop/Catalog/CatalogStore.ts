@@ -38,7 +38,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})
-            set({isLoading: false})
+            // set({isLoading: false})
         })
     },
 
@@ -54,7 +54,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})
-            set({isLoading: false})
+            // set({isLoading: false})
         })
     },
 
@@ -66,7 +66,6 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         set({isLoading: true})
         ProductCardAPI.getProductCardById(productId).then(res => {
             set(state => {
-                // @ts-ignore
                 state.currentProduct = res.data
             })
             set({isLoading: false})
