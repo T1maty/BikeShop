@@ -4,7 +4,7 @@ import {Button, CustomModal} from '../../shared/ui'
 import useCheckModal from "./CheckModalStore"
 
 interface CheckModalProps {
-    children?: ReactElement
+    children: ReactElement
 }
 
 export const CheckModal: React.FC<CheckModalProps> = ({children}) => {
@@ -32,7 +32,9 @@ export const CheckModal: React.FC<CheckModalProps> = ({children}) => {
                     </Button>
                 </div>
                 <div className={s.checkModal_content}>
-                    {children}
+                    <div className={s.scrollWrapper}>
+                        {children}
+                    </div>
                 </div>
             </div>
         </CustomModal>

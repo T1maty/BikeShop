@@ -4,19 +4,36 @@
 .checkModal_mainBox {
     @include defaultModalStyle;
     @include flexColumn;
-    width: 350px;
+    width: 400px;
 
     .checkModal_buttons {
+        width: 100%;
         display: flex;
         gap: $defaultExtraLargeMargin;
+        background-color: $themeColorGray;
+        padding: $defaultLargeMargin;
+        border-radius: $smallBorderRadius;
+        margin-bottom: $defaultSmallMargin;
 
-        //button {
-        //    padding: $defaultSmallMargin;
-        //}
+        > div {
+            width: 100%;
+        }
+        button {
+            padding: $defaultSmallMargin;
+            width: 100%;
+        }
     }
 
     .checkModal_content {
-        //margin-bottom: $defaultLargeMargin;
-        //text-align: center;
+        width: 100%;
+        background-color: $themeColorGray;
+        padding: $defaultLargeMargin;
+        border-radius: $smallBorderRadius;
+
+        .scrollWrapper {
+            overflow-y: auto;
+            max-height: 70vh;
+            padding-right: 5px;
+        }
     }
 }

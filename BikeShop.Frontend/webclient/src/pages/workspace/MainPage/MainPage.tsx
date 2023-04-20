@@ -19,6 +19,7 @@ import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/Employ
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalStore"
 import useCheckModal from "../../../features/CheckModal/CheckModalStore"
+import {CheckForShop} from "../../../widgets";
 
 export const MainPage = () => {
 
@@ -67,7 +68,10 @@ export const MainPage = () => {
             <EmployeeSalaryModal/>
             <EndWorkDayModal/>
             <ReportDayModal/>
-            <CheckModal/>
+
+            <CheckModal>
+                <CheckForShop/>
+            </CheckModal>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>

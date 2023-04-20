@@ -3,16 +3,22 @@
 
 .workAct_wrapper {
     @include wrapperMainBlock;
-    background-color: gray;
+    // перезаписанные свойства
+    min-height: 100%;
+    padding: 0;
+    width: 100%;
+
+    //background-color: gray;
     display: flex;
     justify-content: center;
     color: black;
 
     .workAct_mainBox {
-        width: 400px;
+        //width: 400px;
+        width: 100%;
         height: 100%;
         border: 1px solid white;
-        border-radius: $extraSmallBorderRadius;
+        //border-radius: $extraSmallBorderRadius;
         background-color: white;
         padding: $defaultSmallMargin;
         @include divSmallMarginBottom;
