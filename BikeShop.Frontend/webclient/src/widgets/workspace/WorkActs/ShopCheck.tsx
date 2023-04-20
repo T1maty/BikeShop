@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
-import s from './CheckForShop.module.scss'
+import s from './ActStylesForModal.module.scss'
 
-export const CheckForShop = () => {
+export const ShopCheck = () => {
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>

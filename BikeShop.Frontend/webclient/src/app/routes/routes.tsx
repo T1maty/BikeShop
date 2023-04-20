@@ -8,7 +8,7 @@ import {
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
 import {BarcodeScannerListenerProvider}
     from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
-import {CheckAct, WorkAct} from 'widgets'
+import {ActCheckForWork, ActServiceWork, ShopCheck} from 'widgets'
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -72,19 +72,6 @@ export const routes = createBrowserRouter([
         </ShopWrapper>
     },
 
-    // {
-    //     path: BikeShopPaths.WORKSPACE.HOME_NULL,
-    //     element: <PublicHeaderProvider>
-    //         <_Home/>
-    //     </PublicHeaderProvider>
-    // },
-    // {
-    //     path: BikeShopPaths.WORKSPACE.HOME,
-    //     element: <PublicHeaderProvider>
-    //         <_Home/>
-    //     </PublicHeaderProvider>
-    // },
-
     ////                                        ////
     ////    Страницы только для залогиненых     ////
     ////                                        ////
@@ -143,12 +130,17 @@ export const routes = createBrowserRouter([
             </ProductsWrapper>
         </WorkspaceHeaderProvider>
     },
+
     {
-        path: BikeShopPaths.WORKSPACE.CHECK_ACT,
-        element: <CheckAct/>
+        path: BikeShopPaths.WORKSPACE.SHOP_CHECK,
+        element: <ShopCheck/>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.WORK_CHECK,
+        element: <ActCheckForWork/>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_ACT,
-        element: <WorkAct/>
+        element: <ActServiceWork/>
     },
 ])

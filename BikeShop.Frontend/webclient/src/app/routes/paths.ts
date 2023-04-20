@@ -17,9 +17,12 @@ export const BikeShopPaths = {
         CASHBOX: '/workspace/cashbox',
         PRODUCT_CATALOG: '/workspace/product-catalog',
         WORK_CATALOG: '/workspace/work-catalog',
+
         ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
         INVENTORY_OF_PRODUCTS: '/workspace/inventory-of-products',
-        CHECK_ACT: '/workspace/check-act',
+
+        SHOP_CHECK: '/workspace/shop-check',
+        WORK_CHECK: '/workspace/work-check',
         WORK_ACT: '/workspace/work-act',
     },
 }

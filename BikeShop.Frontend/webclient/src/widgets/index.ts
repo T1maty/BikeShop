@@ -8,6 +8,7 @@ export {ProductTagCloud} from './workspace/ProductCatalog/ProductTagCloud/Produc
 
 export {BarcodeScannerListener} from './workspace/BarcodeScannerListener/BarcodeScannerListener'
 
-export {CheckForShop} from './workspace/WorkActs/CheckForShop'
-export {CheckAct} from './workspace/WorkActs/CheckAct'
-export {WorkAct} from './workspace/WorkActs/WorkAct'
+export {ShopCheck} from './workspace/WorkActs/ShopCheck'
+export {ActHeader} from './workspace/WorkActs/ActHeader'
+export {ActCheckForWork} from './workspace/WorkActs/ActCheckForWork'
+export {ActServiceWork} from './workspace/WorkActs/ActServiceWork'

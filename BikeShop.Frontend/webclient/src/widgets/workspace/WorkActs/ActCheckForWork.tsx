@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
-import s from './Act.module.scss'
+import React from 'react'
+import s from './ActStylesForModal.module.scss'
 
-export const CheckAct = () => {
+export const ActCheckForWork = () => {
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>

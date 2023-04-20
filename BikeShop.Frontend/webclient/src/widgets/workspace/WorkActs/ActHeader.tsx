@@ -1,10 +1,15 @@
-import React, {useEffect} from 'react'
-import s from './Act.module.scss'
+import React from 'react'
+import s from './ActStylesForModal.module.scss'
 
-export const WorkAct = () => {
+interface ActHeaderProps {
+    title: string
+}
+
+export const ActHeader: React.FC<ActHeaderProps> = ({title}) => {
     return (
-        <div className={s.workAct_wrapper}>
-            <div className={s.workAct_mainBox}>
+        // <div className={s.workAct_wrapper}>
+        //     <div className={s.workAct_mainBox}>
+            <>
                 <div className={s.workAct_header}>
                     <div className={s.header_customer}>
                         <div className={s.header_title}>Заказчик</div>
@@ -25,14 +30,16 @@ export const WorkAct = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className={s.workAct_date}>
                     <div className={s.date_title}>
-                        Акт выполненных работ №999
+                        {title} №999
                     </div>
                     <div className={s.date_date}>
                         от 01 января 2020
                     </div>
                 </div>
+
                 <div className={s.workAct_title}>
                     <div className={s.title_title}>
                         Ремонтируемая техника:
@@ -41,32 +48,8 @@ export const WorkAct = () => {
                         Specialized Pro 2023
                     </div>
                 </div>
-                <div className={s.workAct_works}>
-                    <div className={s.works_content}>
-                        Таблица
-                    </div>
-                    <div className={s.works_result}>
-                        <div>Всего услуг: <span style={{fontWeight: 'bold'}}>9999 Р</span></div>
-                        <div>Скидка: <span style={{fontWeight: 'bold'}}>999 Р</span></div>
-                    </div>
-                </div>
-                <div className={s.workAct_products}>
-                    <div className={s.works_content}>
-                        Таблица
-                    </div>
-                    <div className={s.works_result}>
-                        <div>Всего товаров: <span style={{fontWeight: 'bold'}}>9999 Р</span></div>
-                        <div>Скидка: <span style={{fontWeight: 'bold'}}>999 Р</span></div>
-                    </div>
-                </div>
-                <div className={s.workAct_discount}>
-                    <div>Сумма без скидки: <span style={{fontWeight: 'bold'}}>9999 Р</span></div>
-                    <div>Скидка: <span style={{fontWeight: 'bold'}}>999 Р</span></div>
-                </div>
-                <div className={s.workAct_result}>
-                    К оплате: 10 999 $
-                </div>
-            </div>
-        </div>
+            </>
+            // </div>
+        // </div>
     )
 }
