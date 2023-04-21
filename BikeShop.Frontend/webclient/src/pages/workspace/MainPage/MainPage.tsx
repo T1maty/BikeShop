@@ -5,19 +5,9 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    CheckModalBasic,
-    ChooseClientModal,
-    CreateOptionModal,
-    CreateProductModal,
-    CreateSpecificationModal,
-    EditProductCardModal,
-    EmployeeSalaryModal,
-    EncashmentModal,
-    EndWorkDayModal,
-    GetPutMoneyModal,
-    PrintModal,
-    ReportDayModal,
-    SupplyInvoiceArchiveModal
+    ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
+    EditProductCardModal, EmployeeSalaryModal, EncashmentModal, EndWorkDayModal,
+    GetPutMoneyModal, PrintModal, ReportDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -29,10 +19,10 @@ import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchive
 import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalStore"
-import useCheckModal from "../../../features/CheckModals/CheckModalStore"
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
-import {CheckForServiceWork} from "../../../widgets";
+
+import {CheckForServiceWork} from "../../../widgets"
 
 export const MainPage = () => {
 
@@ -52,10 +42,6 @@ export const MainPage = () => {
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
-
-    const setOpenCheckModal = useCheckModal(s => s.setOpenCheckModal)
-    const setTriggerCheckForShop = useCheckModal(s => s.setTriggerCheckForShop)
-    const setTriggerCheckForService = useCheckModal(s => s.setTriggerCheckForService)
 
     const [printOpen, setPrintOpen] = useState(false)
 
@@ -93,45 +79,27 @@ export const MainPage = () => {
             <EncashmentModal/>
             <GetPutMoneyModal/>
 
-            <CheckModalBasic/>
-
-            <PrintModal open={printOpen} setOpen={setPrintOpen}><CheckForServiceWork/></PrintModal>
-
-            {/*<CheckModalCheckForShop/>*/}
-            {/*<CheckModalCheckForService/>*/}
+            <PrintModal open={printOpen} setOpen={setPrintOpen} children={<CheckForServiceWork/>}/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {
-                            setTriggerCheckForShop(true);
-                            setOpenCheckModal(true)
-                        }}>
-                            Создать заказ (акт1)
+                        <Button onClick={() => {setPrintOpen(true)}}>
+                            Создать заказ (акт)
                         </Button>
-                        <Button onClick={() => {
-                            setTriggerCheckForService(true);
-                            setOpenCheckModal(true)
-                        }}>
-                            Добавить горячего клиента (акт2)
+                        <Button onClick={() => {}}>
+                            Добавить горячего клиента
                         </Button>
-                        <Button onClick={() => {
-                            setTriggerCheckForService(true);
-                            setOpenCheckModal(true)
-                        }}>
+                        <Button onClick={() => {}}>
                             Тест печать
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
                             Ремонты
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Прокат
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Внести на счёт
                         </Button>
                     </div>
@@ -140,28 +108,20 @@ export const MainPage = () => {
                         <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                             Каталог товаров
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)}}>
                             Каталог услуг
                         </Button>
 
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Архив приходных
                         </Button>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Настройка зарплаты
                         </Button>
-                        <Button onClick={() => {
-                            setOpenGetPutMoneyModal(true)
-                        }}>
+                        <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
                             Счета клиентов
                         </Button>
-                        <Button onClick={() => {
-                            navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
-                        }}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>
                             Новая приходная накладная
                         </Button>
                     </div>
@@ -194,13 +154,9 @@ export const MainPage = () => {
                 <div className={s.content_rightSide}>
                     <div className={s.rightSide_top}>
                         <div className={s.rightSide_top_search}>
-                            <ChooseClientModal extraCallback={(user: User) => {
-                                chooseClientHandler(user)
-                            }}/>
+                            <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
                             <Button buttonDivWrapper={s.search_chooseClientButton}
-                                    onClick={() => {
-                                        setOpenClientModal(true)
-                                    }}
+                                    onClick={() => {setOpenClientModal(true)}}
                             >
                                 Выбрать клиента
                             </Button>
@@ -215,21 +171,17 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_top_result}>
                             <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                    onClick={() => {
-                                        navigate(BikeShopPaths.WORKSPACE.CASHBOX)
-                                    }}>
+                                    onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
                                 Открыть кассу
                             </Button>
-                            <Button buttonDivWrapper={s.result_cancelBtn} onClick={() => {
-                            }}>
+                            <Button buttonDivWrapper={s.result_cancelBtn} onClick={() => {}}>
                                 X
                             </Button>
                             <div className={s.result_span}>
                                 Цена
                             </div>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {
-                                    }}
+                                    onClick={() => {}}
                             >
                                 К оплате
                             </Button>
@@ -250,9 +202,7 @@ export const MainPage = () => {
                             </div>
                             <div className={s.bottom_right_two}>
                                 <Button buttonDivWrapper={s.right_two_button}
-                                        onClick={() => {
-                                            setOpenEndWorkDayModal(true)
-                                        }}>
+                                        onClick={() => {setOpenEndWorkDayModal(true)}}>
                                     Закончить смену
                                 </Button>
                                 <div className={s.right_two_span}>

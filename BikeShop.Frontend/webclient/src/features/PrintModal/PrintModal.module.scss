@@ -1,12 +1,12 @@
 @import '../../app/styles/variables/mixins';
 @import '../../app/styles/variables/variables';
 
-.checkModal_mainBox {
+.printModal_mainBox {
     @include defaultModalStyle;
     @include flexColumn;
     min-width: 500px;
 
-    .checkModal_buttons {
+    .printModal_buttons {
         width: 100%;
         display: flex;
         gap: $defaultExtraLargeMargin;
@@ -24,7 +24,7 @@
         }
     }
 
-    .checkModal_content {
+    .printModal_content {
         min-width: 100%;
         background-color: $themeColorGray;
         padding: $defaultLargeMargin;

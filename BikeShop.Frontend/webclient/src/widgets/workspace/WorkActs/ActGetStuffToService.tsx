@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './ActGetStuffToService.module.scss'
+import s from './ActGetStuffService.module.scss'
 import {ActHeader} from "./ActHeader"
 
 interface ActGetStuffToServiceProps {
