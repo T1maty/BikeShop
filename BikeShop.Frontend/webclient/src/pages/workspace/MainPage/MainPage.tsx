@@ -5,8 +5,17 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    CheckModal, ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
-    EditProductCardModal, EmployeeSalaryModal, EndWorkDayModal, ReportDayModal, SupplyInvoiceArchiveModal
+    CheckModal,
+    ChooseClientModal,
+    CreateOptionModal,
+    CreateProductModal,
+    CreateSpecificationModal,
+    EditProductCardModal,
+    EmployeeSalaryModal,
+    EncashmentModal,
+    EndWorkDayModal, GetPutMoneyModal,
+    ReportDayModal,
+    SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -20,19 +29,24 @@ import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalSt
 import useCheckModal from "../../../features/CheckModal/CheckModalStore"
 import {CheckForShop, ActServiceWork, ActGetStuffToService,
     ActGetStuffFromService, CheckForServiceWork} from "../../../widgets"
+import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore";
+import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore";
 
 export const MainPage = () => {
 
     const navigate = useNavigate()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
+    const setOpenCheckModal = useCheckModal(s => s.setOpenCheckModal)
+
     const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
     const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
     const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
     const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
     const setOpenReportDayModal = useReportDayModal(s => s.setOpenReportDayModal)
-    const setOpenCheckModal = useCheckModal(s => s.setOpenCheckModal)
+    const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
+    const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -69,6 +83,9 @@ export const MainPage = () => {
             <EndWorkDayModal/>
             <ReportDayModal/>
 
+            <EncashmentModal/>
+            <GetPutMoneyModal/>
+
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
@@ -103,7 +120,7 @@ export const MainPage = () => {
                         <Button onClick={() => {setOpenEmployeeSalaryModal(true)}}>
                             Настройка зарплаты
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
                             Счета клиентов
                         </Button>
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>

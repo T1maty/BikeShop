@@ -81,20 +81,24 @@ export const EmployeeSalaryModal = () => {
                         Зарплата сотрудников
                     </div>
                     <div className={s.employeeSalaryModal_content}>
-                        <div className={s.content_employeeList}>
-                            {
-                                employers.map(em => {
-                                    return (
-                                        <div key={em.id}
-                                             className={em.id === currentEmployee?.id ?
-                                                 s.employeeList_item_active : s.employeeList_item}
-                                             onClick={() => {setCurrentEmployee(em)}}
-                                        >
-                                            {em.name}
-                                        </div>
-                                    )
-                                })
-                            }
+                        <div className={s.content_scrollWrapper}>
+                            <div className={s.content_employeeList}>
+                                {
+                                    employers.map(em => {
+                                        return (
+                                            <div key={em.id}
+                                                 className={em.id === currentEmployee?.id ?
+                                                     s.employeeList_item_active : s.employeeList_item}
+                                                 onClick={() => {
+                                                     setCurrentEmployee(em)
+                                                 }}
+                                            >
+                                                {em.name}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
 
                         <div className={s.content_employeeData}>

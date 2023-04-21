@@ -5,5 +5,32 @@
     @include defaultModalStyle;
     @include flexColumn;
     width: 350px;
+    text-align: center;
+    @include divLargeMarginBottom;
 
+    .encashment_header {
+        .title {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .date {
+            font-size: 20px;
+        }
+    }
+    .encashment_content {
+        width: 100%;
+        @include divSmallMarginBottom;
+        @include EncashmentModalTitle;
+    }
+    .encashment_buttons {
+        width: 100%;
+        @include flexColumnOnly;
+        gap: 10px;
+
+        button {
+            width: 100%;
+            height: 40px;
+        }
+    }
 }

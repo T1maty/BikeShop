@@ -305,7 +305,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////
-
 // Registration
 @mixin registrationBlock($buttonWidth) {
 
@@ -339,7 +338,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////
-
 // LoaderScreen
 @mixin loaderScreenStyles($background) {
     position: absolute;
@@ -363,7 +361,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////
-
 // BurgerMenu
 @mixin burgerMenuAllStyles($transform) {
     position: fixed;
@@ -432,7 +429,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////
-
 // CreateShopModal
 @mixin createShopStorageModal($itemsColumnHeight, $columnWidth2, $columnWidth3) {
     .shopStorageModal_shops {
@@ -557,7 +553,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////
-
 // WorkActs
 @mixin workActWrapperBlock {
     display: flex;
@@ -619,7 +614,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////
-
 // CreateOptionModal
 @mixin currentOption($titleColor) {
     @include hoverCursorPointer;
@@ -665,7 +659,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////
-
 // ShopProfile Order
 @mixin orderStatus($bgColor) {
     @include flexCenter;
@@ -688,4 +681,19 @@
     color: black;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
+}
+
+////////////////////////////////////////////////////////////////////
+// EncashmentModal
+
+@mixin EncashmentModalTitle() {
+    .title {
+        //font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 10px;
+        text-decoration: underline;
+    }
+    .info {
+        font-size: 18px;
+    }
 }

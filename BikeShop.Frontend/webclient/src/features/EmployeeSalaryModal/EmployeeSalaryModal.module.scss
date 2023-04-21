@@ -14,32 +14,36 @@
         @include flexOnlyBetween;
         gap: $defaultLargeMargin;
 
-        .content_employeeList {
-            background-color: $themeColorMilk;
-            padding: $defaultLargeMargin;
-            border-radius: $smallBorderRadius;
-            color: black;
-            @include divExtraSmallMarginBottom;
-            height: 312px;
-            overflow: auto;
+        .content_scrollWrapper {
 
-            .employeeList_item {
-                padding: 5px;
+            .content_employeeList {
+                background-color: $themeColorMilk;
+                padding: $defaultLargeMargin;
+                border-radius: $smallBorderRadius;
+                color: black;
+                @include divExtraSmallMarginBottom;
+                height: 312px;
+                overflow-y: auto;
 
-                &:hover {
-                    //color: gold;
-                    cursor: pointer;
+                .employeeList_item {
+                    padding: 5px;
+
+                    &:hover {
+                        //color: gold;
+                        cursor: pointer;
+                        background-color: $themeColorDark;
+                        //border-radius: $smallBorderRadius;
+                        color: white;
+                        padding: 5px;
+                    }
+                }
+
+                .employeeList_item_active {
                     background-color: $themeColorDark;
                     //border-radius: $smallBorderRadius;
                     color: white;
                     padding: 5px;
                 }
-            }
-            .employeeList_item_active {
-                background-color: $themeColorDark;
-                //border-radius: $smallBorderRadius;
-                color: white;
-                padding: 5px;
             }
         }
         .content_employeeData {

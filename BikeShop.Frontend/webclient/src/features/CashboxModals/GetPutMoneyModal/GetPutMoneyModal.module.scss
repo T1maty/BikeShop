@@ -4,6 +4,69 @@
 .getPutMoneyModal_mainBox {
     @include defaultModalStyle;
     @include flexColumn;
-    width: 350px;
+    width: 520px;
+
+    .getPutMoneyModal_title {
+        @include modalTitle;
+    }
+
+    .getPutMoneyModal_content {
+        @include flexOnlyBetween;
+        gap: $defaultLargeMargin;
+
+        .content_report {
+            @include flexColumnOnly;
+            justify-content: space-between;
+
+            .report {
+                border: 1px solid $themeColorMilk;
+                border-radius: $smallBorderRadius;
+                padding: $defaultSmallMargin;
+                width: 250px;
+                height: 100%;
+
+                textarea {
+                    resize: none;
+                    width: 100%;
+                    height: 100%;
+                    padding: $defaultSmallMargin;
+                    border: none;
+                    background-color: transparent;
+                    font-size: 14px;
+                    color: white;
+
+                    //:focus-visible {
+                    //    border: 2px solid $themeColorDark;
+                    //}
+                }
+                ::placeholder {
+                    color: white;
+                    opacity: 0.8;
+                }
+            }
+        }
+
+        .content_info {
+            .infoBlock {
+                margin-bottom: $defaultLargeMargin;
+
+                .sumInput {
+                    margin-bottom: $defaultLargeMargin;
+                }
+                .infoBlock_radioButtons {
+
+                }
+            }
+            .buttonsBlock {
+                width: 100%;
+                @include flexColumnOnly;
+                gap: $defaultSmallMargin;
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
 
 }

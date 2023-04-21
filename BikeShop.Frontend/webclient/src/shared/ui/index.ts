@@ -11,6 +11,7 @@ export {EditableSpan} from './EditableSpan/EditableSpan'
 export {CustomInput} from './CustomInput/CustomInput'
 export {CustomSearchInput} from './CustomInput/CustomSeacrhInput'
 export {CustomCheckbox} from './CustomCheckbox/CustomCheckbox'
+export {CustomRadioButton} from './CustomRadioButton/CustomRadioButton'
 export {CustomModal} from './CustomModal/CustomModal'
 
 export {ControlledClientCard} from './Controlled/ControlledClientCard'

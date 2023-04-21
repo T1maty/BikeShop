@@ -34,7 +34,9 @@ export const EndWorkDayModal = () => {
                 onClose={() => {setOpen(false)}}
             >
                 <div className={s.endWorkDayModal_mainBlock}>
-                    <div className={s.endWorkDayModal_title}>Закрытие смены</div>
+                    <div className={s.endWorkDayModal_title}>
+                        Закрытие смены
+                    </div>
                     <div className={s.endWorkDayModal_content}>
                         <div className={s.content_report}>
                             <div className={s.report}>
