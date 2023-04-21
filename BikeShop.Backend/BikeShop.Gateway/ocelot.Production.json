@@ -1312,7 +1312,7 @@
 	  {
       "UpstreamPathTemplate": "/api/encashment/create",
       "UpstreamHttpMethod": [
-        "Get"
+        "Post"
       ],
       "DownstreamPathTemplate": "/encashment/create",
       "DownstreamScheme": "http",
@@ -1353,7 +1353,86 @@
         }
       ],
       "SwaggerKey": "acts"
+    },
+	
+	{
+      "UpstreamPathTemplate": "/api/inventarization/getbyshop",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/inventarization/getbyshop",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/inventarization/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/inventarization/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/inventarization/update",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/inventarization/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/inventarization/closeact",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/inventarization/closeact",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/inventarization/getlackbyshop",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/inventarization/getlackbyshop",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
     }
+	
+	
+	
   ],
 
   "SwaggerEndPoints": [

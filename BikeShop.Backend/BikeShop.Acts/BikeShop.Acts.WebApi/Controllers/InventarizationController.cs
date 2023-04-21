@@ -46,11 +46,5 @@ namespace BikeShop.Acts.WebApi.Controllers
         {
 
         }
-
-        [HttpPost("createlack")]
-        public async Task CreateLack(int ActId, int ShopId, Guid UserId)
-        {
-
-        }
     }
 }

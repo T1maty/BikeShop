@@ -21,14 +21,23 @@ namespace BikeShop.Acts.Application.Services
             _context = context;
         }
 
-        public Task<InventarizationWithProducts> CloseAct(int ActId, Guid UserId)
+        public async Task<InventarizationWithProducts> CloseAct(int ActId, Guid UserId)
         {
-            throw new NotImplementedException();
+            var inv = await _context.Inventarizations.FindAsync(ActId);
+            if (inv == null) throw new Exception();
+
+            inv.Status = "Closed";
+            inv.UpdatedAt = DateTime.Now;
+            inv.UserUpdatedId= UserId;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return new InventarizationWithProducts { Inventarization = inv, Products = await _context.InventarizationProducts.Where(n => n.InventariazationId == inv.Id).ToListAsync() };
         }
 
         public async Task<InventarizationWithProducts> Create(int ShopId, Guid UserId)
         {
-            var ent = new Inventarization { ShopId = ShopId, Status = "", UserCreatedId = UserId, UserUpdatedId = UserId, Description = "" };
+            var ent = new Inventarization { ShopId = ShopId, Status = "InWork", UserCreatedId = UserId, UserUpdatedId = UserId, Description = "" };
             await _context.Inventarizations.AddAsync(ent);
 
             return new InventarizationWithProducts { Inventarization = ent, Products = new List<InventarizationProduct>() };
