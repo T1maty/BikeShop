@@ -4,6 +4,7 @@ export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 export {ArchiveModal} from './ArchiveModal/ArchiveModal'
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 
+export {CheckModalBasic} from './CheckModals/CheckModalBasic'
 export {CheckModalCheckForShop} from './CheckModals/CheckModalCheckForShop'
 export {CheckModalCheckForService} from './CheckModals/CheckModalCheckForService'
 

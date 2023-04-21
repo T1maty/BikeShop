@@ -5,18 +5,9 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    CheckModalCheckForService,
-    CheckModalCheckForShop,
-    ChooseClientModal,
-    CreateOptionModal,
-    CreateProductModal,
-    CreateSpecificationModal,
-    EditProductCardModal,
-    EmployeeSalaryModal,
-    EncashmentModal,
-    EndWorkDayModal, GetPutMoneyModal,
-    ReportDayModal,
-    SupplyInvoiceArchiveModal
+    CheckModalBasic, CheckModalCheckForService, CheckModalCheckForShop, ChooseClientModal, CreateOptionModal,
+    CreateProductModal, CreateSpecificationModal, EditProductCardModal, EmployeeSalaryModal, EncashmentModal,
+    EndWorkDayModal, GetPutMoneyModal, ReportDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -37,22 +28,23 @@ export const MainPage = () => {
     const navigate = useNavigate()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
+    const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
+    const user = useMainPageStore(s => s.user)
+    const setUser = useMainPageStore(s => s.setUser)
 
-    const setOpenCheckModalForShop = useCheckModal(s => s.setOpenCheckModalForShop)
-    const setOpenCheckModalForService = useCheckModal(s => s.setOpenCheckModalForService)
-
+    // временные модалки
     const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
     const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
     const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
     const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
-    const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
     const setOpenReportDayModal = useReportDayModal(s => s.setOpenReportDayModal)
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
+    const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
 
-    const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
-    const user = useMainPageStore(s => s.user)
-    const setUser = useMainPageStore(s => s.setUser)
+    const setOpenCheckModal = useCheckModal(s => s.setOpenCheckModal)
+    const setTriggerCheckForShop = useCheckModal(s => s.setTriggerCheckForShop)
+    const setTriggerCheckForService = useCheckModal(s => s.setTriggerCheckForService)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -88,17 +80,19 @@ export const MainPage = () => {
             <EncashmentModal/>
             <GetPutMoneyModal/>
 
-            <CheckModalCheckForShop/>
-            <CheckModalCheckForService/>
+            <CheckModalBasic/>
+
+            {/*<CheckModalCheckForShop/>*/}
+            {/*<CheckModalCheckForService/>*/}
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {setOpenCheckModalForShop(true)}}>
-                            Создать заказ
+                        <Button onClick={() => {setTriggerCheckForShop(true); setOpenCheckModal(true)}}>
+                            Создать заказ (акт1)
                         </Button>
-                        <Button onClick={() => {setOpenCheckModalForService(true)}}>
-                            Добавить горячего клиента
+                        <Button onClick={() => {setTriggerCheckForService(true); setOpenCheckModal(true)}}>
+                            Добавить горячего клиента (акт2)
                         </Button>
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
                             Ремонты
