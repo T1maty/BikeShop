@@ -7,7 +7,6 @@ import {SubmitHandler, useForm, Controller} from "react-hook-form"
 export const GetPutMoneyModal = () => {
 
     const radioGetPut = ['Выдача', 'Внесение']
-    const [radioValue, setRadioValue] = useState(radioGetPut[0])
 
     const open = useGetPutMoneyModal(s => s.openGetPutMoneyModal)
     const setOpen = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
@@ -16,7 +15,7 @@ export const GetPutMoneyModal = () => {
         defaultValues: {
             details: '',
             sum: 0,
-            radioSelect: '',
+            radioGetPut: 'Выдача',
         }
     })
 
@@ -28,7 +27,7 @@ export const GetPutMoneyModal = () => {
         // formControl.reset()
         formControl.setValue('details', '')
         formControl.setValue('sum', 0)
-        // formControl.setValue('radioSelect', '')
+        formControl.setValue('radioGetPut', 'Выдача')
     }, [])
 
     return (
@@ -73,11 +72,22 @@ export const GetPutMoneyModal = () => {
                                                        // rules={{required: Errors[0].name}}
                                 />
                                 <div className={s.infoBlock_radioButtons}>
-                                    <CustomRadioButton
+                                    <Controller
                                         name={'radioGetPut'}
-                                        options={radioGetPut}
-                                        value={radioValue}
-                                        onChangeOption={setRadioValue}
+                                        control={formControl.control}
+                                        render={({field}: any) =>
+                                            <CustomRadioButton
+                                                name={'radioGetPut'}
+                                                options={radioGetPut}
+                                                value={field.value.radioGetPut}
+                                                onChangeOption={(v) => {
+                                                    field.onChange({
+                                                        ...field.value,
+                                                        radioGetPut: v.target.value
+                                                    })
+                                                }}
+                                            />
+                                        }
                                     />
                                 </div>
                             </div>
