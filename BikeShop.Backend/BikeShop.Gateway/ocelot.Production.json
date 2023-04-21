@@ -1257,11 +1257,11 @@
         }
       ],
       "SwaggerKey": "shop"
-    }
+    },
 	
 	
 	
-	{
+	  {
       "UpstreamPathTemplate": "/api/cashboxaction/getbyshop",
       "UpstreamHttpMethod": [
         "Get"
@@ -1276,7 +1276,7 @@
       ],
       "SwaggerKey": "acts"
     },
-	{
+	  {
       "UpstreamPathTemplate": "/api/cashboxaction/create",
       "UpstreamHttpMethod": [
         "Post"
@@ -1294,7 +1294,7 @@
 	
 	
 	
-	{
+	  {
       "UpstreamPathTemplate": "/api/encashment/getbyshop",
       "UpstreamHttpMethod": [
         "Get"
@@ -1309,7 +1309,7 @@
       ],
       "SwaggerKey": "acts"
     },
-	{
+	  {
       "UpstreamPathTemplate": "/api/encashment/create",
       "UpstreamHttpMethod": [
         "Get"
@@ -1324,7 +1324,7 @@
       ],
       "SwaggerKey": "acts"
     },
-	{
+	  {
       "UpstreamPathTemplate": "/api/encashment/setstatustotransfer",
       "UpstreamHttpMethod": [
         "Put"
@@ -1339,7 +1339,7 @@
       ],
       "SwaggerKey": "acts"
     },
-	{
+	  {
       "UpstreamPathTemplate": "/api/encashment/setstatustofinish",
       "UpstreamHttpMethod": [
         "Put"
