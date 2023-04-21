@@ -2,8 +2,8 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../entities/enumerables/ErrorStatusTypes"
-import {SupplyInvoiceDTO} from "../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
-import {SupplyInvoiceAPI} from "../../entities/api/Acts/SupplyInvoiceAPI";
+import {SupplyInvoiceDTO} from "../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO"
+import {SupplyInvoiceAPI} from '../../entities'
 
 interface SupplyInvoiceArchiveModalStore {
     openSupplyInvoiceArchiveModal: boolean

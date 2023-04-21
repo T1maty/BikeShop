@@ -1,5 +1,5 @@
-import {$api} from "../../../shared";
-import {SupplyInvoiceDTO} from "../../models/Acts/SupplyInvoice/SupplyInvoiceDTO";
+import {$api} from "../../../shared"
+import {SupplyInvoiceDTO} from "../../models/Acts/SupplyInvoice/SupplyInvoiceDTO"
 
 export const SupplyInvoiceAPI = {
     getByShop(shopId: number, take: number): any {

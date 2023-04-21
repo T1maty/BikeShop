@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import s from './EncashmentModal.module.scss'
 import {Button, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import useEncashmentModal from "./EncashmentModalStore"
-import {SubmitHandler, useForm} from 'react-hook-form'
+import {Controller, SubmitHandler, useForm} from 'react-hook-form'
 import {Errors} from "../../../entities/errors/workspaceErrors"
 
 export const EncashmentModal = () => {
@@ -13,6 +13,7 @@ export const EncashmentModal = () => {
     const formControl = useForm<any>({
         defaultValues: {
             sum: 0,
+            details: '',
         }
     })
 
@@ -23,14 +24,13 @@ export const EncashmentModal = () => {
     useEffect(() => {
         // formControl.reset()
         formControl.setValue('sum', 0)
+        formControl.setValue('details', '')
     }, [])
 
     return (
         <CustomModal
             open={open}
-            onClose={() => {
-                setOpen(false)
-            }}
+            onClose={() => {setOpen(false)}}
         >
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <div className={s.encashmentModal_mainBox}>
@@ -57,6 +57,26 @@ export const EncashmentModal = () => {
                                                control={formControl}
                                                // rules={{required: Errors[0].name}}
                         />
+
+                        <div className={s.content_report}>
+                            <div className={s.report}>
+                                <Controller
+                                    name={'details'}
+                                    control={formControl.control}
+                                    render={({field}: any) =>
+                                        <textarea placeholder={'Детальное описание'}
+                                                  value={field.value.details}
+                                                  onChange={(v) => {
+                                                      field.onChange({
+                                                          ...field.value,
+                                                          details: v.target.value
+                                                      })
+                                                  }}
+                                        />
+                                    }
+                                />
+                            </div>
+                        </div>
 
                         <div>
                             <div className={s.title}>

@@ -21,7 +21,11 @@
     .encashment_content {
         width: 100%;
         @include divSmallMarginBottom;
-        @include EncashmentModalTitle;
+        @include encashmentModalTitle;
+
+        .content_report {
+            @include encashmentTextarea(100%, 130px);
+        }
     }
     .encashment_buttons {
         width: 100%;

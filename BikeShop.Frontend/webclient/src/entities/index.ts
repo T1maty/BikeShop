@@ -8,6 +8,9 @@ export type {ProductTag} from './entities/ProductTag'
 export type {ProductImage} from './entities/ProductImage'
 export type {ProductQuantity} from './entities/ProductQuantity'
 
+export type {CashboxAction} from './entities/Acts/Cashbox/CashboxAction'
+export type {Encashment} from './entities/Acts/Cashbox/Encashment'
+
 ///////////////
 export type {LoginData} from './models/Auth/LoginData'
 export type {RegistrationData} from './models/Auth/RegistrationData'
@@ -62,6 +65,7 @@ export type {CreateWorkGroup} from './requests/CreateWorkGroup'
 export type {UpdateWorkGroup} from './requests/UpdateWorkGroup'
 export type {CreateOption} from './requests/CreateOption'
 export type {UpdateOption} from './requests/UpdateOption'
+export type {CashboxActionRequest} from './requests/CashboxActionRequest'
 
 ///////////////////////////////////
 //          Responses            //
@@ -89,6 +93,9 @@ export {FinancialInteractionAPI} from './api/FinancialInteractionAPI'
 export {ProductCardAPI} from './api/ProductCardAPI'
 export {ServiceAPI} from './api/ServiceAPI'
 export {ShopAPI} from './api/ShopAPI'
+export {EncashmentAPI} from './api/Acts/EncashmentAPI'
+export {SupplyInvoiceAPI} from './api/Acts/SupplyInvoiceAPI'
+export {CashboxAPI} from './api/Acts/CashboxAPI'
 
 ///////////////////////////////////
 //          Others               //

@@ -115,7 +115,7 @@ export const MainPage = () => {
                         <Button onClick={() => {}}>
                             Архив приходных
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {setOpenEncashmentModal(true)}}>
                             Настройка зарплаты
                         </Button>
                         <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
