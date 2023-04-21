@@ -4,6 +4,8 @@ import {ActHeader} from "./ActHeader"
 
 export const ActGetStuffFromService = () => {
 
+    console.log('2')
+
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>

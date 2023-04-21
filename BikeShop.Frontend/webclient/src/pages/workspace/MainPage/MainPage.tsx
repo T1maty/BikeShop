@@ -5,7 +5,8 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    CheckModal,
+    CheckModalCheckForService,
+    CheckModalCheckForShop,
     ChooseClientModal,
     CreateOptionModal,
     CreateProductModal,
@@ -19,6 +20,7 @@ import {
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
+
 import useCreateSpecificationModal
     from '../../../features/CRUDModals/CreateSpecificationModal/CreateSpecificationModalStore'
 import useCreateOptionModal from '../../../features/CRUDModals/CreateOptionModal/CreateOptionModalStore'
@@ -26,18 +28,18 @@ import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchive
 import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalStore"
-import useCheckModal from "../../../features/CheckModal/CheckModalStore"
-import {CheckForShop, ActServiceWork, ActGetStuffToService,
-    ActGetStuffFromService, CheckForServiceWork} from "../../../widgets"
-import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore";
-import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore";
+import useCheckModal from "../../../features/CheckModals/CheckModalStore"
+import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
+import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 
 export const MainPage = () => {
 
     const navigate = useNavigate()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
-    const setOpenCheckModal = useCheckModal(s => s.setOpenCheckModal)
+
+    const setOpenCheckModalForShop = useCheckModal(s => s.setOpenCheckModalForShop)
+    const setOpenCheckModalForService = useCheckModal(s => s.setOpenCheckModalForService)
 
     const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
     const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
@@ -86,22 +88,25 @@ export const MainPage = () => {
             <EncashmentModal/>
             <GetPutMoneyModal/>
 
+            <CheckModalCheckForShop/>
+            <CheckModalCheckForService/>
+
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {setOpenCheckModalForShop(true)}}>
                             Создать заказ
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {setOpenCheckModalForService(true)}}>
                             Добавить горячего клиента
                         </Button>
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
                             Ремонты
                         </Button>
-                        <Button onClick={() => {setOpenCreateSpecificationModal(true)}}>
+                        <Button onClick={() => {}}>
                             Прокат
                         </Button>
-                        <Button onClick={() => {setOpenCreateOptionModal(true)}}>
+                        <Button onClick={() => {}}>
                             Внести на счёт
                         </Button>
                     </div>
@@ -114,10 +119,10 @@ export const MainPage = () => {
                             Каталог услуг
                         </Button>
 
-                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
+                        <Button onClick={() => {}}>
                             Архив приходных
                         </Button>
-                        <Button onClick={() => {setOpenEmployeeSalaryModal(true)}}>
+                        <Button onClick={() => {}}>
                             Настройка зарплаты
                         </Button>
                         <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
@@ -126,10 +131,6 @@ export const MainPage = () => {
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>
                             Новая приходная накладная
                         </Button>
-
-                        <CheckModal name={'Акт передачи техники (модалка)'}>
-                            <ActGetStuffToService/>
-                        </CheckModal>
                     </div>
                 </div>
 
@@ -187,7 +188,7 @@ export const MainPage = () => {
                                 Цена
                             </div>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {setOpenReportDayModal(true)}}
+                                    onClick={() => {}}
                             >
                                 К оплате
                             </Button>

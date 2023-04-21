@@ -8,6 +8,8 @@ interface ActGetStuffToServiceProps {
 
 export const ActGetStuffToService: React.FC<ActGetStuffToServiceProps> = ({clientInfo}) => {
 
+    console.log('1')
+
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>

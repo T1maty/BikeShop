@@ -3,7 +3,10 @@ export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 
 export {ArchiveModal} from './ArchiveModal/ArchiveModal'
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
-export {CheckModal} from './CheckModal/CheckModal'
+
+export {CheckModalCheckForShop} from './CheckModals/CheckModalCheckForShop'
+export {CheckModalCheckForService} from './CheckModals/CheckModalCheckForService'
+
 export {PayModal} from './PayModal/PayModal'
 export {ChooseClientModal} from './ChooseClientModal/ChooseClientModal'
 export {ChooseDiscountModal} from './ChooseDiscountModal/ChooseDiscountModal'
