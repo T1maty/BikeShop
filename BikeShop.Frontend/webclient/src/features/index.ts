@@ -30,6 +30,9 @@ export {CreateQuantityUnitModal} from './CRUDModals/CreateQuantityUnitModal/Crea
 export {CreateSpecificationModal} from './CRUDModals/CreateSpecificationModal/CreateSpecificationModal'
 export {CreateOptionModal} from './CRUDModals/CreateOptionModal/CreateOptionModal'
 
+export {EncashmentModal} from './CashboxModals/EncashmentModal/EncashmentModal'
+export {GetPutMoneyModal} from './CashboxModals/GetPutMoneyModal/GetPutMoneyModal'
+
 export {TableProductItem} from './ServiceFeatures/TableProductItem/TableProductItem'
 export {CreateWorkGroupModal} from './WorkCatalogFeatures/CreateWorkGroupModal/CreateWorkGroupModal'
 export {CreateWorkModal} from './WorkCatalogFeatures/CreateWorkModal/CreateWorkModal'
