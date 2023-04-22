@@ -118,9 +118,7 @@ export const routes = createBrowserRouter([
     {
         path: BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS,
         element: <WorkspaceHeaderProvider>
-
             <ArrivalOfProducts/>
-
         </WorkspaceHeaderProvider>
     },
     {
@@ -132,24 +130,24 @@ export const routes = createBrowserRouter([
         </WorkspaceHeaderProvider>
     },
 
-    {
-        path: BikeShopPaths.WORKSPACE.SHOP_CHECK,
-        element: <CheckForShop/>
-    },
-    {
-        path: BikeShopPaths.WORKSPACE.WORK_CHECK,
-        element: <CheckForServiceWork/>
-    },
-    {
-        path: BikeShopPaths.WORKSPACE.WORK_ACT,
-        element: <ActServiceWork/>
-    },
-    {
-        path: BikeShopPaths.WORKSPACE.GET_STUFF_TO_SERVICE_ACT,
-        element: <ActGetStuffToService/>
-    },
-    {
-        path: BikeShopPaths.WORKSPACE.GET_STUFF_FROM_SERVICE_ACT,
-        element: <ActGetStuffFromService/>
-    },
+    // {
+    //     path: BikeShopPaths.WORKSPACE.SHOP_CHECK,
+    //     element: <CheckForShop/>
+    // },
+    // {
+    //     path: BikeShopPaths.WORKSPACE.WORK_CHECK,
+    //     element: <CheckForServiceWork/>
+    // },
+    // {
+    //     path: BikeShopPaths.WORKSPACE.WORK_ACT,
+    //     element: <ActServiceWork/>
+    // },
+    // {
+    //     path: BikeShopPaths.WORKSPACE.GET_STUFF_TO_SERVICE_ACT,
+    //     element: <ActGetStuffToService/>
+    // },
+    // {
+    //     path: BikeShopPaths.WORKSPACE.GET_STUFF_FROM_SERVICE_ACT,
+    //     element: <ActGetStuffFromService/>
+    // },
 ])

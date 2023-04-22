@@ -65,9 +65,10 @@ export const InventoryOfProductsArchiveModal = () => {
                                         return (
                                             <div className={s.supplyInvoiceArchiveModal_item} key={el.supplyInvoice.id}
                                                  onDoubleClick={() => {
-                                                     setIsCreating(false)
-                                                     setCurrentSupplyInvoice(el);
-                                                     navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                                     // setIsCreating(false)
+                                                     // setCurrentSupplyInvoice(el)
+                                                     navigate(BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS)
+                                                     setOpen(false)
                                                  }}
                                             >
                                                 <div className={

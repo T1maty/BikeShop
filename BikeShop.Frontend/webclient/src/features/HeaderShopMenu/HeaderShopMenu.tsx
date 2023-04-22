@@ -11,7 +11,7 @@ import useCreateCurrencyModal from "../CRUDModals/CreateCurrencyModal/CreateCurr
 import useCreateQuantityUnitModal from "../CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModalStore"
 import useServiceArchiveModal from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModalStore"
 import useSupplyInvoiceArchiveModal from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore"
-import useEncashmentArchiveModal from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
+import useInventoryOfProductsArchiveModal from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
 import {CreateShopModal} from "../CRUDModals/CreateShopModal/CreateShopModal"
 import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorageModal"
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
@@ -19,8 +19,6 @@ import {CreateQuantityUnitModal} from "../CRUDModals/CreateQuantityUnitModal/Cre
 import {ServiceArchiveModal} from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModal"
 import {InventoryOfProductsArchiveModal} from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
 import {SupplyInvoiceArchiveModal} from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal"
-import useInventoryOfProductsArchiveModal
-    from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore";
 
 export const HeaderShopMenu = () => {
 
@@ -40,9 +38,7 @@ export const HeaderShopMenu = () => {
     const [menuItems1, setMenuItems1] = useState([
         {
             title: 'Архив',
-            func: () => {
-                // navigate(BikeShopPaths.WORKSPACE.SERVICE)
-            }
+            func: () => {}
         },
     ])
     const [subMenuItems1, setSubMenuItems1] = useState([
@@ -178,7 +174,7 @@ export const HeaderShopMenu = () => {
                                 menuItems1.map(item => (
                                     <div className={s.menuList_itemNoClick}
                                          key={item.title}
-                                         onClick={item.func}
+                                         // onClick={item.func}
                                     >
                                         {item.title}
                                     </div>

@@ -5,19 +5,14 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    ChooseClientModal, CreateProductModal, EditProductCardModal, EncashmentArchiveModal,
-    EncashmentModal, EndWorkDayModal, GetPutMoneyModal, ReportDayModal, SupplyInvoiceArchiveModal
+    ChooseClientModal, CreateProductModal, EditProductCardModal,
+    EncashmentModal, EndWorkDayModal, GetPutMoneyModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
-
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
-import useSupplyInvoiceArchiveModal
-    from "../../../features/ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore"
-import useEncashmentArchiveModal
-    from "../../../features/ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
 
 export const MainPage = () => {
 
@@ -28,11 +23,8 @@ export const MainPage = () => {
     const user = useMainPageStore(s => s.user)
     const setUser = useMainPageStore(s => s.setUser)
 
-    // временные модалки
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
-    const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
-    const setOpenEncashmentArchiveModal = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
 
     const [tasks, setTasks] = useState([
@@ -59,14 +51,10 @@ export const MainPage = () => {
 
             <CreateProductModal/>
             <EditProductCardModal/>
-            <EndWorkDayModal/>
-            <ReportDayModal/>
-
-            <SupplyInvoiceArchiveModal/>
-            <EncashmentArchiveModal/>
 
             <EncashmentModal/>
             <GetPutMoneyModal/>
+            <EndWorkDayModal/>
 
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
@@ -74,10 +62,10 @@ export const MainPage = () => {
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
                             Новый ремонт
                         </Button>
-                        <Button onClick={() => {setOpenEncashmentArchiveModal(true)}}>
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
                             Касса
                         </Button>
-                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
+                        <Button onClick={() => {}}>
                             Новый заказ
                         </Button>
                         <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
@@ -151,7 +139,7 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_top_result}>
                             <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                    onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
+                                    onClick={() => {}}>
                                 Открыть кассу
                             </Button>
                             <Button buttonDivWrapper={s.result_cancelBtn} onClick={() => {}}>
