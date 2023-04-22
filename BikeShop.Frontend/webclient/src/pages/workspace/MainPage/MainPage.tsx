@@ -71,23 +71,20 @@ export const MainPage = () => {
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
-                            Создать заказ
+                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
+                            Новый ремонт
                         </Button>
                         <Button onClick={() => {setOpenEncashmentArchiveModal(true)}}>
-                            Добавить "горячего" клиента
+                            Касса
                         </Button>
-                        <Button onClick={() => {}}>
-                            Тест печать
+                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
+                            Новый заказ
                         </Button>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
-                            Ремонты
+                        <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
+                            Акт внесения
                         </Button>
-                        <Button onClick={() => {}}>
-                            Прокат
-                        </Button>
-                        <Button onClick={() => {}}>
-                            Внести на счёт
+                        <Button onClick={() => {setOpenEncashmentModal(true)}}>
+                            Инкассация
                         </Button>
                     </div>
 
@@ -98,18 +95,14 @@ export const MainPage = () => {
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)}}>
                             Каталог услуг
                         </Button>
-
-                        <Button onClick={() => {}}>
-                            Архив приходных
-                        </Button>
-                        <Button onClick={() => {setOpenEncashmentModal(true)}}>
-                            Настройка зарплаты
-                        </Button>
-                        <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
-                            Счета клиентов
-                        </Button>
                         <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>
-                            Новая приходная накладная
+                            Приходные накладные
+                        </Button>
+                        <Button onClick={() => {}}>
+                            Клиенты
+                        </Button>
+                        <Button onClick={() => {}}>
+                            Заказы
                         </Button>
                     </div>
                 </div>

@@ -21,8 +21,8 @@ export const Cashbox = () => {
     const addProduct = useCashboxStore(s => s.addProduct)
     const setData = useCashboxStore(s => s.setProducts)
 
-    const [open, setOpen] = useState(false);
-    const [openPay, setOpenPay] = useState(false);
+    const [open, setOpen] = useState(false)
+    const [openPay, setOpenPay] = useState(false)
     const [sum, setSum] = useState(0)
 
 
@@ -35,7 +35,6 @@ export const Cashbox = () => {
             sum += (n.quantity * n.price - n.discount)
         })
         setSum(sum)
-
     }, [bill])
 
     useEffect(() => {
@@ -57,37 +56,29 @@ export const Cashbox = () => {
     const chooseClientHandler = (user: User) => {
         setUser(user)
         setOpenClientModal(false)
-        console.log('Cashbox click user', user)
     }
 
     return (
-        // <div className={s.cashboxWrapper}>
         <div className={s.cashboxMainBlock}>
             <div className={s.cashboxMainBlock_leftSideWrapper}>
                 <div className={s.leftSide_tables}>
-                    <Button onClick={() => {
-                    }} disabled={!isActiveTable}>
+                    <Button onClick={() => {}} disabled={!isActiveTable}>
                         Касса 1
                     </Button>
-                    <Button onClick={() => {
-                    }} disabled={isActiveTable}>
+                    <Button onClick={() => {}} disabled={isActiveTable}>
                         Касса 2
                     </Button>
-                    <Button onClick={() => {
-                    }} disabled={isActiveTable}>
+                    <Button onClick={() => {}} disabled={isActiveTable}>
                         Касса 3
                     </Button>
-                    <Button onClick={() => {
-                    }} disabled={isActiveTable}>
+                    <Button onClick={() => {}} disabled={isActiveTable}>
                         Касса 4
                     </Button>
                 </div>
 
                 <div className={s.leftSide_client}>
                     <ClientCard user={user}/>
-                    <ChooseClientModal extraCallback={(user: User) => {
-                        chooseClientHandler(user)
-                    }}/>
+                    <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
                     <div className={s.leftSide_client_buttons}>
                         <Button buttonDivWrapper={s.client_buttons_choose}
                                 onClick={() => setOpenClientModal(true)}
@@ -121,14 +112,12 @@ export const Cashbox = () => {
                     <div className={s.discount_buttons}>
                         <ChooseDiscountModal/>
                         <Button buttonDivWrapper={s.buttons_choose}
-                                onClick={() => {
-                                }}
+                                onClick={() => {}}
                         >
                             Выбрать скидку для клиента
                         </Button>
                         <Button buttonDivWrapper={s.buttons_cancel}
-                                onClick={() => {
-                                }}
+                                onClick={() => {}}
                         >
                             X
                         </Button>
@@ -138,17 +127,18 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock_rightSideWrapper}>
                 <div className={s.cashboxMainBlock_rightSideHeader}>
-                    <ChooseProductModal open={open} setOpen={setOpen} setData={setData} data={bill.products}
-                                        slaveColumns={columns}/>
+                    <ChooseProductModal open={open}
+                                        setOpen={setOpen}
+                                        setData={setData}
+                                        data={bill.products}
+                                        slaveColumns={columns}
+                    />
                     <Button buttonDivWrapper={s.header_chooseBtn}
-                            onClick={() => {
-                                setOpen(true)
-                            }}
+                            onClick={() => {setOpen(true)}}
                     >
                         Выбрать товары
                     </Button>
-                    <CustomSearchInput placeholder={'Поиск...'} clearInputValue={() => {
-                    }}/>
+                    <CustomSearchInput placeholder={'Поиск...'} clearInputValue={() => {}}/>
                     {/*<div className={s.header_searchInput}>*/}
                     {/*    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
                     {/*</div>*/}
@@ -162,8 +152,7 @@ export const Cashbox = () => {
                     <div className={s.rightSideBottom_buttonsBlock}>
                         <div className={s.buttonsBlock_one}>
                             <div className={s.one_cancelBtn}>
-                                <Button onClick={() => {
-                                }}>
+                                <Button onClick={() => {}}>
                                     X
                                 </Button>
                             </div>
@@ -179,10 +168,12 @@ export const Cashbox = () => {
                         </div>
                     </div>
                     <div className={s.rightSideBottom_payBlock}>
-                        <PayModal open={openPay} setOpen={setOpenPay} summ={sum} result={paymentResultHandler}/>
-                        <Button onClick={() => {
-                            setOpenPay(true)
-                        }}>
+                        <PayModal open={openPay}
+                                  setOpen={setOpenPay}
+                                  summ={sum}
+                                  result={paymentResultHandler}
+                        />
+                        <Button onClick={() => {setOpenPay(true)}}>
                             К оплате
                         </Button>
                     </div>
@@ -190,6 +181,5 @@ export const Cashbox = () => {
             </div>
 
         </div>
-        // </div>
     )
 }
