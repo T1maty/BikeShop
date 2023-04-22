@@ -1,15 +1,15 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-.encashmentArchiveModal_mainBlock {
+.serviceFinalArchiveModal_mainBlock {
     @include defaultModalStyle;
     width: 700px;
 
-    .encashmentArchiveModal_title {
+    .serviceFinalArchiveModal_title {
         @include modalTitle;
     }
 
-    .encashmentArchiveModal_list {
+    .serviceFinalArchiveModal_list {
         @include divLargeMarginBottom;
         max-height: 550px;
         overflow: auto;
@@ -23,30 +23,31 @@
             padding: $defaultSmallMargin;
             @include hoverCursorPointer;
 
-            .status_WaitingPayment {
-                @include supplyInvoiceStatus($bgColorProfileStatusWaitingPayment);
-            }
-
-            .status_Ready {
-                @include supplyInvoiceStatus($bgColorProfileStatusReady);
-            }
-
-            .status_Canceled {
-                @include supplyInvoiceStatus($bgColorProfileStatusCanceled);
-            }
-
             .item_content {
                 @include flexBetween;
 
                 .content_info {
                     height: 100%;
                     width: 250px;
+                    font-size: 20px;
                     border-right: 2px solid $themeColorMilk;
                     @include flexColumnOnly;
                     justify-content: space-between;
+                    align-items: flex-start;
 
-                    > div:not(:last-child) {
-                        font-size: 20px;
+                    .cashBlock {
+                        @include flexCenter;
+
+                        .cashBlock_img {
+                            img {
+                                width: 25px;
+                                height: 25px;
+                            }
+                        }
+                        .cashBlock_info {
+                            padding-left: 10px;
+                            font-size: 20px;
+                        }
                     }
                 }
 

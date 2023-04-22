@@ -42,7 +42,7 @@ const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/de
         })
     },
 })))/*, {
-    name: "archiveServiceModalStore",
+    name: "serviceArchiveModalStore",
     version: 1
 })*/);
 

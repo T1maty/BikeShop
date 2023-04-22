@@ -730,6 +730,37 @@
     }
 }
 
+@mixin encashmentDateBlock() {
+    .content_cash {
+        height: 100%;
+        @include flexColumnOnly;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 0 10px;
+
+        .cashBlock {
+            @include flexCenter;
+
+            .cashBlock_img {
+                img {
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+            .cashBlock_info {
+                padding-left: 10px;
+                font-size: 20px;
+            }
+        }
+    }
+    .content_date {
+        @include divSmallMarginBottom;
+        line-height: $minLineHeight;
+        border-left: 2px solid $themeColorMilk;
+        padding-left: 10px;
+    }
+}
+
 ////////////////////////////////////////////////////////////////////
 // SupplyInvoiceArchiveModal
 

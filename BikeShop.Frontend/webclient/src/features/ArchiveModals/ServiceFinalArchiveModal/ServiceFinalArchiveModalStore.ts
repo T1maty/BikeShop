@@ -4,10 +4,11 @@ import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO"
 import {SupplyInvoiceAPI} from '../../../entities'
+import {ServiceFinalArchiveModal} from './ServiceFinalArchiveModal';
 
-interface EncashmentArchiveModalStore {
-    openEncashmentArchiveModal: boolean
-    setOpenEncashmentArchiveModal: (value: boolean) => void
+interface ServiceFinalArchiveModalStore {
+    openServiceFinalArchiveModal: boolean
+    setOpenServiceFinalArchiveModal: (value: boolean) => void
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
@@ -15,10 +16,10 @@ interface EncashmentArchiveModalStore {
     getArchive: () => void
 }
 
-const useEncashmentArchiveModal = create<EncashmentArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    openEncashmentArchiveModal: false,
-    setOpenEncashmentArchiveModal: (value: boolean) => set({
-        openEncashmentArchiveModal: value
+const useServiceFinalArchiveModal = create<ServiceFinalArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    openServiceFinalArchiveModal: false,
+    setOpenServiceFinalArchiveModal: (value: boolean) => set({
+        openServiceFinalArchiveModal: value
     }),
     isLoading: false,
     errorStatus: 'default',
@@ -40,8 +41,8 @@ const useEncashmentArchiveModal = create<EncashmentArchiveModalStore>()(/*persis
         })
     },
 })))/*, {
-    name: "encashmentArchiveModalStore",
+    name: "serviceFinalArchiveModalStore",
     version: 1
 })*/);
 
-export default useEncashmentArchiveModal;
+export default useServiceFinalArchiveModal;
