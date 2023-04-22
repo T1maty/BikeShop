@@ -62,8 +62,8 @@ export const SupplyInvoiceArchiveModal = () => {
                                             // s.item_status
                                             el.supplyInvoice.sypplyActStatus === 'Created' ? s.status_WaitingPayment :
                                                 el.supplyInvoice.sypplyActStatus === 'Executed' ? s.status_Ready :
-                                                    el.supplyInvoice.sypplyActStatus === 'Canceled' ? s.status_Canceled : ''
-                                        }>
+                                                    el.supplyInvoice.sypplyActStatus === 'Canceled' ? s.status_Canceled : ''}
+                                        >
                                             {el.supplyInvoice.sypplyActStatus}
                                         </div>
                                         <div className={s.item_content}>

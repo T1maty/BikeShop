@@ -4,6 +4,7 @@ export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 export {ServiceArchiveModal} from './ArchiveModals/ServiceArchiveModal/ServiceArchiveModal'
 export {InventoryOfProductsArchiveModal} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
 export {SupplyInvoiceArchiveModal} from './ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
+export {EncashmentArchiveModal} from './ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 export {PrintModal} from './PrintModal/PrintModal'

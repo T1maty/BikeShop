@@ -12,6 +12,7 @@ import useCreateQuantityUnitModal from "../CRUDModals/CreateQuantityUnitModal/Cr
 import useServiceArchiveModal from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModalStore"
 import useSupplyInvoiceArchiveModal from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore"
 import useInventoryOfProductsArchiveModal from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
+import useEncashmentArchiveModal from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModalStore'
 import {CreateShopModal} from "../CRUDModals/CreateShopModal/CreateShopModal"
 import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorageModal"
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
@@ -19,6 +20,7 @@ import {CreateQuantityUnitModal} from "../CRUDModals/CreateQuantityUnitModal/Cre
 import {ServiceArchiveModal} from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModal"
 import {InventoryOfProductsArchiveModal} from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
 import {SupplyInvoiceArchiveModal} from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal"
+import {EncashmentArchiveModal} from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 
 export const HeaderShopMenu = () => {
 
@@ -29,6 +31,7 @@ export const HeaderShopMenu = () => {
     const openSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
     const openInventoryOfProductsArchiveModal = useInventoryOfProductsArchiveModal(s => s.setOpenInventoryOfProductsArchiveModal)
     const openServiceArchiveModal = useServiceArchiveModal(s => s.setOpenServiceArchiveModal)
+    const openEncashmentArchiveModal = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
 
     const openShopModal = useCreateShopModal(s => s.setOpenCreateShopModal)
     const openStorageModal = useCreateStorageModal(s => s.setOpenCreateStorageModal)
@@ -67,6 +70,13 @@ export const HeaderShopMenu = () => {
             title: 'Ремонты',
             func: () => {
                 openServiceArchiveModal(true)
+                setIsComponentVisible(false)
+            }
+        },
+        {
+            title: 'Инкассация',
+            func: () => {
+                openEncashmentArchiveModal(true)
                 setIsComponentVisible(false)
             }
         },
@@ -157,6 +167,7 @@ export const HeaderShopMenu = () => {
             <SupplyInvoiceArchiveModal/>
             <InventoryOfProductsArchiveModal/>
             <ServiceArchiveModal/>
+            <EncashmentArchiveModal/>
 
             <CreateShopModal/>
             <CreateStorageModal/>
