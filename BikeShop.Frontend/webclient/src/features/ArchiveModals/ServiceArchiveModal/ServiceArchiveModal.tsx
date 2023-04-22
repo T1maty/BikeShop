@@ -1,24 +1,24 @@
 import React, {useEffect, useState} from 'react'
-import s from './ArchiveModal.module.scss'
-import {ServiceItem} from '../../entities'
-import useArchiveModal from "./ArchiveModalStore"
-import {Button, CustomModal} from "../../shared/ui"
-import style from "../../shared/ui/Button/Button.module.scss"
+import s from './ServiceArchiveModal.module.scss'
+import {ServiceItem} from '../../../entities'
+import useServiceArchiveModal from "./ServiceArchiveModalStore"
+import {Button, CustomModal} from "../../../shared/ui"
+import style from "../../../shared/ui/Button/Button.module.scss"
 
-type ArchiveModalStatusType = 'Ended' | 'Canceled' | 'Deleted'
+type ServiceArchiveModalStatusType = 'Ended' | 'Canceled' | 'Deleted'
 
-export const ArchiveModal = () => {
+export const ServiceArchiveModal = () => {
 
-    const open = useArchiveModal(s => s.openArchiveModal)
-    const setOpen = useArchiveModal(s => s.setOpenArchiveModal)
-    const isLoading = useArchiveModal(s => s.isLoading)
+    const open = useServiceArchiveModal(s => s.openServiceArchiveModal)
+    const setOpen = useServiceArchiveModal(s => s.setOpenServiceArchiveModal)
+    const isLoading = useServiceArchiveModal(s => s.isLoading)
 
-    const services = useArchiveModal(s => s.services)
-    const filteredServices = useArchiveModal(s => s.filteredServices)
-    const setFilteredServices = useArchiveModal(s => s.setFilteredServices)
-    const currentService = useArchiveModal(s => s.currentService)
-    const setCurrentService = useArchiveModal(s => s.setCurrentService)
-    const getAllServicesInfo = useArchiveModal(s => s.getAllServicesInfo)
+    const services = useServiceArchiveModal(s => s.services)
+    const filteredServices = useServiceArchiveModal(s => s.filteredServices)
+    const setFilteredServices = useServiceArchiveModal(s => s.setFilteredServices)
+    const currentService = useServiceArchiveModal(s => s.currentService)
+    const setCurrentService = useServiceArchiveModal(s => s.setCurrentService)
+    const getAllServicesInfo = useServiceArchiveModal(s => s.getAllServicesInfo)
 
     // стили //
     // для стилей кнопок фильтрации
@@ -29,7 +29,7 @@ export const ArchiveModal = () => {
     // для стилей выбранного элемента
     const [activeId, setActiveId] = useState<number | null>(null)
 
-    const filterServicesUniversalHandler = (filterName: ArchiveModalStatusType, isButtonEndedOn: boolean,
+    const filterServicesUniversalHandler = (filterName: ServiceArchiveModalStatusType, isButtonEndedOn: boolean,
                                             isButtonCanceledOn: boolean, isButtonDeletedOn: boolean,) => {
 
         setFilteredServices(services.filter(serv => serv.status === filterName))

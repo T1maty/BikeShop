@@ -5,24 +5,19 @@ import {User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    ChooseClientModal, CreateOptionModal, CreateProductModal, CreateSpecificationModal,
-    EditProductCardModal, EmployeeSalaryModal, EncashmentModal, EndWorkDayModal,
-    GetPutMoneyModal, PrintModal, ReportDayModal, SupplyInvoiceArchiveModal
+    ChooseClientModal, CreateProductModal, EditProductCardModal, EncashmentArchiveModal,
+    EncashmentModal, EndWorkDayModal, GetPutMoneyModal, ReportDayModal, SupplyInvoiceArchiveModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
-
-import useCreateSpecificationModal
-    from '../../../features/CRUDModals/CreateSpecificationModal/CreateSpecificationModalStore'
-import useCreateOptionModal from '../../../features/CRUDModals/CreateOptionModal/CreateOptionModalStore'
-import useSupplyInvoiceArchiveModal from '../../../features/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore'
-import useEmployeeSalaryModal from "../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
-import useReportDayModal from "../../../features/ReportDayModal/ReportDayModalStore"
+
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
-
-import {CheckForServiceWork} from "../../../widgets"
+import useSupplyInvoiceArchiveModal
+    from "../../../features/ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore"
+import useEncashmentArchiveModal
+    from "../../../features/ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModalStore"
 
 export const MainPage = () => {
 
@@ -34,16 +29,11 @@ export const MainPage = () => {
     const setUser = useMainPageStore(s => s.setUser)
 
     // временные модалки
-    const setOpenCreateSpecificationModal = useCreateSpecificationModal(s => s.setOpenCreateSpecificationModal)
-    const setOpenCreateOptionModal = useCreateOptionModal(s => s.setOpenCreateOptionModal)
-    const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
-    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
-    const setOpenReportDayModal = useReportDayModal(s => s.setOpenReportDayModal)
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
+    const setOpenSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
+    const setOpenEncashmentArchiveModal = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
-
-    const [printOpen, setPrintOpen] = useState(false)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -69,26 +59,23 @@ export const MainPage = () => {
 
             <CreateProductModal/>
             <EditProductCardModal/>
-            <CreateSpecificationModal/>
-            <CreateOptionModal/>
-            <SupplyInvoiceArchiveModal/>
-            <EmployeeSalaryModal/>
             <EndWorkDayModal/>
             <ReportDayModal/>
+
+            <SupplyInvoiceArchiveModal/>
+            <EncashmentArchiveModal/>
 
             <EncashmentModal/>
             <GetPutMoneyModal/>
 
-            <PrintModal open={printOpen} setOpen={setPrintOpen} children={<CheckForServiceWork/>}/>
-
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {setPrintOpen(true)}}>
-                            Создать заказ (акт)
+                        <Button onClick={() => {setOpenSupplyInvoiceArchiveModal(true)}}>
+                            Создать заказ
                         </Button>
-                        <Button onClick={() => {}}>
-                            Добавить горячего клиента
+                        <Button onClick={() => {setOpenEncashmentArchiveModal(true)}}>
+                            Добавить "горячего" клиента
                         </Button>
                         <Button onClick={() => {}}>
                             Тест печать

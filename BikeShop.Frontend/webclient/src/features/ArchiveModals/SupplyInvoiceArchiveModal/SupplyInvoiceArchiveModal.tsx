@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react'
 import s from './SupplyInvoiceArchiveModal.module.scss'
-import {CustomModal, LoaderScreen} from '../../shared/ui'
+import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import useSupplyInvoiceArchiveModal from './SupplyInvoiceArchiveModalStore'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
-import {SupplyInvoiceDTO} from "../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
-import Enumerable from "linq";
-import useSupplyInvoice from "../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore";
-import {BikeShopPaths} from "../../app/routes/paths";
+import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO"
+import Enumerable from "linq"
+import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore"
+import {BikeShopPaths} from "../../../app/routes/paths"
 
 export const SupplyInvoiceArchiveModal = () => {
 
@@ -32,7 +32,6 @@ export const SupplyInvoiceArchiveModal = () => {
 
     useEffect(() => {
         getArchive()
-        //console.log('архив приходов', archive)
     }, [])
 
     if (isLoading) {
@@ -42,12 +41,12 @@ export const SupplyInvoiceArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
+                onClose={() => {setOpen(false)}}
             >
                 <div className={s.supplyInvoiceArchiveModal_mainBlock}>
-                    <div className={s.supplyInvoiceArchiveModal_title}>Приходные накладные</div>
+                    <div className={s.supplyInvoiceArchiveModal_title}>
+                        Приходные накладные
+                    </div>
                     <div className={s.supplyInvoiceArchiveModal_list}>
                         {
                             archive.map((el: SupplyInvoiceDTO) => {

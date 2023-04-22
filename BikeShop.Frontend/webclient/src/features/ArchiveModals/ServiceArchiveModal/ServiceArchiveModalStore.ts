@@ -1,12 +1,11 @@
 import {create} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {AxiosResponse} from 'axios'
-import {CreateServiceResponse, EntitiesAPI, ServiceItem} from "../../entities"
+import {CreateServiceResponse, EntitiesAPI, ServiceItem} from "../../../entities"
 
-interface ArchiveModalStore {
-    openArchiveModal: boolean
-    setOpenArchiveModal: (value: boolean) => void
+interface ServiceArchiveModalStore {
+    openServiceArchiveModal: boolean
+    setOpenServiceArchiveModal: (value: boolean) => void
     isLoading: boolean
 
     currentService: ServiceItem | null
@@ -19,9 +18,9 @@ interface ArchiveModalStore {
     getAllServicesInfo: () => any // надо исправить тип
 }
 
-const useArchiveModal = create<ArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    openArchiveModal: true,
-    setOpenArchiveModal: (value) => set({openArchiveModal: value}),
+const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    openServiceArchiveModal: true,
+    setOpenServiceArchiveModal: (value) => set({openServiceArchiveModal: value}),
     isLoading: false,
 
     currentService: null,
@@ -43,8 +42,8 @@ const useArchiveModal = create<ArchiveModalStore>()(/*persist(*/devtools(immer((
         })
     },
 })))/*, {
-    name: "archiveModalStore",
+    name: "archiveServiceModalStore",
     version: 1
 })*/);
 
-export default useArchiveModal;
+export default useServiceArchiveModal;

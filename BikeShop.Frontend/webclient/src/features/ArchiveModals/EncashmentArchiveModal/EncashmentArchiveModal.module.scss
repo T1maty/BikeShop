@@ -1,0 +1,70 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.encashmentArchiveModal_mainBlock {
+    @include defaultModalStyle;
+    width: 850px;
+
+    .scroll_wrapper {
+        @include flexOnlyBetween;
+        gap: 20px;
+
+        max-height: 550px;
+        overflow: auto;
+        padding-right: 10px;
+
+        .encashment_Block {
+            width: 60%;
+
+            .encashmentArchiveModal_title {
+                @include modalTitle;
+            }
+
+            .encashmentArchiveModal_list {
+                @include divLargeMarginBottom;
+                @include SupplyInvoiceArchiveModal;
+            }
+        }
+
+        .shortFall_Block {
+            width: 40%;
+
+            .shortFall_title {
+                @include modalTitle;
+            }
+
+            .shortFall_list {
+                @include divLargeMarginBottom;
+
+                .shortFall_listItem {
+                    background-color: $themeColorGray;
+                    border: 1px solid $themeColorMilk;
+                    border-radius: $smallBorderRadius;
+                    padding: $defaultSmallMargin;
+                    height: 139px;
+
+                    .listItem_title {
+                        font-weight: bold;
+                        font-size: 20px;
+                        margin-bottom: $defaultSmallMargin;
+                    }
+
+                    .listItem_content {
+                        @include flexBetween;
+
+                        .content_info {
+                            line-height: 1.3;
+                        }
+
+                        .content_date {
+                            @include divSmallMarginBottom;
+                            line-height: $minLineHeight;
+                            border-left: 2px solid $themeColorMilk;
+                            padding-left: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

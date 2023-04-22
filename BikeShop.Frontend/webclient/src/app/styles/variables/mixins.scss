@@ -117,6 +117,7 @@
 @mixin deleteButton() {
     button {
         background-color: #ff6b6b;
+
         &:hover {
             background-color: red;
         }
@@ -305,6 +306,8 @@
 }
 
 ////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 // Registration
 @mixin registrationBlock($buttonWidth) {
 
@@ -402,6 +405,7 @@
             font-weight: bold;
             font-size: 18px;
         }
+
         .burgerMenu_items {
             padding: 20px;
             @include divLargeMarginBottom;
@@ -418,6 +422,7 @@
                         height: 25px;
                     }
                 }
+
                 .item_title {
                     &:hover {
                         color: orange;
@@ -607,6 +612,7 @@
         .date_title {
             font-weight: bold;
         }
+
         .date_date {
 
         }
@@ -716,9 +722,84 @@
             font-size: 16px;
             color: white;
         }
+
         ::placeholder {
             color: white;
             opacity: 0.7;
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////
+// SupplyInvoiceArchiveModal
+
+@mixin SupplyInvoiceArchiveModal() {
+
+    .supplyInvoiceArchiveModal_item {
+        @include flexOnlyBetween;
+        background-color: $themeColorGray;
+        border: 1px solid $themeColorMilk;
+        border-radius: $smallBorderRadius;
+        padding: $defaultSmallMargin;
+        @include hoverCursorPointer;
+
+        .status_WaitingPayment {
+            @include supplyInvoiceStatus($bgColorProfileStatusWaitingPayment);
+        }
+
+        .status_Ready {
+            @include supplyInvoiceStatus($bgColorProfileStatusReady);
+        }
+
+        .status_Canceled {
+            @include supplyInvoiceStatus($bgColorProfileStatusCanceled);
+        }
+
+        .item_content {
+            width: 90%;
+
+            .item_contentTop {
+                @include flexBetween;
+                font-weight: bold;
+                font-size: 20px;
+                margin-bottom: $defaultSmallMargin;
+
+                > div:not(:last-child) {
+                    border-right: 2px solid $themeColorMilk;
+                    padding-right: 10px;
+                }
+
+                .item_contentTop_number {
+
+                }
+
+                .item_contentTop_qty {
+
+                }
+
+                .item_contentTop_totalNum {
+
+                }
+
+                .item_contentTop_sum {
+
+                }
+            }
+
+            .item_contentBottom {
+                @include flexBetween;
+
+                .item_contentBottom_info {
+                    line-height: $minLineHeight;
+                }
+
+                .item_contentBottom_date {
+                    @include divSmallMarginBottom;
+                    line-height: $minLineHeight;
+                    border-left: 2px solid $themeColorMilk;
+                    padding-left: 10px;
+                }
+            }
         }
     }
 }
