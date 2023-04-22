@@ -42,18 +42,6 @@ export const HeaderShopMenu = () => {
                 // navigate(BikeShopPaths.WORKSPACE.SERVICE)
             }
         },
-        // {
-        //     title: 'Архив сервисов',
-        //     func: () => {
-        //         navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
-        //     }
-        // },
-        // {
-        //     title: 'Архив чеков',
-        //     func: () => {
-        //         navigate(BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS)
-        //     }
-        // },
     ])
     const [subMenuItems1, setSubMenuItems1] = useState([
         {
@@ -186,7 +174,7 @@ export const HeaderShopMenu = () => {
                         <div className={s.burgerMenu_menuList} ref={ref}>
                             {
                                 menuItems1.map(item => (
-                                    <div className={s.menuList_item}
+                                    <div className={s.menuList_itemNoClick}
                                          key={item.title}
                                          onClick={item.func}
                                     >

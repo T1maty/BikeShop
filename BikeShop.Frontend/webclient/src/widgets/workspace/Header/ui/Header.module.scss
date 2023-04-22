@@ -41,6 +41,10 @@
                             background-color: $themeColorGray;
                         }
                     }
+                    .menuList_itemNoClick {
+                        padding: 3px 0;
+                        text-decoration: underline;
+                    }
                     .subMenuList_item {
                         margin-left: 15px;
                         padding: 3px 0;
