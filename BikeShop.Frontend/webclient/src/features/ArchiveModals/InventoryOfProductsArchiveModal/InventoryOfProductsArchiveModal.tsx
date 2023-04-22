@@ -1,24 +1,24 @@
 import React, {useEffect} from 'react'
-import s from './EncashmentArchiveModal.module.scss'
+import s from './InventoryOfProductsArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
 import Enumerable from "linq"
-import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import useEncashmentArchiveModal from "./EncashmentArchiveModalStore"
+import useInventoryOfProductsArchiveModal from "./InventoryOfProductsArchiveModalStore"
+import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore"
 
-export const EncashmentArchiveModal = () => {
+export const InventoryOfProductsArchiveModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
 
-    const open = useEncashmentArchiveModal(s => s.openEncashmentArchiveModal)
-    const setOpen = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
-    const isLoading = useEncashmentArchiveModal(s => s.isLoading)
-    const errorStatus = useEncashmentArchiveModal(s => s.errorStatus)
-    const getArchive = useEncashmentArchiveModal(s => s.getArchive)
-    const archive = useEncashmentArchiveModal(s => s.archive)
+    const open = useInventoryOfProductsArchiveModal(s => s.openInventoryOfProductsArchiveModal)
+    const setOpen = useInventoryOfProductsArchiveModal(s => s.setOpenInventoryOfProductsArchiveModal)
+    const isLoading = useInventoryOfProductsArchiveModal(s => s.isLoading)
+    const errorStatus = useInventoryOfProductsArchiveModal(s => s.errorStatus)
+    const getArchive = useInventoryOfProductsArchiveModal(s => s.getArchive)
+    const archive = useInventoryOfProductsArchiveModal(s => s.archive)
 
     const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
     const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)

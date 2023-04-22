@@ -17,7 +17,7 @@ import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModa
 import useSupplyInvoiceArchiveModal
     from "../../../features/ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore"
 import useEncashmentArchiveModal
-    from "../../../features/ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModalStore"
+    from "../../../features/ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
 
 export const MainPage = () => {
 

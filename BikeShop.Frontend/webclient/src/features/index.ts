@@ -2,7 +2,7 @@ export {HeaderUserMenu} from './HeaderUserMenu/HeaderUserMenu'
 export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 
 export {ServiceArchiveModal} from './ArchiveModals/ServiceArchiveModal/ServiceArchiveModal'
-export {EncashmentArchiveModal} from './ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
+export {InventoryOfProductsArchiveModal} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
 export {SupplyInvoiceArchiveModal} from './ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
