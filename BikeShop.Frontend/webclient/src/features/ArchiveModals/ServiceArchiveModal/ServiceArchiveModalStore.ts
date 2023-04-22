@@ -19,7 +19,7 @@ interface ServiceArchiveModalStore {
 }
 
 const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    openServiceArchiveModal: true,
+    openServiceArchiveModal: false,
     setOpenServiceArchiveModal: (value) => set({openServiceArchiveModal: value}),
     isLoading: false,
 

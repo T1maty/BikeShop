@@ -25,8 +25,8 @@ const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModa
     archive: [],
     getArchive: () => {
         set({isLoading: true})
+        // заглушка
         SupplyInvoiceAPI.getByShop(1, 100).then((res: any) => {
-            console.log("архив инкассации", res.data)
             set(state => {
                 state.archive = res.data
             })
