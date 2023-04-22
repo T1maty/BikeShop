@@ -3,22 +3,32 @@ import s from '../../widgets/workspace/Header/ui/Header.module.scss'
 import {BikeShopPaths} from "../../app/routes/paths"
 import {useNavigate} from "react-router-dom"
 import {useTranslation} from "react-i18next"
+import {useComponentVisible} from "../../shared/hooks/useComponentVisible"
+import {MenuIcon} from 'shared/ui/IconButtons/MenuIcon'
 import useCreateShopModal from "../CRUDModals/CreateShopModal/CreateShopModalStore"
 import useCreateStorageModal from "../CRUDModals/CreateStorageModal/CreateStorageModalStore"
 import useCreateCurrencyModal from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModalStore"
 import useCreateQuantityUnitModal from "../CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModalStore"
+import useServiceArchiveModal from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModalStore"
+import useSupplyInvoiceArchiveModal from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore"
+import useEncashmentArchiveModal from "../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModalStore"
 import {CreateShopModal} from "../CRUDModals/CreateShopModal/CreateShopModal"
 import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorageModal"
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
-import { MenuIcon } from 'shared/ui/IconButtons/MenuIcon'
 import {CreateQuantityUnitModal} from "../CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal"
-import {useComponentVisible} from "../../shared/hooks/useComponentVisible"
+import {ServiceArchiveModal} from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModal"
+import {EncashmentArchiveModal} from "../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal"
+import {SupplyInvoiceArchiveModal} from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal"
 
 export const HeaderShopMenu = () => {
 
     const {t} = useTranslation()
     const navigate = useNavigate()
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
+
+    const openSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
+    const openEncashmentArchiveModal = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
+    const openServiceArchiveModal = useServiceArchiveModal(s => s.setOpenServiceArchiveModal)
 
     const openShopModal = useCreateShopModal(s => s.setOpenCreateShopModal)
     const openStorageModal = useCreateStorageModal(s => s.setOpenCreateStorageModal)
@@ -32,16 +42,46 @@ export const HeaderShopMenu = () => {
                 // navigate(BikeShopPaths.WORKSPACE.SERVICE)
             }
         },
+        // {
+        //     title: 'Архив сервисов',
+        //     func: () => {
+        //         navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+        //     }
+        // },
+        // {
+        //     title: 'Архив чеков',
+        //     func: () => {
+        //         navigate(BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS)
+        //     }
+        // },
+    ])
+    const [subMenuItems1, setSubMenuItems1] = useState([
         {
-            title: 'Архив сервисов',
+            title: 'Приход товара',
             func: () => {
-                navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                openSupplyInvoiceArchiveModal(true)
+                setIsComponentVisible(false)
             }
         },
         {
-            title: 'Архив чеков',
+            title: 'Инвентаризация',
             func: () => {
-                navigate(BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS)
+                openEncashmentArchiveModal(true)
+                setIsComponentVisible(false)
+            }
+        },
+        {
+            title: 'Чеки',
+            func: () => {
+                // openShopModal(true)
+                // setIsComponentVisible(false)
+            }
+        },
+        {
+            title: 'Ремонты',
+            func: () => {
+                openServiceArchiveModal(true)
+                setIsComponentVisible(false)
             }
         },
     ])
@@ -128,6 +168,10 @@ export const HeaderShopMenu = () => {
 
     return (
         <>
+            <SupplyInvoiceArchiveModal/>
+            <EncashmentArchiveModal/>
+            <ServiceArchiveModal/>
+
             <CreateShopModal/>
             <CreateStorageModal/>
             <CreateCurrencyModal/>
@@ -142,49 +186,59 @@ export const HeaderShopMenu = () => {
                         <div className={s.burgerMenu_menuList} ref={ref}>
                             {
                                 menuItems1.map(item => (
-                                <div className={s.menuList_item}
-                                     key={item.title}
-                                     onClick={item.func}
-                                >
-                                    {item.title}
-                                </div>
-                            ))
+                                    <div className={s.menuList_item}
+                                         key={item.title}
+                                         onClick={item.func}
+                                    >
+                                        {item.title}
+                                    </div>
+                                ))
+                            }
+                            {
+                                subMenuItems1.map(item => (
+                                    <div className={s.subMenuList_item}
+                                         key={item.title}
+                                         onClick={item.func}
+                                    >
+                                        {item.title}
+                                    </div>
+                                ))
                             }
                             <hr/>
 
                             {
                                 menuItems2.map(item => (
-                                <div className={s.menuList_item}
-                                     key={item.title}
-                                     onClick={item.func}
-                                >
-                                    {item.title}
-                                </div>
-                            ))
+                                    <div className={s.menuList_item}
+                                         key={item.title}
+                                         onClick={item.func}
+                                    >
+                                        {item.title}
+                                    </div>
+                                ))
                             }
                             <hr/>
 
                             {
                                 menuItems3.map(item => (
-                                <div className={s.menuList_item}
-                                     key={item.title}
-                                     onClick={item.func}
-                                >
-                                    {item.title}
-                                </div>
-                            ))
+                                    <div className={s.menuList_item}
+                                         key={item.title}
+                                         onClick={item.func}
+                                    >
+                                        {item.title}
+                                    </div>
+                                ))
                             }
                             <hr/>
 
                             {
                                 menuItems4.map(item => (
-                                <div className={s.menuList_item}
-                                     key={item.title}
-                                     onClick={item.func}
-                                >
-                                    {item.title}
-                                </div>
-                            ))
+                                    <div className={s.menuList_item}
+                                         key={item.title}
+                                         onClick={item.func}
+                                    >
+                                        {item.title}
+                                    </div>
+                                ))
                             }
                         </div>
 
