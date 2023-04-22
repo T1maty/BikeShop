@@ -43,12 +43,22 @@ export const EncashmentArchiveModal = () => {
                 onClose={() => {setOpen(false)}}
             >
                 <div className={s.encashmentArchiveModal_mainBlock}>
+
+                    <div className={s.header_title}>
+                        <div className={s.encashmentArchiveModal_title}>
+                            Архив инвентаризации
+                        </div>
+                        <div className={s.shortFall_title}>
+                            Недостача
+                        </div>
+                    </div>
+
                     <div className={s.scroll_wrapper}>
 
                         <div className={s.encashment_Block}>
-                            <div className={s.encashmentArchiveModal_title}>
-                                Архив инвентаризации
-                            </div>
+                            {/*<div className={s.encashmentArchiveModal_title}>*/}
+                            {/*    Архив инвентаризации*/}
+                            {/*</div>*/}
                             <div className={s.encashmentArchiveModal_list}>
                                 {
                                     archive.map((el: any) => {
@@ -101,9 +111,9 @@ export const EncashmentArchiveModal = () => {
                         </div>
 
                         <div className={s.shortFall_Block}>
-                            <div className={s.shortFall_title}>
-                                Недостача
-                            </div>
+                            {/*<div className={s.shortFall_title}>*/}
+                            {/*    Недостача*/}
+                            {/*</div>*/}
                             <div className={s.shortFall_list}>
                                 <div className={s.shortFall_listItem}>
                                     <div className={s.listItem_title}>

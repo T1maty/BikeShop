@@ -5,6 +5,21 @@
     @include defaultModalStyle;
     width: 850px;
 
+    .header_title {
+        @include flexOnlyBetween;
+        gap: 20px;
+
+        > div {
+            @include modalTitle;
+        }
+        .encashmentArchiveModal_title {
+            width: 60%;
+        }
+        .shortFall_title {
+            width: 40%;
+        }
+    }
+
     .scroll_wrapper {
         @include flexOnlyBetween;
         gap: 20px;
