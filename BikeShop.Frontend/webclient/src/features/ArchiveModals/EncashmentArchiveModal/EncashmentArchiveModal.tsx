@@ -10,6 +10,7 @@ import useEncashmentArchiveModal from './EncashmentArchiveModalStore'
 import CashIcon from '../../../shared/assets/workspace/cash-icon.svg'
 import PayCardIcon from '../../../shared/assets/workspace/paycard-icon.svg'
 import MoneyIcon from '../../../shared/assets/workspace/money-icon.svg'
+import {formatDate} from "../../../shared/utils/formatDate"
 
 export const EncashmentArchiveModal = () => {
 
@@ -112,11 +113,11 @@ export const EncashmentArchiveModal = () => {
                                             <div className={s.content_date}>
                                                 <div>
                                                     <div>Создан:</div>
-                                                    <div>{el.supplyInvoice.createdAt}</div>
+                                                    <div>{formatDate(el.supplyInvoice.createdAt)}</div>
                                                 </div>
                                                 <div>
                                                     <div>Изменён:</div>
-                                                    <div>{el.supplyInvoice.updatedAt}</div>
+                                                    <div>{formatDate(el.supplyInvoice.updatedAt)}</div>
                                                 </div>
                                             </div>
                                         </div>

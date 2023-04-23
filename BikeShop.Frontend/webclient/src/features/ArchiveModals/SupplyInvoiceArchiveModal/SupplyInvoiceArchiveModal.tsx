@@ -8,6 +8,7 @@ import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/Supp
 import Enumerable from "linq"
 import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
+import {formatDate} from "../../../shared/utils/formatDate"
 
 export const SupplyInvoiceArchiveModal = () => {
 
@@ -88,11 +89,11 @@ export const SupplyInvoiceArchiveModal = () => {
                                                 <div className={s.item_contentBottom_date}>
                                                     <div>
                                                         <div>Создан:</div>
-                                                        <div>{el.supplyInvoice.createdAt}</div>
+                                                        <div>{formatDate(el.supplyInvoice.createdAt)}</div>
                                                     </div>
                                                     <div>
                                                         <div>Изменён:</div>
-                                                        <div>{el.supplyInvoice.updatedAt}</div>
+                                                        <div>{formatDate(el.supplyInvoice.updatedAt)}</div>
                                                     </div>
                                                 </div>
                                             </div>

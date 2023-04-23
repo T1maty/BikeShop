@@ -12,6 +12,7 @@ import AllIcon from '../../../shared/assets/workspace/all-icon.svg'
 import ClientIcon from '../../../shared/assets/workspace/user-icon.svg'
 import MasterIcon from '../../../shared/assets/workspace/mechanic-icon.svg'
 import {ServiceItem} from "../../../entities"
+import {formatDate} from 'shared/utils/formatDate'
 
 export const ServiceFinalArchiveModal = () => {
 
@@ -118,11 +119,11 @@ export const ServiceFinalArchiveModal = () => {
                                             <div className={s.content_date}>
                                                 <div>
                                                     <div>Создан:</div>
-                                                    <div>{service.createdAt}</div>
+                                                    <div>{formatDate(service.createdAt)}</div>
                                                 </div>
                                                 <div>
                                                     <div>Закрыт:</div>
-                                                    <div>{service.updatedAt}</div>
+                                                    <div>{formatDate(service.updatedAt)}</div>
                                                 </div>
                                             </div>
                                         </div>
