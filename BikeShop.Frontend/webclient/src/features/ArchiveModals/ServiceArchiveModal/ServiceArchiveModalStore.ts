@@ -1,12 +1,14 @@
 import {create} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {CreateServiceResponse, EntitiesAPI, ServiceItem} from "../../../entities"
+import {CreateServiceResponse, EntitiesAPI, ServiceAPI, ServiceItem} from "../../../entities"
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes";
 
 interface ServiceArchiveModalStore {
     openServiceArchiveModal: boolean
     setOpenServiceArchiveModal: (value: boolean) => void
     isLoading: boolean
+    errorStatus: ErrorStatusTypes
 
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
@@ -22,6 +24,7 @@ const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/de
     openServiceArchiveModal: false,
     setOpenServiceArchiveModal: (value) => set({openServiceArchiveModal: value}),
     isLoading: false,
+    errorStatus: 'default',
 
     currentService: null,
     setCurrentService: (service) => set({currentService: service}),
@@ -32,12 +35,17 @@ const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/de
 
     getAllServicesInfo: () => {
         set({isLoading: true});
-        return EntitiesAPI.Archive.getAllServicesInfo().then(res => {
+        return ServiceAPI.getAllServicesInfo().then(res => {
             set(state => {
                 state.services = res.data
                 state.filteredServices = res.data
-                    .filter((item: CreateServiceResponse) => item.status === 'Ended')
+                    .filter((item) => item.status === 'Ended')
             })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
             set({isLoading: false})
         })
     },

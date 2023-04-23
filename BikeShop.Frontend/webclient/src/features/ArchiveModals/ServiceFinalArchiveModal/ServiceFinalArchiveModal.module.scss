@@ -28,12 +28,14 @@
 
                 .content_info {
                     height: 100%;
-                    width: 250px;
+                    width: 300px;
                     font-size: 20px;
                     border-right: 2px solid $themeColorMilk;
+                    padding-right: 10px;
                     @include flexColumnOnly;
                     justify-content: space-between;
                     align-items: flex-start;
+                    @include divSmallMarginBottom;
 
                     .cashBlock {
                         @include flexCenter;

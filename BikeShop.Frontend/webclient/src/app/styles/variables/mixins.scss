@@ -758,6 +758,9 @@
         line-height: $minLineHeight;
         border-left: 2px solid $themeColorMilk;
         padding-left: 10px;
+        height: 100%;
+        @include flexColumnOnly;
+        justify-content: center;
     }
 }
 

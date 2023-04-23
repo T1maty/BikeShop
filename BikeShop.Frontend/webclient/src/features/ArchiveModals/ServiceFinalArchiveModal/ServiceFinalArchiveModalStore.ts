@@ -2,9 +2,7 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO"
-import {SupplyInvoiceAPI} from '../../../entities'
-import {ServiceFinalArchiveModal} from './ServiceFinalArchiveModal';
+import {ServiceAPI, ServiceItem} from '../../../entities'
 
 interface ServiceFinalArchiveModalStore {
     openServiceFinalArchiveModal: boolean
@@ -12,8 +10,8 @@ interface ServiceFinalArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    archive: SupplyInvoiceDTO[]
-    getArchive: () => void
+    archive: ServiceItem[]
+    getEndedServices: () => any // надо исправить тип
 }
 
 const useServiceFinalArchiveModal = create<ServiceFinalArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -25,12 +23,12 @@ const useServiceFinalArchiveModal = create<ServiceFinalArchiveModalStore>()(/*pe
     errorStatus: 'default',
 
     archive: [],
-    getArchive: () => {
-        set({isLoading: true})
-        // заглушка
-        SupplyInvoiceAPI.getByShop(1, 100).then((res: any) => {
+    getEndedServices: () => {
+        set({isLoading: true});
+        return ServiceAPI.getAllServicesInfo().then(res => {
             set(state => {
                 state.archive = res.data
+                    .filter((item) => item.status === 'Ended')
             })
             set({isLoading: false})
         }).catch((error: any) => {
