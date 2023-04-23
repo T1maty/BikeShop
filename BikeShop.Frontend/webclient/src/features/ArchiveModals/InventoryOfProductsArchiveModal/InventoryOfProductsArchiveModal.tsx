@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react'
 import s from './InventoryOfProductsArchiveModal.module.scss'
-import {CustomModal, LoaderScreen} from '../../../shared/ui'
+import {Button, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
-import Enumerable from "linq"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import useInventoryOfProductsArchiveModal from "./InventoryOfProductsArchiveModalStore"
-import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore"
+import {useInventarization} from "../../../pages/workspace/Inventarization/InventarizationPageStore";
 
 export const InventoryOfProductsArchiveModal = () => {
 
@@ -20,8 +19,7 @@ export const InventoryOfProductsArchiveModal = () => {
     const getArchive = useInventoryOfProductsArchiveModal(s => s.getArchive)
     const archive = useInventoryOfProductsArchiveModal(s => s.archive)
 
-    const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
-    const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
+    const setInventariazation = useInventarization(s => s.setInventariazation)
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -40,10 +38,12 @@ export const InventoryOfProductsArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.encashmentArchiveModal_mainBlock}>
-
+                    <Button>Новая инвентаризация</Button>
                     <div className={s.header_title}>
                         <div className={s.encashmentArchiveModal_title}>
                             Архив инвентаризации
@@ -61,28 +61,31 @@ export const InventoryOfProductsArchiveModal = () => {
                             {/*</div>*/}
                             <div className={s.encashmentArchiveModal_list}>
                                 {
-                                    archive.map((el: any) => {
+                                    archive.map((el) => {
                                         return (
-                                            <div className={s.supplyInvoiceArchiveModal_item} key={el.supplyInvoice.id}
+                                            <div className={s.supplyInvoiceArchiveModal_item}
+                                                 key={el.inventarization.id}
                                                  onDoubleClick={() => {
                                                      // setIsCreating(false)
                                                      // setCurrentSupplyInvoice(el)
-                                                     navigate(BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS)
+
+                                                     setInventariazation(el);
+                                                     navigate(BikeShopPaths.WORKSPACE.INVENTARIZATION)
                                                      setOpen(false)
                                                  }}
                                             >
                                                 <div className={
                                                     // s.item_status
-                                                    el.supplyInvoice.sypplyActStatus === 'Created' ? s.status_WaitingPayment :
-                                                        el.supplyInvoice.sypplyActStatus === 'Executed' ? s.status_Ready :
-                                                            el.supplyInvoice.sypplyActStatus === 'Canceled' ? s.status_Canceled : ''}
+                                                    el.inventarization.status === 'Created' ? s.status_WaitingPayment :
+                                                        el.inventarization.status === 'Executed' ? s.status_Ready :
+                                                            el.inventarization.status === 'Canceled' ? s.status_Canceled : ''}
                                                 >
-                                                    {el.supplyInvoice.sypplyActStatus}
+                                                    {el.inventarization.status}
                                                 </div>
                                                 <div className={s.item_content}>
                                                     <div className={s.item_contentTop}>
                                                         <div className={s.item_contentTop_number}>
-                                                            №{el.supplyInvoice.id}
+                                                            №{el.inventarization.id}
                                                         </div>
                                                         <div className={s.item_contentTop_sum}>
                                                             Инфа
@@ -90,16 +93,16 @@ export const InventoryOfProductsArchiveModal = () => {
                                                     </div>
                                                     <div className={s.item_contentBottom}>
                                                         <div className={s.item_contentBottom_info}>
-                                                            {el.supplyInvoice.description}
+                                                            {el.inventarization.description}
                                                         </div>
                                                         <div className={s.item_contentBottom_date}>
                                                             <div>
                                                                 <div>Создан:</div>
-                                                                <div>{el.supplyInvoice.createdAt}</div>
+                                                                <div>{el.inventarization.createdAt}</div>
                                                             </div>
                                                             <div>
                                                                 <div>Изменён:</div>
-                                                                <div>{el.supplyInvoice.updatedAt}</div>
+                                                                <div>{el.inventarization.updatedAt}</div>
                                                             </div>
                                                         </div>
                                                     </div>

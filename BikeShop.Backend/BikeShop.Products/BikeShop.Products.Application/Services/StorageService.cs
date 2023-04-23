@@ -113,6 +113,7 @@ namespace BikeShop.Products.Application.Services
             var prodQuantAvailableDict = prodQuantDict;
             foreach (var prod in prodQuantReservedDict)
             {
+                if(prodQuantAvailableDict.ContainsKey(prod.Key))
                 prodQuantAvailableDict[prod.Key] -= prod.Value;
             }
 

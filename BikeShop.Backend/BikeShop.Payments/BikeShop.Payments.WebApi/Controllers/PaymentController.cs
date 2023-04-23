@@ -1,4 +1,5 @@
 ﻿using BikeShop.Payments.Application.Interfaces;
+using BikeShop.Payments.Domain.DTO.Requests;
 using BikeShop.Payments.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +24,9 @@ namespace BikeShop.Payments.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Payment> NewPayment()
+        public async Task<Payment> NewPayment(CreatePayment dto)
         {
-            return await _paymentService.NewPayment();
+            return await _paymentService.NewPayment(dto);
         }
     }
 }

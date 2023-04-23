@@ -1,15 +1,26 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    ArrivalOfProducts, Cashbox, Catalog, CatalogProductItem, InventoryOfProducts,
-    LoginPage, MainPage, Order, ProductCatalog, ProductsWrapper, Profile,
-    RegistrationPage, Service, ShopMain, ShopWrapper, WorkCatalog
+    ArrivalOfProducts,
+    Cashbox,
+    Catalog,
+    CatalogProductItem,
+    LoginPage,
+    MainPage,
+    Order,
+    ProductCatalog,
+    Profile,
+    RegistrationPage,
+    Service,
+    ShopMain,
+    ShopWrapper,
+    WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
-import {BarcodeScannerListenerProvider}
-    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
-import {CheckForServiceWork, ActServiceWork,
-    ActGetStuffToService, CheckForShop, ActGetStuffFromService} from 'widgets'
+import {
+    BarcodeScannerListenerProvider
+} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+import {InventarizationPage} from "../../pages/workspace/Inventarization/InventarizationPage";
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -122,11 +133,9 @@ export const routes = createBrowserRouter([
         </WorkspaceHeaderProvider>
     },
     {
-        path: BikeShopPaths.WORKSPACE.INVENTORY_OF_PRODUCTS,
+        path: BikeShopPaths.WORKSPACE.INVENTARIZATION,
         element: <WorkspaceHeaderProvider>
-            <ProductsWrapper title={'Новый акт инвентаризации'} isUploadFile={false}>
-                <InventoryOfProducts/>
-            </ProductsWrapper>
+            <InventarizationPage/>
         </WorkspaceHeaderProvider>
     },
 

@@ -11,6 +11,11 @@ export type {ProductQuantity} from './entities/ProductQuantity'
 export type {CashboxAction} from './entities/Acts/Cashbox/CashboxAction'
 export type {Encashment} from './entities/Acts/Cashbox/Encashment'
 
+export type {Inventarization} from './entities/Acts/Inventarization/Inventarization'
+export type {InventarizationProduct} from './entities/Acts/Inventarization/InventarizationProduct'
+export type {InventarizationLack} from './entities/Acts/Inventarization/InventarizationLack'
+export type {InventarizationLackProduct} from './entities/Acts/Inventarization/InventarizationLackProduct'
+
 ///////////////
 export type {LoginData} from './models/Auth/LoginData'
 export type {RegistrationData} from './models/Auth/RegistrationData'
@@ -95,6 +100,7 @@ export {ShopAPI} from './api/ShopAPI'
 export {EncashmentAPI} from './api/Acts/EncashmentAPI'
 export {SupplyInvoiceAPI} from './api/Acts/SupplyInvoiceAPI'
 export {CashboxAPI} from './api/Acts/CashboxAPI'
+export {InventorizationAPI} from './api/Acts/InventorizationAPI'
 
 ///////////////////////////////////
 //          Others               //

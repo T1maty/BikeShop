@@ -12,14 +12,17 @@ import useCreateQuantityUnitModal from "../CRUDModals/CreateQuantityUnitModal/Cr
 import useServiceArchiveModal from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModalStore"
 import useServiceFinalArchiveModal from '../ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModalStore'
 import useSupplyInvoiceArchiveModal from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModalStore"
-import useInventoryOfProductsArchiveModal from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
+import useInventoryOfProductsArchiveModal
+    from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
 import useEncashmentArchiveModal from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModalStore'
 import {CreateShopModal} from "../CRUDModals/CreateShopModal/CreateShopModal"
 import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorageModal"
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
 import {CreateQuantityUnitModal} from "../CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal"
 import {ServiceArchiveModal} from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModal"
-import {InventoryOfProductsArchiveModal} from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
+import {
+    InventoryOfProductsArchiveModal
+} from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
 import {SupplyInvoiceArchiveModal} from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal"
 import {EncashmentArchiveModal} from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 import {ServiceFinalArchiveModal} from '../ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
@@ -44,7 +47,8 @@ export const HeaderShopMenu = () => {
     const [menuItems1, setMenuItems1] = useState([
         {
             title: 'Архив',
-            func: () => {}
+            func: () => {
+            }
         },
     ])
     const [subMenuItems1, setSubMenuItems1] = useState([
@@ -93,6 +97,13 @@ export const HeaderShopMenu = () => {
     ])
 
     const [menuItems2, setMenuItems2] = useState([
+        {
+            title: 'Создать инвентаризацию',
+            func: () => {
+                navigate(BikeShopPaths.WORKSPACE.INVENTARIZATION)
+            }
+
+        },
         {
             title: 'Магазины',
             func: () => {
@@ -187,7 +198,9 @@ export const HeaderShopMenu = () => {
 
             <div className={s.leftSide_burgerMenu}>
                 <div className={s.burgerMenu_iconButton}>
-                    <MenuIcon onClick={() => {setIsComponentVisible(!isComponentVisible)}}/>
+                    <MenuIcon onClick={() => {
+                        setIsComponentVisible(!isComponentVisible)
+                    }}/>
                 </div>
                 {
                     isComponentVisible ?
@@ -196,7 +209,7 @@ export const HeaderShopMenu = () => {
                                 menuItems1.map(item => (
                                     <div className={s.menuList_itemNoClick}
                                          key={item.title}
-                                         // onClick={item.func}
+                                        // onClick={item.func}
                                     >
                                         {item.title}
                                     </div>

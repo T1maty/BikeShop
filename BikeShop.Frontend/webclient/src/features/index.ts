@@ -3,7 +3,9 @@ export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 
 export {ServiceArchiveModal} from './ArchiveModals/ServiceArchiveModal/ServiceArchiveModal'
 export {ServiceFinalArchiveModal} from './ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
-export {InventoryOfProductsArchiveModal} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
+export {
+    InventoryOfProductsArchiveModal
+} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
 export {SupplyInvoiceArchiveModal} from './ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 export {EncashmentArchiveModal} from './ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 
@@ -41,4 +43,5 @@ export {CreateCurrencyModal} from './CRUDModals/CreateCurrencyModal/CreateCurren
 export {CreateQuantityUnitModal} from './CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal'
 export {CreateSpecificationModal} from './CRUDModals/CreateSpecificationModal/CreateSpecificationModal'
 export {CreateOptionModal} from './CRUDModals/CreateOptionModal/CreateOptionModal'
+
 
