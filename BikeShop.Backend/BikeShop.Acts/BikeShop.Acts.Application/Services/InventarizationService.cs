@@ -1,8 +1,12 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
+using BikeShop.Acts.Application.Refit;
+using BikeShop.Acts.Domain;
 using BikeShop.Acts.Domain.DTO;
 using BikeShop.Acts.Domain.DTO.Requests.Inventarization;
 using BikeShop.Acts.Domain.Entities;
+using BikeShop.Acts.Domain.Refit;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Service.Application.RefitClients;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,13 +19,17 @@ namespace BikeShop.Acts.Application.Services
     public class InventarizationService : IInventarizationService
     {
         private readonly IApplicationDbContext _context;
+        private readonly IProductClient _productClient;
+        private readonly IShopClient _shopClient;
 
-        public InventarizationService(IApplicationDbContext context)
+        public InventarizationService(IApplicationDbContext context, IProductClient productClient, IShopClient shopClient)
         {
             _context = context;
+            _productClient = productClient;
+            _shopClient = shopClient;
         }
 
-        public async Task<InventarizationWithProducts> CloseAct(int ActId, Guid UserId)
+        public async Task<InventarizationLackWithProducts> CloseAct(int ActId, Guid UserId)
         {
             var inv = await _context.Inventarizations.FindAsync(ActId);
             if (inv == null) throw new Exception();
@@ -30,9 +38,69 @@ namespace BikeShop.Acts.Application.Services
             inv.UpdatedAt = DateTime.Now;
             inv.UserUpdatedId= UserId;
 
+            var lack = new InventarizationLack {  InventarizationId = ActId, ShopId = inv.ShopId, UserCreatedId = UserId, UserUpdatedId = UserId, Description = $"Lack based on Inventarization{inv.Id}" };
+            
+            await _context.InventarizationLacks.AddAsync(lack);
             await _context.SaveChangesAsync(new CancellationToken());
 
-            return new InventarizationWithProducts { Inventarization = inv, Products = await _context.InventarizationProducts.Where(n => n.InventariazationId == inv.Id).ToListAsync() };
+            var invProds = await _context.InventarizationProducts.Where(n=>n.InventariazationId ==ActId).ToListAsync();
+            var storage = await _productClient.GetByStorage(await _shopClient.GetStorageId(inv.ShopId));
+
+            var LackProds = new List<InventarizationLackProduct>();
+
+            foreach (var prod in invProds)
+            {
+                var prodQuant = storage.AvailableProducts.Where(n => n.Product.Id == prod.ProductId).FirstOrDefault();
+                if(prodQuant != null)
+                {
+                    prodQuant.Quantity -= prod.Quantity;
+                    if (prodQuant.Quantity != 0)
+                    {
+                        var lp = new InventarizationLackProduct();
+                        lp.InventariazationLackId = lack.Id;
+                        lp.ProductId = prod.ProductId;
+                        lp.Quantity = prodQuant.Quantity * -1;
+                        lp.QuantityUnitName = prodQuant.QuantityUnit.Name;
+                        lp.RetailPrice = prodQuant.Product.RetailPrice;
+                        lp.IncomePrice = prodQuant.Product.IncomePrice;
+                        lp.Barcode = prodQuant.Product.Barcode;
+                        lp.ManufBarcode = prodQuant.Product.ManufacturerBarcode;
+                        lp.CatalogKey = prodQuant.Product.CatalogKey;   
+                        lp.DealerPrice = prodQuant.Product.DealerPrice;
+                        lp.DealerTotal = lp.DealerPrice * lp.Quantity;
+                        lp.IncomeTotal = lp.IncomePrice * lp.Quantity;
+                        lp.RetailTotal = lp.RetailPrice * lp.Quantity;
+                        lp.Description = prod.Description;
+
+                        LackProds.Add(lp);
+                    }
+                }
+                else
+                {
+                    var lp = new InventarizationLackProduct();
+                    lp.InventariazationLackId = lack.Id;
+                    lp.ProductId = prod.ProductId;
+                    lp.Quantity = prod.Quantity;
+                    lp.QuantityUnitName = prod.QuantityUnitName;
+                    lp.RetailPrice = prod.RetailPrice;
+                    lp.IncomePrice = prod.IncomePrice;
+                    lp.Barcode = prod.Barcode;
+                    lp.ManufBarcode = prod.ManufBarcode;
+                    lp.CatalogKey = prod.CatalogKey;
+                    lp.DealerPrice = prod.DealerPrice;
+                    lp.DealerTotal = lp.DealerPrice * lp.Quantity;
+                    lp.IncomeTotal = lp.IncomePrice * lp.Quantity;
+                    lp.RetailTotal = lp.RetailPrice * lp.Quantity;
+                    lp.Description = prod.Description;
+
+                    LackProds.Add(lp);
+                }
+            }
+
+            await _context.InventarizationLackProducts.AddRangeAsync(LackProds);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return new InventarizationLackWithProducts { InventarizationLack = lack, Products = LackProds };
         }
 
         public async Task<InventarizationWithProducts> Create(int ShopId, Guid UserId)
@@ -50,6 +118,13 @@ namespace BikeShop.Acts.Application.Services
             var products = await _context.InventarizationProducts.Where(n => invs.Select(n => n.Id).Contains(n.InventariazationId)).ToListAsync();
 
             return invs.Select(n=>new InventarizationWithProducts { Inventarization = n,Products = products.Where(m=>m.InventariazationId == n.Id).ToList() }).ToList();
+        }
+
+        public async Task<InventarizationLackWithProducts> GetLackByShop(int ShopId)
+        {
+            var lack = await _context.InventarizationLacks.FindAsync(ShopId);
+            var prods = await _context.InventarizationLackProducts.Where(n=>n.InventariazationLackId == lack.Id).ToListAsync();
+            return new InventarizationLackWithProducts { InventarizationLack = lack, Products = prods };
         }
 
         public async Task<InventarizationWithProducts> Update(UpdateInventarizationDTO dto)

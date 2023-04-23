@@ -1,4 +1,5 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
+using BikeShop.Acts.Domain;
 using BikeShop.Acts.Domain.DTO;
 using BikeShop.Acts.Domain.DTO.Requests.Inventarization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,15 +37,15 @@ namespace BikeShop.Acts.WebApi.Controllers
         }
 
         [HttpPut("closeact")]
-        public async Task<InventarizationWithProducts> CloseAct(int ActId, Guid UserId)
+        public async Task<InventarizationLackWithProducts> CloseAct(int ActId, Guid UserId)
         {
             return await _inventarizationService.CloseAct(ActId, UserId);
         }
 
         [HttpGet("getlackbyshop")]
-        public async Task GetLackByShop()
+        public async Task<InventarizationLackWithProducts> GetLackByShop(int ShopId)
         {
-
+            return await _inventarizationService.GetLackByShop(ShopId);
         }
     }
 }
