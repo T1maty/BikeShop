@@ -28,13 +28,25 @@
                 .burgerMenu_menuList {
                     position: absolute;
                     background-color: var(--header-color);
-                    border-radius: $defaultSmallMargin;
+                    //border-radius: $defaultSmallMargin;
                     border: 1px solid white;
                     padding: $defaultLargeMargin;
                     min-width: 230px;
                     z-index: 100;
 
                     .menuList_item {
+                        padding: 3px 0;
+                        &:hover {
+                            cursor: pointer;
+                            background-color: $themeColorGray;
+                        }
+                    }
+                    .menuList_itemNoClick {
+                        padding: 3px 0;
+                        text-decoration: underline;
+                    }
+                    .subMenuList_item {
+                        margin-left: 15px;
                         padding: 3px 0;
                         &:hover {
                             cursor: pointer;

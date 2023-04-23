@@ -1,18 +1,24 @@
 export {HeaderUserMenu} from './HeaderUserMenu/HeaderUserMenu'
 export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 
-export {ArchiveModal} from './ArchiveModal/ArchiveModal'
-export {ConfirmModal} from './ConfirmModal/ConfirmModal'
+export {ServiceArchiveModal} from './ArchiveModals/ServiceArchiveModal/ServiceArchiveModal'
+export {ServiceFinalArchiveModal} from './ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
+export {InventoryOfProductsArchiveModal} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
+export {SupplyInvoiceArchiveModal} from './ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
+export {EncashmentArchiveModal} from './ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 
+export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 export {PrintModal} from './PrintModal/PrintModal'
 
 export {PayModal} from './PayModal/PayModal'
 export {ChooseClientModal} from './ChooseClientModal/ChooseClientModal'
 export {ChooseDiscountModal} from './ChooseDiscountModal/ChooseDiscountModal'
+
 export {EmployeeSalaryModal} from './EmployeeSalaryModal/EmployeeSalaryModal'
-export {SupplyInvoiceArchiveModal} from './SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 export {EndWorkDayModal} from './EndWorkDayModal/EndWorkDayModal'
 export {ReportDayModal} from './ReportDayModal/ReportDayModal'
+export {EncashmentModal} from './CashboxModals/EncashmentModal/EncashmentModal'
+export {GetPutMoneyModal} from './CashboxModals/GetPutMoneyModal/GetPutMoneyModal'
 
 export {EditProductCardModal} from './ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
 export {ChooseProductTagModal} from './ProductCatalogFeatures/AddProductCardTagModal/AddProductCardTagModal'
@@ -21,9 +27,13 @@ export {CreateTagModal} from './ProductCatalogFeatures/CreateTagModal/CreateTagM
 export {UpdateTagModal} from './ProductCatalogFeatures/UpdateTagModal/UpdateTagModal'
 export {ChooseProductModal} from './ChooseProductModal/ChooseProductModal'
 export {UpdateProductModal} from './ProductCatalogFeatures/UpdateProductModal/UpdateProductModal'
-
 export {SelectProductModal} from './ServiceFeatures/SelectProductWorkModals/SelectProductModal'
 export {SelectWorkModal} from './ServiceFeatures/SelectProductWorkModals/SelectWorkModal'
+export {TableProductItem} from './ServiceFeatures/TableProductItem/TableProductItem'
+export {CreateWorkGroupModal} from './WorkCatalogFeatures/CreateWorkGroupModal/CreateWorkGroupModal'
+export {CreateWorkModal} from './WorkCatalogFeatures/CreateWorkModal/CreateWorkModal'
+export {UpdateWorkGroupModal} from './WorkCatalogFeatures/UpdateWorkGroupModal/UpdateWorkGroupModal'
+export {UpdateWorkModal} from './WorkCatalogFeatures/UpdateWorkModal/UpdateWorkModal'
 
 export {CreateShopModal} from './CRUDModals/CreateShopModal/CreateShopModal'
 export {CreateStorageModal} from './CRUDModals/CreateStorageModal/CreateStorageModal'
@@ -32,11 +42,3 @@ export {CreateQuantityUnitModal} from './CRUDModals/CreateQuantityUnitModal/Crea
 export {CreateSpecificationModal} from './CRUDModals/CreateSpecificationModal/CreateSpecificationModal'
 export {CreateOptionModal} from './CRUDModals/CreateOptionModal/CreateOptionModal'
 
-export {EncashmentModal} from './CashboxModals/EncashmentModal/EncashmentModal'
-export {GetPutMoneyModal} from './CashboxModals/GetPutMoneyModal/GetPutMoneyModal'
-
-export {TableProductItem} from './ServiceFeatures/TableProductItem/TableProductItem'
-export {CreateWorkGroupModal} from './WorkCatalogFeatures/CreateWorkGroupModal/CreateWorkGroupModal'
-export {CreateWorkModal} from './WorkCatalogFeatures/CreateWorkModal/CreateWorkModal'
-export {UpdateWorkGroupModal} from './WorkCatalogFeatures/UpdateWorkGroupModal/UpdateWorkGroupModal'
-export {UpdateWorkModal} from './WorkCatalogFeatures/UpdateWorkModal/UpdateWorkModal'

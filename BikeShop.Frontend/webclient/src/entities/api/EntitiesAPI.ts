@@ -13,14 +13,6 @@ import {ProductOptionsWithVariants}
     from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
 
 export const EntitiesAPI = {
-    Archive: {
-        getAllServicesInfo(): Promise<AxiosResponse<any[]>> {
-            return (
-                $api.get<any[]>('/service/getbyshopid/1')
-            )
-        },
-    },
-
     Shop: {
         getShops(): Promise<AxiosResponse<CreateShopResponse[]>> {
             return (

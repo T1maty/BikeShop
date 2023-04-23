@@ -10,6 +10,10 @@ interface PrintModalProps {
     children: ReactElement
 }
 
+// пример
+// const [printOpen, setPrintOpen] = useState()
+// <PrintModal open={printOpen} setOpen={setPrintOpen} children={<CheckForServiceWork/>}/>
+
 export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children}) => {
 
     const {enqueueSnackbar} = useSnackbar()
@@ -24,7 +28,6 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
         },
     })
 
-
     return (
         <CustomModal
             open={open}
@@ -36,7 +39,6 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
                         Печать
                     </Button>
                 </div>
-
                 <div className={s.printModal_content} ref={componentRef}>
                     <div className={s.scrollWrapper}>
                         {children}

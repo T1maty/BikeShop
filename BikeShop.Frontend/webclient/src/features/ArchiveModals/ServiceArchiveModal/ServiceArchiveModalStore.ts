@@ -1,13 +1,14 @@
 import {create} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {AxiosResponse} from 'axios'
-import {CreateServiceResponse, EntitiesAPI, ServiceItem} from "../../entities"
+import {CreateServiceResponse, EntitiesAPI, ServiceAPI, ServiceItem} from "../../../entities"
+import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes";
 
-interface ArchiveModalStore {
-    openArchiveModal: boolean
-    setOpenArchiveModal: (value: boolean) => void
+interface ServiceArchiveModalStore {
+    openServiceArchiveModal: boolean
+    setOpenServiceArchiveModal: (value: boolean) => void
     isLoading: boolean
+    errorStatus: ErrorStatusTypes
 
     currentService: ServiceItem | null
     setCurrentService: (service: ServiceItem | null) => void
@@ -19,10 +20,11 @@ interface ArchiveModalStore {
     getAllServicesInfo: () => any // надо исправить тип
 }
 
-const useArchiveModal = create<ArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
-    openArchiveModal: true,
-    setOpenArchiveModal: (value) => set({openArchiveModal: value}),
+const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    openServiceArchiveModal: false,
+    setOpenServiceArchiveModal: (value) => set({openServiceArchiveModal: value}),
     isLoading: false,
+    errorStatus: 'default',
 
     currentService: null,
     setCurrentService: (service) => set({currentService: service}),
@@ -33,18 +35,23 @@ const useArchiveModal = create<ArchiveModalStore>()(/*persist(*/devtools(immer((
 
     getAllServicesInfo: () => {
         set({isLoading: true});
-        return EntitiesAPI.Archive.getAllServicesInfo().then(res => {
+        return ServiceAPI.getAllServicesInfo().then(res => {
             set(state => {
                 state.services = res.data
                 state.filteredServices = res.data
-                    .filter((item: CreateServiceResponse) => item.status === 'Ended')
+                    .filter((item) => item.status === 'Ended')
             })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
             set({isLoading: false})
         })
     },
 })))/*, {
-    name: "archiveModalStore",
+    name: "serviceArchiveModalStore",
     version: 1
 })*/);
 
-export default useArchiveModal;
+export default useServiceArchiveModal;

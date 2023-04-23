@@ -8,5 +8,5 @@ export const InventoryOfProducts = () => {
             <div className={s.rightSide_top}>1</div>
             <div className={s.rightSide_bottom}>2</div>
         </div>
-    );
-};
+    )
+}

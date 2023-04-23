@@ -7,7 +7,7 @@ import {Clock} from "../../../../shared/ui/Clock/Clock"
 import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon"
 import {Badge} from "../../../../shared/ui/Badge/Badge"
 import {BikeShopPaths} from "../../../../app/routes/paths"
-import {useAuth} from "../../../../entities";
+import {useAuth} from "../../../../entities"
 
 export const Header = () => {
 
@@ -23,9 +23,7 @@ export const Header = () => {
                 <div className={s.leftSide}>
                     <HeaderShopMenu/>
                     <div className={s.leftSide_shopTitle}
-                         onClick={() => {
-                             navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
-                         }}
+                         onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
                     >
                         {shop ? shop.name : 'Магазин не выбран'}
                     </div>

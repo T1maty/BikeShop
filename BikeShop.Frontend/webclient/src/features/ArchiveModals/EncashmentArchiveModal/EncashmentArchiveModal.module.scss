@@ -1,0 +1,57 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.encashmentArchiveModal_mainBlock {
+    @include defaultModalStyle;
+    width: 700px;
+
+    .encashmentArchiveModal_title {
+        @include modalTitle;
+    }
+
+    .encashmentArchiveModal_list {
+        @include divLargeMarginBottom;
+        max-height: 550px;
+        overflow: auto;
+        padding-right: 10px;
+
+        .supplyInvoiceArchiveModal_item {
+            @include flexOnlyBetween;
+            background-color: $themeColorGray;
+            border: 1px solid $themeColorMilk;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
+            @include hoverCursorPointer;
+
+            .status_WaitingPayment {
+                @include supplyInvoiceStatus($bgColorProfileStatusWaitingPayment);
+            }
+
+            .status_Ready {
+                @include supplyInvoiceStatus($bgColorProfileStatusReady);
+            }
+
+            .status_Canceled {
+                @include supplyInvoiceStatus($bgColorProfileStatusCanceled);
+            }
+
+            .item_content {
+                @include flexBetween;
+
+                .content_info {
+                    height: 100%;
+                    width: 250px;
+                    border-right: 2px solid $themeColorMilk;
+                    @include flexColumnOnly;
+                    justify-content: space-between;
+
+                    > div:not(:last-child) {
+                        font-size: 20px;
+                    }
+                }
+
+                @include encashmentDateBlock;
+            }
+        }
+    }
+}

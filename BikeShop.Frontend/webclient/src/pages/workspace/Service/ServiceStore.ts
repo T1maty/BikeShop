@@ -84,6 +84,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     getAllServicesInfo: () => {
         set({isLoading: true})
         ServiceAPI.getAllServicesInfo().then(res => {
+            console.log('все ремонты', res.data)
             set(state => {
                 state.services = res.data
                 state.filteredServices = res.data

@@ -86,7 +86,6 @@ export type {UserObj} from './responses/GetUsersResponse'
 //             API               //
 ///////////////////////////////////
 export {AuthAPI} from './api/AuthAPI'
-export {ArchiveAPI} from './api/ArchiveAPI'
 export {CatalogAPI} from './api/CatalogAPI'
 export {EntitiesAPI} from './api/EntitiesAPI'
 export {FinancialInteractionAPI} from './api/FinancialInteractionAPI'
