@@ -62,7 +62,7 @@ export const ServiceFinalArchiveModal = () => {
                                         <div className={s.item_content}>
                                             <div className={s.content_info}>
                                                 <div>
-                                                    №{service.id}
+                                                    №{service.id}, {service.name}
                                                 </div>
                                                 <div className={s.cashBlock}>
                                                     <div className={s.cashBlock_img}>
