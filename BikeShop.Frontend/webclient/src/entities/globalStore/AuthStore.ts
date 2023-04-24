@@ -30,6 +30,14 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
             localStorage.setItem('accessToken', r.data.accessToken)
             localStorage.setItem('userId', r.data.user.id)
             localStorage.setItem('shopId', r.data.user.shopId.toString())
+            set(state => {
+                state.user = r.data.user
+            })
+            if (r.data.user.shopId > 0) {
+                set(state => {
+                    state.loginToShop(r.data.user.shopId)
+                })
+            }
             callback ? callback(r.data) : false
         }).catch(((r: AxiosResponse<LoginResponse>) => {
             console.log(r)

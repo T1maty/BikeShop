@@ -21,6 +21,7 @@ import {
     BarcodeScannerListenerProvider
 } from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 import {InventarizationPage} from "../../pages/workspace/Inventarization/InventarizationPage";
+import {CheckAuthEmployee} from "../providers/RouteProviders/CheckAuthEmployee";
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -90,53 +91,61 @@ export const routes = createBrowserRouter([
 
     {
         path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
-        element: // <CheckAuthRouteProvider>
+        element: <CheckAuthEmployee>
             <BarcodeScannerListenerProvider>
                 <WorkspaceHeaderProvider>
                     <MainPage/>
                 </WorkspaceHeaderProvider>
             </BarcodeScannerListenerProvider>
-        // </CheckAuthRouteProvider>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
-        element: //<CheckAuthRouteProvider>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <ProductCatalog/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthRouteProvider>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
-        element: //<CheckAuthRouteProvider>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <WorkCatalog/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthRouteProvider>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.CASHBOX,
-        element: <WorkspaceHeaderProvider>
-            <Cashbox/>
-        </WorkspaceHeaderProvider>
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <Cashbox/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.SERVICE,
-        element: <WorkspaceHeaderProvider>
-            <Service/>
-        </WorkspaceHeaderProvider>
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <Service/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS,
-        element: <WorkspaceHeaderProvider>
-            <ArrivalOfProducts/>
-        </WorkspaceHeaderProvider>
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <ArrivalOfProducts/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.INVENTARIZATION,
-        element: <WorkspaceHeaderProvider>
-            <InventarizationPage/>
-        </WorkspaceHeaderProvider>
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <InventarizationPage/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
     },
 
     // {
