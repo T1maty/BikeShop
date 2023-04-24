@@ -16,7 +16,7 @@ interface EmployeeSalaryModalStore {
 
 const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openEmployeeSalaryModal: false,
-    setOpenEmployeeSalaryModal: (value: boolean) => set({
+    setOpenEmployeeSalaryModal: (value) => set({
         openEmployeeSalaryModal: value
     }),
     isLoading: false,

@@ -17,7 +17,7 @@ interface SupplyInvoiceArchiveModalStore {
 
 const useSupplyInvoiceArchiveModal = create<SupplyInvoiceArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openSupplyInvoiceArchiveModal: false,
-    setOpenSupplyInvoiceArchiveModal: (value: boolean) => set({
+    setOpenSupplyInvoiceArchiveModal: (value) => set({
         openSupplyInvoiceArchiveModal: value
     }),
     isLoading: false,

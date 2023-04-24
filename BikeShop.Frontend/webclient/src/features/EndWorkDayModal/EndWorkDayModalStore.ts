@@ -15,7 +15,7 @@ interface EndWorkDayModalStore {
 
 const useEndWorkDayModal = create<EndWorkDayModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openEndWorkDayModal: false,
-    setOpenEndWorkDayModal: (value: boolean) => set({
+    setOpenEndWorkDayModal: (value) => set({
         openEndWorkDayModal: value
     }),
     isLoading: false,

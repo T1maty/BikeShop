@@ -16,7 +16,7 @@ interface ServiceFinalArchiveModalStore {
 
 const useServiceFinalArchiveModal = create<ServiceFinalArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openServiceFinalArchiveModal: false,
-    setOpenServiceFinalArchiveModal: (value: boolean) => set({
+    setOpenServiceFinalArchiveModal: (value) => set({
         openServiceFinalArchiveModal: value
     }),
     isLoading: false,

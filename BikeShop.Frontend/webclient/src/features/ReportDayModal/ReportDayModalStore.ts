@@ -15,7 +15,7 @@ interface ReportDayModalStore {
 
 const useReportDayModal = create<ReportDayModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openReportDayModal: false,
-    setOpenReportDayModal: (value: boolean) => set({
+    setOpenReportDayModal: (value) => set({
         openReportDayModal: value
     }),
     isLoading: false,

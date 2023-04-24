@@ -17,7 +17,7 @@ interface InventoryOfProductsArchiveModalStore {
 
 const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openInventoryOfProductsArchiveModal: false,
-    setOpenInventoryOfProductsArchiveModal: (value: boolean) => set({
+    setOpenInventoryOfProductsArchiveModal: (value) => set({
         openInventoryOfProductsArchiveModal: value
     }),
     isLoading: false,

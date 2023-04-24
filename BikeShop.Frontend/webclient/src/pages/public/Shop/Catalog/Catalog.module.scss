@@ -36,6 +36,10 @@
 
                 .tagsList_item {
                     //line-height: $minLineHeight;
+                    &:hover {
+                        color: gold;
+                        cursor: pointer;
+                    }
                 }
             }
         }
@@ -66,9 +70,22 @@
                     border-radius: $largeBorderRadius;
                     padding: $defaultLargeMargin;
                     color: white;
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 5px;
 
                     @media (max-width: 390px) {
                         width: 200px;
+                    }
+
+                    .cloudTag_title {
+
+                    }
+                    .cloudTag_item {
+                        background-color: $themeColorGray;
+                        padding: $defaultSmallMargin;
+                        border-radius: $smallBorderRadius;
                     }
                 }
             }

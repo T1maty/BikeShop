@@ -17,7 +17,7 @@ interface EncashmentArchiveModalStore {
 
 const useEncashmentArchiveModal = create<EncashmentArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     openEncashmentArchiveModal: false,
-    setOpenEncashmentArchiveModal: (value: boolean) => set({
+    setOpenEncashmentArchiveModal: (value) => set({
         openEncashmentArchiveModal: value
     }),
     isLoading: false,

@@ -10,7 +10,7 @@ import useCatalog from './CatalogStore'
 import {ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
-import {ProductFullData} from "../../../../entities"
+import {ProductFullData, ProductTag} from '../../../../entities'
 import Enumerable from "linq"
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
@@ -26,6 +26,8 @@ export const Catalog = () => {
 
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
+    const userCurrentTags = useCatalog(s => s.userCurrentTags)
+    const setUserCurrentTags = useCatalog(s => s.setUserCurrentTags)
     const defaultProducts = useCatalog(s => s.defaultProducts)
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
     const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
@@ -89,6 +91,19 @@ export const Catalog = () => {
         navigate(`/shop/catalog/${product.product.id}`)
     }
 
+    const setUserCurrentTagHandler = (tag: ProductTag) => {
+        if (Enumerable.from(userCurrentTags).select(n => n.id).contains(tag.id)) {
+            enqueueSnackbar('Этот тег уже выбран',
+                {
+                    variant: 'info', autoHideDuration: 2000,
+                    anchorOrigin: {vertical: 'top', horizontal: 'right'}
+                })
+            // return
+        } else {
+            setUserCurrentTags(tag)
+        }
+    }
+
     useEffect(() => {
         if (errorStatus === 'error') {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
@@ -112,12 +127,16 @@ export const Catalog = () => {
 
                 <div className={s.container}>
                         <div className={s.catalog_left}>
-                            <div className={s.tags_title}>Категории</div>
+                            <div className={s.tags_title}>
+                                Категории:
+                            </div>
                             <div className={s.tagsList}>
                                 {
                                     tags.map(tag => {
                                         return (
-                                            <div className={s.tagsList_item}>
+                                            <div className={s.tagsList_item}
+                                                 onClick={() => {setUserCurrentTagHandler(tag)}}
+                                            >
                                                 {tag.name}
                                             </div>
                                         )
@@ -129,7 +148,17 @@ export const Catalog = () => {
                         <div className={s.catalog_right}>
                             <div className={s.right_cloudCategory}>
                                 <div className={s.cloudCategory_title}>Облако категорий</div>
-                                <div className={s.cloudCategory_content}>Категории</div>
+                                <div className={s.cloudCategory_content}>
+                                    <div className={s.cloudTag_title}>Выбранные категории:</div>
+                                    {
+                                        userCurrentTags.length === 0 ? '' :
+                                            userCurrentTags.map(tag => {
+                                                return (
+                                                    <div className={s.cloudTag_item}>{tag.name}</div>
+                                                )
+                                            })
+                                    }
+                                </div>
                             </div>
                             <div className={s.right_filters}>
                                 <div className={s.filter_buttons}>
@@ -206,9 +235,7 @@ export const Catalog = () => {
                                             <div className={s.item_buy}>
                                                 <div className={s.item_price}>{prod.product.retailPrice}</div>
                                                 <div className={s.item_cart}
-                                                     onClick={() => {
-                                                         addProductToCartHandler(prod)
-                                                     }}
+                                                     onClick={() => {addProductToCartHandler(prod)}}
                                                 >
                                                     <img
                                                         src={Enumerable.from(cartProducts).select(n => n.product.id).contains(prod.product.id)
