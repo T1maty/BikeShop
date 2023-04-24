@@ -7,6 +7,8 @@ import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
 import {FinancialInteractionAPI, PaymentData, useAuth, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig";
+import {BillProductDTO} from "./models/BillProductDTO";
+import Enumerable from "linq";
 
 export const Cashbox = () => {
 
@@ -62,23 +64,29 @@ export const Cashbox = () => {
         <div className={s.cashboxMainBlock}>
             <div className={s.cashboxMainBlock_leftSideWrapper}>
                 <div className={s.leftSide_tables}>
-                    <Button onClick={() => {}} disabled={!isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={!isActiveTable}>
                         Касса 1
                     </Button>
-                    <Button onClick={() => {}} disabled={isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={isActiveTable}>
                         Касса 2
                     </Button>
-                    <Button onClick={() => {}} disabled={isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={isActiveTable}>
                         Касса 3
                     </Button>
-                    <Button onClick={() => {}} disabled={isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={isActiveTable}>
                         Касса 4
                     </Button>
                 </div>
 
                 <div className={s.leftSide_client}>
                     <ClientCard user={user}/>
-                    <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                    <ChooseClientModal extraCallback={(user: User) => {
+                        chooseClientHandler(user)
+                    }}/>
                     <div className={s.leftSide_client_buttons}>
                         <Button buttonDivWrapper={s.client_buttons_choose}
                                 onClick={() => setOpenClientModal(true)}
@@ -112,12 +120,14 @@ export const Cashbox = () => {
                     <div className={s.discount_buttons}>
                         <ChooseDiscountModal/>
                         <Button buttonDivWrapper={s.buttons_choose}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             Выбрать скидку для клиента
                         </Button>
                         <Button buttonDivWrapper={s.buttons_cancel}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             X
                         </Button>
@@ -129,16 +139,47 @@ export const Cashbox = () => {
                 <div className={s.cashboxMainBlock_rightSideHeader}>
                     <ChooseProductModal open={open}
                                         setOpen={setOpen}
-                                        setData={setData}
+                                        addData={(n) => {
+                                            let exProd = Enumerable.from(bill.products).where(m => m.productId === n.id).firstOrDefault()
+                                            if (exProd != undefined) {
+                                                setData(bill.products.map((m) => {
+                                                    if (m.productId === n.id) {
+                                                        return {...m, quantity: m.quantity + 1}
+                                                    } else {
+                                                        return m
+                                                    }
+                                                }))
+                                            } else {
+                                                let newProd: BillProductDTO = {
+                                                    productId: n.id,
+                                                    name: n.name,
+                                                    catalogKey: n.catalogKey,
+                                                    serialNumber: '',
+                                                    description: '',
+                                                    quantity: 1,
+                                                    quantityUnitName: n.quantityUnitName,
+                                                    currencySymbol: n.currencySymbol,
+                                                    price: n.retailPrice,
+                                                    discount: 0,
+                                                    total: n.retailPrice
+                                                }
+                                                console.log('selectedProd', n)
+                                                setData([...bill.products, newProd])
+                                            }
+                                        }}
+
                                         data={bill.products}
                                         slaveColumns={columns}
                     />
                     <Button buttonDivWrapper={s.header_chooseBtn}
-                            onClick={() => {setOpen(true)}}
+                            onClick={() => {
+                                setOpen(true)
+                            }}
                     >
                         Выбрать товары
                     </Button>
-                    <CustomSearchInput placeholder={'Поиск...'} clearInputValue={() => {}}/>
+                    <CustomSearchInput placeholder={'Поиск...'} clearInputValue={() => {
+                    }}/>
                     {/*<div className={s.header_searchInput}>*/}
                     {/*    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
                     {/*</div>*/}
@@ -152,7 +193,9 @@ export const Cashbox = () => {
                     <div className={s.rightSideBottom_buttonsBlock}>
                         <div className={s.buttonsBlock_one}>
                             <div className={s.one_cancelBtn}>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => {
+                                    setData([])
+                                }}>
                                     X
                                 </Button>
                             </div>
@@ -173,7 +216,9 @@ export const Cashbox = () => {
                                   summ={sum}
                                   result={paymentResultHandler}
                         />
-                        <Button onClick={() => {setOpenPay(true)}}>
+                        <Button onClick={() => {
+                            setOpenPay(true)
+                        }}>
                             К оплате
                         </Button>
                     </div>

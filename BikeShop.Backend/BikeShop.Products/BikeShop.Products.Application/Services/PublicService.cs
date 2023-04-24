@@ -62,13 +62,15 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<List<ProductCardDTO>> getCards(List<Product> products)
         {
-            var response = new List<ProductCardDTO>();
+            var response = new Dictionary<int,ProductCardDTO>();
             foreach (var product in products)
             {
-                response.Add(await getProductCard(product.Id));
+                var card = await getProductCard(product.Id);
+                if (!response.ContainsKey(card.product.Id))
+                response.Add(card.product.Id,card);
             }
            
-            return response;
+            return response.Values.ToList();
         }
 
         public async Task<ProductCardDTO> getProductCard(int Id)

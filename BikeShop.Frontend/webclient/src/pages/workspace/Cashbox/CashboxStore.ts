@@ -52,8 +52,6 @@ const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, 
     },
     setProducts: (value) => {
         set(state => {
-            console.log(value)
-            
             state.bill.products = value
         })
     },
