@@ -107,7 +107,7 @@ namespace BikeShop.Acts.Application.Services
         {
             var ent = new Inventarization { ShopId = ShopId, Status = "InWork", UserCreatedId = UserId, UserUpdatedId = UserId, Description = "" };
             await _context.Inventarizations.AddAsync(ent);
-            await _context.SaveChangesAsync(new CancellationToken(true));
+            await _context.SaveChangesAsync(new CancellationToken());
 
             return new InventarizationWithProducts { Inventarization = ent, Products = new List<InventarizationProduct>() };
         }
