@@ -288,6 +288,22 @@
       ],
       "SwaggerKey": "products"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/product/updateprices",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/product/updateprices",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
 
     {
       "UpstreamPathTemplate": "/api/product/getbyids",
@@ -572,6 +588,22 @@
         "Get"
       ],
       "DownstreamPathTemplate": "/public/defaultproducts",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	
+	{
+      "UpstreamPathTemplate": "/api/public/getproducts",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/public/getproducts",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

@@ -5,6 +5,7 @@ using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
@@ -166,6 +167,12 @@ namespace BikeShop.Products.WebApi.Controllers
         public async Task<ProductImg> UpdateImage(ProductImageDTO dto)
         {
             return await _productService.UpdateImage(dto);
+        }
+
+        [HttpPut("updateprices")]
+        public async Task<Product> UpdatePrices(UpdateProductPriceDTO dto)
+        {
+            return await _productService.UpdatePrices(dto);
         }
     }
 }
