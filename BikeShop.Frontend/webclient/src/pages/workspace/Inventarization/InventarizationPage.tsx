@@ -3,11 +3,13 @@ import s from "../ProductsCount/ProductsWrapper.module.scss";
 import {Button, UniTable} from "../../../shared/ui";
 import {useInventarization} from "./InventarizationPageStore";
 import {ProductCatalogTable} from "../../../widgets";
+import {slaveColumns} from "./models/SlaveTableColumns";
+import {InventarizationProduct, InventorizationAPI, LocalStorage} from "../../../entities";
 
 export const InventarizationPage = () => {
 
     const currentInventarization = useInventarization(s => s.currentInventarization)
-    const setInventariazation = useInventarization(s => s.setInventariazation)
+    const setProducts = useInventarization(s => s.setProducts)
 
     useEffect(() => {
 
@@ -17,7 +19,7 @@ export const InventarizationPage = () => {
         <div className={s.arrivalOfProducts_mainBlock}>
             <div className={s.arrivalOfProducts_leftSide}>
                 <div className={s.leftSide_title}>
-                    {`Инвентаризация №${1}`}
+                    {`Инвентаризация №${currentInventarization.inventarization.id}`}
                 </div>
 
                 <div className={s.leftSide_info}>Дополнительная информация</div>
@@ -45,6 +47,14 @@ export const InventarizationPage = () => {
                 <div className={s.leftSide_footerButtons}>
                     <Button buttonDivWrapper={s.button_save}
                             onClick={() => {
+                                let data = {...currentInventarization,
+                                    inventarization: {
+                                        ...currentInventarization.inventarization,
+                                        user: LocalStorage.userId()
+                                    }
+                                }
+                                console.log(data)
+                                InventorizationAPI.update(data)
                             }}
                     >
                         Сохранить акт
@@ -59,9 +69,35 @@ export const InventarizationPage = () => {
             </div>
 
             <div className={s.arrivalOfProducts_rightSide}>
-                <ProductCatalogTable/>
+                <ProductCatalogTable onRowDoubleClick={(row) => {
+                    let prod: InventarizationProduct = {
+                        id: 0,
+                        createdAt: Date.now().toString(),
+                        updatedAt: Date.now().toString(),
+                        enabled: true,
+                        inventariazationId: currentInventarization.inventarization.id,
+                        productId: row.id,
+                        name: row.name,
+                        description: '',
+                        catalogKey: row.catalogKey,
+                        barcode: row.barcode,
+                        manufBarcode: row.manufacturerBarcode,
+                        quantityUnitName: row.quantityUnitName,
+                        incomePrice: row.incomePrice,
+                        dealerPrice: row.dealerPrice,
+                        retailPrice: row.retailPrice,
+                        quantity: 1,
+                        incomeTotal: row.incomePrice,
+                        dealerTotal: row.dealerPrice,
+                        retailTotal: row.retailPrice,
+                        userCreated: LocalStorage.userId()!,
+                        userUpdated: LocalStorage.userId()!
+                    }
+
+                    setProducts([...currentInventarization.products, prod])
+                }}/>
                 <br/>
-                <UniTable rows={currentInventarization.products} columns={[]}/>
+                <UniTable rows={currentInventarization.products} columns={slaveColumns} setRows={setProducts}/>
 
             </div>
         </div>

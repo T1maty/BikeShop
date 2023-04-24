@@ -68,7 +68,7 @@ export const InventoryOfProductsArchiveModal = () => {
                                                  onDoubleClick={() => {
                                                      // setIsCreating(false)
                                                      // setCurrentSupplyInvoice(el)
-
+                                                     console.log(el)
                                                      setInventariazation(el);
                                                      navigate(BikeShopPaths.WORKSPACE.INVENTARIZATION)
                                                      setOpen(false)

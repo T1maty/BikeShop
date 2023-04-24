@@ -33,6 +33,7 @@ const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModa
             })
             set({isLoading: false})
         }).catch((error: any) => {
+            console.log('inv load error', error);
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})
