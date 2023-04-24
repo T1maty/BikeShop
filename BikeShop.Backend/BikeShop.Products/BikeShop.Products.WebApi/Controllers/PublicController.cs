@@ -29,13 +29,13 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _publicService.DefaultProducts(Quantity);
         }
 
-        [HttpGet("search")]
+        [HttpPost("search")]
         public async Task Serch()
         {
 
         }
 
-        [HttpGet("getproducts")]
+        [HttpPost("getproducts")]
         public async Task<List<ProductCardDTO>> GetProducts(List<int> ids)
         {
             return await _publicService.GetProducts(ids);
