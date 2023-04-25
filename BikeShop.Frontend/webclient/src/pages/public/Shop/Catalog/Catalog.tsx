@@ -12,9 +12,6 @@ import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {ProductFullData, ProductTag} from '../../../../entities'
 import Enumerable from "linq"
-import {
-    ProductTagBindDTO
-} from "../../../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductTagBindDTO";
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
