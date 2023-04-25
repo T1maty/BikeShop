@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from 'react'
 import s from '../LoginPage/LoginPage.module.scss'
 import {SubmitHandler, useForm} from "react-hook-form"
 import {useNavigate} from "react-router-dom"
@@ -27,9 +27,11 @@ export const LoginPage = () => {
     const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
         login(data,
             (data) => {
-                if (data.user.shopId > 0)
+                if (data.user.shopId > 0) {
                     navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
-                else navigate(BikeShopPaths.SHOP.PROFILE)
+                } else {
+                    navigate(BikeShopPaths.SHOP.PROFILE)
+                }
             },
             (r: any) => {
                 formControl.setError(r.response.data.reasonField, {
@@ -39,9 +41,19 @@ export const LoginPage = () => {
             })
     }
 
-    if (isLoading) {
-        return <LoaderScreen variant={'ellipsis'}/>
-    } else {
+    // useEffect(() => {
+    //     if (errorStatus === 'success') {
+    //         enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+    //         formControl.reset()
+    //     }
+    //     if (errorStatus === 'error') {
+    //         enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+    //     }
+    // }, [errorStatus])
+
+    // if (isLoading) {
+    //     return <LoaderScreen variant={'ellipsis'}/>
+    // } else {
 
         return (
             <div className={s.loginPage_container}>
@@ -81,9 +93,7 @@ export const LoginPage = () => {
                                 Вход
                             </Button>
                             <Button buttonDivWrapper={s.loginForm_registerButton}
-                                    onClick={() => {
-                                        navigate(BikeShopPaths.COMMON.REGISTRATION)
-                                    }}
+                                    onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
                             >
                                 Регистрация
                             </Button>
@@ -93,5 +103,5 @@ export const LoginPage = () => {
                 </div>
             </div>
         )
-    }
+    // }
 }

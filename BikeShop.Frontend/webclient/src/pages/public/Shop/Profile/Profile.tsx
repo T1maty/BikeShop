@@ -4,12 +4,14 @@ import {ProfileInfo} from './ProfileInfo'
 import {ProfileOrders} from './ProfileOrders'
 import {ProfilePurchases} from './ProfilePurchases'
 import {ProfileServices} from './ProfileServices'
-import {ProfileAvatar} from './ProfileAvatar';
-
+import {ProfileAvatar} from './ProfileAvatar'
+import {useAuth} from '../../../../entities'
 
 type MenuItemType = 'Profile' | 'Orders' | 'Services' | 'Purchases'
 
 export const Profile = () => {
+
+    const user = useAuth(s => s.user)
 
     const [menuItem, setMenuItem] = useState<MenuItemType>('Orders')
     const [isActiveProfile, setIsActiveProfile] = useState<boolean>(false)
@@ -42,7 +44,7 @@ export const Profile = () => {
                                  true, false, false, false)
                          }}
                     >
-                        <ProfileAvatar lastName={'Петров'} firstName={'Василий'}/>
+                        <ProfileAvatar user={user!}/>
                         <div className={s.user_info}>
                             <div className={s.info_name}>Петров Василий Иванович</div>
                             <div className={s.info_text}>Здесь будет какая-то информация</div>

@@ -8,12 +8,14 @@ import {LoginResponse} from "../responses/LoginResponse"
 import {AuthAPI} from "../api/AuthAPI"
 import {RegistrationData} from "../models/Auth/RegistrationData"
 import {immer} from "zustand/middleware/immer"
-import {ErrorStatusTypes} from '../enumerables/ErrorStatusTypes';
+import {ErrorStatusTypes} from '../enumerables/ErrorStatusTypes'
 
-interface ChooseDiscountModalStore {
+interface AuthStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     errorStatus: ErrorStatusTypes
+    isAuth: boolean
+    setIsAuth: (value: boolean) => void
 
     user: User | undefined
     shop: Shop | undefined
@@ -24,16 +26,18 @@ interface ChooseDiscountModalStore {
     loginToShop: (shopId: number) => void
 }
 
-export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer((set) => ({
+export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
     errorStatus: 'default',
+    isAuth: false,
+    setIsAuth: (value) => set({isAuth: value}),
 
     user: undefined,
     shop: undefined,
 
     login: (loginData, callback, onFailure) => {
-        set({isLoading: true})
+        // set({isLoading: true})
         AuthAPI.Login.login(loginData).then((r: AxiosResponse<LoginResponse>) => {
             console.log(r)
             localStorage.setItem('accessToken', r.data.accessToken)
@@ -44,13 +48,15 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
                 state.user = r.data.user
             })
 
+            console.log('пользователь', r.data.user)
+
             if (r.data.user.shopId > 0) {
                 set(state => {
                     state.loginToShop(r.data.user.shopId)
                 })
             }
             callback ? callback(r.data) : false
-            set({isLoading: false})
+            // set({isLoading: false})
         }).catch(((r: AxiosResponse<LoginResponse>) => {
             console.log(r)
             onFailure ? onFailure(r) : false
@@ -92,6 +98,6 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
         })
     },
 }))), {
-    name: "AuthStore",
+    name: "authStore",
     version: 1
 }));

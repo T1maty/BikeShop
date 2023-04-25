@@ -4,14 +4,13 @@ import {BikeShopPaths} from "../../app/routes/paths"
 import {useTranslation} from "react-i18next"
 import {useNavigate} from "react-router-dom"
 import {useComponentVisible} from "../../shared/hooks/useComponentVisible"
-import {useAuth} from '../../entities'
+import {useAuth, User} from '../../entities'
 
 interface HeaderUserMenuProps {
-    firstName?: string
-    lastName?: string
+    user: User
 }
 
-export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
+export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
 
     const {t} = useTranslation()
     const navigate = useNavigate()
@@ -19,6 +18,13 @@ export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
     const logout = useAuth(s => s.logout)
 
     const [profileMenuItems, setProfileMenuItems] = useState([
+        {
+            title: 'Магазин',
+            func: () => {
+                navigate(BikeShopPaths.SHOP.HOME)
+                setIsComponentVisible(false)
+            }
+        },
         {
             title: 'Профиль',
             func: () => {
@@ -42,7 +48,7 @@ export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
             <div className={s.burgerMenu_iconButton}
                  onClick={() => {setIsComponentVisible(!isComponentVisible)}}
             >
-                UserName
+                {user.lastName !== null ? user.lastName : 'Неизвестный'} {user.firstName !== null ? user.firstName : 'пользователь'}
             </div>
             {
                 isComponentVisible ?

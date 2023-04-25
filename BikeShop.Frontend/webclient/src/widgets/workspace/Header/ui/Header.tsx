@@ -34,7 +34,7 @@ export const Header = () => {
                 </div>
 
                 <div className={s.rightSide}>
-                    <HeaderUserMenu firstName={user?.firstName} lastName={user?.lastName}/>
+                    <HeaderUserMenu user={user!}/>
                     <Badge badgeContent={3}>
                         <NotificationIcon/>
                     </Badge>

@@ -11,14 +11,14 @@ import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
 import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
 import {BurgerMenu} from '../BurgerMenu/BurgerMenu'
 import {useDebounce} from '../../../../shared/hooks/useDebounce'
+import {useAuth, User} from '../../../../entities'
 
 interface ShopHeaderProps {
     isAuth: boolean
-    userLastName: string
-    userFirstName: string
+    user: User
 }
 
-export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, userFirstName}) => {
+export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
 
     const navigate = useNavigate()
 
@@ -70,8 +70,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, userLastName, use
                                 <ShoppingCart/>
 
                                 <LoginBlock isAuth={true}
-                                            userLastName={userLastName}
-                                            userFirstName={userFirstName}
+                                            user={user}
                                 />
                             </div>
                         </div>

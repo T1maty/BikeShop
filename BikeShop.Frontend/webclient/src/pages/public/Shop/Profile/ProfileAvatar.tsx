@@ -1,14 +1,22 @@
 import React from 'react'
+import {User} from '../../../../entities'
+import {BikeShopPaths} from '../../../../app/routes/paths'
+import {useNavigate} from 'react-router-dom'
 
 type ProfileAvatarProps = {
-    lastName: string
-    firstName: string
+    user: User
 }
 
-export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({lastName, firstName}) => {
+export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({user}) => {
+
+    const navigate = useNavigate()
 
     const generateAvatarName = (lastName: string, firstName: string) => {
-        return (lastName[0] + firstName[0]).toUpperCase()
+        if (lastName !== null && firstName !== null) {
+            return (lastName[0] + firstName[0]).toUpperCase()
+        } else {
+            return 'BS'
+        }
     }
 
     const avatarStyles = {
@@ -22,8 +30,8 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({lastName, firstName
     }
 
     return (
-        <div style={avatarStyles}>
-            {generateAvatarName(lastName, firstName)}
+        <div style={avatarStyles} onClick={() => {navigate(BikeShopPaths.SHOP.PROFILE)}}>
+            {generateAvatarName(user.lastName, user.firstName)}
         </div>
     )
 }

@@ -7,15 +7,14 @@ import LogoutIcon from '../../../../shared/assets/shop/icons/logout-icon.svg'
 import RegistrationIcon from '../../../../shared/assets/shop/icons/register-icon-05.svg'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
-import {useAuth} from "../../../../entities"
+import {useAuth, User} from '../../../../entities'
 
 interface LoginBlockProps {
     isAuth: boolean
-    userLastName: string
-    userFirstName: string
+    user: User
 }
 
-export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, userFirstName}) => {
+export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, user}) => {
 
     const navigate = useNavigate()
     const logout = useAuth(s => s.logout)
@@ -23,16 +22,19 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
     return (
         <div className={s.loginBlock_mainBox}>
             {
-                isAuth ?
+                isAuth && user !== undefined ?
                     <>
-                        <div className={s.userInfo}
-                             onClick={() => {navigate(BikeShopPaths.SHOP.PROFILE)}}
-                        >
-                            <ProfileAvatar lastName={userLastName} firstName={userFirstName}/>
+                        <div className={s.userInfo}>
+                            <ProfileAvatar user={user}/>
                             <div className={s.userName}>
-                                {userLastName} {''} {userFirstName}
+                                {user.lastName ? user.lastName : 'Bike'} {user.firstName ? user.firstName : 'Shop'}
                             </div>
-                            <div className={s.logout} onClick={logout}>
+                            <div className={s.logout}
+                                 onClick={() => {
+                                    logout().then()
+                                    navigate(BikeShopPaths.SHOP.HOME)
+                                 }}
+                            >
                                 <img src={LogoutIcon} alt="logout-icon"/>
                             </div>
                         </div>
@@ -43,7 +45,12 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                             <div className={s.profile}>
                                 <img src={ProfileIcon} alt="profile-logo"/>
                             </div>
-                            <div className={s.logout} onClick={logout}>
+                            <div className={s.logout}
+                                 onClick={() => {
+                                     logout().then()
+                                     navigate(BikeShopPaths.SHOP.HOME)
+                                 }}
+                            >
                                 <img src={LogoutIcon} alt="logout-icon"/>
                             </div>
                         </div>
@@ -52,10 +59,7 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                     <>
                         <div className={s.loginBlock}>
                             <div className={s.loginBlock_enter}
-                                 onClick={() => {
-                                     logout().then()
-                                     navigate(BikeShopPaths.COMMON.LOGIN)
-                                 }}
+                                 onClick={() => {navigate(BikeShopPaths.COMMON.LOGIN)}}
                             >
                                 Вход
                             </div>
@@ -68,10 +72,7 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
 
                         <div className={s.loginBlock_icons}>
                             <div className={s.loginBlock_enter}
-                                 onClick={() => {
-                                     logout()
-                                     navigate(BikeShopPaths.COMMON.LOGIN)
-                                 }}
+                                 onClick={() => {navigate(BikeShopPaths.COMMON.LOGIN)}}
                             >
                                 <img src={LoginIcon} alt="login-icon"/>
                             </div>
