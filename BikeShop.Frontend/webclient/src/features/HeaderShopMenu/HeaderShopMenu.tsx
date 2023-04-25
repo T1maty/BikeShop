@@ -15,17 +15,18 @@ import useSupplyInvoiceArchiveModal from "../ArchiveModals/SupplyInvoiceArchiveM
 import useInventoryOfProductsArchiveModal
     from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
 import useEncashmentArchiveModal from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModalStore'
+import useCheckArchiveModal from "../ArchiveModals/CheckArchiveModal/CheckArchiveModalStore"
 import {CreateShopModal} from "../CRUDModals/CreateShopModal/CreateShopModal"
 import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorageModal"
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
 import {CreateQuantityUnitModal} from "../CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal"
 import {ServiceArchiveModal} from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModal"
-import {
-    InventoryOfProductsArchiveModal
-} from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
+import {InventoryOfProductsArchiveModal}
+    from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
 import {SupplyInvoiceArchiveModal} from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal"
 import {EncashmentArchiveModal} from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 import {ServiceFinalArchiveModal} from '../ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
+import {CheckArchiveModal} from "../ArchiveModals/CheckArchiveModal/CheckArchiveModal"
 
 export const HeaderShopMenu = () => {
 
@@ -35,6 +36,7 @@ export const HeaderShopMenu = () => {
 
     const openSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
     const openInventoryOfProductsArchiveModal = useInventoryOfProductsArchiveModal(s => s.setOpenInventoryOfProductsArchiveModal)
+    const openCheckArchiveModal = useCheckArchiveModal(s => s.setOpenCheckArchiveModal)
     const openServiceArchiveModal = useServiceArchiveModal(s => s.setOpenServiceArchiveModal)
     const openServiceFinalArchiveModal = useServiceFinalArchiveModal(s => s.setOpenServiceFinalArchiveModal)
     const openEncashmentArchiveModal = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
@@ -69,8 +71,8 @@ export const HeaderShopMenu = () => {
         {
             title: 'Чеки',
             func: () => {
-                // openShopModal(true)
-                // setIsComponentVisible(false)
+                openCheckArchiveModal(true)
+                setIsComponentVisible(false)
             }
         },
         {
@@ -187,6 +189,7 @@ export const HeaderShopMenu = () => {
         <>
             <SupplyInvoiceArchiveModal/>
             <InventoryOfProductsArchiveModal/>
+            <CheckArchiveModal/>
             <ServiceArchiveModal/>
             <ServiceFinalArchiveModal/>
             <EncashmentArchiveModal/>

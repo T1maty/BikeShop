@@ -4,6 +4,56 @@
 .checkArchiveModal_mainBox {
     @include defaultModalStyle;
     @include flexColumn;
-    width: 350px;
+    width: 600px;
 
+    .checkArchiveModal_title {
+        @include modalTitle;
+    }
+
+    .checkArchiveModal_list {
+        @include divLargeMarginBottom;
+        max-height: 550px;
+        overflow: auto;
+        padding-right: 10px;
+
+        .checkArchiveModal_item {
+            @include flexOnlyBetween;
+            background-color: $themeColorGray;
+            border: 1px solid $themeColorMilk;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
+            @include hoverCursorPointer;
+
+            .item_content {
+                @include flexBetween;
+
+                .content_info {
+                    height: 100%;
+                    //width: 200px;
+                    font-size: 20px;
+                    border-right: 2px solid $themeColorMilk;
+                    padding-right: 10px;
+                    @include flexColumnOnly;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    @include divSmallMarginBottom;
+
+                    .cashBlock {
+                        @include flexCenter;
+
+                        .cashBlock_info {
+                            padding-left: 10px;
+                            font-size: 20px;
+                        }
+                    }
+                }
+                .content_cash {
+                    display: flex;
+                    justify-content: space-around !important;
+                }
+
+                @include modalDateBlock;
+            }
+        }
+    }
 }
