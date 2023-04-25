@@ -46,22 +46,16 @@ export const ProductCatalog = () => {
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Отображение
                     </Button>
                     <CustomSearchInput placeholder={'Поиск...'}
                                        divClassName={s.searchRow_searchInput}
                                        value={value}
-                                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                           setValue(e.currentTarget.value)
-                                       }}
-                                       clearInputValue={() => {
-                                           setValue('')
-                                       }}
+                                       onChange={(e: ChangeEvent<HTMLInputElement>) => {setValue(e.currentTarget.value)}}
+                                       clearInputValue={() => {setValue('')}}
                     />
-                    <Button buttonDivWrapper={s.searchRow_allProductsBtn} onClick={() => {
-                    }}>
+                    <Button buttonDivWrapper={s.searchRow_allProductsBtn} onClick={() => {}}>
                         Все товары
                     </Button>
                     <Button onClick={setNotSortedToTable}>
@@ -69,12 +63,8 @@ export const ProductCatalog = () => {
                     </Button>
                 </div>
 
-                <div className={s.rightSide_table} onContextMenu={(event) => {
-                    event.preventDefault()
-                }}>
-                    <ProductCatalogTable onRowDoubleClick={(row: any) => {
-                        getProductCard(row.id)
-                    }}/>
+                <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
+                    <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
                 </div>
             </div>
         </div>

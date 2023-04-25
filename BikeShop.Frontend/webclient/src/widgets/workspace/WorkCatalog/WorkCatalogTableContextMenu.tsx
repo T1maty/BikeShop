@@ -3,7 +3,7 @@ import {CreateWorkModal, UpdateWorkModal} from "../../../features"
 import {ContextMenu} from "../ContextMenu/ContextMenu"
 import {
     ChooseProductTagModal
-} from "../../../features/ProductCatalogFeatures/AddProductCardTagModal/AddProductCardTagModal";
+} from "../../../features/ProductCatalogFeatures/ChooseProductTagModal/ChooseProductTagModal";
 import {useWorkCatalog} from "./TableCatalogStore";
 
 export const WorkCatalogTableContextMenu = (props: {

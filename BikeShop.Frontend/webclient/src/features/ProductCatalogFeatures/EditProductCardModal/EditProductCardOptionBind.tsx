@@ -15,9 +15,9 @@ import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 import Select from 'react-select'
 import useEditProductCardModal from './EditProductCardModalStore'
 import Enumerable from 'linq'
-import {ChooseProductModal} from '../../ChooseProductModal/ChooseProductModal'
+import {ChooseProductModal} from '../ChooseProductModal/ChooseProductModal'
 import {ProductTagBindDTO} from './models/ProductTagBindDTO'
-import {ChooseProductTagModal} from '../AddProductCardTagModal/AddProductCardTagModal'
+import {ChooseProductTagModal} from '../ChooseProductTagModal/ChooseProductTagModal'
 import {useSnackbar} from 'notistack'
 
 interface ProductCardOptionBindProps {

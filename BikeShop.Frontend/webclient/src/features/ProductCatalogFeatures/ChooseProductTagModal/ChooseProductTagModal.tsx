@@ -1,15 +1,15 @@
 import React from 'react'
-import s from './AddProductCardTagModal.module.scss'
+import s from './ChooseProductTagModal.module.scss'
 import {TagTreeView} from "../../../widgets"
 import {CustomModal} from "../../../shared/ui"
 
-interface AddProductCardTagModalProps {
+interface ChooseProductTagModalProps {
     open: boolean
     setOpen: (value: boolean) => void
     onTagDoubleClick?: (tag: any) => void
 }
 
-export const ChooseProductTagModal: React.FC<AddProductCardTagModalProps> = ({onTagDoubleClick, open, setOpen}) => {
+export const ChooseProductTagModal: React.FC<ChooseProductTagModalProps> = ({onTagDoubleClick, open, setOpen}) => {
 
     return (
         <CustomModal

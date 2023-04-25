@@ -6,6 +6,9 @@ import useProductCatalogTableStore from './ProductCatalogTableStore'
 import {Product, ProductExtended} from "../../../../entities"
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
+import {
+    ChangeProductPriceModal
+} from "../../../../features/ProductCatalogFeatures/ChangeProductPriceModal/ChangeProductPriceModal";
 
 interface CatalogTableProps {
     onRowDoubleClick?: (product: any) => void
@@ -41,6 +44,7 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
     return (
         <>
             <ProductCatalogTableContextMenu/>
+            <ChangeProductPriceModal/>
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
 

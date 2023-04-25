@@ -4,17 +4,17 @@ import {immer} from "zustand/middleware/immer"
 import {CatalogAPI, Product, UpdateProduct} from "../../../entities"
 import {AxiosResponse} from "axios"
 
-interface createProductModalStore {
-    open: boolean
-    setOpen: (value: boolean, product: Product) => void
+interface UpdateProductModalStore {
+    openUpdateProductModal: boolean
+    setOpenUpdateProductModal: (value: boolean, product: Product) => void
     product: Product
     update: (data: UpdateProduct) => Promise<AxiosResponse>
 }
 
-const useUpdateProductModal = create<createProductModalStore>()(persist(devtools(immer((set) => ({
-    open: false,
-    setOpen: (value, product) => {
-        set({open: value})
+const useUpdateProductModal = create<UpdateProductModalStore>()(persist(devtools(immer((set) => ({
+    openUpdateProductModal: false,
+    setOpenUpdateProductModal: (value, product) => {
+        set({openUpdateProductModal: value})
         set({product: product})
     },
     product: {} as Product,

@@ -11,8 +11,8 @@ interface UpdateProductModalProps {
 
 export const UpdateProductModal = (props: UpdateProductModalProps) => {
 
-    const open = useUpdateProductModal(s => s.open)
-    const setOpen = useUpdateProductModal(s => s.setOpen)
+    const open = useUpdateProductModal(s => s.openUpdateProductModal)
+    const setOpen = useUpdateProductModal(s => s.setOpenUpdateProductModal)
     const product = useUpdateProductModal(s => s.product)
     const update = useUpdateProductModal(s => s.update)
 
