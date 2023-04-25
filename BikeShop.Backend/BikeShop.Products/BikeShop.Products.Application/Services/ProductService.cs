@@ -169,5 +169,10 @@ namespace BikeShop.Products.Application.Services
 
             return product;
         }
+
+        public async Task<List<Product>> Search(string querry)
+        {
+            return await _context.Products.Where(n=>n.Name.ToLower().Contains(querry.ToLower())).ToListAsync();
+        }
     }
 }

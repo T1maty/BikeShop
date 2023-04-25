@@ -17,4 +17,5 @@ public interface IProductService
     public Task<ProductImg> UpdateImage(ProductImageDTO dto);
     public Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId);
     public Task<Product> UpdatePrices(UpdateProductPriceDTO dto);
+    public Task<List<Product>> Search(string querry);
 }
