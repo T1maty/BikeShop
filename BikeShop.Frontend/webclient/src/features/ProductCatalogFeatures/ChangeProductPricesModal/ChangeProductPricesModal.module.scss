@@ -4,5 +4,20 @@
 .changeProductPricesModal_mainBox {
     @include defaultModalStyle;
     @include flexColumn;
-    width: 350px;
+    width: 500px;
+
+    .changeProductPricesModal_title {
+        @include modalTitle;
+    }
+    .changeProductPricesModal_productInfo {
+
+    }
+    .changeProductPricesModal_form {
+        .form_leftColumn {
+
+        }
+        .form_rightColumn {
+
+        }
+    }
 }
