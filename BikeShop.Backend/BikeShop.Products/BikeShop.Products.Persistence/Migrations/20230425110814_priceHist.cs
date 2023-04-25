@@ -7,58 +7,35 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BikeShop.Products.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MyFirstMigration : Migration
+    public partial class priceHist : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateTable(
-                name: "TagToProductBinds",
+                name: "PriceHistories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ProductTagId = table.Column<int>(type: "int", nullable: false),
+                    OldIncomePrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    NewIncomePrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    OldRetailPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    NewRetailPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    OldDealerPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    NewDealerPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    UserChangedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Enabled = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TagToProductBinds", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TagToProductBinds_ProductTags_ProductTagId",
-                        column: x => x.ProductTagId,
-                        principalTable: "ProductTags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TagToProductBinds_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_PriceHistories", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_BrandId",
-                table: "Products",
-                column: "BrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TagToProductBinds_ProductId",
-                table: "TagToProductBinds",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TagToProductBinds_ProductTagId",
-                table: "TagToProductBinds",
-                column: "ProductTagId");
+          
         }
 
         /// <inheritdoc />

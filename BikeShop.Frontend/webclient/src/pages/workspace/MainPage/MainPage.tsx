@@ -1,18 +1,24 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from "./MainPage.module.scss"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {User} from "../../../entities"
+import {LocalStorage, User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button} from '../../../shared/ui'
 import {
-    ChooseClientModal, CreateProductModal, EditProductCardModal,
-    EncashmentModal, EndWorkDayModal, GetPutMoneyModal
+    ChooseClientModal,
+    CreateProductModal,
+    EditProductCardModal,
+    EncashmentModal,
+    EndWorkDayModal,
+    GetPutMoneyModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
+import {useEmployee} from "../../../entities/globalStore/EmployeeStore";
+import {ShiftAPI} from "../../../entities/api/User/ShiftAPI";
 
 export const MainPage = () => {
 
@@ -27,6 +33,13 @@ export const MainPage = () => {
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
 
+    const userShiftStatus = useEmployee(s => s.shiftStatus)
+    const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
+
+    useEffect(() => {
+        getUserShiftStatus()
+    }, [])
+
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
         {id: 2, task: 'task 02'},
@@ -39,6 +52,29 @@ export const MainPage = () => {
         {id: 9, task: 'task 09'},
         {id: 10, task: 'task 10'},
     ])
+
+    const getShiftButton = () => {
+        if (userShiftStatus?.lastAction.action === "Open") {
+            return (<Button onClick={() => {
+                ShiftAPI.pause(LocalStorage.userId()!).then(() => {
+                    getUserShiftStatus()
+                })
+            }}>Поставить смену на паузу</Button>)
+        } else if (userShiftStatus?.lastAction.action === "Pause") {
+            return (<Button onClick={() => {
+                ShiftAPI.resume(LocalStorage.userId()!).then(() => {
+                    getUserShiftStatus()
+                })
+            }}>Продолжить смену</Button>)
+        } else {
+            return (<Button onClick={() => {
+                ShiftAPI.open(LocalStorage.userId()!).then(() => {
+                    getUserShiftStatus()
+                })
+            }}>Открыть смену</Button>)
+        }
+
+    }
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -59,19 +95,28 @@ export const MainPage = () => {
             <div className={s.mainPage_header}>
                 <div className={s.mainPage_header_leftSide}>
                     <div className={s.header_leftSide_deal}>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.SERVICE)}}>
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                        }}>
                             Новый ремонт
                         </Button>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.CASHBOX)
+                        }}>
                             Касса
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Новый заказ
                         </Button>
-                        <Button onClick={() => {setOpenGetPutMoneyModal(true)}}>
+                        <Button onClick={() => {
+                            setOpenGetPutMoneyModal(true)
+                        }}>
                             Акт внесения
                         </Button>
-                        <Button onClick={() => {setOpenEncashmentModal(true)}}>
+                        <Button onClick={() => {
+                            setOpenEncashmentModal(true)
+                        }}>
                             Инкассация
                         </Button>
                     </div>
@@ -80,16 +125,22 @@ export const MainPage = () => {
                         <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                             Каталог товаров
                         </Button>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)}}>
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
+                        }}>
                             Каталог услуг
                         </Button>
-                        <Button onClick={() => {navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)}}>
+                        <Button onClick={() => {
+                            navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                        }}>
                             Приходные накладные
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Клиенты
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Заказы
                         </Button>
                     </div>
@@ -122,9 +173,13 @@ export const MainPage = () => {
                 <div className={s.content_rightSide}>
                     <div className={s.rightSide_top}>
                         <div className={s.rightSide_top_search}>
-                            <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                            <ChooseClientModal extraCallback={(user: User) => {
+                                chooseClientHandler(user)
+                            }}/>
                             <Button buttonDivWrapper={s.search_chooseClientButton}
-                                    onClick={() => {setOpenClientModal(true)}}
+                                    onClick={() => {
+                                        setOpenClientModal(true)
+                                    }}
                             >
                                 Выбрать клиента
                             </Button>
@@ -139,17 +194,20 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_top_result}>
                             <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                    onClick={() => {}}>
+                                    onClick={() => {
+                                    }}>
                                 Открыть кассу
                             </Button>
-                            <Button buttonDivWrapper={s.result_cancelBtn} onClick={() => {}}>
+                            <Button buttonDivWrapper={s.result_cancelBtn} onClick={() => {
+                            }}>
                                 X
                             </Button>
                             <div className={s.result_span}>
                                 Цена
                             </div>
                             <Button buttonDivWrapper={s.result_payBtn}
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                    }}
                             >
                                 К оплате
                             </Button>
@@ -165,16 +223,23 @@ export const MainPage = () => {
 
                         <div className={s.bottom_right}>
                             <div className={s.bottom_right_one}>
+                                <div>{userShiftStatus?.lastAction.action}</div>
                                 <div>Сумма</div>
-                                <div>120:47:32</div>
+                                <div>{userShiftStatus?.hours}</div>
                             </div>
                             <div className={s.bottom_right_two}>
-                                <Button buttonDivWrapper={s.right_two_button}
-                                        onClick={() => {setOpenEndWorkDayModal(true)}}>
-                                    Закончить смену
-                                </Button>
+                                <div className={s.right_two_button}>
+                                    {getShiftButton()}
+                                </div>
                                 <div className={s.right_two_span}>
-                                    Закончить смену
+                                    <Button
+                                        onClick={() => {
+                                            ShiftAPI.close(LocalStorage.userId()!).then(() => {
+                                                getUserShiftStatus()
+                                            })
+                                        }}>
+                                        Закончить смену
+                                    </Button>
                                 </div>
                             </div>
                         </div>

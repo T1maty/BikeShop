@@ -16,7 +16,8 @@ export type {InventarizationProduct} from './entities/Acts/Inventarization/Inven
 export type {InventarizationLack} from './entities/Acts/Inventarization/InventarizationLack'
 export type {InventarizationLackProduct} from './entities/Acts/Inventarization/InventarizationLackProduct'
 
-
+export type {UserShiftStatus} from './models/UserShiftStatus'
+export type {ShiftAction} from './entities/ShiftAction'
 export type {BillWithProducts} from './models/BillWithProducts'
 
 

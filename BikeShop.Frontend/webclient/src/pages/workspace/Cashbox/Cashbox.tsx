@@ -122,22 +122,28 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock_leftSideWrapper}>
                 <div className={s.leftSide_tables}>
-                    <Button onClick={() => {}} disabled={!isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={!isActiveTable}>
                         Касса 1
                     </Button>
-                    <Button onClick={() => {}} disabled={isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={isActiveTable}>
                         Касса 2
                     </Button>
-                    <Button onClick={() => {}} disabled={isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={isActiveTable}>
                         Касса 3
                     </Button>
-                    <Button onClick={() => {}} disabled={isActiveTable}>
+                    <Button onClick={() => {
+                    }} disabled={isActiveTable}>
                         Касса 4
                     </Button>
                 </div>
 
                 <div className={s.leftSide_client}>
-                    <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                    <ChooseClientModal extraCallback={(user: User) => {
+                        chooseClientHandler(user)
+                    }}/>
 
                     <ClientCard user={user}/>
                     <div className={s.leftSide_client_buttons}>
@@ -147,7 +153,8 @@ export const Cashbox = () => {
                             Выбрать клиента
                         </Button>
                         <Button buttonDivWrapper={s.client_buttons_cancel}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             X
                         </Button>
@@ -173,12 +180,14 @@ export const Cashbox = () => {
                         <ChooseDiscountModal/>
 
                         <Button buttonDivWrapper={s.buttons_choose}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             Выбрать скидку для клиента
                         </Button>
                         <Button buttonDivWrapper={s.buttons_cancel}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             X
                         </Button>
@@ -196,7 +205,9 @@ export const Cashbox = () => {
                     />
 
                     <Button buttonDivWrapper={s.header_chooseBtn}
-                            onClick={() => {setOpen(true)}}
+                            onClick={() => {
+                                setOpen(true)
+                            }}
                     >
                         Выбрать товары
                     </Button>
@@ -205,10 +216,14 @@ export const Cashbox = () => {
                             cacheOptions
                             defaultOptions
                             isClearable
+                            value={null}
                             loadOptions={loadOptions}
-                            onChange={(r) => {addProductHandler(r as Product); console.log('selected', r)}}
-                            getOptionLabel={label => label.id + ' | ' + label.name + ' | ' + label.catalogKey}
-                            getOptionValue={value => value.name}
+                            onChange={(r) => {
+                                addProductHandler(r as Product);
+                                console.log('selected', r)
+                            }}
+                            getOptionLabel={label => label!.id + ' | ' + label!.name + ' | ' + label!.catalogKey}
+                            getOptionValue={value => value!.name}
                             placeholder={'Поиск'}
                             noOptionsMessage={() => 'Товар не найден'}
                         />
@@ -223,7 +238,9 @@ export const Cashbox = () => {
                     <div className={s.rightSideBottom_buttonsBlock}>
                         <div className={s.buttonsBlock_one}>
                             <div className={s.one_cancelBtn}>
-                                <Button onClick={() => {setData([])}}>
+                                <Button onClick={() => {
+                                    setData([])
+                                }}>
                                     X
                                 </Button>
                             </div>
@@ -244,7 +261,9 @@ export const Cashbox = () => {
                                   summ={sum}
                                   result={paymentResultHandler}
                         />
-                        <Button onClick={() => {setOpenPay(true)}}>
+                        <Button onClick={() => {
+                            setOpenPay(true)
+                        }}>
                             К оплате
                         </Button>
                     </div>

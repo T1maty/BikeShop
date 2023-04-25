@@ -13,5 +13,7 @@ namespace BikeShop.Shop.Domain.Entities
         public int SourceId { get; set; }
         public decimal CashAction { get; set; }
         public decimal TerminalAction { get; set; }
+        public decimal AfterActionCash { get; set; }
+        public decimal AfterActionTerminal { get; set; }
     }
 }

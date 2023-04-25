@@ -1,12 +1,25 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    ArrivalOfProducts, Cashbox, Catalog, CatalogProductItem, LoginPage, MainPage, Order,
-    ProductCatalog, Profile, RegistrationPage, Service, ShopMain, ShopWrapper, WorkCatalog
+    ArrivalOfProducts,
+    Cashbox,
+    Catalog,
+    CatalogProductItem,
+    LoginPage,
+    MainPage,
+    Order,
+    ProductCatalog,
+    Profile,
+    RegistrationPage,
+    Service,
+    ShopMain,
+    ShopWrapper,
+    WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
-import {BarcodeScannerListenerProvider}
-    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+import {
+    BarcodeScannerListenerProvider
+} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 import {InventarizationPage} from "../../pages/workspace/Inventarization/InventarizationPage"
 import {CheckAuthEmployee} from "../providers/RouteProviders/CheckAuthEmployee"
 
@@ -78,61 +91,61 @@ export const routes = createBrowserRouter([
 
     {
         path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
-        element: //<CheckAuthEmployee>
+        element: <CheckAuthEmployee>
             <BarcodeScannerListenerProvider>
                 <WorkspaceHeaderProvider>
                     <MainPage/>
                 </WorkspaceHeaderProvider>
             </BarcodeScannerListenerProvider>
-        //</CheckAuthEmployee>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
-        element: //<CheckAuthEmployee>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <ProductCatalog/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthEmployee>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
-        element: //<CheckAuthEmployee>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <WorkCatalog/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthEmployee>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.CASHBOX,
-        element: //<CheckAuthEmployee>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <Cashbox/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthEmployee>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.SERVICE,
-        element: //<CheckAuthEmployee>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <Service/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthEmployee>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS,
-        element: //<CheckAuthEmployee>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <ArrivalOfProducts/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthEmployee>
+        </CheckAuthEmployee>
     },
     {
         path: BikeShopPaths.WORKSPACE.INVENTARIZATION,
-        element: //<CheckAuthEmployee>
+        element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <InventarizationPage/>
             </WorkspaceHeaderProvider>
-        //</CheckAuthEmployee>
+        </CheckAuthEmployee>
     },
 
     // {

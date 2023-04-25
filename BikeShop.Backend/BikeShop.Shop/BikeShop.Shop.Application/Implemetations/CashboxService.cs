@@ -22,9 +22,12 @@ namespace BikeShop.Shop.Application.Implemetations
             var shop = await _context.Shops.FindAsync(ShopId);
             if (shop == null) throw new System.Exception();
 
-            var ent = new CashboxHistory { ShopId = ShopId, CashAction = CashAction, TerminalAction = TerminalAction, Source = Source, SourceId = SourceId };
+            
             shop.CashboxCash += CashAction;
             shop.CashboxTerminal += TerminalAction;
+
+            var ent = new CashboxHistory { AfterActionCash = shop.CashboxCash, AfterActionTerminal = shop.CashboxTerminal, ShopId = ShopId, CashAction = CashAction, TerminalAction = TerminalAction, Source = Source, SourceId = SourceId };
+
             await _context.CashboxHistories.AddAsync(ent);
             await _context.SaveChangesAsync(new CancellationToken());
             

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeShop.Products.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230415144149_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20230425110814_priceHist")]
+    partial class priceHist
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,19 +120,23 @@ namespace BikeShop.Products.Persistence.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<decimal>("NewPrice")
+                    b.Property<decimal>("NewDealerPrice")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<string>("NewPriceCurrency")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<decimal>("OldPrice")
+                    b.Property<decimal>("NewIncomePrice")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<string>("OldPriceCurrency")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<decimal>("NewRetailPrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("OldDealerPrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("OldIncomePrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("OldRetailPrice")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

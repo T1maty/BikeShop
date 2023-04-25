@@ -14,7 +14,7 @@ export const ShiftAPI = {
     },
     pause(userId: string): any {
         return (
-            $api.put<SupplyInvoiceDTO>(`/shift/pauseshift?UserId=${userId}`)
+            $api.post<SupplyInvoiceDTO>(`/shift/pauseshift?UserId=${userId}`)
         )
     },
     resume(userId: string): any {
