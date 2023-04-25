@@ -92,9 +92,7 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
                         />
                     </div>
                     <div className={s.updateProductModal_buttons}>
-                        <Button onClick={() => {
-                            setOpen(false, {} as Product)
-                        }}>
+                        <Button onClick={() => {setOpen(false, {} as Product)}}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>

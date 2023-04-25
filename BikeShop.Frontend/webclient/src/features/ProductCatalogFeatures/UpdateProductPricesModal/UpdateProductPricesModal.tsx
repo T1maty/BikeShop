@@ -15,6 +15,7 @@ export const UpdateProductPricesModal = () => {
     const setOpen = useUpdateProductPricesModal(s => s.setOpenUpdateProductPricesModal)
     const isLoading = useUpdateProductPricesModal(s => s.isLoading)
     const errorStatus = useUpdateProductPricesModal(s => s.errorStatus)
+
     const product = useUpdateProductPricesModal(s => s.product)
     const updateProductPrices = useUpdateProductPricesModal(s => s.updateProductPrices)
 
@@ -29,6 +30,8 @@ export const UpdateProductPricesModal = () => {
 
     const onSubmit: SubmitHandler<UpdateProductPrices> = (data: UpdateProductPrices) => {
         data.user = 'f82f8597-31c4-4ea7-937c-61234db6ab73'
+        // data.user = '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+        console.log(data)
         updateProductPrices(data)
     }
 
@@ -95,10 +98,14 @@ export const UpdateProductPricesModal = () => {
                         </div>
 
                         <div className={s.buttonsBlock}>
-                            <Button onClick={() => {}} buttonDivWrapper={s.cancelBtn}>
+                            <Button onClick={() => {setOpen(false, {} as Product)}}
+                                    buttonDivWrapper={s.cancelBtn}
+                            >
                                 Отмена
                             </Button>
-                            <Button type={'submit'} buttonDivWrapper={s.saveBtn}>
+                            <Button type={'submit'}
+                                    buttonDivWrapper={s.saveBtn}
+                            >
                                 Сохранить
                             </Button>
                         </div>
