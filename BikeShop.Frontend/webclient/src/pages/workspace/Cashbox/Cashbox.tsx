@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import s from './Cashbox.module.scss'
-import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal} from '../../../features'
+import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal, PrintModal} from '../../../features'
 import {Button, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
-import {ClientCard} from '../../../widgets'
-import {FinancialInteractionAPI, PaymentData, Product, useAuth, User} from '../../../entities'
+import {CheckForShop, ClientCard} from '../../../widgets'
+import {BillWithProducts, FinancialInteractionAPI, PaymentData, Product, useAuth, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig";
 import {BillProductDTO} from "./models/BillProductDTO";
 import Enumerable from "linq";
 import AsyncSelect from "react-select/async";
 import {$api} from "../../../shared";
+import {useSnackbar} from "notistack";
 
 export const Cashbox = () => {
 
     const isActiveTable = true
+    const {enqueueSnackbar} = useSnackbar()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
 
@@ -26,8 +28,10 @@ export const Cashbox = () => {
     const setData = useCashboxStore(s => s.setProducts)
 
     const [open, setOpen] = useState(false)
+    const [openPrint, setOpenPrint] = useState(false)
     const [openPay, setOpenPay] = useState(false)
     const [sum, setSum] = useState(0)
+    const [res, setRes] = useState<BillWithProducts>()
 
     const loadOptions = (inputValue: string, callback: (value: Product[]) => void) => {
         $api.get(`/product/search?querry=${inputValue}`).then((resp) => {
@@ -64,7 +68,11 @@ export const Cashbox = () => {
         res.currencyId = 1
         console.log(res)
         FinancialInteractionAPI.NewBill.create(res).then((r) => {
+            enqueueSnackbar('Товар продан!', {variant: 'success', autoHideDuration: 3000})
+            setRes(r.data)
             console.log(r)
+            setOpenPrint(true)
+            setData([])
         })
     }
 
@@ -105,6 +113,9 @@ export const Cashbox = () => {
 
     return (
         <div className={s.cashboxMainBlock}>
+
+            <PrintModal open={openPrint} setOpen={setOpenPrint}><CheckForShop children={res!}/></PrintModal>
+
             <div className={s.cashboxMainBlock_leftSideWrapper}>
                 <div className={s.leftSide_tables}>
                     <Button onClick={() => {
