@@ -70,9 +70,7 @@ export const RegistrationPage = () => {
                 </div>
 
                 <div className={s.haveAccount}
-                     onClick={() => {
-                         navigate(BikeShopPaths.COMMON.LOGIN)
-                     }}
+                     onClick={() => {navigate(BikeShopPaths.COMMON.LOGIN)}}
                 >
                     Я уже зарегистрирован
                 </div>

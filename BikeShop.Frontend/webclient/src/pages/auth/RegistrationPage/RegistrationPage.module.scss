@@ -11,14 +11,16 @@
         border: 1px solid white;
         border-radius: $smallBorderRadius;
         width: 350px;
-        height: 370px;
+        min-height: 370px;
+        max-height: 430px;
         @include flexColumn;
         padding: 0 40px;
 
         @include registrationBlock(268px); // main layout styles
 
         .haveAccount {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
 
             &:hover {
                 cursor: pointer;
