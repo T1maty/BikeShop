@@ -1,0 +1,21 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.changeProductPriceModal_mainBox {
+    @include defaultModalStyle;
+    @include flexColumn;
+    width: 350px;
+
+    .changeProductPriceModal_buttons {
+        display: flex;
+        gap: $defaultExtraLargeMargin;
+
+        button {
+            padding: $defaultSmallMargin;
+        }
+
+        .confirmModal_cancelButton {
+            @include deleteButton;
+        }
+    }
+}

@@ -6,7 +6,7 @@ import {LoginData, useAuth} from "../../../entities"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {Button, ControlledCustomInput} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
-import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next"
 
 export const LoginPage = () => {
 
@@ -34,19 +34,18 @@ export const LoginPage = () => {
                     message: t(r.response.data.error).toString()
                 })
             })
-
     }
 
     return (
         <div className={s.loginPage_container}>
-
             <div className={s.loginForm_mainBox}>
+
                 <div className={s.loginForm_title}>
                     Авторизация
                 </div>
-                <div className={s.loginForm_form}>
-                    <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                        <div>
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                    <div className={s.loginForm_form}>
+                        <div className={s.phone}>
                             <ControlledCustomInput name={'phone'}
                                                    placeholder={'Почта или номер телефона'}
                                                    control={formControl}
@@ -60,31 +59,25 @@ export const LoginPage = () => {
                                                    }}
                             />
                         </div>
-                        <div>
-                            <ControlledCustomInput name={'password'}
-                                                   placeholder={'Пароль'}
-                                                   control={formControl}
-                                                   rules={{required: Errors[0].name}}
-                            />
-                        </div>
+                        <ControlledCustomInput name={'password'}
+                                               placeholder={'Пароль'}
+                                               control={formControl}
+                                               rules={{required: Errors[0].name}}
+                        />
+                    </div>
+                    <div className={s.loginForm_buttons}>
                         <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
                             Вход
                         </Button>
-                    </form>
-                </div>
-                <div className={s.loginForm_buttons}>
-                    <Button buttonDivWrapper={s.loginForm_registerButton}
-                            onClick={() => {
-                                navigate(BikeShopPaths.COMMON.REGISTRATION)
-                            }}
-                    >
-                        Регистрация
-                    </Button>
-
-                </div>
+                        <Button buttonDivWrapper={s.loginForm_registerButton}
+                                onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
+                        >
+                            Регистрация
+                        </Button>
+                    </div>
+                </form>
 
             </div>
-
         </div>
     )
 }

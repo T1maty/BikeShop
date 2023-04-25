@@ -11,7 +11,8 @@
         border: 1px solid white;
         border-radius: $smallBorderRadius;
         width: 350px;
-        height: 280px;
+        min-height: 280px;
+        max-height: 320px;
         @include flexColumn;
 
         .loginForm_title {
@@ -21,28 +22,28 @@
             color: $themeColorMilk;
         }
 
-        .loginForm_form {
-            margin-bottom: $defaultSmallMargin;
+        form {
+            .loginForm_form {
+                margin-bottom: $defaultSmallMargin;
 
-            form {
-                > div {
+                .phone {
                     margin-bottom: $defaultSmallMargin;
-                    width: 280px;
                 }
             }
-        }
 
-        .loginForm_buttons {
-            @include flexOnlyBetween;
-            width: 280px;
+            .loginForm_buttons {
+                @include flexOnlyBetween;
+                margin-bottom: $defaultLargeMargin;
+                width: 280px;
 
-            button {
-                width: 100%;
-                height: 50px;
-            }
+                button {
+                    width: 100%;
+                    height: 50px;
+                }
 
-            .loginForm_loginButton {
-                width: 130px;
+                .loginForm_loginButton {
+                    width: 130px;
+                }
             }
         }
     }
