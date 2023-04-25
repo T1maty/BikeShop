@@ -3,11 +3,10 @@ export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 
 export {ServiceArchiveModal} from './ArchiveModals/ServiceArchiveModal/ServiceArchiveModal'
 export {ServiceFinalArchiveModal} from './ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
-export {
-    InventoryOfProductsArchiveModal
-} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
+export {InventoryOfProductsArchiveModal} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
 export {SupplyInvoiceArchiveModal} from './ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 export {EncashmentArchiveModal} from './ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
+export {CheckArchiveModal} from './ArchiveModals/CheckArchiveModal/CheckArchiveModal'
 
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 export {PrintModal} from './PrintModal/PrintModal'
@@ -23,7 +22,7 @@ export {EncashmentModal} from './CashboxModals/EncashmentModal/EncashmentModal'
 export {GetPutMoneyModal} from './CashboxModals/GetPutMoneyModal/GetPutMoneyModal'
 
 export {EditProductCardModal} from './ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
-export {ChangeProductPriceModal} from './ProductCatalogFeatures/ChangeProductPriceModal/ChangeProductPriceModal'
+export {ChangeProductPricesModal} from './ProductCatalogFeatures/ChangeProductPricesModal/ChangeProductPricesModal'
 export {CreateProductModal} from './ProductCatalogFeatures/CreateProductModal/CreateProductModal'
 export {ChooseProductModal} from './ProductCatalogFeatures/ChooseProductModal/ChooseProductModal'
 export {UpdateProductModal} from './ProductCatalogFeatures/UpdateProductModal/UpdateProductModal'

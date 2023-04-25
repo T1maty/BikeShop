@@ -74,6 +74,7 @@
                     align-items: center;
                     flex-wrap: wrap;
                     gap: 5px;
+                    min-height: 80px;
 
                     @media (max-width: 390px) {
                         width: 200px;
@@ -83,6 +84,8 @@
 
                     }
                     .cloudTag_item {
+                        @include flexCenter;
+                        gap: 5px;
                         background-color: $themeColorGray;
                         padding: $defaultSmallMargin;
                         border-radius: $smallBorderRadius;

@@ -7,11 +7,14 @@ import CartFull from '../../../../shared/assets/shop/icons/cart-full.svg'
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import {useNavigate} from 'react-router-dom'
 import useCatalog from './CatalogStore'
-import {ShopLoader} from '../../../../shared/ui'
+import {DeleteButton, ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {ProductFullData, ProductTag} from '../../../../entities'
 import Enumerable from "linq"
+import {
+    ProductTagBindDTO
+} from "../../../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductTagBindDTO";
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -27,7 +30,9 @@ export const Catalog = () => {
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
     const userCurrentTags = useCatalog(s => s.userCurrentTags)
-    const setUserCurrentTags = useCatalog(s => s.setUserCurrentTags)
+    const setUserCurrentTag = useCatalog(s => s.setUserCurrentTag)
+    const deleteUserCurrentTag = useCatalog(s => s.deleteUserCurrentTag)
+
     const defaultProducts = useCatalog(s => s.defaultProducts)
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
     const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
@@ -91,7 +96,7 @@ export const Catalog = () => {
         navigate(`/shop/catalog/${product.product.id}`)
     }
 
-    const setUserCurrentTagHandler = (tag: ProductTag) => {
+    const addUserCurrentTagHandler = (tag: ProductTag) => {
         if (Enumerable.from(userCurrentTags).select(n => n.id).contains(tag.id)) {
             enqueueSnackbar('Этот тег уже выбран',
                 {
@@ -100,8 +105,12 @@ export const Catalog = () => {
                 })
             // return
         } else {
-            setUserCurrentTags(tag)
+            setUserCurrentTag(tag)
         }
+    }
+
+    const deleteUserCurrentTagHandler = (tag: ProductTag) => {
+        deleteUserCurrentTag(userCurrentTags.filter(t => t.id !== tag.id))
     }
 
     useEffect(() => {
@@ -135,7 +144,7 @@ export const Catalog = () => {
                                     tags.map(tag => {
                                         return (
                                             <div className={s.tagsList_item}
-                                                 onClick={() => {setUserCurrentTagHandler(tag)}}
+                                                 onClick={() => {addUserCurrentTagHandler(tag)}}
                                             >
                                                 {tag.name}
                                             </div>
@@ -149,12 +158,19 @@ export const Catalog = () => {
                             <div className={s.right_cloudCategory}>
                                 <div className={s.cloudCategory_title}>Облако категорий</div>
                                 <div className={s.cloudCategory_content}>
-                                    <div className={s.cloudTag_title}>Выбранные категории:</div>
+                                    <div className={s.cloudTag_title}>
+                                        Выбранные категории:
+                                    </div>
                                     {
                                         userCurrentTags.length === 0 ? '' :
                                             userCurrentTags.map(tag => {
                                                 return (
-                                                    <div className={s.cloudTag_item}>{tag.name}</div>
+                                                    <div className={s.cloudTag_item}>
+                                                        {tag.name}
+                                                        <DeleteButton size={20}
+                                                                      onClick={() => {deleteUserCurrentTagHandler(tag)}}
+                                                        />
+                                                    </div>
                                                 )
                                             })
                                     }

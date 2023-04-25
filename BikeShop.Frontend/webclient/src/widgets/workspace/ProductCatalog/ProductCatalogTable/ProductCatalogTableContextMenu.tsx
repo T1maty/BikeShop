@@ -7,13 +7,13 @@ import useUpdateProductModal
     from '../../../../features/ProductCatalogFeatures/UpdateProductModal/UpdateProductModalStore'
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
 import useChangeProductPriceModal
-    from "../../../../features/ProductCatalogFeatures/ChangeProductPriceModal/ChangeProductPriceModal"
+    from "../../../../features/ProductCatalogFeatures/ChangeProductPricesModal/ChangeProductPricesModalStore"
 
 export const ProductCatalogTableContextMenu = () => {
 
     const setOpenCreateProductModal = useCreateProductModal(s => s.setTagAndOpen)
     const setOpenUpdateProductModal = useUpdateProductModal(s => s.setOpenUpdateProductModal)
-    const setOpenChangeProductPriceModal = useChangeProductPriceModal(s => s.setOpenChangeProductPriceModal)
+    const setOpenChangeProductPricesModal = useChangeProductPriceModal(s => s.setOpenChangeProductPricesModal)
 
     const contextMenuVisible = useProductCatalogTableStore(s => s.open)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
@@ -34,7 +34,7 @@ export const ProductCatalogTableContextMenu = () => {
         {
             name: 'Изменить цену',
             click: () => {
-                setOpenChangeProductPriceModal(true)
+                setOpenChangeProductPricesModal(true)
                 setContextVisible(false, 0, 0)
             }
         },

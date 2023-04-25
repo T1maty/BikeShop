@@ -1,0 +1,8 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.changeProductPricesModal_mainBox {
+    @include defaultModalStyle;
+    @include flexColumn;
+    width: 350px;
+}

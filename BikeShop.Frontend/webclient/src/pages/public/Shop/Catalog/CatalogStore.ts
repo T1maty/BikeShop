@@ -12,7 +12,8 @@ interface UseCatalogStore {
     tags: ProductTag[]
     getTags: () => void
     userCurrentTags: ProductTag[]
-    setUserCurrentTags: (tag: ProductTag) => void
+    setUserCurrentTag: (tag: ProductTag) => void
+    deleteUserCurrentTag: (filteredTags: ProductTag[]) => void
 
     defaultProducts: ProductFullData[]
     getDefaultProducts: () => void
@@ -44,8 +45,11 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         })
     },
     userCurrentTags: [],
-    setUserCurrentTags: (tag) => set(state => {
+    setUserCurrentTag: (tag) => set(state => {
         state.userCurrentTags.push(tag)
+    }),
+    deleteUserCurrentTag: (filteredTags) => set(state => {
+        state.userCurrentTags = filteredTags
     }),
 
     defaultProducts: [],
