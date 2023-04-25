@@ -16,6 +16,8 @@ public interface IApplicationDbContext
     public DbSet<InventarizationLack> InventarizationLacks { get; set; }
     public DbSet<InventarizationProduct> InventarizationProducts { get; set; }
     public DbSet<InventarizationLackProduct> InventarizationLackProducts { get; set; }
+    public DbSet<Payout> Payouts { get; set; }
+
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
