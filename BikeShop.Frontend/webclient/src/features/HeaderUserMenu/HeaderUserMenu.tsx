@@ -20,13 +20,16 @@ export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
         {
             title: 'Профиль',
             func: () => {
-                navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                // navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                alert('Профиль')
+                setIsComponentVisible(false)
             }
         },
         {
             title: 'Выйти',
             func: () => {
                 navigate(BikeShopPaths.COMMON.LOGIN)
+                setIsComponentVisible(false)
             }
         },
     ])
@@ -34,23 +37,23 @@ export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
     return (
         <div className={s.leftSide_burgerMenu}>
             <div className={s.burgerMenu_iconButton}
-                 onClick={() => {
-                     setIsComponentVisible(!isComponentVisible)
-                 }}
+                 onClick={() => {setIsComponentVisible(!isComponentVisible)}}
             >
                 UserName
             </div>
             {
                 isComponentVisible ?
                     <div className={s.burgerMenu_menuList} ref={ref}>
-                        {profileMenuItems.map(item => (
-                            <div className={s.menuList_item}
-                                 key={item.title}
-                                 onClick={item.func}
-                            >
-                                {item.title}
-                            </div>
-                        ))}
+                        {
+                            profileMenuItems.map(item => (
+                                <div className={s.menuList_item}
+                                     key={item.title}
+                                     onClick={item.func}
+                                >
+                                    {item.title}
+                                </div>
+                            ))
+                        }
                     </div>
 
                     : ''

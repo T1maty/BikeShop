@@ -11,8 +11,8 @@ import {useTranslation} from "react-i18next"
 export const LoginPage = () => {
 
     const {t} = useTranslation('errors')
-    const login = useAuth(s => s.login)
     const navigate = useNavigate()
+    const login = useAuth(s => s.login)
 
     const formControl = useForm<LoginData>({
         defaultValues: {

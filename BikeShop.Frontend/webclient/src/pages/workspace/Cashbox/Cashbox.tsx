@@ -6,12 +6,12 @@ import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClie
 import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
 import {BillWithProducts, FinancialInteractionAPI, PaymentData, Product, useAuth, User} from '../../../entities'
-import {columns} from "./CashboxTableConfig";
-import {BillProductDTO} from "./models/BillProductDTO";
-import Enumerable from "linq";
-import AsyncSelect from "react-select/async";
-import {$api} from "../../../shared";
-import {useSnackbar} from "notistack";
+import {columns} from "./CashboxTableConfig"
+import {BillProductDTO} from "./models/BillProductDTO"
+import Enumerable from "linq"
+import AsyncSelect from "react-select/async"
+import {$api} from "../../../shared"
+import {useSnackbar} from "notistack"
 
 export const Cashbox = () => {
 

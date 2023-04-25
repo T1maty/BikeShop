@@ -1,9 +1,9 @@
-import {create} from "zustand";
-import {devtools} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {User} from '../../../entities';
-import {NewBillDTO} from "./models/NewBillDTO";
-import {BillProductDTO} from "./models/BillProductDTO";
+import {create} from "zustand"
+import {devtools} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {User} from '../../../entities'
+import {NewBillDTO} from "./models/NewBillDTO"
+import {BillProductDTO} from "./models/BillProductDTO"
 
 interface CashboxStore {
     isLoading: boolean

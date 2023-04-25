@@ -25,9 +25,9 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
             {
                 isAuth ?
                     <>
-                        <div className={s.userInfo} onClick={() => {
-                            navigate(BikeShopPaths.SHOP.PROFILE)
-                        }}>
+                        <div className={s.userInfo}
+                             onClick={() => {navigate(BikeShopPaths.SHOP.PROFILE)}}
+                        >
                             <ProfileAvatar lastName={userLastName} firstName={userFirstName}/>
                             <div className={s.userName}>
                                 {userLastName} {''} {userFirstName}
@@ -37,9 +37,9 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                             </div>
                         </div>
 
-                        <div className={s.profileIconsBlock} onClick={() => {
-                            navigate(BikeShopPaths.SHOP.PROFILE)
-                        }}>
+                        <div className={s.profileIconsBlock}
+                             onClick={() => {navigate(BikeShopPaths.SHOP.PROFILE)}}
+                        >
                             <div className={s.profile}>
                                 <img src={ProfileIcon} alt="profile-logo"/>
                             </div>
@@ -60,9 +60,7 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                                 Вход
                             </div>
                             <div className={s.loginBlock_registration}
-                                 onClick={() => {
-                                     navigate(BikeShopPaths.COMMON.REGISTRATION)
-                                 }}
+                                 onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
                             >
                                 Регистрация
                             </div>
@@ -78,9 +76,7 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                                 <img src={LoginIcon} alt="login-icon"/>
                             </div>
                             <div className={s.loginBlock_registration}
-                                 onClick={() => {
-                                     navigate(BikeShopPaths.COMMON.REGISTRATION)
-                                 }}
+                                 onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
                             >
                                 <img src={RegistrationIcon} alt="registration-icon"/>
                             </div>

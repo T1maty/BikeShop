@@ -1,14 +1,13 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {User} from "../models/Auth/User";
-import {Shop} from "../models/Auth/Shop";
-import {LoginData} from "../models/Auth/LoginData";
-import {AxiosResponse} from "axios";
-import {LoginResponse} from "../responses/LoginResponse";
-import {AuthAPI} from "../api/AuthAPI";
-import {RegistrationData} from "../models/Auth/RegistrationData";
-import {immer} from "zustand/middleware/immer";
-
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {User} from "../models/Auth/User"
+import {Shop} from "../models/Auth/Shop"
+import {LoginData} from "../models/Auth/LoginData"
+import {AxiosResponse} from "axios"
+import {LoginResponse} from "../responses/LoginResponse"
+import {AuthAPI} from "../api/AuthAPI"
+import {RegistrationData} from "../models/Auth/RegistrationData"
+import {immer} from "zustand/middleware/immer"
 
 interface ChooseDiscountModalStore {
     user: User | undefined
@@ -30,9 +29,11 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
             localStorage.setItem('accessToken', r.data.accessToken)
             localStorage.setItem('userId', r.data.user.id)
             localStorage.setItem('shopId', r.data.user.shopId.toString())
+
             set(state => {
                 state.user = r.data.user
             })
+
             if (r.data.user.shopId > 0) {
                 set(state => {
                     state.loginToShop(r.data.user.shopId)
@@ -46,14 +47,15 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
     },
 
     logout: () => {
-
         set(state => {
             state.user = undefined
             state.shop = undefined
         })
+
         localStorage.removeItem('accessToken')
         localStorage.removeItem('userId')
         localStorage.removeItem('shopId')
+
         return AuthAPI.Login.logout()
     },
 

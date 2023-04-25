@@ -1,14 +1,15 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {AxiosResponse} from "axios";
-import {User} from '../../../entities';
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {AxiosResponse} from "axios"
+import {User} from '../../../entities'
 
 interface MainPageStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     isClientChosen: boolean
     setIsClientChosen: (value: boolean) => void
+
     user: User
     setUser: (user: User) => void
 }
@@ -18,6 +19,7 @@ const useMainPageStore = create<MainPageStore>()(/*persist(*/devtools(immer((set
     setIsLoading: (value: boolean) => set({isLoading: value}),
     isClientChosen: false,
     setIsClientChosen: (value) => set({isClientChosen: value}),
+
     user: {
         shopId: 0,
         id: '',

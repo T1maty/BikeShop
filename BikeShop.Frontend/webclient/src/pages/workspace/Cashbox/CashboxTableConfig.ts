@@ -1,4 +1,4 @@
-import {UniTableColumn} from "../../../entities";
+import {UniTableColumn} from "../../../entities"
 
 export const columns: UniTableColumn[] = [
     {

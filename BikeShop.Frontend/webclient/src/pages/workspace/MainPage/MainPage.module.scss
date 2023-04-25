@@ -1,204 +1,216 @@
 @import '../../../app/styles/variables/mixins';
 @import '../../../app/styles/variables/variables';
 
-//.mainPageWrapper {
-//    @include defaultContainer;
+.mainPageMainBlock {
+    @include wrapperMainBlock;
 
-    .mainPageMainBlock {
-        @include wrapperMainBlock;
+    .mainPage_header {
+        display: flex;
+        margin-bottom: $defaultLargeMargin;
+        gap: $defaultLargeMargin;
 
-        .mainPage_header {
+        .mainPage_header_leftSide {
             display: flex;
-            margin-bottom: $defaultLargeMargin;
-            gap: $defaultLargeMargin;
+            flex-direction: column;
+            width: 70%;
 
-            .mainPage_header_leftSide {
-                display: flex;
-                flex-direction: column;
-                width: 70%;
+            .header_leftSide_deal {
+                @include flexOnlyBetween;
+                flex-wrap: wrap;
+                border-radius: $largeBorderRadius;
+                background-color: $themeColorDark;
+                margin-bottom: $defaultLargeMargin;
+                padding: $defaultLargeMargin;
 
-                .header_leftSide_deal {
-                    @include flexOnlyBetween;
-                    flex-wrap: wrap;
-                    border-radius: $largeBorderRadius;
-                    background-color: $themeColorDark;
-                    margin-bottom: $defaultLargeMargin;
-                    padding: $defaultLargeMargin;
-
-                    button {
-                        padding: 5px 10px;
-                        height: 40px;
-                    }
-                }
-                .header_leftSide_info {
-                    @include flexOnlyBetween;
-                    flex-wrap: wrap;
-                    border-radius: $largeBorderRadius;
-                    background-color: $themeColorDark;
-                    padding: $defaultLargeMargin;
-
-                    button {
-                        @include flexCenter;
-                        padding: 5px 10px;
-                        height: 40px;
-                    }
+                button {
+                    padding: 5px 10px;
+                    height: 40px;
                 }
             }
 
-            .mainPage_header_rightSide {
-                @include flexCenter;
-                background-color: $themeColorDark;
+            .header_leftSide_info {
+                @include flexOnlyBetween;
+                flex-wrap: wrap;
                 border-radius: $largeBorderRadius;
-                width: 30%;
+                background-color: $themeColorDark;
+                padding: $defaultLargeMargin;
+
+                button {
+                    @include flexCenter;
+                    padding: 5px 10px;
+                    height: 40px;
+                }
             }
         }
 
-        .mainPage_content {
-            display: flex;
-            gap: $defaultLargeMargin;
+        .mainPage_header_rightSide {
+            @include flexCenter;
+            background-color: $themeColorDark;
+            border-radius: $largeBorderRadius;
+            padding: $defaultLargeMargin;
+            width: 30%;
+        }
+    }
 
-            .content_leftSide {
+    .mainPage_content {
+        display: flex;
+        gap: $defaultLargeMargin;
+
+        .content_leftSide {
+            background-color: $themeColorDark;
+            border-radius: $largeBorderRadius;
+            width: 50%;
+
+            .leftSide_title {
+                @include flexCenter;
+                margin-top: $defaultSmallMargin;
+            }
+
+            .leftSide_tasks {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                background-color: $themeColorGray;
+                margin: $defaultLargeMargin;
+                padding: $defaultSmallMargin;
+                border-radius: $largeBorderRadius;
+
+                .tasks_taskItem {
+                    background-color: $themeColorWhite;
+                    border-radius: $smallBorderRadius;
+                    padding: $defaultSmallMargin;
+                    margin: $defaultSmallMargin;
+                    color: black;
+                    width: 250px;
+                    height: 100px;
+                }
+            }
+        }
+
+        .content_rightSide {
+            width: 50%;
+            @include flexColumn;
+
+            .rightSide_top {
+                @include flexColumn;
+                justify-content: space-between;
                 background-color: $themeColorDark;
                 border-radius: $largeBorderRadius;
-                width: 50%;
+                padding: $defaultLargeMargin;
+                margin-bottom: 10px;
+                height: 60%;
+                width: 100%;
 
-                .leftSide_title {
-                    @include flexCenter;
-                    margin-top: $defaultSmallMargin;
-                }
-                .leftSide_tasks {
-                    display: flex;
-                    justify-content: center;
-                    flex-wrap: wrap;
-                    background-color: $themeColorGray;
-                    margin: $defaultLargeMargin;
-                    padding: $defaultSmallMargin;
-                    border-radius: $largeBorderRadius;
+                .rightSide_top_search {
+                    @include flexOnlyBetween;
+                    width: 100%;
 
-                    .tasks_taskItem {
-                        background-color: $themeColorWhite;
-                        border-radius: $smallBorderRadius;
+                    .search_chooseClientButton {
+                        button {
+                            width: 200px;
+                            height: $largeButtonHeight;
+                        }
+                    }
+
+                    .search_searchInput {
+                        @include flexCenter;
+                        width: 100%;
                         padding: $defaultSmallMargin;
-                        margin: $defaultSmallMargin;
-                        color: black;
-                        width: 250px;
-                        height: 100px;
+                        margin-left: $defaultLargeMargin;
+                        border: 2px solid $themeColorMilk;
+                        border-radius: $smallBorderRadius;
+                    }
+                }
+
+                .rightSide_top_info {
+                    @include flexCenter;
+                    height: 60%;
+                    width: 100%;
+                    background-color: $themeColorGray;
+                    border-radius: $largeBorderRadius;
+                }
+
+                .rightSide_top_result {
+                    @include flexCenter;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    .result_chooseCashboxBtn {
+                        button {
+                            height: $largeButtonHeight;
+                            width: 200px;
+                        }
+                    }
+
+                    .result_cancelBtn {
+                        button {
+                            width: 50px;
+                            height: 50px;
+                            padding: 5px;
+                            font-size: 20px;
+                        }
+                    }
+
+                    .result_span {
+                        @include flexCenter;
+                        background-color: $themeColorGray;
+                        border-radius: $smallBorderRadius;
+                        padding: $largeButtonPadding;
+                        height: $largeButtonHeight;
+                        width: 200px;
+                    }
+
+                    .result_payBtn {
+                        button {
+                            height: $largeButtonHeight;
+                            width: 150px;
+                        }
                     }
                 }
             }
 
-            .content_rightSide {
-                width: 50%;
-                @include flexColumn;
+            .rightSide_bottom {
+                @include flexOnlyBetween;
+                background-color: $themeColorDark;
+                border-radius: $largeBorderRadius;
+                padding: $defaultLargeMargin;
+                width: 100%;
+                height: 40%;
+                margin-top: 10px;
 
-                .rightSide_top {
+                .bottom_left {
+                    @include flexColumn;
+                    justify-content: center;
+                    background-color: $themeColorGray;
+                    border-radius: $smallBorderRadius;
+                    margin-right: $defaultSmallMargin;
+                    font-size: 20px;
+                    width: 70%;
+                }
+
+                .bottom_right {
                     @include flexColumn;
                     justify-content: space-between;
-                    background-color: $themeColorDark;
-                    border-radius: $largeBorderRadius;
-                    padding: $defaultLargeMargin;
-                    margin-bottom: 10px;
-                    height: 60%;
-                    width: 100%;
+                    width: 30%;
 
-                    .rightSide_top_search {
-                        @include flexOnlyBetween;
-                        width: 100%;
+                    .bottom_right_one {
+                        text-align: center;
+                    }
 
-                        .search_chooseClientButton {
-                            button {
-                                width: 200px;
-                                height: $largeButtonHeight;
-                            }
-                        }
-                        .search_searchInput {
-                            @include flexCenter;
-                            width: 100%;
-                            padding: $defaultSmallMargin;
-                            margin-left: $defaultLargeMargin;
-                            border: 2px solid $themeColorMilk;
-                            border-radius: $smallBorderRadius;
-                        }
-                    }
-                    .rightSide_top_info {
-                        @include flexCenter;
-                        height: 60%;
-                        width: 100%;
-                        background-color: $themeColorGray;
-                        border-radius: $largeBorderRadius;
-                    }
-                    .rightSide_top_result {
-                        @include flexCenter;
+                    .bottom_right_two {
+                        @include flexColumnOnly;
                         justify-content: space-between;
-                        width: 100%;
 
-                        .result_chooseCashboxBtn {
+                        .right_two_buttons {
                             button {
                                 height: $largeButtonHeight;
-                                width: 200px;
+                                width: 100%;
                             }
-                        }
-                        .result_cancelBtn {
-                            button {
-                                width: 50px;
-                                height: 50px;
-                                padding: 5px;
-                                font-size: 20px;
+
+                            .pauseWorkDay_button {
+                                margin-bottom: $defaultSmallMargin;
                             }
-                        }
-                        .result_span {
-                            @include flexCenter;
-                            background-color: $themeColorGray;
-                            border-radius: $smallBorderRadius;
-                            padding: $largeButtonPadding;
-                            height: $largeButtonHeight;
-                            width: 200px;
-                        }
-                        .result_payBtn {
-                            button {
-                                height: $largeButtonHeight;
-                                width: 150px;
-                            }
-                        }
-                    }
-                }
-                .rightSide_bottom {
-                    @include flexOnlyBetween;
-                    background-color: $themeColorDark;
-                    border-radius: $largeBorderRadius;
-                    padding: $defaultLargeMargin;
-                    width: 100%;
-                    height: 40%;
-                    margin-top: 10px;
-
-                    .bottom_left {
-                        @include flexColumn;
-                        justify-content: center;
-                        background-color: $themeColorGray;
-                        border-radius: $smallBorderRadius;
-                        margin-right: $defaultSmallMargin;
-                        font-size: 20px;
-                        width: 70%;
-                    }
-                    .bottom_right {
-                        @include flexColumn;
-                        justify-content: space-evenly;
-                        width: 30%;
-
-                        .bottom_right_one {
-                            text-align: center;
-                        }
-                        .bottom_right_two {
-                            @include flexColumn;
-
-                            .right_two_button {
-                                margin-bottom: $defaultLargeMargin;
-
-                                button {
-                                    height: $largeButtonHeight;
-                                }
-                            }
-                            .right_two_span {
+                            .endWorkDay_button {
 
                             }
                         }
@@ -207,4 +219,4 @@
             }
         }
     }
-//}
+}
