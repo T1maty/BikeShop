@@ -66,5 +66,18 @@ namespace BikeShop.Products.Application.Common.Errors
                 };
             }
         }
+
+        public static BaseError ProductNotFount
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "productId",
+                    Error = "productId not found",
+                    ErrorDescription = "Specified Product id was not found"
+                };
+            }
+        }
     }
 }

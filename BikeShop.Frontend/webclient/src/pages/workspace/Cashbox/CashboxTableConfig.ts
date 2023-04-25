@@ -28,7 +28,7 @@ export const columns: UniTableColumn[] = [
         align: 'left',
     },
     {
-        id: 'retailPrice',
+        id: 'price',
         label: 'Цена',
         minWidth: 70,
         align: 'left',

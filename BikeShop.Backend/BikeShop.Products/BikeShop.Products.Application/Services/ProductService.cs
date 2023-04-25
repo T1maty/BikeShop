@@ -1,6 +1,8 @@
-﻿using BikeShop.Products.Application.Common.Exceptions;
+﻿using BikeShop.Products.Application.Common.Errors;
+using BikeShop.Products.Application.Common.Exceptions;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Application.RefitClients;
+using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
@@ -148,6 +150,40 @@ namespace BikeShop.Products.Application.Services
             }
 
             return res;
+        }
+
+        public async Task<Product> UpdatePrices(UpdateProductPriceDTO dto)
+        {
+            var product = await _context.Products.FindAsync(dto.ProductId);
+            if (product == null) throw Errors.ProductNotFount;
+
+            var hist = new PriceHistory { OldDealerPrice = product.DealerPrice, OldIncomePrice = product.IncomePrice, OldRetailPrice = product.RetailPrice, NewRetailPrice = dto.RetailPrice, NewDealerPrice = dto.DealerPrice, NewIncomePrice = dto.IncomePrice, ProductId = dto.ProductId, UserChangedId = dto.User };
+
+            product.DealerPrice = dto.DealerPrice;
+            product.IncomePrice = dto.IncomePrice;
+            product.RetailPrice = dto.RetailPrice;
+            product.UpdatedAt = DateTime.Now;
+
+            await _context.PriceHistories.AddAsync(hist);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return product;
+        }
+
+        public async Task<List<Product>> Search(string querry)
+        {
+            var res = querry.ToLower().Split(" ");
+            var contQR = _context.Products.Where(n=>n.Enabled == true);
+            foreach ( var item in res ) 
+            {
+                contQR = contQR.Where(n => n.Name.ToLower().Contains(item)
+                                        || n.Id.ToString().Contains(item)
+                                        || n.CatalogKey.ToLower().Contains(item)
+                                        || n.Barcode.ToLower().Contains(item)
+                                        || n.ManufacturerBarcode.ToLower().Contains(item));
+            }
+
+            return await contQR.ToListAsync();
         }
     }
 }

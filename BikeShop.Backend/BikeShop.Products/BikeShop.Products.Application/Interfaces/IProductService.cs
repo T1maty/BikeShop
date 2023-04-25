@@ -1,4 +1,5 @@
-﻿using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
+﻿using BikeShop.Products.Domain.DTO.Requestes;
+using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -15,4 +16,6 @@ public interface IProductService
     public Task DeleteImage(int imageId);
     public Task<ProductImg> UpdateImage(ProductImageDTO dto);
     public Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId);
+    public Task<Product> UpdatePrices(UpdateProductPriceDTO dto);
+    public Task<List<Product>> Search(string querry);
 }
