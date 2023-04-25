@@ -63,6 +63,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
 
     const userClickHandler = (user: User) => {
         extraCallback(user)
+        console.log(user)
     }
 
     useEffect(() => {
@@ -129,9 +130,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                                             users.map((u: any) => {
                                                 return (
                                                     <div className={s.textField_contentItem} key={u.user.id}
-                                                         onClick={() => {
-                                                             userClickHandler(u.user)
-                                                         }}
+                                                         onClick={() => {userClickHandler(u.user)}}
                                                     >
                                                         {u.user.lastName} {u.user.firstName} {u.user.patronymic}
                                                     </div>

@@ -1,9 +1,8 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
 import {ProductFullData} from '../index'
-import {
-    UpdateProductCardFormModel
-} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardFormModel";
+import {UpdateProductCardFormModel}
+    from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardFormModel"
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {
@@ -11,11 +10,12 @@ export const ProductCardAPI = {
             $api.get<ProductFullData>(`/productcard/getproductcard?productId=${productId}`)
         )
     },
-    updateProductCard(data: UpdateProductCardFormModel): any {
+    updateProductCard(data: UpdateProductCardFormModel): Promise<any> {
         return (
             $api.put('/productcard/updateproductcard', data)
         )
     },
+
     uploadNewImage(data: any, productId: number): Promise<any> {
         return (
             $api.post<any>(`/product/addimagetoproduct?productId=${productId}`, data)

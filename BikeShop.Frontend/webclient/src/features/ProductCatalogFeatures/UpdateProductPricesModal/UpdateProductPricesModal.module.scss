@@ -1,0 +1,63 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.changeProductPricesModal_mainBox {
+    @include defaultModalStyle;
+    @include flexColumn;
+    width: 350px;
+
+    .changeProductPricesModal_title {
+        @include modalTitle;
+    }
+    .changeProductPricesModal_productInfo {
+        width: 100%;
+        @include flexColumn;
+        margin-bottom: $defaultLargeMargin;
+        font-size: 20px;
+        text-align: center;
+
+        .changeProductPricesModal_productNumber {
+            margin-bottom: 5px;
+        }
+        .changeProductPricesModal_productName {
+
+        }
+    }
+
+    form {
+        width: 100%;
+        @include divSmallMarginBottom;
+
+        .formItem {
+            @include flexBetween;
+
+            input {
+                width: 130px;
+            }
+        }
+
+        .buttonsBlock {
+            @include flexBetween;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+
+            button {
+                height: 40px;
+                width: 100%;
+            }
+
+            .cancelBtn {
+                width: 100%;
+                button {
+                    &:hover {
+                        background-color: red;
+                    }
+                }
+            }
+            .saveBtn {
+                width: 100%;
+            }
+        }
+    }
+}

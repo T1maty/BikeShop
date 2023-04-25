@@ -22,7 +22,7 @@ export {EncashmentModal} from './CashboxModals/EncashmentModal/EncashmentModal'
 export {GetPutMoneyModal} from './CashboxModals/GetPutMoneyModal/GetPutMoneyModal'
 
 export {EditProductCardModal} from './ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
-export {ChangeProductPricesModal} from './ProductCatalogFeatures/ChangeProductPricesModal/ChangeProductPricesModal'
+export {UpdateProductPricesModal} from './ProductCatalogFeatures/UpdateProductPricesModal/UpdateProductPricesModal'
 export {CreateProductModal} from './ProductCatalogFeatures/CreateProductModal/CreateProductModal'
 export {ChooseProductModal} from './ProductCatalogFeatures/ChooseProductModal/ChooseProductModal'
 export {UpdateProductModal} from './ProductCatalogFeatures/UpdateProductModal/UpdateProductModal'

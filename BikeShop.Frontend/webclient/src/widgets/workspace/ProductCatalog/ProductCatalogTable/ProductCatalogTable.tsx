@@ -1,6 +1,6 @@
 import React from 'react'
 import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
-import {ChangeProductPricesModal, CreateProductModal, UpdateProductModal} from '../../../../features'
+import {UpdateProductPricesModal, CreateProductModal, UpdateProductModal} from '../../../../features'
 import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import {Product, ProductExtended} from "../../../../entities"
@@ -41,7 +41,7 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
     return (
         <>
             <ProductCatalogTableContextMenu/>
-            <ChangeProductPricesModal/>
+            <UpdateProductPricesModal/>
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
 

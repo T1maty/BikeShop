@@ -1,6 +1,9 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {CreateProduct, CreateTag, Product, ProductExtended, ProductTag, UpdateProduct} from '../index'
+import {
+    UpdateProductPrices, CreateProduct, CreateTag, Product,
+    ProductExtended, ProductTag, UpdateProduct
+} from '../index'
 
 export const CatalogAPI = {
     getProductByTag(value: any): Promise<AxiosResponse<ProductExtended[]>> {
@@ -26,6 +29,12 @@ export const CatalogAPI = {
     getUnsorted(storageId: number): Promise<AxiosResponse<ProductExtended[]>> {
         return (
             $api.get<ProductExtended[]>(`/product/unsorted?srorageId=${storageId}`)
+        )
+    },
+
+    updateProductPrices(data: UpdateProductPrices): Promise<AxiosResponse<Product>> {
+        return (
+            $api.put<Product>('/product/updateprices', data)
         )
     },
 }
