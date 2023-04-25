@@ -7,7 +7,7 @@ import LogoutIcon from '../../../../shared/assets/shop/icons/logout-icon.svg'
 import RegistrationIcon from '../../../../shared/assets/shop/icons/register-icon-05.svg'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
-import {useAuth} from "../../../../entities";
+import {useAuth} from "../../../../entities"
 
 interface LoginBlockProps {
     isAuth: boolean
@@ -53,7 +53,7 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, userLastName, use
                         <div className={s.loginBlock}>
                             <div className={s.loginBlock_enter}
                                  onClick={() => {
-                                     logout()
+                                     logout().then()
                                      navigate(BikeShopPaths.COMMON.LOGIN)
                                  }}
                             >

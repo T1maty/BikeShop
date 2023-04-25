@@ -8,8 +8,13 @@ import {LoginResponse} from "../responses/LoginResponse"
 import {AuthAPI} from "../api/AuthAPI"
 import {RegistrationData} from "../models/Auth/RegistrationData"
 import {immer} from "zustand/middleware/immer"
+import {ErrorStatusTypes} from '../enumerables/ErrorStatusTypes';
 
 interface ChooseDiscountModalStore {
+    isLoading: boolean
+    setIsLoading: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
+
     user: User | undefined
     shop: Shop | undefined
 
@@ -20,10 +25,15 @@ interface ChooseDiscountModalStore {
 }
 
 export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer((set) => ({
+    isLoading: false,
+    setIsLoading: (value) => set({isLoading: value}),
+    errorStatus: 'default',
+
     user: undefined,
     shop: undefined,
 
     login: (loginData, callback, onFailure) => {
+        set({isLoading: true})
         AuthAPI.Login.login(loginData).then((r: AxiosResponse<LoginResponse>) => {
             console.log(r)
             localStorage.setItem('accessToken', r.data.accessToken)
@@ -40,10 +50,15 @@ export const useAuth = create<ChooseDiscountModalStore>()(persist(devtools(immer
                 })
             }
             callback ? callback(r.data) : false
+            set({isLoading: false})
         }).catch(((r: AxiosResponse<LoginResponse>) => {
             console.log(r)
             onFailure ? onFailure(r) : false
-        }))
+            // set({errorStatus: 'error'})
+        })).finally(() => {
+            // set({errorStatus: 'default'})
+            // set({isLoading: false})
+        })
     },
 
     logout: () => {

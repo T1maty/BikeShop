@@ -4,7 +4,7 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import {useNavigate} from "react-router-dom"
 import {LoginData, useAuth} from "../../../entities"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {Button, ControlledCustomInput} from '../../../shared/ui'
+import {Button, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import {useTranslation} from "react-i18next"
 
@@ -12,7 +12,10 @@ export const LoginPage = () => {
 
     const {t} = useTranslation('errors')
     const navigate = useNavigate()
+
     const login = useAuth(s => s.login)
+    const isLoading = useAuth(s => s.isLoading)
+    const errorStatus = useAuth(s => s.errorStatus)
 
     const formControl = useForm<LoginData>({
         defaultValues: {
@@ -36,48 +39,59 @@ export const LoginPage = () => {
             })
     }
 
-    return (
-        <div className={s.loginPage_container}>
-            <div className={s.loginForm_mainBox}>
+    if (isLoading) {
+        return <LoaderScreen variant={'ellipsis'}/>
+    } else {
 
-                <div className={s.loginForm_title}>
-                    Авторизация
-                </div>
-                <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                    <div className={s.loginForm_form}>
-                        <div className={s.phone}>
-                            <ControlledCustomInput name={'phone'}
-                                                   placeholder={'Почта или номер телефона'}
+        return (
+            <div className={s.loginPage_container}>
+                <div className={s.loginForm_mainBox}>
+
+                    <div className={s.loginForm_title}>
+                        Авторизация
+                    </div>
+                    <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                        <div className={s.loginForm_form}>
+                            <div className={s.phone}>
+                                <ControlledCustomInput name={'phone'}
+                                                       placeholder={'Почта или номер телефона'}
+                                                       control={formControl}
+                                                       rules={{
+                                                           required: 'Поле обязательно для заполнения',
+                                                           minLength: {
+                                                               value: 4,
+                                                               message: 'Минимальная длина 4 символа'
+                                                           },
+                                                           pattern: {
+                                                               value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                                                               message: 'Неверный формат номера телефона'
+                                                           }
+                                                       }}
+                                />
+                            </div>
+                            <ControlledCustomInput name={'password'}
+                                                   type={'password'}
+                                                   placeholder={'Пароль'}
                                                    control={formControl}
-                                                   rules={{
-                                                       required: 'Поле обязательно для заполнения',
-                                                       minLength: {value: 4, message: 'Минимальная длина 4 символа'},
-                                                       pattern: {
-                                                           value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
-                                                           message: 'Неверный формат номера телефона'
-                                                       }
-                                                   }}
+                                                   rules={{required: Errors[0].name}}
                             />
                         </div>
-                        <ControlledCustomInput name={'password'}
-                                               placeholder={'Пароль'}
-                                               control={formControl}
-                                               rules={{required: Errors[0].name}}
-                        />
-                    </div>
-                    <div className={s.loginForm_buttons}>
-                        <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
-                            Вход
-                        </Button>
-                        <Button buttonDivWrapper={s.loginForm_registerButton}
-                                onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
-                        >
-                            Регистрация
-                        </Button>
-                    </div>
-                </form>
+                        <div className={s.loginForm_buttons}>
+                            <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
+                                Вход
+                            </Button>
+                            <Button buttonDivWrapper={s.loginForm_registerButton}
+                                    onClick={() => {
+                                        navigate(BikeShopPaths.COMMON.REGISTRATION)
+                                    }}
+                            >
+                                Регистрация
+                            </Button>
+                        </div>
+                    </form>
 
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }

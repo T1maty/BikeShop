@@ -4,6 +4,7 @@ import {BikeShopPaths} from "../../app/routes/paths"
 import {useTranslation} from "react-i18next"
 import {useNavigate} from "react-router-dom"
 import {useComponentVisible} from "../../shared/hooks/useComponentVisible"
+import {useAuth} from '../../entities'
 
 interface HeaderUserMenuProps {
     firstName?: string
@@ -15,6 +16,7 @@ export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
     const {t} = useTranslation()
     const navigate = useNavigate()
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
+    const logout = useAuth(s => s.logout)
 
     const [profileMenuItems, setProfileMenuItems] = useState([
         {
@@ -28,6 +30,7 @@ export const HeaderUserMenu = (props: HeaderUserMenuProps) => {
         {
             title: 'Выйти',
             func: () => {
+                logout().then()
                 navigate(BikeShopPaths.COMMON.LOGIN)
                 setIsComponentVisible(false)
             }
