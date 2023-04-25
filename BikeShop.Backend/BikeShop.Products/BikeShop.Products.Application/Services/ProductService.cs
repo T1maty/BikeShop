@@ -172,7 +172,18 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<List<Product>> Search(string querry)
         {
-            return await _context.Products.Where(n=>n.Name.ToLower().Contains(querry.ToLower())).ToListAsync();
+            var res = querry.ToLower().Split(" ");
+            var contQR = _context.Products.Where(n=>n.Enabled == true);
+            foreach ( var item in res ) 
+            {
+                contQR = contQR.Where(n => n.Name.ToLower().Contains(item)
+                                        || n.Id.ToString().Contains(item)
+                                        || n.CatalogKey.ToLower().Contains(item)
+                                        || n.Barcode.ToLower().Contains(item)
+                                        || n.ManufacturerBarcode.ToLower().Contains(item));
+            }
+
+            return await contQR.ToListAsync();
         }
     }
 }
