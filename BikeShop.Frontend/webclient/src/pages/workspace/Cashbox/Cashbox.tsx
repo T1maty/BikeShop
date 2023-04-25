@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import s from './Cashbox.module.scss'
 import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal} from '../../../features'
-import {Button, CustomSearchInput, UniTable} from '../../../shared/ui'
+import {Button, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {ClientCard} from '../../../widgets'
-import {FinancialInteractionAPI, PaymentData, useAuth, User} from '../../../entities'
+import {FinancialInteractionAPI, PaymentData, Product, useAuth, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig";
 import {BillProductDTO} from "./models/BillProductDTO";
 import Enumerable from "linq";
+import AsyncSelect from "react-select/async";
+import {$api} from "../../../shared";
 
 export const Cashbox = () => {
 
@@ -27,6 +29,17 @@ export const Cashbox = () => {
     const [openPay, setOpenPay] = useState(false)
     const [sum, setSum] = useState(0)
 
+    const loadOptions = (inputValue: string, callback: (value: Product[]) => void) => {
+        $api.get(`/product/search?querry=${inputValue}`).then((resp) => {
+            const asyncOptions = resp.data.map((n: Product) => {
+                return ({label: n.name, value: n.id})
+            });
+            console.log(asyncOptions)
+            callback(resp.data);
+        }).catch((r) => {
+            console.log('serchError', r)
+        })
+    };
 
     useEffect(() => {
         let sum = 0;
@@ -53,6 +66,36 @@ export const Cashbox = () => {
         FinancialInteractionAPI.NewBill.create(res).then((r) => {
             console.log(r)
         })
+    }
+
+    const addProductHandler = (n: Product) => {
+        let exProd = Enumerable.from(bill.products).where(m => m.productId === n.id).firstOrDefault()
+        if (exProd != undefined) {
+            setData(bill.products.map((m) => {
+                if (m.productId === n.id) {
+                    return {...m, quantity: m.quantity + 1}
+                } else {
+                    return m
+                }
+            }))
+        } else {
+            let newProd: BillProductDTO = {
+                productId: n.id,
+                name: n.name,
+                catalogKey: n.catalogKey,
+                serialNumber: '',
+                description: '',
+                quantity: 1,
+                quantityUnitName: "123",
+                currencySymbol: "123",
+                price: n.retailPrice,
+                discount: 0,
+                total: n.retailPrice
+            }
+            console.log('selectedProd', n)
+            setData([...bill.products, newProd])
+        }
+
     }
 
     const chooseClientHandler = (user: User) => {
@@ -139,35 +182,7 @@ export const Cashbox = () => {
                 <div className={s.cashboxMainBlock_rightSideHeader}>
                     <ChooseProductModal open={open}
                                         setOpen={setOpen}
-                                        addData={(n) => {
-                                            let exProd = Enumerable.from(bill.products).where(m => m.productId === n.id).firstOrDefault()
-                                            if (exProd != undefined) {
-                                                setData(bill.products.map((m) => {
-                                                    if (m.productId === n.id) {
-                                                        return {...m, quantity: m.quantity + 1}
-                                                    } else {
-                                                        return m
-                                                    }
-                                                }))
-                                            } else {
-                                                let newProd: BillProductDTO = {
-                                                    productId: n.id,
-                                                    name: n.name,
-                                                    catalogKey: n.catalogKey,
-                                                    serialNumber: '',
-                                                    description: '',
-                                                    quantity: 1,
-                                                    quantityUnitName: n.quantityUnitName,
-                                                    currencySymbol: n.currencySymbol,
-                                                    price: n.retailPrice,
-                                                    discount: 0,
-                                                    total: n.retailPrice
-                                                }
-                                                console.log('selectedProd', n)
-                                                setData([...bill.products, newProd])
-                                            }
-                                        }}
-
+                                        addData={addProductHandler}
                                         data={bill.products}
                                         slaveColumns={columns}
                     />
@@ -178,11 +193,21 @@ export const Cashbox = () => {
                     >
                         Выбрать товары
                     </Button>
-                    <CustomSearchInput placeholder={'Поиск...'} clearInputValue={() => {
-                    }}/>
-                    {/*<div className={s.header_searchInput}>*/}
-                    {/*    <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>*/}
-                    {/*</div>*/}
+                    <div>
+                        <AsyncSelect
+                            cacheOptions
+                            loadOptions={loadOptions}
+                            defaultOptions
+                            placeholder='Поиск'
+                            isClearable
+                            onChange={(r) => {
+                                addProductHandler(r as Product)
+                                console.log('selected', r)
+                            }}
+                            getOptionLabel={label => label.id + ' | ' + label.name + ' | ' + label.catalogKey}
+                            getOptionValue={value => value.name}
+                        />
+                    </div>
                 </div>
 
                 <div className={s.cashboxMainBlock_rightSideMiddle}>
