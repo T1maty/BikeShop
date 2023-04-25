@@ -31,7 +31,7 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
             retailVisibility: product.retailVisibility,
             b2BVisibility: product.b2BVisibility
         }
-    });
+    })
 
     useEffect(() => {
         formControl.setValue('id', product.id)
@@ -62,12 +62,8 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {
-                setOpen(false, {} as Product)
-            }}
-            onContextMenu={(event) => {
-                event.preventDefault()
-            }}
+            onClose={() => {setOpen(false, {} as Product)}}
+            onContextMenu={(event) => {event.preventDefault()}}
         >
             <div className={s.updateProductModal_mainBox}>
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
@@ -96,9 +92,7 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
                         />
                     </div>
                     <div className={s.updateProductModal_buttons}>
-                        <Button onClick={() => {
-                            setOpen(false, {} as Product)
-                        }}>
+                        <Button onClick={() => {setOpen(false, {} as Product)}}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>

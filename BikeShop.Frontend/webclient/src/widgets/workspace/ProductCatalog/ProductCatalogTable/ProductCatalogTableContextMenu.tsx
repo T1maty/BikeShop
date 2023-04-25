@@ -34,7 +34,7 @@ export const ProductCatalogTableContextMenu = () => {
         {
             name: 'Изменить цену',
             click: () => {
-                setOpenUpdateProductPricesModal(true)
+                setOpenUpdateProductPricesModal(true, selected[0].product)
                 setContextVisible(false, 0, 0)
             }
         },

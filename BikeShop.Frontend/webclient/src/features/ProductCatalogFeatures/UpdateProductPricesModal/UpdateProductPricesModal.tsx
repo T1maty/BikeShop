@@ -5,7 +5,7 @@ import {Button, ControlledCustomInput, CustomModal, LoaderScreen} from "../../..
 import {useSnackbar} from "notistack"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {UpdateProductPrices} from "../../../entities"
+import {Product, UpdateProductPrices} from "../../../entities"
 
 export const UpdateProductPricesModal = () => {
 
@@ -15,19 +15,23 @@ export const UpdateProductPricesModal = () => {
     const setOpen = useUpdateProductPricesModal(s => s.setOpenUpdateProductPricesModal)
     const isLoading = useUpdateProductPricesModal(s => s.isLoading)
     const errorStatus = useUpdateProductPricesModal(s => s.errorStatus)
+
+    const product = useUpdateProductPricesModal(s => s.product)
     const updateProductPrices = useUpdateProductPricesModal(s => s.updateProductPrices)
 
     const formControl = useForm<UpdateProductPrices>({
         defaultValues: {
-            incomePrice: 0,
-            retailPrice: 0,
-            dealerPrice: 0
+            productId: product.id,
+            incomePrice: product.incomePrice,
+            retailPrice: product.retailPrice,
+            dealerPrice: product.dealerPrice
         }
     })
 
     const onSubmit: SubmitHandler<UpdateProductPrices> = (data: UpdateProductPrices) => {
-        // data.productId = 1
-        // data.user = 'f82f8597-31c4-4ea7-937c-61234db6ab73'
+        data.user = 'f82f8597-31c4-4ea7-937c-61234db6ab73'
+        // data.user = '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+        console.log(data)
         updateProductPrices(data)
     }
 
@@ -41,12 +45,12 @@ export const UpdateProductPricesModal = () => {
         }
     }, [errorStatus])
 
-    // useEffect(() => {
-    //     formControl.reset()
-    //     formControl.setValue('incomePrice', currentProduct ? currentProduct.incomePrice : 0)
-    //     formControl.setValue('retailPrice', currentProduct ? currentProduct.retailPrice : 0)
-    //     formControl.setValue('dealerPrice', currentProduct ? currentProduct.dealerPrice : 0)
-    // }, [currentProduct])
+    useEffect(() => {
+        formControl.setValue('productId', product.id)
+        formControl.setValue('incomePrice', product ? product.incomePrice : 0)
+        formControl.setValue('retailPrice', product ? product.retailPrice : 0)
+        formControl.setValue('dealerPrice', product ? product.dealerPrice : 0)
+    }, [product])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -55,7 +59,7 @@ export const UpdateProductPricesModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {setOpen(false, {} as Product)}}
             >
                 <div className={s.changeProductPricesModal_mainBox}>
                     <div className={s.changeProductPricesModal_title}>
@@ -63,10 +67,10 @@ export const UpdateProductPricesModal = () => {
                     </div>
                     <div className={s.changeProductPricesModal_productInfo}>
                         <div className={s.changeProductPricesModal_productNumber}>
-                            Арт.: 121221221
+                            Арт.: {product.catalogKey}
                         </div>
                         <div className={s.changeProductPricesModal_productName}>
-                            Название товара
+                            {product.name}
                         </div>
                     </div>
 
@@ -76,7 +80,6 @@ export const UpdateProductPricesModal = () => {
                             <ControlledCustomInput name={'incomePrice'}
                                                    placeholder={'Оптовая цена'}
                                                    control={formControl}
-                                // rules={{required: Errors[0].name}}
                             />
                         </div>
                         <div className={s.formItem}>
@@ -84,7 +87,6 @@ export const UpdateProductPricesModal = () => {
                             <ControlledCustomInput name={'retailPrice'}
                                                    placeholder={'Розничная цена'}
                                                    control={formControl}
-                                // rules={{required: Errors[0].name}}
                             />
                         </div>
                         <div className={s.formItem}>
@@ -92,16 +94,18 @@ export const UpdateProductPricesModal = () => {
                             <ControlledCustomInput name={'dealerPrice'}
                                                    placeholder={'Закупочная цена'}
                                                    control={formControl}
-                                // rules={{required: Errors[0].name}}
                             />
                         </div>
 
                         <div className={s.buttonsBlock}>
-                            <Button onClick={() => {
-                            }} buttonDivWrapper={s.cancelBtn}>
+                            <Button onClick={() => {setOpen(false, {} as Product)}}
+                                    buttonDivWrapper={s.cancelBtn}
+                            >
                                 Отмена
                             </Button>
-                            <Button type={'submit'} buttonDivWrapper={s.saveBtn}>
+                            <Button type={'submit'}
+                                    buttonDivWrapper={s.saveBtn}
+                            >
                                 Сохранить
                             </Button>
                         </div>
