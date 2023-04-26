@@ -89,7 +89,7 @@ export const Catalog = () => {
     }
 
     const setCurrentProductToStore = (product: ProductFullData) => {
-        setCurrentProduct(product)
+        // setCurrentProduct(product) // оставить или нет?!
         navigate(`/shop/catalog/${product.product.id}`)
     }
 

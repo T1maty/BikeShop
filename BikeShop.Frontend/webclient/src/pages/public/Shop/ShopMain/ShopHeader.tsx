@@ -28,7 +28,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
     const isLoading = useCatalog(s => s.isLoading)
     const errorStatus = useCatalog(s => s.errorStatus)
     const searchProductsResult = useCatalog(s => s.searchProductsResult)
-    const searchProducts = useCatalog(s => s.searchProducts)
+    const getSearchProducts = useCatalog(s => s.getSearchProducts)
 
     const [burgerMenuActive, setBurgerMenuActive] = useState<boolean>(false)
     const [searchProductValue, setSearchProductValue] = useState<string>('')
@@ -36,12 +36,12 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
     const searchProductDebounce = useDebounce<string>(searchProductValue, 1000)
 
     const searchClickHandler = (pr: Product) => {
-        // функция для клика по найденному продукту
+        navigate(`/shop/catalog/${pr.id}`)
     }
 
     useEffect(() => {
         if (searchProductValue.length > 0) {
-            searchProducts(searchProductValue)
+            getSearchProducts(searchProductValue)
         }
     }, [searchProductDebounce])
 
@@ -95,7 +95,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                                                 searchProductsResult.map((pr: Product) => {
                                                     return (
                                                         <div className={s.searchInputBox_item} key={pr.id}
-                                                            // onClick={() => {searchClickHandler(pr)}}
+                                                             onClick={() => {searchClickHandler(pr)}}
                                                         >
                                                             {pr.name}
                                                         </div>
