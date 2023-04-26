@@ -4,7 +4,7 @@ import language from '../../../../shared/assets/shop/icons/lang.png'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
-import {CustomSearchInput, LoaderScreen} from '../../../../shared/ui'
+import {CustomInput, CustomSearchInput, LoaderScreen} from '../../../../shared/ui'
 import {ShoppingCart} from '../ShoppingCart/ShoppingCart'
 import ShopLogo from '../../../../shared/assets/shop/icons/ShopLogo.svg'
 import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
@@ -33,6 +33,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
     const getSearchProducts = useCatalog(s => s.getSearchProducts)
 
     const [burgerMenuActive, setBurgerMenuActive] = useState<boolean>(false)
+    const [searchMobileActive, setSearchMobileActive] = useState<boolean>(false)
     const [searchProductValue, setSearchProductValue] = useState<string>('')
 
     const searchProductDebounce = useDebounce<string>(searchProductValue, 1000)
@@ -60,6 +61,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
         <>
             <div className={s.shopHeader_wrapper}>
                 <div className={s.shopHeader_main}>
+
                     <div className={s.container}>
 
                         <div className={s.shop_header}>
@@ -106,7 +108,9 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                                         }
                                     </div>
                                 </div>
-                                <div className={s.searchField_mobile}>
+                                <div className={s.search_mobile}
+                                     onClick={() => {setSearchMobileActive(!searchMobileActive)}}
+                                >
                                     <img src={SearchMagnifyIcon} alt='magnify-icon'/>
                                 </div>
 
@@ -121,6 +125,19 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                         </div>
 
                     </div>
+
+                    {
+                        searchMobileActive &&
+                        <div className={s.input_mobile}>
+                            <input placeholder={'Поиск товара...'}
+                                   value={searchProductValue}
+                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                       setSearchProductValue(e.currentTarget.value)
+                                   }}
+                            />
+                        </div>
+                    }
+
                 </div>
                 <BurgerMenu menuActive={burgerMenuActive} setMenuActive={setBurgerMenuActive}/>
             </div>

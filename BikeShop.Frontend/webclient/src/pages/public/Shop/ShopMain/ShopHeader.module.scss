@@ -9,6 +9,7 @@
 
     .shopHeader_main {
         background-color: $themeColorDark;
+        position: relative;
 
         .container {
             @include defaultContainerForShop; // ограничивающий контейнер
@@ -84,8 +85,9 @@
                             }
                         }
                     }
-                    .searchField_mobile {
+                    .search_mobile {
                         display: none;
+                        position: relative;
 
                         @media(max-width: 880px) {
                             display: flex;
@@ -129,16 +131,16 @@
                 }
             }
         }
+
+        .input_mobile {
+            position: absolute;
+            top: 80px;
+            left: 0;
+
+            input {
+                width: 100vh;
+                padding: 10px;
+            }
+        }
     }
 }
-
-//.searchInputBox {
-//
-//    input {
-//        //width: calc(100% - 12px);
-//        width: 100%;
-//        padding: 5px 10px;
-//        font-size: 16px;
-//        height: 40px;
-//    }
-//}
