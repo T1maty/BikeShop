@@ -33,10 +33,22 @@ public class ServiceService : IServiceService
     {
         var service = _mapper.Map<Domain.Entities.Service>(model);
 
+        service.UserCreatedId = model.UserId;
         service.ClientId = model.Client.Id;
 
         var serviceWorks = _mapper.ProjectTo<ServiceWork>(model.ServiceWorks.AsQueryable()).ToList();
         var serviceProducts = _mapper.ProjectTo<ServiceProduct>(model.ServiceProducts.AsQueryable()).ToList();
+
+        serviceWorks.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
+        serviceProducts.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
+
+        service.PriceProduct = serviceProducts.Select(n => n.Total).Sum();
+        service.DiscountProduct = serviceProducts.Select(n => n.Discount).Sum();
+        service.TotalProduct = service.PriceProduct - service.DiscountProduct;
+
+        service.PriceWork = serviceWorks.Select(n => n.Total).Sum();
+        service.DiscountWork = serviceWorks.Select(n => n.Discount).Sum();
+        service.TotalWork = service.PriceWork - service.DiscountWork;
 
         await UpdateReservation(new List<ServiceProduct>(), serviceProducts, await _shopClient.GetStorageId(model.ShopId));
 
@@ -150,9 +162,22 @@ public class ServiceService : IServiceService
         serviceCont.UserMasterId = dto.UserMasterId;
         serviceCont.ProductDiscountId = dto.ProductDiscountId;
         serviceCont.WorkDiscountId = dto.WorkDiscountId;
+        serviceCont.UserUpdatedId = dto.UserId;
+        serviceCont.UpdatedAt = DateTime.Now;
 
         var serviceWorks = _mapper.ProjectTo<ServiceWork>(dto.ServiceWorks.AsQueryable()).ToList();
         var serviceProducts = _mapper.ProjectTo<ServiceProduct>(dto.ServiceProducts.AsQueryable()).ToList();
+
+        serviceWorks.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
+        serviceProducts.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
+
+        serviceCont.PriceProduct = serviceProducts.Select(n => n.Total).Sum();
+        serviceCont.DiscountProduct = serviceProducts.Select(n => n.Discount).Sum();
+        serviceCont.TotalProduct = serviceCont.PriceProduct - serviceCont.DiscountProduct;
+
+        serviceCont.PriceWork = serviceWorks.Select(n => n.Total).Sum();
+        serviceCont.DiscountWork = serviceWorks.Select(n => n.Discount).Sum();
+        serviceCont.TotalWork = serviceCont.PriceWork - serviceCont.DiscountWork;
 
         var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToListAsync();
         await UpdateReservation(oldServiceProducts, serviceProducts, await _shopClient.GetStorageId(serviceCont.ShopId));
@@ -175,6 +200,15 @@ public class ServiceService : IServiceService
         {
             var service = await _context.Services.FindAsync(id);
             service.Status = status;
+
+            if(status == "Ended")
+            {
+                var storageId = await _shopClient.GetStorageId(service.ShopId);
+                var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).ToListAsync();
+                await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
+                await _productsClient.AddProductsToStorage(oldServiceProducts.Select(n=> new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity*-1}).ToList(), storageId, "Service", id);
+            }
+
             await _context.SaveChangesAsync(new CancellationToken());
         }
         else

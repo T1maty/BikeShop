@@ -12,5 +12,8 @@ namespace BikeShop.Service.Application.RefitClients
     {
         [Post("/storage/updatereservation")]
         public Task UpdateReservationProducts(UpdateReservationProductsDTO dto, int storageId);
+
+        [Post("/storage/addproductstostorage")]
+        public Task AddProductsToStorage(List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId);
     }
 }

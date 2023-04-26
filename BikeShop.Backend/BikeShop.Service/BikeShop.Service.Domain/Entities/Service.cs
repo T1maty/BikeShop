@@ -12,6 +12,7 @@ public class Service : BaseEntity
     public string ClientDescription { get; set; } = string.Empty; // Описание клиента
     
     public Guid UserCreatedId { get; set; } // Id пользователья который создал запись
+    public Guid UserUpdatedId { get; set; }
     public string UserCreatedDescription { get; set; } = String.Empty;// описание описание того кто создал
 
     public Guid UserMasterId { get; set; }// Id ремонтника

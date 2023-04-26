@@ -14,6 +14,8 @@ namespace BikeShop.Service.Application.DTO
         public string ClientDescription { get; set; } 
         public string UserMasterDescription { get; set; }
         public string UserCreatedDescription { get; set; }
+
+        public Guid UserId { get; set; }
         public Guid UserMasterId { get; set; }
         public int WorkDiscountId { get; set; }
         public int ProductDiscountId { get; set; }

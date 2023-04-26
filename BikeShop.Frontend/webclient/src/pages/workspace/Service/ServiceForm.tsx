@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput,} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {CreateService, useAuth, User} from "../../../entities"
+import {CreateService, LocalStorage, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, useForm} from "react-hook-form"
@@ -36,7 +36,7 @@ export const ServiceForm = () => {
 
     const formControl = useForm<CreateService>({
         defaultValues: {
-            shopId: useAuth.getState().shop?.id,
+            shopId: parseInt(LocalStorage.shopId()!),
             id: 0,
             name: '',
             client: {} as User,
@@ -56,8 +56,8 @@ export const ServiceForm = () => {
     const onSubmit: SubmitHandler<CreateService> = (data: CreateService) => {
         // создание сервиса
         if (isCreating) {
-
-            data.shopId = 1
+            data.userId = LocalStorage.userId()!
+            data.shopId = parseInt(LocalStorage.shopId()!)
             setIsCreating(false)
             console.log('create IF works, new data =', data)
             addNewService(data)
@@ -65,6 +65,7 @@ export const ServiceForm = () => {
 
         // обновление сервиса
         if (!isCreating) {
+            data.userId = LocalStorage.userId()!
             console.log('update IF works, updateData = ', data)
             updateService(data)
         }
