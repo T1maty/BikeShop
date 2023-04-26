@@ -9,6 +9,8 @@ public interface IApplicationDbContext
     public DbSet<ShopScheduleItem> ShopScheduleItems { get; set; }
     public DbSet<UserShiftItem> UserShiftItems { get; set; }
     public DbSet<CashboxHistory> CashboxHistories { get; set; }
+    public DbSet<UserSalary> UserSalaries { get; set; }
+
 
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

@@ -10,6 +10,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ShopScheduleItem> ShopScheduleItems { get; set; }
     public DbSet<UserShiftItem> UserShiftItems { get; set; }
     public DbSet<CashboxHistory> CashboxHistories { get; set; }
+    public DbSet<UserSalary> UserSalaries { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
