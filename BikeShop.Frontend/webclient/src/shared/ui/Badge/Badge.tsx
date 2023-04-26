@@ -6,11 +6,13 @@ type BadgeType = {
     badgeContent: number
 }
 
-export const Badge: FC<BadgeType> = ({children,badgeContent}) => {
+export const Badge: FC<BadgeType> = ({children, badgeContent}) => {
     return (
-        <span className={cls.wrapper}>
-            {children}
-            <span className={cls.badge}>{badgeContent}</span>
-        </span>
+        <div>
+            <span className={cls.wrapper}>
+                {children}
+                <span className={cls.badge}>{badgeContent}</span>
+            </span>
+        </div>
     )
 }

@@ -6,6 +6,11 @@ import {
 } from '../index'
 
 export const CatalogAPI = {
+    searchProductByName(inputValue: string): Promise<AxiosResponse<Product[]>> {
+        return (
+            $api.get<Product[]>(`/product/search?querry=${inputValue}`)
+        )
+    },
     getProductByTag(value: any): Promise<AxiosResponse<ProductExtended[]>> {
         return (
             $api.get<ProductExtended[]>('/product/getbytags/' + value + '?storageId=1')
