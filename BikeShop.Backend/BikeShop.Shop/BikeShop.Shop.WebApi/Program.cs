@@ -31,6 +31,10 @@ builder.Services.AddControllers()
 // Register refit
 builder.Services.AddRefitClient<IIdentityClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Identity"]));
+builder.Services.AddRefitClient<IServiceClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Service"]));
+builder.Services.AddRefitClient<IPaymentClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Payments"]));
 
 // Инъекция сервисов из слоя Application и Persistence
 builder.Services.AddApplication();

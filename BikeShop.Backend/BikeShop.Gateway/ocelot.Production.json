@@ -195,6 +195,21 @@
       ],
       "SwaggerKey": "payments"
     },
+	{
+      "UpstreamPathTemplate": "/api/financialinteraction/getbillsbyuser",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/financialinteraction/getbillsbyuser",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 
 
 {

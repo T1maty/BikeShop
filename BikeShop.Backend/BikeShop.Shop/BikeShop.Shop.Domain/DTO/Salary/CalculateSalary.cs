@@ -10,16 +10,20 @@ namespace BikeShop.Shop.Domain.DTO.Salary
     {
         public Guid UserId { get; set; }
 
-        public decimal Rate { get; set; }
-        public TimeSpan Hours { get; set; }
         public DateTime PeriodStart { get; set; }
         public DateTime PeriodFinish { get; set; }
-        public decimal ShopPercent { get; set; }
+
+        public decimal Rate { get; set; }
+        public TimeSpan Hours { get; set; }
+
+        public decimal BillsTotal { get; set; }
+        public decimal ProductsTotal { get; set; }
+        public decimal WorkTotal { get; set; }
+
         public int Bills { get; set; }
-        public decimal WorkPercent { get; set; }
-        public int Services { get; set; }
-        public int Works { get; set; }
-        public int Products { get; set; }
-        public decimal WorkshopPercent { get; set; }
+        public int ServiceWorks { get; set; }
+        public int SeviceProducts { get; set; }
+
+        
     }
 }

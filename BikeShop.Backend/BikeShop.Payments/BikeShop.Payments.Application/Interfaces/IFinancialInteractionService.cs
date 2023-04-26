@@ -12,5 +12,6 @@ namespace BikeShop.Payments.Application.Interfaces
     public interface IFinancialInteractionService
     {
         public Task<BillWithProducts> NewBill(NewBillDTO dto);
+        public Task<List<BillWithProducts>> GetBillsByUser(Guid UserId, DateTime Start, DateTime Finish);
     }
 }
