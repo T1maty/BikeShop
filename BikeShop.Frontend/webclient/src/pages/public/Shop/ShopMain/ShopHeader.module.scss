@@ -132,6 +132,7 @@
             }
         }
 
+        // поиск для мобильных устройств
         .input_mobile {
             position: absolute;
             top: 80px;
@@ -140,6 +141,35 @@
             input {
                 width: 100vh;
                 padding: 10px;
+            }
+        }
+
+        .searchInputBox_mobile {
+            display: none;
+
+            @media(max-width: 880px) {
+                display: flex;
+                flex-direction: column;
+
+                position: absolute;
+                top: 119px;
+                left: 0;
+                width: 100%;
+                height: 100px;
+                //background-color: $themeShopColorGray;
+                background-color: white;
+                border: 1px solid black;
+                padding: 10px;
+                color: black;
+            }
+
+            .searchInputBox_item {
+                padding: 5px;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: darkorange;
+                }
             }
         }
     }

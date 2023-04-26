@@ -4,7 +4,7 @@ import language from '../../../../shared/assets/shop/icons/lang.png'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
-import {CustomInput, CustomSearchInput, LoaderScreen} from '../../../../shared/ui'
+import {CustomSearchInput, LoaderScreen} from '../../../../shared/ui'
 import {ShoppingCart} from '../ShoppingCart/ShoppingCart'
 import ShopLogo from '../../../../shared/assets/shop/icons/ShopLogo.svg'
 import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
@@ -20,9 +20,11 @@ import SearchMagnifyIcon from '../../../../shared/assets/shop/icons/search.png'
 interface ShopHeaderProps {
     isAuth: boolean
     user: User
+    searchMobileActive: boolean
+    setSearchMobileActive: (value: boolean) => void
 }
 
-export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
+export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user, searchMobileActive, setSearchMobileActive}) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -33,7 +35,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
     const getSearchProducts = useCatalog(s => s.getSearchProducts)
 
     const [burgerMenuActive, setBurgerMenuActive] = useState<boolean>(false)
-    const [searchMobileActive, setSearchMobileActive] = useState<boolean>(false)
+    // const [searchMobileActive, setSearchMobileActive] = useState<boolean>(false)
     const [searchProductValue, setSearchProductValue] = useState<string>('')
 
     const searchProductDebounce = useDebounce<string>(searchProductValue, 1000)
@@ -92,7 +94,6 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                                     />
 
                                     <div className={s.searchInputBox}>
-                                        {/*Результат поиска*/}
                                         {
                                             searchProductsResult.length === 0
                                                 ? <div>Поиск...</div> :
@@ -137,6 +138,22 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                             />
                         </div>
                     }
+
+                    <div className={s.searchInputBox_mobile}>
+                        {
+                            searchProductsResult.length === 0
+                                ? <div>Поиск...</div> :
+                                searchProductsResult.map((pr: Product) => {
+                                    return (
+                                        <div className={s.searchInputBox_item} key={pr.id}
+                                             onClick={() => {searchClickHandler(pr)}}
+                                        >
+                                            {pr.name}
+                                        </div>
+                                    )
+                                })
+                        }
+                    </div>
 
                 </div>
                 <BurgerMenu menuActive={burgerMenuActive} setMenuActive={setBurgerMenuActive}/>
