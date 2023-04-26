@@ -14,7 +14,7 @@ import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModa
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
-import {ShiftAPI} from "../../../entities/api/User/ShiftAPI"
+import {ShiftAPI} from '../../../entities'
 import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore';
 
 export const MainPage = () => {

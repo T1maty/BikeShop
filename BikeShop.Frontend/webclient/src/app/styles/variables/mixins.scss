@@ -467,7 +467,6 @@
 // CreateShopModal Active Entity Item
 @mixin activeEntity() {
     .shop_item {
-        //@include divSmallMarginBottom;
         > div:not(:last-child) {
             margin-bottom: $defaultExtraSmallMargin;
         }
@@ -490,7 +489,6 @@
         }
     }
     .shop_item_active {
-        //@include divSmallMarginBottom;
         > div:not(:last-child) {
             margin-bottom: $defaultExtraSmallMargin;
         }

@@ -1,9 +1,9 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
 import {
-    CreateUser, LoginData, LoginResponse,
+    CreateUser, GetUsersResponse, LoginData, LoginResponse,
     RegistrationData, SearchClient, Shop, User
-} from "../index"
+} from '../index'
 
 export const AuthAPI = {
     Login: {
@@ -30,6 +30,11 @@ export const AuthAPI = {
     },
 
     User: {
+        getEmployers(): Promise<AxiosResponse<GetUsersResponse[]>> {
+            return (
+                $api.get<GetUsersResponse[]>('/user/find')
+            )
+        },
         findUser(data: SearchClient): Promise<AxiosResponse<any>> {
             return (
                 $api.get<User[]>(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)

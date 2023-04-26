@@ -1,3 +1,5 @@
+export type {UserNew} from './entities/UserNew'
+
 export type {Product} from './entities/Product'
 export type {ProductSpecification} from './entities/ProductSpecification'
 export type {ProductSpecificationBind} from './entities/ProductSpecificationBind'
@@ -92,6 +94,7 @@ export type {GetUsersResponse} from './responses/GetUsersResponse'
 export type {GetUserResponseGet} from './responses/GetUsersResponse' // ?!
 export type {GetQuantityUnitResponse} from './responses/QuantityUnitResponse'
 export type {UserObj} from './responses/GetUsersResponse'
+export type {SalaryResponse} from './responses/SalaryResponse'
 
 ///////////////////////////////////
 //             API               //
@@ -107,6 +110,8 @@ export {EncashmentAPI} from './api/Acts/EncashmentAPI'
 export {SupplyInvoiceAPI} from './api/Acts/SupplyInvoiceAPI'
 export {CashboxAPI} from './api/Acts/CashboxAPI'
 export {InventorizationAPI} from './api/Acts/InventorizationAPI'
+export {ShiftAPI} from './api/User/ShiftAPI'
+export {SalaryAPI} from './api/User/SalaryAPI'
 
 ///////////////////////////////////
 //          Others               //

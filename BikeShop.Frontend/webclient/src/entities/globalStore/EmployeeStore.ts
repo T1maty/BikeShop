@@ -1,17 +1,16 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {UserShiftStatus} from "../models/UserShiftStatus";
-import {LocalStorage} from "./LocalStorage";
-import {ShiftAPI} from "../api/User/ShiftAPI";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {UserShiftStatus} from "../models/UserShiftStatus"
+import {LocalStorage} from "./LocalStorage"
+import {ShiftAPI} from '../api/User/ShiftAPI'
 
-
-interface inter {
-    shiftStatus: UserShiftStatus | undefined,
+interface EmployeeStore {
+    shiftStatus: UserShiftStatus | undefined
     getUserShiftStatus: () => void
 }
 
-export const useEmployee = create<inter>()(persist(devtools(immer((set) => ({
+export const useEmployee = create<EmployeeStore>()(persist(devtools(immer((set) => ({
     shiftStatus: undefined,
     getUserShiftStatus: () => {
         ShiftAPI.getUserStatus(LocalStorage.userId()!).then((r: any) => {
@@ -21,6 +20,6 @@ export const useEmployee = create<inter>()(persist(devtools(immer((set) => ({
         })
     }
 }))), {
-    name: "EmployeeStore",
+    name: "employeeStore",
     version: 1
 }));

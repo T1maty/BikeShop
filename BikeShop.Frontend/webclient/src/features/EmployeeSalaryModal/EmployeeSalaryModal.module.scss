@@ -29,10 +29,8 @@
                     padding: 5px;
 
                     &:hover {
-                        //color: gold;
                         cursor: pointer;
                         background-color: $themeColorDark;
-                        //border-radius: $smallBorderRadius;
                         color: white;
                         padding: 5px;
                     }
@@ -40,7 +38,6 @@
 
                 .employeeList_item_active {
                     background-color: $themeColorDark;
-                    //border-radius: $smallBorderRadius;
                     color: white;
                     padding: 5px;
                 }
