@@ -16,7 +16,7 @@ interface EmployeeSalaryModalStore {
 
     currentEmployee: UserNew | null
     setCurrentEmployee: (employee: any | null) => void
-    getEmployeeSalary: () => void
+    getEmployeeSalary: (userId: string) => void
     updateEmployeeSalary: (paramsData: SalaryParams) => void
 }
 
@@ -48,19 +48,20 @@ const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/de
     setCurrentEmployee: (employee) => {
         set({currentEmployee: employee})
     },
-    getEmployeeSalary: () => {
-        // set({isLoading: true})
-        // AuthAPI.User.getArchive().then((res: any) => {
-        //     set(state => {
-        //         state.employeeInfo = res.data
-        //     })
-        //     set({isLoading: false})
-        // }).catch((error: any) => {
-        //     set({errorStatus: 'error'})
-        // }).finally(() => {
-        //     set({errorStatus: 'default'})
-        //     set({isLoading: false})
-        // })
+    getEmployeeSalary: (userId: string) => {
+        set({isLoading: true})
+        SalaryAPI.getEmployeeSalaryById(userId).then((res: any) => {
+            // set(state => {
+            //     state.employeeInfo = res.data
+            // })
+            console.log(res.data)
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
     },
     updateEmployeeSalary: (paramsData: SalaryParams) => {
         set({isLoading: true})

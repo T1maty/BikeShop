@@ -5,6 +5,7 @@ import {useSnackbar} from 'notistack'
 import useEmployeeSalaryModal from "./EmployeeSalaryModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {Errors} from "../../entities/errors/workspaceErrors"
+import {SalaryAPI} from '../../entities';
 
 export const EmployeeSalaryModal = () => {
 
@@ -58,6 +59,7 @@ export const EmployeeSalaryModal = () => {
 
     useEffect(() => {
         getEmployersList()
+        getEmployeeSalary('7fea50d8-1440-4288-a684-ba9db58bd4d3')
     }, [])
 
     if (isLoading) {
