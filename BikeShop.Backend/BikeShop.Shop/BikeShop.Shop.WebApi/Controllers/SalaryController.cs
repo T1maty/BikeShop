@@ -16,7 +16,7 @@ namespace BikeShop.Shop.WebApi.Controllers
             _salaryService = salaryService;
         }
 
-        [HttpPut("action")]
+        [HttpPut("update")]
         public async Task<UserSalary> UpdateSalary (Guid UserId, decimal Rate, decimal ShopPercent, decimal WorkPercent, decimal WorkshopPercent)
         {
             return await _salaryService.UpdateSalary(UserId, Rate, ShopPercent, WorkPercent, WorkshopPercent);
