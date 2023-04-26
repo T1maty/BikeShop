@@ -26,7 +26,7 @@ interface ServiceStore {
 
     getAllServicesInfo: () => any
     addNewService: (data: CreateService) => any
-    updateService: (updateData: CreateService) => any
+    updateService: (updateData: CreateService, onSuccess: () => void) => any
     updateServiceStatus: (data: UpdateServiceStatus, onSuccess: () => void) => void
 }
 
@@ -118,7 +118,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         })
     },
-    updateService: (updateData) => {
+    updateService: (updateData, onSuccess) => {
         set({isLoading: true})
         ServiceAPI.updateService(updateData).then((res: any) => {
             ServiceAPI.getAllServicesInfo().then(res => {
@@ -140,9 +140,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                             serv.status === currentListStatus)
                     })
                 }
+                onSuccess();
                 set({isLoading: false})
-
-
             })
         }).catch((error: any) => {
             set({errorStatus: 'error'})

@@ -50,7 +50,9 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
         if (!isCreating) {
             data.userId = LocalStorage.userId()!
             console.log('update IF works, updateData = ', data)
-            updateService(data)
+            updateService(data, () => {
+                formControl.reset()
+            })
         }
     }
 
