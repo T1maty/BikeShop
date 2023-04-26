@@ -5,7 +5,15 @@ import {Button, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
-import {BillWithProducts, FinancialInteractionAPI, PaymentData, Product, useAuth, User} from '../../../entities'
+import {
+    BillWithProducts,
+    CatalogAPI,
+    FinancialInteractionAPI,
+    PaymentData,
+    Product,
+    useAuth,
+    User
+} from '../../../entities'
 import {columns} from "./CashboxTableConfig"
 import {BillProductDTO} from "./models/BillProductDTO"
 import Enumerable from "linq"
@@ -39,7 +47,7 @@ export const Cashbox = () => {
     }
 
     const loadOptions = (inputValue: string, callback: (value: Product[]) => void) => {
-        $api.get(`/product/search?querry=${inputValue}`).then((resp) => {
+        CatalogAPI.searchProductByName(inputValue).then((resp) => {
             const asyncOptions = resp.data.map((n: Product) => {
                 return ({label: n.name, value: n.id})
             })
@@ -105,7 +113,7 @@ export const Cashbox = () => {
         bill.products?.forEach(n => {
             console.log('qty', n.quantity)
             console.log('price', n.price)
-            console.log('disc', n.discount)
+            console.log('discount', n.discount)
             sum += (n.quantity * n.price - n.discount)
         })
         setSum(sum)
@@ -219,7 +227,7 @@ export const Cashbox = () => {
                             value={null}
                             loadOptions={loadOptions}
                             onChange={(r) => {
-                                addProductHandler(r as Product);
+                                addProductHandler(r as Product)
                                 console.log('selected', r)
                             }}
                             getOptionLabel={label => label!.id + ' | ' + label!.name + ' | ' + label!.catalogKey}

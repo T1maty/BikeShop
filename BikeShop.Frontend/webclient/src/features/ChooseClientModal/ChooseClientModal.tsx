@@ -31,6 +31,7 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
     const setFIO = useChooseClientModal(s => s.setFIO)
     const phoneNumber = useChooseClientModal(s => s.phoneNumber)
     const setPhoneNumber = useChooseClientModal(s => s.setPhoneNumber)
+
     const findUser = useChooseClientModal(s => s.findUser)
     const addNewUser = useChooseClientModal(s => s.addNewUser)
 

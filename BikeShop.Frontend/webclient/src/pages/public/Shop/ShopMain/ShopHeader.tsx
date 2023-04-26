@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import s from './ShopHeader.module.scss'
 import language from '../../../../shared/assets/shop/icons/lang.png'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
-import {CustomSearchInput} from '../../../../shared/ui'
+import {CustomSearchInput, LoaderScreen} from '../../../../shared/ui'
 import {ShoppingCart} from '../ShoppingCart/ShoppingCart'
 import ShopLogo from '../../../../shared/assets/shop/icons/ShopLogo.svg'
 import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
 import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
 import {BurgerMenu} from '../BurgerMenu/BurgerMenu'
 import {useDebounce} from '../../../../shared/hooks/useDebounce'
-import {User} from '../../../../entities'
+import {Product, User} from '../../../../entities'
+import useCatalog from "../Catalog/CatalogStore"
+import {useSnackbar} from "notistack"
 
 interface ShopHeaderProps {
     isAuth: boolean
@@ -20,18 +22,37 @@ interface ShopHeaderProps {
 
 export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
 
+    const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
 
+    const isLoading = useCatalog(s => s.isLoading)
+    const errorStatus = useCatalog(s => s.errorStatus)
+    const searchProductsResult = useCatalog(s => s.searchProductsResult)
+    const searchProducts = useCatalog(s => s.searchProducts)
+
     const [burgerMenuActive, setBurgerMenuActive] = useState<boolean>(false)
+    const [searchProductValue, setSearchProductValue] = useState<string>('')
 
-    // заготовка для поиска товара
-    // const searchProduct = useDebounce<string>(productForSearch, 1000)
+    const searchProductDebounce = useDebounce<string>(searchProductValue, 1000)
 
-    // useEffect(() => {
-    //     if (productForSearch.length > 0) {
-    //         findProduct({productForSearch})
-    //     }
-    // }, [searchProduct])
+    const searchClickHandler = (pr: Product) => {
+        // функция для клика по найденному продукту
+    }
+
+    useEffect(() => {
+        if (searchProductValue.length > 0) {
+            searchProducts(searchProductValue)
+        }
+    }, [searchProductDebounce])
+
+    useEffect(() => {
+        if (errorStatus === 'success') {
+            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+        }
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
 
     return (
         <>
@@ -56,11 +77,32 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
 
                             <div className={s.shop_header_right}>
                                 <div className={s.searchField}>
-                                    <CustomSearchInput placeholder={'Поиск товара...'} clearInputValue={() => {}}/>
+                                    <CustomSearchInput placeholder={'Поиск товара...'}
+                                                       value={searchProductValue}
+                                                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                                           setSearchProductValue(e.currentTarget.value)
+                                                       }}
+                                                       clearInputValue={() => {
+                                                           setSearchProductValue('')
+                                                       }}
+                                    />
 
-                                    {/*<div className={s.searchInputBox}>*/}
-                                    {/*    Результат поиска*/}
-                                    {/*</div>*/}
+                                    <div className={s.searchInputBox}>
+                                        {/*Результат поиска*/}
+                                        {
+                                            searchProductsResult.length === 0
+                                                ? <div>Поиск...</div> :
+                                                searchProductsResult.map((pr: Product) => {
+                                                    return (
+                                                        <div className={s.searchInputBox_item} key={pr.id}
+                                                            // onClick={() => {searchClickHandler(pr)}}
+                                                        >
+                                                            {pr.name}
+                                                        </div>
+                                                    )
+                                                })
+                                        }
+                                    </div>
                                 </div>
 
                                 <div className={s.language}>
@@ -69,9 +111,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
 
                                 <ShoppingCart/>
 
-                                <LoginBlock isAuth={true}
-                                            user={user}
-                                />
+                                <LoginBlock isAuth={true} user={user}/>
                             </div>
                         </div>
 
