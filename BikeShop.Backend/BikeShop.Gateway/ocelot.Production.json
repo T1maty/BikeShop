@@ -949,6 +949,39 @@
       ],
       "SwaggerKey": "service"
     },
+	{
+      "UpstreamPathTemplate": "/api/service/getworksbymaster",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/service/getworksbymaster",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
+	{
+      "UpstreamPathTemplate": "/api/service/getproductsbymaster",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/service/getproductsbymaster",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
+
+
+
 
 
     {
@@ -1326,6 +1359,21 @@
         "Get"
       ],
       "DownstreamPathTemplate": "/salary/byuser",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+	{
+      "UpstreamPathTemplate": "/api/salary/calculate",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/salary/calculate",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

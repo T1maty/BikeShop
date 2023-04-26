@@ -1,4 +1,5 @@
 ﻿using BikeShop.Shop.Application.Interfaces;
+using BikeShop.Shop.Domain.DTO.Salary;
 using BikeShop.Shop.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,12 @@ namespace BikeShop.Shop.WebApi.Controllers
         public async Task<UserSalary> Get(Guid UserId)
         {
             return await _salaryService.Get(UserId);
+        }
+
+        [HttpGet("calculate")]
+        public async Task<CalculateSalary> Calculate(Guid UserId, DateTime Start, DateTime Finish)
+        {
+            return await _salaryService.Calculate(UserId, Start, Finish);
         }
     }
 }

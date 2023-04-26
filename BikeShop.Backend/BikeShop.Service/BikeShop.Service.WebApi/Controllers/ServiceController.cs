@@ -2,6 +2,7 @@
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Domain.DTO.Response;
+using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -101,5 +102,19 @@ public class ServiceController : ControllerBase
     {
 
         return await _serviceService.GetServiceById(Id);
+    }
+
+    [HttpGet("getworksbymaster")]
+    public async Task<List<ServiceWork>> GetWorksByMaster(Guid userId)
+    {
+
+        return await _serviceService.GetWorksByMaster(userId);
+    }
+
+    [HttpGet("getproductsbymaster")]
+    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid userId)
+    {
+
+        return await _serviceService.GetProductsByMaster(userId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BikeShop.Shop.Application.Interfaces;
+using BikeShop.Shop.Domain.DTO.Salary;
 using BikeShop.Shop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +17,15 @@ namespace BikeShop.Shop.Application.Implemetations
         public SalaryService(IApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<CalculateSalary> Calculate(Guid UserId, DateTime Start, DateTime Finish)
+        {
+            var ent = new CalculateSalary();
+
+
+
+            return ent;
         }
 
         public async Task<UserSalary> Get(Guid UserId)

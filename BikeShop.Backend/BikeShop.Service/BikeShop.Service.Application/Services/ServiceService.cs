@@ -69,6 +69,13 @@ public class ServiceService : IServiceService
         return r;
     }
 
+    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid userId)
+    {
+        var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Select(n=>n.Id);
+        var prods = _context.ServiceProducts.Where(n => services.Contains(n.ServiceId)).Where(n=>n.UserId == userId).Where(n=>n.Enabled == true);
+        return await prods.ToListAsync();
+    }
+
     public async Task<GetServiceDTO> GetServiceById(int Id)
     {
         //Достаем сущность ремонта и мапим ее в сущность для ответа
@@ -150,6 +157,13 @@ public class ServiceService : IServiceService
         });
         
         return servicesModel;
+    }
+
+    public async Task<List<ServiceWork>> GetWorksByMaster(Guid userId)
+    {
+        var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Select(n => n.Id);
+        var works = _context.ServiceWorks.Where(n => services.Contains(n.ServiceId)).Where(n => n.UserId == userId).Where(n => n.Enabled == true);
+        return await works.ToListAsync();
     }
 
     public async Task<ServiceWithProductsWorksDTO> Update(UpdateServiceDTO dto)
