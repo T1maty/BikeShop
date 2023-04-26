@@ -43,7 +43,7 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
             set(state => {state.users = [...res.data.users]})
             set({isLoadingDiv: false})
         }).catch((error: any) => {
-            console.log('пользователь не найден')
+            console.log('пользователь не найден', error)
         })
     },
     addNewUser: (data) => {

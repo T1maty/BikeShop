@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {ProductCardAPI, ProductFullData, ProductTag, ShopAPI} from '../../../../entities'
+import {CatalogAPI, ProductCardAPI, ProductFullData, ProductTag, ShopAPI} from '../../../../entities'
 import {ErrorStatusTypes} from '../../../../entities/enumerables/ErrorStatusTypes'
 
 interface UseCatalogStore {
@@ -21,6 +21,9 @@ interface UseCatalogStore {
     currentProduct: ProductFullData | null
     setCurrentProduct: (product: ProductFullData | null) => void
     getCurrentProduct: (productId: number) => void
+
+    searchProductsResult: any[]
+    searchProducts: (inputValue: string) => void
 }
 
 const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -86,6 +89,22 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             set({errorStatus: 'default'})
         })
     },
+
+    searchProductsResult: [],
+    searchProducts: (inputValue: string) => {
+        set({isLoading: true})
+        CatalogAPI.searchProductByName(inputValue).then(res => {
+            set(state => {
+                state.searchProductsResult = res.data
+                set({isLoading: false})
+            })
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({isLoading: false})
+            set({errorStatus: 'default'})
+        })
+    }
 })))/*, {
     name: "useCatalog",
     version: 1

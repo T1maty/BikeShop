@@ -113,7 +113,7 @@ export const Cashbox = () => {
         bill.products?.forEach(n => {
             console.log('qty', n.quantity)
             console.log('price', n.price)
-            console.log('disc', n.discount)
+            console.log('discount', n.discount)
             sum += (n.quantity * n.price - n.discount)
         })
         setSum(sum)
@@ -227,7 +227,7 @@ export const Cashbox = () => {
                             value={null}
                             loadOptions={loadOptions}
                             onChange={(r) => {
-                                addProductHandler(r as Product);
+                                addProductHandler(r as Product)
                                 console.log('selected', r)
                             }}
                             getOptionLabel={label => label!.id + ' | ' + label!.name + ' | ' + label!.catalogKey}
