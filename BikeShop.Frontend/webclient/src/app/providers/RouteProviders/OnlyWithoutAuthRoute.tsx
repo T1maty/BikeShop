@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {BikeShopPaths} from 'app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from "../../../entities";
@@ -12,11 +12,11 @@ export const OnlyWithoutAuthRoute: React.FC<OnlyWithoutAuthRouteProps> = ({child
     const navigate = useNavigate()
     const user = useAuth(s => s.user)
 
-    useEffect(() => {
-        if (localStorage.getItem('accessToken') != null && user != undefined) {
-            navigate(BikeShopPaths.SHOP.HOME)
-        }
-    }, [])
+
+    if (localStorage.getItem('accessToken') != null && user != undefined) {
+        navigate(BikeShopPaths.SHOP.HOME)
+    }
+
 
     return (
         <div>

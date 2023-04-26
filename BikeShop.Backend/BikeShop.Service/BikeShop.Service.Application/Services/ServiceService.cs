@@ -3,6 +3,7 @@ using BikeShop.Products.Application.Common.Errors;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
+using BikeShop.Service.Domain.DTO.Response;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.Domain.Enums;
 using BikeShop.Service.Domain.RefitDTO;
@@ -151,7 +152,7 @@ public class ServiceService : IServiceService
         return servicesModel;
     }
 
-    public async Task Update(UpdateServiceDTO dto)
+    public async Task<ServiceWithProductsWorksDTO> Update(UpdateServiceDTO dto)
     {
         var serviceCont = await _context.Services.FindAsync(dto.Id);
 
@@ -192,6 +193,8 @@ public class ServiceService : IServiceService
         await _context.ServiceProducts.AddRangeAsync(serviceProducts);
 
         await _context.SaveChangesAsync(new CancellationToken());
+
+        return new ServiceWithProductsWorksDTO { Service = serviceCont, Products = serviceProducts, Works = serviceWorks };
     }
 
     public async Task UpdateStatus(string status, int id)

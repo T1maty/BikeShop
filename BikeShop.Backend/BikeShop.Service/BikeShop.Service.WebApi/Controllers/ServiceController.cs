@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
+using BikeShop.Service.Domain.DTO.Response;
 using BikeShop.Service.WebApi.Models.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,14 +57,9 @@ public class ServiceController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateService([FromBody] UpdateServiceDTO model)
+    public async Task<ServiceWithProductsWorksDTO> UpdateService([FromBody] UpdateServiceDTO model)
     {
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        await _serviceService.Update(model);
-
-        return Ok();
+        return await _serviceService.Update(model);
     }
 
     /// <summary>

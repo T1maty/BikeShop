@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect} from 'react'
+import React, {ReactElement} from 'react'
 import {BikeShopPaths} from 'app/routes/paths'
 import {useNavigate} from "react-router-dom"
 import {useAuth} from "../../../entities";
@@ -14,18 +14,19 @@ export const CheckAuthEmployee: React.FC<CheckAuthRouteProps> = ({children}) => 
     const loginToShop = useAuth(s => s.loginToShop)
 
 
-    useEffect(() => {
-        if (localStorage.getItem('accessToken') === null || user === undefined) {
-            navigate(BikeShopPaths.COMMON.LOGIN, {replace: true})
+    if (localStorage.getItem('accessToken') === null || user === undefined) {
+        navigate(BikeShopPaths.COMMON.LOGIN)
+        return (<div/>)
+    }
+    if (user != undefined && user.shopId > 0) {
+        if (shop === undefined) {
+            loginToShop(user?.shopId!);
         }
-        if (user != undefined && user.shopId > 0) {
-            if (shop === undefined) {
-                loginToShop(user?.shopId!);
-            }
-        } else {
-            navigate(BikeShopPaths.SHOP.HOME, {replace: true})
-        }
-    }, [])
+    } else {
+        navigate(BikeShopPaths.SHOP.HOME)
+        return (<div/>)
+    }
+
 
     return (
         <div>

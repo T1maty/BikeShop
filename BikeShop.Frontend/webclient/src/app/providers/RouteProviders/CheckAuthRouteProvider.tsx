@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect} from 'react'
+import React, {ReactElement} from 'react'
 import {BikeShopPaths} from 'app/routes/paths'
 import {useNavigate} from "react-router-dom"
 
@@ -9,11 +9,11 @@ interface CheckAuthRouteProps {
 export const CheckAuthRouteProvider: React.FC<CheckAuthRouteProps> = ({children}) => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (localStorage.getItem('accessToken') === null) {
-            navigate(BikeShopPaths.COMMON.LOGIN, {replace: true})
-        }
-    }, [])
+
+    if (localStorage.getItem('accessToken') === null) {
+        navigate(BikeShopPaths.COMMON.LOGIN, {replace: true})
+    }
+
 
     return (
         <div>
