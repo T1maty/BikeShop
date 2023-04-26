@@ -1,10 +1,7 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {
-    CreateService, EnumServiceStatus, User,
-    ServiceItem, UpdateServiceStatus, ServiceAPI, Specification
-} from '../../../entities'
+import {CreateService, EnumServiceStatus, ServiceAPI, ServiceItem, UpdateServiceStatus, User} from '../../../entities'
 import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
@@ -30,14 +27,16 @@ interface ServiceStore {
     getAllServicesInfo: () => any
     addNewService: (data: CreateService) => any
     updateService: (updateData: CreateService) => any
-    updateServiceStatus: (data: UpdateServiceStatus) => void
+    updateServiceStatus: (data: UpdateServiceStatus, onSuccess: () => void) => void
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
     isLoading: false,
     errorStatus: 'default',
     isCreating: false,
-    setIsCreating: (value) => {set({isCreating: value})},
+    setIsCreating: (value) => {
+        set({isCreating: value})
+    },
 
     currentService: null,
     setCurrentService: (service) => {
@@ -142,6 +141,8 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                     })
                 }
                 set({isLoading: false})
+
+
             })
         }).catch((error: any) => {
             set({errorStatus: 'error'})
@@ -150,7 +151,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         })
     },
-    updateServiceStatus: (data: UpdateServiceStatus) => {
+    updateServiceStatus: (data: UpdateServiceStatus, onSuccess) => {
         set({isLoading: true})
         ServiceAPI.updateServiceStatus(data).then((res: any) => {
             const currentListStatus = useService.getState().serviceListStatus
@@ -173,6 +174,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 }
             }
 
+            onSuccess();
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})

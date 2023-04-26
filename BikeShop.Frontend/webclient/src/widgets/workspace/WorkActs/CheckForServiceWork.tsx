@@ -1,7 +1,8 @@
 import React from 'react'
 import s from './CheckStyles.module.scss'
+import {ServiceItem} from "../../../entities";
 
-export const CheckForServiceWork = () => {
+export const CheckForServiceWork = (props: { children: ServiceItem }) => {
 
     return (
         <div className={s.workAct_wrapper}>

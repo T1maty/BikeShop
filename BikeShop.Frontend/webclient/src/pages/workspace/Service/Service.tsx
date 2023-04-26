@@ -5,6 +5,8 @@ import {LoaderScreen} from "../../../shared/ui"
 import {ServiceForm} from "./ServiceForm"
 import {ServiceNavigation} from "./ServiceNavigation"
 import {useSnackbar} from 'notistack'
+import {useForm} from "react-hook-form";
+import {CreateService, LocalStorage, User} from "../../../entities";
 
 export const Service = () => {
 
@@ -14,6 +16,25 @@ export const Service = () => {
     const errorStatus = useService(s => s.errorStatus)
     const getMasters = useService(s => s.getMasters)
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
+
+    const formControl = useForm<CreateService>({
+        defaultValues: {
+            shopId: parseInt(LocalStorage.shopId()!),
+            id: 0,
+            name: '',
+            client: {} as User,
+            clientDescription: '',
+            userMasterId: '',
+
+            productDiscountId: 0,
+            workDiscountId: 0,
+            userMasterDescription: '',
+            userCreatedDescription: '',
+
+            serviceProducts: [],
+            serviceWorks: [],
+        }
+    })
 
     useEffect(() => {
         getMasters()
@@ -35,8 +56,8 @@ export const Service = () => {
 
         return (
             <div className={s.serviceBlock}>
-                <ServiceNavigation/>
-                <ServiceForm/>
+                <ServiceNavigation children={formControl}/>
+                <ServiceForm children={formControl}/>
             </div>
         )
     }

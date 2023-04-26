@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import s from "./Service.module.scss"
 import {Button} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import useService, {ServiceListStatusType} from "./ServiceStore"
 import {ServiceStatusType} from "../../../entities/models/Service/ServiceItem"
-import {EnumServiceStatus} from "../../../entities"
+import {CreateService, EnumServiceStatus} from "../../../entities"
+import {PrintModal} from "../../../features";
+import {CheckForServiceWork} from "../../../widgets";
+import {UseFormReturn} from "react-hook-form";
 
-export const ServiceNavigation = () => {
+export const ServiceNavigation = (props: { children: UseFormReturn<CreateService, any> }) => {
 
     const isLoading = useService(s => s.isLoading)
     const serviceListStatus = useService(s => s.serviceListStatus)
@@ -17,6 +20,8 @@ export const ServiceNavigation = () => {
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
+
+    const [openPrint, setOpenPrint] = useState(false);
 
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
@@ -31,11 +36,20 @@ export const ServiceNavigation = () => {
     }
 
     const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
-        updateServiceStatus({id: currentService?.id || -1, status: newStatus})
+        if (newStatus === "Ended") {
+
+        }
+        updateServiceStatus({id: currentService?.id || -1, status: newStatus}, () => {
+            setOpenPrint(true)
+        })
     }
 
     return (
         <div className={s.service_leftSide}>
+
+            <PrintModal open={openPrint} setOpen={setOpenPrint}
+                        children={<CheckForServiceWork children={currentService!}/>}/>
+
             <div className={s.leftSide_buttons}>
                 <div className={s.buttons_filter}>
                     <Button
@@ -71,7 +85,7 @@ export const ServiceNavigation = () => {
                         (serviceListStatus === EnumServiceStatus.Waiting
                             || serviceListStatus === EnumServiceStatus.WaitingSupply) &&
                         <Button buttonDivWrapper={s.content_startBtn}
-                                disabled={currentService === null}
+                                disabled={currentService === null || props.children.formState.isDirty}
                                 onClick={() => {
                                     updateServiceStatusHandler('InProcess')
                                 }}>
@@ -81,13 +95,13 @@ export const ServiceNavigation = () => {
                     {
                         serviceListStatus === EnumServiceStatus.InProcess &&
                         <div className={s.content_inProcessButtons}>
-                            <Button disabled={currentService === null}
+                            <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         updateServiceStatusHandler('WaitingSupply')
                                     }}>
                                 Остановить ремонт
                             </Button>
-                            <Button disabled={currentService === null}
+                            <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         updateServiceStatusHandler('Ready')
                                     }}>
@@ -99,13 +113,13 @@ export const ServiceNavigation = () => {
                     {
                         serviceListStatus === EnumServiceStatus.Ready &&
                         <div className={s.content_doneButtons}>
-                            <Button disabled={currentService === null}
+                            <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         updateServiceStatusHandler('InProcess')
                                     }}>
                                 Продолжить ремонт
                             </Button>
-                            <Button disabled={currentService === null}
+                            <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         updateServiceStatusHandler('Ended')
                                     }}>
@@ -125,7 +139,7 @@ export const ServiceNavigation = () => {
                                 filteredServices.map(service => {
                                     return (
                                         <div key={service.id}
-                                             // className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
+                                            // className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
                                              className={service.id === currentService?.id ? s.serviceItem_active :
                                                  service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
                                              onClick={() => {

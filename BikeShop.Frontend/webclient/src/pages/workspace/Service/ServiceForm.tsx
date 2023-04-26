@@ -5,15 +5,16 @@ import {Errors} from "../../../entities/errors/workspaceErrors"
 import {CreateService, LocalStorage, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
-import {Controller, SubmitHandler, useForm} from "react-hook-form"
+import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
 import useService from "./ServiceStore"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {useSnackbar} from "notistack"
 import Select from "react-select"
 
-export const ServiceForm = () => {
+export const ServiceForm = (props: { children: UseFormReturn<CreateService, any> }) => {
 
+    const formControl = props.children
     const {enqueueSnackbar} = useSnackbar()
 
     const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
@@ -34,24 +35,6 @@ export const ServiceForm = () => {
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
 
-    const formControl = useForm<CreateService>({
-        defaultValues: {
-            shopId: parseInt(LocalStorage.shopId()!),
-            id: 0,
-            name: '',
-            client: {} as User,
-            clientDescription: '',
-            userMasterId: '',
-
-            productDiscountId: 0,
-            workDiscountId: 0,
-            userMasterDescription: '',
-            userCreatedDescription: '',
-
-            serviceProducts: [],
-            serviceWorks: [],
-        }
-    })
 
     const onSubmit: SubmitHandler<CreateService> = (data: CreateService) => {
         // создание сервиса
