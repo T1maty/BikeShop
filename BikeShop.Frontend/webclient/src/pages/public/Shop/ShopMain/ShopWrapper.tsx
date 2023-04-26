@@ -15,6 +15,8 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
     const setIsAuth = useAuth(s => s.setIsAuth)
     const user = useAuth(s => s.user)
 
+    const [searchMobileActive, setSearchMobileActive] = useState<boolean>(false)
+
     useEffect(() => {
         if (user !== undefined) {
             setIsAuth(true)
@@ -23,9 +25,9 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
 
     return (
         <div className={s.shop_wrapper}>
-            <ShopHeader isAuth={isAuth} user={user!}/>
+            <ShopHeader isAuth={isAuth} user={user!} searchMobileActive={searchMobileActive} setSearchMobileActive={setSearchMobileActive}/>
 
-            <div className={s.shop_main}>
+            <div className={s.shop_main} onClick={() => {setSearchMobileActive(false)}}>
                 {children}
             </div>
 

@@ -5,7 +5,7 @@ import {LocalStorage, User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button, LoaderScreen} from '../../../shared/ui'
 import {
-    ChooseClientModal, CreateProductModal, EditProductCardModal,
+    ChooseClientModal, CreateProductModal, EditProductCardModal, EmployeeSalaryModal,
     EncashmentModal, EndWorkDayModal, GetPutMoneyModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
@@ -15,6 +15,7 @@ import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
 import {ShiftAPI} from "../../../entities/api/User/ShiftAPI"
+import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore';
 
 export const MainPage = () => {
 
@@ -29,6 +30,7 @@ export const MainPage = () => {
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
+    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
 
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
@@ -110,6 +112,8 @@ export const MainPage = () => {
                 <GetPutMoneyModal/>
                 <EndWorkDayModal/>
 
+                <EmployeeSalaryModal/>
+
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
@@ -123,8 +127,7 @@ export const MainPage = () => {
                             }}>
                                 Касса
                             </Button>
-                            <Button onClick={() => {
-                            }}>
+                            <Button onClick={() => {setOpenEmployeeSalaryModal(true)}}>
                                 Новый заказ
                             </Button>
                             <Button onClick={() => {
