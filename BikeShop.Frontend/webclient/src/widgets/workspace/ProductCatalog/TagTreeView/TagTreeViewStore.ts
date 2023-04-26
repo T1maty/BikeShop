@@ -1,11 +1,11 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {ProductTag, ProductTagResponse, UpdateTag} from "../../../../entities"
+import {CatalogAPI, ProductTag, ProductTagResponse, UpdateTag} from "../../../../entities"
 import {AxiosResponse} from "axios"
 import {$api} from "../../../../shared"
 
-interface tagTreeViewStore {
+interface TagTreeViewStore {
     contextMenuVisible: boolean
     setContextMenuVisible: (value: boolean, X: number, Y: number) => void
     contextMenuXY: { X: number, Y: number }
@@ -27,7 +27,7 @@ interface tagTreeViewStore {
     updateTag: (tag: UpdateTag) => void
 }
 
-const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, get) => ({
+const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, get) => ({
     contextMenuVisible: false,
     setContextMenuVisible: (value, x, y) => set({
         contextMenuVisible: value,
@@ -68,11 +68,11 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
                 state.expandedTags.push(id)
             })
         }
-
     },
 
     fetchTags: () => {
-        return $api.get<ProductTagResponse>('/tag/getall');
+        // return $api.get<ProductTagResponse>('/tag/getall')
+        return CatalogAPI.fetchTags()
     },
     addNewTag: (tag) => {
         set(state => {
@@ -87,6 +87,7 @@ const useTagTreeView = create<tagTreeViewStore>()(persist(devtools(immer((set, g
         let EditTag = state.treeViewTags.filter((n) => {
             if (n.id == tag.id) return n
         })[0]
+
         EditTag.name = tag.name
         EditTag.isB2BVisible = tag.isB2BVisible
         EditTag.isRetailVisible = tag.isRetailVisible

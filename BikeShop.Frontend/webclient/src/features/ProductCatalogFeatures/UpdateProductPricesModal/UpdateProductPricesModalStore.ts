@@ -28,6 +28,7 @@ const useUpdateProductPricesModal = create<UpdateProductPricesModalStore>()(pers
         set({isLoading: true})
         CatalogAPI.updateProductPrices(data).then((res: any) => {
             set({isLoading: false})
+            set({errorStatus: 'success'})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
             console.log(error)

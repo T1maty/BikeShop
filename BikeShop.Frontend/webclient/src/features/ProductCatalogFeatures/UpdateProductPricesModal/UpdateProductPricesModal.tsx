@@ -5,7 +5,7 @@ import {Button, ControlledCustomInput, CustomModal, LoaderScreen} from "../../..
 import {useSnackbar} from "notistack"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {Product, UpdateProductPrices} from "../../../entities"
+import {Product, UpdateProductPrices, useAuth} from "../../../entities"
 
 export const UpdateProductPricesModal = () => {
 
@@ -15,6 +15,8 @@ export const UpdateProductPricesModal = () => {
     const setOpen = useUpdateProductPricesModal(s => s.setOpenUpdateProductPricesModal)
     const isLoading = useUpdateProductPricesModal(s => s.isLoading)
     const errorStatus = useUpdateProductPricesModal(s => s.errorStatus)
+
+    const user = useAuth(s => s.user)
 
     const product = useUpdateProductPricesModal(s => s.product)
     const updateProductPrices = useUpdateProductPricesModal(s => s.updateProductPrices)
@@ -29,16 +31,16 @@ export const UpdateProductPricesModal = () => {
     })
 
     const onSubmit: SubmitHandler<UpdateProductPrices> = (data: UpdateProductPrices) => {
-        data.user = 'f82f8597-31c4-4ea7-937c-61234db6ab73'
-        // data.user = '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-        console.log(data)
+        data.user = user!.id
+        console.log('изменение цены', data)
         updateProductPrices(data)
+        setOpen(false, {} as Product)
     }
 
     useEffect(() => {
         if (errorStatus === 'success') {
             enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
-            formControl.reset()
+            // formControl.reset()
         }
         if (errorStatus === 'error') {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
@@ -51,6 +53,10 @@ export const UpdateProductPricesModal = () => {
         formControl.setValue('retailPrice', product ? product.retailPrice : 0)
         formControl.setValue('dealerPrice', product ? product.dealerPrice : 0)
     }, [product])
+
+    // useEffect(() => {
+    //
+    // }, [product])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>

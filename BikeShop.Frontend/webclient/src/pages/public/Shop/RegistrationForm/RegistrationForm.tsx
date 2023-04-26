@@ -6,7 +6,7 @@ import {Errors} from '../../../../entities/errors/workspaceErrors'
 import {RegistrationData, useAuth} from '../../../../entities'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
-
+import {BikeShopPaths} from "../../../../app/routes/paths"
 
 export const RegistrationForm = () => {
 
@@ -23,17 +23,9 @@ export const RegistrationForm = () => {
     })
 
     const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
-        register(data)/*
-            .then((res: any) => {
-            enqueueSnackbar('Вы успешно зарегистрировались',
-                {variant: 'success', autoHideDuration: 3000})
-            // navigate(BikeShopPaths.COMMON.LOGIN)
-        }).catch((error: any) => {
-            let message = error(error.response.data.errorDescription).toString()
-            formControl.setError('name', {type: 'serverError', message: message})
-            enqueueSnackbar(message, {variant: 'error', autoHideDuration: 3000})
-            console.error(error.response.data)
-        })*/
+        register(data, () => {
+            navigate(BikeShopPaths.COMMON.LOGIN)
+        })
     }
 
     return (

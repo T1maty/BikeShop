@@ -40,7 +40,7 @@ export const ProductCatalog = () => {
                     <ProductTagCloud tags={tags} setTags={setTags}/>
                 </div>
                 <div className={s.leftSide_tree}>
-                    <TagTreeView setTags={setTags} tags={tags}/>
+                    <TagTreeView tags={tags} setTags={setTags}/>
                 </div>
             </div>
 
@@ -63,7 +63,9 @@ export const ProductCatalog = () => {
                     </Button>
                 </div>
 
-                <div className={s.rightSide_table} onContextMenu={(event) => {event.preventDefault()}}>
+                <div className={s.rightSide_table}
+                     onContextMenu={(event) => {event.preventDefault()}}
+                >
                     <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
                 </div>
             </div>

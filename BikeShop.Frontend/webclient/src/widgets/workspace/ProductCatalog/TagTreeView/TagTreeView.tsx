@@ -6,12 +6,12 @@ import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
 import {UniTreeView} from "../../../../shared/ui"
 import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore"
-import Enumerable from "linq";
-import {useSnackbar} from "notistack";
+import Enumerable from "linq"
+import {useSnackbar} from "notistack"
 
 interface TagTreeViewProps {
     onNodeDoubleClick?: (node: any) => void
-    tags?: ProductTag[],
+    tags?: ProductTag[]
     setTags?: (value: ProductTag[]) => void
 }
 
@@ -24,8 +24,8 @@ export const TagTreeView = (props: TagTreeViewProps) => {
     const addTag = useTagTreeView(s => s.addNewTag)
     const updateTag = useTagTreeView(s => s.updateTag)
     const treeViewData = useTagTreeView(s => s.treeViewTags)
-    const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
     const setContextMenuVisible = useTagTreeView(s => s.setContextMenuVisible)
+    const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
 
     const [selectedN, setSelectedN] = useState()
 
@@ -46,12 +46,10 @@ export const TagTreeView = (props: TagTreeViewProps) => {
 
     return (
         <div className={s.tagTreeView_mainBox}
-             onContextMenu={(event) => {
-                 event.preventDefault()
-             }}
+             onContextMenu={(event) => {event.preventDefault()}}
         >
-            <UpdateTagModal onSuccess={updateTag}/>
             <CreateTagModal onSuccess={addTag}/>
+            <UpdateTagModal onSuccess={updateTag}/>
 
             <TagTreeViewContextMenu/>
 
@@ -60,13 +58,14 @@ export const TagTreeView = (props: TagTreeViewProps) => {
                          setSelected={setSelectedN}
                          onNodeClick={setProductsToTableHandler}
                          onNodeContext={(node, event) => {
-                             setContextMenuVisible(true, event.clientX, event.clientY);
+                             setContextMenuVisible(true, event.clientX, event.clientY)
                              setSelectedN(node)
                              setProductsToTableHandler(node)
                          }}
                          onNodeDoubleClick={(node) => {
                              props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
-                             if (Enumerable.from(props.tags ? props.tags : []).select(n => n.id).contains(node.id)) {
+                             if (Enumerable.from(props.tags ? props.tags : [])
+                                 .select(n => n.id).contains(node.id)) {
                                  enqueueSnackbar('Этот тег уже в облаке',
                                      {
                                          variant: 'info', autoHideDuration: 2000,

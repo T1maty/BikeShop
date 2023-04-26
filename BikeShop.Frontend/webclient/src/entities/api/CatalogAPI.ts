@@ -2,7 +2,7 @@ import {AxiosResponse} from "axios"
 import {$api} from "shared"
 import {
     UpdateProductPrices, CreateProduct, CreateTag, Product,
-    ProductExtended, ProductTag, UpdateProduct
+    ProductExtended, ProductTag, UpdateProduct, ProductTagResponse
 } from '../index'
 
 export const CatalogAPI = {
@@ -21,9 +21,9 @@ export const CatalogAPI = {
             $api.put<UpdateProduct>('/product/update', data)
         )
     },
-    createProductTag(tag: CreateTag): any {
+    updateProductPrices(data: UpdateProductPrices): Promise<AxiosResponse<Product>> {
         return (
-            $api.post<ProductTag>('/tag/create', tag)
+            $api.put<Product>('/product/updateprices', data)
         )
     },
     getUnsorted(storageId: number): Promise<AxiosResponse<ProductExtended[]>> {
@@ -32,9 +32,14 @@ export const CatalogAPI = {
         )
     },
 
-    updateProductPrices(data: UpdateProductPrices): Promise<AxiosResponse<Product>> {
+    fetchTags(): Promise<AxiosResponse<ProductTagResponse>> {
         return (
-            $api.put<Product>('/product/updateprices', data)
+            $api.get<ProductTagResponse>('/tag/getall')
+        )
+    },
+    createProductTag(tag: CreateTag): any {
+        return (
+            $api.post<ProductTag>('/tag/create', tag)
         )
     },
 }
