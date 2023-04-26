@@ -14,6 +14,8 @@ import {useDebounce} from '../../../../shared/hooks/useDebounce'
 import {Product, User} from '../../../../entities'
 import useCatalog from "../Catalog/CatalogStore"
 import {useSnackbar} from "notistack"
+// import SearchMagnifyIcon from '../../../../shared/assets/workspace/magnifying-glass-black.svg'
+import SearchMagnifyIcon from '../../../../shared/assets/shop/icons/search.png'
 
 interface ShopHeaderProps {
     isAuth: boolean
@@ -103,6 +105,9 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                                                 })
                                         }
                                     </div>
+                                </div>
+                                <div className={s.searchField_mobile}>
+                                    <img src={SearchMagnifyIcon} alt='magnify-icon'/>
                                 </div>
 
                                 <div className={s.language}>
