@@ -1,26 +1,28 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
-import {CreateUser, LoginData, LoginResponse,
-    RegistrationData, SearchClient, Shop, User} from "../index"
+import {
+    CreateUser, LoginData, LoginResponse,
+    RegistrationData, SearchClient, Shop, User
+} from "../index"
 
 export const AuthAPI = {
     Login: {
-        login(loginData: LoginData): any {
+        login(loginData: LoginData): Promise<AxiosResponse<any>> {
             return (
                 $api.post<LoginResponse>('/auth/login', loginData)
             )
         },
-        logout(): any {
+        logout(): Promise<AxiosResponse<any>> {
             return (
                 $api.post('/auth/logout')
             )
         },
-        register(data: RegistrationData): any {
+        register(data: RegistrationData): Promise<AxiosResponse<any>> {
             return (
                 $api.post<RegistrationData>('/auth/register', data)
             )
         },
-        loginToShop(shopId: number): any {
+        loginToShop(shopId: number): Promise<AxiosResponse<any>> {
             return (
                 $api.get<Shop[]>('shop/getall')
             )
@@ -28,14 +30,19 @@ export const AuthAPI = {
     },
 
     User: {
-        findUser(data: SearchClient): any {
+        findUser(data: SearchClient): Promise<AxiosResponse<any>> {
             return (
                 $api.get<User[]>(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
             )
         },
-        addNewUser(data: CreateUser): any {
+        addNewUser(data: CreateUser): Promise<AxiosResponse<any>> {
             return (
                 $api.post<CreateUser>('/user/create', data)
+            )
+        },
+        updateUserProfile(data: any): Promise<AxiosResponse<any>> {
+            return (
+                $api.put<any>('/user/updatepublic', data)
             )
         },
     },

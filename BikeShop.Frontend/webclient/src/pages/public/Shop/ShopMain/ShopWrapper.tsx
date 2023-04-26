@@ -11,7 +11,6 @@ type ShopWrapperProps = {
 
 export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
 
-    // const [searchActive, setSearchActive] = useState<boolean>(false)
     const isAuth = useAuth(s => s.isAuth)
     const setIsAuth = useAuth(s => s.setIsAuth)
     const user = useAuth(s => s.user)
@@ -24,15 +23,9 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
 
     return (
         <div className={s.shop_wrapper}>
-            <ShopHeader isAuth={isAuth}
-                        user={user!}
-                        // searchActive={searchActive}
-                        // setSearchActive={setSearchActive}
-            />
+            <ShopHeader isAuth={isAuth} user={user!}/>
 
-            <div className={s.shop_main}
-                 // onClick={() => {setSearchActive(false)}}
-            >
+            <div className={s.shop_main}>
                 {children}
             </div>
 

@@ -46,7 +46,9 @@ export const Profile = () => {
                     >
                         <ProfileAvatar user={user!}/>
                         <div className={s.user_info}>
-                            <div className={s.info_name}>Петров Василий Иванович</div>
+                            <div className={s.info_name}>
+                                {user!.lastName ? user!.lastName : 'Введите'} {user!.firstName ? user!.firstName : 'Ваше'} {user!.patronymic ? user!.patronymic : 'Имя'}
+                            </div>
                             <div className={s.info_text}>Здесь будет какая-то информация</div>
                         </div>
                     </div>
@@ -82,7 +84,7 @@ export const Profile = () => {
                 </div>
                 <div className={s.profile_content}>
                     {
-                        isActiveProfile ? <ProfileInfo/> : ''
+                        isActiveProfile ? <ProfileInfo user={user!}/> : ''
                     }
                     {
                         isActiveOrders ? <ProfileOrders/> : ''

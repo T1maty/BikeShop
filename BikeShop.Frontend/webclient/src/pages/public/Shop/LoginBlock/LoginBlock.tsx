@@ -26,8 +26,8 @@ export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, user}) => {
                     <>
                         <div className={s.userInfo}>
                             <ProfileAvatar user={user}/>
-                            <div className={s.userName}>
-                                {user.lastName ? user.lastName : 'Bike'} {user.firstName ? user.firstName : 'Shop'}
+                            <div className={s.userName} onClick={() => {navigate(BikeShopPaths.SHOP.PROFILE)}}>
+                                {user.lastName ? user.lastName : 'Ваше'} {user.firstName ? user.firstName : 'Имя'}
                             </div>
                             <div className={s.logout}
                                  onClick={() => {

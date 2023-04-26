@@ -10,7 +10,7 @@ interface TagTreeViewStore {
     setContextMenuVisible: (value: boolean, X: number, Y: number) => void
     contextMenuXY: { X: number, Y: number }
 
-    treeViewTags: ProductTag[],
+    treeViewTags: ProductTag[]
     setTreeViewTags: (tags: ProductTag[]) => void
     addTreeViewTag: (tag: ProductTag) => void
     removeTreeViewTag: (tagId: string) => void

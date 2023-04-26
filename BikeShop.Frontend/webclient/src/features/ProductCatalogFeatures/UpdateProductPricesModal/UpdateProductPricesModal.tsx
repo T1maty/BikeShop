@@ -55,7 +55,7 @@ export const UpdateProductPricesModal = () => {
     }, [product])
 
     // useEffect(() => {
-    //
+    //     getProductByTag()
     // }, [product])
 
     if (isLoading) {

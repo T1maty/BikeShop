@@ -11,7 +11,7 @@ import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
 import BurgerMenuIcon from '../../../../shared/assets/workspace/burger-light.svg'
 import {BurgerMenu} from '../BurgerMenu/BurgerMenu'
 import {useDebounce} from '../../../../shared/hooks/useDebounce'
-import {useAuth, User} from '../../../../entities'
+import {User} from '../../../../entities'
 
 interface ShopHeaderProps {
     isAuth: boolean

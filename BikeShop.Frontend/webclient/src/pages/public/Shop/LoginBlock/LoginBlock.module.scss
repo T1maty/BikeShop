@@ -17,6 +17,8 @@
 
         .userName {
             margin-right: 20px;
+            height: 50px;
+            @include flexCenter;
         }
         .logout {
             img {

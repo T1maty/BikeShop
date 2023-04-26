@@ -65,11 +65,10 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     ),
 
     getProducts: (tags) => {
-        let value = ""
-        tags.forEach((n) => {
-            value = value.concat(n + '-')
-        })
+        let value = ''
+        tags.forEach((n) => {value = value.concat(n + '-')})
         value = value.slice(0, -1)
+
         set({isLoading: true})
 
         CatalogAPI.getProductByTag(value).then((r) => {

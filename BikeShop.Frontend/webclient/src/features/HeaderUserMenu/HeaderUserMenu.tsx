@@ -43,6 +43,8 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
         },
     ])
 
+    console.log('сотрудник магазина', user)
+
     return (
         <div className={s.leftSide_burgerMenu}>
             <div className={s.burgerMenu_iconButton}
