@@ -18,7 +18,7 @@ export const CheckAuthEmployee: React.FC<CheckAuthRouteProps> = ({children}) => 
         if (localStorage.getItem('accessToken') === null || user === undefined) {
             navigate(BikeShopPaths.COMMON.LOGIN, {replace: true})
         }
-        if (user!.shopId > 0) {
+        if (user != undefined && user.shopId > 0) {
             if (shop === undefined) {
                 loginToShop(user?.shopId!);
             }
