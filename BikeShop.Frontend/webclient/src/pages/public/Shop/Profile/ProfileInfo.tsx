@@ -35,8 +35,6 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({user}) => {
     }
 
     useEffect(() => {
-        console.log(user)
-
         formControl.setValue('lastName', user ? user.lastName : '')
         formControl.setValue('firstName', user ? user.firstName : '')
         formControl.setValue('patronymic', user ? user.patronymic : '')
@@ -44,6 +42,8 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({user}) => {
         formControl.setValue('phoneNumber', user ? user.phoneNumber : '')
         formControl.setValue('email', user ? user.email : '')
     }, [user])
+
+    console.log('профиль', user)
 
     return (
         <div className={s.profileInfo_mainBox}>
