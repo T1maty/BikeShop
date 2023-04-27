@@ -37,9 +37,10 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
     shop: undefined,
 
     login: (loginData, callback, onFailure) => {
-        // set({isLoading: true})
+        set({isLoading: true})
         AuthAPI.Login.login(loginData).then((r: AxiosResponse<LoginResponse>) => {
-            console.log(r)
+            console.log('login store', r)
+
             localStorage.setItem('accessToken', r.data.accessToken)
             localStorage.setItem('userId', r.data.user.id)
             localStorage.setItem('shopId', r.data.user.shopId.toString())
@@ -48,22 +49,23 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
                 state.user = r.data.user
             })
 
-            console.log('пользователь', r.data.user)
+            console.log('login user', r.data.user)
 
             if (r.data.user.shopId > 0) {
                 set(state => {
                     state.loginToShop(r.data.user.shopId)
                 })
             }
+
             callback ? callback(r.data) : false
-            // set({isLoading: false})
+            set({isLoading: false})
         }).catch(((r: AxiosResponse<LoginResponse>) => {
-            console.log(r)
+            console.log('login error', r)
             onFailure ? onFailure(r) : false
             // set({errorStatus: 'error'})
         })).finally(() => {
             // set({errorStatus: 'default'})
-            // set({isLoading: false})
+            set({isLoading: false})
         })
     },
 

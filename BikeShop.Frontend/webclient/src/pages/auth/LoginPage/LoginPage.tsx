@@ -7,15 +7,16 @@ import {BikeShopPaths} from "../../../app/routes/paths"
 import {Button, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import {useTranslation} from "react-i18next"
+import {useSnackbar} from "notistack"
 
 export const LoginPage = () => {
 
+    const {enqueueSnackbar} = useSnackbar()
     const {t} = useTranslation('errors')
     const navigate = useNavigate()
 
     const login = useAuth(s => s.login)
     const isLoading = useAuth(s => s.isLoading)
-    const errorStatus = useAuth(s => s.errorStatus)
 
     const formControl = useForm<LoginData>({
         defaultValues: {
@@ -38,22 +39,13 @@ export const LoginPage = () => {
                     type: 'serverError',
                     message: t(r.response.data.error).toString()
                 })
+                enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
             })
     }
 
-    // useEffect(() => {
-    //     if (errorStatus === 'success') {
-    //         enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
-    //         formControl.reset()
-    //     }
-    //     if (errorStatus === 'error') {
-    //         enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
-    //     }
-    // }, [errorStatus])
-
-    // if (isLoading) {
-    //     return <LoaderScreen variant={'ellipsis'}/>
-    // } else {
+    if (isLoading) {
+        return <LoaderScreen variant={'ellipsis'}/>
+    } else {
 
         return (
             <div className={s.loginPage_container}>
@@ -89,13 +81,13 @@ export const LoginPage = () => {
                             />
                         </div>
                         <div className={s.loginForm_buttons}>
-                            <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
-                                Вход
-                            </Button>
                             <Button buttonDivWrapper={s.loginForm_registerButton}
                                     onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
                             >
                                 Регистрация
+                            </Button>
+                            <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
+                                Вход
                             </Button>
                         </div>
                     </form>
@@ -103,5 +95,5 @@ export const LoginPage = () => {
                 </div>
             </div>
         )
-    // }
+    }
 }
