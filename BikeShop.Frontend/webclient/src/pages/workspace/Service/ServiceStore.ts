@@ -5,6 +5,7 @@ import {
     EnumServiceStatus,
     LocalStorage,
     ServiceAPI,
+    ServiceFormModel,
     ServiceWithData,
     UpdateServiceStatus,
     User
@@ -28,12 +29,14 @@ interface ServiceStore {
     filteredServices: ServiceWithData[]
     setFilteredServices: (filteredServices: ServiceWithData[]) => void
 
+    filter: () => void,
+
     masters: User[]
     getMasters: () => void
 
     getAllServicesInfo: () => any
-    addNewService: (data: ServiceWithData) => any
-    updateService: (updateData: ServiceWithData, onSuccess: () => void) => any
+    addNewService: (data: ServiceFormModel, onSuccess: () => void) => any
+    updateService: (updateData: ServiceFormModel, onSuccess: () => void) => any
     updateServiceStatus: (data: UpdateServiceStatus, onSuccess: () => void) => void
 }
 
@@ -87,16 +90,23 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
 
+
+    filter: () => {
+        set(state => {
+            state.filteredServices = state.services
+                .filter((item) =>
+                    item.service.status === 'Waiting' || item.service.status === 'WaitingSupply')
+        })
+    },
+
     getAllServicesInfo: () => {
         set({isLoading: true})
         ServiceAPI.getAllServicesInfo().then(res => {
             console.log('все ремонты', res.data)
             set(state => {
                 state.services = res.data
-                state.filteredServices = res.data
-                    .filter((item) =>
-                        item.service.status === 'Waiting' || item.service.status === 'WaitingSupply')
             })
+            get().filter()
             set({isLoading: false})
             set({isCreating: false})
         }).catch((error: any) => {
@@ -106,19 +116,22 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         })
     },
-    addNewService: (data) => {
+    addNewService: (data, onSuccess) => {
         set({isLoading: true})
+        data.userId = LocalStorage.userId()!
+        data.shopId = parseInt(LocalStorage.shopId()!)
+
         ServiceAPI.addNewService(data).then((res: any) => {
             set(state => {
                 state.services.push(res.data)
             })
-            set(state => {
-                state.filteredServices = state.services.filter(serv =>
-                    serv.service.status === 'Waiting' || serv.service.status === 'WaitingSupply')
-            })
+
+            get().filter()
+
             set({currentService: res.data})
             set({isLoading: false})
         }).catch((error: any) => {
+            console.log(error)
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})
@@ -127,19 +140,23 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     },
     updateService: (updateData, onSuccess) => {
         set({isLoading: true})
-        let data = {...updateData, ...updateData.service, userId: LocalStorage.userId(), service: "nope"}
-        console.log('sendingToServerUpdate', data)
-        ServiceAPI.updateService(data).then((res) => {
-            set(state => {
-                state.services = state.services.map((ser) => {
-                    if (ser.service.id === res.data.service.id)
-                        return (res.data)
-                    else return (ser)
-                })
+        updateData.userId = LocalStorage.userId()!
+        console.log('sendingToServerUpdate', updateData)
+        ServiceAPI.updateService(updateData).then((res) => {
+            let newArchive = get().services.map((ser) => {
+                if (ser.service.id === res.data.service.id) {
+                    return ({...res.data})
+                } else return (ser)
             })
+            set({services: newArchive})
+
+            get().filter()
+
             set({currentService: res.data})
+            onSuccess()
             set({isLoading: false})
         }).catch((error: any) => {
+            console.log(error)
             set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})

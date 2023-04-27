@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput,} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {ServiceWithData, User} from "../../../entities"
+import {ServiceFormModel, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
@@ -12,7 +12,7 @@ import useSelectProductWorkModal
 import {useSnackbar} from "notistack"
 import Select from "react-select"
 
-export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, any> }) => {
+export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
     const formControl = props.children
     const {enqueueSnackbar} = useSnackbar()
@@ -35,19 +35,24 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
 
+    //formControl.register('service.name')
 
-    const onSubmit: SubmitHandler<ServiceWithData> = (data: ServiceWithData) => {
+
+    const onSubmit: SubmitHandler<ServiceFormModel> = (data: ServiceFormModel) => {
         // создание сервиса
         if (isCreating) {
-            setIsCreating(false)
+
             console.log('create IF works, new data =', data)
-            addNewService(data)
+            addNewService(data, () => {
+                setIsCreating(false)
+            })
         }
 
         // обновление сервиса
         if (!isCreating) {
             console.log('update IF works, updateData = ', data)
             updateService(data, () => {
+                enqueueSnackbar('Ремонт обновлен', {variant: 'success', autoHideDuration: 3000})
                 formControl.reset()
             })
         }
@@ -62,25 +67,36 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
 
     useEffect(() => {
         let summ = 0
-        formControl.getValues('works')?.forEach(n => {
+        formControl.getValues('serviceWorks')?.forEach(n => {
             summ += (n.price * n.quantity)
         })
         setSummWorks(summ)
-    }, [formControl.watch('works')])
+    }, [formControl.watch('serviceWorks')])
 
     useEffect(() => {
         let summ = 0
-        formControl.getValues('products')?.forEach(n => {
+        formControl.getValues('serviceProducts')?.forEach(n => {
             summ += (n.price * n.quantity)
         })
         setSummProducts(summ)
-    }, [formControl.watch('products')])
+    }, [formControl.watch('serviceProducts')])
 
     useEffect(() => {
         formControl.reset()
-        formControl.setValue('service', currentService?.service!)
-        formControl.setValue('products', currentService ? currentService.products : [])
-        formControl.setValue('works', currentService ? currentService.works : [])
+
+        formControl.setValue('name', currentService?.service.name!)
+        formControl.setValue('clientDescription', currentService?.service.clientDescription!)
+        formControl.setValue('userMasterId', currentService?.service.userMasterId!)
+        formControl.setValue('clientId', currentService?.service.clientId!)
+        formControl.setValue('userCreatedDescription', currentService?.service.userCreatedDescription!)
+        formControl.setValue('userMasterDescription', currentService?.service.userMasterDescription!)
+        formControl.setValue('workDiscountId', currentService?.service.workDiscountId!)
+        formControl.setValue('productDiscountId', currentService?.service.productDiscountId!)
+        formControl.setValue('id', currentService?.service.id!)
+
+
+        formControl.setValue('serviceProducts', currentService ? currentService.products : [])
+        formControl.setValue('serviceWorks', currentService ? currentService.works : [])
     }, [currentService])
 
     useEffect(() => {
@@ -95,6 +111,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
     return (
         <div className={s.service_rightSide}>
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
+
                 <ControlledCustomInput name={'name'}
                                        placeholder={'Техника'}
                                        control={formControl}
@@ -102,6 +119,8 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                                        divClassName={s.rightSide_stuffInput}
                                        disabled={currentService === null && !isCreating}
                 />
+
+
                 <div className={s.rightSide_infoFields}>
                     <div className={s.infoFields_content}>
                         <ControlledCustomInput name={'clientDescription'}
@@ -113,7 +132,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                         />
                         <div className={s.content_selectMaster}>
                             <Controller
-                                name={'service'}
+                                name={'userMasterId'}
                                 control={formControl.control}
                                 render={({field}: any) =>
                                     <Select
@@ -122,9 +141,9 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                                         options={masters}
                                         isDisabled={currentService === null && !isCreating}
                                         isSearchable
-                                        value={masters.find(n => n.id === field.value?.userMasterId)}
+                                        value={masters.find(n => n.id === field.value)}
                                         onChange={(value: any) => {
-                                            field.onChange({...field.value, userMasterId: value.id})
+                                            field.onChange(value.id)
                                         }}
                                         noOptionsMessage={() => 'Мастер не найден'}
                                         getOptionLabel={label => label!.firstName}
@@ -141,7 +160,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                                         <Button className={s.content_saveBtn} type={'submit'}
                                                 disabled={!formControl.formState.isDirty}>Сохранить</Button>
                                         :
-                                        formControl.getValues('service')?.id > 0 ?
+                                        formControl.getValues('id') > 0 ?
                                             <Button className={s.content_saveBtn} type={'submit'}
                                                     disabled={!formControl.formState.isDirty}>Обновить</Button>
                                             :
@@ -160,7 +179,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                         </div>
                     </div>
                     <div className={s.infoFields_clientCard}>
-                        <ControlledClientCard name={'client'}
+                        <ControlledClientCard name={'clientId'}
                                               control={formControl}
                                               disabled={!isCreating}
                                               state={openClientModal}
@@ -178,7 +197,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
 
                 <div className={s.rightSide_tables}>
                     <Controller
-                        name={'products'}
+                        name={'serviceProducts'}
                         control={formControl.control}
                         render={({field}: any) =>
                             <>
@@ -196,7 +215,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                         }
                     />
                     <Controller
-                        name={'works'}
+                        name={'serviceWorks'}
                         control={formControl.control}
                         render={({field}: any) =>
                             <>
@@ -208,7 +227,9 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                                               disabledButton={(currentService === null && !isCreating)}
                                               summ={summWorks}
                                 />
-                                <SelectWorkModal works={field.value} setWorks={field.onChange}/>
+                                <SelectWorkModal works={field.value} setWorks={field.onChange}
+                                                 defaultMasterId={formControl.getValues('userMasterId')}
+                                                 serviceId={formControl.getValues('id')}/>
                             </>
                         }
                     />

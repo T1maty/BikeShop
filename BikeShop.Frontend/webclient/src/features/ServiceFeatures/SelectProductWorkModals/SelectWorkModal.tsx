@@ -2,12 +2,14 @@ import React from 'react'
 import s from './SelectProductWorkModal.module.scss'
 import useSelectProductWorkModal from './SelectProductWorkModalStore'
 import {SelectWork} from '../../../pages'
-import {ServiceItemWork} from "../../../entities/models/Service/ServiceItem"
 import {CustomModal} from "../../../shared/ui"
+import {ServiceWork} from "../../../entities";
 
 interface props {
-    works: ServiceItemWork[]
-    setWorks: (product: ServiceItemWork[]) => void
+    defaultMasterId: string,
+    serviceId: number,
+    works: ServiceWork[]
+    setWorks: (product: ServiceWork[]) => void
 }
 
 export const SelectWorkModal = (props: props) => {
@@ -18,10 +20,13 @@ export const SelectWorkModal = (props: props) => {
     return (
         <CustomModal
             open={selectWorkModal}
-            onClose={() => {setSelectWorkModal(false)}}
+            onClose={() => {
+                setSelectWorkModal(false)
+            }}
         >
             <div className={s.selectProductWorkModal_mainBox}>
-                <SelectWork setWorks={props.setWorks} works={props.works}/>
+                <SelectWork setWorks={props.setWorks} works={props.works} defaultMasterId={props.defaultMasterId}
+                            serviceId={props.serviceId}/>
             </div>
         </CustomModal>
     )

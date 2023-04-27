@@ -2,14 +2,16 @@ import React, {useEffect, useState} from 'react'
 import s from './SelectProductWork.module.scss'
 import {Button, InputUI, UniTable} from "../../../shared/ui"
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
-import {ServiceItemWork} from "../../../entities/models/Service/ServiceItem"
 import {WorkCatalogTreeView} from "../../../widgets/workspace/WorkCatalog/WorkCatalogTreeView"
 import {columns} from "./SlaveTableConfig"
 import {WorkCatalogTable} from "../../../widgets"
+import {ServiceWork, Work} from "../../../entities";
 
 interface props {
-    works: ServiceItemWork[]
-    setWorks: (work: ServiceItemWork[]) => void
+    defaultMasterId: string,
+    serviceId: number,
+    works: ServiceWork[]
+    setWorks: (work: ServiceWork[]) => void
 }
 
 export const SelectWork = (props: props) => {
@@ -49,18 +51,31 @@ export const SelectWork = (props: props) => {
                 <div className={s.rightSide_availableProducts}>
 
 
-                    <WorkCatalogTable onRowDoubleClick={(row) => {
+                    <WorkCatalogTable onRowDoubleClick={(row: Work) => {
                         let works = props.works
-                        let exist = works.find(n => n.id === row.id)
+                        let exist = works.find(n => n.workId === row.id)
 
                         if (exist != undefined) {
                             exist.quantity++
                             props.setWorks(works)
 
                         } else {
-                            let work = row as ServiceItemWork
-                            work.quantity = 1
-                            works.push(work)
+                            works.push(
+                                {
+                                    id: 0,
+                                    createdAt: Date.now().toString(),
+                                    updatedAt: Date.now().toString(),
+                                    enabled: true,
+                                    workId: row.id,
+                                    name: row.name,
+                                    description: '',
+                                    quantity: 1,
+                                    price: row.price,
+                                    discount: 0,
+                                    total: row.price,
+                                    userId: props.defaultMasterId,
+                                    serviceId: props.serviceId
+                                } as ServiceWork)
                             props.setWorks(works)
 
                         }

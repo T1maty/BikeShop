@@ -23,6 +23,10 @@ export const ControlledCustomInput = (props: ControlledCustomInputProps) => {
                 rules={props.rules}
                 render={({field}: any) =>
                     <CustomInput {...field}
+                                 value={field.value}
+                                 onChange={n => {
+                                     field.onChange(n)
+                                 }}
                                  placeholder={props.placeholder}
                                  type={props.type}
                                  error={!!props.control.formState.errors[props.name]}

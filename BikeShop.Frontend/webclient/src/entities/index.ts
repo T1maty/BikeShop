@@ -21,6 +21,7 @@ export type {InventarizationLackProduct} from './entities/Acts/Inventarization/I
 export type {UserShiftStatus} from './models/UserShiftStatus'
 
 export type {ServiceWithData} from './models/ServiceWithData'
+export type {ServiceFormModel} from './models/ServiceFormModel'
 export type {Service} from './entities/Service/Service'
 export type {ServiceProduct} from './entities/Service/ServiceProduct'
 export type {ServiceWork} from './entities/Service/ServiceWork'

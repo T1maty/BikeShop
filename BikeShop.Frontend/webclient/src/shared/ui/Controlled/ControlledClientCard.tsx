@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ClientCard} from "../../../widgets";
 import {ChooseClientModal} from "../../../features";
 import {User} from "../../../entities";
 import {Controller, UseFormReturn} from "react-hook-form";
 import {RegisterOptions} from "react-hook-form/dist/types/validator";
+import {$api} from "../../index";
+import {AxiosResponse} from "axios";
 
 interface props {
     control: UseFormReturn<any>
@@ -17,6 +19,22 @@ interface props {
 }
 
 export const ControlledClientCard = (props: props) => {
+
+    const [user, setUser] = useState<User>()
+
+    useEffect(() => {
+        let id = props.control.getValues(props.name)
+        if (user === undefined || user?.id != id) {
+            console.log('Пытаемся загружать юзера', user?.id, id)
+            $api.get(`/user/getbyid?id=${id}`).then((r: AxiosResponse<User>) => {
+                setUser(r.data)
+            }).catch((error) => {
+                console.log('ошибка загрузки пользователя', error)
+                setUser({} as User)
+            })
+        }
+    }, [props.control.watch(props.name)])
+
     return (
         <div>
             <Controller
@@ -30,11 +48,12 @@ export const ControlledClientCard = (props: props) => {
                             : true
                         }
 
-                        <ClientCard user={field.value} onDoubleClick={() => {
+                        <ClientCard user={user} onDoubleClick={() => {
                             if (!props.disabled) props.setState(true)
                         }}/>
                         <ChooseClientModal extraCallback={(user: User) => {
-                            field.onChange(user)
+                            setUser(user)
+                            field.onChange(user.id)
                             props.setState(false)
                         }}
                                            state={props.state}
