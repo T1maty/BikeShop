@@ -87,6 +87,7 @@ export type {CreateOption} from './requests/CreateOption'
 export type {UpdateOption} from './requests/UpdateOption'
 export type {CashboxActionRequest} from './requests/CashboxActionRequest'
 export type {UpdateProductPrices} from './requests/UpdateProductPrices'
+export type {UpdateSalaryParams} from './requests/UpdateSalaryParams'
 
 ///////////////////////////////////
 //          Responses            //

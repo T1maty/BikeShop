@@ -2,8 +2,7 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../entities/enumerables/ErrorStatusTypes"
-import {AuthAPI, SalaryAPI, SalaryResponse, UserNew} from '../../entities'
-import {SalaryParams} from '../../entities/api/User/SalaryAPI'
+import {AuthAPI, SalaryAPI, SalaryResponse, UpdateSalaryParams, UserNew} from '../../entities'
 
 interface EmployeeSalaryModalStore {
     openEmployeeSalaryModal: boolean
@@ -19,7 +18,7 @@ interface EmployeeSalaryModalStore {
     currentEmployeeSalary: SalaryResponse
 
     getEmployeeSalary: (userId: string) => void
-    updateEmployeeSalary: (paramsData: SalaryParams) => void
+    updateEmployeeSalary: (paramsData: UpdateSalaryParams) => void
 }
 
 const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -67,7 +66,7 @@ const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/de
             set({isLoading: false})
         })
     },
-    updateEmployeeSalary: (paramsData: SalaryParams) => {
+    updateEmployeeSalary: (paramsData) => {
         set({isLoading: true})
         SalaryAPI.updateEmployeeSalary(paramsData).then((res: any) => {
             set({isLoading: false})

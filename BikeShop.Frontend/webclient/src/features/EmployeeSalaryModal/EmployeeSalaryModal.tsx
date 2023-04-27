@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import s from './EmployeeSalaryModal.module.scss'
 import {Button, ControlledCustomInput, CustomModal, LoaderScreen} from '../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useEmployeeSalaryModal from "./EmployeeSalaryModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {UserNew} from '../../entities'
-import {SalaryParams} from "../../entities/api/User/SalaryAPI"
+import {UpdateSalaryParams, UserNew} from '../../entities'
 
 export const EmployeeSalaryModal = () => {
 
@@ -26,7 +25,7 @@ export const EmployeeSalaryModal = () => {
     const getEmployeeSalary = useEmployeeSalaryModal(s => s.getEmployeeSalary)
     const updateEmployeeSalary = useEmployeeSalaryModal(s => s.updateEmployeeSalary)
 
-    const formControl = useForm<SalaryParams>({
+    const formControl = useForm<UpdateSalaryParams>({
         defaultValues: {
             userId: '',
             rate: 0,
@@ -36,7 +35,7 @@ export const EmployeeSalaryModal = () => {
         }
     })
 
-    const onSubmit: SubmitHandler<SalaryParams> = (data: SalaryParams) => {
+    const onSubmit: SubmitHandler<UpdateSalaryParams> = (data: UpdateSalaryParams) => {
         if (currentEmployee !== null) {
             data.userId = currentEmployee.user.id
             console.log(data)
