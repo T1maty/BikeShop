@@ -27,6 +27,7 @@ export const Catalog = () => {
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
     const userCurrentTags = useCatalog(s => s.userCurrentTags)
+    const setUserCurrentTagsArray = useCatalog(s => s.setUserCurrentTagsArray)
     const setUserCurrentTag = useCatalog(s => s.setUserCurrentTag)
     const deleteUserCurrentTag = useCatalog(s => s.deleteUserCurrentTag)
 
@@ -109,6 +110,10 @@ export const Catalog = () => {
         deleteUserCurrentTag(userCurrentTags.filter(t => t.id !== tag.id))
     }
 
+    const clearUserCurrentTagsArrayHandler = () => {
+        setUserCurrentTagsArray([])
+    }
+
     useEffect(() => {
         if (errorStatus === 'error') {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
@@ -153,7 +158,8 @@ export const Catalog = () => {
                                 <div className={s.cloudCategory_title}>Облако категорий</div>
                                 <div className={s.cloudCategory_content}>
                                     <div className={s.cloudTag_title}>
-                                        Выбранные категории:
+                                        <div>Выбранные категории: </div>
+                                        <DeleteButton size={35} onClick={clearUserCurrentTagsArrayHandler}/>
                                     </div>
                                     {
                                         userCurrentTags.length === 0 ? '' :
