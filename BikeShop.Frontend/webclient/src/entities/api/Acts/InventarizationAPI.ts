@@ -1,7 +1,7 @@
 import {$api} from "../../../shared"
 import {InventarizationFullData} from "../../../pages/workspace/Inventarization/models/InventarizationFullData";
 
-export const InventorizationAPI = {
+export const InventarizationAPI = {
     getByShop(shopId: number, take: number): any {
         return (
             $api.get<InventarizationFullData>(`inventarization/getbyshop?ShopId=${shopId}&Take=${take}`)

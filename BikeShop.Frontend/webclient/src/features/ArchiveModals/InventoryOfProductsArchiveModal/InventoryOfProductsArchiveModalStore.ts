@@ -2,8 +2,8 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {InventorizationAPI} from "../../../entities"
-import {InventarizationFullData} from "../../../pages/workspace/Inventarization/models/InventarizationFullData";
+import {InventarizationAPI} from "../../../entities"
+import {InventarizationFullData} from "../../../pages/workspace/Inventarization/models/InventarizationFullData"
 
 interface InventoryOfProductsArchiveModalStore {
     openInventoryOfProductsArchiveModal: boolean
@@ -26,8 +26,7 @@ const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModa
     archive: [],
     getArchive: () => {
         set({isLoading: true})
-        // заглушка
-        InventorizationAPI.getByShop(1, 100).then((res: any) => {
+        InventarizationAPI.getByShop(1, 100).then((res: any) => {
             set(state => {
                 state.archive = res.data
             })

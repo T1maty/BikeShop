@@ -117,7 +117,7 @@ export {ShopAPI} from './api/ShopAPI'
 export {EncashmentAPI} from './api/Acts/EncashmentAPI'
 export {SupplyInvoiceAPI} from './api/Acts/SupplyInvoiceAPI'
 export {CashboxAPI} from './api/Acts/CashboxAPI'
-export {InventorizationAPI} from './api/Acts/InventorizationAPI'
+export {InventarizationAPI} from './api/Acts/InventarizationAPI'
 export {ShiftAPI} from './api/User/ShiftAPI'
 export {SalaryAPI} from './api/User/SalaryAPI'
 
