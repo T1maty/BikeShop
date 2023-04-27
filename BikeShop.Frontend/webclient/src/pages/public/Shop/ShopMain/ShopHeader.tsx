@@ -14,13 +14,17 @@ import {useDebounce} from '../../../../shared/hooks/useDebounce'
 import {Product, User} from '../../../../entities'
 import useCatalog from "../Catalog/CatalogStore"
 import {useSnackbar} from "notistack"
+// import SearchMagnifyIcon from '../../../../shared/assets/workspace/magnifying-glass-black.svg'
+import SearchMagnifyIcon from '../../../../shared/assets/shop/icons/search.png'
 
 interface ShopHeaderProps {
     isAuth: boolean
     user: User
+    searchMobileActive: boolean
+    setSearchMobileActive: (value: boolean) => void
 }
 
-export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
+export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user, searchMobileActive, setSearchMobileActive}) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -28,20 +32,21 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
     const isLoading = useCatalog(s => s.isLoading)
     const errorStatus = useCatalog(s => s.errorStatus)
     const searchProductsResult = useCatalog(s => s.searchProductsResult)
-    const searchProducts = useCatalog(s => s.searchProducts)
+    const getSearchProducts = useCatalog(s => s.getSearchProducts)
 
     const [burgerMenuActive, setBurgerMenuActive] = useState<boolean>(false)
+    // const [searchMobileActive, setSearchMobileActive] = useState<boolean>(false)
     const [searchProductValue, setSearchProductValue] = useState<string>('')
 
     const searchProductDebounce = useDebounce<string>(searchProductValue, 1000)
 
     const searchClickHandler = (pr: Product) => {
-        // функция для клика по найденному продукту
+        navigate(`/shop/catalog/${pr.id}`)
     }
 
     useEffect(() => {
         if (searchProductValue.length > 0) {
-            searchProducts(searchProductValue)
+            getSearchProducts(searchProductValue)
         }
     }, [searchProductDebounce])
 
@@ -58,6 +63,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
         <>
             <div className={s.shopHeader_wrapper}>
                 <div className={s.shopHeader_main}>
+
                     <div className={s.container}>
 
                         <div className={s.shop_header}>
@@ -88,14 +94,13 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                                     />
 
                                     <div className={s.searchInputBox}>
-                                        {/*Результат поиска*/}
                                         {
                                             searchProductsResult.length === 0
                                                 ? <div>Поиск...</div> :
                                                 searchProductsResult.map((pr: Product) => {
                                                     return (
                                                         <div className={s.searchInputBox_item} key={pr.id}
-                                                            // onClick={() => {searchClickHandler(pr)}}
+                                                             onClick={() => {searchClickHandler(pr)}}
                                                         >
                                                             {pr.name}
                                                         </div>
@@ -103,6 +108,11 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                                                 })
                                         }
                                     </div>
+                                </div>
+                                <div className={s.search_mobile}
+                                     onClick={() => {setSearchMobileActive(!searchMobileActive)}}
+                                >
+                                    <img src={SearchMagnifyIcon} alt='magnify-icon'/>
                                 </div>
 
                                 <div className={s.language}>
@@ -116,6 +126,35 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user}) => {
                         </div>
 
                     </div>
+
+                    {
+                        searchMobileActive &&
+                        <div className={s.input_mobile}>
+                            <input placeholder={'Поиск товара...'}
+                                   value={searchProductValue}
+                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                       setSearchProductValue(e.currentTarget.value)
+                                   }}
+                            />
+                        </div>
+                    }
+
+                    <div className={s.searchInputBox_mobile}>
+                        {
+                            searchProductsResult.length === 0
+                                ? <div>Поиск...</div> :
+                                searchProductsResult.map((pr: Product) => {
+                                    return (
+                                        <div className={s.searchInputBox_item} key={pr.id}
+                                             onClick={() => {searchClickHandler(pr)}}
+                                        >
+                                            {pr.name}
+                                        </div>
+                                    )
+                                })
+                        }
+                    </div>
+
                 </div>
                 <BurgerMenu menuActive={burgerMenuActive} setMenuActive={setBurgerMenuActive}/>
             </div>

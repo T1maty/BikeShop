@@ -23,7 +23,7 @@ interface UseCatalogStore {
     getCurrentProduct: (productId: number) => void
 
     searchProductsResult: any[]
-    searchProducts: (inputValue: string) => void
+    getSearchProducts: (inputValue: string) => void
 }
 
 const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -84,6 +84,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
+            console.log(error)
         }).finally(() => {
             set({isLoading: false})
             set({errorStatus: 'default'})
@@ -91,7 +92,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
     },
 
     searchProductsResult: [],
-    searchProducts: (inputValue: string) => {
+    getSearchProducts: (inputValue: string) => {
         set({isLoading: true})
         CatalogAPI.searchProductByName(inputValue).then(res => {
             set(state => {

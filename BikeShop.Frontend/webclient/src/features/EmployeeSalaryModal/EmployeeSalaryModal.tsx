@@ -5,6 +5,7 @@ import {useSnackbar} from 'notistack'
 import useEmployeeSalaryModal from "./EmployeeSalaryModalStore"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {Errors} from "../../entities/errors/workspaceErrors"
+import {SalaryAPI} from '../../entities';
 
 export const EmployeeSalaryModal = () => {
 
@@ -15,46 +16,39 @@ export const EmployeeSalaryModal = () => {
     const isLoading = useEmployeeSalaryModal(s => s.isLoading)
     const errorStatus = useEmployeeSalaryModal(s => s.errorStatus)
 
+    const employers = useEmployeeSalaryModal(s => s.employers)
+    const getEmployersList = useEmployeeSalaryModal(s => s.getEmployersList)
+
     const currentEmployee = useEmployeeSalaryModal(s => s.currentEmployee)
     const setCurrentEmployee = useEmployeeSalaryModal(s => s.setCurrentEmployee)
-    const getEmployeeInfo = useEmployeeSalaryModal(s => s.getEmployeeInfo)
-
-    const [employers, setEmployers] = useState([
-        {id: 1, name: 'Петров Василй Иванович'},
-        {id: 2, name: 'Петров Василй Петрович'},
-        {id: 3, name: 'Иваной Андрей Иванович'},
-        {id: 4, name: 'Сидоров Игорь Васильевич'},
-        {id: 5, name: 'Никифоров Константин Александрович'},
-        {id: 6, name: 'Никифоров Константин Александрович'},
-        {id: 7, name: 'Никифоров Константин Александрович'},
-    ])
+    const getEmployeeSalary = useEmployeeSalaryModal(s => s.getEmployeeSalary)
+    const updateEmployeeSalary = useEmployeeSalaryModal(s => s.updateEmployeeSalary)
 
     const formControl = useForm<any>({
-        // defaultValues: {
-        //     id: 0,
-        //     moneyPerHour: 0,
-        //     percentFromSaleShop: 0,
-        //     percentFromServiceWorks: 0,
-        //     percentFromSaleServices: 0,
-        // }
+        defaultValues: {
+            id: 0,
+            rate: 0,
+            shopPercent: 0,
+            workPercent: 0,
+            workShopPercent: 0,
+        }
     })
 
     const onSubmit: SubmitHandler<any> = (data: any) => {
-        // if (currentEmployee === null) {
-        //     addNewShop(data)
-        // }
-        // if (currentEmployee !== null) {
-        //     updateShopInfo(data)
-        // }
+        if (currentEmployee !== null) {
+            data.userId = currentEmployee.user.id
+            console.log(data)
+            updateEmployeeSalary(data)
+        }
     }
 
     useEffect(() => {
         formControl.reset()
-        formControl.setValue('id', currentEmployee ? currentEmployee.id : 0)
-        // formControl.setValue('moneyPerHour', currentEmployee ? currentEmployee.moneyPerHour : 0)
-        // formControl.setValue('percentFromSaleShop', currentEmployee ? currentEmployee.percentFromSaleShop : 0)
-        // formControl.setValue('percentFromServiceWorks', currentEmployee ? currentEmployee.percentFromServiceWorks : 0)
-        // formControl.setValue('percentFromSaleServices', currentEmployee ? currentEmployee.percentFromSaleServices : 0)
+        formControl.setValue('id', currentEmployee ? currentEmployee.user.id : 0)
+        // formControl.setValue('moneyPerHour', currentEmployee ? currentEmployee.rate : 0)
+        // formControl.setValue('percentFromSaleShop', currentEmployee ? currentEmployee.shopPercent : 0)
+        // formControl.setValue('percentFromServiceWorks', currentEmployee ? currentEmployee.workPercent : 0)
+        // formControl.setValue('percentFromSaleServices', currentEmployee ? currentEmployee.workShopPercent : 0)
     }, [currentEmployee])
 
     useEffect(() => {
@@ -64,7 +58,8 @@ export const EmployeeSalaryModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        // getEmployeeInfo()
+        getEmployersList()
+        getEmployeeSalary('7fea50d8-1440-4288-a684-ba9db58bd4d3')
     }, [])
 
     if (isLoading) {
@@ -84,16 +79,16 @@ export const EmployeeSalaryModal = () => {
                         <div className={s.content_scrollWrapper}>
                             <div className={s.content_employeeList}>
                                 {
+                                    employers.length === 0 ? <div>Список пуст</div> :
+
                                     employers.map(em => {
                                         return (
-                                            <div key={em.id}
-                                                 className={em.id === currentEmployee?.id ?
+                                            <div key={em.user.id}
+                                                 className={em.user.id === currentEmployee?.user.id ?
                                                      s.employeeList_item_active : s.employeeList_item}
-                                                 onClick={() => {
-                                                     setCurrentEmployee(em)
-                                                 }}
+                                                 onClick={() => {setCurrentEmployee(em)}}
                                             >
-                                                {em.name}
+                                                {em.user.lastName} {em.user.firstName} {em.user.patronymic}
                                             </div>
                                         )
                                     })
@@ -104,20 +99,20 @@ export const EmployeeSalaryModal = () => {
                         <div className={s.content_employeeData}>
                             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                                 <div className={s.employeeData_inputs}>
-                                    <ControlledCustomInput name={'moneyPerHour'}
+                                    <ControlledCustomInput name={'rate'}
                                                            placeholder={'Ставка за час'}
                                                            control={formControl}
                                                            // rules={{required: Errors[0].name}}
                                     />
-                                    <ControlledCustomInput name={'percentFromSaleShop'}
+                                    <ControlledCustomInput name={'shopPercent'}
                                                            placeholder={'Процент от продаж магазина'}
                                                            control={formControl}
                                     />
-                                    <ControlledCustomInput name={'percentFromServiceWorks'}
+                                    <ControlledCustomInput name={'workPercent'}
                                                            placeholder={'Процент от услуг ремонтов'}
                                                            control={formControl}
                                     />
-                                    <ControlledCustomInput name={'percentFromSaleServices'}
+                                    <ControlledCustomInput name={'workShopPercent'}
                                                            placeholder={'Процент от продаж ремонтов'}
                                                            control={formControl}
                                     />
@@ -132,7 +127,6 @@ export const EmployeeSalaryModal = () => {
                                 <Button type={'submit'}
                                         buttonDivWrapper={s.employeeData_saveBtn}
                                         disabled={currentEmployee === null}
-                                        // onClick={() => {setCurrentEmployee(null)}}
                                 >
                                     Сохранить
                                 </Button>
