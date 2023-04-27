@@ -7,7 +7,8 @@ import {Clock} from "../../../../shared/ui/Clock/Clock"
 import {NotificationIcon} from "../../../../shared/ui/IconButtons/NotificationIcon"
 import {Badge} from "../../../../shared/ui/Badge/Badge"
 import {BikeShopPaths} from "../../../../app/routes/paths"
-import {useAuth} from "../../../../entities"
+import {useAuth, useCurrency} from "../../../../entities"
+import Select from "react-select";
 
 export const Header = () => {
 
@@ -16,6 +17,10 @@ export const Header = () => {
 
     const user = useAuth(s => s.user)
     const shop = useAuth(s => s.shop)
+
+    const selectedCurrency = useCurrency(n => n.selectedCurrency)
+    const setSelectedCurrency = useCurrency(n => n.setSelectedCurrency)
+    const allCurrencies = useCurrency(n => n.allCurrencies)
 
 
     return (
@@ -34,6 +39,11 @@ export const Header = () => {
 
                 <div className={s.center}>
                     <Clock/>
+                    <Select options={allCurrencies} getOptionLabel={label => label.name} value={selectedCurrency}
+                            onChange={(v) => {
+                                setSelectedCurrency(v!.id)
+                            }}
+                    />
                 </div>
 
                 <div className={s.rightSide}>

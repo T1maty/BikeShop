@@ -10,6 +10,8 @@ interface props {
     baseCurrency: Currency | null
     selectedCurrency: Currency | null
     setSelectedCurrency: (id: number) => void
+    fromSelectedToBase: (value: number) => { res: number, s: string }
+    fromBaseToSelected: (value: number) => { res: number, s: string }
 }
 
 export const useCurrency = create<props>()(persist(devtools(immer((set, get) => ({
@@ -35,6 +37,12 @@ export const useCurrency = create<props>()(persist(devtools(immer((set, get) => 
         set(state => {
             state.selectedCurrency = Cur!
         })
+    },
+    fromSelectedToBase: (value) => {
+        return {res: value / get().selectedCurrency?.coefficient!, s: get().selectedCurrency?.symbol!}
+    },
+    fromBaseToSelected: (value) => {
+        return {res: value * get().selectedCurrency?.coefficient!, s: get().selectedCurrency?.symbol!}
     }
 }))), {
     name: "useCurrency",

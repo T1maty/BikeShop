@@ -12,13 +12,13 @@ import {
     PaymentData,
     Product,
     useAuth,
+    useCurrency,
     User
 } from '../../../entities'
 import {columns} from "./CashboxTableConfig"
 import {BillProductDTO} from "./models/BillProductDTO"
 import Enumerable from "linq"
 import AsyncSelect from "react-select/async"
-import {$api} from "../../../shared"
 import {useSnackbar} from "notistack"
 
 export const Cashbox = () => {
@@ -40,6 +40,8 @@ export const Cashbox = () => {
     const [openPay, setOpenPay] = useState(false)
     const [sum, setSum] = useState(0)
     const [res, setRes] = useState<BillWithProducts>()
+
+    const baseToS = useCurrency(s => s.fromBaseToSelected)
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -260,7 +262,7 @@ export const Cashbox = () => {
                             </div>
                         </div>
                         <div className={s.buttonsBlock_two}>
-                            {sum}
+                            {baseToS(sum).res + baseToS(sum).s}
                         </div>
                     </div>
                     <div className={s.rightSideBottom_payBlock}>
