@@ -2,7 +2,7 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../entities/enumerables/ErrorStatusTypes"
-import {AuthAPI, SalaryAPI, UserNew} from '../../entities'
+import {AuthAPI, SalaryAPI, SalaryResponse, UserNew} from '../../entities'
 import {SalaryParams} from '../../entities/api/User/SalaryAPI'
 
 interface EmployeeSalaryModalStore {
@@ -15,7 +15,9 @@ interface EmployeeSalaryModalStore {
     getEmployersList: () => void
 
     currentEmployee: UserNew | null
-    setCurrentEmployee: (employee: any | null) => void
+    setCurrentEmployee: (employee: UserNew | null) => void
+    currentEmployeeSalary: SalaryResponse
+
     getEmployeeSalary: (userId: string) => void
     updateEmployeeSalary: (paramsData: SalaryParams) => void
 }
@@ -34,6 +36,7 @@ const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/de
         AuthAPI.User.getEmployers().then((res: any) => {
             set(state => {
                 state.employers = res.data.users.filter((user: UserNew) => user.user.shopId === 1)
+                console.log(state.employers)
             })
             set({isLoading: false})
         }).catch((error: any) => {
@@ -48,13 +51,14 @@ const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/de
     setCurrentEmployee: (employee) => {
         set({currentEmployee: employee})
     },
+    currentEmployeeSalary: {} as SalaryResponse,
+
     getEmployeeSalary: (userId: string) => {
         set({isLoading: true})
         SalaryAPI.getEmployeeSalaryById(userId).then((res: any) => {
-            // set(state => {
-            //     state.employeeInfo = res.data
-            // })
-            console.log(res.data)
+            set(state => {
+                state.currentEmployeeSalary = res.data
+            })
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
@@ -69,7 +73,6 @@ const useEmployeeSalaryModal = create<EmployeeSalaryModalStore>()(/*persist(*/de
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
-            console.log(error)
         }).finally(() => {
             set({errorStatus: 'default'})
             set({isLoading: false})

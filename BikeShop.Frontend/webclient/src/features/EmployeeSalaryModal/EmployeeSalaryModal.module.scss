@@ -47,10 +47,16 @@
             min-width: 300px;
 
             .employeeData_inputs {
-                //@include divSmallMarginBottom;
-
                 > div {
                     margin-bottom: $defaultSmallMargin;
+                }
+
+                .employeeData_inputsItem {
+                    @include flexBetween;
+
+                    input {
+                        width: 100px;
+                    }
                 }
 
                 .inputs_cancelBtn {

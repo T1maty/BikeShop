@@ -20,5 +20,5 @@ export interface SalaryParams {
     rate: number
     shopPercent: number
     workPercent: number
-    workShopPercent: number
+    workshopPercent: number
 }
