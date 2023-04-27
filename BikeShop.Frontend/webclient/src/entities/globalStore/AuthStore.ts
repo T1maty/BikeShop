@@ -13,7 +13,6 @@ import {ErrorStatusTypes} from '../enumerables/ErrorStatusTypes'
 interface AuthStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
-    errorStatus: ErrorStatusTypes
     isAuth: boolean
     setIsAuth: (value: boolean) => void
 
@@ -29,7 +28,6 @@ interface AuthStore {
 export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
-    errorStatus: 'default',
     isAuth: false,
     setIsAuth: (value) => set({isAuth: value}),
 
@@ -62,9 +60,7 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
         }).catch(((r: AxiosResponse<LoginResponse>) => {
             console.log('login error', r)
             onFailure ? onFailure(r) : false
-            // set({errorStatus: 'error'})
         })).finally(() => {
-            // set({errorStatus: 'default'})
             set({isLoading: false})
         })
     },
@@ -83,19 +79,21 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
     },
 
     register: (data, onSuccess, onFailure) => {
+        set({isLoading: true})
         AuthAPI.Login.register(data).then((r: AxiosResponse) => {
             onSuccess ? onSuccess(r) : false
+            set({isLoading: false})
         }).catch((r: AxiosResponse) => {
             onFailure ? onFailure(r) : false
+        }).finally(() => {
+            set({isLoading: false})
         })
     },
 
     loginToShop: (shopId) => {
         AuthAPI.Login.loginToShop(shopId).then((r: any) => {
             let shop = r.data.filter((n: any) => n.id === shopId)[0]
-            set(state => {
-                state.shop = shop
-            })
+            set(state => {state.shop = shop})
             console.log(shop)
         })
     },
