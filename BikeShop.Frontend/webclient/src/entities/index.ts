@@ -19,6 +19,7 @@ export type {InventarizationLackProduct} from './entities/Acts/Inventarization/I
 export type {UserShiftStatus} from './models/UserShiftStatus'
 export type {ShiftAction} from './entities/ShiftAction'
 export type {BillWithProducts} from './models/BillWithProducts'
+export {useCurrency} from './globalStore/useCurrency'
 
 
 ///////////////
