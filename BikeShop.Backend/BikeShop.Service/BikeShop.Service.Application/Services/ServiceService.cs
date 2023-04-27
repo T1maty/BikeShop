@@ -180,35 +180,122 @@ public class ServiceService : IServiceService
         serviceCont.UserUpdatedId = dto.UserId;
         serviceCont.UpdatedAt = DateTime.Now;
 
-        var serviceWorks = _mapper.ProjectTo<ServiceWork>(dto.ServiceWorks.AsQueryable()).ToList();
-        var serviceProducts = _mapper.ProjectTo<ServiceProduct>(dto.ServiceProducts.AsQueryable()).ToList();
+        var existProds = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToDictionaryAsync(n=>n.Id, n=>n);
+        var newProds = new List<ServiceProduct>();
+        var totalProducts = new List<ServiceProduct>();
 
-        serviceWorks.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
-        serviceProducts.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
+        foreach (var prod in dto.ServiceProducts)
+        {
+            if (existProds.ContainsKey(prod.Id))
+            {
+                var ent = existProds[prod.Id];
 
-        serviceCont.PriceProduct = serviceProducts.Select(n => n.Total).Sum();
-        serviceCont.DiscountProduct = serviceProducts.Select(n => n.Discount).Sum();
-        serviceCont.TotalProduct = serviceCont.PriceProduct - serviceCont.DiscountProduct;
+                ent.UpdatedAt = DateTime.Now;
+                ent.Quantity = prod.Quantity;
+                ent.Price = prod.Price;
+                ent.ServiceId = dto.Id;
+                ent.SerialNumber = prod.SerialNumber;
+                ent.QuantityUnitId = prod.QuantityUnitId;
+                ent.CatalogKey = prod.CatalogKey;
+                ent.Discount = prod.Discount;
+                ent.Name = prod.Name;
+                ent.ProductId = prod.ProductId;
+                ent.QuantityUnitName = "";
+                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+                ent.UserId = dto.UserId;
 
-        serviceCont.PriceWork = serviceWorks.Select(n => n.Total).Sum();
-        serviceCont.DiscountWork = serviceWorks.Select(n => n.Discount).Sum();
-        serviceCont.TotalWork = serviceCont.PriceWork - serviceCont.DiscountWork;
+                existProds.Remove(prod.Id);
+                totalProducts.Add(ent);
+            }
+            else
+            {
+                var ent = new ServiceProduct();
+
+                ent.UpdatedAt = DateTime.Now;
+                ent.Quantity = prod.Quantity;
+                ent.Price = prod.Price;
+                ent.ServiceId = dto.Id;
+                ent.SerialNumber = prod.SerialNumber;
+                ent.QuantityUnitId = prod.QuantityUnitId;
+                ent.CatalogKey = prod.CatalogKey;
+                ent.Discount = prod.Discount;
+                ent.Name = prod.Name;
+                ent.ProductId = prod.ProductId;
+                ent.QuantityUnitName = "";
+                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+                ent.UserId = dto.UserId;
+
+                newProds.Add(ent);
+                totalProducts.Add(ent);
+            }
+        }
+
+        _context.ServiceProducts.RemoveRange(existProds.Values);
+        await _context.ServiceProducts.AddRangeAsync(newProds);
+
+
+        var existWorks = await _context.ServiceWorks.Where(n => n.ServiceId == dto.Id).ToDictionaryAsync(n => n.Id, n => n);
+        var newWorks = new List<ServiceWork>();
+        var totalWorks = new List<ServiceWork>();
+
+        foreach (var work in dto.ServiceWorks)
+        {
+            if (existWorks.ContainsKey(work.Id))
+            {
+                var ent = existWorks[work.Id];
+
+                ent.UpdatedAt = DateTime.Now;
+                ent.UserId = work.UserId;
+                ent.ServiceId = dto.Id;
+                ent.WorkId = work.WorkId;
+                ent.Quantity = work.Quantity;
+                ent.Description = work.Description;
+                ent.Price = work.Price;
+                ent.Discount = work.Discount;
+                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+                ent.Name = work.Name;
+
+                existWorks.Remove(work.Id);
+                totalWorks.Add(ent);
+            }
+            else
+            {
+                var ent = new ServiceWork();
+
+                ent.UpdatedAt = DateTime.Now;
+                ent.UserId = work.UserId;
+                ent.ServiceId = dto.Id;
+                ent.WorkId = work.WorkId;
+                ent.Quantity = work.Quantity;
+                ent.Description = work.Description;
+                ent.Price = work.Price;
+                ent.Discount = work.Discount;
+                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+                ent.Name = work.Name;
+
+                newWorks.Add(ent);
+                totalWorks.Add(ent);
+            }
+        }
+
+        _context.ServiceWorks.RemoveRange(existWorks.Values);
+        await _context.ServiceWorks.AddRangeAsync(newWorks);
+
+        serviceCont.DiscountProduct = totalProducts.Select(n => n.Discount).Sum();
+        serviceCont.TotalProduct = totalProducts.Select(n => n.Total).Sum();
+        serviceCont.PriceProduct = serviceCont.TotalProduct + serviceCont.DiscountProduct;
+
+
+        serviceCont.DiscountWork = totalWorks.Select(n => n.Discount).Sum();
+        serviceCont.TotalWork = totalWorks.Select(n => n.Total).Sum();
+        serviceCont.PriceWork = serviceCont.TotalWork + serviceCont.DiscountWork;
 
         var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToListAsync();
-        await UpdateReservation(oldServiceProducts, serviceProducts, await _shopClient.GetStorageId(serviceCont.ShopId));
-
-        _context.ServiceWorks.RemoveRange(_context.ServiceWorks.Where(n => n.ServiceId == dto.Id));
-        _context.ServiceProducts.RemoveRange(_context.ServiceProducts.Where(n => n.ServiceId == dto.Id));
-
-        serviceWorks.ForEach(n => n.ServiceId = serviceCont.Id);
-        serviceProducts.ForEach(n => n.ServiceId = serviceCont.Id);
-
-        await _context.ServiceWorks.AddRangeAsync(serviceWorks);
-        await _context.ServiceProducts.AddRangeAsync(serviceProducts);
+        await UpdateReservation(oldServiceProducts, totalProducts, await _shopClient.GetStorageId(serviceCont.ShopId));
 
         await _context.SaveChangesAsync(new CancellationToken());
 
-        return new ServiceWithProductsWorksDTO { Service = serviceCont, Products = serviceProducts, Works = serviceWorks };
+        return new ServiceWithProductsWorksDTO { Service = serviceCont, Products = totalProducts, Works = totalWorks };
     }
 
     public async Task UpdateStatus(string status, int id)

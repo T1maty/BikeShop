@@ -20,7 +20,7 @@ namespace BikeShop.Service.Application.DTO
         public int WorkDiscountId { get; set; }
         public int ProductDiscountId { get; set; }
 
-        public List<ServiceProductDTO>? ServiceProducts { get; set; }
-        public List<ServiceWorkDTO>? ServiceWorks { get; set; }
+        public List<ServiceProductDTO> ServiceProducts { get; set; }
+        public List<ServiceWorkDTO> ServiceWorks { get; set; }
     }
 }

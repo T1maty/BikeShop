@@ -12,6 +12,7 @@ namespace BikeShop.Service.Application.DTO
 {
     public class ServiceWorkDTO : IMappable
     {
+        public int Id { get; set; }
         public int WorkId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
