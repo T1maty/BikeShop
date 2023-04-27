@@ -16,6 +16,7 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
     const user = useAuth(s => s.user)
 
     const [searchMobileActive, setSearchMobileActive] = useState<boolean>(false)
+    const [searchProductValue, setSearchProductValue] = useState<string>('')
 
     useEffect(() => {
         if (user !== undefined) {
@@ -25,9 +26,14 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
 
     return (
         <div className={s.shop_wrapper}>
-            <ShopHeader isAuth={isAuth} user={user!} searchMobileActive={searchMobileActive} setSearchMobileActive={setSearchMobileActive}/>
+            <ShopHeader isAuth={isAuth} user={user!}
+                        searchMobileActive={searchMobileActive} setSearchMobileActive={setSearchMobileActive}
+                        searchProductValue={searchProductValue} setSearchProductValue={setSearchProductValue}
+            />
 
-            <div className={s.shop_main} onClick={() => {setSearchMobileActive(false)}}>
+            <div className={s.shop_main}
+                 onClick={() => {setSearchMobileActive(false); setSearchProductValue('')}}
+            >
                 {children}
             </div>
 

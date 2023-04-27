@@ -22,9 +22,14 @@ interface ShopHeaderProps {
     user: User
     searchMobileActive: boolean
     setSearchMobileActive: (value: boolean) => void
+    searchProductValue: string
+    setSearchProductValue: (value: string) => void
 }
 
-export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user, searchMobileActive, setSearchMobileActive}) => {
+export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
+                                                       searchMobileActive, setSearchMobileActive,
+                                                       searchProductValue, setSearchProductValue,
+}) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -36,12 +41,13 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user, searchMobil
 
     const [burgerMenuActive, setBurgerMenuActive] = useState<boolean>(false)
     // const [searchMobileActive, setSearchMobileActive] = useState<boolean>(false)
-    const [searchProductValue, setSearchProductValue] = useState<string>('')
+    // const [searchProductValue, setSearchProductValue] = useState<string>('')
 
     const searchProductDebounce = useDebounce<string>(searchProductValue, 1000)
 
-    const searchClickHandler = (pr: Product) => {
+    const chooseSearchProductHandler = (pr: Product) => {
         navigate(`/shop/catalog/${pr.id}`)
+        setSearchProductValue('')
     }
 
     useEffect(() => {
@@ -93,14 +99,14 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user, searchMobil
                                                        }}
                                     />
 
-                                    <div className={s.searchInputBox}>
+                                    <div className={searchProductValue.length > 0 ? s.searchInputBox_active : s.searchInputBox}>
                                         {
                                             searchProductsResult.length === 0
-                                                ? <div>Поиск...</div> :
+                                                ? <div style={{textAlign: 'center'}}>Поиск...</div> :
                                                 searchProductsResult.map((pr: Product) => {
                                                     return (
                                                         <div className={s.searchInputBox_item} key={pr.id}
-                                                             onClick={() => {searchClickHandler(pr)}}
+                                                             onClick={() => {chooseSearchProductHandler(pr)}}
                                                         >
                                                             {pr.name}
                                                         </div>
@@ -121,7 +127,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user, searchMobil
 
                                 <ShoppingCart/>
 
-                                <LoginBlock isAuth={true} user={user}/>
+                                <LoginBlock isAuth={isAuth} user={user}/>
                             </div>
                         </div>
 
@@ -139,14 +145,14 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user, searchMobil
                         </div>
                     }
 
-                    <div className={s.searchInputBox_mobile}>
+                    <div className={searchProductValue.length > 0 ? s.searchInputBox_mobile_active : s.searchInputBox_mobile}>
                         {
                             searchProductsResult.length === 0
-                                ? <div>Поиск...</div> :
+                                ? <div style={{textAlign: 'center'}}>Поиск...</div> :
                                 searchProductsResult.map((pr: Product) => {
                                     return (
                                         <div className={s.searchInputBox_item} key={pr.id}
-                                             onClick={() => {searchClickHandler(pr)}}
+                                             onClick={() => {chooseSearchProductHandler(pr)}}
                                         >
                                             {pr.name}
                                         </div>
