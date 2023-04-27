@@ -10,7 +10,7 @@ interface CheckArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    archive: ServiceWithData[]
+    archive: any[]
     getEndedServices: () => any // надо исправить тип
 }
 
