@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput,} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {CreateService, LocalStorage, User} from "../../../entities"
+import {ServiceWithData, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
@@ -12,7 +12,7 @@ import useSelectProductWorkModal
 import {useSnackbar} from "notistack"
 import Select from "react-select"
 
-export const ServiceForm = (props: { children: UseFormReturn<CreateService, any> }) => {
+export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, any> }) => {
 
     const formControl = props.children
     const {enqueueSnackbar} = useSnackbar()
@@ -36,23 +36,21 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
     const [summWorks, setSummWorks] = useState(0)
 
 
-    const onSubmit: SubmitHandler<CreateService> = (data: CreateService) => {
+    const onSubmit: SubmitHandler<ServiceWithData> = (data: ServiceWithData) => {
         // создание сервиса
         if (isCreating) {
-            data.userId = LocalStorage.userId()!
-            data.shopId = parseInt(LocalStorage.shopId()!)
+            //data.service.userId = LocalStorage.userId()!
+            //data.shopId = parseInt(LocalStorage.shopId()!)
             setIsCreating(false)
             console.log('create IF works, new data =', data)
-            addNewService(data)
+            //addNewService(data)
         }
 
         // обновление сервиса
         if (!isCreating) {
-            data.userId = LocalStorage.userId()!
+            //data.userId = LocalStorage.userId()!
             console.log('update IF works, updateData = ', data)
-            updateService(data, () => {
-                formControl.reset()
-            })
+            //updateService(data, () => {formControl.reset()})
         }
     }
 
@@ -65,30 +63,31 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
 
     useEffect(() => {
         let summ = 0
-        formControl.getValues('serviceWorks').forEach(n => {
+        formControl.getValues('works').forEach(n => {
             summ += (n.price * n.quantity)
         })
         setSummWorks(summ)
-    }, [formControl.watch('serviceWorks')])
+    }, [formControl.watch('works')])
 
     useEffect(() => {
         let summ = 0
-        formControl.getValues('serviceProducts').forEach(n => {
+        formControl.getValues('products').forEach(n => {
             summ += (n.price * n.quantity)
         })
         setSummProducts(summ)
-    }, [formControl.watch('serviceProducts')])
+    }, [formControl.watch('products')])
 
     useEffect(() => {
         formControl.reset()
-        formControl.setValue('id', currentService ? currentService.id : 0)
-        formControl.setValue('name', currentService ? currentService.name : '')
-        formControl.setValue('clientDescription', currentService ? currentService.clientDescription : '')
-        formControl.setValue('userMasterId', currentService ? currentService.userMaster?.id : '')
-        formControl.setValue('client', currentService ? currentService.client : {} as User)
+        //formControl.setValue('id', currentService ? currentService.service.id : 0)
+        //formControl.setValue('name', currentService ? currentService.service.name : '')
+        //formControl.setValue('clientDescription', currentService ? currentService.service.clientDescription : '')
+        //formControl.setValue('userMasterId', currentService ? currentService.service.userMasterId : '')
 
-        formControl.setValue('serviceProducts', currentService ? currentService.products : [])
-        formControl.setValue('serviceWorks', currentService ? currentService.works : [])
+        //formControl.setValue('client', currentService ? currentService.service.client : {} as User)
+
+        //formControl.setValue('serviceProducts', currentService ? currentService.products : [])
+        //formControl.setValue('serviceWorks', currentService ? currentService.works : [])
     }, [currentService])
 
     useEffect(() => {
@@ -121,7 +120,7 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
                         />
                         <div className={s.content_selectMaster}>
                             <Controller
-                                name={'userMasterId'}
+                                name={'service'}
                                 control={formControl.control}
                                 render={({field}: any) =>
                                     <Select
@@ -130,9 +129,9 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
                                         options={masters}
                                         isDisabled={currentService === null && !isCreating}
                                         isSearchable
-                                        value={masters.find(n => n.id === field.value)}
+                                        value={masters.find(n => n.id === field.value.userMasterId)}
                                         onChange={(value: any) => {
-                                            field.onChange(value.id)
+                                            field.onChange({...field.value, userMasterId: value.id})
                                         }}
                                         noOptionsMessage={() => 'Мастер не найден'}
                                         getOptionLabel={label => label!.firstName}
@@ -149,7 +148,7 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
                                         <Button className={s.content_saveBtn} type={'submit'}
                                                 disabled={!formControl.formState.isDirty}>Сохранить</Button>
                                         :
-                                        formControl.getValues('id') > 0 ?
+                                        formControl.getValues('service').id > 0 ?
                                             <Button className={s.content_saveBtn} type={'submit'}
                                                     disabled={!formControl.formState.isDirty}>Обновить</Button>
                                             :
@@ -186,7 +185,7 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
 
                 <div className={s.rightSide_tables}>
                     <Controller
-                        name={'serviceProducts'}
+                        name={'products'}
                         control={formControl.control}
                         render={({field}: any) =>
                             <>
@@ -204,7 +203,7 @@ export const ServiceForm = (props: { children: UseFormReturn<CreateService, any>
                         }
                     />
                     <Controller
-                        name={'serviceWorks'}
+                        name={'works'}
                         control={formControl.control}
                         render={({field}: any) =>
                             <>

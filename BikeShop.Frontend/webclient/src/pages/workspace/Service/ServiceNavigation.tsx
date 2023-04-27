@@ -4,12 +4,12 @@ import {Button} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import useService, {ServiceListStatusType} from "./ServiceStore"
 import {ServiceStatusType} from "../../../entities/models/Service/ServiceItem"
-import {CreateService, EnumServiceStatus} from "../../../entities"
+import {EnumServiceStatus, ServiceWithData} from "../../../entities"
 import {PrintModal} from "../../../features";
 import {CheckForServiceWork} from "../../../widgets";
 import {UseFormReturn} from "react-hook-form";
 
-export const ServiceNavigation = (props: { children: UseFormReturn<CreateService, any> }) => {
+export const ServiceNavigation = (props: { children: UseFormReturn<ServiceWithData, any> }) => {
 
     const isLoading = useService(s => s.isLoading)
     const serviceListStatus = useService(s => s.serviceListStatus)
@@ -27,7 +27,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<CreateService
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
                                             extraFilterName?: ServiceStatusType) => {
 
-        setFilteredServices(services.filter(serv => serv.status === filterName || serv.status === extraFilterName))
+        setFilteredServices(services.filter(serv => serv.service.status === filterName || serv.service.status === extraFilterName))
 
         isButtonWaitingOn ? setServiceListStatus(EnumServiceStatus.Waiting) : true
         isButtonInProcessOn ? setServiceListStatus(EnumServiceStatus.InProcess) : true
@@ -39,7 +39,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<CreateService
         if (newStatus === "Ended") {
 
         }
-        updateServiceStatus({id: currentService?.id || -1, status: newStatus}, () => {
+        updateServiceStatus({id: currentService?.service.id || -1, status: newStatus}, () => {
             setOpenPrint(true)
         })
     }
@@ -138,19 +138,20 @@ export const ServiceNavigation = (props: { children: UseFormReturn<CreateService
 
                                 filteredServices.map(service => {
                                     return (
-                                        <div key={service.id}
+                                        <div key={service.service.id}
                                             // className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
-                                             className={service.id === currentService?.id ? s.serviceItem_active :
-                                                 service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
+                                             className={service.service.id === currentService?.service.id ? s.serviceItem_active :
+                                                 service.service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
                                              onClick={() => {
                                                  setCurrentService(service)
                                              }}
                                         >
-                                            {service.name}
+                                            {service.service.name}
                                         </div>
                                     )
                                 })
                     }
+
                 </div>
             </div>
         </div>

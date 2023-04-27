@@ -4,7 +4,7 @@ import useCheckArchiveModal from "./CheckArchiveModalStore"
 import {CustomModal, LoaderScreen} from "../../../shared/ui"
 import {useSnackbar} from "notistack"
 import {formatDate} from "../../../shared/utils/formatDate"
-import {ServiceItem} from "../../../entities"
+import {ServiceWithData} from "../../../entities"
 
 export const CheckArchiveModal = () => {
 
@@ -34,7 +34,9 @@ export const CheckArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.checkArchiveModal_mainBox}>
 
@@ -43,9 +45,9 @@ export const CheckArchiveModal = () => {
                     </div>
                     <div className={s.checkArchiveModal_list}>
                         {
-                            archive.map((service: ServiceItem) => {
+                            archive.map((service: ServiceWithData) => {
                                 return (
-                                    <div className={s.checkArchiveModal_item} key={service.id}
+                                    <div className={s.checkArchiveModal_item} key={service.service.id}
                                          onDoubleClick={() => {
                                              // setIsCreating(false)
                                              // setCurrentSupplyInvoice(el);
@@ -55,7 +57,7 @@ export const CheckArchiveModal = () => {
                                         <div className={s.item_content}>
                                             <div className={s.content_info}>
                                                 <div>
-                                                    №{service.id}
+                                                    №{service.service.id}
                                                 </div>
                                                 <div className={s.cashBlock}>
                                                     1 позиция
@@ -89,11 +91,11 @@ export const CheckArchiveModal = () => {
                                             <div className={s.content_date}>
                                                 <div>
                                                     <div>Создан:</div>
-                                                    <div>{formatDate(service.createdAt)}</div>
+                                                    <div>{formatDate(service.service.createdAt)}</div>
                                                 </div>
                                                 <div>
                                                     <div>Закрыт:</div>
-                                                    <div>{formatDate(service.updatedAt)}</div>
+                                                    <div>{formatDate(service.service.updatedAt)}</div>
                                                 </div>
                                             </div>
                                         </div>

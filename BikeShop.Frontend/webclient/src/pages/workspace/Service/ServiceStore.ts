@@ -1,7 +1,14 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {CreateService, EnumServiceStatus, ServiceAPI, ServiceItem, UpdateServiceStatus, User} from '../../../entities'
+import {
+    CreateService,
+    EnumServiceStatus,
+    ServiceAPI,
+    ServiceWithData,
+    UpdateServiceStatus,
+    User
+} from '../../../entities'
 import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
@@ -12,14 +19,14 @@ interface ServiceStore {
     isCreating: boolean
     setIsCreating: (value: boolean) => void
 
-    currentService: ServiceItem | null
-    setCurrentService: (service: ServiceItem | null) => void
+    currentService: ServiceWithData | null
+    setCurrentService: (service: ServiceWithData | null) => void
     serviceListStatus: string,
     setServiceListStatus: (serviceListStatus: string) => void
-    services: ServiceItem[]
-    setServices: (services: ServiceItem[]) => void
-    filteredServices: ServiceItem[]
-    setFilteredServices: (filteredServices: ServiceItem[]) => void
+    services: ServiceWithData[]
+    setServices: (services: ServiceWithData[]) => void
+    filteredServices: ServiceWithData[]
+    setFilteredServices: (filteredServices: ServiceWithData[]) => void
 
     masters: User[]
     getMasters: () => void
@@ -88,7 +95,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 state.services = res.data
                 state.filteredServices = res.data
                     .filter((item) =>
-                        item.status === 'Waiting' || item.status === 'WaitingSupply')
+                        item.service.status === 'Waiting' || item.service.status === 'WaitingSupply')
             })
             set({isLoading: false})
             set({isCreating: false})
@@ -107,7 +114,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             })
             set(state => {
                 state.filteredServices = state.services.filter(serv =>
-                    serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+                    serv.service.status === 'Waiting' || serv.service.status === 'WaitingSupply')
             })
             set({currentService: res.data})
             set({isLoading: false})
@@ -132,12 +139,12 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 if (currentListStatus === 'Waiting') {
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
-                            serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+                            serv.service.status === 'Waiting' || serv.service.status === 'WaitingSupply')
                     })
                 } else {
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
-                            serv.status === currentListStatus)
+                            serv.service.status === currentListStatus)
                     })
                 }
                 onSuccess();
@@ -157,18 +164,18 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
 
             if (currentListStatus) {
                 set(state => {
-                    state.services.filter(serv => serv.id === data.id)[0].status = data.status
+                    state.services.filter(serv => serv.service.id === data.id)[0].service.status = data.status
                 })
                 // надо сделать универсальную функцию?
                 if (currentListStatus === 'Waiting') {
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
-                            serv.status === 'Waiting' || serv.status === 'WaitingSupply')
+                            serv.service.status === 'Waiting' || serv.service.status === 'WaitingSupply')
                     })
                 } else {
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
-                            serv.status === currentListStatus)
+                            serv.service.status === currentListStatus)
                     })
                 }
             }

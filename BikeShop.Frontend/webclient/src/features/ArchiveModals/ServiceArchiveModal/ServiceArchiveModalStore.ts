@@ -1,7 +1,7 @@
 import {create} from 'zustand'
-import {devtools, persist} from 'zustand/middleware'
+import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {CreateServiceResponse, EntitiesAPI, ServiceAPI, ServiceItem} from "../../../entities"
+import {ServiceAPI, ServiceWithData} from "../../../entities"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes";
 
 interface ServiceArchiveModalStore {
@@ -10,12 +10,12 @@ interface ServiceArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    currentService: ServiceItem | null
-    setCurrentService: (service: ServiceItem | null) => void
-    services: ServiceItem[]
-    setServices: (services: ServiceItem[]) => void
-    filteredServices: ServiceItem[]
-    setFilteredServices: (filteredServices: ServiceItem[]) => void
+    currentService: ServiceWithData | null
+    setCurrentService: (service: ServiceWithData | null) => void
+    services: ServiceWithData[]
+    setServices: (services: ServiceWithData[]) => void
+    filteredServices: ServiceWithData[]
+    setFilteredServices: (filteredServices: ServiceWithData[]) => void
 
     getAllServicesInfo: () => any // надо исправить тип
 }
@@ -29,9 +29,13 @@ const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/de
     currentService: null,
     setCurrentService: (service) => set({currentService: service}),
     services: [],
-    setServices: (services) => set(state => {state.services = services}),
+    setServices: (services) => set(state => {
+        state.services = services
+    }),
     filteredServices: [],
-    setFilteredServices: (filteredServices) => set(state => {state.filteredServices = filteredServices}),
+    setFilteredServices: (filteredServices) => set(state => {
+        state.filteredServices = filteredServices
+    }),
 
     getAllServicesInfo: () => {
         set({isLoading: true});
@@ -39,7 +43,7 @@ const useServiceArchiveModal = create<ServiceArchiveModalStore>()(/*persist(*/de
             set(state => {
                 state.services = res.data
                 state.filteredServices = res.data
-                    .filter((item) => item.status === 'Ended')
+                    .filter((item) => item.service.status === 'Ended')
             })
             set({isLoading: false})
         }).catch((error: any) => {

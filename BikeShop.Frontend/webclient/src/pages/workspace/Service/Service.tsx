@@ -6,7 +6,7 @@ import {ServiceForm} from "./ServiceForm"
 import {ServiceNavigation} from "./ServiceNavigation"
 import {useSnackbar} from 'notistack'
 import {useForm} from "react-hook-form";
-import {CreateService, LocalStorage, User} from "../../../entities";
+import {ServiceWithData} from "../../../entities";
 
 export const Service = () => {
 
@@ -17,23 +17,8 @@ export const Service = () => {
     const getMasters = useService(s => s.getMasters)
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
 
-    const formControl = useForm<CreateService>({
-        defaultValues: {
-            shopId: parseInt(LocalStorage.shopId()!),
-            id: 0,
-            name: '',
-            client: {} as User,
-            clientDescription: '',
-            userMasterId: '',
-
-            productDiscountId: 0,
-            workDiscountId: 0,
-            userMasterDescription: '',
-            userCreatedDescription: '',
-
-            serviceProducts: [],
-            serviceWorks: [],
-        }
+    const formControl = useForm<ServiceWithData>({
+        defaultValues: {}
     })
 
     useEffect(() => {

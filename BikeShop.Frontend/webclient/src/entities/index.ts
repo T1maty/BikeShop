@@ -19,6 +19,13 @@ export type {InventarizationLack} from './entities/Acts/Inventarization/Inventar
 export type {InventarizationLackProduct} from './entities/Acts/Inventarization/InventarizationLackProduct'
 
 export type {UserShiftStatus} from './models/UserShiftStatus'
+
+export type {ServiceWithData} from './models/ServiceWithData'
+export type {Service} from './entities/Service/Service'
+export type {ServiceProduct} from './entities/Service/ServiceProduct'
+export type {ServiceWork} from './entities/Service/ServiceWork'
+
+
 export type {ShiftAction} from './entities/ShiftAction'
 export type {BillWithProducts} from './models/BillWithProducts'
 export {useCurrency} from './globalStore/useCurrency'

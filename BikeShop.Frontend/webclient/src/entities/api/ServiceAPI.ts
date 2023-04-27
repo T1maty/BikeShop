@@ -1,9 +1,10 @@
 import {AxiosResponse} from 'axios'
 import {$api} from 'shared'
 import {GetUsersResponse} from '../responses/GetUsersResponse'
-import {ServiceItem} from '../models/Service/ServiceItem'
 import {CreateService} from '../requests/CreateService'
 import {UpdateServiceStatus} from '../requests/UpdateService'
+import {ServiceWithData} from "../models/ServiceWithData";
+import {LocalStorage} from "../globalStore/LocalStorage";
 
 export const ServiceAPI = {
     getMasters(): any {
@@ -11,24 +12,24 @@ export const ServiceAPI = {
             $api.get<GetUsersResponse[]>('/user/find')
         )
     },
-    getAllServicesInfo(): Promise<AxiosResponse<ServiceItem[]>> {
+    getAllServicesInfo(): Promise<AxiosResponse<ServiceWithData[]>> {
         return (
-            $api.get<ServiceItem[]>('/service/getbyshopid/1')
+            $api.get<ServiceWithData[]>(`/service/getbyshopid/${LocalStorage.shopId()}`)
         )
     },
-    addNewService(data: CreateService): any {
+    addNewService(data: CreateService): Promise<AxiosResponse<ServiceWithData>> {
         return (
-            $api.post<CreateService[]>('/service/create', data)
+            $api.post<ServiceWithData>('/service/create', data)
         )
     },
-    updateService(updateData: CreateService): any {
+    updateService(updateData: CreateService): Promise<AxiosResponse<ServiceWithData>> {
         return (
-            $api.put<CreateService[]>('/service/updateservice', updateData)
+            $api.put<ServiceWithData>('/service/updateservice', updateData)
         )
     },
-    updateServiceStatus(data: UpdateServiceStatus): any {
+    updateServiceStatus(data: UpdateServiceStatus): Promise<AxiosResponse<ServiceWithData>> {
         return (
-            $api.put<CreateService[]>(`/service/updateservicestatus?id=${data.id}&status=${data.status}`, data)
+            $api.put<ServiceWithData>(`/service/updateservicestatus?id=${data.id}&status=${data.status}`, data)
         )
     },
 }

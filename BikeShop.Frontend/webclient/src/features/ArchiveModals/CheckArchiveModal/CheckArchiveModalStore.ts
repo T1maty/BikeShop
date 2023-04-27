@@ -2,7 +2,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes";
-import {ServiceAPI, ServiceItem} from "../../../entities";
+import {ServiceAPI, ServiceWithData} from "../../../entities";
 
 interface CheckArchiveModalStore {
     openCheckArchiveModal: boolean
@@ -10,7 +10,7 @@ interface CheckArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    archive: ServiceItem[]
+    archive: ServiceWithData[]
     getEndedServices: () => any // надо исправить тип
 }
 
@@ -28,7 +28,7 @@ const useCheckArchiveModal = create<CheckArchiveModalStore>()(persist(devtools(i
         return ServiceAPI.getAllServicesInfo().then(res => {
             set(state => {
                 state.archive = res.data
-                    .filter((item) => item.status === 'Ended')
+                    .filter((item) => item.service.status === 'Ended')
             })
             set({isLoading: false})
         }).catch((error: any) => {

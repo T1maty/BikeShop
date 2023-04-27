@@ -3,15 +3,13 @@ import s from './ServiceFinalArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
-import Enumerable from "linq"
-import {BikeShopPaths} from "../../../app/routes/paths"
 import useServiceFinalArchiveModal from './ServiceFinalArchiveModalStore'
 import BoxIcon from '../../../shared/assets/workspace/package-icon.svg'
 import WrenchIcon from '../../../shared/assets/workspace/wrench-icon.svg'
 import AllIcon from '../../../shared/assets/workspace/all-icon.svg'
 import ClientIcon from '../../../shared/assets/workspace/user-icon.svg'
 import MasterIcon from '../../../shared/assets/workspace/mechanic-icon.svg'
-import {ServiceItem} from "../../../entities"
+import {ServiceWithData} from "../../../entities"
 import {formatDate} from 'shared/utils/formatDate'
 
 export const ServiceFinalArchiveModal = () => {
@@ -43,7 +41,9 @@ export const ServiceFinalArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.serviceFinalArchiveModal_mainBlock}>
                     <div className={s.serviceFinalArchiveModal_title}>
@@ -51,9 +51,9 @@ export const ServiceFinalArchiveModal = () => {
                     </div>
                     <div className={s.serviceFinalArchiveModal_list}>
                         {
-                            archive.map((service: ServiceItem) => {
+                            archive.map((service: ServiceWithData) => {
                                 return (
-                                    <div className={s.supplyInvoiceArchiveModal_item} key={service.id}
+                                    <div className={s.supplyInvoiceArchiveModal_item} key={service.service.id}
                                          onDoubleClick={() => {
                                              // setIsCreating(false)
                                              // setCurrentSupplyInvoice(el);
@@ -63,15 +63,17 @@ export const ServiceFinalArchiveModal = () => {
                                         <div className={s.item_content}>
                                             <div className={s.content_info}>
                                                 <div>
-                                                    №{service.id}, {service.name}
+                                                    №{service.service.id}, {service.service.name}
                                                 </div>
                                                 <div className={s.cashBlock}>
                                                     <div className={s.cashBlock_img}>
                                                         <img src={ClientIcon} alt='client-icon'/>
                                                     </div>
                                                     <div className={s.cashBlock_info}>
-                                                        {service.client !== null ? service.client.lastName : 'Неизвестный'} {''}
-                                                        {service.client !== null ? service.client.firstName : 'клиент'}
+                                                        {//service.client !== null ? service.client.lastName : 'Неизвестный'
+                                                        } {''}
+                                                        {//service.client !== null ? service.client.firstName : 'клиент'
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div className={s.cashBlock}>
@@ -79,8 +81,10 @@ export const ServiceFinalArchiveModal = () => {
                                                         <img src={MasterIcon} alt='master-icon'/>
                                                     </div>
                                                     <div className={s.cashBlock_info}>
-                                                        {service.userMaster !== null ? service.userMaster.lastName : 'Неизвестный'} {''}
-                                                        {service.userMaster !== null ? service.userMaster.firstName : 'мастер'}
+                                                        {//service.userMaster !== null ? service.userMaster.lastName : 'Неизвестный'
+                                                        } {''}
+                                                        {//service.userMaster !== null ? service.userMaster.firstName : 'мастер'
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,11 +123,11 @@ export const ServiceFinalArchiveModal = () => {
                                             <div className={s.content_date}>
                                                 <div>
                                                     <div>Создан:</div>
-                                                    <div>{formatDate(service.createdAt)}</div>
+                                                    <div>{formatDate(service.service.createdAt)}</div>
                                                 </div>
                                                 <div>
                                                     <div>Закрыт:</div>
-                                                    <div>{formatDate(service.updatedAt)}</div>
+                                                    <div>{formatDate(service.service.updatedAt)}</div>
                                                 </div>
                                             </div>
                                         </div>
