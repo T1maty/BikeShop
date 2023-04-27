@@ -14,4 +14,9 @@ export const ShopAPI = {
             $api.get<ProductFullData[]>('/public/defaultproducts?Quantity=10')
         )
     },
+    getCatalogProductsByTag(data: any): Promise<AxiosResponse<ProductFullData[]>> {
+        return (
+            $api.get<ProductFullData[]>('/public/getproducts', data)
+        )
+    },
 }
