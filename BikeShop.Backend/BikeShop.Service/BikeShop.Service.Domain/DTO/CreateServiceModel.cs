@@ -10,7 +10,7 @@ public class CreateServiceModel : IMappable
 {
     public string Name { get; set; }
     public int ShopId { get; set; }
-    public ClientId Client { get; set; } 
+    public Guid ClientId { get; set; } 
     public string ClientDescription { get; set; }
     public Guid UserId { get; set; }
     public Guid UserMasterId { get; set; }

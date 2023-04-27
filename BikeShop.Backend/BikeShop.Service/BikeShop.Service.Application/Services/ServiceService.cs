@@ -35,7 +35,7 @@ public class ServiceService : IServiceService
         var service = _mapper.Map<Domain.Entities.Service>(model);
 
         service.UserCreatedId = model.UserId;
-        service.ClientId = model.Client.Id;
+        service.ClientId = model.ClientId;
 
         var serviceWorks = _mapper.ProjectTo<ServiceWork>(model.ServiceWorks.AsQueryable()).ToList();
         var serviceProducts = _mapper.ProjectTo<ServiceProduct>(model.ServiceProducts.AsQueryable()).ToList();
