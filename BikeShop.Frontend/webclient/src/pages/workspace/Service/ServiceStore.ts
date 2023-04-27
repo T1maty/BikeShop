@@ -2,8 +2,8 @@ import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
 import {
-    CreateService,
     EnumServiceStatus,
+    LocalStorage,
     ServiceAPI,
     ServiceWithData,
     UpdateServiceStatus,
@@ -32,8 +32,8 @@ interface ServiceStore {
     getMasters: () => void
 
     getAllServicesInfo: () => any
-    addNewService: (data: CreateService) => any
-    updateService: (updateData: CreateService, onSuccess: () => void) => any
+    addNewService: (data: ServiceWithData) => any
+    updateService: (updateData: ServiceWithData, onSuccess: () => void) => any
     updateServiceStatus: (data: UpdateServiceStatus, onSuccess: () => void) => void
 }
 
@@ -127,29 +127,18 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     },
     updateService: (updateData, onSuccess) => {
         set({isLoading: true})
-        ServiceAPI.updateService(updateData).then((res: any) => {
-            ServiceAPI.getAllServicesInfo().then(res => {
-                const currentListStatus = useService.getState().serviceListStatus
-
-                set(state => {
-                    state.services = res.data
+        let data = {...updateData, ...updateData.service, userId: LocalStorage.userId(), service: "nope"}
+        console.log('sendingToServerUpdate', data)
+        ServiceAPI.updateService(data).then((res) => {
+            set(state => {
+                state.services = state.services.map((ser) => {
+                    if (ser.service.id === res.data.service.id)
+                        return (res.data)
+                    else return (ser)
                 })
-
-                // надо сделать универсальную функцию ?!
-                if (currentListStatus === 'Waiting') {
-                    set(state => {
-                        state.filteredServices = state.services.filter(serv =>
-                            serv.service.status === 'Waiting' || serv.service.status === 'WaitingSupply')
-                    })
-                } else {
-                    set(state => {
-                        state.filteredServices = state.services.filter(serv =>
-                            serv.service.status === currentListStatus)
-                    })
-                }
-                onSuccess();
-                set({isLoading: false})
             })
+            set({currentService: res.data})
+            set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
         }).finally(() => {

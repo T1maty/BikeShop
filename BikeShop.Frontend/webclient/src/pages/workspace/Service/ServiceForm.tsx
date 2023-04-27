@@ -39,18 +39,17 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
     const onSubmit: SubmitHandler<ServiceWithData> = (data: ServiceWithData) => {
         // создание сервиса
         if (isCreating) {
-            //data.service.userId = LocalStorage.userId()!
-            //data.shopId = parseInt(LocalStorage.shopId()!)
             setIsCreating(false)
             console.log('create IF works, new data =', data)
-            //addNewService(data)
+            addNewService(data)
         }
 
         // обновление сервиса
         if (!isCreating) {
-            //data.userId = LocalStorage.userId()!
             console.log('update IF works, updateData = ', data)
-            //updateService(data, () => {formControl.reset()})
+            updateService(data, () => {
+                formControl.reset()
+            })
         }
     }
 
@@ -63,7 +62,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
 
     useEffect(() => {
         let summ = 0
-        formControl.getValues('works').forEach(n => {
+        formControl.getValues('works')?.forEach(n => {
             summ += (n.price * n.quantity)
         })
         setSummWorks(summ)
@@ -71,7 +70,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
 
     useEffect(() => {
         let summ = 0
-        formControl.getValues('products').forEach(n => {
+        formControl.getValues('products')?.forEach(n => {
             summ += (n.price * n.quantity)
         })
         setSummProducts(summ)
@@ -79,15 +78,9 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
 
     useEffect(() => {
         formControl.reset()
-        //formControl.setValue('id', currentService ? currentService.service.id : 0)
-        //formControl.setValue('name', currentService ? currentService.service.name : '')
-        //formControl.setValue('clientDescription', currentService ? currentService.service.clientDescription : '')
-        //formControl.setValue('userMasterId', currentService ? currentService.service.userMasterId : '')
-
-        //formControl.setValue('client', currentService ? currentService.service.client : {} as User)
-
-        //formControl.setValue('serviceProducts', currentService ? currentService.products : [])
-        //formControl.setValue('serviceWorks', currentService ? currentService.works : [])
+        formControl.setValue('service', currentService?.service!)
+        formControl.setValue('products', currentService ? currentService.products : [])
+        formControl.setValue('works', currentService ? currentService.works : [])
     }, [currentService])
 
     useEffect(() => {
@@ -129,7 +122,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                                         options={masters}
                                         isDisabled={currentService === null && !isCreating}
                                         isSearchable
-                                        value={masters.find(n => n.id === field.value.userMasterId)}
+                                        value={masters.find(n => n.id === field.value?.userMasterId)}
                                         onChange={(value: any) => {
                                             field.onChange({...field.value, userMasterId: value.id})
                                         }}
@@ -148,7 +141,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceWithData, an
                                         <Button className={s.content_saveBtn} type={'submit'}
                                                 disabled={!formControl.formState.isDirty}>Сохранить</Button>
                                         :
-                                        formControl.getValues('service').id > 0 ?
+                                        formControl.getValues('service')?.id > 0 ?
                                             <Button className={s.content_saveBtn} type={'submit'}
                                                     disabled={!formControl.formState.isDirty}>Обновить</Button>
                                             :
