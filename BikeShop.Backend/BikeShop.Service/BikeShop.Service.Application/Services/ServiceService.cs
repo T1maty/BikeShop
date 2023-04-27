@@ -30,7 +30,7 @@ public class ServiceService : IServiceService
         _shopClient = shopClient;
     }
 
-    public async Task<GetServiceDTO> CreateService(CreateServiceModel model)
+    public async Task<ServiceWithProductsWorksDTO> CreateService(CreateServiceModel model)
     {
         var service = _mapper.Map<Domain.Entities.Service>(model);
 
@@ -76,7 +76,7 @@ public class ServiceService : IServiceService
         return await prods.ToListAsync();
     }
 
-    public async Task<GetServiceDTO> GetServiceById(int Id)
+    public async Task<ServiceWithProductsWorksDTO> GetServiceById(int Id)
     {
         //Достаем сущность ремонта и мапим ее в сущность для ответа
         var services = _context.Services.Where(n => n.Id == Id);
@@ -112,10 +112,10 @@ public class ServiceService : IServiceService
             service.UserMaster = usersDitionary.ContainsKey(userMasterId) ? usersDitionary[userMasterId] : null;
         });
 
-        return servicesModel.First();
+        return new ServiceWithProductsWorksDTO { Service = services.First(), Products = servicesModel.First().Products, Works = servicesModel.First().Works};
     }
 
-    public async Task<List<GetServiceDTO>> GetServiceByShopId(int ShopId)
+    public async Task<List<ServiceWithProductsWorksDTO>> GetServiceByShopId(int ShopId)
     {
         //Достаем сущность ремонта и мапим ее в сущность для ответа
         var services = _context.Services.Where(n => n.ShopId == ShopId);
@@ -138,7 +138,9 @@ public class ServiceService : IServiceService
         var servicesIds = servicesList.Select(s => s.Id).ToList();
         var allWorks = await _context.ServiceWorks.Where(n => servicesIds.Contains(n.ServiceId)).ToListAsync();
         var allProducts = await _context.ServiceProducts.Where(n => servicesIds.Contains(n.ServiceId)).ToListAsync();
-        
+
+        var res = new List<ServiceWithProductsWorksDTO>();
+
         servicesModel.ForEach(service => {
             service.Works = allWorks.Where(n=>n.ServiceId == service.Id).ToList();
             service.Products = allProducts.Where(n=>n.ServiceId == service.Id).ToList();
@@ -154,9 +156,11 @@ public class ServiceService : IServiceService
 
             var userMasterId = servicesList.Where(n => n.Id == service.Id).First().UserMasterId.ToString();
             service.UserMaster = usersDitionary.ContainsKey(userMasterId) ? usersDitionary[userMasterId] : null;
+
+            res.Add(new ServiceWithProductsWorksDTO { Works = service.Works, Products = service.Products, Service = servicesList.Where(n => n.Id == service.Id).First() });
         });
         
-        return servicesModel;
+        return res;
     }
 
     public async Task<List<ServiceWork>> GetWorksByMaster(Guid userId)
@@ -298,7 +302,7 @@ public class ServiceService : IServiceService
         return new ServiceWithProductsWorksDTO { Service = serviceCont, Products = totalProducts, Works = totalWorks };
     }
 
-    public async Task UpdateStatus(string status, int id)
+    public async Task<ServiceWithProductsWorksDTO> UpdateStatus(string status, int id)
     {
         if (StatusDict.Get().ContainsKey(status))
         {
@@ -319,6 +323,10 @@ public class ServiceService : IServiceService
         {
             throw Errors.StatusNotFound;
         }
+
+        var r = await GetServiceById(id);
+
+        return r;
     }
 
     private async Task UpdateReservation(List<ServiceProduct> OldProducts, List<ServiceProduct> NewProducts, int storageId)

@@ -32,7 +32,7 @@ public class ServiceController : ControllerBase
     /// <response code="200">Успех. Возвращает массив сервисов/ремонтов</response>
     [HttpGet("getbyshopid/{shopid:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<GetServiceDTO>>> GetOngoingServicesByShopId(int shopid)
+    public async Task<ActionResult<List<ServiceWithProductsWorksDTO>>> GetOngoingServicesByShopId(int shopid)
     {
         var model = await _serviceService.GetServiceByShopId(shopid);
 
@@ -80,25 +80,20 @@ public class ServiceController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> UpdateServiceStatus([FromQuery] string status, int id)
+    public async Task<ServiceWithProductsWorksDTO> UpdateServiceStatus([FromQuery] string status, int id)
     {
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        await _serviceService.UpdateStatus(status, id);
-
-        return Ok();
+        return await _serviceService.UpdateStatus(status, id);
     }
     
     [HttpPost("create")]
-    public async Task<GetServiceDTO> Create([FromBody] CreateServiceModel model)
+    public async Task<ServiceWithProductsWorksDTO> Create([FromBody] CreateServiceModel model)
     {
 
         return await _serviceService.CreateService(model);
     }
 
     [HttpGet("getbyid")]
-    public async Task<GetServiceDTO> GetById([FromQuery] int Id)
+    public async Task<ServiceWithProductsWorksDTO> GetById([FromQuery] int Id)
     {
 
         return await _serviceService.GetServiceById(Id);
