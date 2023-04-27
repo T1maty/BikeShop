@@ -12,6 +12,7 @@ interface UseCatalogStore {
     tags: ProductTag[]
     getTags: () => void
     userCurrentTags: ProductTag[]
+    setUserCurrentTagsArray: (array: any[]) => void
     setUserCurrentTag: (tag: ProductTag) => void
     deleteUserCurrentTag: (filteredTags: ProductTag[]) => void
 
@@ -48,6 +49,9 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         })
     },
     userCurrentTags: [],
+    setUserCurrentTagsArray: (array) => set(state => {
+        state.userCurrentTags = array
+    }),
     setUserCurrentTag: (tag) => set(state => {
         state.userCurrentTags.push(tag)
     }),

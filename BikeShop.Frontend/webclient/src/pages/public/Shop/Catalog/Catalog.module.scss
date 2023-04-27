@@ -81,7 +81,9 @@
                     }
 
                     .cloudTag_title {
-
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
                     }
                     .cloudTag_item {
                         @include flexCenter;
