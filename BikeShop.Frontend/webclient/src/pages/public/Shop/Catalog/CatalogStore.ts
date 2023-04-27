@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, ProductCardAPI, ProductFullData, ProductTag, ShopAPI} from '../../../../entities'
+import {CatalogAPI, Product, ProductCardAPI, ProductFullData, ProductTag, ShopAPI} from '../../../../entities'
 import {ErrorStatusTypes} from '../../../../entities/enumerables/ErrorStatusTypes'
 
 interface UseCatalogStore {
@@ -22,7 +22,7 @@ interface UseCatalogStore {
     setCurrentProduct: (product: ProductFullData | null) => void
     getCurrentProduct: (productId: number) => void
 
-    searchProductsResult: any[]
+    searchProductsResult: Product[]
     getSearchProducts: (inputValue: string) => void
 }
 
@@ -98,6 +98,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             set(state => {
                 state.searchProductsResult = res.data
                 set({isLoading: false})
+                console.log('найденные товары', state.searchProductsResult)
             })
         }).catch((error: any) => {
             set({errorStatus: 'error'})

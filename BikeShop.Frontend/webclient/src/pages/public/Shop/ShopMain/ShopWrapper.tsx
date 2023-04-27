@@ -27,8 +27,10 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
     return (
         <div className={s.shop_wrapper}>
             <ShopHeader isAuth={isAuth} user={user!}
-                        searchMobileActive={searchMobileActive} setSearchMobileActive={setSearchMobileActive}
-                        searchProductValue={searchProductValue} setSearchProductValue={setSearchProductValue}
+                        searchMobileActive={searchMobileActive}
+                        setSearchMobileActive={setSearchMobileActive}
+                        searchProductValue={searchProductValue}
+                        setSearchProductValue={setSearchProductValue}
             />
 
             <div className={s.shop_main}

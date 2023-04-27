@@ -32,7 +32,7 @@ export const Catalog = () => {
 
     const defaultProducts = useCatalog(s => s.defaultProducts)
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
-    const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
+    // const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
@@ -100,7 +100,6 @@ export const Catalog = () => {
                     variant: 'info', autoHideDuration: 2000,
                     anchorOrigin: {vertical: 'top', horizontal: 'right'}
                 })
-            // return
         } else {
             setUserCurrentTag(tag)
         }
