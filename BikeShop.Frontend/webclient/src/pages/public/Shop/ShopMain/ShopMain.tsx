@@ -1,4 +1,4 @@
-﻿import React, {useState} from 'react'
+﻿import React, {useEffect, useState} from 'react'
 import s from './ShopMain.module.scss'
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../../app/routes/paths"
@@ -20,10 +20,15 @@ import catalogAccessories from '../../../../shared/assets/shop/images/catalog-ac
 import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
 import catalogRaznoe from '../../../../shared/assets/shop/images/catalog-raznoe.png'
 import catalogSamokat from '../../../../shared/assets/shop/images/catalog-samokat.png'
+import useCatalog from "../Catalog/CatalogStore"
 
 export const ShopMain = () => {
 
     const navigate = useNavigate()
+
+    const tags = useCatalog(s => s.tags)
+    const getTags = useCatalog(s => s.getTags)
+    const setUserCurrentTag = useCatalog(s => s.setUserCurrentTag)
 
     const [sliderImages, setSliderImages] = useState([
         {
@@ -38,6 +43,10 @@ export const ShopMain = () => {
 
     // вариант совмещения двух и более классов в одном
     // const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
+
+    useEffect(() => {
+        getTags()
+    }, [])
 
     return (
         <div className={s.shop_wrapper}>
@@ -69,7 +78,12 @@ export const ShopMain = () => {
                             <div className={s.catalog_item5}>
                                 <img src={catalogProtection} alt="catalog-spares"/>
                             </div>
-                            <div className={s.catalog_item1} onClick={() => {}}>
+                            <div className={s.catalog_item1}
+                                 onClick={() => {
+                                     setUserCurrentTag(tags[1])
+                                     navigate(BikeShopPaths.SHOP.CATALOG)}
+                                }
+                            >
                                 <img src={catalogBikes} alt="catalog-spares"/>
                             </div>
 

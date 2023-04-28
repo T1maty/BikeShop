@@ -127,7 +127,7 @@ export const Catalog = () => {
             getTags()
             getDefaultProducts()
         } else {
-            getProductsByTags([1])
+            getProductsByTags([4]) // надо доделать
         }
     }, [])
 

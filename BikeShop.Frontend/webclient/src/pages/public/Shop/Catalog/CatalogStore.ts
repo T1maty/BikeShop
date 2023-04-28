@@ -66,6 +66,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
         ShopAPI.getDefaultProducts().then(res => {
             set(state => {
                 state.defaultProducts = res.data
+                console.log('дефолтные товары', state.defaultProducts)
             })
             set({isLoading: false})
         }).catch((error: any) => {
@@ -84,6 +85,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
+            console.log('ошибка получения по тегам', error)
         }).finally(() => {
             set({errorStatus: 'default'})
             // set({isLoading: false})
