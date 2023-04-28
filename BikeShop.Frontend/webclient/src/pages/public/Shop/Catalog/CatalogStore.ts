@@ -18,6 +18,7 @@ interface UseCatalogStore {
 
     defaultProducts: ProductFullData[]
     getDefaultProducts: () => void
+    getProductsByTags: (tags: any) => void
 
     currentProduct: ProductFullData | null
     setCurrentProduct: (product: ProductFullData | null) => void
@@ -63,6 +64,20 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
     getDefaultProducts: () => {
         set({isLoading: true})
         ShopAPI.getDefaultProducts().then(res => {
+            set(state => {
+                state.defaultProducts = res.data
+            })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            // set({isLoading: false})
+        })
+    },
+    getProductsByTags: (tags) => {
+        set({isLoading: true})
+        ShopAPI.getCatalogProductsByTag(tags).then(res => {
             set(state => {
                 state.defaultProducts = res.data
             })

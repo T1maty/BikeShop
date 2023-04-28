@@ -6,13 +6,18 @@
     background-color: var(--header-color);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
-    @include flexCenter;
+    //@include flexCenter;
 
     .content {
-        width: 91%;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas: "leftSide center rightSide";
+        //width: 91%;
+        //display: grid;
+        //grid-template-columns: 1fr 1fr 1fr;
+        //grid-template-areas: "leftSide center rightSide";
+
+        height: var(--navbar-height);
+        @include defaultContainer;
+        padding: $defaultLargeMargin;
+        @include flexBetween;
 
         .leftSide {
             display: flex;
@@ -63,6 +68,15 @@
 
         .center {
             @include flexCenter;
+            gap: 20px;
+
+            .clock {
+                @include flexCenter;
+                width: 75px;
+            }
+            .currency {
+                width: 130px;
+            }
         }
 
         .rightSide {
@@ -73,5 +87,3 @@
         }
     }
 }
-
-

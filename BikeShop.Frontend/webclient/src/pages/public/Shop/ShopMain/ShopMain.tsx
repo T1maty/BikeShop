@@ -69,7 +69,7 @@ export const ShopMain = () => {
                             <div className={s.catalog_item5}>
                                 <img src={catalogProtection} alt="catalog-spares"/>
                             </div>
-                            <div className={s.catalog_item1}>
+                            <div className={s.catalog_item1} onClick={() => {}}>
                                 <img src={catalogBikes} alt="catalog-spares"/>
                             </div>
 

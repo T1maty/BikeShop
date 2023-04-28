@@ -33,6 +33,7 @@ export const Catalog = () => {
 
     const defaultProducts = useCatalog(s => s.defaultProducts)
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
+    const getProductsByTags = useCatalog(s => s.getProductsByTags)
     // const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
@@ -122,8 +123,12 @@ export const Catalog = () => {
 
     useEffect(() => {
         setActiveFilter1(true)
-        getTags()
-        getDefaultProducts()
+        if (userCurrentTags.length === 0) {
+            getTags()
+            getDefaultProducts()
+        } else {
+            getProductsByTags([1])
+        }
     }, [])
 
     if (isLoading) {
