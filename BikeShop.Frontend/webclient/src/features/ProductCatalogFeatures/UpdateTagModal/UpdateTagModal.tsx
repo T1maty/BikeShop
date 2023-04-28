@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import s from './UpdateTagModal.module.scss'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {UpdateTag} from '../../../entities'
-import {ControlledCustomCheckbox, ControlledCustomInput,
-    Button, CustomModal} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useUpdateTagModal from './UpdateTagModalStore'
 
@@ -60,11 +59,15 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {setClose()}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                setClose()
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.updateTagModal_mainBox}>
-                <div onSubmit={control.handleSubmit(onSubmit)}>
+                <form onSubmit={control.handleSubmit(onSubmit)}>
                     <div className={s.updateTagModal_inputs}>
                         <div>
                             ID: {tag.id}
@@ -98,7 +101,7 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
                             Редактировать тег
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </CustomModal>
     )

@@ -1,9 +1,8 @@
-import {EntitiesAPI} from "entities/api/EntitiesAPI"
 import {create} from "zustand"
-import {devtools, persist} from "zustand/middleware"
+import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {Currency} from "../../../entities"
+import {Currency, EntitiesAPI} from "../../../entities"
 
 interface CreateCurrencyModalStore {
     openCurrencyModal: boolean
@@ -53,6 +52,7 @@ const useCreateCurrencyModal = create<CreateCurrencyModalStore>()(/*persist(*/de
             set(state => {
                 state.currencies.push(res.data)
             })
+
             set({isLoading: false})
             set({errorStatus: 'success'})
         }).catch((error: any) => {

@@ -6,4 +6,5 @@ export interface UniTableColumn {
     align?: 'right' | 'left' | 'center';
     isEditable?: boolean
     isNumber?: boolean
+    isCurrency?: boolean
 }

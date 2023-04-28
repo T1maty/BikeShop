@@ -1,15 +1,7 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {
-    EnumServiceStatus,
-    LocalStorage,
-    ServiceAPI,
-    ServiceFormModel,
-    ServiceWithData,
-    UpdateServiceStatus,
-    User
-} from '../../../entities'
+import {LocalStorage, ServiceAPI, ServiceFormModel, ServiceWithData, UpdateServiceStatus, User} from '../../../entities'
 import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
@@ -52,7 +44,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     setCurrentService: (service) => {
         set({currentService: service})
     },
-    serviceListStatus: EnumServiceStatus.Waiting,
+
+    serviceListStatus: "Waiting",
+
     setServiceListStatus: (serviceListStatus) => {
         set({serviceListStatus: serviceListStatus})
     },

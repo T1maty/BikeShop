@@ -32,6 +32,7 @@ export const columns: UniTableColumn[] = [
         label: 'Цена',
         minWidth: 70,
         align: 'left',
+        isCurrency: true
     },
     {
         id: 'discount',

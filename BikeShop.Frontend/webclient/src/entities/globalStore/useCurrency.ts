@@ -1,8 +1,9 @@
 import $api from "shared/http/axios";
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
-import {immer} from "zustand/middleware/immer"
+
 import {Currency} from "../models/Others/Currency";
+import {immer} from "zustand/middleware/immer";
 
 interface props {
     allCurrencies: Currency[]
@@ -10,11 +11,15 @@ interface props {
     baseCurrency: Currency | null
     selectedCurrency: Currency | null
     setSelectedCurrency: (id: number) => void
-    fromSelectedToBase: (value: number) => { res: number, s: string }
-    fromBaseToSelected: (value: number) => { res: number, s: string }
+    fromSelectedToBase: { c: number, s: string }
+    fromBaseToSelected: { c: number, s: string }
+    roundUp: (v: number) => {}
 }
 
 export const useCurrency = create<props>()(persist(devtools(immer((set, get) => ({
+
+    fromBaseToSelected: {c: 1, s: ''},
+    fromSelectedToBase: {c: 1, s: ''},
     allCurrencies: [],
     baseCurrency: null,
     selectedCurrency: null,
@@ -24,25 +29,25 @@ export const useCurrency = create<props>()(persist(devtools(immer((set, get) => 
             set(state => {
                 state.allCurrencies = n.data
             })
+            let bc = n.data.filter(n => n.isBaseCurrency === true)[0]
             set(state => {
-                state.baseCurrency = n.data.filter(n => n.isBaseCurrency === true)[0]
+                state.baseCurrency = bc
             })
-            set(state => {
-                state.selectedCurrency = state.baseCurrency
-            })
+            if (get().selectedCurrency == null)
+                get().setSelectedCurrency(bc.id)
         })
     },
     setSelectedCurrency: (id) => {
         let Cur = get().allCurrencies.find(n => n.id === id)
+        if (Cur === undefined) console.log('UNDEFINED')
         set(state => {
             state.selectedCurrency = Cur!
+            state.fromBaseToSelected = {c: Cur!.coefficient, s: Cur!.symbol}
+            state.fromSelectedToBase = {c: 1 / Cur!.coefficient, s: Cur!.symbol}
         })
     },
-    fromSelectedToBase: (value) => {
-        return {res: value / get().selectedCurrency?.coefficient!, s: get().selectedCurrency?.symbol!}
-    },
-    fromBaseToSelected: (value) => {
-        return {res: value * get().selectedCurrency?.coefficient!, s: get().selectedCurrency?.symbol!}
+    roundUp: (v) => {
+        return (Math.round(v * 10) / 10).toFixed(2).replace('.00', '')
     }
 }))), {
     name: "useCurrency",

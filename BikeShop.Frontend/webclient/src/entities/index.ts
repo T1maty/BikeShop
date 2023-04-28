@@ -30,6 +30,7 @@ export type {ServiceWork} from './entities/Service/ServiceWork'
 export type {ShiftAction} from './entities/ShiftAction'
 export type {BillWithProducts} from './models/BillWithProducts'
 export {useCurrency} from './globalStore/useCurrency'
+export {EntitiesAPI} from './api/EntitiesAPI'
 
 
 ///////////////
@@ -111,7 +112,6 @@ export type {SalaryResponse} from './responses/SalaryResponse'
 ///////////////////////////////////
 export {AuthAPI} from './api/AuthAPI'
 export {CatalogAPI} from './api/CatalogAPI'
-export {EntitiesAPI} from './api/EntitiesAPI'
 export {FinancialInteractionAPI} from './api/FinancialInteractionAPI'
 export {ProductCardAPI} from './api/ProductCardAPI'
 export {ServiceAPI} from './api/ServiceAPI'

@@ -29,7 +29,8 @@ export const columns: UniTableColumn[] = [
         minWidth: 70,
         align: 'left',
         isEditable: true,
-        isNumber: true
+        isNumber: true,
+        isCurrency: true
     },
     {
         id: 'description',

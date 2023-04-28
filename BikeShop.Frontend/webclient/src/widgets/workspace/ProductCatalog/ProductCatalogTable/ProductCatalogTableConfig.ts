@@ -1,11 +1,6 @@
-export interface Column {
-    id: 'id' | 'name' | 'quantity' | 'quantityUnitName' | 'incomePrice' | 'dealerPrice' | 'retailPrice' | 'catalogKey' | 'checkStatus';
-    label: string;
-    minWidth?: number;
-    align?: 'right' | 'left';
-}
+import {UniTableColumn} from "../../../../entities";
 
-export const columns: Column[] = [
+export const columns: UniTableColumn[] = [
     {
         id: 'id',
         label: 'Артикул',
@@ -42,18 +37,21 @@ export const columns: Column[] = [
         label: 'Средний приход',
         minWidth: 70,
         align: 'right',
+        isCurrency: true
     },
     {
         id: 'dealerPrice',
         label: 'Цена оптовая',
         minWidth: 70,
         align: 'right',
+        isCurrency: true
     },
     {
         id: 'retailPrice',
         label: 'Цена розничная',
         minWidth: 70,
         align: 'right',
+        isCurrency: true
     },
     /*{
         id: 'tags',

@@ -3,15 +3,7 @@ import cls from "./UniTable.module.scss"
 import {Loader} from "../Loader/Loader"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
 import {useSnackbar} from "notistack"
-
-export interface Column {
-    id: string
-    label: string
-    minWidth?: number
-    align?: 'right' | 'left'
-    isEditable?: boolean
-    isNumber?: boolean
-}
+import {UniTableColumn, useCurrency} from "../../../entities";
 
 interface TableProps {
     rows: any[]
@@ -31,7 +23,7 @@ interface TableProps {
 interface TableRowProps {
     row?: any
     setRow: (row: any) => void
-    columns: any[]
+    columns: UniTableColumn[]
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
 
@@ -81,14 +73,14 @@ export const UniTable = (props: TableProps) => {
 }
 
 
-const TableHeadItem = memo((props: { theadData: Column[] }) => {
+const TableHeadItem = memo((props: { theadData: UniTableColumn[] }) => {
 
     const {theadData} = props
 
     return (
         <tr className={cls.head_items}>
             {
-                theadData.map((item: Column, index) =>
+                theadData.map((item: UniTableColumn, index) =>
                     <td key={index} title={item.id} className={cls.head_item}>
                         {item.label}
                     </td>
@@ -100,6 +92,10 @@ const TableHeadItem = memo((props: { theadData: Column[] }) => {
 
 
 const TableRow = memo((props: TableRowProps) => {
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const fstb = useCurrency(s => s.fromSelectedToBase)
+    const r = useCurrency(s => s.roundUp)
 
     return (
         <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
@@ -117,24 +113,51 @@ const TableRow = memo((props: TableRowProps) => {
         >
             {
                 props.columns.map((item, index) => {
+                    if (item.isCurrency) item.isNumber = true
                     return <td key={index}>
                         {
-                            item.isEditable ?
-                                <EditableSpan title={props.row[item.id]}
-                                              onChangeInput={(newInputValue) => {
-                                                  if (item.isNumber) {
-                                                      let newValue = Number.parseFloat(newInputValue).toString()
-                                                      let newRow = {...props.row}
-                                                      if (newValue != 'NaN') {
-                                                          newRow[item.id] = newValue
-                                                          console.log('updated')
+                            item.isCurrency ?
+                                item.isEditable ?
+                                    //Ячейка редактируемая + валюта
+                                    <div>
+                                        <EditableSpan title={r(props.row[item.id] * fbts.c).toString()}
+                                                      onChangeInput={(newInputValue) => {
+                                                          if (item.isNumber) {
+                                                              let newValue = (Number.parseFloat(newInputValue) * fstb.c).toString()
+                                                              let newRow = {...props.row}
+                                                              if (newValue != 'NaN') {
+                                                                  newRow[item.id] = newValue
+                                                                  console.log('updated')
+                                                              }
+                                                              props.setRow(newRow)
+                                                          }
+                                                      }}
+                                                      inputClassName={cls.inputClassName}
+                                        />
+                                        <div>{fbts.s}</div>
+
+                                    </div>
+                                    //Ячейка нередактируемая + валюта
+                                    : r(props.row[item.id] * fbts.c) + fbts.s
+                                :
+                                item.isEditable ?
+                                    //Ячейка редактируемая + не валюта
+                                    <EditableSpan title={props.row[item.id]}
+                                                  onChangeInput={(newInputValue) => {
+                                                      if (item.isNumber) {
+                                                          let newValue = Number.parseFloat(newInputValue).toString()
+                                                          let newRow = {...props.row}
+                                                          if (newValue != 'NaN') {
+                                                              newRow[item.id] = newValue
+                                                              console.log('updated')
+                                                          }
+                                                          props.setRow(newRow)
                                                       }
-                                                      props.setRow(newRow)
-                                                  }
-                                              }}
-                                              inputClassName={cls.inputClassName}
-                                />
-                                : props.row[item.id]
+                                                  }}
+                                                  inputClassName={cls.inputClassName}
+                                    />
+                                    //Ячейка не редактируемая + не валюта
+                                    : props.row[item.id]
                         }
                     </td>
                 })

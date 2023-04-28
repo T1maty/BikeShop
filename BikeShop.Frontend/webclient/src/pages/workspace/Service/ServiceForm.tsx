@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput,} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {ServiceFormModel, User} from "../../../entities"
+import {ServiceFormModel, useCurrency, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
@@ -34,6 +34,10 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const [openClientModal, setOpenClientModal] = useState(false)
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const fstb = useCurrency(s => s.fromSelectedToBase)
+    const r = useCurrency(s => s.roundUp)
 
     //formControl.register('service.name')
 
@@ -175,7 +179,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                             </Button>
                                 }
                             </div>
-                            <div className={s.content_sumField}>{summWorks + summProducts}</div>
+                            <div className={s.content_sumField}>{r((summWorks + summProducts) * fbts.c) + fbts.s}</div>
                         </div>
                     </div>
                     <div className={s.infoFields_clientCard}>

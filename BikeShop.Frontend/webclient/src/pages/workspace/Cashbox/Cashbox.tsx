@@ -20,11 +20,13 @@ import {BillProductDTO} from "./models/BillProductDTO"
 import Enumerable from "linq"
 import AsyncSelect from "react-select/async"
 import {useSnackbar} from "notistack"
+import {useTranslation} from "react-i18next";
 
 export const Cashbox = () => {
 
     const isActiveTable = true
     const {enqueueSnackbar} = useSnackbar()
+    const {t} = useTranslation();
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
 
@@ -41,7 +43,9 @@ export const Cashbox = () => {
     const [sum, setSum] = useState(0)
     const [res, setRes] = useState<BillWithProducts>()
 
-    const baseToS = useCurrency(s => s.fromBaseToSelected)
+    const bts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
+
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -262,7 +266,7 @@ export const Cashbox = () => {
                             </div>
                         </div>
                         <div className={s.buttonsBlock_two}>
-                            {baseToS(sum).res + baseToS(sum).s}
+                            {r(sum * bts.c) + bts.s}
                         </div>
                     </div>
                     <div className={s.rightSideBottom_payBlock}>

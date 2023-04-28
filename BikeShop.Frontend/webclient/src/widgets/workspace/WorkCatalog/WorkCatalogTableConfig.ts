@@ -1,11 +1,6 @@
-export interface Column {
-    id: 'id' | 'name' | 'price' | 'description';
-    label: string;
-    minWidth?: number;
-    align?: 'right' | 'left';
-}
+import {UniTableColumn} from "../../../entities";
 
-export const columns: Column[] = [
+export const columns: UniTableColumn[] = [
     {
         id: 'id',
         label: 'Артикул',
@@ -23,6 +18,7 @@ export const columns: Column[] = [
         label: 'Цена',
         minWidth: 70,
         align: 'right',
+        isCurrency: true
     },
     {
         id: 'description',

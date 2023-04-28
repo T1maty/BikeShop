@@ -3,6 +3,7 @@ import {Button} from '../../../shared/ui';
 import s from './ServiceTable.module.scss';
 import {ServiceItemProductWork} from "../../../entities/models/Service/ServiceItem";
 import {TableProductItem} from "../../../features";
+import {useCurrency} from "../../../entities";
 
 type ServiceTableProps = {
     data: ServiceItemProductWork[] | null
@@ -19,6 +20,10 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
                                                               disabledButton,
                                                               summ
                                                           }) => {
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const fstb = useCurrency(s => s.fromSelectedToBase)
+    const r = useCurrency(s => s.roundUp)
 
     const userClickHandler = () => {
         serviceTableCallback()
@@ -41,7 +46,7 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
                     </div>
                 </div>
                 <div className={s.buttons_resultField}>
-                    {summ}
+                    {r(summ * fbts.c) + fbts.s}
                 </div>
             </div>
             <div className={s.tableBox_table}>
