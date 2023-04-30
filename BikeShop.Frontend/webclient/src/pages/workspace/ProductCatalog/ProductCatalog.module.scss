@@ -6,13 +6,7 @@
     @include flexOnlyBetween;
     gap: $defaultLargeMargin;
 
-    //display: grid;
-    //grid-template-columns: 1fr 3fr;
-    //grid-template-areas: "categories tableBox";
-    //gap: $defaultLargeMargin;
-
     .productCatalogTable_leftSide {
-        //grid-area: categories;
         width: 25%;
         @include flexColumn;
 
@@ -35,60 +29,47 @@
     }
 
     .productCatalogTable_rightSide {
-        //grid-area: tableBox;
         width: 75%;
         @include flexColumn;
+        padding: $defaultLargeMargin;
+        background-color: $themeColorDark;
+        border-radius: $largeBorderRadius;
 
-        .rightSide_container {
+        .rightSide_searchRow {
+            @include flexOnlyBetween;
+            margin-bottom: $defaultLargeMargin;
+            width: 100%;
 
-            padding: $defaultLargeMargin;
-            background-color: $themeColorDark;
-            border-radius: $largeBorderRadius;
-
-            .rightSide_searchRow {
-                @include flexOnlyBetween;
-                margin-bottom: $defaultLargeMargin;
+            button {
                 width: 100%;
-
-                button {
-                    width: 100%;
-                }
-
-                .searchRow_searchInput {
-                    width: 50%;
-                }
             }
 
-            .rightSide_table {
-                //border: 1px solid white;
-                //height: 100%;
-                height: 900px;
-
-                //.table_content {
-                //    overflow-y: auto;
-                //    //height: 500px;
-                //    height: 100%;
-                //}
+            .searchRow_searchInput {
+                width: 50%;
             }
+        }
+
+        .rightSide_table {
+            height: 100%;
         }
     }
 }
 
-.productCatalogTable_mainBlock::-webkit-scrollbar {
-    width: 10px;
-    border-radius: 5px;
-}
-
-.productCatalogTable_mainBlock::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-.productCatalogTable_mainBlock::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-/* Handle on hover */
-.productCatalogTable_mainBlock::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
+//.productCatalogTable_mainBlock::-webkit-scrollbar {
+//    width: 10px;
+//    border-radius: 5px;
+//}
+//
+//.productCatalogTable_mainBlock::-webkit-scrollbar-track {
+//    background: #f1f1f1;
+//}
+//
+///* Handle */
+//.productCatalogTable_mainBlock::-webkit-scrollbar-thumb {
+//    background: #888;
+//}
+//
+///* Handle on hover */
+//.productCatalogTable_mainBlock::-webkit-scrollbar-thumb:hover {
+//    background: #555;
+//}

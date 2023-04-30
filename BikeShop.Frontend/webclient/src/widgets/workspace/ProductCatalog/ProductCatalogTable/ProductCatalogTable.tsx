@@ -45,26 +45,24 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
 
-            {/*<div className={s.table_content}>*/}
-                <UniTable rows={data}
-                          columns={columns}
-                          isLoading={isLoading}
-                          rowOnDoubleClick={(row) => {
-                              props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
-                          }}
-                          rowOnContext={(row, event) => {
-                              setContextVisible(true, event.clientX, event.clientY)
-                              let prd: ProductExtended = {} as ProductExtended
-                              prd.product = (row as Product)
-                              setSelected([prd])
-                          }}
-                          rowOnClick={(row) => {
-                              let prd: ProductExtended = {} as ProductExtended
-                              prd.product = (row as Product)
-                              setSelected([prd])
-                          }}
-                />
-            {/*</div>*/}
+            <UniTable rows={data}
+                      columns={columns}
+                      isLoading={isLoading}
+                      rowOnDoubleClick={(row) => {
+                          props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
+                      }}
+                      rowOnContext={(row, event) => {
+                          setContextVisible(true, event.clientX, event.clientY)
+                          let prd: ProductExtended = {} as ProductExtended
+                          prd.product = (row as Product)
+                          setSelected([prd])
+                      }}
+                      rowOnClick={(row) => {
+                          let prd: ProductExtended = {} as ProductExtended
+                          prd.product = (row as Product)
+                          setSelected([prd])
+                      }}
+            />
         </>
     )
 }

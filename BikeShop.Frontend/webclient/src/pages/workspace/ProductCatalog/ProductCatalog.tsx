@@ -45,36 +45,32 @@ export const ProductCatalog = () => {
             </div>
 
             <div className={s.productCatalogTable_rightSide}>
-                <div className={s.rightSide_container}>
-
-                    <div className={s.rightSide_searchRow}>
-                        <Button onClick={() => {}}>
-                            Отображение
-                        </Button>
-                        <div className={s.searchRow_searchInput}>
-                            <CustomSearchInput placeholder={'Поиск...'}
-                                               value={value}
-                                               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                                   setValue(e.currentTarget.value)
-                                               }}
-                                               clearInputValue={() => {setValue('')}}
-                            />
-                        </div>
-                        <Button onClick={() => {}}>
-                            Все товары
-                        </Button>
-                        <Button onClick={setNotSortedToTable}>
-                            Неотсортированные
-                        </Button>
+                <div className={s.rightSide_searchRow}>
+                    <Button onClick={() => {}}>
+                        Отображение
+                    </Button>
+                    <div className={s.searchRow_searchInput}>
+                        <CustomSearchInput placeholder={'Поиск...'}
+                                           value={value}
+                                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                               setValue(e.currentTarget.value)
+                                           }}
+                                           clearInputValue={() => {setValue('')}}
+                        />
                     </div>
-
-                    <div className={s.rightSide_table}
-                         onContextMenu={(event) => {event.preventDefault()}}
-                    >
-                        <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
-                    </div>
+                    <Button onClick={() => {}}>
+                        Все товары
+                    </Button>
+                    <Button onClick={setNotSortedToTable}>
+                        Неотсортированные
+                    </Button>
                 </div>
 
+                <div className={s.rightSide_table}
+                     onContextMenu={(event) => {event.preventDefault()}}
+                >
+                    <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
+                </div>
             </div>
         </div>
     )

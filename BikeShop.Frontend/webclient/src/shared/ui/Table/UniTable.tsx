@@ -3,7 +3,7 @@ import cls from "./UniTable.module.scss"
 import {Loader} from "../Loader/Loader"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
 import {useSnackbar} from "notistack"
-import {UniTableColumn, useCurrency} from "../../../entities";
+import {UniTableColumn, useCurrency} from "../../../entities"
 
 interface TableProps {
     rows: any[]
@@ -34,7 +34,6 @@ interface TableRowProps {
 export const UniTable = (props: TableProps) => {
 
     const [selected, setSelected] = useState([])
-    const {enqueueSnackbar} = useSnackbar()
 
     return (
         <>
