@@ -4,8 +4,10 @@ using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,6 +132,51 @@ namespace BikeShop.Products.Application.Services
             //Создаем сущность ответа, заполяем подготовленной информацией и возвращаем.
             return new StorageProductsDTO { Storage = storage, AvailableProducts = productQuantityDTOAvailable, ReservedProducts = productQuantityDTOReserved };
 
+        }
+
+        public async Task<string> GetFromBRUA()
+        {
+            
+            string connectionString = "Server=zf452963.mysql.tools;Database=zf452963_db;Uid=zf452963_db;Pwd=Q9kUMTVr;";
+            MySqlConnection dbConnection = new MySqlConnection(connectionString);
+
+            MySqlCommand command = new MySqlCommand("SELECT TovarId, Quantity FROM Storage", dbConnection);
+
+            dbConnection.Open();
+            
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            var prod = dt.Rows[0];
+
+            string ids = "";
+
+            foreach (DataRow row in dt.Rows) 
+            {
+                ids = ids + $"Id = {row[0]} OR ";
+            }
+
+            ids = ids.Remove(ids.Length - 4);
+
+            
+
+            MySqlCommand command1 = new MySqlCommand($"SELECT catalog_key, name, price_in, price_out, bar_code FROM tovars WHERE {ids}", dbConnection);
+            MySqlDataAdapter adapter1 = new MySqlDataAdapter(command1);
+            DataTable dt1 = new DataTable();
+            adapter1.Fill(dt1);
+
+            dbConnection.Close();
+            var np = new List<Product>();
+            foreach (DataRow row in dt1.Rows)
+            {
+                np.Add(new Product { Barcode = row[4].ToString(), CatalogKey = row[0].ToString(), CheckStatus = "JustCreatedByScript", DealerPrice = 0, IncomePrice = decimal.Parse(row[2].ToString()), RetailPrice = decimal.Parse(row[3].ToString()), Name = row[1].ToString(), QuantityUnitId = 1, BrandId = 1}) ;
+            }
+            await _context.Products.AddRangeAsync(np);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return ids;
         }
 
         public async Task UpdateReservationProducts(List<ProductQuantitySmplDTO> OldReservationProducts, List<ProductQuantitySmplDTO> NewReservationProducts, int storageId)

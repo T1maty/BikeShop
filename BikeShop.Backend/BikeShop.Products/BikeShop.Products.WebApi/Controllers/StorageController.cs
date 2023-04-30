@@ -42,5 +42,11 @@ namespace BikeShop.Products.WebApi.Controllers
             await _storageService.UpdateReservationProducts(dto.OldReservationProducts, dto.NewReservationProducts, storageId);
         }
 
+        [HttpPost("getFromBRUA")]
+        public async Task<string> GetFromBRUA()
+        {
+            return await _storageService.GetFromBRUA();
+        }
+
     }
 }
