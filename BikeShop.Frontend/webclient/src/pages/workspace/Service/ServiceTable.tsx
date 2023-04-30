@@ -1,15 +1,15 @@
-import React from 'react';
-import {Button} from '../../../shared/ui';
-import s from './ServiceTable.module.scss';
-import {ServiceItemProductWork} from "../../../entities/models/Service/ServiceItem";
-import {TableProductItem} from "../../../features";
-import {useCurrency} from "../../../entities";
+import React from 'react'
+import {Button} from '../../../shared/ui'
+import s from './ServiceTable.module.scss'
+import {ServiceItemProductWork} from "../../../entities/models/Service/ServiceItem"
+import {TableProductItem} from "../../../features"
+import {useCurrency} from "../../../entities"
 
 type ServiceTableProps = {
     data: ServiceItemProductWork[] | null
     buttonTitle: string
     serviceTableCallback: () => void
-    disabledButton: boolean,
+    disabledButton: boolean
     summ: number
 }
 
@@ -65,5 +65,5 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
                 }
             </div>
         </div>
-    );
-};
+    )
+}

@@ -2,7 +2,7 @@
 @import './src/app/styles/variables/variables';
 
 .tableBox {
-    border: 1px solid white;
+    //border: 1px solid white;
     @include widthHeightFull;
     height: 100%;
 
@@ -11,7 +11,9 @@
         margin-bottom: $defaultSmallMargin;
 
         .buttons_editBtn {
-
+            button {
+                height: 55px;
+            }
         }
         .buttons_discountField {
             @include flexColumn;
