@@ -1,4 +1,4 @@
-import {CreateStorage} from '../requests/CreateStorage';
+import {CreateStorage} from '../requests/CreateStorage'
 
 export interface CreateStorageResponse extends CreateStorage {
     id: number
