@@ -185,33 +185,51 @@
                     border-radius: $smallBorderRadius;
                     margin-right: $defaultSmallMargin;
                     font-size: 20px;
-                    width: 70%;
+                    width: 60%;
                 }
 
                 .bottom_right {
                     @include flexColumn;
                     justify-content: space-between;
-                    width: 30%;
+                    width: 40%;
 
-                    .bottom_right_one {
+                    > div {
+                        width: 100%;
+                    }
+                    .shiftStatus {
+                        background-color: orange;
+                        border-radius: $smallBorderRadius;
+                        padding: $defaultSmallMargin;
+                        color: black;
                         text-align: center;
                     }
+                    .shiftTime {
+                        @include flexCenter;
+                        gap: 5px;
+                    }
+                    .shiftTiming {
+                        @include flexBetween;
+                        font-size: 14px;
+                        text-align: center;
+                        background-color: $themeColorGray;
+                        border-radius: $smallBorderRadius;
+                        padding: $defaultSmallMargin;
+                    }
+                    .buttons {
+                        button {
+                            height: $smallButtonHeight;
+                            width: 100%;
+                        }
 
-                    .bottom_right_two {
-                        @include flexColumnOnly;
-                        justify-content: space-between;
+                        .pauseWorkDay_button {
+                            margin-bottom: $defaultSmallMargin;
+                        }
 
-                        .right_two_buttons {
+                        .endWorkDay_button {
                             button {
-                                height: $largeButtonHeight;
-                                width: 100%;
-                            }
-
-                            .pauseWorkDay_button {
-                                margin-bottom: $defaultSmallMargin;
-                            }
-                            .endWorkDay_button {
-
+                                &:hover {
+                                    background-color: red;
+                                }
                             }
                         }
                     }

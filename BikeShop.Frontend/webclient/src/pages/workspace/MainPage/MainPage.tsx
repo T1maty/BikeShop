@@ -15,7 +15,8 @@ import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
 import {ShiftAPI} from '../../../entities'
-import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore';
+import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
+import {formatWorkDayTime} from "../../../shared/utils/formatWorkDayTime"
 
 export const MainPage = () => {
 
@@ -243,27 +244,41 @@ export const MainPage = () => {
                             </div>
 
                             <div className={s.bottom_right}>
-                                <div className={s.bottom_right_one}>
-                                    <div>{userShiftStatus?.lastAction.action}</div>
-                                    <div>{userShiftStatus?.hours}</div>
+                                <div className={s.shiftStatus}>
+                                    {
+                                        userShiftStatus?.lastAction.action === 'Open' ? 'Смена открыта' :
+                                            userShiftStatus?.lastAction.action === 'Pause' ? 'Пауза' : 'Смена закрыта'
+                                    }
                                 </div>
-                                <div className={s.bottom_right_two}>
-                                    <div className={s.right_two_buttons}>
-                                        {getShiftButton()}
-
-                                        <Button buttonDivWrapper={s.endWorkDay_button}
-                                                onClick={() => {
-                                                    ShiftAPI.close(LocalStorage.userId()!).then(() => {
-                                                        getUserShiftStatus()
-                                                    })
-                                                }}
-                                        >
-                                            Закончить смену
-                                        </Button>
+                                <div className={s.shiftTime}>
+                                    <div style={{textDecoration: 'underline'}}>Время смены:</div>
+                                    <div>{formatWorkDayTime(userShiftStatus?.hours)}</div>
+                                </div>
+                                <div className={s.shiftTiming}>
+                                    <div>
+                                        <div>Открыто в:</div>
+                                        <div>10:00</div>
                                     </div>
+                                    <div>
+                                        <div>До конца смены:</div>
+                                        <div>10:00</div>
+                                    </div>
+                                </div>
+                                <div className={s.buttons}>
+                                    {getShiftButton()}
+
+                                    <Button buttonDivWrapper={s.endWorkDay_button}
+                                            onClick={() => {
+                                                ShiftAPI.close(LocalStorage.userId()!)
+                                                    .then(() => {getUserShiftStatus()})
+                                            }}
+                                    >
+                                        Закончить смену
+                                    </Button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
