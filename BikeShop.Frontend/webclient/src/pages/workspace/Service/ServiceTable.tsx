@@ -40,7 +40,7 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, se
                     </div>
                 </div>
                 <div className={s.buttons_resultField}>
-                    {r(summ * fbts.c) + fbts.s}
+                    {fbts.s + ' ' + r(summ * fbts.c)}
                 </div>
             </div>
             <div className={s.tableBox_table}>

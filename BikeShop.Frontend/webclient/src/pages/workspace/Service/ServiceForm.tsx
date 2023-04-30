@@ -137,9 +137,7 @@ export const ServiceForm = (props: {children: UseFormReturn<ServiceFormModel, an
                                         isDisabled={currentService === null && !isCreating}
                                         isSearchable
                                         value={masters.find(n => n.id === field.value)}
-                                        onChange={(value: any) => {
-                                            field.onChange(value.id)
-                                        }}
+                                        onChange={(value: any) => {field.onChange(value.id)}}
                                         noOptionsMessage={() => 'Мастер не найден'}
                                         getOptionLabel={label => label!.firstName}
                                         getOptionValue={value => value!.firstName}
