@@ -1,6 +1,6 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
-import {Button, CustomSearchInput} from '../../../shared/ui'
+import {AsyncSelectSearchProduct, Button} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
@@ -50,13 +50,7 @@ export const ProductCatalog = () => {
                         Отображение
                     </Button>
                     <div className={s.searchRow_searchInput}>
-                        <CustomSearchInput placeholder={'Поиск...'}
-                                           value={value}
-                                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                               setValue(e.currentTarget.value)
-                                           }}
-                                           clearInputValue={() => {setValue('')}}
-                        />
+                        <AsyncSelectSearchProduct/>
                     </div>
                     <Button onClick={() => {}}>
                         Все товары

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import s from './SelectProductWork.module.scss'
-import {Button, InputUI, UniTable} from '../../../shared/ui'
+import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
 import useSelectProduct from "./SelectProductStore"
 import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem"
@@ -61,7 +61,7 @@ export const SelectProduct = (props: SelectProductProps) => {
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
+                        <AsyncSelectSearchProduct/>
                     </div>
                     <div className={s.infoRow_result}>
                         <div className={s.result_sum}>
