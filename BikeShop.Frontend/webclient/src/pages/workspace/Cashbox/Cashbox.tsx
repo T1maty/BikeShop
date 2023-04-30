@@ -1,26 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import s from './Cashbox.module.scss'
 import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal, PrintModal} from '../../../features'
-import {Button, UniTable} from '../../../shared/ui'
+import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
-import {
-    BillWithProducts,
-    CatalogAPI,
-    FinancialInteractionAPI,
-    PaymentData,
-    Product,
-    useAuth,
-    useCurrency,
-    User
-} from '../../../entities'
+import {BillWithProducts, PaymentData, User,
+    FinancialInteractionAPI, useAuth, useCurrency} from '../../../entities'
 import {columns} from "./CashboxTableConfig"
-import {BillProductDTO} from "./models/BillProductDTO"
-import Enumerable from "linq"
-import AsyncSelect from "react-select/async"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
+import {asyncSelectSearchProductF} from '../../../shared/ui/AsyncSelectSearch/asyncSelectSearchProductF'
 
 export const Cashbox = () => {
 
@@ -34,7 +24,6 @@ export const Cashbox = () => {
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
     const bill = useCashboxStore(s => s.bill)
-    const addProduct = useCashboxStore(s => s.addProduct)
     const setData = useCashboxStore(s => s.setProducts)
 
     const [open, setOpen] = useState(false)
@@ -52,18 +41,6 @@ export const Cashbox = () => {
         setOpenClientModal(false)
     }
 
-    const loadOptions = (inputValue: string, callback: (value: Product[]) => void) => {
-        CatalogAPI.searchProductByName(inputValue).then((resp) => {
-            const asyncOptions = resp.data.map((n: Product) => {
-                return ({label: n.name, value: n.id})
-            })
-            console.log(asyncOptions)
-            callback(resp.data)
-        }).catch((r) => {
-            console.log('searchError', r)
-        })
-    }
-
     const paymentResultHandler = (value: PaymentData) => {
         let res = {...bill, ...value}
         res.userId = logUser != undefined ? logUser.id : ""
@@ -79,38 +56,6 @@ export const Cashbox = () => {
             setOpenPrint(true)
             setData([])
         })
-    }
-
-    const addProductHandler = (n: Product) => {
-        let exProd = Enumerable.from(bill.products)
-            .where(m => m.productId === n.id)
-            .firstOrDefault()
-
-        if (exProd !== undefined) {
-            setData(bill.products.map((m) => {
-                if (m.productId === n.id) {
-                    return {...m, quantity: m.quantity + 1}
-                } else {
-                    return m
-                }
-            }))
-        } else {
-            let newProd: BillProductDTO = {
-                productId: n.id,
-                name: n.name,
-                catalogKey: n.catalogKey,
-                serialNumber: '',
-                description: '',
-                quantity: 1,
-                quantityUnitName: "123",
-                currencySymbol: "123",
-                price: n.retailPrice,
-                discount: 0,
-                total: n.retailPrice
-            }
-            console.log('selectedProd', n)
-            setData([...bill.products, newProd])
-        }
     }
 
     useEffect(() => {
@@ -136,28 +81,30 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock_leftSideWrapper}>
                 <div className={s.leftSide_tables}>
-                    <Button onClick={() => {
-                    }} disabled={!isActiveTable}>
+                    <Button onClick={() => {}}
+                            disabled={!isActiveTable}
+                    >
                         Касса 1
                     </Button>
-                    <Button onClick={() => {
-                    }} disabled={isActiveTable}>
+                    <Button onClick={() => {}}
+                            disabled={isActiveTable}
+                    >
                         Касса 2
                     </Button>
-                    <Button onClick={() => {
-                    }} disabled={isActiveTable}>
+                    <Button onClick={() => {}}
+                            disabled={isActiveTable}
+                    >
                         Касса 3
                     </Button>
-                    <Button onClick={() => {
-                    }} disabled={isActiveTable}>
+                    <Button onClick={() => {}}
+                            disabled={isActiveTable}
+                    >
                         Касса 4
                     </Button>
                 </div>
 
                 <div className={s.leftSide_client}>
-                    <ChooseClientModal extraCallback={(user: User) => {
-                        chooseClientHandler(user)
-                    }}/>
+                    <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
 
                     <ClientCard user={user}/>
                     <div className={s.leftSide_client_buttons}>
@@ -167,8 +114,7 @@ export const Cashbox = () => {
                             Выбрать клиента
                         </Button>
                         <Button buttonDivWrapper={s.client_buttons_cancel}
-                                onClick={() => {
-                                }}
+                                onClick={() => {}}
                         >
                             X
                         </Button>
@@ -194,14 +140,12 @@ export const Cashbox = () => {
                         <ChooseDiscountModal/>
 
                         <Button buttonDivWrapper={s.buttons_choose}
-                                onClick={() => {
-                                }}
+                                onClick={() => {}}
                         >
                             Выбрать скидку для клиента
                         </Button>
                         <Button buttonDivWrapper={s.buttons_cancel}
-                                onClick={() => {
-                                }}
+                                onClick={() => {}}
                         >
                             X
                         </Button>
@@ -213,34 +157,18 @@ export const Cashbox = () => {
                 <div className={s.cashboxMainBlock_rightSideHeader}>
                     <ChooseProductModal open={open}
                                         setOpen={setOpen}
-                                        addData={addProductHandler}
+                                        addData={asyncSelectSearchProductF}
                                         data={bill.products}
                                         slaveColumns={columns}
                     />
 
                     <Button buttonDivWrapper={s.header_chooseBtn}
-                            onClick={() => {
-                                setOpen(true)
-                            }}
+                            onClick={() => {setOpen(true)}}
                     >
                         Выбрать товары
                     </Button>
                     <div className={s.header_searchSelect}>
-                        <AsyncSelect
-                            cacheOptions
-                            defaultOptions
-                            isClearable
-                            value={null}
-                            loadOptions={loadOptions}
-                            onChange={(r) => {
-                                addProductHandler(r as Product)
-                                console.log('selected', r)
-                            }}
-                            getOptionLabel={label => label!.id + ' | ' + label!.name + ' | ' + label!.catalogKey}
-                            getOptionValue={value => value!.name}
-                            placeholder={'Поиск'}
-                            noOptionsMessage={() => 'Товар не найден'}
-                        />
+                        <AsyncSelectSearchProduct/>
                     </div>
                 </div>
 

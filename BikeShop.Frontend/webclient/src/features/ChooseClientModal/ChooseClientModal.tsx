@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useEffect} from 'react'
 import s from './ChooseClientModal.module.scss'
-import {Button, ControlledCustomInput, CustomModal, CustomSearchInput,
-    InputUI, LoaderScreen} from '../../shared/ui'
+import {Button, ControlledCustomInput, CustomModal, CustomSearchInput, LoaderScreen} from '../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {CreateUser, User} from '../../entities'
 import {useSnackbar} from 'notistack'

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from './SelectProductWork.module.scss'
-import {Button, InputUI, UniTable} from "../../../shared/ui"
+import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
 import {WorkCatalogTreeView} from "../../../widgets/workspace/WorkCatalog/WorkCatalogTreeView"
 import {columns} from "./SlaveTableConfig"
@@ -81,7 +81,7 @@ export const SelectWork = (props: SelectWorkProps) => {
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
+                        <AsyncSelectSearchProduct/>
                     </div>
                     <div className={s.infoRow_result}>
                         <div className={s.result_sum}>
