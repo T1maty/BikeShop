@@ -1,7 +1,8 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {LocalStorage, ServiceAPI, ServiceFormModel, ServiceWithData, UpdateServiceStatus, User} from '../../../entities'
+import {LocalStorage, ServiceAPI, ServiceFormModel, ServiceWithData,
+    UpdateServiceStatus, User} from '../../../entities'
 import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
@@ -13,19 +14,18 @@ interface ServiceStore {
     isCreating: boolean
     setIsCreating: (value: boolean) => void
 
+    masters: User[]
+    getMasters: () => void
+
     currentService: ServiceWithData | null
     setCurrentService: (service: ServiceWithData | null) => void
-    serviceListStatus: string,
+    serviceListStatus: string
     setServiceListStatus: (serviceListStatus: string) => void
     services: ServiceWithData[]
     setServices: (services: ServiceWithData[]) => void
     filteredServices: ServiceWithData[]
     setFilteredServices: (filteredServices: ServiceWithData[]) => void
-
-    filter: () => void,
-
-    masters: User[]
-    getMasters: () => void
+    filter: () => void
 
     getAllServicesInfo: () => any
     addNewService: (data: ServiceFormModel, onSuccess: () => void) => any
@@ -44,25 +44,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         set({isCreating: value})
     },
 
-    currentService: null,
-    setCurrentService: (service) => {
-        set({currentService: service})
-    },
-
-    serviceListStatus: "Waiting",
-
-    setServiceListStatus: (serviceListStatus) => {
-        set({serviceListStatus: serviceListStatus})
-    },
-    services: [],
-    setServices: (services) => set(state => {
-        state.services = services
-    }),
-    filteredServices: [],
-    setFilteredServices: (filteredServices) => set(state => {
-        state.filteredServices = filteredServices
-    }),
-
     masters: [],
     getMasters: () => {
         set({isLoading: true})
@@ -75,8 +56,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             })
 
             set(state => {
-                // @ts-ignore
-                state.masters = users.filter(n => n !== undefined)
+                state.masters = users.filter((n: any) => n !== undefined)
                 console.log('все мастера', state.masters)
             })
             set({isLoading: false})
@@ -88,7 +68,22 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
         })
     },
 
-
+    currentService: null,
+    setCurrentService: (service) => {
+        set({currentService: service})
+    },
+    serviceListStatus: "Waiting",
+    setServiceListStatus: (serviceListStatus) => {
+        set({serviceListStatus: serviceListStatus})
+    },
+    services: [],
+    setServices: (services) => set(state => {
+        state.services = services
+    }),
+    filteredServices: [],
+    setFilteredServices: (filteredServices) => set(state => {
+        state.filteredServices = filteredServices
+    }),
     filter: () => {
         set(state => {
             state.filteredServices = state.services
@@ -123,9 +118,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set(state => {
                 state.services.push(res.data)
             })
-
             get().filter()
-
             set({currentService: res.data})
             set({isLoading: false})
         }).catch((error: any) => {
@@ -147,9 +140,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 } else return (ser)
             })
             set({services: newArchive})
-
             get().filter()
-
             set({currentService: res.data})
             onSuccess()
             set({isLoading: false})
@@ -170,7 +161,6 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 set(state => {
                     state.services.filter(serv => serv.service.id === data.id)[0].service.status = data.status
                 })
-                // надо сделать универсальную функцию?
                 if (currentListStatus === 'Waiting') {
                     set(state => {
                         state.filteredServices = state.services.filter(serv =>
@@ -184,7 +174,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 }
             }
 
-            onSuccess();
+            onSuccess()
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})

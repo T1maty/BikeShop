@@ -5,8 +5,8 @@ import {LoaderScreen} from "../../../shared/ui"
 import {ServiceForm} from "./ServiceForm"
 import {ServiceNavigation} from "./ServiceNavigation"
 import {useSnackbar} from 'notistack'
-import {useForm} from "react-hook-form";
-import {ServiceFormModel} from "../../../entities";
+import {useForm} from "react-hook-form"
+import {ServiceFormModel} from "../../../entities"
 
 export const Service = () => {
 

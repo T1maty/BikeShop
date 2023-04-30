@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {ClientCard} from "../../../widgets"
 import {ChooseClientModal} from "../../../features"
-import {User} from "../../../entities"
+import {AuthAPI, User} from '../../../entities'
 import {Controller, UseFormReturn} from "react-hook-form"
 import {RegisterOptions} from "react-hook-form/dist/types/validator"
-import {$api} from "../../index"
 import {AxiosResponse} from "axios"
 import useService from '../../../pages/workspace/Service/ServiceStore'
 
-interface props {
+interface ControlledClientCardProps {
     control: UseFormReturn<any>
     name: string
     className?: any
@@ -18,7 +17,7 @@ interface props {
     setState: (state: boolean) => void
 }
 
-export const ControlledClientCard = (props: props) => {
+export const ControlledClientCard = (props: ControlledClientCardProps) => {
 
     const isLoading = useService(s => s.isLoading)
     const setIsLoading = useService(s => s.setIsLoading)
@@ -27,11 +26,10 @@ export const ControlledClientCard = (props: props) => {
     useEffect(() => {
         let id = props.control.getValues(props.name)
 
-        if (user === undefined || user?.id != id) {
+        if (user === undefined || user?.id !== id) {
             console.log('Пытаемся загружать юзера', user?.id, id)
-
             // setIsLoading(true)
-            $api.get(`/user/getbyid?id=${id}`).then((r: AxiosResponse<User>) => {
+            AuthAPI.User.getUserById(id).then((r: AxiosResponse<User>) => {
                 setUser(r.data)
                 setIsLoading(false)
             }).catch((error) => {
@@ -53,7 +51,7 @@ export const ControlledClientCard = (props: props) => {
                     <div>
                         {
                             !!props.control.formState.errors[props.name]
-                                ? <div>Выбирите клиента</div>
+                                ? <div>Выберите клиента</div>
                                 : true
                         }
 

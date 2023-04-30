@@ -5,11 +5,11 @@ import style from "../../../shared/ui/Button/Button.module.scss"
 import useService, {ServiceListStatusType} from "./ServiceStore"
 import {ServiceStatusType} from "../../../entities/models/Service/ServiceItem"
 import {EnumServiceStatus, ServiceFormModel} from "../../../entities"
-import {PrintModal} from "../../../features";
-import {CheckForServiceWork} from "../../../widgets";
-import {UseFormReturn} from "react-hook-form";
+import {PrintModal} from "../../../features"
+import {CheckForServiceWork} from "../../../widgets"
+import {UseFormReturn} from "react-hook-form"
 
-export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
+export const ServiceNavigation = (props: {children: UseFormReturn<ServiceFormModel, any>}) => {
 
     const isLoading = useService(s => s.isLoading)
     const serviceListStatus = useService(s => s.serviceListStatus)

@@ -35,6 +35,11 @@ export const AuthAPI = {
                 $api.get<GetUsersResponse[]>('/user/find')
             )
         },
+        getUserById(userId: string): Promise<AxiosResponse<User>> {
+            return (
+                $api.get<User>(`/user/getbyid?id=${userId}`)
+            )
+        },
         findUser(data: SearchClient): Promise<AxiosResponse<any>> {
             return (
                 $api.get<User[]>(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)

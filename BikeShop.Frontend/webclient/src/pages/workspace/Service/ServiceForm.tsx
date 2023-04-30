@@ -12,7 +12,7 @@ import useSelectProductWorkModal
 import {useSnackbar} from "notistack"
 import Select from "react-select"
 
-export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
+export const ServiceForm = (props: {children: UseFormReturn<ServiceFormModel, any>}) => {
 
     const formControl = props.children
     const {enqueueSnackbar} = useSnackbar()
@@ -41,7 +41,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const onSubmit: SubmitHandler<ServiceFormModel> = (data: ServiceFormModel) => {
         // создание сервиса
         if (isCreating) {
-
             console.log('create IF works, new data =', data)
             addNewService(data, () => {
                 setIsCreating(false)
@@ -119,14 +118,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                 />
                 <div className={s.rightSide_infoFields}>
                     <div className={s.infoFields_content}>
-                        {/*<ControlledCustomInput name={'clientDescription'}*/}
-                        {/*                       placeholder={'Детальное описание'}*/}
-                        {/*                       control={formControl}*/}
-                        {/*                       rules={{required: Errors[0].name}}*/}
-                        {/*                       divClassName={s.content_detailsInput}*/}
-                        {/*                       disabled={currentService === null && !isCreating}*/}
-                        {/*/>*/}
-
                         <ControlledCustomTextarea name={'clientDescription'}
                                                   placeholder={'Детальное описание'}
                                                   control={formControl}

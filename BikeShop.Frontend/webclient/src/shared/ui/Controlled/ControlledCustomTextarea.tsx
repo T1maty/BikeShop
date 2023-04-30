@@ -34,5 +34,5 @@ export const ControlledCustomTextarea = (props: ControlledCustomTextareaProps) =
                 }
             />
         </div>
-    );
-};
+    )
+}
