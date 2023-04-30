@@ -1,30 +1,30 @@
-import $api from "shared/http/axios";
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
-
-import {Currency} from "../models/Others/Currency";
-import {immer} from "zustand/middleware/immer";
+import {Currency} from "../models/Others/Currency"
+import {immer} from "zustand/middleware/immer"
+import {EntitiesAPI} from '../api/EntitiesAPI'
 
 interface props {
-    allCurrencies: Currency[]
-    loadAllCurrencies: () => void
-    baseCurrency: Currency | null
-    selectedCurrency: Currency | null
-    setSelectedCurrency: (id: number) => void
     fromSelectedToBase: { c: number, s: string }
     fromBaseToSelected: { c: number, s: string }
+
+    baseCurrency: Currency | null
+    selectedCurrency: Currency | null
+    allCurrencies: Currency[]
+    loadAllCurrencies: () => void
+    setSelectedCurrency: (id: number) => void
     roundUp: (v: number) => {}
 }
 
 export const useCurrency = create<props>()(persist(devtools(immer((set, get) => ({
-
     fromBaseToSelected: {c: 1, s: ''},
     fromSelectedToBase: {c: 1, s: ''},
-    allCurrencies: [],
+
     baseCurrency: null,
     selectedCurrency: null,
+    allCurrencies: [],
     loadAllCurrencies: () => {
-        $api.get<Currency[]>('/currency/getall').then(n => {
+        EntitiesAPI.Currency.getCurrencies().then(n => {
             console.log('currenciesLoaded', n.data)
             set(state => {
                 state.allCurrencies = n.data
@@ -39,6 +39,7 @@ export const useCurrency = create<props>()(persist(devtools(immer((set, get) => 
     },
     setSelectedCurrency: (id) => {
         let Cur = get().allCurrencies.find(n => n.id === id)
+        
         if (Cur === undefined) console.log('UNDEFINED')
         set(state => {
             state.selectedCurrency = Cur!

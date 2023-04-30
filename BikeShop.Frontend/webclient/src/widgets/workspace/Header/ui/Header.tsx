@@ -22,7 +22,6 @@ export const Header = () => {
     const setSelectedCurrency = useCurrency(n => n.setSelectedCurrency)
     const allCurrencies = useCurrency(n => n.allCurrencies)
 
-
     const colourStyles = {
         // @ts-ignore
         option: (styles, {isFocused, isSelected}) => ({

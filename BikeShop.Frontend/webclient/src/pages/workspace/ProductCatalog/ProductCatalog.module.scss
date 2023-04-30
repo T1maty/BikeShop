@@ -7,7 +7,7 @@
     gap: $defaultLargeMargin;
 
     .productCatalogTable_leftSide {
-        width: 25%;
+        width: 20%;
         @include flexColumn;
 
         .leftSide_header {
@@ -29,7 +29,7 @@
     }
 
     .productCatalogTable_rightSide {
-        width: 75%;
+        width: 80%;
         @include flexColumn;
         padding: $defaultLargeMargin;
         background-color: $themeColorDark;
