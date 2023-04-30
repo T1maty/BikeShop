@@ -19,8 +19,8 @@ public class Product : BaseEntity
     [JsonIgnore] public Brand? Brand { get; set; }
 
     public string CheckStatus { get; set; } = string.Empty;
-    public bool RetailVisibility { get; set; }
-    public bool B2BVisibility { get; set; }
-    
+    public bool RetailVisibility { get; set; } = false;
+    public bool B2BVisibility { get; set; } = false;
+
     [JsonIgnore] public IList<TagToProductBind> TagToProductBinds { get; set; }
 }
