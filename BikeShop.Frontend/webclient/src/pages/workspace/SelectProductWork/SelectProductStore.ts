@@ -1,7 +1,7 @@
-import {create} from "zustand";
-import {devtools, persist} from "zustand/middleware";
-import {immer} from "zustand/middleware/immer";
-import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem";
+import {create} from "zustand"
+import {devtools, persist} from "zustand/middleware"
+import {immer} from "zustand/middleware/immer"
+import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem"
 
 interface selectProductStore {
     convert: (product: any) => ServiceItemProduct
@@ -11,8 +11,6 @@ const useSelectProduct = create<selectProductStore>()(persist(devtools(immer((se
     slaveTableRows: [],
 
     convert: (product) => {
-
-
         let newProduct: ServiceItemProduct = {
             id: 0,
             productId: product.id,
@@ -34,7 +32,6 @@ const useSelectProduct = create<selectProductStore>()(persist(devtools(immer((se
             quantityUnitName: 'шт'
         }
         return newProduct
-
     }
 }))), {
     name: "selectProductStore",

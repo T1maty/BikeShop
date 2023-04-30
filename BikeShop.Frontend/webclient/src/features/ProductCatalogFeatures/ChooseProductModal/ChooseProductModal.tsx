@@ -46,11 +46,13 @@ export const ChooseProductModal = (props: props) => {
                     <div className={s.chooseProductModal_tagTreeView}>
                         <TagTreeView/>
                     </div>
+
                     <div className={s.chooseProductModal_catalogTable}>
                         <ProductCatalogTable onRowDoubleClick={(row) => {
-                            props.addData ? props.addData(row) : false
-                            props.setData ? setDataHandler(row) : false
-                        }}/>
+                                props.addData ? props.addData(row) : false
+                                props.setData ? setDataHandler(row) : false
+                            }}
+                        />
                         <br/>
                         {
                             (props.data != undefined && props.slaveColumns != undefined) ?

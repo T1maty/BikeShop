@@ -5,21 +5,22 @@ import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalo
 import {WorkCatalogTreeView} from "../../../widgets/workspace/WorkCatalog/WorkCatalogTreeView"
 import {columns} from "./SlaveTableConfig"
 import {WorkCatalogTable} from "../../../widgets"
-import {ServiceWork, Work} from "../../../entities";
+import {ServiceWork, Work} from "../../../entities"
+import useSelectProductWorkModal
+    from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 
-interface props {
-    defaultMasterId: string,
-    serviceId: number,
+interface SelectWorkProps {
+    defaultMasterId: string
+    serviceId: number
     works: ServiceWork[]
     setWorks: (work: ServiceWork[]) => void
 }
 
-export const SelectWork = (props: props) => {
+export const SelectWork = (props: SelectWorkProps) => {
 
+    const setOpenSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
     const {getGroup} = useWorkCatalog(state => state)
-
     const [selected, setSelected] = useState([])
-
 
     useEffect(() => {
         getGroup()
@@ -33,14 +34,12 @@ export const SelectWork = (props: props) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {setOpenSelectWorkModal(false)}}>
                             Отмена
                         </Button>
                     </div>
@@ -50,7 +49,6 @@ export const SelectWork = (props: props) => {
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
 
-
                     <WorkCatalogTable onRowDoubleClick={(row: Work) => {
                         let works = props.works
                         let exist = works.find(n => n.workId === row.id)
@@ -58,7 +56,6 @@ export const SelectWork = (props: props) => {
                         if (exist != undefined) {
                             exist.quantity++
                             props.setWorks(works)
-
                         } else {
                             works.push(
                                 {
@@ -77,15 +74,14 @@ export const SelectWork = (props: props) => {
                                     serviceId: props.serviceId
                                 } as ServiceWork)
                             props.setWorks(works)
-
                         }
-                    }}/>
+                    }}
+                    />
 
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {
-                        }}/>
+                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
                     </div>
                     <div className={s.infoRow_result}>
                         <div className={s.result_sum}>

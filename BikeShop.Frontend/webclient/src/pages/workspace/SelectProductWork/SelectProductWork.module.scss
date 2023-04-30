@@ -9,7 +9,7 @@
     gap: $defaultLargeMargin;
 
     .selectProduct_mainBox_leftSide {
-        border: 1px solid white;
+        //border: 1px solid white;
         @include flexColumn;
         width: 30%;
         min-height: 700px;

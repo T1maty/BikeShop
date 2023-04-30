@@ -6,6 +6,8 @@ import useSelectProduct from "./SelectProductStore"
 import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem"
 import {columns} from "./SlaveTableConfig"
 import {ProductTag} from "../../../entities"
+import useSelectProductWorkModal
+    from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 
 interface SelectProductProps {
     products: ServiceItemProduct[]
@@ -14,9 +16,9 @@ interface SelectProductProps {
 
 export const SelectProduct = (props: SelectProductProps) => {
 
+    const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
+    const conv = useSelectProduct(s => s.convert)
     const [tags, setTags] = useState<ProductTag[]>([])
-
-    const conv = useSelectProduct(s => s.convert);
 
     return (
         <div className={s.selectProduct_mainBox}>
@@ -29,15 +31,12 @@ export const SelectProduct = (props: SelectProductProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {
-
-                        }}>
+                        <Button onClick={() => {}}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {setOpenSelectProductModal(false)}}>
                             Отмена
                         </Button>
                     </div>
@@ -57,12 +56,12 @@ export const SelectProduct = (props: SelectProductProps) => {
                             prods.push(item)
                         }
                         props.setProducts(prods)
-                    }}/>
+                    }}
+                    />
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
-                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {
-                        }}/>
+                        <InputUI placeholder={'Поиск...'} clearInputValue={() => {}}/>
                     </div>
                     <div className={s.infoRow_result}>
                         <div className={s.result_sum}>

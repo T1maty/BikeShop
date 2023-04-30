@@ -30,7 +30,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
 
-    // const [isCreating, setIsCreating] = useState(false)
     const [openClientModal, setOpenClientModal] = useState(false)
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
@@ -38,9 +37,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
-
-    //formControl.register('service.name')
-
 
     const onSubmit: SubmitHandler<ServiceFormModel> = (data: ServiceFormModel) => {
         // создание сервиса
@@ -97,7 +93,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
         formControl.setValue('workDiscountId', currentService?.service.workDiscountId!)
         formControl.setValue('productDiscountId', currentService?.service.productDiscountId!)
         formControl.setValue('id', currentService?.service.id!)
-
 
         formControl.setValue('serviceProducts', currentService ? currentService.products : [])
         formControl.setValue('serviceWorks', currentService ? currentService.works : [])

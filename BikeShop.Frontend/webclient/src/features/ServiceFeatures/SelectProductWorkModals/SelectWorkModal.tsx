@@ -3,7 +3,7 @@ import s from './SelectProductWorkModal.module.scss'
 import useSelectProductWorkModal from './SelectProductWorkModalStore'
 import {SelectWork} from '../../../pages'
 import {CustomModal} from "../../../shared/ui"
-import {ServiceWork} from "../../../entities";
+import {ServiceWork} from "../../../entities"
 
 interface props {
     defaultMasterId: string,
@@ -20,9 +20,7 @@ export const SelectWorkModal = (props: props) => {
     return (
         <CustomModal
             open={selectWorkModal}
-            onClose={() => {
-                setSelectWorkModal(false)
-            }}
+            onClose={() => {setSelectWorkModal(false)}}
         >
             <div className={s.selectProductWorkModal_mainBox}>
                 <SelectWork setWorks={props.setWorks} works={props.works} defaultMasterId={props.defaultMasterId}
