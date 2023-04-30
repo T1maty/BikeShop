@@ -37,10 +37,10 @@ export const UniTable = (props: TableProps) => {
     const {enqueueSnackbar} = useSnackbar()
 
     return (
-        <div>
+        <>
             <table className={`${props.className} ${cls.table}`}>
                 <thead className={cls.thead}>
-                <TableHeadItem theadData={props.columns}/>
+                    <TableHeadItem theadData={props.columns}/>
                 </thead>
                 <tbody className={cls.tbody}>
                 {
@@ -68,7 +68,7 @@ export const UniTable = (props: TableProps) => {
                 }
                 </tbody>
             </table>
-        </div>
+        </>
     )
 }
 

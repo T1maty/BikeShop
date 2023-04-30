@@ -2,30 +2,29 @@
 @import '../../../app/styles/variables/variables';
 
 .container {
-  @include wrapperMainBlock;
-  gap: $defaultLargeMargin;
-  display: grid;
-  grid-template-columns: 1fr 2.5fr;
-  grid-template-areas: "categories tableBox";
+    @include wrapperMainBlock;
+    gap: $defaultLargeMargin;
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    grid-template-areas: "categories tableBox";
 
-  .categories, .tableBox {
-    padding: $defaultLargeMargin;
-    background-color: $themeColorDark;
-    border-radius: $largeBorderRadius;
-  }
+    .categories, .tableBox {
+        padding: $defaultLargeMargin;
+        background-color: $themeColorDark;
+        border-radius: $largeBorderRadius;
+    }
 
-  .categories {
-    grid-area: categories;
-    overflow: auto;
-  }
+    .categories {
+        grid-area: categories;
+        overflow: auto;
+    }
 
-  .tableBox {
-    grid-area: tableBox;
-    padding: $defaultLargeMargin;
-    background-color: $themeColorDark;
-
-  }
-
+    .tableBox {
+        grid-area: tableBox;
+        padding: $defaultLargeMargin;
+        background-color: $themeColorDark;
+        height: 100%;
+    }
 }
 
 

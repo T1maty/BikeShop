@@ -45,7 +45,7 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
             <CreateProductModal onSuccess={createProductSuccessHandler}/>
             <UpdateProductModal onSuccess={updateRow}/>
 
-            <div className={s.table_content}>
+            {/*<div className={s.table_content}>*/}
                 <UniTable rows={data}
                           columns={columns}
                           isLoading={isLoading}
@@ -64,7 +64,7 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
                               setSelected([prd])
                           }}
                 />
-            </div>
+            {/*</div>*/}
         </>
     )
 }

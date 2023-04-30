@@ -74,12 +74,14 @@
 
         .rightSide_table {
             border: 1px solid white;
+            //height: 100%;
+            height: 900px;
 
-            .table_content {
-                overflow-y: auto;
-                //height: 500px;
-                height: 100%;
-            }
+            //.table_content {
+            //    overflow-y: auto;
+            //    //height: 500px;
+            //    height: 100%;
+            //}
         }
     }
 }

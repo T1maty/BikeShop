@@ -1,67 +1,69 @@
 
 .table {
-  background-color: rgb(18, 18, 18);
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
-  color: var(--primary-color);
-  width: 100%;
-  overflow: auto;
-  border-collapse: collapse;
-  border-radius: 5px;
-  border-style: hidden;
-  box-shadow: 0 0 0 1px rgb(81, 81, 81);
+    background-color: rgb(18, 18, 18);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+    color: var(--primary-color);
+    width: 100%;
+    //overflow: auto;
+    border-collapse: collapse;
+    //border-radius: 5px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px rgb(81, 81, 81);
+    height: 100%;
 }
 
 .thead, .tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-  font-size: 14px;
-  word-break: break-word;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    font-size: 14px;
+    word-break: break-word;
 }
 
 .thead {
-  border-bottom: 1px solid rgb(81, 81, 81);
-  text-align: center;
+    border-bottom: 1px solid rgb(81, 81, 81);
+    text-align: center;
 }
 
 .tbody {
-  display: block;
-  max-height: 500px;
-  overflow: auto;
+    display: block;
+    //max-height: 860px;
+    height: 94%;
+    overflow: auto;
 }
 
 .head_item {
-  padding: 10px;
-  border-right: 1px solid rgb(81, 81, 81);
+    padding: 5px;
+    border-right: 1px solid rgb(81, 81, 81);
 }
 
 .tbody {
-  display: block;
-  text-align: center;
+    display: block;
+    text-align: center;
 }
 
 .body_items {
-  border-bottom: 1px solid rgb(81, 81, 81);
+    border-bottom: 1px solid rgb(81, 81, 81);
 }
 
 .body_items:hover {
-  background-color: rgb(18, 18, 18);
+    background-color: rgb(18, 18, 18);
 }
 
 .body_item {
-  padding: 5px;
+    padding: 5px;
 }
 
 .rowSelectedBackground {
-  background: #5C636A;
+    background: #5C636A;
 }
 
 .rowSelectedBackground:hover {
-  background: #4b4b4b;
+    background: #4b4b4b;
 }
 
 .inputClassName {
-  height: 30px;
-  width: 150px;
-  padding: 5px;
+    height: 30px;
+    width: 150px;
+    padding: 5px;
 }
