@@ -123,8 +123,8 @@ export const Catalog = () => {
 
     useEffect(() => {
         setActiveFilter1(true)
+        getTags()
         if (userCurrentTags.length === 0) {
-            getTags()
             getDefaultProducts()
         } else {
             getProductsByTags([4]) // надо доделать

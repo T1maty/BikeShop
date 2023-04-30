@@ -94,32 +94,12 @@ export const ChooseClientModal: React.FC<ChooseClientModalProps> = ({extraCallba
                                                    setFIO(e.currentTarget.value)}}
                                                clearInputValue={() => {setFIO('')}}
                             />
-                            {/*<div className={s.clientModal_searchBlock_input}>*/}
-                            {/*    <InputUI placeholder={'Введите фамилию'} value={fio}*/}
-                            {/*             onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
-                            {/*                 setFIO(e.currentTarget.value)*/}
-                            {/*             }}*/}
-                            {/*             clearInputValue={() => {*/}
-                            {/*                 setFIO('')*/}
-                            {/*             }}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <CustomSearchInput placeholder={'Введите номер телефона'}
                                                value={phoneNumber}
                                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                                    setPhoneNumber(e.currentTarget.value)}}
                                                clearInputValue={() => {setPhoneNumber('')}}
                             />
-                            {/*<div className={s.clientModal_searchBlock_input}>*/}
-                            {/*    <InputUI placeholder={'Введите номер телефона'} value={phoneNumber}*/}
-                            {/*             onChange={(e: ChangeEvent<HTMLInputElement>) => {*/}
-                            {/*                 setPhoneNumber(e.currentTarget.value)*/}
-                            {/*             }}*/}
-                            {/*             clearInputValue={() => {*/}
-                            {/*                 setPhoneNumber('')*/}
-                            {/*             }}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <div className={s.clientModal_searchBlock_textField}>
                                 {
                                     users.length === 0

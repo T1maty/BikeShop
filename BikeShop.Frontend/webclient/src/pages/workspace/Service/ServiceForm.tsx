@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
-import {Button, ControlledClientCard, ControlledCustomInput,} from '../../../shared/ui'
+import {Button, ControlledClientCard, ControlledCustomInput, ControlledCustomTextarea} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
 import {ServiceFormModel, useCurrency, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
@@ -110,7 +110,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     return (
         <div className={s.service_rightSide}>
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
-
                 <ControlledCustomInput name={'name'}
                                        placeholder={'Техника'}
                                        control={formControl}
@@ -118,16 +117,22 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                        divClassName={s.rightSide_stuffInput}
                                        disabled={currentService === null && !isCreating}
                 />
-
-
                 <div className={s.rightSide_infoFields}>
                     <div className={s.infoFields_content}>
-                        <ControlledCustomInput name={'clientDescription'}
-                                               placeholder={'Детальное описание'}
-                                               control={formControl}
-                                               rules={{required: Errors[0].name}}
-                                               divClassName={s.content_detailsInput}
-                                               disabled={currentService === null && !isCreating}
+                        {/*<ControlledCustomInput name={'clientDescription'}*/}
+                        {/*                       placeholder={'Детальное описание'}*/}
+                        {/*                       control={formControl}*/}
+                        {/*                       rules={{required: Errors[0].name}}*/}
+                        {/*                       divClassName={s.content_detailsInput}*/}
+                        {/*                       disabled={currentService === null && !isCreating}*/}
+                        {/*/>*/}
+
+                        <ControlledCustomTextarea name={'clientDescription'}
+                                                  placeholder={'Детальное описание'}
+                                                  control={formControl}
+                                                  rules={{required: Errors[0].name}}
+                                                  divClassName={s.content_detailsInput}
+                                                  disabled={currentService === null && !isCreating}
                         />
                         <div className={s.content_selectMaster}>
                             <Controller
@@ -174,7 +179,9 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                             </Button>
                                 }
                             </div>
-                            <div className={s.content_sumField}>{r((summWorks + summProducts) * fbts.c) + fbts.s}</div>
+                            <div className={s.content_sumField}>
+                                {r((summWorks + summProducts) * fbts.c) + fbts.s}
+                            </div>
                         </div>
                     </div>
                     <div className={s.infoFields_clientCard}>

@@ -47,8 +47,10 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     return (
         <div className={s.service_leftSide}>
 
-            <PrintModal open={openPrint} setOpen={setOpenPrint}
-                        children={<CheckForServiceWork children={currentService!}/>}/>
+            <PrintModal open={openPrint}
+                        setOpen={setOpenPrint}
+                        children={<CheckForServiceWork children={currentService!}/>}
+            />
 
             <div className={s.leftSide_buttons}>
                 <div className={s.buttons_filter}>
@@ -129,29 +131,24 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                     }
                 </div>
             </div>
+
             <div className={s.leftSide_content}>
                 <div className={s.content_info}>
                     {
                         isLoading ? <div>Загрузка...</div> :
-
                             filteredServices.length === 0 ? <div>Список пуст</div> :
-
                                 filteredServices.map(service => {
                                     return (
                                         <div key={service.service.id}
-                                            // className={service.id === activeId ? s.serviceItem_active : s.serviceItem}
                                              className={service.service.id === currentService?.service.id ? s.serviceItem_active :
                                                  service.service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
-                                             onClick={() => {
-                                                 setCurrentService(service)
-                                             }}
+                                             onClick={() => {setCurrentService(service)}}
                                         >
                                             {service.service.name}
                                         </div>
                                     )
                                 })
                     }
-
                 </div>
             </div>
         </div>

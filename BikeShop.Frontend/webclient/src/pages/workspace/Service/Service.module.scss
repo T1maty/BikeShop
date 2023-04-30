@@ -116,16 +116,16 @@
 
             .infoFields_content {
                 @include flexColumnOnly;
+                @include divLargeMarginBottom;
                 justify-content: space-between;
                 width: 60%;
 
                 .content_detailsInput {
-                    margin-bottom: $defaultLargeMargin;
-                    height: 120px;
+                    height: 100%;
 
-                    input {
-                        min-height: 80px;
-                    }
+                    //input {
+                    //    min-height: 80px;
+                    //}
                 }
                 .content_selectMaster {
                     color: black

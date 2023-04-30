@@ -10,11 +10,11 @@ interface ClientCardProps {
 export const ClientCard: React.FC<ClientCardProps> = ({user, onDoubleClick}) => {
 
     return (
-        <div className={s.clientCard_background} onDoubleClick={() => {
-            onDoubleClick ? onDoubleClick() : true
-        }}>
+        <div className={s.clientCard_background}
+             onDoubleClick={() => {onDoubleClick ? onDoubleClick() : true}}
+        >
             <h3>Клиент</h3>
-            <p>
+            <p className={s.fio}>
                 <span>ФИО:</span> {''}
                 {user?.lastName ? user?.lastName : 'Клиент'} {''}
                 {user?.firstName ? user?.firstName : 'не'} {''}

@@ -7,8 +7,9 @@ import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
 interface ServiceStore {
-    isLoading: boolean
     errorStatus: ErrorStatusTypes
+    isLoading: boolean
+    setIsLoading: (value: boolean) => void
     isCreating: boolean
     setIsCreating: (value: boolean) => void
 
@@ -33,8 +34,11 @@ interface ServiceStore {
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
-    isLoading: false,
     errorStatus: 'default',
+    isLoading: false,
+    setIsLoading: (value) => {
+        set({isLoading: value})
+    },
     isCreating: false,
     setIsCreating: (value) => {
         set({isCreating: value})

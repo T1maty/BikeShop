@@ -10,12 +10,14 @@ export {InputUI} from './InputUI/InputUI' // инпут с поиском (по�
 export {EditableSpan} from './EditableSpan/EditableSpan'
 export {CustomInput} from './CustomInput/CustomInput'
 export {CustomSearchInput} from './CustomInput/CustomSeacrhInput'
+export {CustomTextarea} from './CustomTextarea/CustomTextarea'
 export {CustomCheckbox} from './CustomCheckbox/CustomCheckbox'
 export {CustomRadioButton} from './CustomRadioButton/CustomRadioButton'
 export {CustomModal} from './CustomModal/CustomModal'
 
 export {ControlledClientCard} from './Controlled/ControlledClientCard'
 export {ControlledCustomInput} from './Controlled/ControlledCustomInput'
+export {ControlledCustomTextarea} from './Controlled/ControlledCustomTextarea'
 export {ControlledCustomCheckbox} from './Controlled/ControlledCustomCheckbox'
 export {ControlledReactSelect} from './Controlled/ControlledReactSelect'
 

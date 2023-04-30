@@ -1,8 +1,6 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes,
     KeyboardEvent, ReactNode} from 'react'
 import s from './CustomInput.module.scss'
-import {Button} from "../Button/Button";
-import CancelIcon from '../../assets/workspace/cancel-icon-white.svg'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
