@@ -36,10 +36,12 @@
     .tableBox_table {
         background-color: $themeColorGray;
         border-radius: $largeBorderRadius;
-        padding: $defaultLargeMargin;
-        @include flexColumn;
-        height: 400px;
-        //overflow: auto;
-        overflow-x: hidden;
+        padding: $defaultSmallMargin;
+
+        .scroll_wrapper {
+            @include flexColumn;
+            height: 400px;
+            overflow-x: hidden;
+        }
     }
 }

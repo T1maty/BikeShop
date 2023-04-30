@@ -2,38 +2,42 @@
 @import '../../../app/styles/variables/variables';
 
 .tableItem_box {
-  @include flexBetween;
-  width: 95%; // ?
-  border: 2px solid $themeColorWhite;
-  border-radius: $smallBorderRadius;
-  margin: $defaultSmallMargin;
-  padding: $defaultSmallMargin;
+    @include flexBetween;
+    width: 95%; // ?
+    border: 2px solid $themeColorWhite;
+    border-radius: $smallBorderRadius;
+    margin: $defaultSmallMargin;
+    padding: $defaultSmallMargin;
 
-  .tableItem_title {
-    word-break: break-word;
-    margin-right: $defaultSmallMargin;
-  }
-
-  .tableItem_numbers {
-    @include flexCenter;
-
-    .tableItem_price {
-      color: black;
-      background-color: $themeColorWhite;
-      border-radius: $smallBorderRadius;
-      padding: $defaultSmallMargin;
-      margin-right: $defaultSmallMargin;
-      min-width: 80px;
-      @include flexCenter;
+    .tableItem_title {
+        word-break: break-word;
+        margin-right: $defaultSmallMargin;
     }
 
-    .tableItem_sum {
-      color: black;
-      background-color: $themeColorWhite;
-      border-radius: $smallBorderRadius;
-      padding: $defaultSmallMargin;
-      min-width: 80px;
-      @include flexCenter;
+    .tableItem_numbers {
+        @include flexCenter;
+
+        .tableItem_price {
+            color: black;
+            background-color: $themeColorWhite;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
+            margin-right: $defaultSmallMargin;
+            min-width: 80px;
+            @include flexCenter;
+
+            .multiply {
+                padding: 0 3px;
+            }
+        }
+
+        .tableItem_sum {
+            color: black;
+            background-color: $themeColorWhite;
+            border-radius: $smallBorderRadius;
+            padding: $defaultSmallMargin;
+            min-width: 80px;
+            @include flexCenter;
+        }
     }
-  }
 }

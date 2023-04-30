@@ -13,14 +13,8 @@ type ServiceTableProps = {
     summ: number
 }
 
-export const ServiceTable: React.FC<ServiceTableProps> = ({
-                                                              data,
-                                                              buttonTitle,
-                                                              serviceTableCallback,
-                                                              disabledButton,
-                                                              summ
-                                                          }) => {
-
+export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTableCallback,
+                                                              disabledButton, summ}) => {
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
@@ -50,19 +44,21 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({
                 </div>
             </div>
             <div className={s.tableBox_table}>
-                {
-                    (data != null) && (data.length != 0) ?
-                        data.map((item, index) => {
-                            return (
-                                <TableProductItem key={index}
-                                                  name={item.name}
-                                                  price={item.price}
-                                                  count={item.quantity}
-                                />
-                            )
-                        })
-                        : <div>Список пуст</div>
-                }
+                <div className={s.scroll_wrapper}>
+                    {
+                        (data != null) && (data.length != 0) ?
+                            data.map((item, index) => {
+                                return (
+                                    <TableProductItem key={index}
+                                                      name={item.name}
+                                                      price={item.price}
+                                                      count={item.quantity}
+                                    />
+                                )
+                            })
+                            : <div>Список пуст</div>
+                    }
+                </div>
             </div>
         </div>
     )

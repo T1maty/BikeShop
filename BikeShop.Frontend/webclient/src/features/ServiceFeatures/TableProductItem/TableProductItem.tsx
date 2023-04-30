@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './TableProductItem.module.scss'
-import {useCurrency} from "../../../entities";
+import {useCurrency} from "../../../entities"
 
 interface TableItemProps {
     name: string
@@ -20,7 +20,7 @@ export const TableProductItem: React.FC<TableItemProps> = ({name, price, count})
             <div className={s.tableItem_numbers}>
                 <div className={s.tableItem_price}>
                     <div>{r(price * fbts.c) + fbts.s}</div>
-                    <div>x</div>
+                    <div className={s.multiply}>x</div>
                     <div>{count}</div>
                 </div>
                 <div className={s.tableItem_sum}>{r(count * price * fbts.c) + fbts.s}</div>
