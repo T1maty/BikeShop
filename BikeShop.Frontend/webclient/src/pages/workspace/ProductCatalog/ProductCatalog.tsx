@@ -9,6 +9,8 @@ import {useSnackbar} from "notistack"
 import {ProductTag} from "../../../entities"
 import useProductCatalogTableStore
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableStore"
+import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
+import Select from 'react-select'
 
 export const ProductCatalog = () => {
 
@@ -18,8 +20,12 @@ export const ProductCatalog = () => {
     const isError = useEditProductCardModal(s => s.isError)
     const setNotSortedToTable = useProductCatalogTableStore(s => s.setNotSortedToTable)
 
+    const storages = useCreateStorageModal(s => s.storages)
+    const getStorages = useCreateStorageModal(s => s.getStorages)
+    const currentStorage = useCreateStorageModal(s => s.currentStorage)
+    const setCurrentStorage = useCreateStorageModal(s => s.setCurrentStorage)
+
     const [tags, setTags] = useState<ProductTag[]>([])
-    const [value, setValue] = useState('') // заглушка для инпута
 
     useEffect(() => {
         if (isError) {
@@ -30,6 +36,10 @@ export const ProductCatalog = () => {
                 })
         }
     }, [isError])
+
+    useEffect(() => {
+        getStorages()
+    }, [])
 
     return (
         <div className={s.productCatalogTable_mainBlock}>
@@ -51,6 +61,20 @@ export const ProductCatalog = () => {
                     </Button>
                     <div className={s.searchRow_searchInput}>
                         <AsyncSelectSearchProduct/>
+                    </div>
+                    <div style={{color: 'black'}}>
+                        <Select
+                            className={s.options_search}
+                            placeholder={'Склад'}
+                            isSearchable={false}
+                            options={storages}
+                            // defaultValue={storages[0].id}
+                            value={currentStorage}
+                            onChange={(v) => { // @ts-ignore
+                                setCurrentStorage(v!.id)}}
+                            getOptionLabel={label => label.name}
+                            // getOptionValue={value => value.name}
+                        />
                     </div>
                     <Button onClick={() => {}}>
                         Все товары
