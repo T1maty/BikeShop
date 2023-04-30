@@ -6,8 +6,14 @@
     @include flexOnlyBetween;
     gap: $defaultLargeMargin;
 
+    //display: grid;
+    //grid-template-columns: 1fr 3fr;
+    //grid-template-areas: "categories tableBox";
+    //gap: $defaultLargeMargin;
+
     .productCatalogTable_leftSide {
-        width: 30%;
+        //grid-area: categories;
+        width: 25%;
         @include flexColumn;
 
         .leftSide_header {
@@ -29,59 +35,41 @@
     }
 
     .productCatalogTable_rightSide {
-        border: 1px solid white;
-        width: 70%;
+        //grid-area: tableBox;
+        width: 75%;
         @include flexColumn;
 
+        .rightSide_container {
 
-        .rightSide_searchRow {
-            border: 1px solid white;
-            @include flexOnlyBetween;
-            margin-bottom: $defaultLargeMargin;
-            width: 100%;
+            padding: $defaultLargeMargin;
+            background-color: $themeColorDark;
+            border-radius: $largeBorderRadius;
 
-            button {
+            .rightSide_searchRow {
+                @include flexOnlyBetween;
+                margin-bottom: $defaultLargeMargin;
                 width: 100%;
-            }
-
-            //.searchRow_chooseBtn {
-            //    button {
-            //        padding: $largeButtonPadding;
-            //    }
-            //}
-            .searchRow_searchInput {
-                width: 100%;
-
-                //input {
-                //    margin: 0 20px;
-                //}
-            }
-            .searchRow_allProductsBtn {
-                width: 50%;
-                margin-right: 20px;
 
                 button {
-                    padding: $largeButtonPadding;
+                    width: 100%;
+                }
+
+                .searchRow_searchInput {
+                    width: 50%;
                 }
             }
-            //.header_notSortedBtn {
-            //    width: 100%;
-            //    button {
-            //        padding: $largeButtonPadding;
-            //    }
-            //}
-        }
 
-        .rightSide_table {
-            border: 1px solid white;
-            //height: 100%;
-            height: 900px;
+            .rightSide_table {
+                //border: 1px solid white;
+                //height: 100%;
+                height: 900px;
 
-            //.table_content {
-            //    overflow-y: auto;
-            //    //height: 500px;
-            //    height: 100%;
-            //}
+                //.table_content {
+                //    overflow-y: auto;
+                //    //height: 500px;
+                //    height: 100%;
+                //}
+            }
         }
     }
 }

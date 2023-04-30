@@ -20,13 +20,13 @@ import {BillProductDTO} from "./models/BillProductDTO"
 import Enumerable from "linq"
 import AsyncSelect from "react-select/async"
 import {useSnackbar} from "notistack"
-import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next"
 
 export const Cashbox = () => {
 
     const isActiveTable = true
     const {enqueueSnackbar} = useSnackbar()
-    const {t} = useTranslation();
+    const {t} = useTranslation()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
 
@@ -252,9 +252,7 @@ export const Cashbox = () => {
                     <div className={s.rightSideBottom_buttonsBlock}>
                         <div className={s.buttonsBlock_one}>
                             <div className={s.one_cancelBtn}>
-                                <Button onClick={() => {
-                                    setData([])
-                                }}>
+                                <Button onClick={() => {setData([])}}>
                                     X
                                 </Button>
                             </div>
@@ -268,19 +266,20 @@ export const Cashbox = () => {
                         <div className={s.buttonsBlock_two}>
                             {r(sum * bts.c) + bts.s}
                         </div>
+
+                        <div className={s.rightSideBottom_payBlock}>
+                            <PayModal open={openPay}
+                                      setOpen={setOpenPay}
+                                      summ={sum}
+                                      result={paymentResultHandler}
+                            />
+                            <Button onClick={() => {setOpenPay(true)}}>
+                                К оплате
+                            </Button>
+                        </div>
+
                     </div>
-                    <div className={s.rightSideBottom_payBlock}>
-                        <PayModal open={openPay}
-                                  setOpen={setOpenPay}
-                                  summ={sum}
-                                  result={paymentResultHandler}
-                        />
-                        <Button onClick={() => {
-                            setOpenPay(true)
-                        }}>
-                            К оплате
-                        </Button>
-                    </div>
+
                 </div>
             </div>
 
