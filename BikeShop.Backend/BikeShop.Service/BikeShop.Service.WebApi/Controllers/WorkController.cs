@@ -71,4 +71,10 @@ public class WorkController : ControllerBase
     {
         return await _workService.UpdateWork(model);
     }
+
+    [HttpGet("search")]
+    public async Task<List<Work>> Search(string Querry)
+    {
+        return await _workService.Search(Querry);
+    }
 }

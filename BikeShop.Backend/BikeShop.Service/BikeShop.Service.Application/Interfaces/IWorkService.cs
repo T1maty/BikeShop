@@ -8,5 +8,6 @@ namespace BikeShop.Service.Application.Interfaces
         public Task<List<Work>> GetWorksByGroupId(int id);
         public Task<Work> CreateWork(CreateWorkModel model);
         public Task<Work> UpdateWork(UpdateWorkModel model);
+        public Task<List<Work>> Search(string Querry);
     }
 }

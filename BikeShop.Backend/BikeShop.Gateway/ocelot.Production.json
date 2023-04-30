@@ -873,6 +873,21 @@
       ],
       "SwaggerKey": "service"
     },
+	{
+      "UpstreamPathTemplate": "/api/work/search",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/work/search",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
 
     {
       "UpstreamPathTemplate": "/api/service/getbyshopid/{shopid}",

@@ -3,6 +3,7 @@ using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.Work;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BikeShop.Service.Application.Services
 {
@@ -55,6 +56,19 @@ namespace BikeShop.Service.Application.Services
             await _context.SaveChangesAsync(new CancellationToken());
 
             return work;
+        }
+
+        public async Task<List<Work>> Search(string Querry)
+        {
+            var res = Querry.ToLower().Split(" ");
+            var contQR = _context.Works.Where(n => n.Enabled == true);
+            foreach (var item in res)
+            {
+                contQR = contQR.Where(n => n.Name.ToLower().Contains(item)
+                                        || n.Id.ToString().Contains(item));
+            }
+
+            return await contQR.ToListAsync();
         }
     }
 }
