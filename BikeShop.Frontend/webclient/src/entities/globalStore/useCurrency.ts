@@ -4,7 +4,7 @@ import {Currency} from "../models/Others/Currency"
 import {immer} from "zustand/middleware/immer"
 import {EntitiesAPI} from '../api/EntitiesAPI'
 
-interface props {
+interface CurrencyProps {
     fromSelectedToBase: { c: number, s: string }
     fromBaseToSelected: { c: number, s: string }
 
@@ -16,7 +16,7 @@ interface props {
     roundUp: (v: number) => {}
 }
 
-export const useCurrency = create<props>()(persist(devtools(immer((set, get) => ({
+export const useCurrency = create<CurrencyProps>()(persist(devtools(immer((set, get) => ({
     fromBaseToSelected: {c: 1, s: ''},
     fromSelectedToBase: {c: 1, s: ''},
 
@@ -39,7 +39,7 @@ export const useCurrency = create<props>()(persist(devtools(immer((set, get) => 
     },
     setSelectedCurrency: (id) => {
         let Cur = get().allCurrencies.find(n => n.id === id)
-        
+
         if (Cur === undefined) console.log('UNDEFINED')
         set(state => {
             state.selectedCurrency = Cur!
