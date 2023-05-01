@@ -9,6 +9,7 @@ import {Badge} from "../../../../shared/ui/Badge/Badge"
 import {BikeShopPaths} from "../../../../app/routes/paths"
 import {useAuth, useCurrency} from "../../../../entities"
 import Select from "react-select"
+import {selectColorStyles} from '../../../../app/styles/variables/selectColorStyles'
 
 export const Header = () => {
 
@@ -21,29 +22,6 @@ export const Header = () => {
     const selectedCurrency = useCurrency(n => n.selectedCurrency)
     const setSelectedCurrency = useCurrency(n => n.setSelectedCurrency)
     const allCurrencies = useCurrency(n => n.allCurrencies)
-
-    const colourStyles = {
-        // @ts-ignore
-        option: (styles, {isFocused, isSelected}) => ({
-            ...styles,
-            background: isFocused
-                ? '#1876D1'
-                : isSelected
-                    ? '#fff'
-                    : undefined,
-            zIndex: 1,
-            color: 'black'
-        }),
-        // menuList: (styles: any) => ({
-        //     ...styles,
-        //     background: 'papayawhip'
-        // }),
-        menu: (base: any) => ({
-            ...base,
-            backgroundColor: 'white',
-            color: 'black'
-        })
-    }
 
     return (
         <div className={s.appBar}>
@@ -66,7 +44,7 @@ export const Header = () => {
                                 value={selectedCurrency}
                                 onChange={(v) => {setSelectedCurrency(v!.id)}}
                                 getOptionLabel={label => label.name}
-                                styles={colourStyles}
+                                styles={selectColorStyles}
                         />
                     </div>
                 </div>

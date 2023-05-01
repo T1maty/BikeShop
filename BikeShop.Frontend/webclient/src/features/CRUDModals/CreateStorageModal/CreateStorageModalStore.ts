@@ -13,6 +13,9 @@ interface CreateStorageModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
+    selectedStorage: CreateStorageResponse | null
+    setSelectedStorage: (storageId: number) => void
+
     currentStorage: CreateStorageResponse | null
     setCurrentStorage: (storage: CreateStorageResponse | null) => void
 
@@ -28,10 +31,21 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     isLoading: false,
     errorStatus: 'default',
 
+    selectedStorage: null,
+    setSelectedStorage: (storageId) => {
+        let storage = get().storages.find(n => n.id === storageId)
+
+        if (storage === undefined) console.log('storage UNDEFINED')
+        set(state => {
+            state.selectedStorage = storage!
+        })
+    },
+
     currentStorage: null,
     setCurrentStorage: (storage) => {
         set({currentStorage: storage})
     },
+
     storages: [],
     getStorages: () => {
         set({isLoading: true})
