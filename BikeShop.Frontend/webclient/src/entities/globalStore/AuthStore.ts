@@ -8,7 +8,6 @@ import {LoginResponse} from "../responses/LoginResponse"
 import {AuthAPI} from "../api/AuthAPI"
 import {RegistrationData} from "../models/Auth/RegistrationData"
 import {immer} from "zustand/middleware/immer"
-import {ErrorStatusTypes} from '../enumerables/ErrorStatusTypes'
 
 interface AuthStore {
     isLoading: boolean

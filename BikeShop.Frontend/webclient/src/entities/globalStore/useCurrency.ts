@@ -9,9 +9,9 @@ interface CurrencyProps {
     fromBaseToSelected: { c: number, s: string }
 
     baseCurrency: Currency | null
-    selectedCurrency: Currency | null
     allCurrencies: Currency[]
     loadAllCurrencies: () => void
+    selectedCurrency: Currency | null
     setSelectedCurrency: (id: number) => void
     roundUp: (v: number) => {}
 }
@@ -21,7 +21,6 @@ export const useCurrency = create<CurrencyProps>()(persist(devtools(immer((set, 
     fromSelectedToBase: {c: 1, s: ''},
 
     baseCurrency: null,
-    selectedCurrency: null,
     allCurrencies: [],
     loadAllCurrencies: () => {
         EntitiesAPI.Currency.getCurrencies().then(n => {
@@ -37,10 +36,11 @@ export const useCurrency = create<CurrencyProps>()(persist(devtools(immer((set, 
                 get().setSelectedCurrency(bc.id)
         })
     },
+    selectedCurrency: null,
     setSelectedCurrency: (id) => {
         let Cur = get().allCurrencies.find(n => n.id === id)
 
-        if (Cur === undefined) console.log('UNDEFINED')
+        if (Cur === undefined) console.log('currency UNDEFINED')
         set(state => {
             state.selectedCurrency = Cur!
             state.fromBaseToSelected = {c: Cur!.coefficient, s: Cur!.symbol}

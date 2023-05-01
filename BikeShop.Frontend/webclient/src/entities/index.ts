@@ -122,6 +122,7 @@ export {CashboxAPI} from './api/Acts/CashboxAPI'
 export {InventarizationAPI} from './api/Acts/InventarizationAPI'
 export {ShiftAPI} from './api/User/ShiftAPI'
 export {SalaryAPI} from './api/User/SalaryAPI'
+export {TableCatalogAPI} from './api/TableCatalogAPI'
 
 ///////////////////////////////////
 //          Others               //

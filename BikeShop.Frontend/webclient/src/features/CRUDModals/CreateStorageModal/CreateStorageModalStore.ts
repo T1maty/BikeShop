@@ -3,15 +3,17 @@ import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CreateStorageResponse} from '../../../entities/responses/StorageResponse'
 import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage'
-import {EntitiesAPI} from "../../../entities"
+import {EntitiesAPI, useAuth} from '../../../entities'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-
 
 interface CreateStorageModalStore {
     openCreateStorageModal: boolean
     setOpenCreateStorageModal: (value: boolean) => void
     isLoading: boolean
     errorStatus: ErrorStatusTypes
+
+    selectedStorage: CreateStorageResponse | null
+    setSelectedStorage: (storageId: number) => void
 
     currentStorage: CreateStorageResponse | null
     setCurrentStorage: (storage: CreateStorageResponse | null) => void
@@ -28,10 +30,21 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     isLoading: false,
     errorStatus: 'default',
 
+    selectedStorage: null,
+    setSelectedStorage: (storageId) => {
+        let storage = get().storages.find(st => st.id === storageId)
+
+        if (storage === undefined) console.log('storage UNDEFINED')
+        set(state => {
+            state.selectedStorage = storage!
+        })
+    },
+
     currentStorage: null,
     setCurrentStorage: (storage) => {
         set({currentStorage: storage})
     },
+
     storages: [],
     getStorages: () => {
         set({isLoading: true})
@@ -39,6 +52,14 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
             set(state => {
                 state.storages = res.data
             })
+
+            // для дефолтного значения склада
+            let currentShop = useAuth.getState().shop
+            let defaultShopStorage = get().storages.find(st => st.id === currentShop?.storageId)
+            set(state => {
+                state.selectedStorage = defaultShopStorage!
+            })
+
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
