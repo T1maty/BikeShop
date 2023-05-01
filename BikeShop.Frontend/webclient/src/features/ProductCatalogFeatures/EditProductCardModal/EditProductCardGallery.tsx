@@ -1,11 +1,10 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from "./EditProductCardGallery.module.scss"
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
-import {Button, DeleteButton, LoaderScreen} from '../../../shared/ui'
+import {Button, LoaderScreen} from '../../../shared/ui'
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {ProductCardAPI, ProductImage} from '../../../entities'
 import {ConfirmModal} from '../../ConfirmModal/ConfirmModal'
-import useConfirmModal from '../../ConfirmModal/ConfirmModalStore'
 import {useSnackbar} from "notistack"
 
 interface ProductCardGalleryProps {
@@ -20,9 +19,9 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const isLoading = useEditProductCardModal(s => s.isLoading)
     const setIsLoading = useEditProductCardModal(s => s.setIsLoading)
-    const setOpenConfirmModal = useConfirmModal(s => s.setOpenConfirmModal)
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
+    const [confirm, setConfirm] = useState(false);
 
     // загрузка изображения
     const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +110,9 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                 return (
                                     <div key={img.id}
                                          className={s.imageList_item}
-                                         onDoubleClick={() => {setImageHandler(key)}}
+                                         onDoubleClick={() => {
+                                             setImageHandler(key)
+                                         }}
                                     >
                                         <img className={currentImageKey === key ? s.active_image : ''}
                                              src={img.url} alt="img-thumbnail"
@@ -123,11 +124,17 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
                                         <img src={RemoveIcon} alt="remove-icon"
                                              className={s.imageList_deleteItem}
-                                             onClick={() => {setOpenConfirmModal(true)}}
-                                             // onClick={() => {deleteImageHandler(img.id); console.log('id from click', img.id)}}
+                                             onClick={() => {
+                                                 setConfirm(true)
+                                             }}
+                                            // onClick={() => {deleteImageHandler(img.id); console.log('id from click', img.id)}}
                                         />
                                         <ConfirmModal title={'Вы действительно хотите удалить изображение?'}
-                                                      extraCallback={() => {deleteImageHandler(img.id); console.log('id from click', img.id)}}
+                                                      extraCallback={() => {
+                                                          deleteImageHandler(img.id);
+                                                          console.log('id from click', img.id)
+                                                      }}
+                                                      open={confirm} setOpen={setConfirm}
                                         />
 
                                     </div>
@@ -139,13 +146,17 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                 <div className={s.imageGallery_buttons}>
                     <div className={s.imageGallery_sortButtons}>
                         <Button disabled={currentImageKey === null || currentImageKey === 0}
-                                onClick={() => {onMoveBackwardHandler(currentImageKey)}}
+                                onClick={() => {
+                                    onMoveBackwardHandler(currentImageKey)
+                                }}
                         >
                             Переместить назад
                         </Button>
                         <Button
                             disabled={currentImageKey === null || currentImageKey === (props.images.length - 1)}
-                            onClick={() => {onMoveForwardHandler(currentImageKey)}}
+                            onClick={() => {
+                                onMoveForwardHandler(currentImageKey)
+                            }}
                         >
                             Переместить вперёд
                         </Button>
@@ -153,7 +164,9 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                     <div className={s.imageGallery_addImage}>
                         <input type="file" id="file"
                                accept="image/png, image/jpeg"
-                               onChange={(v) => {uploadImageHandler(v)}}
+                               onChange={(v) => {
+                                   uploadImageHandler(v)
+                               }}
                                className={s.inputFile}
                         />
                     </div>

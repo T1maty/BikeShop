@@ -4,12 +4,12 @@ import {Button} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import useService, {ServiceListStatusType} from "./ServiceStore"
 import {ServiceStatusType} from "../../../entities/models/Service/ServiceItem"
-import {EnumServiceStatus, ServiceFormModel} from "../../../entities"
-import {PrintModal} from "../../../features"
+import {EnumServiceStatus, ServiceFormModel, ServiceWithData} from "../../../entities"
+import {ConfirmModal, PrintModal} from "../../../features"
 import {CheckForServiceWork} from "../../../widgets"
 import {UseFormReturn} from "react-hook-form"
 
-export const ServiceNavigation = (props: {children: UseFormReturn<ServiceFormModel, any>}) => {
+export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
     const isLoading = useService(s => s.isLoading)
     const serviceListStatus = useService(s => s.serviceListStatus)
@@ -22,6 +22,8 @@ export const ServiceNavigation = (props: {children: UseFormReturn<ServiceFormMod
     const updateServiceStatus = useService(s => s.updateServiceStatus)
 
     const [openPrint, setOpenPrint] = useState(false);
+    const [confirm, setConfirm] = useState(false);
+    const [confData, setConfData] = useState<ServiceWithData>()
 
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
@@ -47,6 +49,9 @@ export const ServiceNavigation = (props: {children: UseFormReturn<ServiceFormMod
     return (
         <div className={s.service_leftSide}>
 
+            <ConfirmModal title={'Несохраненные изменения будут утеряны'} extraCallback={() => {
+                setCurrentService(confData!)
+            }} open={confirm} setOpen={setConfirm}/>
             <PrintModal open={openPrint}
                         setOpen={setOpenPrint}
                         children={<CheckForServiceWork children={currentService!}/>}
@@ -142,7 +147,12 @@ export const ServiceNavigation = (props: {children: UseFormReturn<ServiceFormMod
                                         <div key={service.service.id}
                                              className={service.service.id === currentService?.service.id ? s.serviceItem_active :
                                                  service.service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
-                                             onClick={() => {setCurrentService(service)}}
+                                             onClick={() => {
+                                                 if (props.children.formState.isDirty) {
+                                                     setConfirm(true)
+                                                     setConfData(service)
+                                                 } else setCurrentService(service)
+                                             }}
                                         >
                                             {service.service.name}
                                         </div>

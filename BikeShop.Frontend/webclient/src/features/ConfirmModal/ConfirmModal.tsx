@@ -1,17 +1,15 @@
 import React from 'react'
 import s from './ConfirmModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
-import useConfirmModal from './ConfirmModalStore'
 
 interface ConfirmModalProps {
     title: string
     extraCallback: () => void
+    open: boolean
+    setOpen: (v: boolean,) => void
 }
 
-export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback}) => {
-
-    const open = useConfirmModal(s => s.openConfirmModal)
-    const setOpen = useConfirmModal(s => s.setOpenConfirmModal)
+export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback, setOpen, open}) => {
 
     const confirmButtonHandler = () => {
         extraCallback()
@@ -21,18 +19,22 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback}
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
         >
             <div className={s.confirmModal_mainBox}>
                 <div className={s.confirmModal_title}>
                     {title}
                 </div>
                 <div className={s.confirmModal_buttons}>
-                    <Button  onClick={confirmButtonHandler}>
+                    <Button onClick={confirmButtonHandler}>
                         Подтвердить
                     </Button>
                     <div className={s.confirmModal_cancelButton}>
-                        <Button  onClick={() => {setOpen(false)}}>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
                             Отмена
                         </Button>
                     </div>
