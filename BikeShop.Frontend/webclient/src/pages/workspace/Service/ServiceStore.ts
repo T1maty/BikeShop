@@ -1,8 +1,7 @@
 import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {LocalStorage, ServiceAPI, ServiceFormModel, ServiceWithData,
-    UpdateServiceStatus, User} from '../../../entities'
+import {LocalStorage, ServiceAPI, ServiceFormModel, ServiceWithData, UpdateServiceStatus, User} from '../../../entities'
 import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
@@ -70,6 +69,7 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
 
     currentService: null,
     setCurrentService: (service) => {
+        set({isCreating: false})
         set({currentService: service})
     },
     serviceListStatus: "Waiting",
@@ -119,7 +119,11 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
                 state.services.push(res.data)
             })
             get().filter()
-            set({currentService: res.data})
+            set({isCreating: false})
+            set(state => {
+                state.currentService = state.services[state.services.length - 1]
+            })
+            onSuccess();
             set({isLoading: false})
         }).catch((error: any) => {
             console.log(error)

@@ -12,7 +12,7 @@ import useSelectProductWorkModal
 import {useSnackbar} from "notistack"
 import Select from "react-select"
 
-export const ServiceForm = (props: {children: UseFormReturn<ServiceFormModel, any>}) => {
+export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
     const formControl = props.children
     const {enqueueSnackbar} = useSnackbar()
@@ -43,7 +43,7 @@ export const ServiceForm = (props: {children: UseFormReturn<ServiceFormModel, an
         if (isCreating) {
             console.log('create IF works, new data =', data)
             addNewService(data, () => {
-                setIsCreating(false)
+                enqueueSnackbar('Ремонт создан', {variant: 'success', autoHideDuration: 3000})
             })
         }
 
@@ -52,14 +52,12 @@ export const ServiceForm = (props: {children: UseFormReturn<ServiceFormModel, an
             console.log('update IF works, updateData = ', data)
             updateService(data, () => {
                 enqueueSnackbar('Ремонт обновлен', {variant: 'success', autoHideDuration: 3000})
-                formControl.reset()
             })
         }
     }
 
     // очистка всех данных (кнопка ОТМЕНА)
     const clearAllServiceInfo = () => {
-        formControl.reset()
         setCurrentService(null)
         setIsCreating(false)
     }
@@ -83,18 +81,20 @@ export const ServiceForm = (props: {children: UseFormReturn<ServiceFormModel, an
     useEffect(() => {
         formControl.reset()
 
-        formControl.setValue('name', currentService?.service.name!)
-        formControl.setValue('clientDescription', currentService?.service.clientDescription!)
-        formControl.setValue('userMasterId', currentService?.service.userMasterId!)
-        formControl.setValue('clientId', currentService?.service.clientId!)
-        formControl.setValue('userCreatedDescription', currentService?.service.userCreatedDescription!)
-        formControl.setValue('userMasterDescription', currentService?.service.userMasterDescription!)
-        formControl.setValue('workDiscountId', currentService?.service.workDiscountId!)
-        formControl.setValue('productDiscountId', currentService?.service.productDiscountId!)
-        formControl.setValue('id', currentService?.service.id!)
+        if (currentService != null) {
+            formControl.setValue('name', currentService?.service.name!)
+            formControl.setValue('clientDescription', currentService?.service.clientDescription!)
+            formControl.setValue('userMasterId', currentService?.service.userMasterId!)
+            formControl.setValue('clientId', currentService?.service.clientId!)
+            formControl.setValue('userCreatedDescription', currentService?.service.userCreatedDescription!)
+            formControl.setValue('userMasterDescription', currentService?.service.userMasterDescription!)
+            formControl.setValue('workDiscountId', currentService?.service.workDiscountId!)
+            formControl.setValue('productDiscountId', currentService?.service.productDiscountId!)
+            formControl.setValue('id', currentService?.service.id!)
 
-        formControl.setValue('serviceProducts', currentService ? currentService.products : [])
-        formControl.setValue('serviceWorks', currentService ? currentService.works : [])
+            formControl.setValue('serviceProducts', currentService ? currentService.products : [])
+            formControl.setValue('serviceWorks', currentService ? currentService.works : [])
+        }
     }, [currentService])
 
     useEffect(() => {
@@ -137,7 +137,9 @@ export const ServiceForm = (props: {children: UseFormReturn<ServiceFormModel, an
                                         isDisabled={currentService === null && !isCreating}
                                         isSearchable
                                         value={masters.find(n => n.id === field.value)}
-                                        onChange={(value: any) => {field.onChange(value.id)}}
+                                        onChange={(value: any) => {
+                                            field.onChange(value.id)
+                                        }}
                                         noOptionsMessage={() => 'Мастер не найден'}
                                         getOptionLabel={label => label!.firstName}
                                         getOptionValue={value => value!.firstName}
