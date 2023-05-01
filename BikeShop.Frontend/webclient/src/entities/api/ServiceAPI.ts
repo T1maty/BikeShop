@@ -4,6 +4,7 @@ import {GetUsersResponse} from '../responses/GetUsersResponse'
 import {UpdateServiceStatus} from '../requests/UpdateService'
 import {ServiceWithData} from "../models/ServiceWithData";
 import {LocalStorage} from "../globalStore/LocalStorage";
+import {Work} from "../models/Service/Work";
 
 export const ServiceAPI = {
     getMasters(): any {
@@ -29,6 +30,11 @@ export const ServiceAPI = {
     updateServiceStatus(data: UpdateServiceStatus): Promise<AxiosResponse<ServiceWithData>> {
         return (
             $api.put<ServiceWithData>(`/service/updateservicestatus?id=${data.id}&status=${data.status}`, data)
+        )
+    },
+    searchWork: function (querry: string): Promise<AxiosResponse<Work[]>> {
+        return (
+            $api.get<Work[]>(`/work/search?Querry=${querry}`)
         )
     },
 }

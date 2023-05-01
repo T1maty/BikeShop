@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from './SelectProductWork.module.scss'
-import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
+import {Button, UniTable} from '../../../shared/ui'
 import {useWorkCatalog} from "../../../widgets/workspace/WorkCatalog/TableCatalogStore"
 import {WorkCatalogTreeView} from "../../../widgets/workspace/WorkCatalog/WorkCatalogTreeView"
 import {columns} from "./SlaveTableConfig"
@@ -8,6 +8,7 @@ import {WorkCatalogTable} from "../../../widgets"
 import {ServiceWork, Work} from "../../../entities"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
+import {AsyncSelectSearchWork} from "../../../shared/ui/AsyncSelectSearch/AsyncSelectSearchWork";
 
 interface SelectWorkProps {
     defaultMasterId: string
@@ -25,6 +26,35 @@ export const SelectWork = (props: SelectWorkProps) => {
     useEffect(() => {
         getGroup()
     }, [])
+
+    const addWorkHandler = (row: Work) => {
+        let works = props.works
+        let exist = works.find(n => n.workId === row.id)
+
+        if (exist != undefined) {
+            exist.quantity++
+            props.setWorks(works)
+        } else {
+            works.push(
+                {
+                    id: 0,
+                    createdAt: Date.now().toString(),
+                    updatedAt: Date.now().toString(),
+                    enabled: true,
+                    workId: row.id,
+                    complicationPrice: 0,
+                    name: row.name,
+                    description: '',
+                    quantity: 1,
+                    price: row.price,
+                    discount: 0,
+                    total: row.price,
+                    userId: props.defaultMasterId,
+                    serviceId: props.serviceId
+                } as ServiceWork)
+            props.setWorks(works)
+        }
+    }
 
     return (
         <div className={s.selectProduct_mainBox}>
@@ -52,40 +82,13 @@ export const SelectWork = (props: SelectWorkProps) => {
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
 
-                    <WorkCatalogTable onRowDoubleClick={(row: Work) => {
-                        let works = props.works
-                        let exist = works.find(n => n.workId === row.id)
-
-                        if (exist != undefined) {
-                            exist.quantity++
-                            props.setWorks(works)
-                        } else {
-                            works.push(
-                                {
-                                    id: 0,
-                                    createdAt: Date.now().toString(),
-                                    updatedAt: Date.now().toString(),
-                                    enabled: true,
-                                    workId: row.id,
-                                    complicationPrice: 0,
-                                    name: row.name,
-                                    description: '',
-                                    quantity: 1,
-                                    price: row.price,
-                                    discount: 0,
-                                    total: row.price,
-                                    userId: props.defaultMasterId,
-                                    serviceId: props.serviceId
-                                } as ServiceWork)
-                            props.setWorks(works)
-                        }
-                    }}
+                    <WorkCatalogTable onRowDoubleClick={addWorkHandler}
                     />
 
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
-                        <AsyncSelectSearchProduct/>
+                        <AsyncSelectSearchWork onSelect={addWorkHandler}/>
                     </div>
                     <div className={s.infoRow_result}>
                         <div className={s.result_sum}>

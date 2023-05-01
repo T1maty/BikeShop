@@ -8,6 +8,7 @@ import {columns} from "./SlaveTableConfig"
 import {ProductTag} from "../../../entities"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
+import {Product} from "entities";
 
 interface SelectProductProps {
     products: ServiceItemProduct[]
@@ -20,6 +21,19 @@ export const SelectProduct = (props: SelectProductProps) => {
     const conv = useSelectProduct(s => s.convert)
     const [tags, setTags] = useState<ProductTag[]>([])
 
+    const addProductHandler = (product: Product) => {
+        let prods = props.products
+        let actual = prods.find(n => n.productId === product.id)
+        if (actual != undefined) {
+            actual.quantity++
+        } else {
+            let item = conv(product)
+            item.quantity = 1
+            prods.push(item)
+        }
+        props.setProducts(prods)
+    }
+
     return (
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
@@ -31,12 +45,15 @@ export const SelectProduct = (props: SelectProductProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {setOpenSelectProductModal(false)}}>
+                        <Button onClick={() => {
+                            setOpenSelectProductModal(false)
+                        }}>
                             Отмена
                         </Button>
                     </div>
@@ -45,23 +62,12 @@ export const SelectProduct = (props: SelectProductProps) => {
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
-                    <ProductCatalogTable onRowDoubleClick={(product) => {
-                        let prods = props.products
-                        let actual = prods.find(n => n.productId === product.id)
-                        if (actual != undefined) {
-                            actual.quantity++
-                        } else {
-                            let item = conv(product)
-                            item.quantity = 1
-                            prods.push(item)
-                        }
-                        props.setProducts(prods)
-                    }}
+                    <ProductCatalogTable onRowDoubleClick={addProductHandler}
                     />
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
-                        <AsyncSelectSearchProduct/>
+                        <AsyncSelectSearchProduct onSelect={addProductHandler}/>
                     </div>
                     <div className={s.infoRow_result}>
                         <div className={s.result_sum}>

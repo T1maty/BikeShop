@@ -5,12 +5,20 @@ import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
-import {BillWithProducts, PaymentData, User,
-    FinancialInteractionAPI, useAuth, useCurrency} from '../../../entities'
+import {
+    BillWithProducts,
+    FinancialInteractionAPI,
+    PaymentData,
+    Product,
+    useAuth,
+    useCurrency,
+    User
+} from '../../../entities'
 import {columns} from "./CashboxTableConfig"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
-import {asyncSelectSearchProductF} from '../../../shared/ui/AsyncSelectSearch/asyncSelectSearchProductF'
+import Enumerable from "linq";
+import {BillProductDTO} from "./models/BillProductDTO";
 
 export const Cashbox = () => {
 
@@ -35,6 +43,37 @@ export const Cashbox = () => {
     const bts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
 
+    const onSearchHandler = (n: Product) => {
+        let exProd = Enumerable.from(bill.products)
+            .where(m => m.productId === n.id)
+            .firstOrDefault()
+
+        if (exProd !== undefined) {
+            setData(bill.products.map((m) => {
+                if (m.productId === n.id) {
+                    return {...m, quantity: m.quantity + 1}
+                } else {
+                    return m
+                }
+            }))
+        } else {
+            let newProd: BillProductDTO = {
+                productId: n.id,
+                name: n.name,
+                catalogKey: n.catalogKey,
+                serialNumber: '',
+                description: '',
+                quantity: 1,
+                quantityUnitName: "123",
+                currencySymbol: "123",
+                price: n.retailPrice,
+                discount: 0,
+                total: n.retailPrice
+            }
+            console.log('selectedProd', n)
+            setData([...bill.products, newProd])
+        }
+    }
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -81,22 +120,26 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock_leftSideWrapper}>
                 <div className={s.leftSide_tables}>
-                    <Button onClick={() => {}}
+                    <Button onClick={() => {
+                    }}
                             disabled={!isActiveTable}
                     >
                         Касса 1
                     </Button>
-                    <Button onClick={() => {}}
+                    <Button onClick={() => {
+                    }}
                             disabled={isActiveTable}
                     >
                         Касса 2
                     </Button>
-                    <Button onClick={() => {}}
+                    <Button onClick={() => {
+                    }}
                             disabled={isActiveTable}
                     >
                         Касса 3
                     </Button>
-                    <Button onClick={() => {}}
+                    <Button onClick={() => {
+                    }}
                             disabled={isActiveTable}
                     >
                         Касса 4
@@ -104,7 +147,9 @@ export const Cashbox = () => {
                 </div>
 
                 <div className={s.leftSide_client}>
-                    <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                    <ChooseClientModal extraCallback={(user: User) => {
+                        chooseClientHandler(user)
+                    }}/>
 
                     <ClientCard user={user}/>
                     <div className={s.leftSide_client_buttons}>
@@ -114,7 +159,8 @@ export const Cashbox = () => {
                             Выбрать клиента
                         </Button>
                         <Button buttonDivWrapper={s.client_buttons_cancel}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             X
                         </Button>
@@ -140,12 +186,14 @@ export const Cashbox = () => {
                         <ChooseDiscountModal/>
 
                         <Button buttonDivWrapper={s.buttons_choose}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             Выбрать скидку для клиента
                         </Button>
                         <Button buttonDivWrapper={s.buttons_cancel}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             X
                         </Button>
@@ -157,18 +205,20 @@ export const Cashbox = () => {
                 <div className={s.cashboxMainBlock_rightSideHeader}>
                     <ChooseProductModal open={open}
                                         setOpen={setOpen}
-                                        addData={asyncSelectSearchProductF}
+                                        addData={onSearchHandler}
                                         data={bill.products}
                                         slaveColumns={columns}
                     />
 
                     <Button buttonDivWrapper={s.header_chooseBtn}
-                            onClick={() => {setOpen(true)}}
+                            onClick={() => {
+                                setOpen(true)
+                            }}
                     >
                         Выбрать товары
                     </Button>
                     <div className={s.header_searchSelect}>
-                        <AsyncSelectSearchProduct/>
+                        <AsyncSelectSearchProduct onSelect={onSearchHandler}/>
                     </div>
                 </div>
 
@@ -180,7 +230,9 @@ export const Cashbox = () => {
                     <div className={s.rightSideBottom_buttonsBlock}>
                         <div className={s.buttonsBlock_one}>
                             <div className={s.one_cancelBtn}>
-                                <Button onClick={() => {setData([])}}>
+                                <Button onClick={() => {
+                                    setData([])
+                                }}>
                                     X
                                 </Button>
                             </div>
@@ -201,7 +253,9 @@ export const Cashbox = () => {
                                       summ={sum}
                                       result={paymentResultHandler}
                             />
-                            <Button onClick={() => {setOpenPay(true)}}>
+                            <Button onClick={() => {
+                                setOpenPay(true)
+                            }}>
                                 К оплате
                             </Button>
                         </div>

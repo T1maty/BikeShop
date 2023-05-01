@@ -1,12 +1,12 @@
 import React from 'react'
 import AsyncSelect from 'react-select/async'
-import {CatalogAPI, Product} from '../../../entities'
+import {ServiceAPI, Work} from '../../../entities'
 
-export const AsyncSelectSearchProduct = (props: { onSelect: (value: Product) => void }) => {
+export const AsyncSelectSearchWork = (props: { onSelect: (value: Work) => void }) => {
 
-    const loadOptions = (inputValue: string, callback: (value: Product[]) => void) => {
-        CatalogAPI.searchProductByName(inputValue).then((resp) => {
-            const asyncOptions = resp.data.map((n: Product) => {
+    const loadOptions = (inputValue: string, callback: (value: Work[]) => void) => {
+        ServiceAPI.searchWork(inputValue).then((resp) => {
+            const asyncOptions = resp.data.map((n: Work) => {
                 return ({label: n.name, value: n.id})
             })
             console.log(asyncOptions)
@@ -25,13 +25,13 @@ export const AsyncSelectSearchProduct = (props: { onSelect: (value: Product) => 
                 value={null}
                 loadOptions={loadOptions}
                 onChange={(r) => {
-                    props.onSelect(r as Product)
+                    props.onSelect(r as Work)
                     console.log('selected', r)
                 }}
-                getOptionLabel={label => label!.id + ' | ' + label!.name + ' | ' + label!.catalogKey}
+                getOptionLabel={label => label!.id + ' | ' + label!.name + ' | ' + label!.price}
                 getOptionValue={value => value!.name}
                 placeholder={'Поиск'}
-                noOptionsMessage={() => 'Товар не найден'}
+                noOptionsMessage={() => 'Услуга не найдена'}
             />
         </div>
     )
