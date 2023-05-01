@@ -19,9 +19,9 @@ export const Header = () => {
     const user = useAuth(s => s.user)
     const shop = useAuth(s => s.shop)
 
+    const allCurrencies = useCurrency(n => n.allCurrencies)
     const selectedCurrency = useCurrency(n => n.selectedCurrency)
     const setSelectedCurrency = useCurrency(n => n.setSelectedCurrency)
-    const allCurrencies = useCurrency(n => n.allCurrencies)
 
     return (
         <div className={s.appBar}>

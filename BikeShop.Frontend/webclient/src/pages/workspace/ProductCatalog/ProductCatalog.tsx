@@ -71,8 +71,8 @@ export const ProductCatalog = () => {
                             placeholder={'Склад'}
                             isSearchable={false}
                             options={storages}
-                            defaultValue={storages[0]}
-                            // defaultValue={setSelectedStorage(storages.find(st => st.id === shop!.storageId))}
+                            // defaultValue={storages[0]}
+                            // defaultValue={setSelectedStorage(shop!.storageId)}
                             value={selectedStorage}
                             onChange={(v) => {setSelectedStorage(v!.id)}}
                             getOptionLabel={label => label.name}

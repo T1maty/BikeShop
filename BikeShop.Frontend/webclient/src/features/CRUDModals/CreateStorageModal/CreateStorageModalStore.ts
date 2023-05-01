@@ -6,7 +6,6 @@ import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateSto
 import {EntitiesAPI} from "../../../entities"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
-
 interface CreateStorageModalStore {
     openCreateStorageModal: boolean
     setOpenCreateStorageModal: (value: boolean) => void
@@ -33,7 +32,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
 
     selectedStorage: null,
     setSelectedStorage: (storageId) => {
-        let storage = get().storages.find(n => n.id === storageId)
+        let storage = get().storages.find(st => st.id === storageId)
 
         if (storage === undefined) console.log('storage UNDEFINED')
         set(state => {
@@ -52,6 +51,9 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
         EntitiesAPI.Storage.getStorages().then(res => {
             set(state => {
                 state.storages = res.data
+            })
+            set(state => {
+                state.selectedStorage = res.data[0]
             })
             set({isLoading: false})
         }).catch((error: any) => {
