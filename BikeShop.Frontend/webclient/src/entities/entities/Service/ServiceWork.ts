@@ -9,6 +9,7 @@ export interface ServiceWork {
     quantity: number,
     price: number,
     discount: number,
+    complicationPrice: number,
     total: number,
     userId: string,
     serviceId: number

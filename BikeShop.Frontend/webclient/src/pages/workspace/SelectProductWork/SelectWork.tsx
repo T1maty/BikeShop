@@ -34,12 +34,15 @@ export const SelectWork = (props: SelectWorkProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {setOpenSelectWorkModal(false)}}>
+                        <Button onClick={() => {
+                            setOpenSelectWorkModal(false)
+                        }}>
                             Отмена
                         </Button>
                     </div>
@@ -64,6 +67,7 @@ export const SelectWork = (props: SelectWorkProps) => {
                                     updatedAt: Date.now().toString(),
                                     enabled: true,
                                     workId: row.id,
+                                    complicationPrice: 0,
                                     name: row.name,
                                     description: '',
                                     quantity: 1,

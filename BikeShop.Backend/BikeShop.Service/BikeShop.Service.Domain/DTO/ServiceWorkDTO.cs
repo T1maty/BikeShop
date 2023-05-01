@@ -19,6 +19,7 @@ namespace BikeShop.Service.Application.DTO
         public int Quantity { get; set; }
         public int QuantityUnitId { get; set; }
         public decimal Price { get; set; }
+        public decimal ComplicationPrice { get; set; } = 0;
         public decimal Discount { get; set; }
         public decimal Total { get; set; }
         public Guid UserId { get; set; }

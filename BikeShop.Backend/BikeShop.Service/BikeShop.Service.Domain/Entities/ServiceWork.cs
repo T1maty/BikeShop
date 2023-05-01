@@ -11,6 +11,7 @@ public class ServiceWork : BaseEntity
     public int Quantity { get; set; } = 0;
     public decimal Price { get; set; } = 0;
     public decimal Discount { get; set; } = 0;
+    public decimal ComplicationPrice { get; set; } = 0;
     public decimal Total { get; set; } = 0;
     public Guid? UserId { get; set; }
 

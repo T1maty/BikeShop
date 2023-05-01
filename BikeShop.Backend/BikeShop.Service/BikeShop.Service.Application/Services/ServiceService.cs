@@ -40,7 +40,7 @@ public class ServiceService : IServiceService
         var serviceWorks = _mapper.ProjectTo<ServiceWork>(model.ServiceWorks.AsQueryable()).ToList();
         var serviceProducts = _mapper.ProjectTo<ServiceProduct>(model.ServiceProducts.AsQueryable()).ToList();
 
-        serviceWorks.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
+        serviceWorks.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount + n.ComplicationPrice);
         serviceProducts.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
 
         service.PriceProduct = serviceProducts.Select(n => n.Total).Sum();
@@ -248,6 +248,7 @@ public class ServiceService : IServiceService
             {
                 var ent = existWorks[work.Id];
 
+                ent.ComplicationPrice = work.ComplicationPrice;
                 ent.UpdatedAt = DateTime.Now;
                 ent.UserId = work.UserId;
                 ent.ServiceId = dto.Id;
@@ -256,7 +257,7 @@ public class ServiceService : IServiceService
                 ent.Description = work.Description;
                 ent.Price = work.Price;
                 ent.Discount = work.Discount;
-                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+                ent.Total = ent.Price * ent.Quantity - ent.Discount + ent.ComplicationPrice;
                 ent.Name = work.Name;
 
                 existWorks.Remove(work.Id);
@@ -266,6 +267,7 @@ public class ServiceService : IServiceService
             {
                 var ent = new ServiceWork();
 
+                ent.ComplicationPrice = work.ComplicationPrice;
                 ent.UpdatedAt = DateTime.Now;
                 ent.UserId = work.UserId;
                 ent.ServiceId = dto.Id;
@@ -274,7 +276,7 @@ public class ServiceService : IServiceService
                 ent.Description = work.Description;
                 ent.Price = work.Price;
                 ent.Discount = work.Discount;
-                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+                ent.Total = ent.Price * ent.Quantity - ent.Discount + ent.ComplicationPrice;
                 ent.Name = work.Name;
 
                 newWorks.Add(ent);
