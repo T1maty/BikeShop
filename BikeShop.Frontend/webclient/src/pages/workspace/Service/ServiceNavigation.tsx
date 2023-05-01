@@ -2,12 +2,14 @@ import React, {useState} from 'react'
 import s from "./Service.module.scss"
 import {Button} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
-import useService, {ServiceListStatusType} from "./ServiceStore"
+import useService from "./ServiceStore"
+import ServiceStore, {ServiceListStatusType} from "./ServiceStore"
 import {ServiceStatusType} from "../../../entities/models/Service/ServiceItem"
 import {EnumServiceStatus, ServiceFormModel, ServiceWithData} from "../../../entities"
 import {ConfirmModal, PrintModal} from "../../../features"
 import {CheckForServiceWork} from "../../../widgets"
 import {UseFormReturn} from "react-hook-form"
+import {ServiceNavigationContext} from "./ServiceNavigationContex";
 
 export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -24,6 +26,11 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const [openPrint, setOpenPrint] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [confData, setConfData] = useState<ServiceWithData>()
+    const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
+
+    const selected = ServiceStore(s => s.selectedNavService)
+    const setSelected = ServiceStore(s => s.setSelectedNavService)
+
 
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
@@ -49,8 +56,10 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     return (
         <div className={s.service_leftSide}>
 
+            <ServiceNavigationContext open={navContext} setOpen={setNavContext}/>
             <ConfirmModal title={'Несохраненные изменения будут утеряны'} extraCallback={() => {
                 setCurrentService(confData!)
+                setSelected(confData!)
             }} open={confirm} setOpen={setConfirm}/>
             <PrintModal open={openPrint}
                         setOpen={setOpenPrint}
@@ -146,12 +155,19 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                                     return (
                                         <div key={service.service.id}
                                              className={service.service.id === currentService?.service.id ? s.serviceItem_active :
-                                                 service.service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : s.serviceItem}
+                                                 service.service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : selected?.service.id === service.service.id ? s.serviceItem_selected : s.serviceItem}
                                              onClick={() => {
                                                  if (props.children.formState.isDirty) {
                                                      setConfirm(true)
                                                      setConfData(service)
-                                                 } else setCurrentService(service)
+                                                 } else {
+                                                     setCurrentService(service)
+                                                     setSelected(service)
+                                                 }
+                                             }}
+                                             onContextMenu={(e) => {
+                                                 setSelected(service)
+                                                 setNavContext({o: true, x: e.clientX, y: e.clientY})
                                              }}
                                         >
                                             {service.service.name}

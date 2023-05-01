@@ -30,6 +30,9 @@ interface ServiceStore {
     addNewService: (data: ServiceFormModel, onSuccess: () => void) => any
     updateService: (updateData: ServiceFormModel, onSuccess: () => void) => any
     updateServiceStatus: (data: UpdateServiceStatus, onSuccess: () => void) => void
+
+    selectedNavService: ServiceWithData | null,
+    setSelectedNavService: (v: ServiceWithData) => void,
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -187,6 +190,10 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
             set({isLoading: false})
         })
     },
+    selectedNavService: null,
+    setSelectedNavService: (v) => {
+        set({selectedNavService: v})
+    }
 })))/*, {
     name: "serviceStore",
     version: 1

@@ -54,7 +54,9 @@ export const Service = () => {
     } else {
 
         return (
-            <div className={s.serviceBlock}>
+            <div className={s.serviceBlock} onContextMenu={e => {
+                e.preventDefault()
+            }}>
                 <ServiceNavigation children={formControl}/>
                 <ServiceForm children={formControl}/>
             </div>
