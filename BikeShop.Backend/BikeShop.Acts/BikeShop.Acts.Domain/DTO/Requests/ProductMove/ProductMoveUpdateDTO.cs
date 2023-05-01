@@ -8,11 +8,7 @@ namespace BikeShop.Acts.Domain.DTO.Requests.ProductMove
 {
     public class ProductMoveUpdateDTO
     {
-        public int Id { get; set; }
-        public Guid User { get; set; }
-        public int MovingFromSkladId { get; set; }
-        public int MovingToSkladId { get; set; }
-        public string Description { get; set; }
+        public MoveUpdateDTO ProductMove { get; set; }
         public List<ProductMoveProductDTO> products { get; set; }
     }
 }

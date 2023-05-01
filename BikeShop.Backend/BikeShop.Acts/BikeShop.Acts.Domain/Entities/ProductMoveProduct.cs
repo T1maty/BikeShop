@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Acts.Domain.Entities
 {
-    public class ProductMoveProducts : BaseEntity
+    public class ProductMoveProduct : BaseEntity
     {
+        public int ProductMoveId { get; set; }
         public int ProductId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

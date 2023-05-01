@@ -10,6 +10,6 @@ namespace BikeShop.Acts.Domain.DTO
     public class ProductMoveWithProducts
     {
         public ProductMove ProductMove { get; set; }
-        public List<ProductMoveProducts> Products { get; set; }
+        public List<ProductMoveProduct> Products { get; set; }
     }
 }

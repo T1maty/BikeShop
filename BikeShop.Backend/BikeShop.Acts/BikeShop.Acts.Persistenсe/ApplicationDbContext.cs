@@ -16,6 +16,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<InventarizationLack> InventarizationLacks { get; set; }
     public DbSet<InventarizationProduct> InventarizationProducts { get; set; }
     public DbSet<InventarizationLackProduct> InventarizationLackProducts { get; set; }
+    public DbSet<ProductMove> ProductMoves { get; set; }
+    public DbSet<ProductMoveProduct> ProductMoveProducts { get; set; }
     public DbSet<Payout> Payouts { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

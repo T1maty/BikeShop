@@ -17,6 +17,8 @@ public interface IApplicationDbContext
     public DbSet<InventarizationProduct> InventarizationProducts { get; set; }
     public DbSet<InventarizationLackProduct> InventarizationLackProducts { get; set; }
     public DbSet<Payout> Payouts { get; set; }
+    public DbSet<ProductMove> ProductMoves { get; set; }
+    public DbSet<ProductMoveProduct> ProductMoveProducts { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
