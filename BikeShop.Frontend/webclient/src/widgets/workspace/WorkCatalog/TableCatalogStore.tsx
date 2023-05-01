@@ -1,8 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {$api} from "../../../shared"
-import {Work, Group} from "../../../entities"
+import {Work, Group, TableCatalogAPI} from '../../../entities'
 
 interface WorkCatalogStore {
     isLoading: boolean
@@ -48,7 +47,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
 
     },
     getGroup() {
-        $api.get<Group[]>('/group/getbyshopid/1').then((data) => {
+        TableCatalogAPI.getCatalogGroup().then((data) => {
             console.log('Groups:', data.data)
             set({group: data.data})
         })
@@ -60,7 +59,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
     },
     getWork(id: number) {
         set({isLoading: true})
-        $api.get<Work[]>(`/work/getbygroupid/${id}`).then((data) => {
+        TableCatalogAPI.getWorkGroup(id).then((data) => {
             set({works: data.data, currencyId: id})
             set({isLoading: false})
         })
@@ -72,7 +71,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
         set({selectedRow: work})
     },
     createWork(data: any) {
-        $api.post('/work/create', {
+        TableCatalogAPI.createWork( {
             "name": "test",
             "description": "string",
             "price": 0,
@@ -82,7 +81,7 @@ export const useWorkCatalog = create<WorkCatalogStore>()(persist(devtools(immer(
         })
     },
     updateWork(data: any) {
-        $api.put('/work/update', {
+        TableCatalogAPI.updateWork( {
             "id": data.id,
             "name": `Обновлено в ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
             "description": "string",
