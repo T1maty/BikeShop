@@ -162,7 +162,7 @@ export const routes = createBrowserRouter([
     // },
     // {
     //     path: BikeShopPaths.WORKSPACE.GET_STUFF_TO_SERVICE_ACT,
-    //     element: <ActGetStuffToService/>
+    //     element: <ServiceIncomeInvoice/>
     // },
     // {
     //     path: BikeShopPaths.WORKSPACE.GET_STUFF_FROM_SERVICE_ACT,

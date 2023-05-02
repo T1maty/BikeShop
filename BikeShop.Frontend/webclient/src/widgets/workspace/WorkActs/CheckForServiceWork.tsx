@@ -10,10 +10,10 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
 
                 <div className={s.workAct_date}>
                     <div className={s.date_title}>
-                        Чек №999
+                        Чек №{props.children.service.id}
                     </div>
                     <div className={s.date_date}>
-                        от 01 января 2020
+                        {props.children.service.createdAt}
                     </div>
                 </div>
                 <div className={s.workAct_title}>
@@ -21,7 +21,7 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                         Ремонтируемая техника:
                     </div>
                     <div className={s.title_info}>
-                        Specialized Pro 2023
+                        {props.children.service.name}
                     </div>
                 </div>
 

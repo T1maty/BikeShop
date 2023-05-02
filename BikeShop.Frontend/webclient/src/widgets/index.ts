@@ -13,5 +13,5 @@ export {CheckForServiceWork} from './workspace/WorkActs/CheckForServiceWork'
 
 export {ActHeader} from './workspace/WorkActs/ActHeader'
 export {ActServiceWork} from './workspace/WorkActs/ActServiceWork'
-export {ActGetStuffToService} from './workspace/WorkActs/ActGetStuffToService'
+export {ServiceIncomeInvoice} from './workspace/Invoices/Service/ServiceIncomeInvoice'
 export {ActGetStuffFromService} from './workspace/WorkActs/ActGetStuffFromService'

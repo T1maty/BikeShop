@@ -1,7 +1,6 @@
 version: '3'
 services:
   bikeshop.frontend:
-    build: ./client
     container_name: bikeshop-frontend
     image: nomadrilius/bikeshop.frontend
     hostname: bikeshop.frontend
