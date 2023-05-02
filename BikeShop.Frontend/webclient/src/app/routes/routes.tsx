@@ -13,7 +13,7 @@ import {
     RegistrationPage,
     Service,
     ShopMain,
-    ShopWrapper,
+    ShopWrapper, StorageTransfer,
     WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
@@ -144,6 +144,14 @@ export const routes = createBrowserRouter([
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <InventarizationPage/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.STORAGE_TRANSFER,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <StorageTransfer/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },

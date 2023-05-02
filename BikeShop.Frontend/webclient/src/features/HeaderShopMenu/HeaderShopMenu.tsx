@@ -103,6 +103,15 @@ export const HeaderShopMenu = () => {
             title: 'Создать инвентаризацию',
             func: () => {
                 navigate(BikeShopPaths.WORKSPACE.INVENTARIZATION)
+                setIsComponentVisible(false)
+            }
+
+        },
+        {
+            title: 'Создать перемещение',
+            func: () => {
+                navigate(BikeShopPaths.WORKSPACE.STORAGE_TRANSFER)
+                setIsComponentVisible(false)
             }
 
         },
