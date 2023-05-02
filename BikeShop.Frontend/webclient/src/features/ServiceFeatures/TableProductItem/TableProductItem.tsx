@@ -14,6 +14,8 @@ export const TableProductItem: React.FC<TableItemProps> = ({name, price, count})
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
 
+    const discount = true
+
     return (
         <div className={s.tableItem_box}>
             <div className={s.tableItem_title}>{name}</div>
@@ -23,7 +25,12 @@ export const TableProductItem: React.FC<TableItemProps> = ({name, price, count})
                     <div className={s.multiply}>x</div>
                     <div>{count}</div>
                 </div>
-                <div className={s.tableItem_sum}>{r(count * price * fbts.c) + fbts.s}</div>
+                <div className={s.tableItem_sum}>
+                    {
+                        discount ? <div>$ -195</div> : ''
+                    }
+                    <div>{r(count * price * fbts.c) + fbts.s}</div>
+                </div>
             </div>
         </div>
     )

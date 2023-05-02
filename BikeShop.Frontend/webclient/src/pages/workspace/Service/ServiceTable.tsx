@@ -2,7 +2,7 @@ import React from 'react'
 import {Button} from '../../../shared/ui'
 import s from './ServiceTable.module.scss'
 import {ServiceItemProductWork} from "../../../entities/models/Service/ServiceItem"
-import {TableProductItem} from "../../../features"
+import {TableProductItem, TableProductItemAdditional} from "../../../features"
 import {useCurrency} from "../../../entities"
 
 type ServiceTableProps = {
@@ -49,11 +49,19 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, se
                         (data != null) && (data.length != 0) ?
                             data.map((item, index) => {
                                 return (
-                                    <TableProductItem key={index}
-                                                      name={item.name}
-                                                      price={item.price}
-                                                      count={item.quantity}
-                                    />
+                                    <>
+                                        <TableProductItem key={index}
+                                                          name={item.name}
+                                                          price={item.price}
+                                                          count={item.quantity}
+                                        />
+
+                                        <TableProductItemAdditional key={index}
+                                                                    name={item.name}
+                                                                    price={item.price}
+                                                                    count={item.quantity}
+                                        />
+                                    </>
                                 )
                             })
                             : <div>Список пуст</div>

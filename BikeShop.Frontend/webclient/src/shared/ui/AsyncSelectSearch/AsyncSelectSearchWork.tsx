@@ -7,7 +7,6 @@ export const AsyncSelectSearchWork = (props: { onSelect: (value: Work) => void }
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
 
-
     const loadOptions = (inputValue: string, callback: (value: Work[]) => void) => {
         ServiceAPI.searchWork(inputValue).then((resp) => {
             const asyncOptions = resp.data.map((n: Work) => {

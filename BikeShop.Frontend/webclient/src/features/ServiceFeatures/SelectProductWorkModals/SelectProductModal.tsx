@@ -21,7 +21,9 @@ export const SelectProductModal: React.FC<SelectProductModalProps> = (props: Sel
             onClose={() => {setSelectProductModal(false)}}
         >
             <div className={s.selectProductWorkModal_mainBox}>
-                <SelectProduct products={props.products} setProducts={props.setProducts}/>
+                <SelectProduct products={props.products}
+                               setProducts={props.setProducts}
+                />
             </div>
         </CustomModal>
     )
