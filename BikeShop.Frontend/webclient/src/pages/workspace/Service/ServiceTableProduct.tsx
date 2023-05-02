@@ -1,34 +1,32 @@
-import React from 'react'
-import {Button} from '../../../shared/ui'
-import s from './ServiceTable.module.scss'
-import {ServiceItemProductWork} from "../../../entities/models/Service/ServiceItem"
-import {TableProductItem, TableProductItemAdditional} from "../../../features"
-import {useCurrency} from "../../../entities"
+import React from 'react';
+import {ServiceProduct, useCurrency} from "../../../entities";
+import s from "./ServiceTable.module.scss";
+import {Button} from "../../../shared/ui";
+import {TableProductItem} from "../../../features";
 
 type ServiceTableProps = {
-    data: ServiceItemProductWork[] | null
-    buttonTitle: string
+    data: ServiceProduct[] | null
     serviceTableCallback: () => void
     disabledButton: boolean
     summ: number
 }
 
-export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, serviceTableCallback,
-                                                              disabledButton, summ}) => {
+const ServiceTableProduct = (props: ServiceTableProps) => {
+
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
 
     const userClickHandler = () => {
-        serviceTableCallback()
+        props.serviceTableCallback()
     }
 
     return (
         <div className={s.tableBox}>
             <div className={s.tableBox_buttons}>
                 <div className={s.buttons_editBtn}>
-                    <Button onClick={userClickHandler} disabled={disabledButton}>
-                        {buttonTitle}
+                    <Button onClick={userClickHandler} disabled={props.disabledButton}>
+                        Редактор услуг
                     </Button>
                 </div>
                 <div className={s.buttons_discountField}>
@@ -40,26 +38,20 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, se
                     </div>
                 </div>
                 <div className={s.buttons_resultField}>
-                    {fbts.s + ' ' + r(summ * fbts.c)}
+                    {r(props.summ * fbts.c) + ' ' + fbts.s}
                 </div>
             </div>
             <div className={s.tableBox_table}>
                 <div className={s.scroll_wrapper}>
                     {
-                        (data != null) && (data.length != 0) ?
-                            data.map((item, index) => {
+                        (props.data != null) && (props.data.length != 0) ?
+                            props.data.map((item, index) => {
                                 return (
                                     <>
                                         <TableProductItem key={index}
                                                           name={item.name}
                                                           price={item.price}
                                                           count={item.quantity}
-                                        />
-
-                                        <TableProductItemAdditional key={index}
-                                                                    name={item.name}
-                                                                    price={item.price}
-                                                                    count={item.quantity}
                                         />
                                     </>
                                 )
@@ -69,5 +61,7 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({data, buttonTitle, se
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
+export default ServiceTableProduct;

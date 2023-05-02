@@ -4,8 +4,7 @@ import {Button} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import useService from "./ServiceStore"
 import ServiceStore, {ServiceListStatusType} from "./ServiceStore"
-import {ServiceStatusType} from "../../../entities/models/Service/ServiceItem"
-import {EnumServiceStatus, ServiceFormModel, ServiceWithData} from "../../../entities"
+import {EnumServiceStatus, ServiceFormModel, ServiceStatus, ServiceWithData} from "../../../entities"
 import {ConfirmModal, PrintModal} from "../../../features"
 import {CheckForServiceWork} from "../../../widgets"
 import {UseFormReturn} from "react-hook-form"
@@ -41,7 +40,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
 
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
-                                            extraFilterName?: ServiceStatusType) => {
+                                            extraFilterName?: ServiceStatus) => {
 
         setFilteredServices(services.filter(serv => serv.service.status === filterName || serv.service.status === extraFilterName))
 
@@ -51,7 +50,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
         console.log('отфильтрованные сервисы', filteredServices)
     }
 
-    const updateServiceStatusHandler = (newStatus: ServiceStatusType) => {
+    const updateServiceStatusHandler = (newStatus: ServiceStatus) => {
         if (newStatus === "Ended") {
 
         }
@@ -66,8 +65,8 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
             <ServiceNavigationContext open={navContext} setOpen={setNavContext}/>
             <ConfirmModal title={'Несохраненные изменения будут утеряны'}
                           extraCallback={() => {
-                            setCurrentService(confData!)
-                            setSelected(confData!)
+                              setCurrentService(confData!)
+                              setSelected(confData!)
                           }}
                           open={confirm}
                           setOpen={setConfirm}

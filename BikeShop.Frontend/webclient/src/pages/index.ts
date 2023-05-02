@@ -7,7 +7,6 @@ export {Service} from './workspace/Service/Service'
 export {WorkCatalog} from './workspace/WorkCatalog/WorkCatalog'
 
 export {ProductCatalog} from './workspace/ProductCatalog/ProductCatalog'
-export {ServiceTable} from './workspace/Service/ServiceTable'
 export {SelectProduct} from './workspace/SelectProductWork/SelectProduct'
 export {SelectWork} from './workspace/SelectProductWork/SelectWork'
 // export {ProductsWrapper} from './workspace/ProductsCount/ProductsWrapper'

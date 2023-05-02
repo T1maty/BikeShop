@@ -1,17 +1,17 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem"
+import {ServiceProduct} from "../../../entities";
 
 interface selectProductStore {
-    convert: (product: any) => ServiceItemProduct
+    convert: (product: any) => ServiceProduct
 }
 
 const useSelectProduct = create<selectProductStore>()(persist(devtools(immer((set) => ({
     slaveTableRows: [],
 
     convert: (product) => {
-        let newProduct: ServiceItemProduct = {
+        let newProduct: ServiceProduct = {
             id: 0,
             productId: product.id,
             createdAt: product.createdAt,

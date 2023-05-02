@@ -1,30 +1,38 @@
 import React from 'react'
 import s from './TableProductItemAdditional.module.scss'
 import {useCurrency} from "../../../entities"
-import {DeleteButton} from "../../../shared/ui"
+import {DeleteButton, EditableSpan} from "../../../shared/ui"
 
 interface TableItemAdditionalProps {
     name: string
     price: number
     count: number
+    onChange: (desc: string, price: string) => void
 }
 
-export const TableProductItemAdditional: React.FC<TableItemAdditionalProps> = ({name, price, count}) => {
+export const TableProductItemAdditional: React.FC<TableItemAdditionalProps> = ({name, price, count, onChange}) => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
 
     const deleteAdditionalWorkHandler = () => {
-        // code here
+        onChange('', '0')
     }
 
     return (
         <div className={s.tableItem_box}>
-            <div className={s.tableItem_title}>{name}</div>
+            <div className={s.tableItem_title}>
+                <EditableSpan title={name} onChangeInput={(v) => {
+                    onChange(v, price.toString())
+                }}/>
+            </div>
             <div className={s.tableItem_numbers}>
                 <div className={s.tableItem_price}>
-                    {r(price * fbts.c) + fbts.s}
+                    <EditableSpan title={r(price * fbts.c).toString()} onChangeInput={(v) => {
+                        onChange(name, v)
+                    }}/>
+                    {fbts.s}
                 </div>
                 <DeleteButton size={25} onClick={deleteAdditionalWorkHandler}/>
             </div>

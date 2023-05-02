@@ -3,16 +3,15 @@ import s from './SelectProductWork.module.scss'
 import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
 import useSelectProduct from "./SelectProductStore"
-import {ServiceItemProduct} from "../../../entities/models/Service/ServiceItem"
 import {columns} from "./SlaveTableConfig"
-import {ProductTag} from "../../../entities"
+import {ProductTag, ServiceProduct} from "../../../entities"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {Product} from "entities"
 
 interface SelectProductProps {
-    products: ServiceItemProduct[]
-    setProducts: (product: ServiceItemProduct[]) => void
+    products: ServiceProduct[]
+    setProducts: (product: ServiceProduct[]) => void
 }
 
 export const SelectProduct = (props: SelectProductProps) => {
@@ -45,12 +44,15 @@ export const SelectProduct = (props: SelectProductProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {setOpenSelectProductModal(false)}}>
+                        <Button onClick={() => {
+                            setOpenSelectProductModal(false)
+                        }}>
                             Отмена
                         </Button>
                     </div>

@@ -6,9 +6,10 @@ interface TableItemProps {
     name: string
     price: number
     count: number
+    onPriceClick?: () => void
 }
 
-export const TableProductItem: React.FC<TableItemProps> = ({name, price, count}) => {
+export const TableProductItem: React.FC<TableItemProps> = ({name, price, count, onPriceClick}) => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
@@ -20,7 +21,11 @@ export const TableProductItem: React.FC<TableItemProps> = ({name, price, count})
         <div className={s.tableItem_box}>
             <div className={s.tableItem_title}>{name}</div>
             <div className={s.tableItem_numbers}>
-                <div className={s.tableItem_price}>
+                <div className={s.tableItem_price}
+                     onClick={() => {
+                         onPriceClick != null ? onPriceClick() : false
+                     }}
+                >
                     <div>{r(price * fbts.c) + fbts.s}</div>
                     <div className={s.multiply}>x</div>
                     <div>{count}</div>

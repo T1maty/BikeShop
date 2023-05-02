@@ -4,13 +4,14 @@ import {Button, ControlledClientCard, ControlledCustomInput, ControlledCustomTex
 import {Errors} from "../../../entities/errors/workspaceErrors"
 import {ServiceFormModel, useCurrency, User} from "../../../entities"
 import {SelectProductModal, SelectWorkModal} from "../../../features"
-import {ServiceTable} from "./ServiceTable"
 import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
 import useService from "./ServiceStore"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {useSnackbar} from "notistack"
 import Select from "react-select"
+import ServiceTableWork from "./ServiceTableWork";
+import ServiceTableProduct from "./ServiceTableProduct";
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -198,11 +199,12 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                         control={formControl.control}
                         render={({field}: any) =>
                             <>
-                                <ServiceTable data={field.value}
-                                              buttonTitle={'Редактор товаров'}
-                                              serviceTableCallback={() => {setOpenSelectProductModal(true)}}
-                                              disabledButton={(currentService === null && !isCreating)}
-                                              summ={summProducts}
+                                <ServiceTableProduct data={field.value}
+                                                     serviceTableCallback={() => {
+                                                         setOpenSelectProductModal(true)
+                                                     }}
+                                                     disabledButton={(currentService === null && !isCreating)}
+                                                     summ={summProducts}
                                 />
                                 <SelectProductModal products={field.value}
                                                     setProducts={field.onChange}
@@ -215,11 +217,13 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                         control={formControl.control}
                         render={({field}: any) =>
                             <>
-                                <ServiceTable data={field.value}
-                                              buttonTitle={'Редактор услуг'}
-                                              serviceTableCallback={() => {setOpenSelectWorkModal(true)}}
-                                              disabledButton={(currentService === null && !isCreating)}
-                                              summ={summWorks}
+                                <ServiceTableWork data={field.value}
+                                                  setData={field.onChange}
+                                                  serviceTableCallback={() => {
+                                                      setOpenSelectWorkModal(true)
+                                                  }}
+                                                  disabledButton={(currentService === null && !isCreating)}
+                                                  summ={summWorks}
                                 />
                                 <SelectWorkModal works={field.value} setWorks={field.onChange}
                                                  defaultMasterId={formControl.getValues('userMasterId')}
