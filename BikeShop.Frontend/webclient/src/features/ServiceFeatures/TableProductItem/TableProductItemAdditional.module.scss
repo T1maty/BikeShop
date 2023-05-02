@@ -3,11 +3,11 @@
 
 .tableItem_box {
     @include flexBetween;
-    width: 70%; // ?
+    width: 75%; // ?
     border: 2px solid darkorange;
     border-radius: $smallBorderRadius;
-    padding: 5px $defaultSmallMargin;
-    margin-top: -7px;
+    padding: 3px $defaultSmallMargin;
+    margin-top: -5px;
 
     .tableItem_title {
         word-break: break-word;
