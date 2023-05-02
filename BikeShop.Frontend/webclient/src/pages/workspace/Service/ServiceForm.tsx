@@ -200,14 +200,13 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                             <>
                                 <ServiceTable data={field.value}
                                               buttonTitle={'Редактор товаров'}
-                                              serviceTableCallback={() => {
-                                                  setOpenSelectProductModal(true)
-                                              }}
+                                              serviceTableCallback={() => {setOpenSelectProductModal(true)}}
                                               disabledButton={(currentService === null && !isCreating)}
                                               summ={summProducts}
                                 />
                                 <SelectProductModal products={field.value}
-                                                    setProducts={field.onChange}/>
+                                                    setProducts={field.onChange}
+                                />
                             </>
                         }
                     />
@@ -218,15 +217,14 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                             <>
                                 <ServiceTable data={field.value}
                                               buttonTitle={'Редактор услуг'}
-                                              serviceTableCallback={() => {
-                                                  setOpenSelectWorkModal(true)
-                                              }}
+                                              serviceTableCallback={() => {setOpenSelectWorkModal(true)}}
                                               disabledButton={(currentService === null && !isCreating)}
                                               summ={summWorks}
                                 />
                                 <SelectWorkModal works={field.value} setWorks={field.onChange}
                                                  defaultMasterId={formControl.getValues('userMasterId')}
-                                                 serviceId={formControl.getValues('id')}/>
+                                                 serviceId={formControl.getValues('id')}
+                                />
                             </>
                         }
                     />
