@@ -33,6 +33,7 @@ export {UpdateTagModal} from './ProductCatalogFeatures/UpdateTagModal/UpdateTagM
 export {SelectProductModal} from './ServiceFeatures/SelectProductWorkModals/SelectProductModal'
 export {SelectWorkModal} from './ServiceFeatures/SelectProductWorkModals/SelectWorkModal'
 export {TableProductItem} from './ServiceFeatures/TableProductItem/TableProductItem'
+export {TableProductItemAdditional} from './ServiceFeatures/TableProductItem/TableProductItemAdditional'
 export {CreateWorkGroupModal} from './WorkCatalogFeatures/CreateWorkGroupModal/CreateWorkGroupModal'
 export {CreateWorkModal} from './WorkCatalogFeatures/CreateWorkModal/CreateWorkModal'
 export {UpdateWorkGroupModal} from './WorkCatalogFeatures/UpdateWorkGroupModal/UpdateWorkGroupModal'

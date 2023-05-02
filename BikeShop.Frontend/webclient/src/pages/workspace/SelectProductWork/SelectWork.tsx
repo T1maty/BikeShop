@@ -8,7 +8,7 @@ import {WorkCatalogTable} from "../../../widgets"
 import {ServiceWork, Work} from "../../../entities"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
-import {AsyncSelectSearchWork} from "../../../shared/ui/AsyncSelectSearch/AsyncSelectSearchWork";
+import {AsyncSelectSearchWork} from "../../../shared/ui/AsyncSelectSearch/AsyncSelectSearchWork"
 
 interface SelectWorkProps {
     defaultMasterId: string
@@ -82,8 +82,7 @@ export const SelectWork = (props: SelectWorkProps) => {
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
 
-                    <WorkCatalogTable onRowDoubleClick={addWorkHandler}
-                    />
+                    <WorkCatalogTable onRowDoubleClick={addWorkHandler}/>
 
                 </div>
                 <div className={s.rightSide_infoRow}>

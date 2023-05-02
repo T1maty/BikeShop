@@ -29,8 +29,7 @@ export const ProductsWrapper: React.FC<ProductsWrapperProps> = ({title, isUpload
                         : ''
                 }
                 <div className={s.leftSide_info}>Дополнительная информация</div>
-                <Button buttonDivWrapper={s.button_chooseItem} onClick={() => {
-                }}>
+                <Button buttonDivWrapper={s.button_chooseItem} onClick={() => {}}>
                     Выбрать товар
                 </Button>
                 <div className={s.leftSide_delivery}>
@@ -46,12 +45,10 @@ export const ProductsWrapper: React.FC<ProductsWrapperProps> = ({title, isUpload
                     <div>Итого: 99999999</div>
                 </div>
                 <div className={s.leftSide_footerButtons}>
-                    <Button buttonDivWrapper={s.button_save} onClick={() => {
-                    }}>
+                    <Button buttonDivWrapper={s.button_save} onClick={() => {}}>
                         Сохранить акт
                     </Button>
-                    <Button buttonDivWrapper={s.button_cancel} onClick={() => {
-                    }}>
+                    <Button buttonDivWrapper={s.button_cancel} onClick={() => {}}>
                         Отмена
                     </Button>
                 </div>
@@ -59,5 +56,5 @@ export const ProductsWrapper: React.FC<ProductsWrapperProps> = ({title, isUpload
 
             {children}
         </div>
-    );
-};
+    )
+}

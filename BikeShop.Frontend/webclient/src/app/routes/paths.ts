@@ -20,6 +20,7 @@ export const BikeShopPaths = {
 
         ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
         INVENTARIZATION: '/workspace/inventarization',
+        STORAGE_TRANSFER: '/workspace/storage-transfer',
 
         SHOP_CHECK: '/workspace/shop-check',
 

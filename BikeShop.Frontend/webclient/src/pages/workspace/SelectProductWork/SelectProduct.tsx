@@ -8,7 +8,7 @@ import {columns} from "./SlaveTableConfig"
 import {ProductTag} from "../../../entities"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
-import {Product} from "entities";
+import {Product} from "entities"
 
 interface SelectProductProps {
     products: ServiceItemProduct[]
@@ -45,15 +45,12 @@ export const SelectProduct = (props: SelectProductProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {
-                            setOpenSelectProductModal(false)
-                        }}>
+                        <Button onClick={() => {setOpenSelectProductModal(false)}}>
                             Отмена
                         </Button>
                     </div>

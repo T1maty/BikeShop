@@ -13,6 +13,7 @@ export {SelectWork} from './workspace/SelectProductWork/SelectWork'
 export {ProductsWrapper} from './workspace/ProductsCount/ProductsWrapper'
 export {ArrivalOfProducts} from './workspace/SupplyInvoice/ArrivalOfProducts'
 export {InventoryOfProducts} from './workspace/ProductsCount/InventoryOfProducts'
+export {StorageTransfer} from './workspace/StorageTransfer/StorageTransfer'
 
 export {ShopMain} from './public/Shop/ShopMain/ShopMain'
 export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'
