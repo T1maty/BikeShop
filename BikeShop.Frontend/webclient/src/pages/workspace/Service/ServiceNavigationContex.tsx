@@ -27,12 +27,14 @@ export const ServiceNavigationContext = (props: p) => {
         {
             name: 'Акт приема',
             click: () => {
+                sv1(true)
 
             }
         },
         {
             name: 'Смета',
             click: () => {
+                sv3(true)
 
             }
         },
@@ -45,6 +47,7 @@ export const ServiceNavigationContext = (props: p) => {
         {
             name: 'Стикер',
             click: () => {
+                sv2(true)
 
             }
         },
