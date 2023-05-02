@@ -1,17 +1,27 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import s from '../ProductsCount/ProductsWrapper.module.scss'
 import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
 import {ChooseProductModal} from '../../../features'
+import Select from 'react-select'
 import Enumerable from 'linq'
 import {SupplyInvoiceDTO} from '../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
 import {ProductQuantity, SupplyInvoiceAPI} from '../../../entities'
 import {SupplyInvoiceProduct} from '../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
 import useSupplyInvoice from "../SupplyInvoice/models/SupplyInvoiceStore"
 import {columns} from "../SupplyInvoice/SupplyInvoiceTableConfig"
+import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
+import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
 
 export const StorageProductsTransfer = () => {
 
     const [vis, setVis] = useState(false)
+
+    const storages = useCreateStorageModal(s => s.storages)
+    const getStorages = useCreateStorageModal(s => s.getStorages)
+    const selectedStorageForTransferFrom = useCreateStorageModal(s => s.selectedStorageForTransferFrom)
+    const setSelectedStorageForTransferFrom = useCreateStorageModal(s => s.setSelectedStorageForTransferFrom)
+    const selectedStorageForTransferTo = useCreateStorageModal(s => s.selectedStorageForTransferTo)
+    const setSelectedStorageForTransferTo = useCreateStorageModal(s => s.setSelectedStorageForTransferTo)
 
     const currentSupplyInvoice = useSupplyInvoice(s => s.currentSupplyInvoice)
     const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
@@ -26,6 +36,10 @@ export const StorageProductsTransfer = () => {
         }
     }
 
+    useEffect(() => {
+        getStorages()
+    }, [])
+
     return (
         <div className={s.arrivalOfProducts_mainBlock}>
             <div className={s.arrivalOfProducts_leftSide}>
@@ -39,7 +53,35 @@ export const StorageProductsTransfer = () => {
                         </div>
                         : ''
                 }
-                <div className={s.leftSide_info}>Дополнительная информация</div>
+                <div style={{color: 'black'}}>
+                    <Select
+                        className={s.options_search}
+                        placeholder={'Со склада'}
+                        isSearchable={false}
+                        options={storages}
+                        value={selectedStorageForTransferFrom}
+                        onChange={(v) => {setSelectedStorageForTransferFrom(v!.id)}}
+                        getOptionLabel={label => label.name}
+                        getOptionValue={value => value.name}
+                        styles={selectColorStyles}
+                    />
+                </div>
+                <div style={{color: 'black'}}>
+                    <Select
+                        className={s.options_search}
+                        placeholder={'На склад'}
+                        isSearchable={false}
+                        options={storages}
+                        value={selectedStorageForTransferTo}
+                        onChange={(v) => {setSelectedStorageForTransferTo(v!.id)}}
+                        getOptionLabel={label => label.name}
+                        getOptionValue={value => value.name}
+                        styles={selectColorStyles}
+                    />
+                </div>
+                <div className={s.leftSide_info}>
+                    Дополнительная информация
+                </div>
                 <Button buttonDivWrapper={s.button_chooseItem}
                         onClick={() => {setVis(true)}}
                 >

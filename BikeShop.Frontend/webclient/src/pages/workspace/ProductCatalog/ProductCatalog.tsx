@@ -72,16 +72,13 @@ export const ProductCatalog = () => {
                             isSearchable={false}
                             options={storages}
                             value={selectedStorage}
-                            onChange={(v) => {
-                                setSelectedStorage(v!.id)
-                            }}
+                            onChange={(v) => {setSelectedStorage(v!.id)}}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             styles={selectColorStyles}
                         />
                     </div>
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Все товары
                     </Button>
                     <Button onClick={setNotSortedToTable}>

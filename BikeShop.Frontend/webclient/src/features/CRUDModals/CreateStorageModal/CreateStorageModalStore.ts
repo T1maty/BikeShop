@@ -12,6 +12,11 @@ interface CreateStorageModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
+    selectedStorageForTransferFrom: CreateStorageResponse | null
+    setSelectedStorageForTransferFrom: (storageId: number) => void
+    selectedStorageForTransferTo: CreateStorageResponse | null
+    setSelectedStorageForTransferTo: (storageId: number) => void
+
     selectedStorage: CreateStorageResponse | null
     setSelectedStorage: (storageId: number) => void
 
@@ -30,6 +35,27 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
     isLoading: false,
     errorStatus: 'default',
 
+    // для перемещение со склада
+    selectedStorageForTransferFrom: null,
+    setSelectedStorageForTransferFrom: (storageId) => {
+        let storage = get().storages.find(st => st.id === storageId)
+
+        if (storage === undefined) console.log('storage UNDEFINED')
+        set(state => {
+            state.selectedStorageForTransferFrom = storage!
+        })
+    },
+    selectedStorageForTransferTo: null,
+    setSelectedStorageForTransferTo: (storageId) => {
+        let storage = get().storages.find(st => st.id === storageId)
+
+        if (storage === undefined) console.log('storage UNDEFINED')
+        set(state => {
+            state.selectedStorageForTransferTo = storage!
+        })
+    },
+
+    // для каталога продуктов
     selectedStorage: null,
     setSelectedStorage: (storageId) => {
         let storage = get().storages.find(st => st.id === storageId)
@@ -40,6 +66,7 @@ const useCreateStorageModal = create<CreateStorageModalStore>()(/*persist(*/devt
         })
     },
 
+    // для модального окна складов
     currentStorage: null,
     setCurrentStorage: (storage) => {
         set({currentStorage: storage})
