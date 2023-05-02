@@ -9,7 +9,7 @@ import {SupplyInvoiceProduct} from '../../../entities/entities/Acts/SupplyInvoic
 import useSupplyInvoice from "../SupplyInvoice/models/SupplyInvoiceStore"
 import {columns} from "../SupplyInvoice/SupplyInvoiceTableConfig"
 
-export const StorageTransfer = () => {
+export const StorageProductsTransfer = () => {
 
     const [vis, setVis] = useState(false)
 

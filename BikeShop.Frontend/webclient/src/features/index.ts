@@ -7,6 +7,7 @@ export {InventoryOfProductsArchiveModal} from './ArchiveModals/InventoryOfProduc
 export {SupplyInvoiceArchiveModal} from './ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 export {EncashmentArchiveModal} from './ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 export {CheckArchiveModal} from './ArchiveModals/CheckArchiveModal/CheckArchiveModal'
+export {StorageProductsTransferArchiveModal} from './ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
 
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 export {PrintModal} from './PrintModal/PrintModal'

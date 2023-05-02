@@ -1,0 +1,38 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.supplyInvoiceArchiveModal_item {
+    @include flexOnlyBetween;
+    background-color: $themeColorGray;
+    border: 1px solid $themeColorMilk;
+    border-radius: $smallBorderRadius;
+    padding: $defaultSmallMargin;
+    @include hoverCursorPointer;
+
+    .item_content {
+        @include flexBetween;
+
+        .content_info {
+            height: 100%;
+            max-width: 300px;
+            font-size: 20px;
+            border-right: 2px solid $themeColorMilk;
+            padding-right: 10px;
+            @include flexColumnOnly;
+            justify-content: space-between;
+            align-items: flex-start;
+            @include divSmallMarginBottom;
+
+            .cashBlock {
+                @include flexCenter;
+
+                .cashBlock_info {
+                    padding-left: 10px;
+                    font-size: 20px;
+                }
+            }
+        }
+
+        @include modalDateBlock;
+    }
+}

@@ -16,6 +16,8 @@ import useInventoryOfProductsArchiveModal
     from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModalStore"
 import useEncashmentArchiveModal from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModalStore'
 import useCheckArchiveModal from "../ArchiveModals/CheckArchiveModal/CheckArchiveModalStore"
+import useStorageProductsTransferArchiveModalStore
+    from '../ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModalStore'
 import {CreateShopModal} from "../CRUDModals/CreateShopModal/CreateShopModal"
 import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorageModal"
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
@@ -27,6 +29,7 @@ import {SupplyInvoiceArchiveModal} from "../ArchiveModals/SupplyInvoiceArchiveMo
 import {EncashmentArchiveModal} from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 import {ServiceFinalArchiveModal} from '../ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
 import {CheckArchiveModal} from "../ArchiveModals/CheckArchiveModal/CheckArchiveModal"
+import {StorageProductsTransferArchiveModal} from '../ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
 
 export const HeaderShopMenu = () => {
 
@@ -40,6 +43,7 @@ export const HeaderShopMenu = () => {
     const openServiceArchiveModal = useServiceArchiveModal(s => s.setOpenServiceArchiveModal)
     const openServiceFinalArchiveModal = useServiceFinalArchiveModal(s => s.setOpenServiceFinalArchiveModal)
     const openEncashmentArchiveModal = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
+    const openStorageProductsTransferArchiveModal = useStorageProductsTransferArchiveModalStore(s => s.setOpenStorageProductsTransferArchiveModal)
 
     const openShopModal = useCreateShopModal(s => s.setOpenCreateShopModal)
     const openStorageModal = useCreateStorageModal(s => s.setOpenCreateStorageModal)
@@ -96,6 +100,13 @@ export const HeaderShopMenu = () => {
                 setIsComponentVisible(false)
             }
         },
+        {
+            title: 'Перемещение товара',
+            func: () => {
+                openStorageProductsTransferArchiveModal(true)
+                setIsComponentVisible(false)
+            }
+        },
     ])
 
     const [menuItems2, setMenuItems2] = useState([
@@ -110,7 +121,7 @@ export const HeaderShopMenu = () => {
         {
             title: 'Создать перемещение',
             func: () => {
-                navigate(BikeShopPaths.WORKSPACE.STORAGE_TRANSFER)
+                navigate(BikeShopPaths.WORKSPACE.STORAGE_PRODUCTS_TRANSFER)
                 setIsComponentVisible(false)
             }
 
@@ -202,6 +213,7 @@ export const HeaderShopMenu = () => {
             <ServiceArchiveModal/>
             <ServiceFinalArchiveModal/>
             <EncashmentArchiveModal/>
+            <StorageProductsTransferArchiveModal/>
 
             <CreateShopModal/>
             <CreateStorageModal/>

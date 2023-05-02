@@ -1,0 +1,32 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.serviceFinalArchiveModal_mainBlock {
+    @include defaultModalStyle;
+    width: 1360px;
+
+    .serviceFinalArchiveModal_title {
+        @include modalTitle;
+    }
+
+    .archive_wrapper {
+        @include flexBetween;
+
+        > div {
+            width: 430px;
+
+            fieldset {
+                //border: 1px solid $themeColorMilk;
+                border-radius: $smallBorderRadius;
+            }
+        }
+    }
+
+    .serviceFinalArchiveModal_list {
+        @include divLargeMarginBottom;
+        max-height: 550px;
+        width: 400px;
+        overflow: auto;
+        padding-right: 10px;
+    }
+}
