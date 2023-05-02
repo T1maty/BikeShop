@@ -236,6 +236,17 @@
     }
 }
 
+// Service
+@mixin serviceItemCommonStyles() {
+    word-break: break-word;
+    @include flexBetween;
+    gap: 5px;
+    width: 100%;
+    border-radius: $smallBorderRadius;
+    border: 1px solid $themeColorMilk;
+    padding: $defaultSmallMargin;
+}
+
 // WorkProductsModal
 @mixin workAndProductModalsButtonBlock() {
     display: flex;

@@ -9,7 +9,8 @@ import {EnumServiceStatus, ServiceFormModel, ServiceWithData} from "../../../ent
 import {ConfirmModal, PrintModal} from "../../../features"
 import {CheckForServiceWork} from "../../../widgets"
 import {UseFormReturn} from "react-hook-form"
-import {ServiceNavigationContext} from "./ServiceNavigationContex";
+import {ServiceNavigationContext} from "./ServiceNavigationContex"
+import {formatDateNoYear} from "../../../shared/utils/formatDateNoYear"
 
 export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -31,6 +32,12 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const selected = ServiceStore(s => s.selectedNavService)
     const setSelected = ServiceStore(s => s.setSelectedNavService)
 
+    const itemStyles = {
+        backgroundColor: '#efefef',
+        color: 'black',
+        padding: '5px',
+        borderRadius: '5px'
+    }
 
     const filterServicesUniversalHandler = (filterName: ServiceListStatusType, isButtonWaitingOn: boolean,
                                             isButtonInProcessOn: boolean, isButtonReadyOn: boolean,
@@ -57,10 +64,14 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
         <div className={s.service_leftSide}>
 
             <ServiceNavigationContext open={navContext} setOpen={setNavContext}/>
-            <ConfirmModal title={'Несохраненные изменения будут утеряны'} extraCallback={() => {
-                setCurrentService(confData!)
-                setSelected(confData!)
-            }} open={confirm} setOpen={setConfirm}/>
+            <ConfirmModal title={'Несохраненные изменения будут утеряны'}
+                          extraCallback={() => {
+                            setCurrentService(confData!)
+                            setSelected(confData!)
+                          }}
+                          open={confirm}
+                          setOpen={setConfirm}
+            />
             <PrintModal open={openPrint}
                         setOpen={setOpenPrint}
                         children={<CheckForServiceWork children={currentService!}/>}
@@ -155,7 +166,8 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                                     return (
                                         <div key={service.service.id}
                                              className={service.service.id === currentService?.service.id ? s.serviceItem_active :
-                                                 service.service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply : selected?.service.id === service.service.id ? s.serviceItem_selected : s.serviceItem}
+                                                 service.service.status === 'WaitingSupply' ? s.serviceItem_WaitingSupply :
+                                                     selected?.service.id === service.service.id ? s.serviceItem_selected : s.serviceItem}
                                              onClick={() => {
                                                  if (props.children.formState.isDirty) {
                                                      setConfirm(true)
@@ -170,7 +182,9 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                                                  setNavContext({o: true, x: e.clientX, y: e.clientY})
                                              }}
                                         >
-                                            {service.service.name}
+                                            <div style={itemStyles}>{service.service.id}</div>
+                                            <div>{service.service.name}</div>
+                                            <div style={itemStyles}>{formatDateNoYear(service.service.createdAt)}</div>
                                         </div>
                                     )
                                 })
