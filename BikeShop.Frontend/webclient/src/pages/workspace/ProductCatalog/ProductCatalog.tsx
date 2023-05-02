@@ -59,13 +59,11 @@ export const ProductCatalog = () => {
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Отображение
                     </Button>
                     <div className={s.searchRow_searchInput}>
-                        <AsyncSelectSearchProduct onSelect={() => {
-                        }}/>
+                        <AsyncSelectSearchProduct onSelect={() => {}}/>
                     </div>
                     <div style={{color: 'black'}}>
                         <Select
