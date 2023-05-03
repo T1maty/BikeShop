@@ -17,7 +17,7 @@ export const columns: UniTableColumn[] = [
     },
     {
         id: 'quantity',
-        label: 'Кличество',
+        label: 'Количество',
         minWidth: 70,
         align: 'right',
         isEditable: true,

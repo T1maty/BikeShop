@@ -64,15 +64,12 @@ export const SelectWork = (props: SelectWorkProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {
-                            setOpenSelectWorkModal(false)
-                        }}>
+                        <Button onClick={() => {setOpenSelectWorkModal(false)}}>
                             Отмена
                         </Button>
                     </div>
@@ -81,10 +78,9 @@ export const SelectWork = (props: SelectWorkProps) => {
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
-
                     <WorkCatalogTable onRowDoubleClick={addWorkHandler}/>
-
                 </div>
+
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
                         <AsyncSelectSearchWork onSelect={addWorkHandler}/>
@@ -101,9 +97,14 @@ export const SelectWork = (props: SelectWorkProps) => {
                         </div>
                     </div>
                 </div>
+
                 <div className={s.rightSide_chosenProducts}>
-                    <UniTable rows={props.works} setRows={props.setWorks} columns={columns} selected={selected}
-                              setSelected={setSelected}/>
+                    <UniTable rows={props.works}
+                              setRows={props.setWorks}
+                              columns={columns}
+                              selected={selected}
+                              setSelected={setSelected}
+                    />
                 </div>
             </div>
         </div>

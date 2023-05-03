@@ -1,3 +1,4 @@
+@import '../../../app/styles/variables/mixins';
 
 .table {
     background-color: rgb(18, 18, 18);
@@ -43,6 +44,8 @@
 
 .body_items {
     border-bottom: 1px solid rgb(81, 81, 81);
+
+
 }
 
 .body_items:hover {
@@ -51,6 +54,10 @@
 
 .body_item {
     padding: 5px;
+
+    .currency_inputClassName {
+        word-break: break-word;
+    }
 }
 
 .rowSelectedBackground {
@@ -61,8 +68,31 @@
     background: #4b4b4b;
 }
 
-.inputClassName {
-    height: 30px;
+//.inputClassName {
+//    height: 30px;
+//    width: 150px;
+//    padding: 5px;
+//}
+
+// 1 - колонка с ценой
+.price_column {
+    @include flexCenter;
+    gap: 5px;
+}
+.currency_inputClassName1 {
+    width: 100px;
+    text-align: center;
+    //background: none;
+}
+.currency_spanClassName1 {
+    font-size: 14px;
+}
+
+// 2 - название, количество, описание
+.currency_inputClassName2 {
     width: 150px;
-    padding: 5px;
+    text-align: center;
+}
+.currency_spanClassName2 {
+    font-size: 14px;
 }

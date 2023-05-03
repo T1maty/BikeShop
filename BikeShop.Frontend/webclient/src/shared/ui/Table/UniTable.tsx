@@ -2,7 +2,6 @@ import React, {memo, useState} from "react"
 import cls from "./UniTable.module.scss"
 import {Loader} from "../Loader/Loader"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
-import {useSnackbar} from "notistack"
 import {UniTableColumn, useCurrency} from "../../../entities"
 
 interface TableProps {
@@ -118,7 +117,7 @@ const TableRow = memo((props: TableRowProps) => {
                             item.isCurrency ?
                                 item.isEditable ?
                                     //Ячейка редактируемая + валюта
-                                    <div>
+                                    <div className={cls.price_column}>
                                         <EditableSpan title={r(props.row[item.id] * fbts.c).toString()}
                                                       onChangeInput={(newInputValue) => {
                                                           if (item.isNumber) {
@@ -131,10 +130,11 @@ const TableRow = memo((props: TableRowProps) => {
                                                               props.setRow(newRow)
                                                           }
                                                       }}
-                                                      inputClassName={cls.inputClassName}
+                                                      // inputClassName={cls.inputClassName}
+                                                      inputClassName={cls.currency_inputClassName1}
+                                                      spanClassName={cls.currency_spanClassName1}
                                         />
                                         <div>{fbts.s}</div>
-
                                     </div>
                                     //Ячейка нередактируемая + валюта
                                     : r(props.row[item.id] * fbts.c) + fbts.s
@@ -153,7 +153,9 @@ const TableRow = memo((props: TableRowProps) => {
                                                           props.setRow(newRow)
                                                       }
                                                   }}
-                                                  inputClassName={cls.inputClassName}
+                                                  // inputClassName={cls.inputClassName}
+                                                  inputClassName={cls.currency_inputClassName2}
+                                                  spanClassName={cls.currency_spanClassName2}
                                     />
                                     //Ячейка не редактируемая + не валюта
                                     : props.row[item.id]
