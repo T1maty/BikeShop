@@ -174,6 +174,8 @@ public class ServiceService : IServiceService
     {
         var serviceCont = await _context.Services.FindAsync(dto.Id);
 
+        var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToListAsync();
+
         serviceCont.Name = dto.Name;
         serviceCont.ClientDescription = dto.ClientDescription;
         serviceCont.UserMasterDescription = dto.UserMasterDescription;
@@ -296,7 +298,7 @@ public class ServiceService : IServiceService
         serviceCont.TotalWork = totalWorks.Select(n => n.Total).Sum();
         serviceCont.PriceWork = serviceCont.TotalWork + serviceCont.DiscountWork;
 
-        var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToListAsync();
+        
         await UpdateReservation(oldServiceProducts, totalProducts, await _shopClient.GetStorageId(serviceCont.ShopId));
 
         await _context.SaveChangesAsync(new CancellationToken());
