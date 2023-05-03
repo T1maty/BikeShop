@@ -9,9 +9,11 @@ using BikeShop.Service.Application.RefitClients;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace BikeShop.Payments.Application.Services
 {
@@ -46,10 +48,17 @@ namespace BikeShop.Payments.Application.Services
 
         public async Task<BillWithProducts> NewBill(NewBillDTO dto)
         {
-            var currency = await _context.Currencies.FindAsync(dto.CurrencyId);
+            var currencies = await _context.Currencies.ToListAsync();
+            var currency = currencies.Where(n => n.Id == dto.CurrencyId).FirstOrDefault();
             var products = new List<BillProduct>();
             foreach (var product in dto.Products)
             {
+                var prc = product.Price;
+                if (dto.CurrencyId!= product.CurrencyId)
+                {
+                    var inbase = product.Price * (1 / currencies.Where(n => n.Id == product.CurrencyId).FirstOrDefault().Coefficient);
+                    prc = inbase * currency.Coefficient;
+                }
                 products.Add(new BillProduct
                 {
                     CatalogKey = product.CatalogKey,
@@ -57,9 +66,10 @@ namespace BikeShop.Payments.Application.Services
                     Description = product.Description,
                     Discount = product.Discount,
                     Name = product.Name,
-                    CurrencyId= product.CurrencyId,
+                    CurrencyId= dto.CurrencyId,
                     ProductId = product.ProductId,
-                    Price = product.Price,
+             
+                    Price = prc,
                     Quantity = product.Quantity,
                     QuantityUnitName = product.QuantityUnitName,
                     SerialNumber = product.SerialNumber,
