@@ -183,7 +183,7 @@ namespace BikeShop.Products.Application.Services
                                         || n.ManufacturerBarcode.ToLower().Contains(item));
             }
 
-            return await contQR.ToListAsync();
+            return await contQR.Take(10).ToListAsync();
         }
     }
 }

@@ -17,5 +17,6 @@ namespace BikeShop.Products.Application.Interfaces
 
         public Task UpdateReservationProducts(List<ProductQuantitySmplDTO> OldReservationProducts, List<ProductQuantitySmplDTO> NewReservationProducts, int storageId);
         public Task<string> GetFromBRUA();
+        public Task<List<ProductStorageQuantity>> GetIdByStorage(int storageId);
     }
 }

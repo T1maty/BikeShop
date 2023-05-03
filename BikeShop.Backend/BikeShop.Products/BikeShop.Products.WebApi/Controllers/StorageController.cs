@@ -29,7 +29,13 @@ namespace BikeShop.Products.WebApi.Controllers
         {
             return await _storageService.GetByStorage(storageId);
         }
-
+        ///
+        [HttpGet("getidsbystorage")]
+        public async Task<List<ProductStorageQuantity>> GetIdByStorage(int storageId)
+        {
+            return await _storageService.GetIdByStorage(storageId);
+        }
+        ///
         [HttpPost("addproductstostorage")]
         public async Task AddProductsToStorage([FromBody] List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId)
         {

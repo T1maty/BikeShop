@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from '../ProductsCount/ProductsWrapper.module.scss'
-import {Button, UniTable} from '../../../shared/ui'
+import {Button, CustomInput, UniTable} from '../../../shared/ui'
 import {columns} from './SupplyInvoiceTableConfig'
 import {ChooseProductModal} from '../../../features'
 import useSupplyInvoice from './models/SupplyInvoiceStore'
@@ -30,24 +30,25 @@ export const ArrivalOfProducts = () => {
         <div className={s.arrivalOfProducts_mainBlock}>
             <div className={s.arrivalOfProducts_leftSide}>
                 <div className={s.leftSide_title}>
-                    {isCreating ? 'Новый приход товара' : currentSupplyInvoice.supplyInvoice.id}
+                    {isCreating ? 'Новый приход товара' : "Приход номер " + currentSupplyInvoice.supplyInvoice.id}
                 </div>
-                {
-                    false ?
-                        <div className={s.leftSide_uploadFile}>
-                            <input type="file" id="file" onChange={uploadHandler} className={s.inputFile}/>
-                        </div>
-                        : ''
-                }
+
+                <div className={s.leftSide_uploadFile}>
+                    <input type="file" id="file" onChange={uploadHandler} className={s.inputFile}/>
+                </div>
+
+
                 <div className={s.leftSide_info}>Дополнительная информация</div>
                 <Button buttonDivWrapper={s.button_chooseItem}
-                        onClick={() => {setVis(true)}}
+                        onClick={() => {
+                            setVis(true)
+                        }}
                 >
                     Выбрать товар
                 </Button>
                 <div className={s.leftSide_delivery}>
-                    <div>Доставка</div>
-                    <div>Расходы</div>
+                    <CustomInput placeholder={"Доставка"}/>
+                    <CustomInput placeholder={"Расходы"}/>
                 </div>
                 <div className={s.leftSide_metrika}>
                     <div className={s.metrika_title}>Метрика:</div>

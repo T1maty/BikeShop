@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './SupplyInvoiceArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import useSupplyInvoiceArchiveModal from './SupplyInvoiceArchiveModalStore'
@@ -9,6 +9,7 @@ import Enumerable from "linq"
 import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {formatDate} from "../../../shared/utils/formatDate"
+import {SupplyInvoiceArchiveModalContext} from "./SupplyInvoiceArchiveModalContext";
 
 export const SupplyInvoiceArchiveModal = () => {
 
@@ -24,6 +25,8 @@ export const SupplyInvoiceArchiveModal = () => {
 
     const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
     const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
+
+    const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -42,25 +45,36 @@ export const SupplyInvoiceArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
-                <div className={s.supplyInvoiceArchiveModal_mainBlock}>
+                <div className={s.supplyInvoiceArchiveModal_mainBlock} onContextMenu={(e) => {
+                    e.preventDefault()
+                }}>
+
+                    <SupplyInvoiceArchiveModalContext open={navContext} setOpen={setNavContext}/>
                     <div className={s.supplyInvoiceArchiveModal_title}>
                         Приходные накладные
                     </div>
                     <div className={s.supplyInvoiceArchiveModal_list}>
                         {
-                            archive.map((el: SupplyInvoiceDTO) => {
+                            Enumerable.from(archive as SupplyInvoiceDTO[]).orderByDescending(n => n.supplyInvoice.id).toArray().map((el: SupplyInvoiceDTO) => {
                                 return (
                                     <div className={s.supplyInvoiceArchiveModal_item} key={el.supplyInvoice.id}
                                          onDoubleClick={() => {
-                                             setIsCreating(false)
-                                             setCurrentSupplyInvoice(el);
-                                             navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                             if (el.supplyInvoice.sypplyActStatus === 'Created') {
+                                                 setIsCreating(false)
+                                                 setCurrentSupplyInvoice(el);
+                                                 navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                                 setOpen(false)
+                                             }
+                                         }}
+                                         onContextMenu={(e) => {
+                                             setNavContext({o: true, x: e.clientX, y: e.clientY})
                                          }}
                                     >
                                         <div className={
-                                            // s.item_status
                                             el.supplyInvoice.sypplyActStatus === 'Created' ? s.status_WaitingPayment :
                                                 el.supplyInvoice.sypplyActStatus === 'Executed' ? s.status_Ready :
                                                     el.supplyInvoice.sypplyActStatus === 'Canceled' ? s.status_Canceled : ''}

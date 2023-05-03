@@ -179,6 +179,23 @@ namespace BikeShop.Products.Application.Services
             return ids;
         }
 
+        public async Task<List<ProductStorageQuantity>> GetIdByStorage(int storageId)
+        {
+            //Получаем словари для всех товаров на складе, а так же зарезервированных товаров на складе.
+            var prodQuantDict = await _context.StorageProducts.Where(n => n.StorageId == storageId).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
+            var prodQuantReservedDict = await _context.ProductReservations.Where(n => n.StorageId == storageId).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
+
+            //Получаем доступные товары отнимая от товаров на складе зарезервированные товары
+            var prodQuantAvailableDict = prodQuantDict;
+            foreach (var prod in prodQuantReservedDict)
+            {
+                if (prodQuantAvailableDict.ContainsKey(prod.Key))
+                    prodQuantAvailableDict[prod.Key] -= prod.Value;
+            }
+
+            return prodQuantDict.Select(n => new ProductStorageQuantity { ProductId = n.Key, Available = prodQuantAvailableDict[n.Key], Reserved = prodQuantReservedDict[n.Key] }).ToList();
+        }
+
         public async Task UpdateReservationProducts(List<ProductQuantitySmplDTO> OldReservationProducts, List<ProductQuantitySmplDTO> NewReservationProducts, int storageId)
         {
             var Reservation = await _context.ProductReservations.Where(n => n.StorageId == storageId).ToDictionaryAsync(n=>n.ProductId, n=>n);
