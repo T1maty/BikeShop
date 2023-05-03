@@ -14,6 +14,7 @@ interface CurrencyProps {
     selectedCurrency: Currency | null
     setSelectedCurrency: (id: number) => void
     roundUp: (v: number) => {}
+    find: (id: number) => Currency | undefined
 }
 
 export const useCurrency = create<CurrencyProps>()(persist(devtools(immer((set, get) => ({
@@ -49,6 +50,9 @@ export const useCurrency = create<CurrencyProps>()(persist(devtools(immer((set, 
     },
     roundUp: (v) => {
         return (Math.round(v * 10) / 10).toFixed(2).replace('.00', '')
+    },
+    find: (id) => {
+        return get().allCurrencies.find(n => n.id === id)
     }
 }))), {
     name: "useCurrency",

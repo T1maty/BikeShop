@@ -1,8 +1,9 @@
 import React from 'react'
 import s from './CheckStyles.module.scss'
-import {BillWithProducts} from "../../../entities";
+import {BillWithProducts, useCurrency} from "../../../entities";
 
 export const CheckForShop = (props: { children: BillWithProducts }) => {
+    const findCurrency = useCurrency(s => s.find)
 
     return (
         <div className={s.workAct_wrapper}>
@@ -28,13 +29,15 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
                     </div>
                     <div className={s.works_result}>
                         <div>Всего: <span
-                            style={{fontWeight: 'bold'}}>{props.children.bill.total + props.children.bill.discount}</span>
+                            style={{fontWeight: 'bold'}}>{props.children.bill.total + props.children.bill.discount + findCurrency(props.children.bill.currencyId)?.symbol!}</span>
                         </div>
-                        <div>Скидка: <span style={{fontWeight: 'bold'}}>{props.children.bill.discount}</span></div>
+                        <div>Скидка: <span
+                            style={{fontWeight: 'bold'}}>{props.children.bill.discount + findCurrency(props.children.bill.currencyId)?.symbol!}</span>
+                        </div>
                     </div>
                 </div>
                 <div className={s.workAct_result}>
-                    К оплате: {props.children.bill.total}
+                    К оплате: {props.children.bill.total + findCurrency(props.children.bill.currencyId)?.symbol!}
                 </div>
 
             </div>

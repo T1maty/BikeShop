@@ -7,7 +7,7 @@ export interface NewBillDTO {
     personalBalance: number
     userId: string
     clientId: string
-    shopId: number
+    shopId: string
     currencyId: number
     description: string
     products: BillProductDTO[]
