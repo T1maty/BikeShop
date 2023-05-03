@@ -1,8 +1,8 @@
 import React from 'react';
-import {ServiceWork, useCurrency} from "../../../entities";
-import s from "./ServiceTable.module.scss";
-import {Button} from "../../../shared/ui";
-import {TableProductItem, TableProductItemAdditional} from "../../../features";
+import {ServiceWork, useCurrency} from "../../../entities"
+import s from "./ServiceTable.module.scss"
+import {Button} from "../../../shared/ui"
+import {TableProductItem, TableProductItemAdditional} from "../../../features"
 
 type ServiceTableProps = {
     data: ServiceWork[] | null
@@ -68,28 +68,28 @@ const ServiceTableWork = (props: ServiceTableProps) => {
                                                               }
                                                           }}
                                         />
-                                        {item.complicationPrice > 0 || item.description != '' ?
-                                            <TableProductItemAdditional key={index}
-                                                                        name={item.description}
-                                                                        price={item.complicationPrice}
-                                                                        count={item.quantity}
-                                                                        onChange={(desc, price) => {
-                                                                            let newData = props.data?.map((value, indeX) => {
-                                                                                if (indeX === index) {
-                                                                                    return {
-                                                                                        ...value,
-                                                                                        description: desc,
-                                                                                        complicationPrice: fstb.c * parseFloat(price)
+                                        {
+                                            item.complicationPrice > 0 || item.description != '' ?
+                                                <TableProductItemAdditional key={index}
+                                                                            name={item.description}
+                                                                            price={item.complicationPrice}
+                                                                            count={item.quantity}
+                                                                            onChange={(desc, price) => {
+                                                                                let newData = props.data?.map((value, indeX) => {
+                                                                                    if (indeX === index) {
+                                                                                        return {
+                                                                                            ...value,
+                                                                                            description: desc,
+                                                                                            complicationPrice: fstb.c * parseFloat(price)
+                                                                                        }
+                                                                                    } else {
+                                                                                        return value
                                                                                     }
-                                                                                } else {
-                                                                                    return value
-                                                                                }
-                                                                            })
-                                                                            props.setData(newData!)
-                                                                        }}
-                                            />
-                                            :
-                                            <div/>
+                                                                                })
+                                                                                props.setData(newData!)
+                                                                            }}
+                                                />
+                                                : <div/>
                                         }
                                     </>
                                 )

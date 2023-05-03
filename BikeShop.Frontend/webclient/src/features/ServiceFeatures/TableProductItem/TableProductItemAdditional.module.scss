@@ -12,6 +12,19 @@
     .tableItem_title {
         word-break: break-word;
         margin-right: $defaultSmallMargin;
+        width: 150px;
+
+        .editableSpanInput_description {
+            width: 150px;
+            height: 30px;
+            font-size: 16px;
+        }
+        .editableSpanSpan_description {
+            height: 40px;
+            word-break: break-word;
+            overflow-y: auto;
+            font-size: 16px;
+        }
     }
 
     .tableItem_numbers {
@@ -23,8 +36,22 @@
             border-radius: $smallBorderRadius;
             padding: 5px;
             margin-right: $defaultSmallMargin;
-            min-width: 80px;
+            width: 100px;
             @include flexCenter;
+
+            .editableSpanInput_price {
+                width: 70px;
+                height: 30px;
+                font-size: 16px;
+            }
+            .editableSpanSpan_price {
+                display: flex;
+                align-items: center;
+                height: 30px;
+                word-break: break-word;
+                overflow-y: auto;
+                font-size: 16px;
+            }
         }
     }
 }

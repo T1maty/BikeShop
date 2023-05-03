@@ -23,15 +23,19 @@ export const TableProductItemAdditional: React.FC<TableItemAdditionalProps> = ({
     return (
         <div className={s.tableItem_box}>
             <div className={s.tableItem_title}>
-                <EditableSpan title={name} onChangeInput={(v) => {
-                    onChange(v, price.toString())
-                }}/>
+                <EditableSpan title={name}
+                              onChangeInput={(v) => {onChange(v, price.toString())}}
+                              inputClassName={s.editableSpanInput_description}
+                              spanClassName={s.editableSpanSpan_description}
+                />
             </div>
             <div className={s.tableItem_numbers}>
                 <div className={s.tableItem_price}>
-                    <EditableSpan title={r(price * fbts.c).toString()} onChangeInput={(v) => {
-                        onChange(name, v)
-                    }}/>
+                    <EditableSpan title={r(price * fbts.c).toString()}
+                                  onChangeInput={(v) => {onChange(name, v)}}
+                                  inputClassName={s.editableSpanInput_price}
+                                  spanClassName={s.editableSpanSpan_price}
+                    />
                     {fbts.s}
                 </div>
                 <DeleteButton size={25} onClick={deleteAdditionalWorkHandler}/>
