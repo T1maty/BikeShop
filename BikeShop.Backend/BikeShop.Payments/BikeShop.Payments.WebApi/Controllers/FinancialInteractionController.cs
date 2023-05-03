@@ -33,7 +33,7 @@ namespace BikeShop.Payments.WebApi.Controllers
         [HttpGet("getbillsbyshop")]
         public async Task<List<BillWithProducts>> GetBillsByShop(int ShopId, int Take)
         {
-            return await _interactionService.GetBillsByUser(UserId, Start, Finish);
+            return await _interactionService.GetBillsByShop(ShopId, Take);
         }
     }
 }
