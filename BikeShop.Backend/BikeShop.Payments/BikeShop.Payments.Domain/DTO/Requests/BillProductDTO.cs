@@ -16,6 +16,7 @@ namespace BikeShop.Payments.Domain.DTO.Requests
         public decimal Quantity { get; set; }
         public string QuantityUnitName { get; set; } = string.Empty;
         public string CurrencySymbol { get; set; } = string.Empty;
+        public int CurrencyId { get; set; }
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
     }

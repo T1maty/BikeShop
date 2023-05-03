@@ -7,6 +7,7 @@ export interface BillProductDTO {
     quantity: number
     quantityUnitName: string
     currencySymbol: string
+    currencyId: number
     price: number
     discount: number
     total: number

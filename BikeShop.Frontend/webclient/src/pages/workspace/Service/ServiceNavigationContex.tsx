@@ -1,6 +1,13 @@
 import React, {useState} from 'react'
-import {ContextMenu} from "../../../widgets";
+import {
+    ActGetStuffFromService,
+    ActServiceWork,
+    CheckForServiceWork,
+    ContextMenu,
+    ServiceIncomeInvoice
+} from "../../../widgets";
 import ServiceStore from "./ServiceStore";
+import {PrintModal} from "../../../features";
 
 interface p {
     open: { o: boolean, x: number, y: number },
@@ -47,6 +54,10 @@ export const ServiceNavigationContext = (props: p) => {
     ]
     return (
         <>
+            <PrintModal open={v1} setOpen={sv1} children={<ServiceIncomeInvoice children={selected!}/>}/>
+            <PrintModal open={v2} setOpen={sv2} children={<ActGetStuffFromService/>}/>
+            <PrintModal open={v3} setOpen={sv3} children={<ActServiceWork/>}/>
+            <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={selected!}/>}/>
 
             <ContextMenu
                 isOpen={props.open.o}

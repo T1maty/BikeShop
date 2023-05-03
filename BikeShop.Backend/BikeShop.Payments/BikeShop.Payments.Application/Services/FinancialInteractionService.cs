@@ -57,6 +57,7 @@ namespace BikeShop.Payments.Application.Services
                     Description = product.Description,
                     Discount = product.Discount,
                     Name = product.Name,
+                    CurrencyId= product.CurrencyId,
                     ProductId = product.ProductId,
                     Price = product.Price,
                     Quantity = product.Quantity,

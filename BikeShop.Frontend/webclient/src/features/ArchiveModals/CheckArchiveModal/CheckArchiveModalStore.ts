@@ -2,7 +2,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes";
-import {ServiceAPI, ServiceWithData} from "../../../entities";
+import {BillWithProducts, FinancialInteractionAPI, LocalStorage} from "../../../entities";
 
 interface CheckArchiveModalStore {
     openCheckArchiveModal: boolean
@@ -10,8 +10,8 @@ interface CheckArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    archive: any[]
-    getEndedServices: () => any // надо исправить тип
+    archive: BillWithProducts[]
+    loadArchive: () => void // надо исправить тип
 }
 
 const useCheckArchiveModal = create<CheckArchiveModalStore>()(persist(devtools(immer((set) => ({
@@ -23,12 +23,12 @@ const useCheckArchiveModal = create<CheckArchiveModalStore>()(persist(devtools(i
 
     archive: [],
     // заглушка
-    getEndedServices: () => {
+
+    loadArchive: () => {
         set({isLoading: true});
-        return ServiceAPI.getAllServicesInfo().then(res => {
+        FinancialInteractionAPI.getByShop(LocalStorage.shopId()!, 100).then(res => {
             set(state => {
                 state.archive = res.data
-                    .filter((item) => item.service.status === 'Ended')
             })
             set({isLoading: false})
         }).catch((error: any) => {

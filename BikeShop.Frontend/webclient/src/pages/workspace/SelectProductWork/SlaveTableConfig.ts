@@ -2,7 +2,7 @@ import {UniTableColumn} from "../../../entities";
 
 export const columns: UniTableColumn[] = [
     {
-        id: 'workId',
+        id: 'productId',
         label: 'Артикул',
         minWidth: 70,
         align: 'right',
@@ -13,7 +13,6 @@ export const columns: UniTableColumn[] = [
         label: 'Название',
         minWidth: 70,
         align: 'right',
-        isEditable: true
     },
     {
         id: 'quantity',
@@ -28,16 +27,7 @@ export const columns: UniTableColumn[] = [
         label: 'Цена',
         minWidth: 70,
         align: 'left',
-        isEditable: true,
         isNumber: true,
         isCurrency: true
     },
-    {
-        id: 'description',
-        label: 'Описание',
-        minWidth: 70,
-        align: 'right',
-        isEditable: true
-    },
-
 ]

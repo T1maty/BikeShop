@@ -42,6 +42,8 @@ export const Cashbox = () => {
 
     const bts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
+    const currency = useCurrency(s => s.selectedCurrency)
+
 
     const onSearchHandler = (n: Product) => {
         let exProd = Enumerable.from(bill.products)
@@ -64,11 +66,12 @@ export const Cashbox = () => {
                 serialNumber: '',
                 description: '',
                 quantity: 1,
+                currencyId: currency?.id ? currency?.id : 1,
                 quantityUnitName: "123",
-                currencySymbol: "123",
-                price: n.retailPrice,
+                currencySymbol: currency?.symbol ? currency?.symbol : "$",
+                price: bts.c * n.retailPrice,
                 discount: 0,
-                total: n.retailPrice
+                total: bts.c * n.retailPrice
             }
             console.log('selectedProd', n)
             setData([...bill.products, newProd])
@@ -81,6 +84,7 @@ export const Cashbox = () => {
     }
 
     const paymentResultHandler = (value: PaymentData) => {
+
         let res = {...bill, ...value}
         res.userId = logUser != undefined ? logUser.id : ""
         res.description = 'desc'

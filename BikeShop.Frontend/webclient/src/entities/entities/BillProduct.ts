@@ -11,6 +11,9 @@ export interface BillProduct {
     currencySymbol
         :
         string
+    currencyId
+        :
+        number
     description
         :
         string
