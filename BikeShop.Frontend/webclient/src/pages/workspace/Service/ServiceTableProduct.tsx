@@ -1,8 +1,8 @@
-import React from 'react';
-import {ServiceProduct, useCurrency} from "../../../entities";
-import s from "./ServiceTable.module.scss";
-import {Button} from "../../../shared/ui";
-import {TableProductItem} from "../../../features";
+import React from 'react'
+import {ServiceProduct, useCurrency} from "../../../entities"
+import s from "./ServiceTable.module.scss"
+import {Button} from "../../../shared/ui"
+import {TableProductItem} from "../../../features"
 
 type ServiceTableProps = {
     data: ServiceProduct[] | null
@@ -26,7 +26,7 @@ const ServiceTableProduct = (props: ServiceTableProps) => {
             <div className={s.tableBox_buttons}>
                 <div className={s.buttons_editBtn}>
                     <Button onClick={userClickHandler} disabled={props.disabledButton}>
-                        Редактор услуг
+                        Редактор товаров
                     </Button>
                 </div>
                 <div className={s.buttons_discountField}>
