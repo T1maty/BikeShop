@@ -9,6 +9,7 @@ export type {ProductOptionVariant} from './entities/ProductOptionVariant'
 export type {ProductTag} from './entities/ProductTag'
 export type {ProductImage} from './entities/ProductImage'
 export type {ProductQuantity} from './entities/ProductQuantity'
+export type {ProductStorageQuantity} from './responses/ProductStorageQuantity'
 
 
 export type {CashboxAction} from './entities/Acts/Cashbox/CashboxAction'

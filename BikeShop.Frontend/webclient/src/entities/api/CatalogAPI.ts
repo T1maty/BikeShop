@@ -1,8 +1,15 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
 import {
-    UpdateProductPrices, CreateProduct, CreateTag, Product,
-    ProductExtended, ProductTag, UpdateProduct, ProductTagResponse
+    CreateProduct,
+    CreateTag,
+    Product,
+    ProductExtended,
+    ProductStorageQuantity,
+    ProductTag,
+    ProductTagResponse,
+    UpdateProduct,
+    UpdateProductPrices
 } from '../index'
 
 export const CatalogAPI = {
@@ -45,6 +52,11 @@ export const CatalogAPI = {
     createProductTag(tag: CreateTag): any {
         return (
             $api.post<ProductTag>('/tag/create', tag)
+        )
+    },
+    getStorageProductIds(storageId: string): Promise<AxiosResponse<ProductStorageQuantity[]>> {
+        return (
+            $api.get<ProductStorageQuantity[]>(`/storage/getidsbystorage?storageId=${storageId}`)
         )
     },
 }

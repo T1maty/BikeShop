@@ -12,6 +12,7 @@ import useProductCatalogTableStore
 import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
 import Select from 'react-select'
 import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
+import {useProductCatalogStorage} from "./ProductCatalogStorage";
 
 export const ProductCatalog = () => {
 
@@ -27,6 +28,8 @@ export const ProductCatalog = () => {
     const getStorages = useCreateStorageModal(s => s.getStorages)
     const selectedStorage = useCreateStorageModal(s => s.selectedStorage)
     const setSelectedStorage = useCreateStorageModal(s => s.setSelectedStorage)
+
+    const loadStorageData = useProductCatalogStorage(s => s.loadStorageData)
 
     const [tags, setTags] = useState<ProductTag[]>([])
 
@@ -44,6 +47,11 @@ export const ProductCatalog = () => {
         getStorages()
     }, [])
 
+    useEffect(() => {
+        if (selectedStorage != undefined)
+            loadStorageData(selectedStorage?.id.toString()!)
+    }, [selectedStorage])
+
     return (
         <div className={s.productCatalogTable_mainBlock}>
             <EditProductCardModal/>
@@ -59,11 +67,13 @@ export const ProductCatalog = () => {
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
-                    <Button onClick={() => {}}>
+                    <Button onClick={() => {
+                    }}>
                         Отображение
                     </Button>
                     <div className={s.searchRow_searchInput}>
-                        <AsyncSelectSearchProduct onSelect={() => {}}/>
+                        <AsyncSelectSearchProduct onSelect={() => {
+                        }}/>
                     </div>
                     <div style={{color: 'black'}}>
                         <Select
@@ -72,13 +82,16 @@ export const ProductCatalog = () => {
                             isSearchable={false}
                             options={storages}
                             value={selectedStorage}
-                            onChange={(v) => {setSelectedStorage(v!.id)}}
+                            onChange={(v) => {
+                                setSelectedStorage(v!.id)
+                            }}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             styles={selectColorStyles}
                         />
                     </div>
-                    <Button onClick={() => {}}>
+                    <Button onClick={() => {
+                    }}>
                         Все товары
                     </Button>
                     <Button onClick={setNotSortedToTable}>

@@ -51,7 +51,7 @@ public class ServiceService : IServiceService
         service.DiscountWork = serviceWorks.Select(n => n.Discount).Sum();
         service.TotalWork = service.PriceWork - service.DiscountWork;
 
-        await UpdateReservation(new List<ServiceProduct>(), serviceProducts, await _shopClient.GetStorageId(model.ShopId));
+        await UpdateReservation(new List<ProductQuantitySmplDTO>(), serviceProducts, await _shopClient.GetStorageId(model.ShopId));
 
         await _context.Services.AddAsync(service);
         await _context.SaveChangesAsync(new CancellationToken());
@@ -174,7 +174,7 @@ public class ServiceService : IServiceService
     {
         var serviceCont = await _context.Services.FindAsync(dto.Id);
 
-        var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToListAsync();
+        var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
 
         serviceCont.Name = dto.Name;
         serviceCont.ClientDescription = dto.ClientDescription;
@@ -316,7 +316,7 @@ public class ServiceService : IServiceService
             if(status == "Ended")
             {
                 var storageId = await _shopClient.GetStorageId(service.ShopId);
-                var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).ToListAsync();
+                var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
                 await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
                 await _productsClient.AddProductsToStorage(oldServiceProducts.Select(n=> new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity*-1}).ToList(), storageId, "Service", id);
             }
@@ -333,11 +333,11 @@ public class ServiceService : IServiceService
         return r;
     }
 
-    private async Task UpdateReservation(List<ServiceProduct> OldProducts, List<ServiceProduct> NewProducts, int storageId)
+    private async Task UpdateReservation(List<ProductQuantitySmplDTO> OldProducts, List<ServiceProduct> NewProducts, int storageId)
     {
         var data = new UpdateReservationProductsDTO();
-        data.OldReservationProducts = _mapper.ProjectTo<ProductQuantitySmplDTO>(OldProducts.AsQueryable()).ToList();
-        data.NewReservationProducts = _mapper.ProjectTo<ProductQuantitySmplDTO>(NewProducts.AsQueryable()).ToList();
+        data.OldReservationProducts = OldProducts;
+        data.NewReservationProducts = NewProducts.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToList();
         await _productsClient.UpdateReservationProducts(data, storageId);
     }
 }
