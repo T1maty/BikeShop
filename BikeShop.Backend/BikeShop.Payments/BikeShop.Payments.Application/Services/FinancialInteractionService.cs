@@ -30,6 +30,13 @@ namespace BikeShop.Payments.Application.Services
             _shopClient = shopClient;
         }
 
+        public async Task<List<BillWithProducts>> GetBillsByShop(int ShopId, int Take)
+        {
+            var bills = await _context.Bills.Where(n=>n.ShopId == ShopId).Take(Take).ToListAsync();
+            var prods = await _context.BillProducts.Where(n => bills.Select(m => m.Id).Contains(n.BillId)).ToListAsync();
+            return bills.Select(n => new BillWithProducts { bill = n, products = prods.Where(m => m.BillId == n.Id).ToList() }).ToList();
+        }
+
         public async Task<List<BillWithProducts>> GetBillsByUser(Guid UserId, DateTime Start, DateTime Finish)
         {
             var bills = await _context.Bills.Where(n => n.Enabled == true).Where(n => n.UserId == UserId).Where(n => n.CreatedAt > Start).Where(n => n.CreatedAt < Finish).ToListAsync();

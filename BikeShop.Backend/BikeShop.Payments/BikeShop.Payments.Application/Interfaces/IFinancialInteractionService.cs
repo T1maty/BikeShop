@@ -13,5 +13,6 @@ namespace BikeShop.Payments.Application.Interfaces
     {
         public Task<BillWithProducts> NewBill(NewBillDTO dto);
         public Task<List<BillWithProducts>> GetBillsByUser(Guid UserId, DateTime Start, DateTime Finish);
+        public Task<List<BillWithProducts>> GetBillsByShop(int ShopId, int Take)
     }
 }
