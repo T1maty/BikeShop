@@ -23,7 +23,6 @@ export const BikeShopPaths = {
         STORAGE_PRODUCTS_TRANSFER: '/workspace/storage-products-transfer',
 
         SHOP_CHECK: '/workspace/shop-check',
-
         WORK_CHECK: '/workspace/work-check',
         WORK_ACT: '/workspace/work-act',
         GET_STUFF_TO_SERVICE_ACT: '/workspace/get-stuff-to-service-act',

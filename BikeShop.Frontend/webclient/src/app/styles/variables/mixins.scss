@@ -611,6 +611,18 @@
         text-align: center;
         min-height: 100px;
         margin-bottom: $defaultSmallMargin;
+        padding: $defaultSmallMargin;
+
+        // табличка в чеке
+        table {
+            word-break: break-word;
+            border-collapse: collapse;
+            border: 2px solid $themeColorMilk;
+
+            th, td {
+                border: 1px solid black;
+            }
+        }
     }
     .works_result {
         text-align: right;

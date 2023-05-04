@@ -7,6 +7,11 @@
     .workAct_mainBox {
         @include workActMainBlock;
 
+        .shop_title {
+            font-size: 26px;
+            text-align: center;
+        }
+
         @include workActDateBlock;
 
         .workAct_title {
@@ -24,6 +29,14 @@
         }
 
         .workAct_works {
+            .works_names {
+                margin-bottom: $defaultSmallMargin;
+
+                :first-child {
+                    margin-bottom: 5px;
+                }
+            }
+
             @include workActProductBlock;
         }
 

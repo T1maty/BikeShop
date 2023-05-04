@@ -8,19 +8,34 @@ import {BillProductDTO} from "./models/BillProductDTO"
 interface CashboxStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
+
+    bill: NewBillDTO
     user: User
     setUser: (user: User) => void
 
-    bill: NewBillDTO,
-    products: any[],
+    products: any[]
     setProducts: (value: BillProductDTO[]) => void
     addProduct: (value: any) => void
 }
 
 const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, get) => ({
-    bill: {} as NewBillDTO,
     isLoading: false,
+    setIsLoading: (value) => set({
+        isLoading: value
+    }),
+
+    bill: {} as NewBillDTO,
+    user: {} as User,
+    setUser: (user) => set({
+        user: user
+    }),
+
     products: [],
+    setProducts: (value) => {
+        set(state => {
+            state.bill.products = value
+        })
+    },
     addProduct: (value) => {
         let newValue: BillProductDTO = {
             ...value,
@@ -50,18 +65,6 @@ const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, 
         }
 
     },
-    setProducts: (value) => {
-        set(state => {
-            state.bill.products = value
-        })
-    },
-    setIsLoading: (value: boolean) => set({
-        isLoading: value
-    }),
-    user: {} as User,
-    setUser: (user: User) => set({
-        user: user
-    }),
 })))/*, {
     name: "cashboxStore",
     version: 1

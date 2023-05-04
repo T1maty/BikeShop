@@ -6,20 +6,14 @@ import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClie
 import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
 import {
-    BillWithProducts,
-    FinancialInteractionAPI,
-    LocalStorage,
-    PaymentData,
-    Product,
-    useAuth,
-    useCurrency,
-    User
+    BillWithProducts, FinancialInteractionAPI, LocalStorage, PaymentData,
+    Product, useAuth, useCurrency, User
 } from '../../../entities'
 import {columns} from "./CashboxTableConfig"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
-import Enumerable from "linq";
-import {BillProductDTO} from "./models/BillProductDTO";
+import Enumerable from "linq"
+import {BillProductDTO} from "./models/BillProductDTO"
 
 export const Cashbox = () => {
 
@@ -30,12 +24,12 @@ export const Cashbox = () => {
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
 
     const logUser = useAuth(s => s.user)
+    const isLoading = useCashboxStore(s => s.isLoading)
+    const setIsLoading = useCashboxStore(s => s.setIsLoading)
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
     const bill = useCashboxStore(s => s.bill)
     const setData = useCashboxStore(s => s.setProducts)
-    const isLoading = useCashboxStore(s => s.isLoading)
-    const setIsLoading = useCashboxStore(s => s.setIsLoading)
 
     const [open, setOpen] = useState(false)
     const [openPrint, setOpenPrint] = useState(false)
@@ -94,9 +88,10 @@ export const Cashbox = () => {
         res.currencyId = currency?.id!
         console.log(res)
 
+        setIsLoading(true)
         FinancialInteractionAPI.NewBill.create(res).then((r) => {
-            setIsLoading(true)
-            enqueueSnackbar('Товар продан!', {variant: 'success', autoHideDuration: 3000})
+            setIsLoading(false)
+            enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 3000})
             setRes(r.data)
             console.log(r)
             setOpenPrint(true)
@@ -129,30 +124,29 @@ export const Cashbox = () => {
 
             <div className={s.cashboxMainBlock}>
 
-                <PrintModal open={openPrint} setOpen={setOpenPrint}><CheckForShop children={res!}/></PrintModal>
+                <PrintModal open={openPrint}
+                            setOpen={setOpenPrint}>
+                            <CheckForShop children={res!}/>
+                </PrintModal>
 
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
-                        <Button onClick={() => {
-                        }}
+                        <Button onClick={() => {}}
                                 disabled={!isActiveTable}
                         >
                             Касса 1
                         </Button>
-                        <Button onClick={() => {
-                        }}
+                        <Button onClick={() => {}}
                                 disabled={isActiveTable}
                         >
                             Касса 2
                         </Button>
-                        <Button onClick={() => {
-                        }}
+                        <Button onClick={() => {}}
                                 disabled={isActiveTable}
                         >
                             Касса 3
                         </Button>
-                        <Button onClick={() => {
-                        }}
+                        <Button onClick={() => {}}
                                 disabled={isActiveTable}
                         >
                             Касса 4
@@ -160,9 +154,7 @@ export const Cashbox = () => {
                     </div>
 
                     <div className={s.leftSide_client}>
-                        <ChooseClientModal extraCallback={(user: User) => {
-                            chooseClientHandler(user)
-                        }}/>
+                        <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
 
                         <ClientCard user={user}/>
                         <div className={s.leftSide_client_buttons}>
@@ -172,8 +164,7 @@ export const Cashbox = () => {
                                 Выбрать клиента
                             </Button>
                             <Button buttonDivWrapper={s.client_buttons_cancel}
-                                    onClick={() => {
-                                    }}
+                                    onClick={() => {setUser({} as User)}}
                             >
                                 X
                             </Button>
@@ -199,14 +190,12 @@ export const Cashbox = () => {
                             <ChooseDiscountModal/>
 
                             <Button buttonDivWrapper={s.buttons_choose}
-                                    onClick={() => {
-                                    }}
+                                    onClick={() => {}}
                             >
                                 Выбрать скидку для клиента
                             </Button>
                             <Button buttonDivWrapper={s.buttons_cancel}
-                                    onClick={() => {
-                                    }}
+                                    onClick={() => {}}
                             >
                                 X
                             </Button>
@@ -224,9 +213,7 @@ export const Cashbox = () => {
                         />
 
                         <Button buttonDivWrapper={s.header_chooseBtn}
-                                onClick={() => {
-                                    setOpen(true)
-                                }}
+                                onClick={() => {setOpen(true)}}
                         >
                             Выбрать товары
                         </Button>
@@ -243,9 +230,7 @@ export const Cashbox = () => {
                         <div className={s.rightSideBottom_buttonsBlock}>
                             <div className={s.buttonsBlock_one}>
                                 <div className={s.one_cancelBtn}>
-                                    <Button onClick={() => {
-                                        setData([])
-                                    }}>
+                                    <Button onClick={() => {setData([])}}>
                                         X
                                     </Button>
                                 </div>
@@ -263,12 +248,11 @@ export const Cashbox = () => {
                             <div className={s.rightSideBottom_payBlock}>
                                 <PayModal open={openPay}
                                           setOpen={setOpenPay}
+                                          user={user}
                                           summ={sum}
                                           result={paymentResultHandler}
                                 />
-                                <Button onClick={() => {
-                                    setOpenPay(true)
-                                }}>
+                                <Button onClick={() => {setOpenPay(true)}}>
                                     К оплате
                                 </Button>
                             </div>

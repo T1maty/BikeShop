@@ -3,7 +3,14 @@
 
 .payModal_mainBox {
     @include defaultModalStyle;
-    @include divLargeMarginBottom;
+    @include divSmallMarginBottom;
+    width: 350px;
+
+    > * {
+        button {
+            height: 40px;
+        }
+    }
 
     .payModal_header {
         @include flexColumn;
@@ -17,15 +24,29 @@
     }
 
     .payModal_clientCard {
+        margin-bottom: 20px !important;
     }
 
     .payModal_payType {
         :first-child {
-            margin-bottom: $defaultSmallMargin;
+            margin-bottom: 5px;
         }
 
         button {
             width: 100%;
+        }
+    }
+
+    .payModal_cashback {
+        @include flexColumn;
+        margin-bottom: 0 !important;
+
+        .cashback_text {
+
+        }
+        .cashback_sum {
+            font-size: 30px;
+            font-weight: bold;
         }
     }
 
@@ -51,9 +72,13 @@
         .cashbackBlock_buttons {
             width: 100%;
 
-            :first-child {
+            .cancelButton {
+                @include deleteButton;
                 margin-bottom: $defaultSmallMargin;
             }
+            //:first-child {
+            //    margin-bottom: $defaultSmallMargin;
+            //}
 
             button {
                 width: 100%;

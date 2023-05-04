@@ -37,30 +37,35 @@ export const ChooseProductModal = (props: props) => {
     return (
         <CustomModal
             open={props.open ? props.open : open}
-            onClose={() => {
-                props.setOpen ? props.setOpen(false) : setOpen(false)
-            }}
+            onClose={() => {props.setOpen ? props.setOpen(false) : setOpen(false)}}
         >
             <div className={s.chooseProductModal_mainBox}>
                 <div className={s.chooseProductModal_wrapper}>
+
                     <div className={s.chooseProductModal_tagTreeView}>
                         <TagTreeView/>
                     </div>
 
                     <div className={s.chooseProductModal_catalogTable}>
-                        <ProductCatalogTable onRowDoubleClick={(row) => {
-                                props.addData ? props.addData(row) : false
-                                props.setData ? setDataHandler(row) : false
-                            }}
-                        />
-                        <br/>
-                        {
-                            (props.data != undefined && props.slaveColumns != undefined) ?
-                                <UniTable rows={props.data} columns={props.slaveColumns ? props.slaveColumns : []}
-                                          setRows={props.setDataSlaveTable}/> : <div>No slave table</div>
-                        }
-
+                        <div className={s.table_availableProducts}>
+                            <ProductCatalogTable onRowDoubleClick={(row) => {
+                                                    props.addData ? props.addData(row) : false
+                                                    props.setData ? setDataHandler(row) : false
+                                                }}
+                            />
+                        </div>
+                        <div className={s.table_chosenProducts}>
+                            {
+                                (props.data != undefined && props.slaveColumns != undefined) ?
+                                    <UniTable rows={props.data}
+                                              columns={props.slaveColumns ? props.slaveColumns : []}
+                                              setRows={props.setDataSlaveTable}
+                                    />
+                                    : <div>Нет выбранных товаров</div>
+                            }
+                        </div>
                     </div>
+
                 </div>
             </div>
         </CustomModal>

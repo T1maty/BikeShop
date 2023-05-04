@@ -10,7 +10,6 @@ import {Errors} from '../../entities/errors/workspaceErrors'
 
 interface ChooseClientModalProps {
     extraCallback: (user: User) => void
-
     state?: boolean
     setState?: (state: boolean) => void
 }
