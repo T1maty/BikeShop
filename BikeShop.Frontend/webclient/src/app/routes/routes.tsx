@@ -3,7 +3,7 @@ import {createBrowserRouter} from 'react-router-dom'
 import {
     ArrivalOfProducts, Cashbox, Catalog, CatalogProductItem, LoginPage, MainPage,
     Order, ProductCatalog, Profile, RegistrationPage, Service, ShopMain,
-    ShopWrapper, StorageProductsTransfer, WorkCatalog
+    ShopWrapper, StorageProductsTransfer, WorkCatalog, StuffProfile
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
 import {
@@ -89,22 +89,6 @@ export const routes = createBrowserRouter([
         </CheckAuthEmployee>
     },
     {
-        path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
-        element: <CheckAuthEmployee>
-            <WorkspaceHeaderProvider>
-                <ProductCatalog/>
-            </WorkspaceHeaderProvider>
-        </CheckAuthEmployee>
-    },
-    {
-        path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
-        element: <CheckAuthEmployee>
-            <WorkspaceHeaderProvider>
-                <WorkCatalog/>
-            </WorkspaceHeaderProvider>
-        </CheckAuthEmployee>
-    },
-    {
         path: BikeShopPaths.WORKSPACE.CASHBOX,
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
@@ -117,6 +101,22 @@ export const routes = createBrowserRouter([
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <Service/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.PRODUCT_CATALOG,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <ProductCatalog/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.WORK_CATALOG,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <WorkCatalog/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },
@@ -141,6 +141,14 @@ export const routes = createBrowserRouter([
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <StorageProductsTransfer/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.PROFILE,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <StuffProfile/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },

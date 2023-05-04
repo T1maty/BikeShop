@@ -1,0 +1,47 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.stuffProfileWork_mainBlock {
+    font-size: 20px;
+
+    .stuffProfileWork_title {
+        border-bottom: 2px solid white;
+        padding-bottom: $defaultSmallMargin;
+        margin-bottom: $defaultLargeMargin;
+    }
+    .stuffProfileWork_hours {
+        @include divSmallMarginBottom;
+        margin-bottom: $defaultExtraLargeMargin;
+    }
+    .stuffProfileWork_salary {
+        width: 50%;
+
+        fieldset {
+            border-radius: $smallBorderRadius;
+
+            .salary_info {
+                margin-top: 10px;
+                @include divExtraLargeMarginBottom;
+
+                .salary_info1 {
+                    @include divSmallMarginBottom;
+                }
+                .salary_info2 {
+                    @include divSmallMarginBottom;
+                }
+                .salary_result {
+                    margin-bottom: $defaultLargeMargin;
+                }
+            }
+            .calcButton {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                button {
+                    height: 50px;
+                }
+            }
+        }
+    }
+}

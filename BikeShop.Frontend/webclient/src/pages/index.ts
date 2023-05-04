@@ -5,7 +5,6 @@ export {MainPage} from './workspace/MainPage/MainPage'
 export {Cashbox} from './workspace/Cashbox/Cashbox'
 export {Service} from './workspace/Service/Service'
 export {WorkCatalog} from './workspace/WorkCatalog/WorkCatalog'
-
 export {ProductCatalog} from './workspace/ProductCatalog/ProductCatalog'
 export {SelectProduct} from './workspace/SelectProductWork/SelectProduct'
 export {SelectWork} from './workspace/SelectProductWork/SelectWork'
@@ -13,11 +12,18 @@ export {SelectWork} from './workspace/SelectProductWork/SelectWork'
 export {ArrivalOfProducts} from './workspace/SupplyInvoice/ArrivalOfProducts'
 export {InventoryOfProducts} from './workspace/ProductsCount/InventoryOfProducts'
 export {StorageProductsTransfer} from './workspace/StorageProductsTransfer/StorageProductsTransfer'
+export {StuffProfile} from './workspace/StuffProfile/StuffProfile'
+export {StuffProfileInfo} from './workspace/StuffProfile/StuffProfileInfo'
+export {StuffProfileWork} from './workspace/StuffProfile/StuffProfileWork'
+
 
 export {ShopMain} from './public/Shop/ShopMain/ShopMain'
 export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'
 export {ShopHeader} from './public/Shop/ShopMain/ShopHeader'
 export {ShopFooter} from './public/Shop/ShopMain/ShopFooter'
+
+export {LoginBlock} from './public/Shop/LoginBlock/LoginBlock'
+export {BurgerMenu} from './public/Shop/BurgerMenu/BurgerMenu'
 
 export {Catalog} from './public/Shop/Catalog/Catalog'
 export {CatalogProductItem} from './public/Shop/Catalog/CatalogProductItem'
@@ -29,8 +35,3 @@ export {ProfileOrders} from './public/Shop/Profile/ProfileOrders'
 export {ProfileInfo} from './public/Shop/Profile/ProfileInfo'
 export {ProfileServices} from './public/Shop/Profile/ProfileServices'
 export {ProfilePurchases} from './public/Shop/Profile/ProfilePurchases'
-
-export {LoginBlock} from './public/Shop/LoginBlock/LoginBlock'
-export {BurgerMenu} from './public/Shop/BurgerMenu/BurgerMenu'
-
-

@@ -1,0 +1,58 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.stuffProfileMainBlock {
+    @include wrapperMainBlock;
+    display: flex;
+    gap: $defaultLargeMargin;
+
+    .profile_navMenu {
+        border-radius: $largeBorderRadius;
+        background-color: $themeColorDark;
+        padding: $defaultExtraLargeMargin;
+        width: 25%;
+        font-size: 20px;
+        text-align: center;
+        @include divExtraLargeMarginBottom;
+
+        > div {
+            &:hover {
+                cursor: pointer;
+                color: gold;
+                //background-color: $themeColorGray;
+            }
+        }
+
+        .activeMenu {
+            color: gold;
+        }
+    }
+
+    .profile_content {
+        width: 75%;
+        @include flexColumn;
+        gap: $defaultLargeMargin;
+
+        > div {
+            border-radius: $largeBorderRadius;
+            background-color: $themeColorDark;
+            padding: $defaultLargeMargin;
+            width: 100%;
+        }
+
+        .content_title {
+            height: 80px;
+            @include flexBetween;
+
+            .title_name {
+                width: 100%;
+            }
+            .title_textInput {
+
+            }
+        }
+        .content_info {
+            height: 100%;
+        }
+    }
+}

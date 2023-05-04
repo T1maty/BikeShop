@@ -28,8 +28,7 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
         {
             title: 'Профиль',
             func: () => {
-                // navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                alert('Профиль')
+                navigate(BikeShopPaths.WORKSPACE.PROFILE)
                 setIsComponentVisible(false)
             }
         },
