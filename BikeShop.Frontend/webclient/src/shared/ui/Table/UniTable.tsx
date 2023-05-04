@@ -113,7 +113,7 @@ const TableRow = memo((props: TableRowProps) => {
             {
                 props.columns.map((item, index) => {
                     if (item.isCurrency) item.isNumber = true
-                    return <td key={index} style={{textAlign: `${item.align!}`, width: 'fit-content'}}>
+                    return <td key={index} style={{textAlign: `${item.align!}`}}>
                         {
                             item.isCurrency ?
                                 item.isEditable ?
