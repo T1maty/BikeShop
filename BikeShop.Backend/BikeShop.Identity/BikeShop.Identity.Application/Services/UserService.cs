@@ -30,7 +30,8 @@ namespace BikeShop.Identity.Application.Services
 
         public async Task<List<ApplicationUser>> GetEmployees(int ShopId)
         {
-            return await _userManager.Users.Where(n => n.ShopId > 0).ToListAsync();
+            if(ShopId == 0)return await _userManager.Users.Where(n => n.ShopId > 0).ToListAsync();
+            else return await _userManager.Users.Where(n => n.ShopId == ShopId).ToListAsync();
         }
 
         public async Task<UserDTO> GetUserById(Guid id)
