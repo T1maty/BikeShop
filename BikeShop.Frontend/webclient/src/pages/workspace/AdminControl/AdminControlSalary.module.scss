@@ -5,7 +5,36 @@
     font-size: 20px;
 
     .stuffProfileWork_title {
-        margin-bottom: $defaultLargeMargin;
+        margin-bottom: $defaultExtraLargeMargin;
+
+        .title_selectBlock {
+            //display: flex;
+            //align-items: center;
+            @include flexBetween;
+            //gap: $defaultExtraLargeMargin;
+            margin-bottom: $defaultLargeMargin;
+        }
+        .title_calcBlock {
+            @include flexBetween;
+
+            > div:not(:last-child) {
+                @include flexBetween;
+                gap: $defaultSmallMargin;
+            }
+
+            .startTime {
+
+            }
+            .endTime {
+
+            }
+            .calcButton {
+                button {
+                    height: 41px;
+                    width: 150px;
+                }
+            }
+        }
     }
     .stuffProfileWork_hours {
         @include divSmallMarginBottom;
@@ -16,8 +45,20 @@
         margin-bottom: $defaultLargeMargin;
     }
     .controlBlock {
-        .calcButton {
+        .controlBlock_sum {
+            width: 50%;
+            @include flexBetween;
+
+            .sum_input {
+                width: 60%;
+                margin-bottom: $defaultSmallMargin;
+            }
+        }
+        .giveMoneyButton {
+            width: 50%;
+
             button {
+                width: 100%;
                 height: 50px;
             }
         }

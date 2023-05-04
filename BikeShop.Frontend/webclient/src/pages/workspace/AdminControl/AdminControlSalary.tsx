@@ -4,6 +4,8 @@ import {Button, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import useAdminControl from './AdminControlStore'
 import {useSnackbar} from 'notistack'
+import {selectColorStylesWhite} from '../../../app/styles/variables/selectColorStyles'
+import Select from 'react-select'
 
 export const AdminControlSalary = () => {
 
@@ -11,14 +13,16 @@ export const AdminControlSalary = () => {
 
     const isLoading = useAdminControl(s => s.isLoading)
     const errorStatus = useAdminControl(s => s.errorStatus)
+    const selectedEmployee = useAdminControl(s => s.selectedEmployee)
+    const setSelectedEmployee = useAdminControl(s => s.setSelectedEmployee)
+    const employers = useAdminControl(s => s.employers)
+    const getEmployersList = useAdminControl(s => s.getEmployersList)
 
     const formControl = useForm<any>({
         defaultValues: {
             userId: '',
-            rate: 0,
-            shopPercent: 0,
-            workPercent: 0,
-            workshopPercent: 0,
+            start: 0,
+            end: 0,
             sum: 0,
         }
     })
@@ -33,10 +37,9 @@ export const AdminControlSalary = () => {
 
     useEffect(() => {
         // formControl.setValue('userId', currentEmployeeSalary ? currentEmployeeSalary.userId : '')
-        // formControl.setValue('rate', currentEmployeeSalary ? currentEmployeeSalary.rate : 0)
-        // formControl.setValue('shopPercent', currentEmployeeSalary ? currentEmployeeSalary.shopPercent : 0)
-        // formControl.setValue('workPercent', currentEmployeeSalary ? currentEmployeeSalary.workPercent : 0)
-        // formControl.setValue('workshopPercent', currentEmployeeSalary ? currentEmployeeSalary.workshopPercent : 0)
+        // formControl.setValue('start', currentEmployeeSalary ? currentEmployeeSalary.start : 0)
+        // formControl.setValue('end', currentEmployeeSalary ? currentEmployeeSalary.end : 0)
+        // formControl.setValue('sum', currentEmployeeSalary ? currentEmployeeSalary.sum : 0)
     }, [])
 
     useEffect(() => {
@@ -46,7 +49,7 @@ export const AdminControlSalary = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        // getEmployersList()
+        getEmployersList()
     }, [])
 
     if (isLoading) {
@@ -58,10 +61,48 @@ export const AdminControlSalary = () => {
                 <div className={s.stuffProfileWork_mainBlock}>
 
                     <div className={s.stuffProfileWork_title}>
-                        Отработка
+                        <div className={s.title_selectBlock}>
+                            <div style={{color: 'black', width: '50%'}}>
+                                <Select
+                                    className={s.options_search}
+                                    placeholder={'Выбрать сотрудника'}
+                                    isSearchable={false}
+                                    options={employers}
+                                    value={selectedEmployee}
+                                    onChange={(v) => {setSelectedEmployee(v!.user.id)}}
+                                    getOptionLabel={label => label.user.lastName}
+                                    getOptionValue={value => value.user.lastName}
+                                    styles={selectColorStylesWhite}
+                                />
+                            </div>
+                            <div>Прошлая выплата: 20.01.2022, 14:00</div>
+                        </div>
+                        <div className={s.title_calcBlock}>
+                            <div>
+                                <div>Начало:</div>
+                                <ControlledCustomInput name={'start'}
+                                                       placeholder={'Начало периода'}
+                                                       control={formControl}
+                                                       divClassName={s.startTime}
+                                />
+                            </div>
+                            <div>
+                                <div>Конец:</div>
+                                <ControlledCustomInput name={'end'}
+                                                       placeholder={'Конец периода'}
+                                                       control={formControl}
+                                                       divClassName={s.endTime}
+                                />
+                            </div>
+                            <Button buttonDivWrapper={s.calcButton}
+                                    onClick={() => {}}
+                            >
+                                Рассчитать
+                            </Button>
+                        </div>
                     </div>
                     <div className={s.stuffProfileWork_hours}>
-                        <div>Смен: 20</div>
+                        {/*<div>Смен: 20</div>*/}
                         <div>Часов: 200</div>
                     </div>
 
@@ -85,19 +126,19 @@ export const AdminControlSalary = () => {
                     </div>
 
                     <div className={s.controlBlock}>
-                        <div style={{marginBottom: '10px'}}>
-                            Сумма выплаты:
-                        </div>
-                        <div style={{marginBottom: '10px', width: '220px'}}>
+                        <div className={s.controlBlock_sum}>
+                            <div style={{marginBottom: '10px'}}>
+                                Сумма выплаты:
+                            </div>
                             <ControlledCustomInput name={'sum'}
                                                    placeholder={'Сумма выплаты'}
                                                    control={formControl}
+                                                   divClassName={s.sum_input}
                             />
                         </div>
                         <Button type={'submit'}
-                                buttonDivWrapper={s.calcButton}
-                                onClick={() => {
-                                }}
+                                buttonDivWrapper={s.giveMoneyButton}
+                                onClick={() => {}}
                         >
                             Сформировать выплату
                         </Button>

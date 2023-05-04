@@ -12,7 +12,7 @@ import useProductCatalogTableStore
 import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
 import Select from 'react-select'
 import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
-import {useProductCatalogStorage} from "./ProductCatalogStorage";
+import {useProductCatalogStorage} from "./ProductCatalogStorage"
 
 export const ProductCatalog = () => {
 
@@ -21,8 +21,6 @@ export const ProductCatalog = () => {
     const getProductCard = useEditProductCardModal(s => s.getProductCard)
     const isError = useEditProductCardModal(s => s.isError)
     const setNotSortedToTable = useProductCatalogTableStore(s => s.setNotSortedToTable)
-
-    const shop = useAuth(s => s.shop)
 
     const storages = useCreateStorageModal(s => s.storages)
     const getStorages = useCreateStorageModal(s => s.getStorages)
@@ -67,13 +65,11 @@ export const ProductCatalog = () => {
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Отображение
                     </Button>
                     <div className={s.searchRow_searchInput}>
-                        <AsyncSelectSearchProduct onSelect={() => {
-                        }}/>
+                        <AsyncSelectSearchProduct onSelect={() => {}}/>
                     </div>
                     <div style={{color: 'black'}}>
                         <Select
@@ -82,16 +78,13 @@ export const ProductCatalog = () => {
                             isSearchable={false}
                             options={storages}
                             value={selectedStorage}
-                            onChange={(v) => {
-                                setSelectedStorage(v!.id)
-                            }}
+                            onChange={(v) => {setSelectedStorage(v!.id)}}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             styles={selectColorStyles}
                         />
                     </div>
-                    <Button onClick={() => {
-                    }}>
+                    <Button onClick={() => {}}>
                         Все товары
                     </Button>
                     <Button onClick={setNotSortedToTable}>
@@ -100,13 +93,9 @@ export const ProductCatalog = () => {
                 </div>
 
                 <div className={s.rightSide_table}
-                     onContextMenu={(event) => {
-                         event.preventDefault()
-                     }}
+                     onContextMenu={(event) => {event.preventDefault()}}
                 >
-                    <ProductCatalogTable onRowDoubleClick={(row: any) => {
-                        getProductCard(row.id)
-                    }}/>
+                    <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
                 </div>
             </div>
         </div>
