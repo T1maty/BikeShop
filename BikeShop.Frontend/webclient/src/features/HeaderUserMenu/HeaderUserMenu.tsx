@@ -50,7 +50,7 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
             <div className={s.burgerMenu_iconButton}
                  onClick={() => {setIsComponentVisible(!isComponentVisible)}}
             >
-                {user.lastName !== null ? user.lastName : 'Неизвестный'} {user.firstName !== null ? user.firstName : 'пользователь'}
+                {user && user.lastName} {user && user.firstName}
             </div>
             {
                 isComponentVisible ?

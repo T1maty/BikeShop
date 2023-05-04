@@ -44,15 +44,12 @@ export const SelectProduct = (props: SelectProductProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {
-                        }}>
+                        <Button onClick={() => {}}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {
-                            setOpenSelectProductModal(false)
-                        }}>
+                        <Button onClick={() => {setOpenSelectProductModal(false)}}>
                             Отмена
                         </Button>
                     </div>

@@ -57,7 +57,7 @@ export const CheckArchiveModal = () => {
 
                     <div className={s.checkArchiveModal_list}>
                         {
-                            !(archive.length > 1) ? <div>No</div> :
+                            !(archive.length > 1) ? <div>Список пуст</div> :
 
                                 archive?.map((bill: BillWithProducts) => {
                                     return (
