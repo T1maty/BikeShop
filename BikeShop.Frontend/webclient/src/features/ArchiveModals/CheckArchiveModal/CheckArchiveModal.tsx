@@ -54,14 +54,14 @@ export const CheckArchiveModal = () => {
 
                     <PrintModal open={openPrint} setOpen={setOpenPrint}><CheckForShop
                         children={selected!}/></PrintModal>
-                    
+
                     <div className={s.checkArchiveModal_list}>
                         {
                             !(archive.length > 1) ? <div>No</div> :
 
                                 archive?.map((bill: BillWithProducts) => {
                                     return (
-                                        <div className={s.checkArchiveModal_item} key={bill.bill.id}
+                                        <div className={s.checkArchiveModal_item} key={bill.bill?.id}
                                              onClick={() => {
                                                  setSelected(bill)
                                              }}
@@ -85,13 +85,13 @@ export const CheckArchiveModal = () => {
 
                                                 <div className={s.content_info} style={{paddingLeft: '10px'}}>
                                                     <div>
-                                                        {bill.bill?.price + findCurrency(bill.bill.currencyId)?.symbol!}
+                                                        {bill.bill?.price + findCurrency(bill.bill?.currencyId)?.symbol!}
                                                     </div>
                                                     <div className={s.cashBlock}>
-                                                        {bill.bill?.discount * -1 + findCurrency(bill.bill.currencyId)?.symbol!}
+                                                        {bill.bill?.discount * -1 + findCurrency(bill.bill?.currencyId)?.symbol!}
                                                     </div>
                                                     <div className={s.cashBlock}>
-                                                        {bill.bill?.total + findCurrency(bill.bill.currencyId)?.symbol!}
+                                                        {bill.bill?.total + findCurrency(bill.bill?.currencyId)?.symbol!}
                                                     </div>
                                                 </div>
 

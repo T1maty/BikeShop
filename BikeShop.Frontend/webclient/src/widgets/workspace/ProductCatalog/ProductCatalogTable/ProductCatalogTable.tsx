@@ -1,6 +1,5 @@
 import React from 'react'
-import s from "../../../../pages/workspace/ProductCatalog/ProductCatalog.module.scss"
-import {UpdateProductPricesModal, CreateProductModal, UpdateProductModal} from '../../../../features'
+import {CreateProductModal, UpdateProductModal, UpdateProductPricesModal} from '../../../../features'
 import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import {Product, ProductExtended} from "../../../../entities"
@@ -34,7 +33,8 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
             ...item.product,
             quantity: item.quantity,
             quantityUnitName: item.quantityUnit?.name ? item.quantityUnit?.name : 'Error',
-            quantityId: item.quantityUnit?.id ? item.quantityUnit?.id : 0
+            quantityId: item.quantityUnit?.id ? item.quantityUnit?.id : 0,
+            color: 'green'
         }
     })
 

@@ -3,7 +3,7 @@ export interface UniTableColumn {
     label: string;
     minWidth?: number;
     maxWidth?: number;
-    align?: 'right' | 'left' | 'center';
+    align?: "center" | "right" | "left";
     isEditable?: boolean
     isNumber?: boolean
     isCurrency?: boolean

@@ -38,7 +38,7 @@ export const UniTable = (props: TableProps) => {
         <>
             <table className={`${props.className} ${cls.table}`}>
                 <thead className={cls.thead}>
-                    <TableHeadItem theadData={props.columns}/>
+                <TableHeadItem theadData={props.columns}/>
                 </thead>
                 <tbody className={cls.tbody}>
                 {
@@ -97,6 +97,7 @@ const TableRow = memo((props: TableRowProps) => {
 
     return (
         <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
+            style={{backgroundColor: `${props.row.color != undefined ? props.row.color : ''}`}}
             onDoubleClick={(event) => {
                 props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
             }}
@@ -112,7 +113,7 @@ const TableRow = memo((props: TableRowProps) => {
             {
                 props.columns.map((item, index) => {
                     if (item.isCurrency) item.isNumber = true
-                    return <td key={index}>
+                    return <td key={index} style={{textAlign: `${item.align!}`, width: 'fit-content'}}>
                         {
                             item.isCurrency ?
                                 item.isEditable ?
@@ -130,14 +131,15 @@ const TableRow = memo((props: TableRowProps) => {
                                                               props.setRow(newRow)
                                                           }
                                                       }}
-                                                      // inputClassName={cls.inputClassName}
+                                            // inputClassName={cls.inputClassName}
                                                       inputClassName={cls.currency_inputClassName1}
                                                       spanClassName={cls.currency_spanClassName1}
                                         />
                                         <div>{fbts.s}</div>
                                     </div>
                                     //Ячейка нередактируемая + валюта
-                                    : r(props.row[item.id] * fbts.c) + fbts.s
+                                    :
+                                    <div>{r(props.row[item.id] * fbts.c) + fbts.s}</div>
                                 :
                                 item.isEditable ?
                                     //Ячейка редактируемая + не валюта
@@ -153,12 +155,12 @@ const TableRow = memo((props: TableRowProps) => {
                                                           props.setRow(newRow)
                                                       }
                                                   }}
-                                                  // inputClassName={cls.inputClassName}
+                                        // inputClassName={cls.inputClassName}
                                                   inputClassName={cls.currency_inputClassName2}
                                                   spanClassName={cls.currency_spanClassName2}
                                     />
                                     //Ячейка не редактируемая + не валюта
-                                    : props.row[item.id]
+                                    : <div style={{alignContent: 'right'}}>{props.row[item.id]}</div>
                         }
                     </td>
                 })
