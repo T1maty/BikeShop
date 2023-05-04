@@ -4,7 +4,7 @@ import {Button, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import useAdminControl from './AdminControlStore'
 import {useSnackbar} from 'notistack'
-import {selectColorStylesWhite} from '../../../app/styles/variables/selectColorStyles'
+import {selectColorStylesWhite} from '../../../app/styles/variables/selectColorStylesWhite'
 import Select from 'react-select'
 
 export const AdminControlSalary = () => {

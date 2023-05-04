@@ -1,4 +1,4 @@
-export const selectColorStyles = {
+export const selectColorStylesWhite = {
     // @ts-ignore
     option: (styles, {isFocused, isSelected}) => ({
         ...styles,
@@ -8,7 +8,7 @@ export const selectColorStyles = {
                 ? '#fff'
                 : undefined,
         zIndex: 1,
-        color: 'black'
+        color: 'white'
     }),
     // menuList: (styles: any) => ({
     //     ...styles,
