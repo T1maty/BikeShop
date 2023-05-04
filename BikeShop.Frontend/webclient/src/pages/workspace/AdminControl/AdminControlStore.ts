@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {AuthAPI, User, UserNew} from '../../../entities'
+import {AuthAPI, UserNew} from '../../../entities'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface AdminControlStore {
