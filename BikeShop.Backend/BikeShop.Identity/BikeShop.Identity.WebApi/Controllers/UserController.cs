@@ -180,4 +180,16 @@ public class UserController : ControllerBase
         await _userService.SetUsersShop(userId, shopId);
         return Ok();
     }
+
+    [HttpGet("search")]
+    public async Task<List<ApplicationUser>> Search(string Querry, int Take)
+    {
+        return await _userService.Search(Querry, Take);
+    }
+
+    [HttpGet("GetEmployees")]
+    public async Task<List<ApplicationUser>> GetEmployees(int ShopId)
+    {
+        return await _userService.GetEmployees(ShopId);
+    }
 }

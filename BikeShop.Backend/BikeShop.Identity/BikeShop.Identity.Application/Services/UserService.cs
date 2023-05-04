@@ -5,23 +5,32 @@ using BikeShop.Identity.Application.Interfaces;
 using BikeShop.Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BikeShop.Identity.Application.Services
 {
     public class UserService : IUserService
     {
+        private readonly IAuthDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper)
+        public UserService(IAuthDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
+            _context = context;
             _userManager = userManager;
             _mapper = mapper;
+        }
+
+        public async Task<List<ApplicationUser>> GetEmployees(int ShopId)
+        {
+            return await _userManager.Users.Where(n => n.ShopId > 0).ToListAsync();
         }
 
         public async Task<UserDTO> GetUserById(Guid id)
@@ -48,6 +57,23 @@ namespace BikeShop.Identity.Application.Services
             }
 
             return dict;
+        }
+
+        public async Task<List<ApplicationUser>> Search(string Querry, int Take)
+        {
+            var res = Querry.ToLower().Split(" ");
+            var contQR = _userManager.Users;
+            foreach (var item in res)
+            {
+                contQR = contQR.Where(n => n.UserName.ToLower().Contains(item)
+                                        || n.FirstName.ToLower().Contains(item)
+                                        || n.LastName.ToLower().Contains(item)
+                                        || n.Patronymic.ToLower().Contains(item)
+                                        || n.Email.ToLower().Contains(item)
+                                        || n.PhoneNumber.ToLower().Contains(item));
+            }
+
+            return await contQR.Take(Take).ToListAsync();
         }
 
         public async Task SetUsersShop(Guid userId, int shopId)
