@@ -33,6 +33,13 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
             }
         },
         {
+            title: 'Админ',
+            func: () => {
+                navigate(BikeShopPaths.WORKSPACE.ADMIN)
+                setIsComponentVisible(false)
+            }
+        },
+        {
             title: 'Выйти',
             func: () => {
                 logout().then()

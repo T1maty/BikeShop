@@ -1,0 +1,17 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.stuffProfileMainBlock {
+    @include profileAdminMenuStyles;
+
+    .profile_content {
+        width: 75%;
+        border-radius: $largeBorderRadius;
+        background-color: $themeColorDark;
+        padding: $defaultLargeMargin;
+
+        .content_info {
+            height: 100%;
+        }
+    }
+}

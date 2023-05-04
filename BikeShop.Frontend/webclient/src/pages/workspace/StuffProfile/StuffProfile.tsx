@@ -52,6 +52,7 @@ export const StuffProfile = () => {
                     Ещё один пункт
                 </div>
             </div>
+
             <div className={s.profile_content}>
                 <div className={s.content_title}>
                     <div className={s.title_name}>

@@ -1,8 +1,7 @@
 import React from 'react'
 import {User} from "../../../entities"
 import s from './StuffProfileWork.module.scss'
-import {Button, DeleteButton, EditableSpan} from "../../../shared/ui";
-import {BikeShopPaths} from "../../../app/routes/paths";
+import {Button} from "../../../shared/ui"
 
 interface StuffProfileWorkProps {
     user: User

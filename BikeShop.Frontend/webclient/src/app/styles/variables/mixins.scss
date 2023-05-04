@@ -855,6 +855,68 @@
 }
 
 ////////////////////////////////////////////////////////////////////
+// Workspace ProfileAdmin Styles
+@mixin profileAdminMenuStyles() {
+    @include wrapperMainBlock;
+    display: flex;
+    gap: $defaultLargeMargin;
+
+    .profile_navMenu {
+        border-radius: $largeBorderRadius;
+        background-color: $themeColorDark;
+        padding: $defaultExtraLargeMargin;
+        width: 25%;
+        font-size: 20px;
+        text-align: center;
+        @include divExtraLargeMarginBottom;
+
+        > div {
+            &:hover {
+                cursor: pointer;
+                color: gold;
+                //background-color: $themeColorGray;
+            }
+        }
+
+        .activeMenu {
+            color: gold;
+        }
+    }
+}
+
+@mixin profileAdminSalaryFormStyles($resultMarginBottom) {
+    width: 50%;
+
+    fieldset {
+        border-radius: $smallBorderRadius;
+
+        .salary_info {
+            margin-top: 10px;
+            @include divExtraLargeMarginBottom;
+
+            .salary_info1 {
+                @include divSmallMarginBottom;
+            }
+            .salary_info2 {
+                @include divSmallMarginBottom;
+            }
+            .salary_result {
+                margin-bottom: $resultMarginBottom;
+            }
+        }
+        .calcButton {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            button {
+                height: 50px;
+            }
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////
 // ShopProfile Order
 
 @mixin orderStatus($bgColor) {

@@ -5,8 +5,6 @@
     font-size: 20px;
 
     .stuffProfileWork_title {
-        border-bottom: 2px solid white;
-        padding-bottom: $defaultSmallMargin;
         margin-bottom: $defaultLargeMargin;
     }
     .stuffProfileWork_hours {
@@ -14,6 +12,14 @@
         margin-bottom: $defaultExtraLargeMargin;
     }
     .stuffProfileWork_salary {
-        @include profileAdminSalaryFormStyles($defaultLargeMargin);
+        @include profileAdminSalaryFormStyles(0);
+        margin-bottom: $defaultLargeMargin;
+    }
+    .controlBlock {
+        .calcButton {
+            button {
+                height: 50px;
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@ import {createBrowserRouter} from 'react-router-dom'
 import {
     ArrivalOfProducts, Cashbox, Catalog, CatalogProductItem, LoginPage, MainPage,
     Order, ProductCatalog, Profile, RegistrationPage, Service, ShopMain,
-    ShopWrapper, StorageProductsTransfer, WorkCatalog, StuffProfile
+    ShopWrapper, StorageProductsTransfer, WorkCatalog, StuffProfile, AdminControl
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
 import {
@@ -149,6 +149,14 @@ export const routes = createBrowserRouter([
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <StuffProfile/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.ADMIN,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <AdminControl/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },
