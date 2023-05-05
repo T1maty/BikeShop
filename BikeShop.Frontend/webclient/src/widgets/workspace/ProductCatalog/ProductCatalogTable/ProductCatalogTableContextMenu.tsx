@@ -27,17 +27,18 @@ export const ProductCatalogTableContextMenu = () => {
         {
             name: 'Редактировать',
             click: () => {
-                setOpenUpdateProductModal(true, selected[0].product)
+                setOpenUpdateProductModal(true, selected[0])
                 setContextVisible(false, 0, 0)
             }
         },
         {
             name: 'Изменить цену',
             click: () => {
-                setOpenUpdateProductPricesModal(true, selected[0].product)
+                setOpenUpdateProductPricesModal(true, selected[0])
                 setContextVisible(false, 0, 0)
             }
         },
+
         {
             name: 'Создать',
             click: () => {
@@ -83,7 +84,9 @@ export const ProductCatalogTableContextMenu = () => {
     return (
         <ContextMenu
             isOpen={contextMenuVisible}
-            onClose={() => {setContextVisible(false, 0, 0)}}
+            onClose={() => {
+                setContextVisible(false, 0, 0)
+            }}
             settings={settings}
             top={contextXY.Y}
             left={contextXY.X}

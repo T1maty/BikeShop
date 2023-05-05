@@ -2,9 +2,10 @@ import React from 'react'
 import {CreateProductModal, UpdateProductModal, UpdateProductPricesModal} from '../../../../features'
 import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
-import {Product, ProductExtended} from "../../../../entities"
+import {Product} from "../../../../entities"
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
+import {useProductCatalogStorage} from "../../../../pages/workspace/ProductCatalog/ProductCatalogStorage";
 
 interface CatalogTableProps {
     onRowDoubleClick?: (product: any) => void
@@ -19,23 +20,24 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
+    const storageData = useProductCatalogStorage(s => s.storageData)
+
 
     const createProductSuccessHandler = (product: Product) => {
-        let extProd: ProductExtended
-        extProd = {} as ProductExtended
-        extProd.product = product
-        extProd.quantity = 0
-        addNewProduct(extProd)
+        addNewProduct(product)
     }
 
     let data = rows.map((item) => {
+        let sd = storageData.find(n => n.productId == item.id)
         return {
-            ...item.product,
-            quantity: item.quantity,
-            quantityUnitName: item.quantityUnit?.name ? item.quantityUnit?.name : 'Error',
-            quantityId: item.quantityUnit?.id ? item.quantityUnit?.id : 0,
+            ...item,
+            quantity: sd != undefined ? sd.available : 0,
+            reserved: sd != undefined ? sd.reserved : 0,
             color: 'green'
         }
+    }).sort((a, b) => {
+        if (a.quantity > 0) return 1
+        else return 0
     })
 
     return (
@@ -53,14 +55,10 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
                       }}
                       rowOnContext={(row, event) => {
                           setContextVisible(true, event.clientX, event.clientY)
-                          let prd: ProductExtended = {} as ProductExtended
-                          prd.product = (row as Product)
-                          setSelected([prd])
+                          setSelected([row as Product])
                       }}
                       rowOnClick={(row) => {
-                          let prd: ProductExtended = {} as ProductExtended
-                          prd.product = (row as Product)
-                          setSelected([prd])
+                          setSelected([row as Product])
                       }}
             />
         </>

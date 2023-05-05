@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, ProductExtended, UpdateProduct} from "../../../../entities"
+import {CatalogAPI, Product, UpdateProduct} from "../../../../entities"
 
 interface productCatalogTableStore {
     isLoading: boolean
@@ -9,14 +9,14 @@ interface productCatalogTableStore {
     setOpen: (value: boolean, X: number, Y: number) => void
     contextMenuXY: { X: number, Y: number }
 
-    rows: ProductExtended[]
-    setRows: (data: ProductExtended[]) => void
+    rows: Product[]
+    setRows: (data: Product[]) => void
     isRowSelected: (id: number) => boolean
-    selectedRows: ProductExtended[]
-    setSelectedRows: (value: ProductExtended[]) => void
+    selectedRows: Product[]
+    setSelectedRows: (value: Product[]) => void
 
     getProducts: (tags: string[]) => void
-    addNewProduct: (product: ProductExtended) => void
+    addNewProduct: (product: Product) => void
     updateRow: (rowData: UpdateProduct) => void
 
     setNotSortedToTable: () => void
@@ -40,7 +40,7 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     },
     isRowSelected: (id) => {
         let inf = get().selectedRows.filter((n) => {
-            if (n.product.id == id) return n
+            if (n.id == id) return n
         })
         if (inf.length > 0) return true
         else return false
@@ -73,12 +73,12 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     updateRow: (rowData) => {
         set(state => {
             let row = state.rows.filter((n) => {
-                if (n.product.id == rowData.id) return n
+                if (n.id == rowData.id) return n
             })[0]
-            row.product.name = rowData.name
-            row.product.manufacturerBarcode = rowData.manufacturerBarcode
-            row.product.b2BVisibility = rowData.b2BVisibility
-            row.product.retailVisibility = rowData.retailVisibility
+            row.name = rowData.name
+            row.manufacturerBarcode = rowData.manufacturerBarcode
+            row.b2BVisibility = rowData.b2BVisibility
+            row.retailVisibility = rowData.retailVisibility
         })
     },
 
@@ -86,7 +86,11 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
         set({isLoading: true})
         CatalogAPI.getUnsorted(1).then((r) => {
             console.log(r.data)
-            set({rows: r.data})
+            set({
+                rows: r.data.map((r) => {
+                    return (r.product)
+                })
+            })
             set({isLoading: false})
         }).catch((r) => {
             console.log(r)

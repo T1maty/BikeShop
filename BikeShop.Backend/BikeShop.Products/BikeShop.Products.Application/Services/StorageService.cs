@@ -27,7 +27,7 @@ namespace BikeShop.Products.Application.Services
         {
             var prodsAsDict = products.ToDictionary(p => p.ProductId, n => n);
             var storageItems = _context.StorageProducts.Where(n=>n.StorageId == storageId).Where(n => prodsAsDict.Keys.Contains(n.ProductId)).ToDictionary(n=>n.ProductId, n=>n);
-            var productsEntitiesDict = await _context.Products.Where(n => prodsAsDict.Keys.Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n);
+            var productsEntitiesDict = await _context.Products.Where(n => prodsAsDict.Select(m=>m.Key).Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n);
             var newItems = new Dictionary<int, StorageProduct>();
             var newMoves = new Dictionary<int, ProductStorageMove>();
             foreach (var product in products)
@@ -140,7 +140,7 @@ namespace BikeShop.Products.Application.Services
             string connectionString = "Server=zf452963.mysql.tools;Database=zf452963_db;Uid=zf452963_db;Pwd=Q9kUMTVr;";
             MySqlConnection dbConnection = new MySqlConnection(connectionString);
 
-            MySqlCommand command = new MySqlCommand("SELECT TovarId, Quantity FROM Storage", dbConnection);
+            MySqlCommand command = new MySqlCommand("SELECT TovarId, Quantity FROM Storage WHERE Quantity > 0", dbConnection);
 
             dbConnection.Open();
             
@@ -153,27 +153,57 @@ namespace BikeShop.Products.Application.Services
 
             string ids = "";
 
+            var prodQuantOldDict = new Dictionary<int, decimal>();
             foreach (DataRow row in dt.Rows) 
             {
                 ids = ids + $"Id = {row[0]} OR ";
+                var id = int.Parse(row[0].ToString());
+                var quant = int.Parse(row[1].ToString());
+                if (prodQuantOldDict.ContainsKey(id))
+                {
+                    prodQuantOldDict[id] += quant;
+                }
+                else
+                {
+                    prodQuantOldDict.Add(id, quant);
+                }
             }
 
             ids = ids.Remove(ids.Length - 4);
 
-            
 
-            MySqlCommand command1 = new MySqlCommand($"SELECT catalog_key, name, price_in, price_out, bar_code FROM tovars WHERE {ids}", dbConnection);
+            MySqlCommand command1 = new MySqlCommand($"SELECT catalog_key, name, price_in, price_out, bar_code, id FROM tovars WHERE {ids}", dbConnection);
             MySqlDataAdapter adapter1 = new MySqlDataAdapter(command1);
             DataTable dt1 = new DataTable();
             adapter1.Fill(dt1);
 
             dbConnection.Close();
             var np = new List<Product>();
+            var np1 = new List<ProductCard>();
+
+            var prodQuantUnits = await _context.QuantityUnits.ToDictionaryAsync(n=>n.Id, n=>n.Name);
+
+            var buf = new Dictionary<Product, decimal>();
             foreach (DataRow row in dt1.Rows)
             {
-                np.Add(new Product { Barcode = row[4].ToString(), CatalogKey = row[0].ToString(), CheckStatus = "JustCreatedByScript", DealerPrice = 0, IncomePrice = decimal.Parse(row[2].ToString()), RetailPrice = decimal.Parse(row[3].ToString()), Name = row[1].ToString(), QuantityUnitId = 1, BrandId = 1}) ;
+                var net = new Product { Barcode = row[4].ToString(), CatalogKey = row[0].ToString(), CheckStatus = "JustCreatedByScript", DealerPrice = 0, IncomePrice = decimal.Parse(row[2].ToString()), RetailPrice = decimal.Parse(row[3].ToString()), Name = row[1].ToString(), QuantityUnitId = 1, BrandId = 1, QuantityUnitName = prodQuantUnits[1] };
+                np.Add(net) ;
+                buf.Add(net, prodQuantOldDict[int.Parse(row[5].ToString())]);
             }
+
             await _context.Products.AddRangeAsync(np);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            foreach (var item in np)
+            {
+                await _context.ProductsCards.AddAsync(new ProductCard { ProductId = item.Id, Description = "", DescriptionShort = "" });
+                //np1.Add(new ProductCard { ProductId = item.Id, Description = "", DescriptionShort = ""});
+            }
+
+            //await _context.ProductsCards.AddRangeAsync(np1);
+
+            await AddProductsToStorage(buf.Select(n=> new ProductQuantitySmplDTO { ProductId = n.Key.Id, Quantity = n.Value}).ToList(), 1, "SupplyInvoice", 0);
+            
             await _context.SaveChangesAsync(new CancellationToken());
 
             return ids;
@@ -193,7 +223,7 @@ namespace BikeShop.Products.Application.Services
                     prodQuantAvailableDict[prod.Key] -= prod.Value;
             }
 
-            return prodQuantDict.Select(n => new ProductStorageQuantity { ProductId = n.Key, Available = prodQuantAvailableDict[n.Key], Reserved = prodQuantReservedDict[n.Key] }).ToList();
+            return prodQuantDict.Select(n => new ProductStorageQuantity { ProductId = n.Key, Available = prodQuantAvailableDict[n.Key], Reserved = prodQuantReservedDict.ContainsKey(n.Key)?prodQuantReservedDict[n.Key]:0 }).ToList();
         }
 
         public async Task UpdateReservationProducts(List<ProductQuantitySmplDTO> OldReservationProducts, List<ProductQuantitySmplDTO> NewReservationProducts, int storageId)

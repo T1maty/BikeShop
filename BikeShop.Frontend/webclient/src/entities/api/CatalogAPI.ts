@@ -18,9 +18,9 @@ export const CatalogAPI = {
             $api.get<Product[]>(`/product/search?querry=${inputValue}`)
         )
     },
-    getProductByTag(value: any): Promise<AxiosResponse<ProductExtended[]>> {
+    getProductByTag(value: any): Promise<AxiosResponse<Product[]>> {
         return (
-            $api.get<ProductExtended[]>('/product/getbytags/' + value + '?storageId=1')
+            $api.get<Product[]>('/product/getbytags/' + value + '?storageId=1')
         )
     },
     createProduct(data: CreateProduct): Promise<AxiosResponse<Product[]>> {
