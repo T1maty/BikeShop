@@ -2,14 +2,16 @@ import React, {useEffect} from 'react'
 import s from "../ProductsCount/ProductsWrapper.module.scss"
 import {Button, UniTable} from "../../../shared/ui"
 import {useInventarization} from "./InventarizationPageStore"
-import {ProductCatalogTable} from "../../../widgets"
 import {slaveColumns} from "./models/SlaveTableColumns"
-import {InventarizationProduct, InventarizationAPI, LocalStorage} from "../../../entities"
+import {InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../entities"
+import {MasterTableColumns} from "./models/MasterTableColumns";
 
 export const InventarizationPage = () => {
 
     const currentInventarization = useInventarization(s => s.currentInventarization)
     const setProducts = useInventarization(s => s.setProducts)
+    const toInvStorage = useInventarization(s => s.toInvStorage)
+    const updateToIv = useInventarization(s => s.updateToIv)
 
     const setInventarizationHandler = (row: any) => {
 
@@ -41,7 +43,8 @@ export const InventarizationPage = () => {
     }
 
     const saveInventarizationActHandler = () => {
-        let data = {...currentInventarization,
+        let data = {
+            ...currentInventarization,
             inventarization: {
                 ...currentInventarization.inventarization,
                 user: LocalStorage.userId()
@@ -52,7 +55,7 @@ export const InventarizationPage = () => {
     }
 
     useEffect(() => {
-
+        updateToIv()
     }, [])
 
     return (
@@ -64,7 +67,7 @@ export const InventarizationPage = () => {
 
                 <div className={s.leftSide_info}>Дополнительная информация</div>
                 <Button buttonDivWrapper={s.button_chooseItem}
-                        // onClick={() => {setVis(true)}}
+                    // onClick={() => {setVis(true)}}
                 >
                     Выбрать товар
                 </Button>
@@ -82,7 +85,8 @@ export const InventarizationPage = () => {
                 </div>
                 <div className={s.leftSide_footerButtons}>
                     <Button buttonDivWrapper={s.button_cancel}
-                            onClick={() => {}}
+                            onClick={() => {
+                            }}
                     >
                         Отмена
                     </Button>
@@ -95,7 +99,10 @@ export const InventarizationPage = () => {
             </div>
 
             <div className={s.arrivalOfProducts_rightSide}>
-                <ProductCatalogTable onRowDoubleClick={(row) => {setInventarizationHandler(row)}}/>
+                <UniTable rows={toInvStorage}
+                          columns={MasterTableColumns}
+                          setRows={setProducts}
+                />
                 <br/>
                 <UniTable rows={currentInventarization.products}
                           columns={slaveColumns}

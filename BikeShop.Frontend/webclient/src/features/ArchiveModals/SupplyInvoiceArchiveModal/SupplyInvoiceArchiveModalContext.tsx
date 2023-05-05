@@ -3,6 +3,8 @@ import {ContextMenu} from "../../../widgets";
 import {LocalStorage, SupplyInvoiceAPI} from "../../../entities";
 import useSupplyInvoiceArchiveModal from "./SupplyInvoiceArchiveModalStore";
 import {useSnackbar} from "notistack";
+import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore";
+import {SupplyInvoice} from "../../../entities/entities/Acts/SupplyInvoice/SupplyInvoice";
 
 interface p {
     open: { o: boolean, x: number, y: number },
@@ -14,6 +16,7 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
     const selectedSupplyInvoice = useSupplyInvoiceArchiveModal(s => s.selectedSupplyInvoice)
     const setArchive = useSupplyInvoiceArchiveModal(s => s.setArchive)
     const archive = useSupplyInvoiceArchiveModal(s => s.archive)
+    const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -30,6 +33,17 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
                             }
                             else return n
                         }))
+                        setCurrentSupplyInvoice(
+                            {
+                                supplyInvoiceProducts: [], supplyInvoice: {
+                                    shopId: 1,
+                                    user: LocalStorage.userId()!,
+                                    description: '',
+                                    additionalPrice: 0,
+                                    deliveryPrice: 0
+                                } as unknown as SupplyInvoice
+                            }
+                        )
                         enqueueSnackbar('Накладная применена!', {variant: 'success', autoHideDuration: 3000})
                     }).catch(() => {
                         enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})

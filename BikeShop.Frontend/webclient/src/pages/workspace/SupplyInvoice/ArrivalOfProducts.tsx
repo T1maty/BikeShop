@@ -1,15 +1,17 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from '../ProductsCount/ProductsWrapper.module.scss'
-import {Button, CustomInput, UniTable} from '../../../shared/ui'
+import {Button, CustomInput, EditableSpan, UniTable} from '../../../shared/ui'
 import {columns} from './SupplyInvoiceTableConfig'
 import {ChooseProductModal} from '../../../features'
 import useSupplyInvoice from './models/SupplyInvoiceStore'
 import Enumerable from 'linq'
 import {SupplyInvoiceDTO} from '../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
-import {ProductQuantity, SupplyInvoiceAPI} from '../../../entities'
+import {ProductQuantity, SupplyInvoiceAPI, useCurrency} from '../../../entities'
 import {SupplyInvoiceProduct} from '../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
+import {useSnackbar} from "notistack";
 
 export const ArrivalOfProducts = () => {
+    const {enqueueSnackbar} = useSnackbar()
 
     const [vis, setVis] = useState(false)
 
@@ -18,6 +20,10 @@ export const ArrivalOfProducts = () => {
     const isCreating = useSupplyInvoice(s => s.isCreating)
     const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
     const setProducts = useSupplyInvoice(s => s.setProducts)
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const fstb = useCurrency(s => s.fromSelectedToBase)
+    const r = useCurrency(s => s.roundUp)
 
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
@@ -57,31 +63,28 @@ export const ArrivalOfProducts = () => {
                     Выбрать товар
                 </Button>
                 <div className={s.leftSide_delivery}>
-                    <CustomInput
-                        placeholder={"Доставка"}
-                        value={currentSupplyInvoice.supplyInvoice.deliveryPrice}
-                        onChange={(value) => {
-                            setCurrentSupplyInvoice({
-                                ...currentSupplyInvoice,
-                                supplyInvoice: {
-                                    ...currentSupplyInvoice.supplyInvoice,
-                                    deliveryPrice: parseFloat(value.target.value)
-                                }
-                            })
-                        }}
-                    />
-                    <CustomInput placeholder={"Расходы"}
-                                 value={currentSupplyInvoice.supplyInvoice.additionalPrice}
-                                 onChange={(value) => {
-                                     setCurrentSupplyInvoice({
-                                         ...currentSupplyInvoice,
-                                         supplyInvoice: {
-                                             ...currentSupplyInvoice.supplyInvoice,
-                                             additionalPrice: parseFloat(value.target.value)
-                                         }
-                                     })
-                                 }}
-                    />
+                    <EditableSpan title={r(currentSupplyInvoice.supplyInvoice.deliveryPrice * fbts.c)}
+                                  onChangeInput={(value) => {
+                                      setCurrentSupplyInvoice({
+                                          ...currentSupplyInvoice,
+                                          supplyInvoice: {
+                                              ...currentSupplyInvoice.supplyInvoice,
+                                              deliveryPrice: parseFloat(value) * fstb.c
+                                          }
+                                      })
+                                  }}/>
+                    {fbts.s}
+                    <EditableSpan title={r(currentSupplyInvoice.supplyInvoice.additionalPrice * fbts.c)}
+                                  onChangeInput={(value) => {
+                                      setCurrentSupplyInvoice({
+                                          ...currentSupplyInvoice,
+                                          supplyInvoice: {
+                                              ...currentSupplyInvoice.supplyInvoice,
+                                              additionalPrice: parseFloat(value) * fstb.c
+                                          }
+                                      })
+                                  }}/>
+                    {fbts.s}
                 </div>
                 <div className={s.leftSide_metrika}>
                     <div className={s.metrika_title}>Метрика:</div>
@@ -107,6 +110,10 @@ export const ArrivalOfProducts = () => {
 
                                 if (isCreating) {
                                     SupplyInvoiceAPI.create(data).then((r: any) => {
+                                        enqueueSnackbar('Накладная создана!', {
+                                            variant: 'success',
+                                            autoHideDuration: 3000
+                                        })
                                         setIsCreating(false)
                                         setCurrentSupplyInvoice(r.data)
                                         console.log(r)
@@ -115,9 +122,15 @@ export const ArrivalOfProducts = () => {
                                     })
                                 } else {
                                     SupplyInvoiceAPI.update(data).then((r: any) => {
+                                        enqueueSnackbar('Накладная сохранена!', {
+                                            variant: 'success',
+                                            autoHideDuration: 3000
+                                        })
                                         setCurrentSupplyInvoice(r.data)
                                         console.log(r)
                                     }).catch((r: any) => {
+                                        enqueueSnackbar('Ошибка сервера!', {variant: 'error', autoHideDuration: 3000})
+
                                         console.log(r)
                                     })
                                 }

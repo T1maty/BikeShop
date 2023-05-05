@@ -19,4 +19,9 @@ export const ShopAPI = {
             $api.get<ProductFullData[]>('/public/getproducts', data)
         )
     },
+    getStorageId(shopId: number): Promise<AxiosResponse<number>> {
+        return (
+            $api.get<number>(`/shop/getstorageid?ShopId=${shopId}`)
+        )
+    },
 }

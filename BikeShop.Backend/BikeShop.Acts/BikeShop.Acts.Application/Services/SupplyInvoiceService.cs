@@ -65,6 +65,7 @@ namespace BikeShop.Acts.Application.Services
         public async Task Execute(int invoiceId, Guid userId)
         {
             var invoice = await _context.SupplyInvoices.FindAsync(invoiceId);
+            if (invoice == null || invoice.SypplyActStatus == "Executed") throw new Exception();
             invoice.UpdatedAt = DateTime.Now;
             invoice.UserUpdatedId = userId;
             invoice.SypplyActStatus = "Executed";

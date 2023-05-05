@@ -59,4 +59,9 @@ export const CatalogAPI = {
             $api.get<ProductStorageQuantity[]>(`/storage/getidsbystorage?storageId=${storageId}`)
         )
     },
+    getProductsByIds(data: number[]): Promise<AxiosResponse<Product[]>> {
+        return (
+            $api.post<Product[]>(`/product/getbyids`, data)
+        )
+    },
 }

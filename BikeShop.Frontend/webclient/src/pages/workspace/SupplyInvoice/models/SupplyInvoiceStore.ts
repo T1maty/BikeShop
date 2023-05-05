@@ -3,6 +3,7 @@ import {devtools} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {SupplyInvoiceDTO} from "../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
 import {SupplyInvoiceProduct} from "../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct";
+import {LocalStorage} from "../../../../entities";
 
 interface SupplyInvoiceStore {
     currentSupplyInvoice: SupplyInvoiceDTO
@@ -22,8 +23,10 @@ const useSupplyInvoice = create<SupplyInvoiceStore>()(/*persist(*/devtools(immer
     currentSupplyInvoice: {
         supplyInvoiceProducts: [], supplyInvoice: {
             shopId: 1,
-            user: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+            user: LocalStorage.userId(),
             description: '',
+            additionalPrice: 0,
+            deliveryPrice: 0
         }
     } as unknown as SupplyInvoiceDTO,
     setCurrentSupplyInvoice: (value) => {
@@ -33,7 +36,7 @@ const useSupplyInvoice = create<SupplyInvoiceStore>()(/*persist(*/devtools(immer
     },
     setProducts: (value) => {
         set(state => {
-            state.currentSupplyInvoice.supplyInvoiceProducts = value
+            state.currentSupplyInvoice.supplyInvoiceProducts = value.filter(n => n.quantity != 0)
         })
     },
 

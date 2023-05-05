@@ -13,7 +13,7 @@ interface CurrencyProps {
     loadAllCurrencies: () => void
     selectedCurrency: Currency | null
     setSelectedCurrency: (id: number) => void
-    roundUp: (v: number) => {}
+    roundUp: (v: number) => string
     find: (id: number) => Currency | undefined
 }
 
