@@ -35,7 +35,7 @@ namespace BikeShop.Products.Application.Services
             return await _context.Products.Where(n => Ids.Contains(n.Id)).ToListAsync();
         }
 
-        public async Task<List<ProductQuantityDTO>> GetProductsByTags(string tagsIds, int storageId)
+        public async Task<List<Product>> GetProductsByTags(string tagsIds, int Take)
         {
             var ids = ProductService.GetTagListFromString(tagsIds);
 
@@ -45,20 +45,7 @@ namespace BikeShop.Products.Application.Services
             var products = await _context.Products.Where(product => productsIds.Contains(product.Id))
             .ToListAsync();
 
-            var quantityUnits = await _context.QuantityUnits.ToDictionaryAsync(n=>n.Id, n=>n);
-            var storage = await _context.StorageProducts.Where(n => n.StorageId == storageId).Where(n => products.Select(j => j.Id).Contains(n.ProductId)).ToDictionaryAsync(n=>n.ProductId, n=>n.Quantity);
-
-            var res = new List<ProductQuantityDTO>();
-
-            foreach (var prod in products)
-            {
-                res.Add(new ProductQuantityDTO { 
-                    Product = prod ,
-                    QuantityUnit = prod.QuantityUnitId==0?null:quantityUnits[prod.QuantityUnitId], 
-                    Quantity = storage.ContainsKey(prod.Id)?storage[prod.Id]:0 });
-            }
-
-            return res;
+            return products;
         }
 
         private static List<int> GetTagListFromString(string tagsArrayStr)

@@ -134,9 +134,9 @@ namespace BikeShop.Products.WebApi.Controllers
         [HttpGet("getbytags/{tagsIds}")]
         [ProducesResponseType(typeof(ProductsListModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<List<ProductQuantityDTO>>> GetProductsByTags(string tagsIds, int storageId)
+        public async Task<List<Product>> GetProductsByTags(string tagsIds, int Take)
         {
-            return Ok(await _productService.GetProductsByTags(tagsIds, storageId));
+            return await _productService.GetProductsByTags(tagsIds, Take);
         }
 
         [HttpPost("getbyids")]

@@ -9,6 +9,7 @@ export interface Product {
     barcode: string
     manufacturerBarcode: string
     quantityUnitId: number
+    quantityUnitName: string
     incomePrice: number
     dealerPrice: number
     retailPrice: number
