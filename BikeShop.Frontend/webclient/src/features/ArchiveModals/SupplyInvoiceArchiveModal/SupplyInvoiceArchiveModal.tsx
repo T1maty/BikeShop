@@ -26,6 +26,9 @@ export const SupplyInvoiceArchiveModal = () => {
     const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
     const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
 
+    const setSelectedSupplyInvoice = useSupplyInvoiceArchiveModal(s => s.setSelectedSupplyInvoice)
+    const selectedSupplyInvoice = useSupplyInvoiceArchiveModal(s => s.selectedSupplyInvoice)
+
     const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
     useEffect(() => {
@@ -73,6 +76,7 @@ export const SupplyInvoiceArchiveModal = () => {
                                          }}
                                          onContextMenu={(e) => {
                                              setNavContext({o: true, x: e.clientX, y: e.clientY})
+                                             setSelectedSupplyInvoice(el)
                                          }}
                                     >
                                         <div className={

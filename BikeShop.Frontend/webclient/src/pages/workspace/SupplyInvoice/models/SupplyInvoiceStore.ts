@@ -6,6 +6,8 @@ import {SupplyInvoiceProduct} from "../../../../entities/entities/Acts/SupplyInv
 
 interface SupplyInvoiceStore {
     currentSupplyInvoice: SupplyInvoiceDTO
+
+
     setCurrentSupplyInvoice: (value: SupplyInvoiceDTO) => void
     setProducts: (value: SupplyInvoiceProduct[]) => void
 

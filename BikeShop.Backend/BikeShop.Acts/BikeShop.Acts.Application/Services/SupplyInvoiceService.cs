@@ -74,7 +74,7 @@ namespace BikeShop.Acts.Application.Services
 
             foreach (var prod in products)
             {
-                data.Add(new ProductQuantitySmplDTO { ProductId = prod.Id, Quantity = prod.Quantity });
+                data.Add(new ProductQuantitySmplDTO { ProductId = prod.ProductId, Quantity = prod.Quantity });
             }
 
             await _productClient.AddProductsToStorage(data, await _shopClient.GetStorageId(invoice.ShopId), "SupplyInvoice", invoiceId );

@@ -13,9 +13,22 @@ interface SupplyInvoiceArchiveModalStore {
 
     archive: SupplyInvoiceDTO[]
     getArchive: () => void
+    setArchive: (value: SupplyInvoiceDTO[]) => void
+
+    selectedSupplyInvoice: SupplyInvoiceDTO | null
+    setSelectedSupplyInvoice: (value: SupplyInvoiceDTO) => void
 }
 
 const useSupplyInvoiceArchiveModal = create<SupplyInvoiceArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    selectedSupplyInvoice: null,
+    setSelectedSupplyInvoice: (value) => {
+        set(state => {
+            state.selectedSupplyInvoice = value
+        })
+    },
+    setArchive: (value) => {
+        set({archive: value})
+    },
     openSupplyInvoiceArchiveModal: false,
     setOpenSupplyInvoiceArchiveModal: (value) => set({
         openSupplyInvoiceArchiveModal: value
