@@ -47,7 +47,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
                 ReasonField = "brandId"
             };
 
-
+        var QuantityUnits = await _context.QuantityUnits.ToDictionaryAsync(n=>n.Id, n=>n.Name);
         // Если все ок - добавляю продукт
         var newProduct = new Domain.Entities.Product
         {
@@ -61,7 +61,9 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             RetailPrice = request.RetailPrice,
             RetailVisibility = request.RetailVisibility,
             DealerPrice = request.DealerPrice,
-            B2BVisibility = request.B2BVisibility
+            B2BVisibility = request.B2BVisibility,
+            QuantityUnitName = QuantityUnits[1]
+            
         };
         _context.Products.Add(newProduct);
         await _context.SaveChangesAsync(cancellationToken);

@@ -89,10 +89,6 @@ export const ProductCatalog = () => {
                             styles={selectColorStyles}
                         />
                     </div>
-                    <Button onClick={() => {
-                    }}>
-                        Все товары
-                    </Button>
                     <Button onClick={setNotSortedToTable}>
                         Неотсортированные
                     </Button>
