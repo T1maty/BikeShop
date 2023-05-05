@@ -6,6 +6,7 @@ using BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice.Update;
 using BikeShop.Acts.Domain.Entities;
 using BikeShop.Acts.Domain.Refit;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.Entities;
 using BikeShop.Service.Application.RefitClients;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,8 @@ namespace BikeShop.Acts.Application.Services
             invoce.UserCreatedId = dto.SupplyInvoice.User;
             invoce.UserUpdatedId = dto.SupplyInvoice.User;
             invoce.Description = dto.SupplyInvoice.Description;
+            invoce.AdditionalPrice = dto.SupplyInvoice.AdditionalPrice;
+            invoce.DeliveryPrice = dto.SupplyInvoice.DeliveryPrice;
             invoce.Total = 0;
 
             await _context.SupplyInvoices.AddAsync(invoce);
@@ -51,7 +54,7 @@ namespace BikeShop.Acts.Application.Services
             }
 
 
-            invoce.Total = product.Select(n=>n.Total).Sum();
+            invoce.Total = product.Select(n=>n.Total).Sum() + invoce.AdditionalPrice + invoce.DeliveryPrice;
             await _context.SupplyInvoiceProducts.AddRangeAsync(product);
             await _context.SaveChangesAsync(new CancellationToken());
 
@@ -100,6 +103,8 @@ namespace BikeShop.Acts.Application.Services
 
             invoice.UpdatedAt = DateTime.Now;
             invoice.UserUpdatedId = dto.SupplyInvoice.User;
+            invoice.AdditionalPrice = dto.SupplyInvoice.AdditionalPrice;
+            invoice.DeliveryPrice = dto.SupplyInvoice.DeliveryPrice;
             invoice.Description = dto.SupplyInvoice.Description;
 
             var remove = products.Select(n=>n.Value).ToList();
@@ -150,6 +155,9 @@ namespace BikeShop.Acts.Application.Services
             }
 
             _context.SupplyInvoiceProducts.RemoveRange(remove);
+
+            invoice.Total = result.Select(n => n.Total).Sum() + invoice.AdditionalPrice + invoice.DeliveryPrice;
+
             await _context.SupplyInvoiceProducts.AddRangeAsync(create);
             await _context.SaveChangesAsync(new CancellationToken());
 

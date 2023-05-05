@@ -38,7 +38,7 @@ export const ArrivalOfProducts = () => {
                 </div>
 
 
-                <div className={s.leftSide_info}>Дополнительная информация</div>
+                <div className={s.leftSide_info}><CustomInput placeholder={"Дополнительная информация"}/></div>
                 <Button buttonDivWrapper={s.button_chooseItem}
                         onClick={() => {
                             setVis(true)

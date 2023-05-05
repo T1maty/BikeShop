@@ -29,11 +29,14 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
 
     let data = rows.map((item) => {
         let sd = storageData.find(n => n.productId == item.id)
+        var color = ""
+        if (sd != undefined && sd.available > 0) color = "#599B59"
+        if (sd != undefined && sd.available < 0) color = "#650000"
         return {
             ...item,
             quantity: sd != undefined ? sd.available : 0,
             reserved: sd != undefined ? sd.reserved : 0,
-            color: 'green'
+            color: color
         }
     }).sort((a, b) => {
         if (a.quantity > 0) return 1

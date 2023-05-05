@@ -10,6 +10,7 @@ interface CheckAuthRouteProps {
 export const CheckAuthRouteProvider: React.FC<CheckAuthRouteProps> = ({children}) => {
     const navigate = useNavigate();
     const user = useAuth(s => s.user)
+    const updateUserData = useAuth(s => s.updateUserData)
 
 
     useEffect(() => {
@@ -17,6 +18,9 @@ export const CheckAuthRouteProvider: React.FC<CheckAuthRouteProps> = ({children}
             navigate(BikeShopPaths.COMMON.LOGIN, {replace: true})
         }
     }, [user])
+    useEffect(() => {
+        updateUserData();
+    }, [])
 
     return (
         <div>

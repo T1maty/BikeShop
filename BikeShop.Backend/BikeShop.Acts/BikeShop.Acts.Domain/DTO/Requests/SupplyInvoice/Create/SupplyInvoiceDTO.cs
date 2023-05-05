@@ -10,6 +10,8 @@ namespace BikeShop.Acts.Domain.DTO.Requests.SupplyInvoice.Create
     {
         public int ShopId { get; set; }
         public Guid User { get; set; }
+        public decimal DeliveryPrice { get; set; }
+        public decimal AdditionalPrice { get; set; }
         public string Description { get; set; } = string.Empty;
     }
 }

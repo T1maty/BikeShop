@@ -6,8 +6,14 @@ import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClie
 import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
 import {
-    BillWithProducts, FinancialInteractionAPI, LocalStorage, PaymentData,
-    Product, useAuth, useCurrency, User
+    BillWithProducts,
+    FinancialInteractionAPI,
+    LocalStorage,
+    PaymentData,
+    Product,
+    useAuth,
+    useCurrency,
+    User
 } from '../../../entities'
 import {columns} from "./CashboxTableConfig"
 import {useSnackbar} from "notistack"
@@ -63,7 +69,7 @@ export const Cashbox = () => {
                 description: '',
                 quantity: 1,
                 currencyId: currency?.id!,
-                quantityUnitName: "123",
+                quantityUnitName: n.quantityUnitName,
                 currencySymbol: currency?.symbol!,
                 price: bts.c * n.retailPrice,
                 discount: 0,
@@ -126,27 +132,31 @@ export const Cashbox = () => {
 
                 <PrintModal open={openPrint}
                             setOpen={setOpenPrint}>
-                            <CheckForShop children={res!}/>
+                    <CheckForShop children={res!}/>
                 </PrintModal>
 
                 <div className={s.cashboxMainBlock_leftSideWrapper}>
                     <div className={s.leftSide_tables}>
-                        <Button onClick={() => {}}
+                        <Button onClick={() => {
+                        }}
                                 disabled={!isActiveTable}
                         >
                             Касса 1
                         </Button>
-                        <Button onClick={() => {}}
+                        <Button onClick={() => {
+                        }}
                                 disabled={isActiveTable}
                         >
                             Касса 2
                         </Button>
-                        <Button onClick={() => {}}
+                        <Button onClick={() => {
+                        }}
                                 disabled={isActiveTable}
                         >
                             Касса 3
                         </Button>
-                        <Button onClick={() => {}}
+                        <Button onClick={() => {
+                        }}
                                 disabled={isActiveTable}
                         >
                             Касса 4
@@ -154,7 +164,9 @@ export const Cashbox = () => {
                     </div>
 
                     <div className={s.leftSide_client}>
-                        <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                        <ChooseClientModal extraCallback={(user: User) => {
+                            chooseClientHandler(user)
+                        }}/>
 
                         <ClientCard user={user}/>
                         <div className={s.leftSide_client_buttons}>
@@ -164,7 +176,9 @@ export const Cashbox = () => {
                                 Выбрать клиента
                             </Button>
                             <Button buttonDivWrapper={s.client_buttons_cancel}
-                                    onClick={() => {setUser({} as User)}}
+                                    onClick={() => {
+                                        setUser({} as User)
+                                    }}
                             >
                                 X
                             </Button>
@@ -190,12 +204,14 @@ export const Cashbox = () => {
                             <ChooseDiscountModal/>
 
                             <Button buttonDivWrapper={s.buttons_choose}
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                    }}
                             >
                                 Выбрать скидку для клиента
                             </Button>
                             <Button buttonDivWrapper={s.buttons_cancel}
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                    }}
                             >
                                 X
                             </Button>
@@ -213,7 +229,9 @@ export const Cashbox = () => {
                         />
 
                         <Button buttonDivWrapper={s.header_chooseBtn}
-                                onClick={() => {setOpen(true)}}
+                                onClick={() => {
+                                    setOpen(true)
+                                }}
                         >
                             Выбрать товары
                         </Button>
@@ -230,7 +248,9 @@ export const Cashbox = () => {
                         <div className={s.rightSideBottom_buttonsBlock}>
                             <div className={s.buttonsBlock_one}>
                                 <div className={s.one_cancelBtn}>
-                                    <Button onClick={() => {setData([])}}>
+                                    <Button onClick={() => {
+                                        setData([])
+                                    }}>
                                         X
                                     </Button>
                                 </div>
@@ -242,7 +262,7 @@ export const Cashbox = () => {
                                 </div>
                             </div>
                             <div className={s.buttonsBlock_two}>
-                                {r(sum * bts.c) + bts.s}
+                                {sum + bts.s}
                             </div>
 
                             <div className={s.rightSideBottom_payBlock}>
@@ -252,7 +272,9 @@ export const Cashbox = () => {
                                           summ={sum}
                                           result={paymentResultHandler}
                                 />
-                                <Button onClick={() => {setOpenPay(true)}}>
+                                <Button onClick={() => {
+                                    setOpenPay(true)
+                                }}>
                                     К оплате
                                 </Button>
                             </div>

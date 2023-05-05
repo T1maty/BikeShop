@@ -8,6 +8,7 @@ import {LoginResponse} from "../responses/LoginResponse"
 import {AuthAPI} from "../api/AuthAPI"
 import {RegistrationData} from "../models/Auth/RegistrationData"
 import {immer} from "zustand/middleware/immer"
+import {LocalStorage} from "./LocalStorage";
 
 interface AuthStore {
     isLoading: boolean
@@ -22,9 +23,11 @@ interface AuthStore {
     logout: () => Promise<AxiosResponse>
     register: (data: RegistrationData, onSuccess?: (response: AxiosResponse) => void, onFailure?: (response: AxiosResponse) => void) => void
     loginToShop: (shopId: number) => void
+
+    updateUserData: () => void
 }
 
-export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
+export const useAuth = create<AuthStore>()(persist(devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
     isAuth: false,
@@ -92,10 +95,30 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set) => ({
     loginToShop: (shopId) => {
         AuthAPI.Login.loginToShop(shopId).then((r: any) => {
             let shop = r.data.filter((n: any) => n.id === shopId)[0]
-            set(state => {state.shop = shop})
+            set(state => {
+                state.shop = shop
+            })
             console.log(shop)
         })
     },
+
+    updateUserData: () => {
+        let user = get().user
+        let oldShopId = LocalStorage.shopId()
+        if (user != undefined)
+            AuthAPI.User.getUserById(user.id).then((r) => {
+                localStorage.setItem('shopId', r.data.shopId.toString())
+                set(state => {
+                    state.user = r.data
+                })
+
+                if (r.data.shopId.toString() != oldShopId && r.data.shopId != 0) {
+                    set(state => {
+                        state.loginToShop(r.data.shopId)
+                    })
+                }
+            })
+    }
 }))), {
     name: "authStore",
     version: 1

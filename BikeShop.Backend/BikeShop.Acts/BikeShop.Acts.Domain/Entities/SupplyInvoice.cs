@@ -14,6 +14,9 @@ namespace BikeShop.Acts.Domain.Entities
         public Guid UserUpdatedId { get; set;}
         public string SypplyActStatus { get; set; }
         public string Description { get; set; } = string.Empty;
+
+        public decimal DeliveryPrice { get; set; } 
+        public decimal AdditionalPrice { get; set; } 
         public decimal Total { get; set; } = 0;
     }
 }
