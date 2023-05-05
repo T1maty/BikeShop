@@ -102,6 +102,48 @@ export const InventarizationPage = () => {
                 <UniTable rows={toInvStorage}
                           columns={MasterTableColumns}
                           setRows={setProducts}
+                          rowOnDoubleClick={(r: any) => {
+                              let exist = false
+                              let data = currentInventarization.products.map(n => {
+                                  if (n.productId === r.id) {
+                                      exist = true
+                                      return {
+                                          ...n,
+                                          quantity: n.quantity + 1,
+                                          incomeTotal: n.incomePrice * n.quantity + 1,
+                                          retailTotal: n.retailPrice * n.quantity + 1,
+                                          dealerTotal: n.dealerPrice * n.quantity + 1
+                                      }
+                                  } else return n
+                              })
+                              if (exist) {
+                                  setProducts(data)
+                              } else {
+                                  setProducts([...data, {
+                                      id: 0,
+                                      createdAt: Date.now().toLocaleString(),
+                                      updatedAt: Date.now().toLocaleString(),
+                                      enabled: true,
+                                      inventariazationId: currentInventarization.inventarization.id,
+                                      productId: r.id,
+                                      name: r.name,
+                                      description: '',
+                                      catalogKey: r.catalogKey,
+                                      barcode: r.barcode,
+                                      manufBarcode: r.manufacturerBarcode != null ? r.manufacturerBarcode : '',
+                                      quantityUnitName: r.quantityUnitName,
+                                      incomePrice: r.incomePrice,
+                                      dealerPrice: r.dealerPrice,
+                                      retailPrice: r.retailPrice,
+                                      quantity: 1,
+                                      incomeTotal: r.incomePrice,
+                                      dealerTotal: r.dealerPrice,
+                                      retailTotal: r.retailPrice,
+                                      userCreated: LocalStorage.userId()!,
+                                      userUpdated: LocalStorage.userId()!
+                                  }])
+                              }
+                          }}
                 />
                 <br/>
                 <UniTable rows={currentInventarization.products}

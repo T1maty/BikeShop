@@ -21,4 +21,10 @@ export const slaveColumns: UniTableColumn[] = [
         isEditable: true,
         isNumber: true
     },
+    {
+        id: 'catalogKey',
+        label: 'Количество',
+        minWidth: 70,
+        align: 'right',
+    },
 ]
