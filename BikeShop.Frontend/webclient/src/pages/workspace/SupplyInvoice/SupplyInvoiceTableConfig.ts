@@ -2,7 +2,7 @@ import {UniTableColumn} from "../../../entities";
 
 export const columns: UniTableColumn[] = [
     {
-        id: 'id',
+        id: 'productId',
         label: 'Артикул',
         minWidth: 70,
         align: 'right',
@@ -32,6 +32,8 @@ export const columns: UniTableColumn[] = [
         label: 'Приходная цена',
         minWidth: 70,
         align: 'left',
+        isCurrency: true,
+        isEditable: true
     },
     {
         id: 'catalogKey',

@@ -76,7 +76,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
                         <div>
                             {
                                 tags.map((n) => {
-                                    return n.id + ' '
+                                    return n.id + " " + n.name + " | "
                                 })
                             }
                         </div>

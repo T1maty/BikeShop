@@ -43,6 +43,7 @@ namespace BikeShop.Acts.Application.Services
             invoce.DeliveryPrice = dto.SupplyInvoice.DeliveryPrice;
             invoce.Total = 0;
 
+
             await _context.SupplyInvoices.AddAsync(invoce);
             await _context.SaveChangesAsync(new CancellationToken());
 

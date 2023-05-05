@@ -63,6 +63,7 @@ export const SupplyInvoiceArchiveModal = () => {
                                 return (
                                     <div className={s.supplyInvoiceArchiveModal_item} key={el.supplyInvoice.id}
                                          onDoubleClick={() => {
+                                             console.log(el)
                                              if (el.supplyInvoice.sypplyActStatus === 'Created') {
                                                  setIsCreating(false)
                                                  setCurrentSupplyInvoice(el);

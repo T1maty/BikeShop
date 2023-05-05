@@ -38,7 +38,17 @@ export const ArrivalOfProducts = () => {
                 </div>
 
 
-                <div className={s.leftSide_info}><CustomInput placeholder={"Дополнительная информация"}/></div>
+                <div className={s.leftSide_info}>
+                    <CustomInput
+                        placeholder={"Дополнительная информация"}
+                        value={currentSupplyInvoice.supplyInvoice.description}
+                        onChange={(value) => {
+                            setCurrentSupplyInvoice({
+                                ...currentSupplyInvoice,
+                                supplyInvoice: {...currentSupplyInvoice.supplyInvoice, description: value.target.value}
+                            })
+                        }}
+                    /></div>
                 <Button buttonDivWrapper={s.button_chooseItem}
                         onClick={() => {
                             setVis(true)
@@ -47,8 +57,31 @@ export const ArrivalOfProducts = () => {
                     Выбрать товар
                 </Button>
                 <div className={s.leftSide_delivery}>
-                    <CustomInput placeholder={"Доставка"}/>
-                    <CustomInput placeholder={"Расходы"}/>
+                    <CustomInput
+                        placeholder={"Доставка"}
+                        value={currentSupplyInvoice.supplyInvoice.deliveryPrice}
+                        onChange={(value) => {
+                            setCurrentSupplyInvoice({
+                                ...currentSupplyInvoice,
+                                supplyInvoice: {
+                                    ...currentSupplyInvoice.supplyInvoice,
+                                    deliveryPrice: parseFloat(value.target.value)
+                                }
+                            })
+                        }}
+                    />
+                    <CustomInput placeholder={"Расходы"}
+                                 value={currentSupplyInvoice.supplyInvoice.additionalPrice}
+                                 onChange={(value) => {
+                                     setCurrentSupplyInvoice({
+                                         ...currentSupplyInvoice,
+                                         supplyInvoice: {
+                                             ...currentSupplyInvoice.supplyInvoice,
+                                             additionalPrice: parseFloat(value.target.value)
+                                         }
+                                     })
+                                 }}
+                    />
                 </div>
                 <div className={s.leftSide_metrika}>
                     <div className={s.metrika_title}>Метрика:</div>

@@ -37,9 +37,13 @@ export const ChooseProductModal = (props: props) => {
     return (
         <CustomModal
             open={props.open ? props.open : open}
-            onClose={() => {props.setOpen ? props.setOpen(false) : setOpen(false)}}
+            onClose={() => {
+                props.setOpen ? props.setOpen(false) : setOpen(false)
+            }}
         >
-            <div className={s.chooseProductModal_mainBox}>
+            <div className={s.chooseProductModal_mainBox} onContextMenu={e => {
+                e.preventDefault()
+            }}>
                 <div className={s.chooseProductModal_wrapper}>
 
                     <div className={s.chooseProductModal_tagTreeView}>
@@ -49,9 +53,9 @@ export const ChooseProductModal = (props: props) => {
                     <div className={s.chooseProductModal_catalogTable}>
                         <div className={s.table_availableProducts}>
                             <ProductCatalogTable onRowDoubleClick={(row) => {
-                                                    props.addData ? props.addData(row) : false
-                                                    props.setData ? setDataHandler(row) : false
-                                                }}
+                                props.addData ? props.addData(row) : false
+                                props.setData ? setDataHandler(row) : false
+                            }}
                             />
                         </div>
                         <div className={s.table_chosenProducts}>
