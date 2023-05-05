@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
 import useCreateProductModal
     from '../../../../features/ProductCatalogFeatures/CreateProductModal/CreateProductModalStore'
@@ -8,6 +8,9 @@ import useUpdateProductModal
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
 import useUpdateProductPriceModal
     from "../../../../features/ProductCatalogFeatures/UpdateProductPricesModal/UpdateProductPricesModalStore"
+import {PrintModal} from "../../../../features";
+import ProductSticker from "../../Invoices/ProductSticker/ProductSticker";
+import {useCurrency} from "../../../../entities";
 
 export const ProductCatalogTableContextMenu = () => {
 
@@ -22,6 +25,10 @@ export const ProductCatalogTableContextMenu = () => {
 
     const treeViewData = useTagTreeView(s => s.treeViewTags)
     const tagSelected = useTagTreeView(s => s.selectedTag)
+
+    const cur = useCurrency(s => s.selectedCurrency)
+
+    const [o1, so1] = useState(false)
 
     const settings = [
         {
@@ -50,47 +57,26 @@ export const ProductCatalogTableContextMenu = () => {
             }
         },
         {
-            name: 'Статистика',
-            click: () => {
-                // code here
-            }
-        },
-        {
-            name: 'Отследить товар',
-            click: () => {
-                // code here
-            }
-        },
-        {
             name: 'Напечатать ценник',
             click: () => {
-                // code here
-            }
-        },
-        {
-            name: 'Открыть пачку',
-            click: () => {
-                // code here
-            }
-        },
-        {
-            name: 'Менеджер цен',
-            click: () => {
-                // code here
+                so1(true)
             }
         },
     ]
 
     return (
-        <ContextMenu
-            isOpen={contextMenuVisible}
-            onClose={() => {
-                setContextVisible(false, 0, 0)
-            }}
-            settings={settings}
-            top={contextXY.Y}
-            left={contextXY.X}
-        />
+        <>
+            <PrintModal open={o1} setOpen={so1} children={<ProductSticker product={selected[0]} cur={cur!}/>}/>
+            <ContextMenu
+                isOpen={contextMenuVisible}
+                onClose={() => {
+                    setContextVisible(false, 0, 0)
+                }}
+                settings={settings}
+                top={contextXY.Y}
+                left={contextXY.X}
+            />
+        </>
     )
 }
 

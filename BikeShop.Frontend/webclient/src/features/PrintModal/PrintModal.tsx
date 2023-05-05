@@ -1,8 +1,8 @@
-import React, {useRef, ReactElement} from 'react'
-import s from './PrintModal.module.scss'
+import React, {ReactElement, useRef} from 'react'
 import {Button, CustomModal} from '../../shared/ui'
 import {useReactToPrint} from 'react-to-print'
 import {useSnackbar} from 'notistack'
+import s from './PrintModal.module.scss'
 
 interface PrintModalProps {
     open: boolean
@@ -10,15 +10,12 @@ interface PrintModalProps {
     children: ReactElement
 }
 
-// пример
-// const [printOpen, setPrintOpen] = useState()
-// <PrintModal open={printOpen} setOpen={setPrintOpen} children={<CheckForServiceWork/>}/>
-
 export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children}) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
     const componentRef = useRef<HTMLDivElement>(null)
+
 
     const printDocumentHandler = useReactToPrint({
         content: () => componentRef.current,
@@ -28,10 +25,13 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
         },
     })
 
+
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
         >
             <div className={s.printModal_mainBox}>
                 <div className={s.printModal_buttons}>
@@ -45,6 +45,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
                     </div>
                 </div>
             </div>
+
         </CustomModal>
     )
 }
