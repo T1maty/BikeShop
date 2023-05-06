@@ -3,7 +3,7 @@ import {ContextMenu} from "../../../widgets";
 import {LocalStorage, SupplyInvoiceAPI} from "../../../entities";
 import useSupplyInvoiceArchiveModal from "./SupplyInvoiceArchiveModalStore";
 import {useSnackbar} from "notistack";
-import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore";
+import useSupplyInvoice from "../../../pages/workspace/ProductsCount/SupplyInvoice/models/SupplyInvoiceStore";
 import {SupplyInvoice} from "../../../entities/entities/Acts/SupplyInvoice/SupplyInvoice";
 
 interface p {

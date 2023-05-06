@@ -6,7 +6,7 @@ import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
 import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO"
 import Enumerable from "linq"
-import useSupplyInvoice from "../../../pages/workspace/SupplyInvoice/models/SupplyInvoiceStore"
+import useSupplyInvoice from "../../../pages/workspace/ProductsCount/SupplyInvoice/models/SupplyInvoiceStore"
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {formatDate} from "../../../shared/utils/formatDate"
 import {SupplyInvoiceArchiveModalContext} from "./SupplyInvoiceArchiveModalContext";

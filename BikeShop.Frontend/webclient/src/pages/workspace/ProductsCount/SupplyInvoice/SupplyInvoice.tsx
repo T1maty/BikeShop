@@ -1,16 +1,16 @@
 import React, {ChangeEvent, useState} from 'react'
-import s from '../ProductsCount/ProductsWrapper.module.scss'
-import {Button, CustomInput, EditableSpan, UniTable} from '../../../shared/ui'
+import s from '../ProductsCountStyles.module.scss'
+import {Button, CustomInput, EditableSpan, UniTable} from '../../../../shared/ui'
 import {columns} from './SupplyInvoiceTableConfig'
-import {ChooseProductModal} from '../../../features'
+import {ChooseProductModal} from '../../../../features'
 import useSupplyInvoice from './models/SupplyInvoiceStore'
 import Enumerable from 'linq'
-import {SupplyInvoiceDTO} from '../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
-import {ProductQuantity, SupplyInvoiceAPI, useCurrency} from '../../../entities'
-import {SupplyInvoiceProduct} from '../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
-import {useSnackbar} from "notistack";
+import {SupplyInvoiceDTO} from '../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
+import {ProductQuantity, SupplyInvoiceAPI, useCurrency} from '../../../../entities'
+import {SupplyInvoiceProduct} from '../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
+import {useSnackbar} from "notistack"
 
-export const ArrivalOfProducts = () => {
+export const SupplyInvoice = () => {
     const {enqueueSnackbar} = useSnackbar()
 
     const [vis, setVis] = useState(false)

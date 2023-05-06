@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './ProductsWrapper.module.scss'
+import s from '../ProductsCountStyles.module.scss'
 
 export const InventoryOfProducts = () => {
 

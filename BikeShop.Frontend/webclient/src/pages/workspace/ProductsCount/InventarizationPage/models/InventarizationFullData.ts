@@ -1,4 +1,4 @@
-import {Inventarization, InventarizationProduct} from "../../../../entities";
+import {Inventarization, InventarizationProduct} from "../../../../../entities";
 
 export interface InventarizationFullData {
     inventarization: Inventarization

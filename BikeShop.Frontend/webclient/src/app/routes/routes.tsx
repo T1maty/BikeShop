@@ -1,15 +1,13 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    ArrivalOfProducts, Cashbox, Catalog, CatalogProductItem, LoginPage, MainPage,
-    Order, ProductCatalog, Profile, RegistrationPage, Service, ShopMain,
-    ShopWrapper, StorageProductsTransfer, WorkCatalog, StuffProfile, AdminControl
+    Cashbox, Catalog, CatalogProductItem, LoginPage, MainPage, Order, ProductCatalog,
+    Profile, RegistrationPage, Service, ShopMain, ShopWrapper, WorkCatalog,
+    StorageProductsTransfer, StuffProfile, AdminControl, InventarizationPage, SupplyInvoice
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
-import {
-    BarcodeScannerListenerProvider
-} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
-import {InventarizationPage} from "../../pages/workspace/Inventarization/InventarizationPage"
+import {BarcodeScannerListenerProvider}
+    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 import {CheckAuthEmployee} from "../providers/RouteProviders/CheckAuthEmployee"
 
 // @ts-ignore
@@ -124,7 +122,7 @@ export const routes = createBrowserRouter([
         path: BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS,
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
-                <ArrivalOfProducts/>
+                <SupplyInvoice/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },

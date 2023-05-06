@@ -5,7 +5,7 @@ import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../app/routes/paths"
 import useInventoryOfProductsArchiveModal from "./InventoryOfProductsArchiveModalStore"
-import {useInventarization} from "../../../pages/workspace/Inventarization/InventarizationPageStore";
+import {useInventarization} from "../../../pages/workspace/ProductsCount/InventarizationPage/InventarizationPageStore";
 
 export const InventoryOfProductsArchiveModal = () => {
 

@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
-import s from "../ProductsCount/ProductsWrapper.module.scss"
-import {Button, UniTable} from "../../../shared/ui"
+import s from "../ProductsCountStyles.module.scss"
+import {Button, UniTable} from "../../../../shared/ui"
 import {useInventarization} from "./InventarizationPageStore"
 import {slaveColumns} from "./models/SlaveTableColumns"
-import {InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../entities"
-import {MasterTableColumns} from "./models/MasterTableColumns";
+import {InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../../entities"
+import {MasterTableColumns} from "./models/MasterTableColumns"
 
 export const InventarizationPage = () => {
 

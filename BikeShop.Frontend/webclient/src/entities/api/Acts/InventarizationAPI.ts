@@ -1,5 +1,5 @@
 import {$api} from "../../../shared"
-import {InventarizationFullData} from "../../../pages/workspace/Inventarization/models/InventarizationFullData";
+import {InventarizationFullData} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData";
 
 export const InventarizationAPI = {
     getByShop(shopId: number, take: number): any {

@@ -1,5 +1,5 @@
 // import React, {ReactNode, ChangeEvent} from 'react'
-// import s from './ProductsWrapper.module.scss'
+// import s from './ProductsCountStyles.module.scss'
 // import {Button} from '../../../shared/ui'
 //
 // type ProductsWrapperProps = {

@@ -3,7 +3,7 @@ import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {InventarizationAPI} from "../../../entities"
-import {InventarizationFullData} from "../../../pages/workspace/Inventarization/models/InventarizationFullData"
+import {InventarizationFullData} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData"
 
 interface InventoryOfProductsArchiveModalStore {
     openInventoryOfProductsArchiveModal: boolean

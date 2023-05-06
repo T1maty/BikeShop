@@ -1,8 +1,8 @@
-import {UniTableColumn} from "../../../../entities";
+import {UniTableColumn} from "../../../../../entities";
 
-export const slaveColumns: UniTableColumn[] = [
+export const MasterTableColumns: UniTableColumn[] = [
     {
-        id: 'productId',
+        id: 'id',
         label: 'Артикул',
         minWidth: 70,
         align: 'right',
@@ -17,9 +17,7 @@ export const slaveColumns: UniTableColumn[] = [
         id: 'quantity',
         label: 'Количество',
         minWidth: 70,
-        align: 'right',
-        isEditable: true,
-        isNumber: true
+        align: 'center',
     },
     {
         id: 'catalogKey',

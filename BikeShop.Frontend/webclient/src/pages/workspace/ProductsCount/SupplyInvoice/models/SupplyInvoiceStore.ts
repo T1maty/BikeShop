@@ -1,9 +1,9 @@
 import {create} from "zustand";
 import {devtools} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {SupplyInvoiceDTO} from "../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
-import {SupplyInvoiceProduct} from "../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct";
-import {LocalStorage} from "../../../../entities";
+import {SupplyInvoiceDTO} from "../../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
+import {SupplyInvoiceProduct} from "../../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct";
+import {LocalStorage} from "../../../../../entities";
 
 interface SupplyInvoiceStore {
     currentSupplyInvoice: SupplyInvoiceDTO

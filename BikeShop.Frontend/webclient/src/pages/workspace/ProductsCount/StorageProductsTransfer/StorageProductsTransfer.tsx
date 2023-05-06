@@ -1,16 +1,16 @@
 import React, {ChangeEvent, useEffect, useState} from 'react'
-import s from '../ProductsCount/ProductsWrapper.module.scss'
-import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
-import {ChooseProductModal} from '../../../features'
+import s from '../ProductsCountStyles.module.scss'
+import {AsyncSelectSearchProduct, Button, UniTable} from '../../../../shared/ui'
+import {ChooseProductModal} from '../../../../features'
 import Select from 'react-select'
 import Enumerable from 'linq'
-import {SupplyInvoiceDTO} from '../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
-import {ProductQuantity, SupplyInvoiceAPI} from '../../../entities'
-import {SupplyInvoiceProduct} from '../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
+import {SupplyInvoiceDTO} from '../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
+import {ProductQuantity, SupplyInvoiceAPI} from '../../../../entities'
+import {SupplyInvoiceProduct} from '../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
 import useSupplyInvoice from "../SupplyInvoice/models/SupplyInvoiceStore"
 import {columns} from "../SupplyInvoice/SupplyInvoiceTableConfig"
-import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
-import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
+import {selectColorStyles} from '../../../../app/styles/variables/selectColorStyles'
+import useCreateStorageModal from '../../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
 
 export const StorageProductsTransfer = () => {
 

@@ -2,7 +2,7 @@ import {create} from 'zustand'
 import {devtools} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
 import {InventarizationFullData} from "./models/InventarizationFullData";
-import {CatalogAPI, Inventarization, InventarizationProduct, LocalStorage, ShopAPI} from "../../../entities";
+import {CatalogAPI, Inventarization, InventarizationProduct, LocalStorage, ShopAPI} from "../../../../entities";
 import {Product} from "entities";
 import Enumerable from "linq";
 

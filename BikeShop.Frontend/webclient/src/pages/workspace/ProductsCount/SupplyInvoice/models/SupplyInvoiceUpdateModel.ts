@@ -1,10 +1,11 @@
-import {ProductExtended} from "../../../../entities";
+import {ProductExtended} from "../../../../../entities";
 
-export interface SupplyInvoiceCreateModel {
+export interface SupplyInvoiceUpdateModel {
     supplyInvoice: {
-        shopId: number
+        id: number
         user: string
         description: string
     }
     supplyInvoiceProducts: ProductExtended[]
+
 }
