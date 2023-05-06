@@ -3,11 +3,11 @@ import s from './CheckArchiveModal.module.scss'
 import useCheckArchiveModal from "./CheckArchiveModalStore"
 import {CustomModal, LoaderScreen} from "../../../shared/ui"
 import {useSnackbar} from "notistack"
-import {BillWithProducts, useCurrency} from "../../../entities";
-import Enumerable from "linq";
-import {formatDate} from "../../../shared/utils/formatDate";
-import {CheckForShop} from "../../../widgets";
-import {PrintModal} from "../../PrintModal/PrintModal";
+import {BillWithProducts, useCurrency} from "../../../entities"
+import Enumerable from "linq"
+import {formatDate} from "../../../shared/utils/formatDate"
+import {CheckForShop} from "../../../widgets"
+import {PrintModal} from "../../PrintModal/PrintModal"
 
 export const CheckArchiveModal = () => {
 

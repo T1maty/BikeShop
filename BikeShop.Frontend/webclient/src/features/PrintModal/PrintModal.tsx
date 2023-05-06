@@ -1,8 +1,8 @@
 import React, {ReactElement, useRef} from 'react'
+import s from './PrintModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
 import {useReactToPrint} from 'react-to-print'
 import {useSnackbar} from 'notistack'
-import s from './PrintModal.module.scss'
 
 interface PrintModalProps {
     open: boolean
@@ -16,7 +16,6 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
 
     const componentRef = useRef<HTMLDivElement>(null)
 
-
     const printDocumentHandler = useReactToPrint({
         content: () => componentRef.current,
         pageStyle: 'print',
@@ -24,7 +23,6 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
             enqueueSnackbar('Печать выполнена', {variant: 'success', autoHideDuration: 3000})
         },
     })
-
 
     return (
         <CustomModal
@@ -45,7 +43,6 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
                     </div>
                 </div>
             </div>
-
         </CustomModal>
     )
 }

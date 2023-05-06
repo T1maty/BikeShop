@@ -8,9 +8,9 @@ import useUpdateProductModal
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
 import useUpdateProductPriceModal
     from "../../../../features/ProductCatalogFeatures/UpdateProductPricesModal/UpdateProductPricesModalStore"
-import {PrintModal} from "../../../../features";
-import ProductSticker from "../../Invoices/ProductSticker/ProductSticker";
-import {useCurrency} from "../../../../entities";
+import {PrintModal} from "../../../../features"
+import {useCurrency} from "../../../../entities"
+import {ProductSticker} from "../../Invoices/ProductSticker/ProductSticker"
 
 export const ProductCatalogTableContextMenu = () => {
 
@@ -66,12 +66,13 @@ export const ProductCatalogTableContextMenu = () => {
 
     return (
         <>
-            <PrintModal open={o1} setOpen={so1} children={<ProductSticker product={selected[0]} cur={cur!}/>}/>
+            <PrintModal open={o1}
+                        setOpen={so1}
+                        children={<ProductSticker product={selected[0]} cur={cur!}/>}
+            />
             <ContextMenu
                 isOpen={contextMenuVisible}
-                onClose={() => {
-                    setContextVisible(false, 0, 0)
-                }}
+                onClose={() => {setContextVisible(false, 0, 0)}}
                 settings={settings}
                 top={contextXY.Y}
                 left={contextXY.X}
