@@ -11,7 +11,7 @@ export {SelectWork} from './workspace/SelectProductWork/SelectWork'
 // export {ProductsWrapper} from './workspace/ProductsCount/ProductsWrapper'
 export {SupplyInvoice} from './workspace/ProductsCount/SupplyInvoice/SupplyInvoice'
 export {InventarizationPage} from './workspace/ProductsCount/InventarizationPage/InventarizationPage'
-export {InventoryOfProducts} from './workspace/ProductsCount/InventoryOfProducts/InventoryOfProducts'
+// export {_InventoryOfProducts} from './workspace/ProductsCount/_InventoryOfProducts/_InventoryOfProducts'
 export {StorageProductsTransfer} from './workspace/ProductsCount/StorageProductsTransfer/StorageProductsTransfer'
 
 export {AdminControl} from './workspace/AdminControl/AdminControl'

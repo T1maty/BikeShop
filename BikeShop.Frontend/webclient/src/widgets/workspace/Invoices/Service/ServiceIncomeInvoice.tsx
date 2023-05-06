@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import s from '../../WorkActs/ActGetStuffService.module.scss'
-import {AuthAPI, ServiceWithData, useAuth, User} from "../../../../entities";
-import InvoiceHeader from "../InvoiceHeader";
-import {formatDate} from "../../../../shared/utils/formatDate";
+import {AuthAPI, ServiceWithData, useAuth, User} from "../../../../entities"
+import {formatDate} from "../../../../shared/utils/formatDate"
+import {InvoiceHeader} from "./InvoiceHeader"
 
 export const ServiceIncomeInvoice = (props: { children: ServiceWithData }) => {
 

@@ -1,15 +1,17 @@
-import React from 'react';
-import {Shop, User} from "../../../entities";
-import s from "../WorkActs/ActHeader.module.scss";
+import React from 'react'
+import {Shop, User} from "../../../../entities"
+import s from "../../WorkActs/ActHeader.module.scss"
 
-const InvoiceHeader = (props: { client: User | null, shop: Shop }) => {
+export const InvoiceHeader = (props: { client: User | null, shop: Shop }) => {
+
     return (
         <>
             <div className={s.workAct_header}>
                 <div className={s.header_customer}>
                     <div className={s.header_title}>Заказчик</div>
                     <div className={s.header_content}>
-                        {props.client === null ?
+                        {
+                            props.client === null ?
                             <div>Загрузка</div>
                             :
                             <>
@@ -19,7 +21,6 @@ const InvoiceHeader = (props: { client: User | null, shop: Shop }) => {
                                 <div>{props.client.phoneNumber}</div>
                             </>
                         }
-
                     </div>
                 </div>
                 <div className={s.header_master}>
@@ -33,7 +34,5 @@ const InvoiceHeader = (props: { client: User | null, shop: Shop }) => {
                 </div>
             </div>
         </>
-    );
-};
-
-export default InvoiceHeader;
+    )
+}

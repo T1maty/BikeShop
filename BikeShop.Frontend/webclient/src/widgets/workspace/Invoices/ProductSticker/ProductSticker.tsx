@@ -8,7 +8,7 @@ export const ProductSticker = (props: { product: Product, cur: Currency }) => {
     return (
         <div className={s.wrapper}>
             <div className={s.name}>
-                {props.product.name.length > 70 ? props.product.name.slice(0, 69) + '...' : props.product.name}
+                {props.product.name.length > 57 ? props.product.name.slice(0, 56) + '...' : props.product.name}
             </div>
             <Barcode value={props.product.barcode} format={"EAN13"} height={60}/>
             <div className={s.price}>

@@ -1,6 +1,6 @@
 .wrapper {
     background: white;
-    width: 300px;
+    width: 250px;
     height: 170px;
     display: flex;
     flex-direction: column;
@@ -11,8 +11,9 @@
     .name {
         color: black;
         text-align: center;
-        font-weight: bold;
-        font-size: large;
+        font-size: 14px;
+        padding: 0 5px;
+        max-height: 30px;
 
         //max-width: 290px;
         //height: 40px;
