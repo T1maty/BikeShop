@@ -3,7 +3,7 @@ import s from "../ProductsCountStyles.module.scss"
 import {Button, UniTable} from "../../../../shared/ui"
 import {useInventarization} from "./InventarizationPageStore"
 import {slaveColumns} from "./models/SlaveTableColumns"
-import {InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../../entities"
+import {InventarizationAPI, LocalStorage} from "../../../../entities"
 import {MasterTableColumns} from "./models/MasterTableColumns"
 
 export const InventarizationPage = () => {
@@ -13,33 +13,47 @@ export const InventarizationPage = () => {
     const toInvStorage = useInventarization(s => s.toInvStorage)
     const updateToIv = useInventarization(s => s.updateToIv)
 
-    const setInventarizationHandler = (row: any) => {
-
-        let prod: InventarizationProduct = {
-            id: 0,
-            createdAt: Date.now().toString(),
-            updatedAt: Date.now().toString(),
-            enabled: true,
-            inventariazationId: currentInventarization.inventarization.id,
-            productId: row.id,
-            name: row.name,
-            description: '',
-            catalogKey: row.catalogKey,
-            barcode: row.barcode,
-            manufBarcode: row.manufacturerBarcode,
-            quantityUnitName: row.quantityUnitName,
-            incomePrice: row.incomePrice,
-            dealerPrice: row.dealerPrice,
-            retailPrice: row.retailPrice,
-            quantity: 1,
-            incomeTotal: row.incomePrice,
-            dealerTotal: row.dealerPrice,
-            retailTotal: row.retailPrice,
-            userCreated: LocalStorage.userId()!,
-            userUpdated: LocalStorage.userId()!
+    const setInventarizationHandler = (r: any) => {
+        let exist = false
+        let data = currentInventarization.products.map(n => {
+            if (n.productId === r.id) {
+                exist = true
+                return {
+                    ...n,
+                    quantity: n.quantity + 1,
+                    incomeTotal: n.incomePrice * n.quantity + 1,
+                    retailTotal: n.retailPrice * n.quantity + 1,
+                    dealerTotal: n.dealerPrice * n.quantity + 1
+                }
+            } else return n
+        })
+        if (exist) {
+            setProducts(data)
+        } else {
+            setProducts([...data, {
+                id: 0,
+                createdAt: Date.now().toLocaleString(),
+                updatedAt: Date.now().toLocaleString(),
+                enabled: true,
+                inventariazationId: currentInventarization.inventarization.id,
+                productId: r.id,
+                name: r.name,
+                description: '',
+                catalogKey: r.catalogKey,
+                barcode: r.barcode,
+                manufBarcode: r.manufacturerBarcode != null ? r.manufacturerBarcode : '',
+                quantityUnitName: r.quantityUnitName,
+                incomePrice: r.incomePrice,
+                dealerPrice: r.dealerPrice,
+                retailPrice: r.retailPrice,
+                quantity: 1,
+                incomeTotal: r.incomePrice,
+                dealerTotal: r.dealerPrice,
+                retailTotal: r.retailPrice,
+                userCreated: LocalStorage.userId()!,
+                userUpdated: LocalStorage.userId()!
+            }])
         }
-
-        setProducts([...currentInventarization.products, prod])
     }
 
     const saveInventarizationActHandler = () => {
@@ -85,8 +99,7 @@ export const InventarizationPage = () => {
                 </div>
                 <div className={s.leftSide_footerButtons}>
                     <Button buttonDivWrapper={s.button_cancel}
-                            onClick={() => {
-                            }}
+                            onClick={() => {}}
                     >
                         Отмена
                     </Button>
@@ -98,60 +111,17 @@ export const InventarizationPage = () => {
                 </div>
             </div>
 
-            <div className={s.arrivalOfProducts_rightSide}>
+            <div className={s.inventoryOfProducts_rightSide}>
                 <UniTable rows={toInvStorage}
                           columns={MasterTableColumns}
                           setRows={setProducts}
-                          rowOnDoubleClick={(r: any) => {
-                              let exist = false
-                              let data = currentInventarization.products.map(n => {
-                                  if (n.productId === r.id) {
-                                      exist = true
-                                      return {
-                                          ...n,
-                                          quantity: n.quantity + 1,
-                                          incomeTotal: n.incomePrice * n.quantity + 1,
-                                          retailTotal: n.retailPrice * n.quantity + 1,
-                                          dealerTotal: n.dealerPrice * n.quantity + 1
-                                      }
-                                  } else return n
-                              })
-                              if (exist) {
-                                  setProducts(data)
-                              } else {
-                                  setProducts([...data, {
-                                      id: 0,
-                                      createdAt: Date.now().toLocaleString(),
-                                      updatedAt: Date.now().toLocaleString(),
-                                      enabled: true,
-                                      inventariazationId: currentInventarization.inventarization.id,
-                                      productId: r.id,
-                                      name: r.name,
-                                      description: '',
-                                      catalogKey: r.catalogKey,
-                                      barcode: r.barcode,
-                                      manufBarcode: r.manufacturerBarcode != null ? r.manufacturerBarcode : '',
-                                      quantityUnitName: r.quantityUnitName,
-                                      incomePrice: r.incomePrice,
-                                      dealerPrice: r.dealerPrice,
-                                      retailPrice: r.retailPrice,
-                                      quantity: 1,
-                                      incomeTotal: r.incomePrice,
-                                      dealerTotal: r.dealerPrice,
-                                      retailTotal: r.retailPrice,
-                                      userCreated: LocalStorage.userId()!,
-                                      userUpdated: LocalStorage.userId()!
-                                  }])
-                              }
-                          }}
+                          rowOnDoubleClick={(r: any) => {setInventarizationHandler(r)}}
                 />
-                <br/>
                 <UniTable rows={currentInventarization.products}
                           columns={slaveColumns}
                           setRows={setProducts}
                 />
             </div>
-
         </div>
     )
 }

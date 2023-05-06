@@ -58,8 +58,7 @@ export const SelectProduct = (props: SelectProductProps) => {
 
             <div className={s.selectProduct_mainBox_rightSide}>
                 <div className={s.rightSide_availableProducts}>
-                    <ProductCatalogTable onRowDoubleClick={addProductHandler}
-                    />
+                    <ProductCatalogTable onRowDoubleClick={addProductHandler}/>
                 </div>
                 <div className={s.rightSide_infoRow}>
                     <div className={s.infoRow_searchField}>
@@ -78,7 +77,10 @@ export const SelectProduct = (props: SelectProductProps) => {
                     </div>
                 </div>
                 <div className={s.rightSide_chosenProducts}>
-                    <UniTable rows={props.products} columns={columns} setRows={props.setProducts}/>
+                    <UniTable rows={props.products}
+                              columns={columns}
+                              setRows={props.setProducts}
+                    />
                 </div>
             </div>
         </div>

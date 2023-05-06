@@ -9,7 +9,6 @@
     gap: $defaultLargeMargin;
 
     .selectProduct_mainBox_leftSide {
-        //border: 1px solid white;
         @include flexColumn;
         width: 25%;
         min-height: 700px;
@@ -43,7 +42,7 @@
     }
 
     .selectProduct_mainBox_rightSide {
-        border: 1px solid white;
+        //border: 1px solid white;
         @include flexColumn;
         justify-content: space-between;
         width: 75%;
@@ -55,12 +54,11 @@
             display: flex;
             justify-content: center;
             background-color: $themeColorDark;
-            //border-radius: $largeBorderRadius;
             height: 300px;
             overflow: auto;
         }
         .rightSide_infoRow {
-            border: 1px solid white;
+            //border: 1px solid white;
             @include flexBetween;
             height: 70px;
 
@@ -81,7 +79,6 @@
             display: flex;
             justify-content: center;
             background-color: $themeColorDark;
-            //border-radius: $largeBorderRadius;
             height: 300px;
             overflow: auto;
         }

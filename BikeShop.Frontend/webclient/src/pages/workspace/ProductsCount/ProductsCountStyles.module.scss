@@ -84,9 +84,13 @@
         border-radius: $largeBorderRadius;
         padding: $defaultLargeMargin;
     }
+
     // стили для инвентаризации товаров
     .inventoryOfProducts_rightSide {
         width: 70%;
+        background-color: $themeColorDark;
+        border-radius: $largeBorderRadius;
+        padding: $defaultLargeMargin;
         @include flexColumn;
         gap: $defaultLargeMargin;
 
@@ -96,12 +100,6 @@
             background-color: $themeColorDark;
             border-radius: $largeBorderRadius;
             padding: $defaultLargeMargin;
-        }
-        .rightSide_top {
-
-        }
-        .rightSide_bottom {
-
         }
     }
 }
