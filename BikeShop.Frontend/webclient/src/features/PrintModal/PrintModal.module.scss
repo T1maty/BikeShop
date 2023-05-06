@@ -29,6 +29,8 @@
         background-color: $themeColorGray;
         padding: $defaultLargeMargin;
         border-radius: $smallBorderRadius;
+        display: flex;
+        justify-content: center;
 
         .scrollWrapper {
             overflow-y: auto;
