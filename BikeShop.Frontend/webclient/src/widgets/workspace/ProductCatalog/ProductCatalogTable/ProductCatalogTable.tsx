@@ -5,7 +5,7 @@ import useProductCatalogTableStore from './ProductCatalogTableStore'
 import {Product} from "../../../../entities"
 import {UniTable} from "../../../../shared/ui"
 import {columns} from "./ProductCatalogTableConfig"
-import {useProductCatalogStorage} from "../../../../pages/workspace/ProductCatalog/ProductCatalogStorage";
+import {useProductCatalogStorage} from "../../../../pages/workspace/ProductCatalog/ProductCatalogStorage"
 
 interface CatalogTableProps {
     onRowDoubleClick?: (product: any) => void
