@@ -5,6 +5,11 @@
     @include defaultModalStyle;
     width: 850px;
 
+    .newInventory_btn {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
     .header_title {
         @include flexOnlyBetween;
         gap: 20px;
@@ -29,57 +34,110 @@
         padding-right: 10px;
 
         .encashment_Block {
-            width: 60%;
+            width: 100%;
 
             .encashmentArchiveModal_title {
                 @include modalTitle;
             }
 
             .encashmentArchiveModal_list {
-                @include divLargeMarginBottom;
-                @include SupplyInvoiceArchiveModal;
-            }
-        }
+                //@include divLargeMarginBottom;
+                @include SupplyInvoiceArchiveModal(50%);
 
-        .shortFall_Block {
-            width: 40%;
+                @include flexBetween;
+                gap: 10px;
+                overflow: hidden;
+                flex-wrap: wrap;
 
-            .shortFall_title {
-                @include modalTitle;
-            }
+                .shortFall_Block {
+                    width: 48%;
 
-            .shortFall_list {
-                @include divLargeMarginBottom;
-
-                .shortFall_listItem {
-                    background-color: $themeColorGray;
-                    border: 1px solid $themeColorMilk;
-                    border-radius: $smallBorderRadius;
-                    padding: $defaultSmallMargin;
-                    height: 139px;
-
-                    .listItem_title {
-                        font-weight: bold;
-                        font-size: 20px;
-                        margin-bottom: $defaultSmallMargin;
+                    .shortFall_title {
+                        @include modalTitle;
                     }
 
-                    .listItem_content {
-                        @include flexBetween;
+                    .shortFall_list {
+                        @include divLargeMarginBottom;
 
-                        .content_info {
-                            line-height: 1.3;
-                        }
+                        .shortFall_listItem {
+                            background-color: $themeColorGray;
+                            border: 1px solid $themeColorMilk;
+                            border-radius: $smallBorderRadius;
+                            padding: $defaultSmallMargin;
+                            height: 139px;
 
-                        .content_date {
-                            @include divSmallMarginBottom;
-                            line-height: $minLineHeight;
-                            border-left: 2px solid $themeColorMilk;
-                            padding-left: 10px;
+                            .listItem_title {
+                                font-weight: bold;
+                                font-size: 20px;
+                                margin-bottom: $defaultSmallMargin;
+                            }
+
+                            .listItem_content {
+                                @include flexBetween;
+
+                                .content_info {
+                                    line-height: 1.3;
+                                }
+
+                                .content_date {
+                                    @include divSmallMarginBottom;
+                                    line-height: $minLineHeight;
+                                    border-left: 2px solid $themeColorMilk;
+                                    padding-left: 10px;
+                                }
+                            }
                         }
                     }
                 }
+                .no_shortFall {
+                    width: 48%;
+                    height: 139px;
+                    background-color: $themeColorGray;
+                    border: 1px solid $themeColorMilk;
+                    border-radius: $smallBorderRadius;
+                }
             }
         }
+
+        //.shortFall_Block {
+        //    width: 40%;
+        //
+        //    .shortFall_title {
+        //        @include modalTitle;
+        //    }
+        //
+        //    .shortFall_list {
+        //        @include divLargeMarginBottom;
+        //
+        //        .shortFall_listItem {
+        //            background-color: $themeColorGray;
+        //            border: 1px solid $themeColorMilk;
+        //            border-radius: $smallBorderRadius;
+        //            padding: $defaultSmallMargin;
+        //            height: 139px;
+        //
+        //            .listItem_title {
+        //                font-weight: bold;
+        //                font-size: 20px;
+        //                margin-bottom: $defaultSmallMargin;
+        //            }
+        //
+        //            .listItem_content {
+        //                @include flexBetween;
+        //
+        //                .content_info {
+        //                    line-height: 1.3;
+        //                }
+        //
+        //                .content_date {
+        //                    @include divSmallMarginBottom;
+        //                    line-height: $minLineHeight;
+        //                    border-left: 2px solid $themeColorMilk;
+        //                    padding-left: 10px;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
