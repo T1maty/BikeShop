@@ -22,9 +22,20 @@ interface InventoryOfProductsArchiveModalStore {
 
     lackArchive: InventoryLackFullData[]
     getLackArchive: () => void
+    setLackArchive: (v: InventoryLackFullData[]) => void
+
+    selected: InventarizationFullData | null
+    setSelected: (v: InventarizationFullData) => void
 }
 
 const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    setLackArchive: (v) => {
+        set({lackArchive: v})
+    },
+    selected: null,
+    setSelected: (v) => {
+        set({selected: v})
+    },
     lackArchive: [],
     getLackArchive: () => {
         InventarizationAPI.getLackByShop(LocalStorage.shopId()!).then(n => {

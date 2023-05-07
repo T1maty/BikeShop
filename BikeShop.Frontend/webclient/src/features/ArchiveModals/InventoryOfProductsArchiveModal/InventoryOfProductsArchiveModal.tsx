@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './InventoryOfProductsArchiveModal.module.scss'
 import {Button, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
@@ -7,6 +7,7 @@ import {BikeShopPaths} from "../../../app/routes/paths"
 import useInventoryOfProductsArchiveModal from "./InventoryOfProductsArchiveModalStore"
 import {useInventarization} from "../../../pages/workspace/ProductsCount/InventarizationPage/InventarizationPageStore";
 import {InventarizationAPI, LocalStorage} from "../../../entities";
+import {InventoryArchiveContext} from "./InventoryArchiveContext";
 
 export const InventoryOfProductsArchiveModal = () => {
 
@@ -22,8 +23,11 @@ export const InventoryOfProductsArchiveModal = () => {
     const archive = useInventoryOfProductsArchiveModal(s => s.archive)
     const lackArchive = useInventoryOfProductsArchiveModal(s => s.lackArchive)
     const setArchive = useInventoryOfProductsArchiveModal(s => s.setArchive)
+    const setSelected = useInventoryOfProductsArchiveModal(s => s.setSelected)
 
     const setInventariazation = useInventarization(s => s.setInventariazation)
+
+    const [context, setContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -47,7 +51,10 @@ export const InventoryOfProductsArchiveModal = () => {
                     setOpen(false)
                 }}
             >
-                <div className={s.encashmentArchiveModal_mainBlock}>
+                <InventoryArchiveContext open={context} setOpen={setContext}/>
+                <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => {
+                    e.preventDefault()
+                }}>
                     <Button onClick={() => {
                         InventarizationAPI.create(LocalStorage.shopId()!, LocalStorage.userId()!).then(n => {
                             enqueueSnackbar('Ивентаризация создана', {variant: 'success', autoHideDuration: 3000})
@@ -84,6 +91,13 @@ export const InventoryOfProductsArchiveModal = () => {
                                                          setInventariazation(el);
                                                          navigate(BikeShopPaths.WORKSPACE.INVENTARIZATION)
                                                          setOpen(false)
+                                                     }}
+                                                     onContextMenu={(e) => {
+                                                         setSelected(el)
+                                                         setContext({o: true, x: e.clientX, y: e.clientY})
+                                                     }}
+                                                     onClick={() => {
+                                                         setSelected(el)
                                                      }}
                                                 >
                                                     <div className={
