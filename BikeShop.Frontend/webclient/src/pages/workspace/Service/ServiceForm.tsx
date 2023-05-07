@@ -10,8 +10,8 @@ import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {useSnackbar} from "notistack"
 import Select from "react-select"
-import ServiceTableWork from "./ServiceTableWork";
-import ServiceTableProduct from "./ServiceTableProduct";
+import ServiceTableWork from "./ServiceTableWork"
+import ServiceTableProduct from "./ServiceTableProduct"
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 

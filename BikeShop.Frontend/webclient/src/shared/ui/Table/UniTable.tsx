@@ -87,7 +87,9 @@ const TableHeadItem = memo((props: { theadData: UniTableColumn[] }) => {
         <tr className={cls.head_items}>
             {
                 theadData.map((item: UniTableColumn, index) =>
-                    <td key={index} title={item.id} className={cls.head_item}>
+                    <td key={index} title={item.id} className={cls.head_item}
+                        style={{ width: `${item.width!}%` }}
+                    >
                         {item.label}
                     </td>
                 )
@@ -121,7 +123,7 @@ const TableRow = memo((props: TableRowProps) => {
             {
                 props.columns.map((item, index) => {
                     if (item.isCurrency) item.isNumber = true
-                    return <td key={index} style={{textAlign: `${item.align!}`}}>
+                    return <td key={index} style={{ textAlign: `${item.align!}`, width: `${item.width!}%` }}>
                         {
                             item.isCurrency ?
                                 item.isEditable ?
@@ -139,17 +141,16 @@ const TableRow = memo((props: TableRowProps) => {
                                                               props.setRow(newRow)
                                                           }
                                                       }}
-                                            // inputClassName={cls.inputClassName}
+                                                      // inputClassName={cls.inputClassName}
                                                       inputClassName={cls.currency_inputClassName1}
                                                       spanClassName={cls.currency_spanClassName1}
                                         />
                                         <div>{fbts.s}</div>
                                     </div>
                                     //Ячейка нередактируемая + валюта
-                                    :
-                                    <div>{r(props.row[item.id] * fbts.c) + fbts.s}</div>
-                                :
-                                item.isEditable ?
+                                    : <div>{r(props.row[item.id] * fbts.c) + fbts.s}</div>
+
+                                : item.isEditable ?
                                     //Ячейка редактируемая + не валюта
                                     <EditableSpan title={props.row[item.id]}
                                                   onChangeInput={(newInputValue) => {
@@ -163,12 +164,12 @@ const TableRow = memo((props: TableRowProps) => {
                                                           props.setRow(newRow)
                                                       }
                                                   }}
-                                        // inputClassName={cls.inputClassName}
+                                                  // inputClassName={cls.inputClassName}
                                                   inputClassName={cls.currency_inputClassName2}
                                                   spanClassName={cls.currency_spanClassName2}
                                     />
                                     //Ячейка не редактируемая + не валюта
-                                    : <div style={{alignContent: 'right'}}>{props.row[item.id]}</div>
+                                    : <div style={{alignContent: 'center'}}>{props.row[item.id]}</div>
                         }
                     </td>
                 })
