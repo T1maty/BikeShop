@@ -783,8 +783,7 @@
     transform: rotate(180deg);
 }
 
-@mixin SupplyInvoiceArchiveModal() {
-
+@mixin SupplyInvoiceArchiveModal($secondColWidth) {
     .supplyInvoiceArchiveModal_item {
         @include flexOnlyBetween;
         background-color: $themeColorGray;
@@ -792,6 +791,7 @@
         border-radius: $smallBorderRadius;
         padding: $defaultSmallMargin;
         @include hoverCursorPointer;
+        width: $secondColWidth;
 
         .status_WaitingPayment {
             @include supplyInvoiceStatus($bgColorProfileStatusWaitingPayment);

@@ -3,12 +3,10 @@ import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {InventarizationAPI, LocalStorage} from "../../../entities"
-import {
-    InventarizationFullData
-} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData"
-import {
-    InventoryLackFullData
-} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventoryLackFullData";
+import {InventarizationFullData}
+    from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData"
+import {InventoryLackFullData}
+    from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventoryLackFullData"
 
 interface InventoryOfProductsArchiveModalStore {
     openInventoryOfProductsArchiveModal: boolean

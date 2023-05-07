@@ -5,9 +5,10 @@ import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../app/routes/paths"
 import useInventoryOfProductsArchiveModal from "./InventoryOfProductsArchiveModalStore"
-import {useInventarization} from "../../../pages/workspace/ProductsCount/InventarizationPage/InventarizationPageStore";
-import {InventarizationAPI, LocalStorage} from "../../../entities";
-import {InventoryArchiveContext} from "./InventoryArchiveContext";
+import {useInventarization} from "../../../pages/workspace/ProductsCount/InventarizationPage/InventarizationPageStore"
+import {InventarizationAPI, LocalStorage} from "../../../entities"
+import {InventoryArchiveContext} from "./InventoryArchiveContext"
+import {formatDate} from '../../../shared/utils/formatDate'
 
 export const InventoryOfProductsArchiveModal = () => {
 
@@ -18,6 +19,7 @@ export const InventoryOfProductsArchiveModal = () => {
     const setOpen = useInventoryOfProductsArchiveModal(s => s.setOpenInventoryOfProductsArchiveModal)
     const isLoading = useInventoryOfProductsArchiveModal(s => s.isLoading)
     const errorStatus = useInventoryOfProductsArchiveModal(s => s.errorStatus)
+
     const getArchive = useInventoryOfProductsArchiveModal(s => s.getArchive)
     const getLackArchive = useInventoryOfProductsArchiveModal(s => s.getLackArchive)
     const archive = useInventoryOfProductsArchiveModal(s => s.archive)
@@ -38,6 +40,7 @@ export const InventoryOfProductsArchiveModal = () => {
     useEffect(() => {
         getArchive()
         getLackArchive()
+        console.log(archive)
     }, [])
 
     if (isLoading) {
@@ -47,20 +50,24 @@ export const InventoryOfProductsArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
+                onClose={() => {setOpen(false)}}
             >
                 <InventoryArchiveContext open={context} setOpen={setContext}/>
-                <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => {
-                    e.preventDefault()
-                }}>
-                    <Button onClick={() => {
-                        InventarizationAPI.create(LocalStorage.shopId()!, LocalStorage.userId()!).then(n => {
-                            enqueueSnackbar('Ивентаризация создана', {variant: 'success', autoHideDuration: 3000})
-                            setArchive([...archive, n.data])
-                        })
-                    }}>Новая инвентаризация</Button>
+                <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => {e.preventDefault()}}>
+                    <Button buttonDivWrapper={s.newInventory_btn}
+                            onClick={() => {
+                                InventarizationAPI.create(LocalStorage.shopId()!, LocalStorage.userId()!).then(n => {
+                                    enqueueSnackbar('Ивентаризация создана', {
+                                        variant: 'success',
+                                        autoHideDuration: 3000
+                                    })
+                                    setArchive([...archive, n.data])
+                                })
+                            }}
+                    >
+                        Новая инвентаризация
+                    </Button>
+
                     <div className={s.header_title}>
                         <div className={s.encashmentArchiveModal_title}>
                             Архив инвентаризации
@@ -73,20 +80,17 @@ export const InventoryOfProductsArchiveModal = () => {
                     <div className={s.scroll_wrapper}>
 
                         <div className={s.encashment_Block}>
-                            {/*<div className={s.encashmentArchiveModal_title}>*/}
-                            {/*    Архив инвентаризации*/}
-                            {/*</div>*/}
                             <div className={s.encashmentArchiveModal_list}>
                                 {
                                     archive.map((el) => {
                                         let lack = lackArchive.find(n => n.inventarizationLack.inventarizationId === el.inventarization.id)
+
                                         return (
                                             <>
                                                 <div className={s.supplyInvoiceArchiveModal_item}
                                                      key={el.inventarization.id}
+                                                     onClick={() => {setSelected(el)}}
                                                      onDoubleClick={() => {
-                                                         // setIsCreating(false)
-                                                         // setCurrentSupplyInvoice(el)
                                                          console.log(el)
                                                          setInventariazation(el);
                                                          navigate(BikeShopPaths.WORKSPACE.INVENTARIZATION)
@@ -96,14 +100,11 @@ export const InventoryOfProductsArchiveModal = () => {
                                                          setSelected(el)
                                                          setContext({o: true, x: e.clientX, y: e.clientY})
                                                      }}
-                                                     onClick={() => {
-                                                         setSelected(el)
-                                                     }}
                                                 >
                                                     <div className={
                                                         // s.item_status
-                                                        el.inventarization.status === 'Created' ? s.status_WaitingPayment :
-                                                            el.inventarization.status === 'Executed' ? s.status_Ready :
+                                                        el.inventarization.status === 'InWork' ? s.status_WaitingPayment :
+                                                            el.inventarization.status === 'Closed' ? s.status_Ready :
                                                                 el.inventarization.status === 'Canceled' ? s.status_Canceled : ''}
                                                     >
                                                         {el.inventarization.status}
@@ -124,47 +125,48 @@ export const InventoryOfProductsArchiveModal = () => {
                                                             <div className={s.item_contentBottom_date}>
                                                                 <div>
                                                                     <div>Создан:</div>
-                                                                    <div>{el.inventarization.createdAt}</div>
+                                                                    <div>{formatDate(el.inventarization.createdAt)}</div>
                                                                 </div>
                                                                 <div>
                                                                     <div>Изменён:</div>
-                                                                    <div>{el.inventarization.updatedAt}</div>
+                                                                    <div>{formatDate(el.inventarization.updatedAt)}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {lack != undefined ? <div className={s.shortFall_Block}>
-                                                        {/*<div className={s.shortFall_title}>*/}
-                                                        {/*    Недостача*/}
-                                                        {/*</div>*/}
-                                                        <div className={s.shortFall_list}>
-                                                            <div className={s.shortFall_listItem}>
-                                                                <div className={s.listItem_title}>
-                                                                    №121212
-                                                                </div>
-                                                                <div className={s.listItem_content}>
-                                                                    <div className={s.content_info}>
-                                                                        <div>Недостача: 12121</div>
-                                                                        <div>Позиций: 12</div>
-                                                                        <div>Единиц: 3</div>
-                                                                        <div>Инфа</div>
+
+                                                {
+                                                    lack !== undefined ?
+                                                        <div className={s.shortFall_Block}>
+                                                            <div className={s.shortFall_list}>
+                                                                <div className={s.shortFall_listItem}>
+                                                                    <div className={s.listItem_title}>
+                                                                        №121212
                                                                     </div>
-                                                                    <div className={s.content_date}>
-                                                                        <div>
-                                                                            <div>Создан:</div>
-                                                                            <div>12-04-2023</div>
+                                                                    <div className={s.listItem_content}>
+                                                                        <div className={s.content_info}>
+                                                                            <div>Недостача: 12121</div>
+                                                                            <div>Позиций: 12</div>
+                                                                            <div>Единиц: 3</div>
+                                                                            <div>Инфа</div>
                                                                         </div>
-                                                                        <div>
-                                                                            <div>Изменён:</div>
-                                                                            <div>15-04-2023</div>
+                                                                        <div className={s.content_date}>
+                                                                            <div>
+                                                                                <div>Создан:</div>
+                                                                                <div>12-04-2023</div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div>Изменён:</div>
+                                                                                <div>15-04-2023</div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    : <div></div>}
+                                                    : <div className={s.no_shortFall}>{''}</div>
+                                                }
                                             </>
                                         )
                                     })
