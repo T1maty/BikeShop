@@ -49,11 +49,18 @@ export const useInventarization = create<InventarizationStore>()(persist(devtool
                 console.log('Айдишники', t.data)
                 CatalogAPI.getProductsByIds(Enumerable.from(t.data).select(m => m.productId).toArray()).then(h => {
                     console.log('Товары на инвентуру', h.data)
+
                     let data = h.data.map(n => {
                         let ent = get().currentInventarization.products.find(s => s.productId === n.id)
-                        if (ent != undefined) return {...n, quantity: 1}
+                        let quant = t.data.find(h => h.productId === n.id)
+                        if (ent != undefined && quant != undefined) return {
+                            ...n,
+                            quantity: quant.available - ent.quantity
+                        }
+                        else if (quant != undefined) return {...n, quantity: quant.available}
                         else return {...n, quantity: 0}
-                    })
+                        // @ts-ignore
+                    }).filter(k => k.quantity != 0)
                     set({toInvStorage: data})
                 })
             })

@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../app/routes/paths"
 import useInventoryOfProductsArchiveModal from "./InventoryOfProductsArchiveModalStore"
 import {useInventarization} from "../../../pages/workspace/ProductsCount/InventarizationPage/InventarizationPageStore";
+import {InventarizationAPI, LocalStorage} from "../../../entities";
 
 export const InventoryOfProductsArchiveModal = () => {
 
@@ -18,6 +19,7 @@ export const InventoryOfProductsArchiveModal = () => {
     const errorStatus = useInventoryOfProductsArchiveModal(s => s.errorStatus)
     const getArchive = useInventoryOfProductsArchiveModal(s => s.getArchive)
     const archive = useInventoryOfProductsArchiveModal(s => s.archive)
+    const setArchive = useInventoryOfProductsArchiveModal(s => s.setArchive)
 
     const setInventariazation = useInventarization(s => s.setInventariazation)
 
@@ -44,6 +46,10 @@ export const InventoryOfProductsArchiveModal = () => {
             >
                 <div className={s.encashmentArchiveModal_mainBlock}>
                     <Button onClick={() => {
+                        InventarizationAPI.create(LocalStorage.shopId()!, LocalStorage.userId()!).then(n => {
+                            enqueueSnackbar('Ивентаризация создана', {variant: 'success', autoHideDuration: 3000})
+                            setArchive([...archive, n.data])
+                        })
                     }}>Новая инвентаризация</Button>
                     <div className={s.header_title}>
                         <div className={s.encashmentArchiveModal_title}>

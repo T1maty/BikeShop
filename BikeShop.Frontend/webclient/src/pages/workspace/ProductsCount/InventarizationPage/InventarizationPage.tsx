@@ -5,9 +5,10 @@ import {useInventarization} from "./InventarizationPageStore"
 import {slaveColumns} from "./models/SlaveTableColumns"
 import {InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../../entities"
 import {MasterTableColumns} from "./models/MasterTableColumns"
+import {useSnackbar} from "notistack";
 
 export const InventarizationPage = () => {
-
+    const {enqueueSnackbar} = useSnackbar()
     const currentInventarization = useInventarization(s => s.currentInventarization)
     const setProducts = useInventarization(s => s.setProducts)
     const toInvStorage = useInventarization(s => s.toInvStorage)
@@ -85,7 +86,10 @@ export const InventarizationPage = () => {
             }
         }
         console.log(data)
-        InventarizationAPI.update(data)
+        InventarizationAPI.update(data).then(() => {
+            enqueueSnackbar('Ивентаризация обновлена', {variant: 'success', autoHideDuration: 3000})
+
+        })
     }
 
     useEffect(() => {

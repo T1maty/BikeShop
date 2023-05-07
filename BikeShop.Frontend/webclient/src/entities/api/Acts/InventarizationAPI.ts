@@ -2,9 +2,10 @@ import {$api} from "../../../shared"
 import {
     InventarizationFullData
 } from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData";
+import {AxiosResponse} from "axios";
 
 export const InventarizationAPI = {
-    getByShop(shopId: number, take: number): any {
+    getByShop(shopId: number, take: number): Promise<AxiosResponse<InventarizationFullData>> {
         return (
             $api.get<InventarizationFullData>(`/inventarization/getbyshop?ShopId=${shopId}&Take=${take}`)
         )
@@ -14,7 +15,7 @@ export const InventarizationAPI = {
             $api.put<InventarizationFullData>(`/inventarization/update`, data)
         )
     },
-    create(shopId: number, user: string): any {
+    create(shopId: string, user: string): Promise<AxiosResponse<InventarizationFullData>> {
         return (
             $api.post<InventarizationFullData>(`/inventarization/create?ShopId=${shopId}&UserId=${user}`)
         )

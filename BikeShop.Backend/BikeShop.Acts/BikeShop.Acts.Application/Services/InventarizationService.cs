@@ -134,11 +134,11 @@ namespace BikeShop.Acts.Application.Services
             return invs.Select(n=>new InventarizationWithProducts { Inventarization = n,Products = products.Where(m=>m.InventariazationId == n.Id).ToList() }).ToList();
         }
 
-        public async Task<InventarizationLackWithProducts> GetLackByShop(int ShopId)
+        public async Task<List<InventarizationLackWithProducts>> GetLackByShop(int ShopId)
         {
-            var lack = await _context.InventarizationLacks.Where(n=>n.ShopId == ShopId).FirstOrDefaultAsync();
-            var prods = await _context.InventarizationLackProducts.Where(n=>n.InventariazationLackId == lack.Id).ToListAsync();
-            return new InventarizationLackWithProducts { InventarizationLack = lack, Products = prods };
+            var lack = await _context.InventarizationLacks.Where(n=>n.ShopId == ShopId).ToListAsync();
+            var prods = await _context.InventarizationLackProducts.Where(n=>lack.Select(m=>m.Id).Contains(n.InventariazationLackId)).ToListAsync();
+            return lack.Select(n=>new InventarizationLackWithProducts { InventarizationLack = n, Products = prods.Where(n=>n.InventariazationLackId == n.Id).ToList() }).ToList();
         }
 
         public async Task<InventarizationWithProducts> Update(UpdateInventarizationDTO dto)
