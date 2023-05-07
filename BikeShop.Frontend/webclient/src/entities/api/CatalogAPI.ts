@@ -64,4 +64,9 @@ export const CatalogAPI = {
             $api.post<Product[]>(`/product/getbyids`, data)
         )
     },
+    getProductByBarcode(barcode: string): Promise<AxiosResponse<Product>> {
+        return (
+            $api.get<Product>(`/product/getbybarcode/${barcode}`,)
+        )
+    },
 }

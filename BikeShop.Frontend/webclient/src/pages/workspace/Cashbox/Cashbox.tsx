@@ -7,6 +7,7 @@ import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
 import {
     BillWithProducts,
+    CatalogAPI,
     FinancialInteractionAPI,
     LocalStorage,
     PaymentData,
@@ -23,6 +24,7 @@ import {BillProductDTO} from "./models/BillProductDTO"
 import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
+import {useBarcode} from "../../../app/providers/BarcodeScannerListenerProvider/useBarcode";
 
 export const Cashbox = () => {
 
@@ -49,6 +51,8 @@ export const Cashbox = () => {
     const bts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
     const currency = useCurrency(s => s.selectedCurrency)
+
+    const lastBarcode = useBarcode(s => s.lastBarcode)
 
     const onSearchHandler = (n: Product) => {
         let exProd = Enumerable.from(bill.products)
@@ -87,6 +91,16 @@ export const Cashbox = () => {
         setUser(user)
         setOpenClientModal(false)
     }
+
+    useEffect(() => {
+        if (lastBarcode == '') return
+        CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
+            enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
+            onSearchHandler(n.data)
+        }).catch(() => {
+            enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
+        })
+    }, [lastBarcode])
 
     const paymentResultHandler = (value: PaymentData) => {
 
