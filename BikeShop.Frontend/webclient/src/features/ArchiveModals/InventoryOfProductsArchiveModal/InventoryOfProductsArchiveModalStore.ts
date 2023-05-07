@@ -2,10 +2,13 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {InventarizationAPI} from "../../../entities"
+import {InventarizationAPI, LocalStorage} from "../../../entities"
 import {
     InventarizationFullData
 } from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData"
+import {
+    InventoryLackFullData
+} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventoryLackFullData";
 
 interface InventoryOfProductsArchiveModalStore {
     openInventoryOfProductsArchiveModal: boolean
@@ -17,10 +20,17 @@ interface InventoryOfProductsArchiveModalStore {
     getArchive: () => void
     setArchive: (v: InventarizationFullData[]) => void
 
-    
+    lackArchive: InventoryLackFullData[]
+    getLackArchive: () => void
 }
 
 const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    lackArchive: [],
+    getLackArchive: () => {
+        InventarizationAPI.getLackByShop(LocalStorage.shopId()!).then(n => {
+            set({lackArchive: n.data})
+        })
+    },
     setArchive: (v) => {
         set({archive: v})
     },

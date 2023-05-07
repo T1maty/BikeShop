@@ -3,6 +3,9 @@ import {
     InventarizationFullData
 } from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData";
 import {AxiosResponse} from "axios";
+import {
+    InventoryLackFullData
+} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventoryLackFullData";
 
 export const InventarizationAPI = {
     getByShop(shopId: number, take: number): Promise<AxiosResponse<InventarizationFullData>> {
@@ -10,7 +13,7 @@ export const InventarizationAPI = {
             $api.get<InventarizationFullData>(`/inventarization/getbyshop?ShopId=${shopId}&Take=${take}`)
         )
     },
-    update(data: InventarizationFullData): any {
+    update(data: InventarizationFullData): Promise<AxiosResponse<InventarizationFullData>> {
         return (
             $api.put<InventarizationFullData>(`/inventarization/update`, data)
         )
@@ -20,14 +23,14 @@ export const InventarizationAPI = {
             $api.post<InventarizationFullData>(`/inventarization/create?ShopId=${shopId}&UserId=${user}`)
         )
     },
-    closeAct(actId: number, user: string): any {
+    closeAct(actId: number, user: string): Promise<AxiosResponse<InventoryLackFullData>> {
         return (
-            $api.put<InventarizationFullData>(`inventarization/closeact?ActId=${actId}&UserId=${user}`)
+            $api.put<InventoryLackFullData>(`inventarization/closeact?ActId=${actId}&UserId=${user}`)
         )
     },
-    getLackByShop(shopId: number): any {
+    getLackByShop(shopId: string): Promise<AxiosResponse<InventoryLackFullData[]>> {
         return (
-            $api.get<InventarizationFullData>(`/inventarization/getlackbyshop?ShopId=${shopId}`)
+            $api.get<InventoryLackFullData[]>(`/inventarization/getlackbyshop?ShopId=${shopId}`)
         )
     },
 }

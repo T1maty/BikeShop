@@ -43,7 +43,7 @@ namespace BikeShop.Acts.WebApi.Controllers
         }
 
         [HttpGet("getlackbyshop")]
-        public async Task<InventarizationLackWithProducts> GetLackByShop(int ShopId)
+        public async Task<List<InventarizationLackWithProducts>> GetLackByShop(int ShopId)
         {
             return await _inventarizationService.GetLackByShop(ShopId);
         }

@@ -15,6 +15,6 @@ namespace BikeShop.Acts.Application.Interfaces
         public Task<InventarizationWithProducts> Create(int ShopId, Guid UserId);
         public Task<InventarizationWithProducts> Update(UpdateInventarizationDTO dto);
         public Task<InventarizationLackWithProducts> CloseAct(int ActId, Guid UserId);
-        public Task<InventarizationLackWithProducts> GetLackByShop(int ShopId);
+        public Task<List<InventarizationLackWithProducts>> GetLackByShop(int ShopId);
     }
 }
