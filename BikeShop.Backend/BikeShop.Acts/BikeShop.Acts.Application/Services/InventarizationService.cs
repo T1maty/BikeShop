@@ -32,8 +32,8 @@ namespace BikeShop.Acts.Application.Services
         public async Task<InventarizationLackWithProducts> CloseAct(int ActId, Guid UserId)
         {
             var inv = await _context.Inventarizations.FindAsync(ActId);
-            if (inv == null) throw new Exception();
-
+            if (inv == null || inv.Status == "Closed") throw new Exception();
+// || inv.Status == "Closed"
             inv.Status = "Closed";
             inv.UpdatedAt = DateTime.Now;
             inv.UserUpdatedId= UserId;
@@ -45,6 +45,8 @@ namespace BikeShop.Acts.Application.Services
 
             var invProds = await _context.InventarizationProducts.Where(n=>n.InventariazationId ==ActId).ToListAsync();
             var storage = await _productClient.GetByStorage(await _shopClient.GetStorageId(inv.ShopId));
+
+            var notFound = storage.AvailableProducts;
 
             var LackProds = new List<InventarizationLackProduct>();
 
@@ -71,31 +73,42 @@ namespace BikeShop.Acts.Application.Services
                         lp.IncomeTotal = lp.IncomePrice * lp.Quantity;
                         lp.RetailTotal = lp.RetailPrice * lp.Quantity;
                         lp.Description = prod.Description;
+                        lp.Name = prodQuant.Product.Name;
+                        lp.ManufBarcode = "";
 
                         LackProds.Add(lp);
+                        
                     }
                 }
-                else
-                {
-                    var lp = new InventarizationLackProduct();
-                    lp.InventariazationLackId = lack.Id;
-                    lp.ProductId = prod.ProductId;
-                    lp.Quantity = prod.Quantity;
-                    lp.QuantityUnitName = prod.QuantityUnitName;
-                    lp.RetailPrice = prod.RetailPrice;
-                    lp.IncomePrice = prod.IncomePrice;
-                    lp.Barcode = prod.Barcode;
-                    lp.ManufBarcode = prod.ManufBarcode;
-                    lp.CatalogKey = prod.CatalogKey;
-                    lp.DealerPrice = prod.DealerPrice;
-                    lp.DealerTotal = lp.DealerPrice * lp.Quantity;
-                    lp.IncomeTotal = lp.IncomePrice * lp.Quantity;
-                    lp.RetailTotal = lp.RetailPrice * lp.Quantity;
-                    lp.Description = prod.Description;
-
-                    LackProds.Add(lp);
-                }
+                
+                notFound.Remove(prodQuant);
             }
+
+
+            foreach (var prod in notFound)
+            {
+                var lp = new InventarizationLackProduct();
+                lp.InventariazationLackId = lack.Id;
+                lp.ProductId = prod.Product.Id;
+                lp.Quantity = prod.Quantity;
+                lp.QuantityUnitName = "";
+                lp.RetailPrice = prod.Product.RetailPrice;
+                lp.IncomePrice = prod.Product.IncomePrice;
+                lp.Barcode = prod.Product.Barcode;
+                lp.Name = prod.Product.Name;
+                lp.ManufBarcode = prod.Product.ManufacturerBarcode;
+                lp.CatalogKey = prod.Product.CatalogKey;
+                lp.DealerPrice = prod.Product.DealerPrice;
+                lp.DealerTotal = lp.DealerPrice * lp.Quantity;
+                lp.IncomeTotal = lp.IncomePrice * lp.Quantity;
+                lp.RetailTotal = lp.RetailPrice * lp.Quantity;
+                lp.Description = "";
+                lp.ManufBarcode = "";
+
+
+                LackProds.Add(lp);
+            }
+
 
             await _context.InventarizationLackProducts.AddRangeAsync(LackProds);
             await _context.SaveChangesAsync(new CancellationToken());
@@ -123,7 +136,7 @@ namespace BikeShop.Acts.Application.Services
 
         public async Task<InventarizationLackWithProducts> GetLackByShop(int ShopId)
         {
-            var lack = await _context.InventarizationLacks.FindAsync(ShopId);
+            var lack = await _context.InventarizationLacks.Where(n=>n.ShopId == ShopId).FirstOrDefaultAsync();
             var prods = await _context.InventarizationLackProducts.Where(n=>n.InventariazationLackId == lack.Id).ToListAsync();
             return new InventarizationLackWithProducts { InventarizationLack = lack, Products = prods };
         }

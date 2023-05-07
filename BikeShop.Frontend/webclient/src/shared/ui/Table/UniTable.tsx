@@ -32,8 +32,16 @@ interface TableRowProps {
 
 export const UniTable = (props: TableProps) => {
 
-    const [selected, setSelected] = useState([])
+    const [selected, setSelected] = useState<any[]>([])
 
+    const getSelect = () => {
+        if (props.selected != null) return props.selected
+        else return selected
+    }
+    const getSetSelect = () => {
+        if (props.setSelected != null) return props.setSelected
+        else return setSelected
+    }
     return (
         <>
             <table className={`${props.className} ${cls.table}`}>
@@ -56,8 +64,8 @@ export const UniTable = (props: TableProps) => {
                                              columns={props.columns}
                                              onRowDoubleClick={props.rowOnDoubleClick}
                                              rowOnContext={props.rowOnContext}
-                                             selected={props.selected != undefined ? props.selected : selected}
-                                             setSelected={props.setSelected != undefined ? props.setSelected : setSelected}
+                                             selected={getSelect()}
+                                             setSelected={getSetSelect()}
                             />
                         })
                         : <tr style={{height: 250, display: 'flex', justifyContent: 'center'}}>

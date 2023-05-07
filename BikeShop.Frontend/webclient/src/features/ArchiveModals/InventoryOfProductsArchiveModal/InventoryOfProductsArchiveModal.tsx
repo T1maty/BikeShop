@@ -43,7 +43,8 @@ export const InventoryOfProductsArchiveModal = () => {
                 }}
             >
                 <div className={s.encashmentArchiveModal_mainBlock}>
-                    <Button>Новая инвентаризация</Button>
+                    <Button onClick={() => {
+                    }}>Новая инвентаризация</Button>
                     <div className={s.header_title}>
                         <div className={s.encashmentArchiveModal_title}>
                             Архив инвентаризации

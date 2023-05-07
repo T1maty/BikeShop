@@ -15,6 +15,9 @@ interface InventarizationStore {
     toInvStorage: Product[]
     updateToIv: () => void
     loadFromStorage: () => void
+
+    selectedM: Product | null,
+    setSelectedM: (value: Product) => void
 }
 
 export const useInventarization = create<InventarizationStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -46,6 +49,10 @@ export const useInventarization = create<InventarizationStore>()(/*persist(*/dev
                 })
             })
         })
+    },
+    selectedM: null,
+    setSelectedM: (value) => {
+        set({selectedM: value})
     }
 
 })))/*, {

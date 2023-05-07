@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from "../ProductsCountStyles.module.scss"
 import {Button, UniTable} from "../../../../shared/ui"
 import {useInventarization} from "./InventarizationPageStore"
 import {slaveColumns} from "./models/SlaveTableColumns"
-import {InventarizationAPI, LocalStorage} from "../../../../entities"
+import {InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../../entities"
 import {MasterTableColumns} from "./models/MasterTableColumns"
 
 export const InventarizationPage = () => {
@@ -12,6 +12,26 @@ export const InventarizationPage = () => {
     const setProducts = useInventarization(s => s.setProducts)
     const toInvStorage = useInventarization(s => s.toInvStorage)
     const updateToIv = useInventarization(s => s.updateToIv)
+    const selectedM = useInventarization(s => s.selectedM)
+    const setSelectedM = useInventarization(s => s.setSelectedM)
+
+
+    const [selectedS, setSelectedS] = useState<InventarizationProduct>()
+
+    const [shareSelected, setShareSelected] = useState<number>()
+
+    useEffect(() => {
+        setSelectedM(toInvStorage[0])
+    }, [])
+
+    const handler = () => {
+        console.log(selectedM)
+        console.log(selectedS)
+        console.log(shareSelected)
+        console.log('shareSelected')
+        //setSelectedS(shareSelected)
+        setSelectedM(toInvStorage[0])
+    }
 
     const setInventarizationHandler = (r: any) => {
         let exist = false
@@ -81,7 +101,9 @@ export const InventarizationPage = () => {
 
                 <div className={s.leftSide_info}>Дополнительная информация</div>
                 <Button buttonDivWrapper={s.button_chooseItem}
-                        onClick={() => {}}
+                        onClick={() => {
+                            setSelectedM(toInvStorage[0])
+                        }}
                 >
                     Выбрать товар
                 </Button>
@@ -99,7 +121,8 @@ export const InventarizationPage = () => {
                 </div>
                 <div className={s.leftSide_footerButtons}>
                     <Button buttonDivWrapper={s.button_cancel}
-                            onClick={() => {}}
+                            onClick={() => {
+                            }}
                     >
                         Отмена
                     </Button>
@@ -115,11 +138,31 @@ export const InventarizationPage = () => {
                 <UniTable rows={toInvStorage}
                           columns={MasterTableColumns}
                           setRows={setProducts}
-                          rowOnDoubleClick={(r: any) => {setInventarizationHandler(r)}}
+                          rowOnDoubleClick={(r: any) => {
+                              setInventarizationHandler(r)
+                          }}
+                          selected={selectedM}
+                          setSelected={(v) => {
+                              setSelectedM(v)
+                              setShareSelected(v.productId)
+                              //handler()
+                          }}
+                          rowOnClick={(d) => {
+                              //setShareSelected((d as Product).id)
+                          }}
                 />
                 <UniTable rows={currentInventarization.products}
                           columns={slaveColumns}
                           setRows={setProducts}
+                          selected={selectedS!}
+                          setSelected={(v) => {
+                              setSelectedS(v)
+                              setShareSelected(v.productId)
+                              //handler()
+                          }}
+                          rowOnClick={(d) => {
+                              //setShareSelected((d as InventarizationProduct).productId)
+                          }}
                 />
             </div>
         </div>

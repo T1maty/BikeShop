@@ -23,13 +23,16 @@ import {CreateStorageModal} from "../CRUDModals/CreateStorageModal/CreateStorage
 import {CreateCurrencyModal} from "../CRUDModals/CreateCurrencyModal/CreateCurrencyModal"
 import {CreateQuantityUnitModal} from "../CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal"
 import {ServiceArchiveModal} from "../ArchiveModals/ServiceArchiveModal/ServiceArchiveModal"
-import {InventoryOfProductsArchiveModal}
-    from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
+import {
+    InventoryOfProductsArchiveModal
+} from "../ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal"
 import {SupplyInvoiceArchiveModal} from "../ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal"
 import {EncashmentArchiveModal} from '../ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 import {ServiceFinalArchiveModal} from '../ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
 import {CheckArchiveModal} from "../ArchiveModals/CheckArchiveModal/CheckArchiveModal"
-import {StorageProductsTransferArchiveModal} from '../ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
+import {
+    StorageProductsTransferArchiveModal
+} from '../ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
 
 export const HeaderShopMenu = () => {
 
@@ -111,14 +114,6 @@ export const HeaderShopMenu = () => {
 
     const [menuItems2, setMenuItems2] = useState([
         {
-            title: 'Создать инвентаризацию',
-            func: () => {
-                navigate(BikeShopPaths.WORKSPACE.INVENTARIZATION)
-                setIsComponentVisible(false)
-            }
-
-        },
-        {
             title: 'Создать перемещение',
             func: () => {
                 navigate(BikeShopPaths.WORKSPACE.STORAGE_PRODUCTS_TRANSFER)
@@ -158,12 +153,6 @@ export const HeaderShopMenu = () => {
     ])
 
     const [menuItems3, setMenuItems3] = useState([
-        {
-            title: 'Валюта:',
-            func: () => {
-                //
-            }
-        },
         {
             title: 'Язык:',
             func: () => {
