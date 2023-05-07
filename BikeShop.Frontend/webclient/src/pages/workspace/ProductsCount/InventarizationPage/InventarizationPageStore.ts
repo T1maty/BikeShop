@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import {devtools} from 'zustand/middleware'
+import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
 import {InventarizationFullData} from "./models/InventarizationFullData";
 import {CatalogAPI, Inventarization, InventarizationProduct, LocalStorage, ShopAPI} from "../../../../entities";
@@ -14,16 +14,20 @@ interface InventarizationStore {
 
     toInvStorage: Product[]
     updateToIv: () => void
+    recalculate: () => void
     loadFromStorage: () => void
 
     selectedM: Product | null,
     setSelectedM: (value: Product) => void
 }
 
-export const useInventarization = create<InventarizationStore>()(/*persist(*/devtools(immer((set, get) => ({
+export const useInventarization = create<InventarizationStore>()(persist(devtools(immer((set, get) => ({
     currentInventarization: {
         products: [],
         inventarization: {shopId: LocalStorage.shopId()!} as unknown as Inventarization
+    },
+    recalculate: () => {
+
     },
     setInventariazation: (value) => {
         set(state => {
@@ -45,7 +49,12 @@ export const useInventarization = create<InventarizationStore>()(/*persist(*/dev
                 console.log('Айдишники', t.data)
                 CatalogAPI.getProductsByIds(Enumerable.from(t.data).select(m => m.productId).toArray()).then(h => {
                     console.log('Товары на инвентуру', h.data)
-                    set({toInvStorage: h.data})
+                    let data = h.data.map(n => {
+                        let ent = get().currentInventarization.products.find(s => s.productId === n.id)
+                        if (ent != undefined) return {...n, quantity: 1}
+                        else return {...n, quantity: 0}
+                    })
+                    set({toInvStorage: data})
                 })
             })
         })
@@ -55,7 +64,7 @@ export const useInventarization = create<InventarizationStore>()(/*persist(*/dev
         set({selectedM: value})
     }
 
-})))/*, {
+}))), {
     name: "InventarizationStore",
     version: 1
-})*/);
+}));

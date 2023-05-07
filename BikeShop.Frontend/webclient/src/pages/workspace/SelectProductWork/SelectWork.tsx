@@ -21,7 +21,7 @@ export const SelectWork = (props: SelectWorkProps) => {
 
     const setOpenSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
     const {getGroup} = useWorkCatalog(state => state)
-    const [selected, setSelected] = useState([])
+    const [selected, setSelected] = useState<any>([])
 
     useEffect(() => {
         getGroup()
@@ -64,12 +64,15 @@ export const SelectWork = (props: SelectWorkProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {setOpenSelectWorkModal(false)}}>
+                        <Button onClick={() => {
+                            setOpenSelectWorkModal(false)
+                        }}>
                             Отмена
                         </Button>
                     </div>

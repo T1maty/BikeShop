@@ -15,8 +15,8 @@ interface TableProps {
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     rowOnDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
 
-    selected?: any
-    setSelected?: (value: any) => void
+    selected?: any[]
+    setSelected?: (value: any[]) => void
 }
 
 interface TableRowProps {
@@ -27,7 +27,7 @@ interface TableRowProps {
     onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
 
     selected: any[]
-    setSelected: (row: any) => void
+    setSelected: (row: any[]) => void
 }
 
 export const UniTable = (props: TableProps) => {

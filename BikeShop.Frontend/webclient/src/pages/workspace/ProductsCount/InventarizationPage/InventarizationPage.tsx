@@ -141,10 +141,10 @@ export const InventarizationPage = () => {
                           rowOnDoubleClick={(r: any) => {
                               setInventarizationHandler(r)
                           }}
-                          selected={selectedM}
+                          selected={[selectedM]}
                           setSelected={(v) => {
-                              setSelectedM(v)
-                              setShareSelected(v.productId)
+                              setSelectedM(v[0])
+                              setShareSelected(v[0].productId)
                               //handler()
                           }}
                           rowOnClick={(d) => {
@@ -154,10 +154,10 @@ export const InventarizationPage = () => {
                 <UniTable rows={currentInventarization.products}
                           columns={slaveColumns}
                           setRows={setProducts}
-                          selected={selectedS!}
+                          selected={[selectedS!]}
                           setSelected={(v) => {
-                              setSelectedS(v)
-                              setShareSelected(v.productId)
+                              setSelectedS(v[0])
+                              setShareSelected(v[0].productId)
                               //handler()
                           }}
                           rowOnClick={(d) => {
