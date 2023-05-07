@@ -40,6 +40,7 @@ export const InventoryOfProductsArchiveModal = () => {
     useEffect(() => {
         getArchive()
         getLackArchive()
+        console.log(archive)
     }, [])
 
     if (isLoading) {
@@ -102,8 +103,8 @@ export const InventoryOfProductsArchiveModal = () => {
                                                 >
                                                     <div className={
                                                         // s.item_status
-                                                        el.inventarization.status === 'Created' ? s.status_WaitingPayment :
-                                                            el.inventarization.status === 'Executed' ? s.status_Ready :
+                                                        el.inventarization.status === 'InWork' ? s.status_WaitingPayment :
+                                                            el.inventarization.status === 'Closed' ? s.status_Ready :
                                                                 el.inventarization.status === 'Canceled' ? s.status_Canceled : ''}
                                                     >
                                                         {el.inventarization.status}
