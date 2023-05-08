@@ -3,6 +3,8 @@ import cls from "./UniTable.module.scss"
 import {Loader} from "../Loader/Loader"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
 import {UniTableColumn, useCurrency} from "../../../entities"
+import {usePopperTooltip} from 'react-popper-tooltip'
+import 'react-popper-tooltip/dist/styles.css'
 
 interface TableProps {
     rows: any[]
@@ -82,16 +84,31 @@ export const UniTable = (props: TableProps) => {
 const TableHeadItem = memo((props: { theadData: UniTableColumn[] }) => {
 
     const {theadData} = props
+    const {getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible} = usePopperTooltip()
 
     return (
         <tr className={cls.head_items}>
             {
                 theadData.map((item: UniTableColumn, index) =>
-                    <td key={index} title={item.id} className={cls.head_item}
+                    <>
+                    <td key={index}
+                        title={item.id}
+                        className={cls.head_item}
                         style={{ width: `${item.width!}%` }}
+                        ref={setTriggerRef}
                     >
                         {item.label}
                     </td>
+                    {/*{*/}
+                    {/*    visible &&*/}
+                    {/*    <>*/}
+                    {/*    <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>*/}
+                    {/*        {item.label}*/}
+                    {/*    </div>*/}
+                    {/*    <div {...getArrowProps({ className: 'tooltip-arrow' })} />*/}
+                    {/*    </>*/}
+                    {/*}*/}
+                    </>
                 )
             }
         </tr>
@@ -148,7 +165,7 @@ const TableRow = memo((props: TableRowProps) => {
                                         <div>{fbts.s}</div>
                                     </div>
                                     //Ячейка нередактируемая + валюта
-                                    : <div>{r(props.row[item.id] * fbts.c) + fbts.s}</div>
+                                    : <div>{r(props.row[item.id] * fbts.c) + ' ' + fbts.s}</div>
 
                                 : item.isEditable ?
                                     //Ячейка редактируемая + не валюта

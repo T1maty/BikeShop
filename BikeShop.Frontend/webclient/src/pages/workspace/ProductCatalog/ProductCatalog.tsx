@@ -79,9 +79,7 @@ export const ProductCatalog = () => {
                             isSearchable={false}
                             options={storages}
                             value={selectedStorage}
-                            onChange={(v) => {
-                                setSelectedStorage(v!.id)
-                            }}
+                            onChange={(v) => {setSelectedStorage(v!.id)}}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             styles={selectColorStyles}
@@ -93,9 +91,7 @@ export const ProductCatalog = () => {
                 </div>
 
                 <div className={s.rightSide_table}
-                     onContextMenu={(event) => {
-                         event.preventDefault()
-                     }}
+                     onContextMenu={(event) => {event.preventDefault()}}
                 >
                     <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
                 </div>
