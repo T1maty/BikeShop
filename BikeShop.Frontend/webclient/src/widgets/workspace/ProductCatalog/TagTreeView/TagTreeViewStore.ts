@@ -71,7 +71,6 @@ const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, g
     },
 
     fetchTags: () => {
-        // return $api.get<ProductTagResponse>('/tag/getall')
         return CatalogAPI.fetchTags()
     },
     addNewTag: (tag) => {

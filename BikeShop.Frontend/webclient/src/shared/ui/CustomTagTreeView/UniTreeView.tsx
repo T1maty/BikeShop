@@ -2,7 +2,7 @@ import React, {memo, useEffect, useState} from 'react'
 import cls from './CustomTagTreeView.module.scss'
 
 interface UniTreeView {
-    data: Array<object>,
+    data: Array<object>
     selected: any
     setSelected: (node: any) => void
     onNodeContext?: (node: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
@@ -56,8 +56,8 @@ export const UniTreeView = memo((props: UniTreeView) => {
     }
 
     const renderItem = (item: any) => {
-        const isExpanded = expandedItems.includes(item.id);
-        const hasChildren = item.children && item.children.length > 0;
+        const isExpanded = expandedItems.includes(item.id)
+        const hasChildren = item.children && item.children.length > 0
 
         const onClickHandlerCollapsed = () => {
             if (hasChildren && isExpanded) {
@@ -113,7 +113,7 @@ export const UniTreeView = memo((props: UniTreeView) => {
 
     return (
         <>
-            {data != undefined ? buildTree(data, 0).map(renderItem) : false}
+            {data !== undefined ? buildTree(data, 0).map(renderItem) : false}
         </>
     )
 })
