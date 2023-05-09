@@ -17,7 +17,7 @@ export const BarcodeScannerListenerProvider = memo((props: props) => {
     }
 
     useEffect(() => {
-        window.addEventListener('keydown', h, true);
+        window.addEventListener('keydown', h);
         return (() => {
             window.removeEventListener('keydown', h)
         })

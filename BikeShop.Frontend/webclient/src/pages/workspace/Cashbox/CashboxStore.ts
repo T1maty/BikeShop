@@ -1,5 +1,5 @@
 import {create} from "zustand"
-import {devtools} from "zustand/middleware"
+import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {User} from '../../../entities'
 import {NewBillDTO} from "./models/NewBillDTO"
@@ -18,7 +18,7 @@ interface CashboxStore {
     addProduct: (value: any) => void
 }
 
-const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (value) => set({
         isLoading: value
@@ -65,9 +65,9 @@ const useCashboxStore = create<CashboxStore>()(/*persist(*/devtools(immer((set, 
         }
 
     },
-})))/*, {
+}))), {
     name: "cashboxStore",
     version: 1
-})*/);
+}));
 
 export default useCashboxStore;

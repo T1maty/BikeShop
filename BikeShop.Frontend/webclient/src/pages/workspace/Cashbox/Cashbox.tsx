@@ -94,6 +94,7 @@ export const Cashbox = () => {
 
     useEffect(() => {
         if (lastBarcode == '') return
+        console.log('Barcode: ', lastBarcode)
         CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
             enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
             onSearchHandler(n.data)
@@ -123,7 +124,6 @@ export const Cashbox = () => {
             setIsLoading(false)
         })
     }
-
 
 
     useEffect(() => {

@@ -20,7 +20,7 @@ export const Clock = () => {
         const minutes = currentTime.getMinutes()
         const seconds = currentTime.getSeconds()
 
-        return`${hours}:${minutes < 10 ?`0${minutes}`:minutes}:${seconds < 10 ?`0${seconds}`:seconds}`
+        return `${hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
     }, [currentTime])
 
     return <>{time}</>

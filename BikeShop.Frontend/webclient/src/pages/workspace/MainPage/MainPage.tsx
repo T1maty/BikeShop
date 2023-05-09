@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import s from "./MainPage.module.scss"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {LocalStorage, User} from "../../../entities"
+import {LocalStorage, ShiftAPI, User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button, LoaderScreen} from '../../../shared/ui'
 import {
-    ChooseClientModal, CreateProductModal, EditProductCardModal, EmployeeSalaryModal,
-    EncashmentModal, EndWorkDayModal, GetPutMoneyModal
+    ChooseClientModal,
+    CreateProductModal,
+    EditProductCardModal,
+    EmployeeSalaryModal,
+    EncashmentModal,
+    EndWorkDayModal,
+    GetPutMoneyModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -14,9 +19,8 @@ import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModa
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
-import {ShiftAPI} from '../../../entities'
 import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
-import {formatWorkDayTime} from "../../../shared/utils/formatWorkDayTime"
+import ShiftTime from "./ShiftTime";
 
 export const MainPage = () => {
 
@@ -39,6 +43,10 @@ export const MainPage = () => {
     useEffect(() => {
         getUserShiftStatus()
     }, [])
+
+    console.log('date', new Date().toString());
+    console.log('shift', userShiftStatus?.hours);
+    console.log('shiftStart', userShiftStatus?.lastAction.time);
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -128,7 +136,9 @@ export const MainPage = () => {
                             }}>
                                 Касса
                             </Button>
-                            <Button onClick={() => {setOpenEmployeeSalaryModal(true)}}>
+                            <Button onClick={() => {
+                                setOpenEmployeeSalaryModal(true)
+                            }}>
                                 Новый заказ
                             </Button>
                             <Button onClick={() => {
@@ -252,7 +262,7 @@ export const MainPage = () => {
                                 </div>
                                 <div className={s.shiftTime}>
                                     <div style={{textDecoration: 'underline'}}>Время смены:</div>
-                                    <div>{userShiftStatus?formatWorkDayTime(userShiftStatus?.hours):'Error'}</div>
+                                    <div><ShiftTime/></div>
                                 </div>
                                 <div className={s.shiftTiming}>
                                     <div>
@@ -270,7 +280,9 @@ export const MainPage = () => {
                                     <Button buttonDivWrapper={s.endWorkDay_button}
                                             onClick={() => {
                                                 ShiftAPI.close(LocalStorage.userId()!)
-                                                    .then(() => {getUserShiftStatus()})
+                                                    .then(() => {
+                                                        getUserShiftStatus()
+                                                    })
                                             }}
                                     >
                                         Закончить смену
