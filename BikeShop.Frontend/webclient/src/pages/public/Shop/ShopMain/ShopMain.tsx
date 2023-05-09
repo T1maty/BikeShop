@@ -10,6 +10,7 @@ import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.
 import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
 import Map from '../../../../shared/assets/shop/images/map-01.png'
+import WorkshopBanner from '../../../../shared/assets/shop/images/workshop-banner.png'
 
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
 import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
@@ -21,6 +22,7 @@ import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
 import catalogRaznoe from '../../../../shared/assets/shop/images/catalog-raznoe.png'
 import catalogSamokat from '../../../../shared/assets/shop/images/catalog-samokat.png'
 import useCatalog from "../Catalog/CatalogStore"
+import {Workshop} from './Workshop';
 
 export const ShopMain = () => {
 
@@ -111,9 +113,17 @@ export const ShopMain = () => {
                 </div>
             </div>
 
+            <div className={s.workshop_banner}>
+                <div className={s.container}>
+                    <img src={WorkshopBanner} alt="workshop-banner"/>
+                </div>
+            </div>
+
+            <Workshop/>
+
             <div className={s.map}>
                 <img src={Map} alt="map"/>
-                <RegistrationForm/>
+                {/*<RegistrationForm/>*/}
             </div>
 
         </div>

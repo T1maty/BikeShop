@@ -25,6 +25,7 @@ export {ShopMain} from './public/Shop/ShopMain/ShopMain'
 export {ShopWrapper} from './public/Shop/ShopMain/ShopWrapper'
 export {ShopHeader} from './public/Shop/ShopMain/ShopHeader'
 export {ShopFooter} from './public/Shop/ShopMain/ShopFooter'
+export {Workshop} from './public/Shop/ShopMain/Workshop'
 
 export {LoginBlock} from './public/Shop/LoginBlock/LoginBlock'
 export {BurgerMenu} from './public/Shop/BurgerMenu/BurgerMenu'
