@@ -11,11 +11,6 @@ export const BarcodeScannerListenerProvider = memo((props: props) => {
     //const [barcode, setBarcode] = useState('')
 
     const sb = useBarcode(s => s.setBarcode)
-    const lb = useBarcode(s => s.lastBarcode)
-
-    useEffect(() => {
-        console.log('LastBarcode', lb)
-    }, [lb])
 
     const h = (event: KeyboardEvent) => {
         sb(event.key)
