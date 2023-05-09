@@ -7,7 +7,7 @@ import CartFull from '../../../../shared/assets/shop/icons/cart-full.svg'
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
 import {useNavigate} from 'react-router-dom'
 import useCatalog from './CatalogStore'
-import {DeleteButton, ShopLoader} from '../../../../shared/ui'
+import {DeleteButton, ShopLoader, UniTreeView} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {ProductFullData, ProductTag} from '../../../../entities'
@@ -61,6 +61,8 @@ export const Catalog = () => {
             }
         },
     ])
+
+    const [selectedN, setSelectedN] = useState()
 
     const filterUniversalHandler = (filterName: FilterProductsType,
                                     activeFilter1: boolean, activeFilter2: boolean,
@@ -129,7 +131,7 @@ export const Catalog = () => {
         } else {
             getProductsByTags([4]) // надо доделать
         }
-    }, [])
+    }, [userCurrentTags])
 
     if (isLoading) {
         return <ShopLoader/>
@@ -144,6 +146,11 @@ export const Catalog = () => {
                                 Категории:
                             </div>
                             <div className={s.tagsList}>
+                                {/*<UniTreeView data={tags}*/}
+                                {/*             selected={selectedN}*/}
+                                {/*             setSelected={setSelectedN}*/}
+                                {/*/>*/}
+
                                 {
                                     tags.map(tag => {
                                         return (

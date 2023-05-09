@@ -1,0 +1,116 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.workshop_mainBox {
+    .container {
+        @include defaultContainerForShop; // ограничивающий контейнер
+
+        .workshopData {
+            border: 1px solid black;
+            display: flex;
+            padding: 20px 0;
+
+            .workshop_description {
+                width: 350px;
+                padding: 20px;
+                @include divLargeMarginBottom;
+                @include flexColumnOnly;
+
+                .description_title {
+                    color: #F04D4D;
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+                .description_content {
+
+                }
+                .description_details {
+                    align-self: flex-end;
+                    text-align: center;
+                    width: 130px;
+                    border: 2px solid #F04D4D;
+                    padding: 10px;
+                    border-radius: 20px;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: #F04D4D;
+                        color: white;
+                    }
+                }
+                .data_length {
+                    align-self: center;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    > div {
+                        img {
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    .bullet_item {
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 50%;
+                        border: 2px solid #F04D4D;
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #F04D4D;
+                        }
+                    }
+                    .bullet_item_active {
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 50%;
+                        border: 2px solid #F04D4D;
+                        background-color: #F04D4D;
+                    }
+                }
+            }
+            .workshop_photos {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                overflow: hidden;
+
+                .workshop_photo {
+                    opacity: 0.5;
+
+                    &:hover {
+                        opacity: 1;
+                        cursor: pointer;
+                    }
+
+                    .photo {
+                        margin-bottom: 10px;
+
+                        img {
+                            width: 315px;
+                            height: 315px;
+                        }
+                    }
+                    .title {
+                        text-align: center;
+                        color: #F04D4D;
+                        font-weight: bold;
+                    }
+                }
+                .workshop_photo_active {
+                    .photo {
+                        img {
+
+                        }
+                    }
+                    .title {
+
+                    }
+                }
+            }
+        }
+    }
+}

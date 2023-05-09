@@ -1,8 +1,8 @@
-import React, {memo, useState} from "react"
-import cls from "./UniTable.module.scss"
-import {Loader} from "../Loader/Loader"
-import {EditableSpan} from "../EditableSpan/EditableSpan"
-import {UniTableColumn, useCurrency} from "../../../entities"
+import React, {memo, useState} from 'react'
+import cls from './UniTable.module.scss'
+import {Loader} from '../Loader/Loader'
+import {EditableSpan} from '../EditableSpan/EditableSpan'
+import {UniTableColumn, useCurrency} from '../../../entities'
 import {usePopperTooltip} from 'react-popper-tooltip'
 import 'react-popper-tooltip/dist/styles.css'
 
@@ -71,7 +71,7 @@ export const UniTable = (props: TableProps) => {
                             />
                         })
                         : <tr style={{height: 250, display: 'flex', justifyContent: 'center'}}>
-                            <td><Loader variant={"ellipsis"}/></td>
+                            <td><Loader variant={'ellipsis'}/></td>
                         </tr>
                 }
                 </tbody>
@@ -84,30 +84,30 @@ export const UniTable = (props: TableProps) => {
 const TableHeadItem = memo((props: { theadData: UniTableColumn[] }) => {
 
     const {theadData} = props
-    const {getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible} = usePopperTooltip()
+    // const {getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible} = usePopperTooltip()
 
     return (
         <tr className={cls.head_items}>
             {
                 theadData.map((item: UniTableColumn, index) =>
                     <>
-                    <td key={index}
-                        title={item.id}
-                        className={cls.head_item}
-                        style={{ width: `${item.width!}%` }}
-                        ref={setTriggerRef}
-                    >
-                        {item.label}
-                    </td>
-                    {/*{*/}
-                    {/*    visible &&*/}
-                    {/*    <>*/}
-                    {/*    <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>*/}
-                    {/*        {item.label}*/}
-                    {/*    </div>*/}
-                    {/*    <div {...getArrowProps({ className: 'tooltip-arrow' })} />*/}
-                    {/*    </>*/}
-                    {/*}*/}
+                        <td key={index}
+                            title={item.id}
+                            className={cls.head_item}
+                            style={{width: `${item.width!}%`}}
+                            // ref={setTriggerRef}
+                        >
+                            {item.label}
+                        </td>
+                        {/*{*/}
+                        {/*    visible &&*/}
+                        {/*    <>*/}
+                        {/*    <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>*/}
+                        {/*        {item.label}*/}
+                        {/*    </div>*/}
+                        {/*    <div {...getArrowProps({ className: 'tooltip-arrow' })} />*/}
+                        {/*    </>*/}
+                        {/*}*/}
                     </>
                 )
             }
@@ -117,6 +117,8 @@ const TableHeadItem = memo((props: { theadData: UniTableColumn[] }) => {
 
 
 const TableRow = memo((props: TableRowProps) => {
+
+    const {getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible} = usePopperTooltip()
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
@@ -140,16 +142,43 @@ const TableRow = memo((props: TableRowProps) => {
             {
                 props.columns.map((item, index) => {
                     if (item.isCurrency) item.isNumber = true
-                    return <td key={index} style={{ textAlign: `${item.align!}`, width: `${item.width!}%` }}>
-                        {
-                            item.isCurrency ?
-                                item.isEditable ?
-                                    //Ячейка редактируемая + валюта
-                                    <div className={cls.price_column}>
-                                        <EditableSpan title={r(props.row[item.id] * fbts.c).toString()}
+                    return (
+                        <>
+                        <td key={index}
+                            style={{textAlign: `${item.align!}`, width: `${item.width!}%`}}
+                            ref={setTriggerRef}
+                        >
+                            {
+                                item.isCurrency ?
+                                    item.isEditable ?
+                                        //Ячейка редактируемая + валюта
+                                        <div className={cls.price_column}>
+                                            <EditableSpan title={r(props.row[item.id] * fbts.c).toString()}
+                                                          onChangeInput={(newInputValue) => {
+                                                              if (item.isNumber) {
+                                                                  let newValue = (Number.parseFloat(newInputValue) * fstb.c).toString()
+                                                                  let newRow = {...props.row}
+                                                                  if (newValue != 'NaN') {
+                                                                      newRow[item.id] = newValue
+                                                                      console.log('updated')
+                                                                  }
+                                                                  props.setRow(newRow)
+                                                              }
+                                                          }}
+                                                          inputClassName={cls.currency_inputClassName1}
+                                                          spanClassName={cls.currency_spanClassName1}
+                                            />
+                                            <div>{fbts.s}</div>
+                                        </div>
+                                        //Ячейка нередактируемая + валюта
+                                        : <div>{r(props.row[item.id] * fbts.c) + ' ' + fbts.s}</div>
+
+                                    : item.isEditable ?
+                                        //Ячейка редактируемая + не валюта
+                                        <EditableSpan title={props.row[item.id]}
                                                       onChangeInput={(newInputValue) => {
                                                           if (item.isNumber) {
-                                                              let newValue = (Number.parseFloat(newInputValue) * fstb.c).toString()
+                                                              let newValue = Number.parseFloat(newInputValue).toString()
                                                               let newRow = {...props.row}
                                                               if (newValue != 'NaN') {
                                                                   newRow[item.id] = newValue
@@ -158,37 +187,24 @@ const TableRow = memo((props: TableRowProps) => {
                                                               props.setRow(newRow)
                                                           }
                                                       }}
-                                                      // inputClassName={cls.inputClassName}
-                                                      inputClassName={cls.currency_inputClassName1}
-                                                      spanClassName={cls.currency_spanClassName1}
+                                                      inputClassName={cls.currency_inputClassName2}
+                                                      spanClassName={cls.currency_spanClassName2}
                                         />
-                                        <div>{fbts.s}</div>
-                                    </div>
-                                    //Ячейка нередактируемая + валюта
-                                    : <div>{r(props.row[item.id] * fbts.c) + ' ' + fbts.s}</div>
-
-                                : item.isEditable ?
-                                    //Ячейка редактируемая + не валюта
-                                    <EditableSpan title={props.row[item.id]}
-                                                  onChangeInput={(newInputValue) => {
-                                                      if (item.isNumber) {
-                                                          let newValue = Number.parseFloat(newInputValue).toString()
-                                                          let newRow = {...props.row}
-                                                          if (newValue != 'NaN') {
-                                                              newRow[item.id] = newValue
-                                                              console.log('updated')
-                                                          }
-                                                          props.setRow(newRow)
-                                                      }
-                                                  }}
-                                                  // inputClassName={cls.inputClassName}
-                                                  inputClassName={cls.currency_inputClassName2}
-                                                  spanClassName={cls.currency_spanClassName2}
-                                    />
-                                    //Ячейка не редактируемая + не валюта
-                                    : <div style={{alignContent: 'center'}}>{props.row[item.id]}</div>
-                        }
-                    </td>
+                                        //Ячейка не редактируемая + не валюта
+                                        : <div style={{alignContent: 'center'}}>{props.row[item.id]}</div>
+                            }
+                        </td>
+                            {/*{*/}
+                            {/*    visible &&*/}
+                            {/*    <>*/}
+                            {/*        <div ref={setTooltipRef} {...getTooltipProps({className: 'tooltip-container'})}>*/}
+                            {/*            {item.label}*/}
+                            {/*        </div>*/}
+                            {/*        <div {...getArrowProps({className: 'tooltip-arrow'})} />*/}
+                            {/*    </>*/}
+                            {/*}*/}
+                        </>
+                    )
                 })
             }
         </tr>
