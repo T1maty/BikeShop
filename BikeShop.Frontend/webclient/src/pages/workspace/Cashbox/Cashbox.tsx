@@ -124,6 +124,8 @@ export const Cashbox = () => {
         })
     }
 
+
+
     useEffect(() => {
         let sum = 0
 

@@ -252,7 +252,7 @@ export const MainPage = () => {
                                 </div>
                                 <div className={s.shiftTime}>
                                     <div style={{textDecoration: 'underline'}}>Время смены:</div>
-                                    <div>{formatWorkDayTime(userShiftStatus?.hours)}</div>
+                                    <div>{userShiftStatus?formatWorkDayTime(userShiftStatus?.hours):'Error'}</div>
                                 </div>
                                 <div className={s.shiftTiming}>
                                     <div>
