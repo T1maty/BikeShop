@@ -67,7 +67,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
 
     return (
         <>
-            <div className={s.shopHeader_wrapper}>
+            <header className={s.shopHeader_wrapper}>
                 <div className={s.shopHeader_main}>
 
                     <div className={s.container}>
@@ -163,7 +163,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
 
                 </div>
                 <BurgerMenu menuActive={burgerMenuActive} setMenuActive={setBurgerMenuActive}/>
-            </div>
+            </header>
         </>
     )
 }

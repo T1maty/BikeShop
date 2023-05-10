@@ -65,7 +65,10 @@ export const ShopMain = () => {
                             <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG)}}>
                                 Каталог
                             </div>
-                            <div>Мастерская</div>
+                            <div>
+                                <a href='#workshop'>Мастерская</a>
+                                {/*Мастерская*/}
+                            </div>
                             <div>Фотографии</div>
                             <div>Контакты</div>
                         </div>
@@ -114,7 +117,7 @@ export const ShopMain = () => {
                 </div>
             </div>
 
-            <div className={s.workshop_banner}>
+            <div className={s.workshop_banner} id={'workshop'}>
                 <div className={s.container}>
                     <img src={WorkshopBanner} alt="workshop-banner"/>
                 </div>

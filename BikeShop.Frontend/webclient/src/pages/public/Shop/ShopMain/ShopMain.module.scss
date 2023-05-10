@@ -165,6 +165,10 @@
                     font-weight: bold;
                     color: black;
 
+                    a {text-decoration: none}
+                    a:visited{color:inherit}
+                    a:focus, a:active {outline: none}
+
                     @media(max-width: 1400px) {
                         //
                     }
