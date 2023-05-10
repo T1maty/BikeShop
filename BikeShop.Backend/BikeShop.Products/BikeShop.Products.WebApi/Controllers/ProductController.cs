@@ -6,6 +6,7 @@ using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes;
+using BikeShop.Products.Domain.DTO.Requestes.Product;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
@@ -88,33 +89,13 @@ namespace BikeShop.Products.WebApi.Controllers
         }
 
 
-        /// <summary>
-        /// Обновление продукта
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Все поля обязательны. Переписывает все значения продукта с указанным id
-        /// </remarks>
-        /// 
-        /// <param name="model">Продукт с нужным id и обновленными параметрами</param>
-        /// <returns>Ничего</returns>
-        ///
-        /// <response code="200">Успех. Продукт обновлен</response>
-        /// <response code="404">Не найден продукт с таким id (product_not_found) / Не найден бренд с таким id (brand_not_found)</response>
-        /// <response code="422">Невалидная модель</response>
         [HttpPut("update")]
         [ProducesResponseType(typeof(void),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ValidationResultModel),StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductModel model)
+        public async Task<Product> UpdateProduct([FromBody] UpdateProductDTO dto)
         {
-            if (!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);
-
-            var command = _mapper.Map<UpdateProductCommand>(model);
-            await _mediator.Send(command);
-
-            return Ok();
+            return await _productService.Update(dto);
         }
 
         /// <summary>

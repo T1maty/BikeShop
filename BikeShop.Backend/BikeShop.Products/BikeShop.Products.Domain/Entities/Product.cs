@@ -8,7 +8,7 @@ public class Product : BaseEntity
     public string CatalogKey { get; set; } = string.Empty;
     public string Category { get; set; } = string.Empty;
     public string Barcode { get; set; } = string.Empty;
-    public string? ManufacturerBarcode { get; set; }
+    public string ManufacturerBarcode { get; set; } = string.Empty;
     public int QuantityUnitId { get; set; } = 1;
     public string QuantityUnitName { get; set; }
 

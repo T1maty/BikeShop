@@ -1,4 +1,5 @@
 ﻿using BikeShop.Products.Domain.DTO.Requestes;
+using BikeShop.Products.Domain.DTO.Requestes.Product;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
@@ -18,4 +19,5 @@ public interface IProductService
     public Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId);
     public Task<Product> UpdatePrices(UpdateProductPriceDTO dto);
     public Task<List<Product>> Search(string querry);
+    public Task<Product> Update(UpdateProductDTO dto);
 }

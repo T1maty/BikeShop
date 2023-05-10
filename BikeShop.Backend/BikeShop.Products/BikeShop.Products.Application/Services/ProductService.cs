@@ -3,6 +3,7 @@ using BikeShop.Products.Application.Common.Exceptions;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Application.RefitClients;
 using BikeShop.Products.Domain.DTO.Requestes;
+using BikeShop.Products.Domain.DTO.Requestes.Product;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.Entities;
@@ -15,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace BikeShop.Products.Application.Services
@@ -171,6 +173,22 @@ namespace BikeShop.Products.Application.Services
             }
 
             return await contQR.Take(10).ToListAsync();
+        }
+
+        public async Task<Product> Update(UpdateProductDTO dto)
+        {
+            var ent = await _context.Products.FindAsync(dto.Id);
+            if (ent == null) throw new Exception();
+
+            ent.Name = dto.Name;
+            ent.CatalogKey = dto.CatalogKey;
+            if(dto.Category != null) ent.Category = dto.Category;
+            if(dto.ManufacturerBarcode != null) ent.ManufacturerBarcode = dto.ManufacturerBarcode;
+            ent.RetailVisibility = dto.RetailVisibility;
+            ent.B2BVisibility = dto.B2BVisibility;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+            return ent;
         }
     }
 }

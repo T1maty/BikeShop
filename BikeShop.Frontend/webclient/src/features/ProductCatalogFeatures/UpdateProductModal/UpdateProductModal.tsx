@@ -50,6 +50,8 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
 
     const onSubmit: SubmitHandler<UpdateProduct> = (data: UpdateProduct) => {
         console.log(data)
+        if (data.manufacturerBarcode == null) data.manufacturerBarcode = ''
+        if (data.category == null) data.category = ''
         update(data).then((r) => {
             console.log(r)
             setOpen(false, {} as Product)
@@ -62,8 +64,12 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false, {} as Product)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                setOpen(false, {} as Product)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.updateProductModal_mainBox}>
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
@@ -76,15 +82,22 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
                         />
-                        <ControlledCustomInput name={'manufacturerBarcode'}
-                                               placeholder={'Штрихкод производителя'}
+                        <ControlledCustomInput name={'catalogKey'}
+                                               placeholder={'Каталожный номер'}
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
                         />
-                        <ControlledCustomInput name={'b2BVisibility'}
-                                               placeholder={'Видим в B2B'}
+                        <ControlledCustomInput name={'category'}
+                                               placeholder={'Категория'}
                                                control={formControl}
-                                               rules={{required: 'Обязательное поле'}}
+                        />
+                        <ControlledCustomInput name={'manufacturerBarcode'}
+                                               placeholder={'Штрихкод производителя'}
+                                               control={formControl}
+                        />
+                        <ControlledCustomCheckbox name={'b2BVisibility'}
+                                                  label={'Видим в B2B'}
+                                                  control={formControl}
                         />
                         <ControlledCustomCheckbox name={'retailVisibility'}
                                                   label={'Видим в интернет-магазине'}
@@ -92,7 +105,9 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
                         />
                     </div>
                     <div className={s.updateProductModal_buttons}>
-                        <Button onClick={() => {setOpen(false, {} as Product)}}>
+                        <Button onClick={() => {
+                            setOpen(false, {} as Product)
+                        }}>
                             Отмена
                         </Button>
                         <Button type={'submit'}>
