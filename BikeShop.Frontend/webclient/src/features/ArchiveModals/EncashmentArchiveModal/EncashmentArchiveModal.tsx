@@ -3,14 +3,13 @@ import s from './EncashmentArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
-import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO"
-import Enumerable from "linq"
-import {BikeShopPaths} from "../../../app/routes/paths"
 import useEncashmentArchiveModal from './EncashmentArchiveModalStore'
 import CashIcon from '../../../shared/assets/workspace/cash-icon.svg'
 import PayCardIcon from '../../../shared/assets/workspace/paycard-icon.svg'
 import MoneyIcon from '../../../shared/assets/workspace/money-icon.svg'
 import {formatDate} from "../../../shared/utils/formatDate"
+import {useCurrency} from "../../../entities";
+import Enumerable from "linq";
 
 export const EncashmentArchiveModal = () => {
 
@@ -23,6 +22,9 @@ export const EncashmentArchiveModal = () => {
     const errorStatus = useEncashmentArchiveModal(s => s.errorStatus)
     const getArchive = useEncashmentArchiveModal(s => s.getArchive)
     const archive = useEncashmentArchiveModal(s => s.archive)
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
 
     // const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
     // const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
@@ -44,17 +46,19 @@ export const EncashmentArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
-                <div className={s.encashmentArchiveModal_mainBlock}>
+                <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => e.preventDefault()}>
                     <div className={s.encashmentArchiveModal_title}>
                         Архив инкассаций
                     </div>
                     <div className={s.encashmentArchiveModal_list}>
                         {
-                            archive.map((el: SupplyInvoiceDTO) => {
+                            Enumerable.from(archive).orderByDescending(n => n.id).toArray().map((el) => {
                                 return (
-                                    <div className={s.supplyInvoiceArchiveModal_item} key={el.supplyInvoice.id}
+                                    <div className={s.supplyInvoiceArchiveModal_item} key={el.id}
                                          onDoubleClick={() => {
                                              // setIsCreating(false)
                                              // setCurrentSupplyInvoice(el);
@@ -63,23 +67,23 @@ export const EncashmentArchiveModal = () => {
                                     >
                                         <div className={
                                             // s.item_status
-                                            el.supplyInvoice.sypplyActStatus === 'Created' ? s.status_WaitingPayment :
-                                                el.supplyInvoice.sypplyActStatus === 'Executed' ? s.status_Ready :
-                                                    el.supplyInvoice.sypplyActStatus === 'Canceled' ? s.status_Canceled : ''}
+                                            el.status === 'InShop' ? s.status_WaitingPayment :
+                                                el.status === 'Executed' ? s.status_Ready :
+                                                    el.status === 'Canceled' ? s.status_Canceled : ''}
                                         >
-                                            {el.supplyInvoice.sypplyActStatus}
+                                            {el.status}
                                         </div>
 
                                         <div className={s.item_content}>
                                             <div className={s.content_info}>
                                                 <div className={s.item_contentTop_number}>
-                                                    №{el.supplyInvoice.id}
+                                                    №{el.id}
                                                 </div>
                                                 <div className={s.item_contentTop_number}>
                                                     Иванов Василий
                                                 </div>
                                                 <div>
-                                                    Какая-то информация
+                                                    {el.description}
                                                 </div>
                                             </div>
 
@@ -89,7 +93,7 @@ export const EncashmentArchiveModal = () => {
                                                         <img src={CashIcon} alt='cash-icon'/>
                                                     </div>
                                                     <div className={s.cashBlock_info}>
-                                                        99999111
+                                                        {r(el.cash * fbts.c) + fbts.s}
                                                     </div>
                                                 </div>
                                                 <div className={s.cashBlock}>
@@ -97,7 +101,7 @@ export const EncashmentArchiveModal = () => {
                                                         <img src={PayCardIcon} alt='card-icon'/>
                                                     </div>
                                                     <div className={s.cashBlock_info}>
-                                                        999992
+                                                        {r(el.card * fbts.c) + fbts.s}
                                                     </div>
                                                 </div>
                                                 <div className={s.cashBlock}>
@@ -105,7 +109,7 @@ export const EncashmentArchiveModal = () => {
                                                         <img src={MoneyIcon} alt='cash-icon'/>
                                                     </div>
                                                     <div className={s.cashBlock_info}>
-                                                        99999121212
+                                                        {r(el.cashRemain * fbts.c) + fbts.s}
                                                     </div>
                                                 </div>
                                             </div>
@@ -113,11 +117,11 @@ export const EncashmentArchiveModal = () => {
                                             <div className={s.content_date}>
                                                 <div>
                                                     <div>Создан:</div>
-                                                    <div>{formatDate(el.supplyInvoice.createdAt)}</div>
+                                                    <div>{formatDate(el.createdAt)}</div>
                                                 </div>
                                                 <div>
                                                     <div>Изменён:</div>
-                                                    <div>{formatDate(el.supplyInvoice.updatedAt)}</div>
+                                                    <div>{formatDate(el.updatedAt)}</div>
                                                 </div>
                                             </div>
                                         </div>

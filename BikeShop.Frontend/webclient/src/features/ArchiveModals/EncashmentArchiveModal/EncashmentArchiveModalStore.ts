@@ -2,8 +2,7 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {SupplyInvoiceDTO} from "../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO"
-import {SupplyInvoiceAPI} from '../../../entities'
+import {Encashment, EncashmentAPI, LocalStorage} from '../../../entities'
 
 interface EncashmentArchiveModalStore {
     openEncashmentArchiveModal: boolean
@@ -11,7 +10,7 @@ interface EncashmentArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    archive: SupplyInvoiceDTO[]
+    archive: Encashment[]
     getArchive: () => void
 }
 
@@ -27,9 +26,10 @@ const useEncashmentArchiveModal = create<EncashmentArchiveModalStore>()(/*persis
     getArchive: () => {
         set({isLoading: true})
         // заглушка
-        SupplyInvoiceAPI.getByShop(1, 100).then((res: any) => {
+        EncashmentAPI.getByShop(LocalStorage.shopId()!, 100).then((res) => {
             set(state => {
                 state.archive = res.data
+                console.log('Encashment', res.data)
             })
             set({isLoading: false})
         }).catch((error: any) => {

@@ -1,11 +1,12 @@
 import {$api} from "../../../shared"
 import {Encashment} from '../../entities/Acts/Cashbox/Encashment'
 import {AxiosResponse} from 'axios'
+import {CreateEncashment} from "../../requests/CreateEncashment";
 
 export const EncashmentAPI = {
-    getByShop(shopId: number, take: number): Promise<AxiosResponse<Encashment[]>> {
+    getByShop(shopId: string, take: number): Promise<AxiosResponse<Encashment[]>> {
         return (
-            $api.get<Encashment[]>(`/encashment/getbyshop?id=${shopId}&take=${take}`)
+            $api.get<Encashment[]>(`/encashment/getbyshop?ShopId=${shopId}&Take=${take}`)
         )
     },
     setStatusToTransfer(id: number, userId: string): Promise<AxiosResponse<Encashment>> {
@@ -16,6 +17,11 @@ export const EncashmentAPI = {
     setStatusToFinish(id: number, userId: string): Promise<AxiosResponse<Encashment>> {
         return (
             $api.put(`/encashment/setstatustofinish?id=${id}&userId=${userId}`)
+        )
+    },
+    create(data: CreateEncashment): Promise<AxiosResponse<Encashment>> {
+        return (
+            $api.post(`/encashment/create`, data)
         )
     },
 }

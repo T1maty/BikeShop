@@ -6,6 +6,7 @@ export interface Encashment {
     card: number
     status: string
     time: string
+    cashRemain: number,
 
     createdAt: string
     updatedAt: string

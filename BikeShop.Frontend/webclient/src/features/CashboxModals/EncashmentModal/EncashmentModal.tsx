@@ -3,7 +3,9 @@ import s from './EncashmentModal.module.scss'
 import {Button, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import useEncashmentModal from "./EncashmentModalStore"
 import {Controller, SubmitHandler, useForm} from 'react-hook-form'
-import {useAuth, useCurrency} from "../../../entities";
+import {EncashmentAPI, LocalStorage, useAuth, useCurrency} from "../../../entities";
+import {CreateEncashment} from "../../../entities/requests/CreateEncashment";
+import {useSnackbar} from "notistack";
 
 export const EncashmentModal = () => {
 
@@ -12,14 +14,18 @@ export const EncashmentModal = () => {
     const loginToShop = useAuth(s => s.loginToShop)
     const shop = useAuth(s => s.shop)
     const fbts = useCurrency(s => s.fromBaseToSelected)
+    const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
+    const {enqueueSnackbar} = useSnackbar()
 
     const [rest, setRest] = useState('0')
 
-    const formControl = useForm<any>({
+    const formControl = useForm<CreateEncashment>({
         defaultValues: {
-            sum: 0,
-            details: '',
+            cash: 0,
+            description: '',
+            shopId: shop!.id.toString(),
+            userId: LocalStorage.userId()!
         }
     })
 
@@ -30,18 +36,21 @@ export const EncashmentModal = () => {
     }, [open])
 
     useEffect(() => {
-        setRest(r(shop?.cashboxCash! * fbts.c - formControl.getValues('sum')))
-    }, [formControl.watch('sum')])
+        setRest(r(shop?.cashboxCash! * fbts.c - formControl.getValues('cash')))
+    }, [formControl.watch('cash')])
 
-    const onSubmit: SubmitHandler<any> = (data: any) => {
-        //
+    const onSubmit: SubmitHandler<CreateEncashment> = (data: CreateEncashment) => {
+        console.log(data)
+        let nd = {...data, cash: (data.cash * fstb.c)}
+        EncashmentAPI.create(nd).then(() => {
+            enqueueSnackbar('Инкассация создана', {variant: 'success', autoHideDuration: 10000})
+            loginToShop(shop?.id!)
+            formControl.reset()
+            setOpen(false)
+        }).catch(() => {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 10000})
+        })
     }
-
-    useEffect(() => {
-        // formControl.reset()
-        formControl.setValue('sum', 0)
-        formControl.setValue('details', '')
-    }, [])
 
     return (
         <CustomModal
@@ -70,7 +79,7 @@ export const EncashmentModal = () => {
                             </div>
                         </div>
 
-                        <ControlledCustomInput name={'sum'}
+                        <ControlledCustomInput name={'cash'}
                                                placeholder={'Изъято'}
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
@@ -79,16 +88,13 @@ export const EncashmentModal = () => {
                         <div className={s.content_report}>
                             <div className={s.report}>
                                 <Controller
-                                    name={'details'}
+                                    name={'description'}
                                     control={formControl.control}
                                     render={({field}: any) =>
                                         <textarea placeholder={'Дополнительная информация'}
-                                                  value={field.value.details}
+                                                  value={field.value}
                                                   onChange={(v) => {
-                                                      field.onChange({
-                                                          ...field.value,
-                                                          details: v.target.value
-                                                      })
+                                                      field.onChange(v)
                                                   }}
                                         />
                                     }
