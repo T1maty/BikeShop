@@ -11,7 +11,7 @@ import {Workshop} from './Workshop'
 import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.png'
 import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
-import Map from '../../../../shared/assets/shop/images/map-01.png'
+import Map from '../../../../shared/assets/shop/images/map-00.png'
 import WorkshopBanner from '../../../../shared/assets/shop/images/workshop-banner.png'
 
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
@@ -131,16 +131,37 @@ export const ShopMain = () => {
                         Контакты
                     </div>
                     <div className={s.info}>
-                        <div>Карта</div>
-                        <div>Инфо</div>
+                        <div className={s.info_map}>
+                            <img src={Map} alt="map"/>
+                        </div>
+                        <div className={s.info_address}>
+                            <div className={s.address_title}>
+                                <div>Веломагазин</div>
+                                <div>г.Киев, ул.Щербакова, 1</div>
+                            </div>
+                            <div className={s.address_time}>
+                                <div>
+                                    <div>Режим работы</div>
+                                    <div>ПН-ПТ: 10:00-20:00</div>
+                                    <div>СБ-ВС: 10:00-20:00</div>
+                                </div>
+                                <div>
+                                    <div>Контактный номер</div>
+                                    <div>+38 (099) 139 23 85</div>
+                                </div>
+                            </div>
+                            <div className={s.address_gallery}>
+                                Галерея
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div className={s.map}>
-                <img src={Map} alt="map"/>
+            {/*<div className={s.map}>*/}
+            {/*    <img src={Map} alt="map"/>*/}
                 {/*<RegistrationForm/>*/}
-            </div>
+            {/*</div>*/}
 
         </div>
     )
