@@ -11,12 +11,12 @@ export const EncashmentAPI = {
     },
     setStatusToTransfer(id: number, userId: string): Promise<AxiosResponse<Encashment>> {
         return (
-            $api.put(`/encashment/setstatustotransfer?id=${id}&userId=${userId}`)
+            $api.put(`/encashment/setstatustotransfer?Id=${id}&UserId=${userId}`)
         )
     },
     setStatusToFinish(id: number, userId: string): Promise<AxiosResponse<Encashment>> {
         return (
-            $api.put(`/encashment/setstatustofinish?id=${id}&userId=${userId}`)
+            $api.put(`/encashment/setstatustofinish?Id=${id}&UserId=${userId}`)
         )
     },
     create(data: CreateEncashment): Promise<AxiosResponse<Encashment>> {

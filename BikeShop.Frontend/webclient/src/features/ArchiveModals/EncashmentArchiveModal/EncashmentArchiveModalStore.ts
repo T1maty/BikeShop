@@ -12,9 +12,19 @@ interface EncashmentArchiveModalStore {
 
     archive: Encashment[]
     getArchive: () => void
+    setArchive: (v: Encashment[]) => void
+    selected: Encashment | null
+    setSelected: (v: Encashment) => void
 }
 
 const useEncashmentArchiveModal = create<EncashmentArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    setArchive: (v) => {
+        set({archive: v})
+    },
+    selected: null,
+    setSelected: (v) => {
+        set({selected: v})
+    },
     openEncashmentArchiveModal: false,
     setOpenEncashmentArchiveModal: (value) => set({
         openEncashmentArchiveModal: value

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './EncashmentArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
@@ -10,6 +10,7 @@ import MoneyIcon from '../../../shared/assets/workspace/money-icon.svg'
 import {formatDate} from "../../../shared/utils/formatDate"
 import {useCurrency} from "../../../entities";
 import Enumerable from "linq";
+import {EncashmentArchiveContext} from "./EncashmentArchiveContext";
 
 export const EncashmentArchiveModal = () => {
 
@@ -22,12 +23,16 @@ export const EncashmentArchiveModal = () => {
     const errorStatus = useEncashmentArchiveModal(s => s.errorStatus)
     const getArchive = useEncashmentArchiveModal(s => s.getArchive)
     const archive = useEncashmentArchiveModal(s => s.archive)
+    const selected = useEncashmentArchiveModal(s => s.selected)
+    const setSelected = useEncashmentArchiveModal(s => s.setSelected)
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
 
     // const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
     // const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
+
+    const [context, setContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -36,8 +41,9 @@ export const EncashmentArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getArchive()
-    }, [])
+        if (open)
+            getArchive()
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -50,6 +56,7 @@ export const EncashmentArchiveModal = () => {
                     setOpen(false)
                 }}
             >
+                <EncashmentArchiveContext open={context} setOpen={setContext}/>
                 <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => e.preventDefault()}>
                     <div className={s.encashmentArchiveModal_title}>
                         Архив инкассаций
@@ -64,12 +71,16 @@ export const EncashmentArchiveModal = () => {
                                              // setCurrentSupplyInvoice(el);
                                              // navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
                                          }}
+                                         onContextMenu={e => {
+                                             setSelected(el)
+                                             setContext({o: true, x: e.clientX, y: e.clientY})
+                                         }}
                                     >
                                         <div className={
                                             // s.item_status
-                                            el.status === 'InShop' ? s.status_WaitingPayment :
-                                                el.status === 'Executed' ? s.status_Ready :
-                                                    el.status === 'Canceled' ? s.status_Canceled : ''}
+                                            el.status === 'InTransfer' ? s.status_WaitingPayment :
+                                                el.status === 'Finished' ? s.status_Ready :
+                                                    el.status === 'InShop' ? s.status_Canceled : ''}
                                         >
                                             {el.status}
                                         </div>
