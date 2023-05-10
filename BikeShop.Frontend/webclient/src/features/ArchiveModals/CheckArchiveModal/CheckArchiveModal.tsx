@@ -43,17 +43,16 @@ export const CheckArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {
-                    setOpen(false)
-                }}
+                onClose={() => {setOpen(false)}}
             >
                 <div className={s.checkArchiveModal_mainBox}>
                     <div className={s.checkArchiveModal_title}>
                         Архив чеков
                     </div>
 
-                    <PrintModal open={openPrint} setOpen={setOpenPrint}><CheckForShop
-                        children={selected!}/></PrintModal>
+                    <PrintModal open={openPrint} setOpen={setOpenPrint}>
+                        <CheckForShop children={selected!}/>
+                    </PrintModal>
 
                     <div className={s.checkArchiveModal_list}>
                         {
