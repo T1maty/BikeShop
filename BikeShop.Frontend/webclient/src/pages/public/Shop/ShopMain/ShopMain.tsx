@@ -125,6 +125,18 @@ export const ShopMain = () => {
 
             <Workshop/>
 
+            <div className={s.contacts}>
+                <div className={s.container}>
+                    <div className={s.title}>
+                        Контакты
+                    </div>
+                    <div className={s.info}>
+                        <div>Карта</div>
+                        <div>Инфо</div>
+                    </div>
+                </div>
+            </div>
+
             <div className={s.map}>
                 <img src={Map} alt="map"/>
                 {/*<RegistrationForm/>*/}
