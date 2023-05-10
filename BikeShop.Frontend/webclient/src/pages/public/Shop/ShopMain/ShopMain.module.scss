@@ -325,13 +325,11 @@
         background-color: gray;
         height: 300px;
         padding: 0 40px;
-        //overflow: hidden;
 
         .container {
             @include defaultContainerForShop; // ограничивающий контейнер
             overflow: hidden;
             position: relative;
-            //width: 1400px;
             height: 300px;
 
             //width: 1400px;

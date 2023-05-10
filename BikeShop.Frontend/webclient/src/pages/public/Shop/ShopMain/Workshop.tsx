@@ -4,6 +4,7 @@ import clsx from "clsx"
 import WorkshopPhoto01 from '../../../../shared/assets/shop/images/workshop-01.jpg'
 import WorkshopPhoto02 from '../../../../shared/assets/shop/images/workshop-02.jpg'
 import WorkshopPhoto03 from '../../../../shared/assets/shop/images/workshop-03.jpg'
+import WorkshopPhoto04 from '../../../../shared/assets/shop/images/workshop-04.jpg'
 import ArrowLeft from '../../../../shared/assets/shop/icons/arrow-left.svg'
 import ArrowRight from '../../../../shared/assets/shop/icons/arrow-right.svg'
 
@@ -17,7 +18,7 @@ type WorkshopDataType = {
 
 export const Workshop = () => {
 
-    const [currentData, setCurrentData] = useState<WorkshopDataType | null>(null)
+    const [currentData, setCurrentData] = useState<WorkshopDataType>({} as WorkshopDataType)
 
     const [workshopData, setWorkshopData] = useState<WorkshopDataType[]>([
         {
@@ -35,10 +36,8 @@ export const Workshop = () => {
             imageUrl: WorkshopPhoto03, title: 'Заказ запчастей', workLink: ''
         },
         {
-            id: 3, description: 'Мы занимаемся профессиональным сервисом велосипедов любой сложности, ' +
-                'наша команда предоставит вам консультацию и поможет с подбором правильных ' +
-                'велокомпонентов. Отремонтируем всё: от вилки до втулки, тормоза, цепь и пр.',
-            imageUrl: WorkshopPhoto01, title: 'Ремонт комплектующих', workLink: ''
+            id: 3, description: 'Сделаем всё по высшему разряду!',
+            imageUrl: WorkshopPhoto04, title: 'Индивидуальный подход', workLink: ''
         },
     ])
 
