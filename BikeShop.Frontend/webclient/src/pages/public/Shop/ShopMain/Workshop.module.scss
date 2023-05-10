@@ -21,8 +21,18 @@
                     font-weight: bold;
                     font-size: 20px;
                 }
-                .description_content {
+                .description_contentBox {
+                    height: 150px;
 
+                    // обрезка строки
+                    .description_content {
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 8; // количество строк
+                        -webkit-box-orient: vertical;
+                        line-height: 1.2;
+                        height: 100%;
+                    }
                 }
                 .description_details {
                     align-self: flex-end;
@@ -31,6 +41,7 @@
                     border: 2px solid #F04D4D;
                     padding: 10px;
                     border-radius: 20px;
+                    margin-bottom: 40px !important;
 
                     &:hover {
                         cursor: pointer;
@@ -52,6 +63,16 @@
                         }
                     }
 
+                    .endLength {
+                        opacity: 0.5;
+
+                        img {
+                            &:hover {
+                                cursor: default;
+                            }
+                        }
+                    }
+
                     .bullet_item {
                         width: 15px;
                         height: 15px;
@@ -68,6 +89,7 @@
                         height: 15px;
                         border-radius: 50%;
                         border: 2px solid #F04D4D;
+
                         background-color: #F04D4D;
                     }
                 }

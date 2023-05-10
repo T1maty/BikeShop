@@ -312,14 +312,14 @@
     .workshop_banner {
         background-color: gray;
         height: 300px;
-        overflow: hidden;
+        padding: 0 40px;
+        //overflow: hidden;
 
         .container {
-            @include defaultContainer; // ограничивающий контейнер
+            @include defaultContainerForShop; // ограничивающий контейнер
             overflow: hidden;
-
             position: relative;
-            width: 1400px;
+            //width: 1400px;
             height: 300px;
 
             //width: 1400px;
@@ -333,7 +333,7 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%,-50%);
-                width: 1400px;
+                width: 1320px; // (1400 - padding 2*40px)
                 height: 300px;
                 object-fit: cover;
                 object-position: 0 0;

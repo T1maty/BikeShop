@@ -5,6 +5,7 @@ import WorkshopPhoto02 from '../../../../shared/assets/shop/images/workshop-02.j
 import WorkshopPhoto03 from '../../../../shared/assets/shop/images/workshop-03.jpg'
 import ArrowLeft from '../../../../shared/assets/shop/icons/arrow-left.svg'
 import ArrowRight from '../../../../shared/assets/shop/icons/arrow-right.svg'
+import clsx from "clsx";
 
 type WorkshopDataType = {
     id: number
@@ -48,13 +49,18 @@ export const Workshop = () => {
                         <>
                             <div className={s.workshop_description}>
                                 <div className={s.description_title}>{currentData.title}</div>
-                                <div className={s.description_content}>{currentData.description}</div>
+                                <div className={s.description_contentBox}>
+                                    <div className={s.description_content}>
+                                        {currentData.description}
+                                    </div>
+                                </div>
                                 <div className={s.description_details}>Подробнее</div>
                                 <div className={s.data_length}>
-                                    <div onClick={() => {
-                                        if (currentData.id === 0) return
-                                        if (currentData) setCurrentData(workshopData[currentData.id - 1])
-                                        }}
+                                    <div className={clsx({[s.endLength]: currentData.id === 0})}
+                                         onClick={() => {
+                                             if (currentData.id === 0) return
+                                             if (currentData) setCurrentData(workshopData[currentData.id - 1])
+                                         }}
                                     >
                                         <img src={ArrowLeft} alt='arrow-left' width={20} height={20}/>
                                     </div>
@@ -69,15 +75,18 @@ export const Workshop = () => {
                                             )
                                         })
                                     }
-                                    <div onClick={() => {
-                                        if (currentData.id === workshopData.length-1) return
-                                        if (currentData) setCurrentData(workshopData[currentData.id + 1])
-                                        }}
+                                    <div className={clsx({[s.endLength]: currentData.id === workshopData.length - 1})}
+                                         onClick={() => {
+                                             if (currentData.id === workshopData.length - 1) return
+                                             if (currentData) setCurrentData(workshopData[currentData.id + 1])
+                                         }}
                                     >
                                         <img src={ArrowRight} alt='arrow-right' width={20} height={20}/>
                                     </div>
                                 </div>
                             </div>
+
+
                             <div className={s.workshop_photos}>
                                 {
                                     workshopData.map(el => {

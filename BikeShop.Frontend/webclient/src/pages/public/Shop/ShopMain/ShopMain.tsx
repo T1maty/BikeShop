@@ -5,6 +5,8 @@ import {BikeShopPaths} from "../../../../app/routes/paths"
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import {RegistrationForm} from '../RegistrationForm/RegistrationForm'
+import useCatalog from "../Catalog/CatalogStore"
+import {Workshop} from './Workshop'
 
 import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.png'
 import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
@@ -21,8 +23,7 @@ import catalogAccessories from '../../../../shared/assets/shop/images/catalog-ac
 import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
 import catalogRaznoe from '../../../../shared/assets/shop/images/catalog-raznoe.png'
 import catalogSamokat from '../../../../shared/assets/shop/images/catalog-samokat.png'
-import useCatalog from "../Catalog/CatalogStore"
-import {Workshop} from './Workshop';
+
 
 export const ShopMain = () => {
 
