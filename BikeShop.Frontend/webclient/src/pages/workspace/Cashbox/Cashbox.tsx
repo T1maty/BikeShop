@@ -126,19 +126,11 @@ export const Cashbox = () => {
 
     useEffect(() => {
         let sum = 0
-
         bill.products?.forEach(n => {
-            console.log('qty', n.quantity)
-            console.log('price', n.price)
-            console.log('discount', n.discount)
             sum += (n.quantity * n.price - n.discount)
         })
         setSum(sum)
     }, [bill])
-
-    useEffect(() => {
-        setData([])
-    }, [])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -149,7 +141,7 @@ export const Cashbox = () => {
 
                     <PrintModal open={openPrint}
                                 setOpen={setOpenPrint}>
-                                <CheckForShop children={res!}/>
+                        <CheckForShop children={res!}/>
                     </PrintModal>
 
                     <div className={s.cashboxMainBlock_leftSideWrapper}>
@@ -181,7 +173,9 @@ export const Cashbox = () => {
                         </div>
 
                         <div className={s.leftSide_client}>
-                            <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                            <ChooseClientModal extraCallback={(user: User) => {
+                                chooseClientHandler(user)
+                            }}/>
 
                             <ClientCard user={user}/>
                             <div className={s.leftSide_client_buttons}>

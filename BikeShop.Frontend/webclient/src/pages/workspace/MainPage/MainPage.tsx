@@ -21,6 +21,7 @@ import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModa
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
 import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 import ShiftTime from "./ShiftTime";
+import useCashboxStore from "../Cashbox/CashboxStore";
 
 export const MainPage = () => {
 
@@ -42,6 +43,9 @@ export const MainPage = () => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
+
+    const bill = useCashboxStore(s => s.bill)
+    const setData = useCashboxStore(s => s.setProducts)
 
     const shop = useAuth(s => s.shop)
 
@@ -228,12 +232,15 @@ export const MainPage = () => {
                             </div>
 
                             <div className={s.rightSide_top_info}>
-                                Выбранные товары
+                                {bill.products.map(n => {
+                                    return (<div className={s.cashbox_table}>{n.name}</div>)
+                                })}
                             </div>
 
                             <div className={s.rightSide_top_result}>
                                 <Button buttonDivWrapper={s.result_chooseCashboxBtn}
                                         onClick={() => {
+                                            navigate(BikeShopPaths.WORKSPACE.CASHBOX)
                                         }}>
                                     Открыть кассу
                                 </Button>
