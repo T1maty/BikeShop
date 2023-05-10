@@ -27,6 +27,10 @@ export const CheckAuthEmployee: React.FC<CheckAuthRouteProps> = ({children}) => 
         }
     }, [user])
 
+    useEffect(() => {
+        if (shop != undefined) loginToShop(shop.id)
+    }, [])
+
     return (
         <div>
             {children}

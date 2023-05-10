@@ -18,7 +18,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
 
     const printDocumentHandler = useReactToPrint({
         content: () => componentRef.current,
-        pageStyle: 'print',
+        pageStyle: "@page { size: 2.5in 4in }",
         onAfterPrint: () => {
             enqueueSnackbar('Печать выполнена', {variant: 'success', autoHideDuration: 3000})
         },

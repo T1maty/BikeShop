@@ -93,12 +93,10 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set, get) => 
     },
 
     loginToShop: (shopId) => {
-        AuthAPI.Login.loginToShop(shopId).then((r: any) => {
-            let shop = r.data.filter((n: any) => n.id === shopId)[0]
+        AuthAPI.Login.getShopById(shopId).then(r => {
             set(state => {
-                state.shop = shop
+                state.shop = r.data
             })
-            console.log(shop)
         })
     },
 

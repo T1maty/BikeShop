@@ -1,14 +1,20 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './EncashmentModal.module.scss'
 import {Button, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import useEncashmentModal from "./EncashmentModalStore"
 import {Controller, SubmitHandler, useForm} from 'react-hook-form'
-import {Errors} from "../../../entities/errors/workspaceErrors"
+import {useAuth, useCurrency} from "../../../entities";
 
 export const EncashmentModal = () => {
 
     const open = useEncashmentModal(s => s.openEncashmentModal)
     const setOpen = useEncashmentModal(s => s.setOpenEncashmentModal)
+    const loginToShop = useAuth(s => s.loginToShop)
+    const shop = useAuth(s => s.shop)
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
+
+    const [rest, setRest] = useState('0')
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -16,6 +22,16 @@ export const EncashmentModal = () => {
             details: '',
         }
     })
+
+    useEffect(() => {
+        if (open === true) {
+            loginToShop(shop?.id!)
+        }
+    }, [open])
+
+    useEffect(() => {
+        setRest(r(shop?.cashboxCash! * fbts.c - formControl.getValues('sum')))
+    }, [formControl.watch('sum')])
 
     const onSubmit: SubmitHandler<any> = (data: any) => {
         //
@@ -30,7 +46,9 @@ export const EncashmentModal = () => {
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
         >
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <div className={s.encashmentModal_mainBox}>
@@ -39,7 +57,7 @@ export const EncashmentModal = () => {
                             Инкассация
                         </div>
                         <div className={s.date}>
-                            {Date.now()}
+                            {new Date().toLocaleString('en-GB')}
                         </div>
                     </div>
                     <div className={s.encashment_content}>
@@ -48,14 +66,14 @@ export const EncashmentModal = () => {
                                 Доступно:
                             </div>
                             <div className={s.info}>
-                                9991299
+                                {shop?.cashboxCash ? r(shop?.cashboxCash * fbts.c) + fbts.s : 'Ошибка'}
                             </div>
                         </div>
 
                         <ControlledCustomInput name={'sum'}
                                                placeholder={'Изъято'}
                                                control={formControl}
-                                               // rules={{required: Errors[0].name}}
+                                               rules={{required: 'Обязательное поле'}}
                         />
 
                         <div className={s.content_report}>
@@ -64,7 +82,7 @@ export const EncashmentModal = () => {
                                     name={'details'}
                                     control={formControl.control}
                                     render={({field}: any) =>
-                                        <textarea placeholder={'Детальное описание'}
+                                        <textarea placeholder={'Дополнительная информация'}
                                                   value={field.value.details}
                                                   onChange={(v) => {
                                                       field.onChange({
@@ -83,7 +101,7 @@ export const EncashmentModal = () => {
                                 Остаток:
                             </div>
                             <div className={s.info}>
-                                99999
+                                {rest + fbts.s}
                             </div>
                         </div>
                         <div>
@@ -91,7 +109,7 @@ export const EncashmentModal = () => {
                                 Безнал.:
                             </div>
                             <div className={s.info}>
-                                1212132
+                                {shop?.cashboxCash ? r(shop?.cashboxTerminal * fbts.c) + fbts.s : 'Ошибка'}
                             </div>
                         </div>
                     </div>
@@ -99,7 +117,7 @@ export const EncashmentModal = () => {
                         <Button>
                             Отмена
                         </Button>
-                        <Button type={'submit'}>
+                        <Button type={'submit'} disabled={rest === "NaN"}>
                             Создать
                         </Button>
                     </div>
