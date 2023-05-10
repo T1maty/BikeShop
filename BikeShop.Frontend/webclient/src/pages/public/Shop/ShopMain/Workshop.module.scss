@@ -13,21 +13,38 @@
             display: flex;
             padding: 20px 0;
 
+            @media(max-width: 740px) {
+                flex-wrap: wrap;
+            }
+
             .workshop_description {
                 width: 350px;
                 padding: 20px;
                 @include divLargeMarginBottom;
                 @include flexColumnOnly;
 
+                @media(max-width: 740px) {
+                    width: 100%;
+                }
+
                 .description_title {
                     color: #F04D4D;
                     font-weight: bold;
                     font-size: 20px;
                     height: 40px;
+
+                    @media(max-width: 740px) {
+                        width: 100%;
+                        text-align: center;
+                    }
                 }
                 .description_contentBox {
                     width: 220px;
                     height: 150px;
+
+                    @media(max-width: 740px) {
+                        width: 100%;
+                    }
 
                     // обрезка строки
                     .description_content {
@@ -106,9 +123,15 @@
                 align-items: center;
                 gap: 20px;
                 overflow: hidden;
+                position: relative; // slider
 
                 .workshop_photo {
                     opacity: 0.5;
+
+                    // slider
+                    position: relative;
+                    top: 0;
+                    left: 390px;
 
                     &:hover {
                         opacity: 1;
@@ -130,6 +153,11 @@
                     }
                 }
                 .workshop_photo_active {
+                    // slider
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+
                     .photo {
                         img {
                             width: 370px;

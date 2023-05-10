@@ -165,9 +165,17 @@
                     font-weight: bold;
                     color: black;
 
-                    a {text-decoration: none}
-                    a:visited{color:inherit}
-                    a:focus, a:active {outline: none}
+                    a {
+                        text-decoration: none
+                    }
+
+                    a:visited {
+                        color: inherit
+                    }
+
+                    a:focus, a:active {
+                        outline: none
+                    }
 
                     @media(max-width: 1400px) {
                         //
@@ -317,13 +325,11 @@
         background-color: gray;
         height: 300px;
         padding: 0 40px;
-        //overflow: hidden;
 
         .container {
             @include defaultContainerForShop; // ограничивающий контейнер
             overflow: hidden;
             position: relative;
-            //width: 1400px;
             height: 300px;
 
             //width: 1400px;
@@ -336,11 +342,41 @@
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                transform: translate(-50%,-50%);
+                transform: translate(-50%, -50%);
                 width: 1320px; // (1400 - padding 2*40px)
                 height: 300px;
                 object-fit: cover;
                 object-position: 0 0;
+            }
+        }
+    }
+
+    .contacts {
+        background: rgba(0, 0, 0, 0.5);
+
+        .container {
+            @include defaultContainerForShop; // ограничивающий контейнер
+
+            .title {
+                font-size: 40px;
+                color: white;
+                @include flexCenter;
+                padding: 20px 0;
+            }
+            .info {
+                @include flexBetween;
+                gap: 20px;
+                width: 100%;
+                padding-bottom: 20px;
+
+                > div {
+                    border: 1px solid white;
+                    background-color: $themeColorDark;
+                    border-radius: $smallBorderRadius;
+                    padding: $defaultSmallMargin;
+                    width: 50%;
+                    height: 200px;
+                }
             }
         }
     }
