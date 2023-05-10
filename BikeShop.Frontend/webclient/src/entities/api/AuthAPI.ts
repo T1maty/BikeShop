@@ -1,8 +1,14 @@
 import {AxiosResponse} from "axios"
 import {$api} from "shared"
 import {
-    CreateUser, GetUsersResponse, LoginData, LoginResponse,
-    RegistrationData, SearchClient, Shop, User
+    CreateUser,
+    GetUsersResponse,
+    LoginData,
+    LoginResponse,
+    RegistrationData,
+    SearchClient,
+    Shop,
+    User
 } from '../index'
 
 export const AuthAPI = {
@@ -25,6 +31,11 @@ export const AuthAPI = {
         loginToShop(shopId: number): Promise<AxiosResponse<any>> {
             return (
                 $api.get<Shop[]>('shop/getall')
+            )
+        },
+        getShopById(shopId: number): Promise<AxiosResponse<Shop>> {
+            return (
+                $api.get<Shop>(`/shop/getbyid?ShopId=${shopId}`)
             )
         },
     },

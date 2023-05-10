@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import s from "./MainPage.module.scss"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {LocalStorage, ShiftAPI, User} from "../../../entities"
+import {LocalStorage, ShiftAPI, useAuth, useCurrency, User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button, LoaderScreen} from '../../../shared/ui'
 import {
@@ -39,6 +39,13 @@ export const MainPage = () => {
 
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
+
+    const shop = useAuth(s => s.shop)
+
+    console.log('shop', shop)
 
     useEffect(() => {
         getUserShiftStatus()
@@ -248,9 +255,8 @@ export const MainPage = () => {
 
                         <div className={s.rightSide_bottom}>
                             <div className={s.bottom_left}>
-                                <div>Сумма</div>
-                                <div>Сумма</div>
-                                <div>Сумма</div>
+                                <div>Касса: {shop?.cashboxCash ? r(shop?.cashboxCash * fbts.c) + fbts.s : 'Ошибка'}</div>
+                                <div>Терминал: {shop?.cashboxCash ? r(shop?.cashboxTerminal * fbts.c) + fbts.s : 'Ошибка'}</div>
                             </div>
 
                             <div className={s.bottom_right}>

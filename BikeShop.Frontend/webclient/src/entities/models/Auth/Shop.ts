@@ -4,8 +4,10 @@ export interface Shop {
     address: string
     phone: string
     secret: string
-    storageId: 0
+    storageId: number
     createdAt: string
     updatedAt: string
     enabled: true
+    cashboxCash: number,
+    cashboxTerminal: number,
 }

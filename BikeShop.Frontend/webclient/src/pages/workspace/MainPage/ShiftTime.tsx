@@ -37,7 +37,7 @@ const ShiftTime = () => {
         if (seconds === 60) {
             setSeconds(0)
             setMinutes(s => s + 1)
-            if (minutes === 60) {
+            if (minutes === 59) {
                 setMinutes(0)
                 setHours(h => h + 1)
             }

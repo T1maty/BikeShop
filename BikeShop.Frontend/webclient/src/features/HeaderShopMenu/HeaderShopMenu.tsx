@@ -62,14 +62,14 @@ export const HeaderShopMenu = () => {
     ])
     const [subMenuItems1, setSubMenuItems1] = useState([
         {
-            title: 'Приход товара',
+            title: 'Приходы товаров',
             func: () => {
                 openSupplyInvoiceArchiveModal(true)
                 setIsComponentVisible(false)
             }
         },
         {
-            title: 'Инвентаризация',
+            title: 'Инвентаризации',
             func: () => {
                 openInventoryOfProductsArchiveModal(true)
                 setIsComponentVisible(false)
@@ -83,28 +83,21 @@ export const HeaderShopMenu = () => {
             }
         },
         {
-            title: 'Текущие ремонты',
-            func: () => {
-                openServiceArchiveModal(true)
-                setIsComponentVisible(false)
-            }
-        },
-        {
-            title: 'Ремонты',
+            title: 'Завершенные ремонты',
             func: () => {
                 openServiceFinalArchiveModal(true)
                 setIsComponentVisible(false)
             }
         },
         {
-            title: 'Инкассация',
+            title: 'Инкассации',
             func: () => {
                 openEncashmentArchiveModal(true)
                 setIsComponentVisible(false)
             }
         },
         {
-            title: 'Перемещение товара',
+            title: 'Перемещение товаров',
             func: () => {
                 openStorageProductsTransferArchiveModal(true)
                 setIsComponentVisible(false)
