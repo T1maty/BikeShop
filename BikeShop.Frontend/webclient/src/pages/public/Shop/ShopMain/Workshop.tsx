@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import s from './Workshop.module.scss'
+import clsx from "clsx"
 import WorkshopPhoto01 from '../../../../shared/assets/shop/images/workshop-01.jpg'
 import WorkshopPhoto02 from '../../../../shared/assets/shop/images/workshop-02.jpg'
 import WorkshopPhoto03 from '../../../../shared/assets/shop/images/workshop-03.jpg'
 import ArrowLeft from '../../../../shared/assets/shop/icons/arrow-left.svg'
 import ArrowRight from '../../../../shared/assets/shop/icons/arrow-right.svg'
-import clsx from "clsx";
 
 type WorkshopDataType = {
     id: number
@@ -94,8 +94,17 @@ export const Workshop = () => {
                                             <div key={el.id}
                                                  className={currentData.id === el.id ? s.workshop_photo_active : s.workshop_photo}
                                             >
-                                                <div className={s.photo}><img src={el.imageUrl} alt='workshop-photo'/></div>
-                                                <div className={s.title}>{currentData.id !== el.id ? el.title : ''}</div>
+                                                <div className={s.photo}
+                                                     onClick={() => {
+                                                         // @ts-ignore
+                                                         setCurrentData(workshopData.find(newEl => newEl.id === el.id))
+                                                     }}
+                                                >
+                                                    <img src={el.imageUrl} alt='workshop-photo'/>
+                                                </div>
+                                                <div className={s.title}>
+                                                    {currentData.id !== el.id ? el.title : ''}
+                                                </div>
                                             </div>
                                         )
                                     })

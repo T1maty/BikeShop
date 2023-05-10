@@ -2,11 +2,14 @@
 @import '../../../../app/styles/variables/variables';
 
 .workshop_mainBox {
+    background-color: $themeColorDark;
+    //background: rgba(0, 0, 0, 0.5);
+
     .container {
         @include defaultContainerForShop; // ограничивающий контейнер
 
         .workshopData {
-            border: 1px solid black;
+            //border: 1px solid black;
             display: flex;
             padding: 20px 0;
 
@@ -26,6 +29,7 @@
 
                     // обрезка строки
                     .description_content {
+                        color: white;
                         overflow: hidden;
                         display: -webkit-box;
                         -webkit-line-clamp: 8; // количество строк
@@ -41,6 +45,7 @@
                     border: 2px solid #F04D4D;
                     padding: 10px;
                     border-radius: 20px;
+                    color: white;
                     margin-bottom: 40px !important;
 
                     &:hover {
@@ -64,7 +69,7 @@
                     }
 
                     .endLength {
-                        opacity: 0.5;
+                        opacity: 0.3;
 
                         img {
                             &:hover {
@@ -112,8 +117,8 @@
                         margin-bottom: 10px;
 
                         img {
-                            width: 315px;
-                            height: 315px;
+                            width: 300px;
+                            height: 300px;
                         }
                     }
                     .title {
@@ -125,7 +130,8 @@
                 .workshop_photo_active {
                     .photo {
                         img {
-
+                            width: 370px;
+                            height: 370px;
                         }
                     }
                     .title {
