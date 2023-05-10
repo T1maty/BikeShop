@@ -140,12 +140,12 @@ export const ShopMain = () => {
                                 <div>г.Киев, ул.Щербакова, 1</div>
                             </div>
                             <div className={s.address_time}>
-                                <div>
+                                <div className={s.time_one}>
                                     <div>Режим работы</div>
                                     <div>ПН-ПТ: 10:00-20:00</div>
                                     <div>СБ-ВС: 10:00-20:00</div>
                                 </div>
-                                <div>
+                                <div className={s.time_two}>
                                     <div>Контактный номер</div>
                                     <div>+38 (099) 139 23 85</div>
                                 </div>

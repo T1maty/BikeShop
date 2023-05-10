@@ -236,7 +236,8 @@
                         }
                     }
 
-                    padding: 20px 40px 150px;
+                    //padding: 20px 40px 150px;
+                    padding: 40px;
 
                     @media(max-width: 767px) {
                         padding: 20px 40px;
@@ -377,10 +378,20 @@
                     width: 50%;
                     height: 404px;
                     overflow: hidden;
+
+                    @media(max-width: 870px) {
+                        width: 100%;
+                    }
+                }
+
+                @media(max-width: 870px) {
+                    flex-wrap: wrap;
                 }
 
                 .info_map {
-
+                    img {
+                        //object-fit: cover;
+                    }
                 }
                 .info_address {
                     color: white;
@@ -412,6 +423,18 @@
                             flex-direction: column;
                             align-items: center;
                             @include divSmallMarginBottom;
+                            text-align: center;
+                        }
+
+                        @media(max-width: 420px) {
+                            height: 35%;
+                        }
+
+                        .time_one {
+
+                        }
+                        .time_two {
+
                         }
                     }
                     .address_gallery {
