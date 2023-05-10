@@ -6,9 +6,9 @@ export interface CreateProduct {
     incomePrice: number
     dealerPrice: number
     retailPrice: number
-    brandId: number
-    checkStatus: string
     retailVisibility: boolean
     b2BVisibility: boolean
-    tagsIds: string[]
+    tagId: string | null
+    quantityUnitId: number,
+    user: string,
 }

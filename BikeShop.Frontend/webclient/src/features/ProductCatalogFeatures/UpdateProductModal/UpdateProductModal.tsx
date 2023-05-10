@@ -4,12 +4,14 @@ import {SubmitHandler, useForm} from 'react-hook-form'
 import {Product, UpdateProduct} from '../../../entities'
 import useUpdateProductModal from './UpdateProductModalStore'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
+import {useSnackbar} from "notistack";
 
 interface UpdateProductModalProps {
     onSuccess?: (updateData: UpdateProduct) => void
 }
 
 export const UpdateProductModal = (props: UpdateProductModalProps) => {
+    const {enqueueSnackbar} = useSnackbar()
 
     const open = useUpdateProductModal(s => s.openUpdateProductModal)
     const setOpen = useUpdateProductModal(s => s.setOpenUpdateProductModal)
@@ -23,11 +25,6 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
             catalogKey: product.catalogKey,
             category: product.category,
             manufacturerBarcode: product.manufacturerBarcode,
-            incomePrice: product.incomePrice,
-            dealerPrice: product.dealerPrice,
-            retailPrice: product.retailPrice,
-            brandId: product.brandId,
-            checkStatus: product.checkStatus,
             retailVisibility: product.retailVisibility,
             b2BVisibility: product.b2BVisibility
         }
@@ -39,24 +36,20 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
         formControl.setValue('catalogKey', product.catalogKey)
         formControl.setValue('category', product.category)
         formControl.setValue('manufacturerBarcode', product.manufacturerBarcode)
-        formControl.setValue('incomePrice', product.incomePrice)
-        formControl.setValue('dealerPrice', product.dealerPrice)
-        formControl.setValue('retailPrice', product.retailPrice)
-        formControl.setValue('brandId', product.brandId)
-        formControl.setValue('checkStatus', product.checkStatus)
         formControl.setValue('retailVisibility', product.retailVisibility)
         formControl.setValue('b2BVisibility', product.b2BVisibility)
     }, [product])
 
     const onSubmit: SubmitHandler<UpdateProduct> = (data: UpdateProduct) => {
         console.log(data)
-        if (data.manufacturerBarcode == null) data.manufacturerBarcode = ''
-        if (data.category == null) data.category = ''
         update(data).then((r) => {
             console.log(r)
             setOpen(false, {} as Product)
             props.onSuccess ? props.onSuccess(data) : true
+            enqueueSnackbar('Товар успешно обновлен', {variant: 'success', autoHideDuration: 3000})
+            formControl.reset()
         }).catch((error => {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
             console.log(error)
         }))
     }

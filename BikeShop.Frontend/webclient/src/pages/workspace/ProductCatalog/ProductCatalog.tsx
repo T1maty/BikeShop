@@ -6,13 +6,14 @@ import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
 import {EditProductCardModal} from "../../../features"
 import {useSnackbar} from "notistack"
-import {ProductTag} from '../../../entities'
+import {ProductCardAPI, ProductTag} from '../../../entities'
 import useProductCatalogTableStore
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableStore"
 import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
 import Select from 'react-select'
 import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
 import {useProductCatalogStorage} from "./ProductCatalogStorage"
+import Enumerable from "linq";
 
 export const ProductCatalog = () => {
 
@@ -28,6 +29,8 @@ export const ProductCatalog = () => {
     const setSelectedStorage = useCreateStorageModal(s => s.setSelectedStorage)
 
     const loadStorageData = useProductCatalogStorage(s => s.loadStorageData)
+    const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
+
     const storageData = useProductCatalogStorage(s => s.storageData)
 
     const [tags, setTags] = useState<ProductTag[]>([])
@@ -66,11 +69,16 @@ export const ProductCatalog = () => {
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
-                    <Button onClick={() => {}}>
+                    <Button onClick={() => {
+                    }}>
                         Отображение
                     </Button>
                     <div className={s.searchRow_searchInput}>
-                        <AsyncSelectSearchProduct onSelect={() => {}}/>
+                        <AsyncSelectSearchProduct onSelect={(p) => {
+                            ProductCardAPI.getProductCardById(p.id).then(n => {
+                                setProductsToTable(Enumerable.from(n.data.productTags).select(h => h.productTag.id).toArray())
+                            })
+                        }}/>
                     </div>
                     <div style={{color: 'black'}}>
                         <Select
@@ -79,7 +87,9 @@ export const ProductCatalog = () => {
                             isSearchable={false}
                             options={storages}
                             value={selectedStorage}
-                            onChange={(v) => {setSelectedStorage(v!.id)}}
+                            onChange={(v) => {
+                                setSelectedStorage(v!.id)
+                            }}
                             getOptionLabel={label => label.name}
                             getOptionValue={value => value.name}
                             styles={selectColorStyles}
@@ -91,9 +101,13 @@ export const ProductCatalog = () => {
                 </div>
 
                 <div className={s.rightSide_table}
-                     onContextMenu={(event) => {event.preventDefault()}}
+                     onContextMenu={(event) => {
+                         event.preventDefault()
+                     }}
                 >
-                    <ProductCatalogTable onRowDoubleClick={(row: any) => {getProductCard(row.id)}}/>
+                    <ProductCatalogTable onRowDoubleClick={(row: any) => {
+                        getProductCard(row.id)
+                    }}/>
                 </div>
             </div>
         </div>

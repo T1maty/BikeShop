@@ -2,7 +2,7 @@ import React from 'react'
 import s from './CreateProductModal.module.scss'
 import useCreateProductModal from './CreateProductModalStore'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {CreateProduct, EnumProductCheckStatus, Product} from '../../../entities'
+import {CreateProduct, LocalStorage, Product, useCurrency} from '../../../entities'
 import {useSnackbar} from 'notistack'
 import {useTranslation} from 'react-i18next'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
@@ -22,30 +22,32 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
     const create = useCreateProductModal(s => s.create)
     const tags = useCreateProductModal(s => s.tags)
 
+    const fstb = useCurrency(s => s.fromSelectedToBase)
+    const r = useCurrency(s => s.roundUp)
+
     const formControl = useForm<CreateProduct>({
         defaultValues: {
             name: '',
             catalogKey: '',
-            category: 'cat',
+            category: '',
             manufacturerBarcode: '',
             incomePrice: 0,
             dealerPrice: 0,
             retailPrice: 0,
-            brandId: 1,
-            checkStatus: EnumProductCheckStatus.justCreatedByUser,
             retailVisibility: false,
             b2BVisibility: false,
-            tagsIds: ['0']
+            tagId: null,
+            quantityUnitId: 1,
+            user: LocalStorage.userId()!
         }
     })
 
     const onSubmit: SubmitHandler<CreateProduct> = (data: CreateProduct) => {
-        if (tags.length > 0) {
-            data.tagsIds = tags.map((n) => {
-                return n.id
-            })
-        }
 
+        data.tagId = tags[0].id
+        data.dealerPrice = data.dealerPrice * fstb.c
+        data.retailPrice = data.retailPrice * fstb.c
+        data.incomePrice = data.incomePrice * fstb.c
         create(data).then((r) => {
             setOpen(false)
             props.onSuccess ? props.onSuccess(r.data) : true
@@ -54,7 +56,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
             enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 10000})
         }).catch(r => {
             let message = error(r.response.data.errorDescription).toString()
-            formControl.setError('manufacturerBarcode', {type: 'serverError', message: message})
+            formControl.setError(r.response.data.reasonField, {type: 'serverError', message: message})
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 10000})
             console.error(r.response.data)
         })
@@ -90,26 +92,29 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
                         />
+                        <ControlledCustomInput name={'category'}
+                                               placeholder={'Категория'}
+                                               control={formControl}
+                        />
                         <ControlledCustomInput name={'manufacturerBarcode'}
                                                placeholder={'Штрих-код производителя'}
                                                control={formControl}
-                                               rules={{required: 'Обязательное поле'}}
                         />
                         <ControlledCustomInput name={'incomePrice'}
                                                placeholder={'Цена возможной закупки'}
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
-                        />
+                        />{fstb.s}
                         <ControlledCustomInput name={'dealerPrice'}
                                                placeholder={'Оптовая цена'}
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
-                        />
+                        />{fstb.s}
                         <ControlledCustomInput name={'retailPrice'}
                                                placeholder={'Розничная цена'}
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
-                        />
+                        />{fstb.s}
                         <ControlledCustomCheckbox name={'b2BVisibility'}
                                                   label={'Видим в B2B'}
                                                   control={formControl}
