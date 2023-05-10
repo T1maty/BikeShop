@@ -35,13 +35,14 @@ export const Cashbox = () => {
     const [open, setOpen] = useState(false)
     const [openPrint, setOpenPrint] = useState(false)
     const [openPay, setOpenPay] = useState(false)
-    const [sum, setSum] = useState(0)
     const [res, setRes] = useState<BillWithProducts>()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const logUser = useAuth(s => s.user)
     const lastBarcode = useBarcode(s => s.lastBarcode)
 
+    const sum = useCashboxStore(s => s.sum)
+    const setSum = useCashboxStore(s => s.setSum)
     const isLoading = useCashboxStore(s => s.isLoading)
     const setIsLoading = useCashboxStore(s => s.setIsLoading)
     const user = useCashboxStore(s => s.user)

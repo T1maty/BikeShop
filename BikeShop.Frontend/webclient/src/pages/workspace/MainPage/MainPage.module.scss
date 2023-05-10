@@ -131,14 +131,62 @@
           width: 100%;
           background-color: $themeColorGray;
           border-radius: $largeBorderRadius;
+          overflow: auto;
 
-          .cashbox_table {
-
-            border: 2px solid white;
-            border-radius: 10px;
-            margin: 10px;
+          .cashbox_table_wrapper {
+            display: flex;
+            margin-top: 5px;
+            margin-left: 10px;
             padding: 5px;
+            width: 97%;
+
+            .cashbox_table_left {
+              display: flex;
+              border: 2px solid white;
+              border-radius: 10px;
+              padding: 5px;
+              width: 100%;
+              margin-right: 5px;
+
+              .cashbox_table_name {
+                border-radius: 5px;
+                width: 90%;
+                margin-right: 5px;
+              }
+
+              .cashbox_table_price {
+                background: white;
+                color: black;
+                border-radius: 5px;
+                padding: 5px;
+                margin-right: 5px;
+              }
+
+              .cashbox_table_total {
+                background: white;
+                color: black;
+                border-radius: 5px;
+                padding: 5px;
+
+              }
+            }
+
+            .cashbox_table_remove {
+              display: flex;
+              justify-content: space-around;
+              border: 2px solid darkred;
+              border-radius: 5px;
+              padding: 5px;
+              width: 50px;
+              height: 50px;
+            }
+
+            .cashbox_table_remove:hover {
+              color: red;
+              border: 2px solid red;
+            }
           }
+
 
         }
 

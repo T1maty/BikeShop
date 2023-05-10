@@ -16,9 +16,16 @@ interface CashboxStore {
     products: any[]
     setProducts: (value: BillProductDTO[]) => void
     addProduct: (value: any) => void
+
+    sum: number,
+    setSum: (v: number) => void
 }
 
 const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get) => ({
+    sum: 0,
+    setSum: (v) => {
+        set({sum: v})
+    },
     isLoading: false,
     setIsLoading: (value) => set({
         isLoading: value

@@ -41,6 +41,10 @@ export const MainPage = () => {
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
 
+    const sum = useCashboxStore(s => s.sum)
+    const setSum = useCashboxStore(s => s.setSum)
+
+
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
 
@@ -71,6 +75,14 @@ export const MainPage = () => {
         {id: 9, task: 'task 09'},
         {id: 10, task: 'task 10'},
     ])
+
+    useEffect(() => {
+        let sum = 0
+        bill.products?.forEach(n => {
+            sum += (n.quantity * n.price - n.discount)
+        })
+        setSum(sum)
+    }, [bill])
 
     const getShiftButton = () => {
         if (userShiftStatus?.lastAction.action === "Open") {
@@ -233,7 +245,17 @@ export const MainPage = () => {
 
                             <div className={s.rightSide_top_info}>
                                 {bill.products.map(n => {
-                                    return (<div className={s.cashbox_table}>{n.name}</div>)
+                                    return (<div className={s.cashbox_table_wrapper}>
+                                        <div className={s.cashbox_table_left}>
+                                            <div className={s.cashbox_table_name}>{n.name}</div>
+                                            <div className={s.cashbox_table_price}>{n.price * fbts.c + fbts.s} </div>
+                                            <div className={s.cashbox_table_total}>{n.total * fbts.c + fbts.s}</div>
+                                        </div>
+                                        <div className={s.cashbox_table_remove} onClick={() => {
+                                            setData(bill.products.filter(h => h.productId != n.productId))
+                                        }}>X
+                                        </div>
+                                    </div>)
                                 })}
                             </div>
 
@@ -249,7 +271,7 @@ export const MainPage = () => {
                                     X
                                 </Button>
                                 <div className={s.result_span}>
-                                    Цена
+                                    {sum * fbts.c + fbts.s}
                                 </div>
                                 <Button buttonDivWrapper={s.result_payBtn}
                                         onClick={() => {
