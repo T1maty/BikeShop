@@ -23,8 +23,8 @@ import Enumerable from "linq"
 import {BillProductDTO} from "./models/BillProductDTO"
 import {
     BarcodeScannerListenerProvider
-} from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
-import {useBarcode} from "../../../app/providers/BarcodeScannerListenerProvider/useBarcode";
+} from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider"
+import {useBarcode} from "../../../app/providers/BarcodeScannerListenerProvider/useBarcode"
 
 export const Cashbox = () => {
 
@@ -32,9 +32,16 @@ export const Cashbox = () => {
     const {enqueueSnackbar} = useSnackbar()
     const {t} = useTranslation()
 
-    const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
+    const [open, setOpen] = useState(false)
+    const [openPrint, setOpenPrint] = useState(false)
+    const [openPay, setOpenPay] = useState(false)
+    const [sum, setSum] = useState(0)
+    const [res, setRes] = useState<BillWithProducts>()
 
+    const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const logUser = useAuth(s => s.user)
+    const lastBarcode = useBarcode(s => s.lastBarcode)
+
     const isLoading = useCashboxStore(s => s.isLoading)
     const setIsLoading = useCashboxStore(s => s.setIsLoading)
     const user = useCashboxStore(s => s.user)
@@ -42,17 +49,9 @@ export const Cashbox = () => {
     const bill = useCashboxStore(s => s.bill)
     const setData = useCashboxStore(s => s.setProducts)
 
-    const [open, setOpen] = useState(false)
-    const [openPrint, setOpenPrint] = useState(false)
-    const [openPay, setOpenPay] = useState(false)
-    const [sum, setSum] = useState(0)
-    const [res, setRes] = useState<BillWithProducts>()
-
     const bts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
     const currency = useCurrency(s => s.selectedCurrency)
-
-    const lastBarcode = useBarcode(s => s.lastBarcode)
 
     const onSearchHandler = (n: Product) => {
         let exProd = Enumerable.from(bill.products)
@@ -92,17 +91,6 @@ export const Cashbox = () => {
         setOpenClientModal(false)
     }
 
-    useEffect(() => {
-        if (lastBarcode == '') return
-        console.log('Barcode: ', lastBarcode)
-        CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
-            enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
-            onSearchHandler(n.data)
-        }).catch(() => {
-            enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
-        })
-    }, [lastBarcode])
-
     const paymentResultHandler = (value: PaymentData) => {
 
         let res = {...bill, ...value}
@@ -125,6 +113,16 @@ export const Cashbox = () => {
         })
     }
 
+    useEffect(() => {
+        if (lastBarcode == '') return
+        console.log('Barcode: ', lastBarcode)
+        CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
+            enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
+            onSearchHandler(n.data)
+        }).catch(() => {
+            enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
+        })
+    }, [lastBarcode])
 
     useEffect(() => {
         let sum = 0
@@ -151,7 +149,7 @@ export const Cashbox = () => {
 
                     <PrintModal open={openPrint}
                                 setOpen={setOpenPrint}>
-                        <CheckForShop children={res!}/>
+                                <CheckForShop children={res!}/>
                     </PrintModal>
 
                     <div className={s.cashboxMainBlock_leftSideWrapper}>
@@ -183,9 +181,7 @@ export const Cashbox = () => {
                         </div>
 
                         <div className={s.leftSide_client}>
-                            <ChooseClientModal extraCallback={(user: User) => {
-                                chooseClientHandler(user)
-                            }}/>
+                            <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
 
                             <ClientCard user={user}/>
                             <div className={s.leftSide_client_buttons}>
