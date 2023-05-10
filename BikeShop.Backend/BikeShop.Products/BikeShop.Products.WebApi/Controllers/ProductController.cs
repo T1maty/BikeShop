@@ -1,7 +1,5 @@
 using AutoMapper;
 using BikeShop.Products.Application.Common.Errors;
-using BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
-using BikeShop.Products.Application.CQRS.Commands.Product.UpdateProduct;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
 using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.Application.Interfaces;
@@ -34,37 +32,15 @@ namespace BikeShop.Products.WebApi.Controllers
         }
 
 
-        /// <summary>
-        /// Создание нового товара
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Обязательные поля: name, catalogKey, category, все price, brandId, TagsIds
-        /// </remarks>
-        /// 
-        /// <param name="model">Модель создания продукта</param>
-        /// <returns>Ничего</returns>
-        ///
-        /// <response code="200">Успех. Продукт создан</response>
-        /// <response code="404">Бренд с указанным id не найден (brand_not_found)</response>
-        /// <response code="409">Товар с указанным manufacturerBarcode уже существует (product_already_exists)</response>
-        /// <response code="500">Скорее всего, одного из тэгов из tagsIds не существует</response>
-        /// <response code="422">Невалидная модель</response>
         [HttpPost("create")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(IException), StatusCodes.Status409Conflict)]
         [ProducesResponseType(typeof(IException), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ValidationResultModel), StatusCodes.Status422UnprocessableEntity)]
-        public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductModel model)
+        public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductDTO dto)
         {
-            if (!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);
-
-            var command = _mapper.Map<CreateProductCommand>(model);
-            var product = await _mediator.Send(command);
-
-            return Ok(product);
+            return await _productService.Create(dto);
         }
 
 

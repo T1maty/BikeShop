@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using BikeShop.Products.Application.Common.Mappings;
-using BikeShop.Products.Application.CQRS.Commands.Product.CreateProduct;
 
 namespace BikeShop.Products.WebApi.Models.Product
 {
-    public class CreateProductModel : IMappable
+    public class CreateProductModel
     {
         [Required] public string Name { get; set; } = string.Empty;
         [Required] public string CatalogKey { get; set; } = string.Empty;
@@ -23,10 +22,5 @@ namespace BikeShop.Products.WebApi.Models.Product
         public bool B2BVisibility { get; set; }
 
         [Required] public int[] TagsIds { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<CreateProductModel, CreateProductCommand>();
-        }
     }
 }

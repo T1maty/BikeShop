@@ -16,12 +16,15 @@ public class Product : BaseEntity
     public decimal DealerPrice { get; set; }
     public decimal RetailPrice { get; set; }
 
-    public int BrandId { get; set; }
+    public int BrandId { get; set; } = 1;
     [JsonIgnore] public Brand? Brand { get; set; }
 
-    public string CheckStatus { get; set; } = string.Empty;
+    public string CheckStatus { get; set; } = "JustCreatedByUser";
     public bool RetailVisibility { get; set; } = false;
     public bool B2BVisibility { get; set; } = false;
+
+    public Guid UserCreated { get; set; }
+    public Guid UserUpdated { get; set; }
 
     [JsonIgnore] public IList<TagToProductBind> TagToProductBinds { get; set; }
 }

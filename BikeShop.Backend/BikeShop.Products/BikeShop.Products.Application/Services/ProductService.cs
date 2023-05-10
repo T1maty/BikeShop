@@ -186,9 +186,97 @@ namespace BikeShop.Products.Application.Services
             if(dto.ManufacturerBarcode != null) ent.ManufacturerBarcode = dto.ManufacturerBarcode;
             ent.RetailVisibility = dto.RetailVisibility;
             ent.B2BVisibility = dto.B2BVisibility;
+            ent.UserUpdated = dto.User;
+            ent.UpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync(new CancellationToken());
             return ent;
+        }
+
+        public async Task<Product> Create(CreateProductDTO dto)
+        {
+            var prod = new Product();
+
+            prod.UserCreated = dto.User;
+            prod.UserUpdated = dto.User;
+
+            if(dto.ManufacturerBarcode != null)dto.ManufacturerBarcode = dto.ManufacturerBarcode;
+            if(dto.Category != null)dto.Category = dto.Category;
+
+            prod.CatalogKey = dto.CatalogKey;
+            prod.B2BVisibility = dto.B2BVisibility;
+            prod.RetailVisibility = dto.RetailVisibility;
+            prod.RetailPrice = dto.RetailPrice;
+            prod.DealerPrice = dto.DealerPrice;
+            prod.IncomePrice= dto.IncomePrice;
+            prod.Name = dto.Name;
+            prod.QuantityUnitId = 1;
+
+            var unit = await _context.QuantityUnits.FindAsync(1);
+            if (unit == null) throw new Exception();
+
+            prod.QuantityUnitName = unit.Name;
+
+            await _context.Products.AddAsync(prod);
+            await _context.SaveChangesAsync(new CancellationToken());
+            
+            // Гененирую уникальный баркод для продукта
+            var barcodes = await _context.Products.Select(p => p.Barcode).ToArrayAsync();
+            var newBarcode = GenerateUniqueBarcode(prod.Id, barcodes);
+            prod.Barcode = newBarcode;
+
+            await _context.ProductsCards.AddAsync(new ProductCard { ProductId = prod.Id, Description = "", DescriptionShort = "" });
+
+            if(dto.TagId != 0 && dto.TagId != null)
+            {
+                await _context.TagToProductBinds.AddAsync(new TagToProductBind { ProductId = prod.Id, ProductTagId = (int)dto.TagId });
+            }
+
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return prod;
+        }
+
+        private static string GenerateUniqueBarcode(int productId, string[] existBarcodes)
+        {
+            var temp = productId.ToString();
+            while (temp.Length < 12) temp += '0';
+
+            var sum = 0;
+
+            for (var i = temp.Length; i >= 1; i--)
+            {
+                var digit = Convert.ToInt32(temp.Substring(i - 1, 1));
+                if (i % 2 == 0) sum += digit * 3;
+                else sum += digit * 1;
+            }
+
+            var checkSum = (10 - sum % 10) % 10;
+
+            var barcode = temp + checkSum;
+
+            var counter = 0;
+            while (existBarcodes.Contains(barcode))
+            {
+                counter++;
+                var lenght = counter.ToString().Length;
+                temp = barcode.Remove(12 - lenght, lenght + 1) + counter;
+
+                var sum1 = 0;
+
+                for (var i = temp.Length; i >= 1; i--)
+                {
+                    var digit = Convert.ToInt32(temp.Substring(i - 1, 1));
+                    if (i % 2 == 0) sum1 += digit * 3;
+                    else sum1 += digit * 1;
+                }
+
+                var checkSum1 = (10 - (sum1 % 10)) % 10;
+
+                barcode = temp + checkSum1;
+            }
+
+            return barcode;
         }
     }
 }
