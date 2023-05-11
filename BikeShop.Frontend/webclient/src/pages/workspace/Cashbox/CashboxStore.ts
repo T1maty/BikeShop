@@ -1,9 +1,10 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {User} from '../../../entities'
+import {BillWithProducts, FinancialInteractionAPI, LocalStorage, PaymentData, Product, User} from '../../../entities'
 import {NewBillDTO} from "./models/NewBillDTO"
 import {BillProductDTO} from "./models/BillProductDTO"
+import Enumerable from "linq";
 
 interface CashboxStore {
     isLoading: boolean
@@ -13,9 +14,9 @@ interface CashboxStore {
     user: User
     setUser: (user: User) => void
 
-    products: any[]
     setProducts: (value: BillProductDTO[]) => void
-    addProduct: (value: any) => void
+    addProduct: (value: Product) => void
+    paymentHandler: (data: PaymentData, onSuccess: (r: BillWithProducts) => void) => void,
 
     sum: number,
     setSum: (v: number) => void
@@ -37,41 +38,61 @@ const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get)
         user: user
     }),
 
-    products: [],
     setProducts: (value) => {
         set(state => {
             state.bill.products = value
         })
     },
-    addProduct: (value) => {
-        let newValue: BillProductDTO = {
-            ...value,
-            productId: value.id,
-            quantity: 1,
-            discount: 0,
-            price: value.retailPrice
-        }
+    addProduct: (n) => {
+        let bill = get().bill
+        let exProd = Enumerable.from(bill.products)
+            .where(m => m.productId === n.id)
+            .firstOrDefault()
 
-        let all = [...(get().bill.products != undefined ? get().bill.products : [])]
-        let ent = all?.find(n => n.productId === newValue.productId)
-        if (ent != undefined) {
-            let index = all.indexOf(ent)
-            let quant = ent.quantity
-
-            set(state => {
-                state.bill.products[index].quantity = quant + 1
-            })
+        if (exProd !== undefined) {
+            get().setProducts(bill.products.map((m) => {
+                if (m.productId === n.id) {
+                    return {...m, quantity: m.quantity + 1}
+                } else {
+                    return m
+                }
+            }))
         } else {
-            set(state => {
-                state.bill.products != undefined ?
-
-                    state.bill.products.push(newValue)
-                    :
-                    state.bill.products = [newValue]
-            })
+            let newProd: BillProductDTO = {
+                productId: n.id,
+                name: n.name,
+                catalogKey: n.catalogKey,
+                serialNumber: '',
+                description: '',
+                quantity: 1,
+                currencyId: 1,
+                quantityUnitName: n.quantityUnitName,
+                currencySymbol: LocalStorage.currency.symbol()!,
+                price: n.retailPrice,
+                discount: 0,
+                total: n.retailPrice
+            }
+            console.log('selectedProd', n)
+            get().setProducts([...bill.products, newProd])
         }
-
     },
+    paymentHandler: (data, onSuccess) => {
+        let bill = get().bill
+        let res = {...bill, ...data}
+        res.userId = LocalStorage.userId()!
+        res.description = ''
+        res.shopId = LocalStorage.shopId()!
+        res.currencyId = LocalStorage.currency.id()
+        console.log(res)
+        set({isLoading: true})
+
+        FinancialInteractionAPI.NewBill.create(res).then((r) => {
+            set({isLoading: false})
+            onSuccess(r.data)
+        }).finally(() => {
+            set({isLoading: false})
+        })
+    }
 }))), {
     name: "cashboxStore",
     version: 1

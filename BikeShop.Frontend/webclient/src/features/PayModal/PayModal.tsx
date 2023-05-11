@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Button, CustomInput, CustomModal} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import {ClientCard} from "../../widgets"
-import {PaymentData, User} from "../../entities"
+import {LocalStorage, PaymentData, User} from "../../entities"
 
 interface PayModalProps {
     open: boolean
@@ -19,7 +19,9 @@ export const PayModal = (props: PayModalProps) => {
     return (
         <CustomModal
             open={props.open}
-            onClose={() => {props.setOpen(false)}}
+            onClose={() => {
+                props.setOpen(false)
+            }}
         >
             <div className={s.payModal_mainBox}>
 
@@ -28,7 +30,7 @@ export const PayModal = (props: PayModalProps) => {
                         К оплате:
                     </div>
                     <div className={s.header_sum}>
-                        {props.summ}
+                        {props.summ * LocalStorage.currency.fbts() + LocalStorage.currency.symbol()!}
                     </div>
                 </div>
 
@@ -40,17 +42,21 @@ export const PayModal = (props: PayModalProps) => {
                 </div>
 
                 <div className={s.payModal_payType}>
-                    <Button onClick={() => {}}>
+                    <Button onClick={() => {
+                    }}>
                         Использовать терминал
                     </Button>
-                    <Button onClick={() => {}}>
+                    <Button onClick={() => {
+                    }}>
                         Оплата с баланса
                     </Button>
                 </div>
 
                 <CustomInput
                     value={cash}
-                    onChange={(e) => { setCash(Number(e.currentTarget.value)) }}
+                    onChange={(e) => {
+                        setCash(Number(e.currentTarget.value))
+                    }}
                     placeholder={'Полученная сумма наличными'}
                 />
 
@@ -59,7 +65,7 @@ export const PayModal = (props: PayModalProps) => {
                         Сдача:
                     </div>
                     <div className={s.cashback_sum}>
-                        {cash ? (cash - props.summ) : 0}
+                        {cash ? (cash - props.summ * LocalStorage.currency.fbts()) : 0} {LocalStorage.currency.symbol()!}
                     </div>
                 </div>
 
@@ -68,19 +74,21 @@ export const PayModal = (props: PayModalProps) => {
                     </div>
                     <div className={s.cashbackBlock_buttons}>
                         <Button buttonDivWrapper={s.cancelButton}
-                                onClick={() => {props.setOpen(false)}}
+                                onClick={() => {
+                                    props.setOpen(false)
+                                }}
                         >
                             Отмена
                         </Button>
                         <Button onClick={() => {
-                                    props.result({
-                                        cash: props.summ,
-                                        card: 0,
-                                        bankCount: 0,
-                                        personalBalance: 0
-                                    })
-                                    props.setOpen(false)
-                                }}
+                            props.result({
+                                cash: props.summ,
+                                card: 0,
+                                bankCount: 0,
+                                personalBalance: 0
+                            })
+                            props.setOpen(false)
+                        }}
                         >
                             Оплатить
                         </Button>

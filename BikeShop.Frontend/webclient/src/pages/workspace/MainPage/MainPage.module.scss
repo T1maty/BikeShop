@@ -105,6 +105,10 @@
         height: 60%;
         width: 100%;
 
+        .select {
+          width: 100%;
+        }
+
         .rightSide_top_search {
           @include flexOnlyBetween;
           width: 100%;

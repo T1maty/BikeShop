@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import s from "./MainPage.module.scss"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {LocalStorage, ShiftAPI, useAuth, useCurrency, User} from "../../../entities"
+import {BillWithProducts, LocalStorage, PaymentData, ShiftAPI, useAuth, useCurrency, User} from "../../../entities"
 import {useNavigate} from "react-router-dom"
-import {Button, LoaderScreen} from '../../../shared/ui'
+import {AsyncSelectSearchProduct, Button, LoaderScreen} from '../../../shared/ui'
 import {
     ChooseClientModal,
     CreateProductModal,
@@ -11,7 +11,9 @@ import {
     EmployeeSalaryModal,
     EncashmentModal,
     EndWorkDayModal,
-    GetPutMoneyModal
+    GetPutMoneyModal,
+    PayModal,
+    PrintModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -22,10 +24,13 @@ import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
 import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 import ShiftTime from "./ShiftTime";
 import useCashboxStore from "../Cashbox/CashboxStore";
+import {useSnackbar} from "notistack";
+import {CheckForShop} from "../../../widgets";
 
 export const MainPage = () => {
 
     const navigate = useNavigate()
+    const {enqueueSnackbar} = useSnackbar()
 
     const isLoading = useChooseClientModal(s => s.isLoading)
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
@@ -50,8 +55,15 @@ export const MainPage = () => {
 
     const bill = useCashboxStore(s => s.bill)
     const setData = useCashboxStore(s => s.setProducts)
+    const addProduct = useCashboxStore(s => s.addProduct)
 
     const shop = useAuth(s => s.shop)
+    const paymentHandler = useCashboxStore(s => s.paymentHandler)
+
+    const [openPay, setOpenPay] = useState(false)
+    const [res, setRes] = useState<BillWithProducts>()
+    const [openPrint, setOpenPrint] = useState(false)
+
 
     console.log('shop', shop)
 
@@ -83,6 +95,17 @@ export const MainPage = () => {
         })
         setSum(sum)
     }, [bill])
+
+    const paymentResultHandler = (value: PaymentData) => {
+
+        paymentHandler(value, (r) => {
+            enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 3000})
+            setRes(r)
+            console.log(r)
+            setOpenPrint(true)
+            setData([])
+        })
+    }
 
     const getShiftButton = () => {
         if (userShiftStatus?.lastAction.action === "Open") {
@@ -227,6 +250,9 @@ export const MainPage = () => {
 
                     <div className={s.content_rightSide}>
                         <div className={s.rightSide_top}>
+                            <div className={s.select}>
+                                <AsyncSelectSearchProduct onSelect={addProduct}/>
+                            </div>
                             <div className={s.rightSide_top_search}>
                                 <ChooseClientModal extraCallback={(user: User) => {
                                     chooseClientHandler(user)
@@ -273,8 +299,19 @@ export const MainPage = () => {
                                 <div className={s.result_span}>
                                     {sum * fbts.c + fbts.s}
                                 </div>
+                                <PayModal open={openPay}
+                                          setOpen={setOpenPay}
+                                          user={user}
+                                          summ={sum}
+                                          result={paymentResultHandler}
+                                />
+                                <PrintModal open={openPrint}
+                                            setOpen={setOpenPrint}>
+                                    <CheckForShop children={res!}/>
+                                </PrintModal>
                                 <Button buttonDivWrapper={s.result_payBtn}
                                         onClick={() => {
+                                            setOpenPay(true)
                                         }}
                                 >
                                     К оплате

@@ -7,5 +7,19 @@ export const LocalStorage = {
     },
     accessToken() {
         return localStorage.getItem('accessToken')
+    },
+    currency: {
+        id() {
+            return parseFloat(localStorage.getItem('currencyId')!)
+        },
+        fbts() {
+            return parseFloat(localStorage.getItem('currencyFBTS')!)
+        },
+        fstb() {
+            return parseFloat(localStorage.getItem('currencyFSTB')!)
+        },
+        symbol() {
+            return localStorage.getItem('currencySymbol')
+        },
     }
 }

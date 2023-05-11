@@ -7,7 +7,7 @@ export const FinancialInteractionAPI = {
     NewBill: {
         create(data: NewBillDTO) {
             return (
-                $api.post('/financialinteraction/newbill', data)
+                $api.post<BillWithProducts>('/financialinteraction/newbill', data)
             )
         },
     },

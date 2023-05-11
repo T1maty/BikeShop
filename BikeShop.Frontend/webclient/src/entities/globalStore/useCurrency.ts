@@ -42,6 +42,10 @@ export const useCurrency = create<CurrencyProps>()(persist(devtools(immer((set, 
         let Cur = get().allCurrencies.find(n => n.id === id)
 
         if (Cur === undefined) console.log('currency UNDEFINED')
+        localStorage.setItem('currencyId', Cur!.id.toString())
+        localStorage.setItem('currencyFBTS', Cur!.coefficient.toString())
+        localStorage.setItem('currencyFSTB', (1 / Cur!.coefficient).toString())
+        localStorage.setItem('currencySymbol', (Cur!.symbol).toString())
         set(state => {
             state.selectedCurrency = Cur!
             state.fromBaseToSelected = {c: Cur!.coefficient, s: Cur!.symbol}

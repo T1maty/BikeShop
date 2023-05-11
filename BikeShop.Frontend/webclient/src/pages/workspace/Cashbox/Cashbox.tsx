@@ -5,22 +5,10 @@ import {AsyncSelectSearchProduct, Button, LoaderScreen, UniTable} from '../../..
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
 import {CheckForShop, ClientCard} from '../../../widgets'
-import {
-    BillWithProducts,
-    CatalogAPI,
-    FinancialInteractionAPI,
-    LocalStorage,
-    PaymentData,
-    Product,
-    useAuth,
-    useCurrency,
-    User
-} from '../../../entities'
+import {BillWithProducts, CatalogAPI, PaymentData, useAuth, useCurrency, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
-import Enumerable from "linq"
-import {BillProductDTO} from "./models/BillProductDTO"
 import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider"
@@ -49,43 +37,12 @@ export const Cashbox = () => {
     const setUser = useCashboxStore(s => s.setUser)
     const bill = useCashboxStore(s => s.bill)
     const setData = useCashboxStore(s => s.setProducts)
+    const addProduct = useCashboxStore(s => s.addProduct)
+    const paymentHandler = useCashboxStore(s => s.paymentHandler)
 
     const bts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
     const currency = useCurrency(s => s.selectedCurrency)
-
-    const onSearchHandler = (n: Product) => {
-        let exProd = Enumerable.from(bill.products)
-            .where(m => m.productId === n.id)
-            .firstOrDefault()
-
-        if (exProd !== undefined) {
-            setData(bill.products.map((m) => {
-                if (m.productId === n.id) {
-                    return {...m, quantity: m.quantity + 1}
-                } else {
-                    return m
-                }
-            }))
-        } else {
-            let newProd: BillProductDTO = {
-                productId: n.id,
-                name: n.name,
-                catalogKey: n.catalogKey,
-                serialNumber: '',
-                description: '',
-                quantity: 1,
-                currencyId: currency?.id!,
-                quantityUnitName: n.quantityUnitName,
-                currencySymbol: currency?.symbol!,
-                price: bts.c * n.retailPrice,
-                discount: 0,
-                total: bts.c * n.retailPrice
-            }
-            console.log('selectedProd', n)
-            setData([...bill.products, newProd])
-        }
-    }
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -94,23 +51,12 @@ export const Cashbox = () => {
 
     const paymentResultHandler = (value: PaymentData) => {
 
-        let res = {...bill, ...value}
-        res.userId = logUser != undefined ? logUser.id : ""
-        res.description = ''
-        res.shopId = LocalStorage.shopId()!
-        res.currencyId = currency?.id!
-        console.log(res)
-
-        setIsLoading(true)
-        FinancialInteractionAPI.NewBill.create(res).then((r) => {
-            setIsLoading(false)
+        paymentHandler(value, (r) => {
             enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 3000})
-            setRes(r.data)
+            setRes(r)
             console.log(r)
             setOpenPrint(true)
             setData([])
-        }).finally(() => {
-            setIsLoading(false)
         })
     }
 
@@ -119,7 +65,7 @@ export const Cashbox = () => {
         console.log('Barcode: ', lastBarcode)
         CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
             enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
-            onSearchHandler(n.data)
+            addProduct(n.data)
         }).catch(() => {
             enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
         })
@@ -233,7 +179,7 @@ export const Cashbox = () => {
                         <div className={s.cashboxMainBlock_rightSideHeader}>
                             <ChooseProductModal open={open}
                                                 setOpen={setOpen}
-                                                addData={onSearchHandler}
+                                                addData={addProduct}
                                                 data={bill.products}
                                                 slaveColumns={columns}
                             />
@@ -246,7 +192,7 @@ export const Cashbox = () => {
                                 Выбрать товары
                             </Button>
                             <div className={s.header_searchSelect}>
-                                <AsyncSelectSearchProduct onSelect={onSearchHandler}/>
+                                <AsyncSelectSearchProduct onSelect={addProduct}/>
                             </div>
                         </div>
 
