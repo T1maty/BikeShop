@@ -85,5 +85,10 @@ namespace BikeShop.Identity.Application.Services
 
             await _userManager.UpdateAsync(user);
         }
+
+        public async Task addUserToRole(Guid userId, string Role)
+        {
+            await _userManager.AddToRoleAsync(await _userManager.FindByIdAsync(userId.ToString()), Role);
+        }
     }
 }

@@ -46,7 +46,8 @@ namespace BikeShop.Shop.Application.Implemetations
                                                      .ToListAsync();
             var result = new TimeSpan(0);
 
-            if(items.FirstOrDefault()!= null && items.FirstOrDefault().Action != ShiftStatus.Open && items.FirstOrDefault().Time.Date == Start.Date) result = result.Add(items.FirstOrDefault().Time - Start);
+            if(items.FirstOrDefault()!= null && items.FirstOrDefault().Action != ShiftStatus.Open && items.FirstOrDefault().Time.Date == Start.Date) 
+                result = result.Add(items.FirstOrDefault().Time - Start);
 
             for (int i = 0; i < items.Count-1; i++)
             {
@@ -57,7 +58,10 @@ namespace BikeShop.Shop.Application.Implemetations
                 }
             }
 
-            if (items.LastOrDefault()!=null&&items.LastOrDefault().Action == ShiftStatus.Open && items.FirstOrDefault().Time.Date == DateTime.Now.Date) result = result.Add(DateTime.Now - items.LastOrDefault().Time);
+            var t = items.FirstOrDefault().Time.Date;
+            var t2 = DateTime.Now.Date;
+            if (items.LastOrDefault()!=null&&items.LastOrDefault().Action == ShiftStatus.Open && items.LastOrDefault().Time.Date == DateTime.Now.Date) 
+                result = result.Add(DateTime.Now - items.LastOrDefault().Time);
 
             return result;
         }

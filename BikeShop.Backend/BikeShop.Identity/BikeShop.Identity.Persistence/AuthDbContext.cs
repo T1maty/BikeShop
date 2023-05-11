@@ -12,6 +12,8 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
 {
     // Сессии, основанные на рефреш токенах
     public DbSet<RefreshSession> RefreshSessions { get; set; }
+    public DbSet<RoleGroup> RoleGroups { get; set; }
+    public DbSet<RoleGroupBind> RoleGroupBinds { get; set; }
 
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
@@ -39,28 +41,27 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
 
         // Создание первого стандартного пользователя и роли user
         var hasher = new PasswordHasher<ApplicationUser>();
-        builder.Entity<ApplicationUser>().HasData(new ApplicationUser
-        {
-            Id = Guid.NewGuid().ToString(),
-            UserName = "test@test.com",
-            NormalizedUserName = "test@test.com".ToUpper(),
-            Email = "test@test.com",
-            NormalizedEmail = "test@test.com".ToUpper(),
-            EmailConfirmed = true,
-            PasswordHash = hasher.HashPassword(null, "admin"),
-            SecurityStamp = string.Empty,
-
-            FirstName = "Nikita",
-            LastName = "Kalnitskiy",
-            Patronymic = "Andreevich",
-            ShopId = 1,
-        });
 
         builder.Entity<IdentityRole>().HasData(new IdentityRole()
         {
             Id = Guid.NewGuid().ToString(),
             Name = "user",
             NormalizedName = "USER"
+        }, new IdentityRole()
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "admin",
+            NormalizedName = "ADMIN"
+        }, new IdentityRole()
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "employee",
+            NormalizedName = "EMPLOYEE"
+        }, new IdentityRole()
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "superemployee",
+            NormalizedName = "SUPEREMPLOYEE"
         });
     }
 }

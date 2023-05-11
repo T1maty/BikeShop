@@ -11,7 +11,9 @@ using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.WebApi.Models.Product;
 using BikeShop.Products.WebApi.Models.Validation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace BikeShop.Products.WebApi.Controllers
 {
@@ -132,6 +134,7 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productService.UpdatePrices(dto);
         }
 
+        [Authorize(Roles = "")]
         [HttpGet("search")]
         public async Task<List<Product>> Search(string querry)
         {

@@ -1228,6 +1228,112 @@
       ],
       "SwaggerKey": "identity"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/role/getall",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/role/getall",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/role/getallgroups",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/role/getallgroups",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/role/creategroup",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/role/creategroup",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/role/setroletogroup",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/role/setroletogroup",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/role/setgrouptouser",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/role/setgrouptouser",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/role/setroletouser",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/role/setroletouser",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/role/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/role/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
 
 
 

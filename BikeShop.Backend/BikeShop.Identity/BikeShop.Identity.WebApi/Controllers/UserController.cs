@@ -181,6 +181,7 @@ public class UserController : ControllerBase
         return Ok();
     }
 
+    [Authorize(Roles = "admin")]
     [HttpGet("search")]
     public async Task<List<ApplicationUser>> Search(string Querry, int Take)
     {
@@ -191,5 +192,11 @@ public class UserController : ControllerBase
     public async Task<List<ApplicationUser>> GetEmployees(int ShopId)
     {
         return await _userService.GetEmployees(ShopId);
+    }
+
+    [HttpPut("setrole")]
+    public async Task SetRole(Guid user, string role)
+    {
+        await _userService.addUserToRole(user, role);
     }
 }

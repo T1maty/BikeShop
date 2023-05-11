@@ -1,5 +1,6 @@
 ﻿using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace BikeShop.Identity.Application.Interfaces
 
         public Task<List<ApplicationUser>> Search(string Querry, int Take);
         public Task<List<ApplicationUser>> GetEmployees(int ShopId);
+        public Task addUserToRole(Guid userId, string Role);
     }
 }

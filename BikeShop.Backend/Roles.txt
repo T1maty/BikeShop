@@ -1,0 +1,3 @@
+storagecrud_getall
+storagecrud_create
+storagecrud_update

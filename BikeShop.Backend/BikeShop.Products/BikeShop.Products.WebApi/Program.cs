@@ -1,5 +1,6 @@
 using System.Net.Mime;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using BikeShop.Products.Application;
 using BikeShop.Products.Application.Common.Configurations;
@@ -10,7 +11,10 @@ using BikeShop.Products.Persistence;
 using BikeShop.Products.WebApi.Middleware;
 using BikeShop.Products.WebApi.Models.Validation;
 using BikeShop.Service.Application.RefitClients;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,6 +73,23 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Добавлении схемы аутентификации по JWT токену
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
 // Swagger
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(config =>
@@ -77,6 +98,29 @@ builder.Services.AddSwaggerGen(config =>
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     config.IncludeXmlComments(xmlPath);
+
+    // Добавление возможности указывать JWT access token в сваггере для эндпоинтов, которые требуют bearer
+    config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+    });
+    // Сваггер будет добавлять указанный JWT access token в заголовки
+    config.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
 });
 
 // Инжект конфигурации автомаппера
@@ -115,6 +159,9 @@ app.UseSwaggerUI(config =>
 
     config.SwaggerEndpoint("swagger/v1/swagger.json", "BikeShop.Products API");
 });
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 app.MapControllers();

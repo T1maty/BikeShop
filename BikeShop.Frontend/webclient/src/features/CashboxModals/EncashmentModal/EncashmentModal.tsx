@@ -24,7 +24,7 @@ export const EncashmentModal = () => {
         defaultValues: {
             cash: 0,
             description: '',
-            shopId: shop!.id.toString(),
+            shopId: LocalStorage.shopId()!,
             userId: LocalStorage.userId()!
         }
     })

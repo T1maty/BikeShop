@@ -1,8 +1,10 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data;
 
 namespace BikeShop.Products.WebApi.Controllers
 {
@@ -17,7 +19,7 @@ namespace BikeShop.Products.WebApi.Controllers
         {
             _storageService = storageService;
         }
-
+        //[Authorize(Roles = "")]
         [HttpPost("getbyids")]
         public async Task<List<StorageProductsDTO>> GetByIds([FromBody] List<int> Ids)
         {
