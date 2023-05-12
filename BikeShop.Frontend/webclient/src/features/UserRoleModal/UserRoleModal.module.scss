@@ -1,0 +1,46 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.userRoleModal_mainBox {
+    @include defaultModalStyle;
+    width: 700px;
+    height: 700px;
+
+    > div {
+        @include flexOnlyBetween;
+        gap: $defaultSmallMargin;
+        border: 1px solid white;
+    }
+
+    .userRoleModal_header {
+        margin-bottom: $defaultSmallMargin;
+        width: 100%;
+        height: 70%;
+
+        > div {
+            border: 1px solid white;
+        }
+
+        .header_groups {
+            width: 30%;
+        }
+        .header_roles {
+            width: 70%;
+        }
+    }
+    .userRoleModal_bottom {
+        width: 100%;
+        height: 30%;
+
+        > div {
+            border: 1px solid white;
+        }
+
+        .bottom_deals {
+            width: 70%;
+        }
+        .bottom_buttons {
+            width: 30%;
+        }
+    }
+}
