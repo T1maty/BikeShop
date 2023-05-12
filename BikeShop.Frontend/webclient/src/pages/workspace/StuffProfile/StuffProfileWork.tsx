@@ -44,11 +44,9 @@ export const StuffProfileWork: React.FC<StuffProfileWorkProps> = ({user}) => {
                     <div className={s.salary_info}>
                         <div className={s.salary_info1}>
                             <div>Ремонты: {r(calculateData ? calculateData.serviceWorks * fbts.c : 0) + fbts.s}</div>
-                            <div>Продажа
+                            <div>Продажи
                                 ремонтов: {r(calculateData ? calculateData.seviceProducts * fbts.c : 0) + fbts.s}</div>
-                            <div>Товары ремонтов шт.: {r(calculateData ? calculateData.productsTotal : 0)}</div>
                             <div>Продажи: {r(calculateData ? calculateData.billsTotal * fbts.c : 0) + fbts.s}</div>
-                            <div>Продажи шт.: {r(calculateData ? calculateData.bills : 0)}</div>
                             <div>Ставка: {r(calculateData ? calculateData.rate * fbts.c : 0) + fbts.s}</div>
                         </div>
                         <div className={s.salary_info2}>
