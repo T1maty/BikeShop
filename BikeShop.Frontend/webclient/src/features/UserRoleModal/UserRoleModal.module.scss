@@ -4,12 +4,11 @@
 .userRoleModal_mainBox {
     @include defaultModalStyle;
     width: 700px;
-    height: 700px;
+    height: 750px;
 
     > div {
         @include flexOnlyBetween;
         gap: $defaultLargeMargin;
-        border: 1px solid white;
     }
 
     .userRoleModal_header {
@@ -17,30 +16,31 @@
         width: 100%;
         height: 70%;
 
-        > div {
-            border: 1px solid white;
-        }
-
         .header_groups {
             width: 30%;
             @include flexColumnOnly;
 
             .groups_groups {
-                border: 1px solid white;
                 height: 90%;
-                margin-bottom: $defaultSmallMargin;
                 padding: $defaultSmallMargin;
                 border-radius: $smallBorderRadius;
                 background-color: $themeColorGray;
-                @include divSmallMarginBottom;
+                margin-bottom: $defaultSmallMargin;
 
-                .groups_groupsItem {
-                    padding: $defaultSmallMargin;
-                    border-radius: $smallBorderRadius;
-                    background-color: $themeColorMilk;
-                    color: black;
-                    font-size: 20px;
-                    text-align: center;
+                .groups_groupsWrapper {
+                    @include divSmallMarginBottom;
+                    height: 100%;
+                    padding-right: 5px;
+                    overflow-y: auto;
+
+                    .groups_groupsItem {
+                        padding: $defaultSmallMargin;
+                        border-radius: $smallBorderRadius;
+                        background-color: $themeColorMilk;
+                        color: black;
+                        font-size: 20px;
+                        text-align: center;
+                    }
                 }
             }
             .createGroup {
@@ -57,26 +57,45 @@
             @include flexColumnOnly;
             gap: $defaultSmallMargin;
 
-            > div {
-                border: 1px solid white;
-            }
-
             .roles_description {
                 height: 45%;
                 padding: $defaultSmallMargin;
                 border-radius: $smallBorderRadius;
                 background-color: $themeColorGray;
+
+                .roles_descriptionWrapper {
+                    @include divSmallMarginBottom;
+                    height: 100%;
+                    padding-right: 5px;
+                    overflow-y: auto;
+
+                    .roles_descriptionItem {
+                        padding: $defaultSmallMargin;
+                        border-radius: $smallBorderRadius;
+                        background-color: $themeColorMilk;
+                        color: black;
+                        font-size: 20px;
+                        display: flex;
+                        align-items: center;
+                        gap: $defaultLargeMargin;
+
+                        > div {
+                            word-break: break-word;
+                        }
+
+                        .descriptionItem_name {
+                            width: 30%;
+                        }
+                        .roles_descriptionItem_description {
+                            width: 70%;
+                        }
+                    }
+                }
             }
             .roles_tabs {
                 height: 10%;
                 @include flexBetween;
                 gap: $defaultLargeMargin;
-                border: 1px solid black;
-
-                > div {
-                    border: 1px solid white;
-                    //height: 100%;
-                }
 
                 .tabs_toggle {
                     width: 85%;
@@ -100,9 +119,9 @@
                     //        width: 30px;
                     //        height: 30px;
                     //
-                    //        svg:hover {
-                    //            fill: blue;
+                    //        &:hover {
                     //            cursor: pointer;
+                    //            stroke: gold;
                     //        }
                     //    }
                     //}
@@ -113,16 +132,28 @@
                 padding: $defaultSmallMargin;
                 border-radius: $smallBorderRadius;
                 background-color: $themeColorGray;
+
+                .roles_rolesWrapper {
+                    @include divSmallMarginBottom;
+                    height: 100%;
+                    padding-right: 5px;
+                    overflow-y: auto;
+
+                    .roles_rolesItem {
+                        padding: $defaultSmallMargin;
+                        border-radius: $smallBorderRadius;
+                        background-color: $themeColorMilk;
+                        color: black;
+                        font-size: 20px;
+                        text-align: center;
+                    }
+                }
             }
         }
     }
     .userRoleModal_bottom {
         width: 100%;
-        height: 27%; // 3 - поправка на нижний отступ
-
-        > div {
-            border: 1px solid white;
-        }
+        height: 27%; // 3% - поправка на нижний отступ
 
         .bottom_deals {
             width: 70%;
@@ -134,11 +165,26 @@
             .deals_select {
                 height: 10%; // ?
             }
-            .deals_table {
+            .deals_content {
                 padding: $defaultSmallMargin;
                 border-radius: $smallBorderRadius;
                 background-color: $themeColorGray;
                 height: 70%; // ?
+
+                .deals_contentWrapper {
+                    @include divSmallMarginBottom;
+                    height: 100%;
+                    padding-right: 5px;
+                    overflow-y: auto;
+
+                    .deals_contentItem {
+                        padding: $defaultSmallMargin;
+                        border-radius: $smallBorderRadius;
+                        background-color: $themeColorMilk;
+                        color: black;
+                        font-size: 20px;
+                    }
+                }
             }
         }
         .bottom_buttons {

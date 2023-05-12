@@ -15,7 +15,6 @@ export const CustomCheckbox: React.FC<CheckboxPropsType> = (
         onChange, onChangeChecked,
         className, spanClassName,
         children, // в эту переменную попадёт текст, типизировать не нужно, так как он затипизирован в React.FC
-
         ...restProps // все остальные пропсы попадут в объект restProps
     }
 ) => {
