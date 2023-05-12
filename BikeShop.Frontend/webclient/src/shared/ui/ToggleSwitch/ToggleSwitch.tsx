@@ -1,5 +1,5 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes} from 'react'
-import s from './CustomCheckbox.module.css'
+import s from './ToggleSwitch.module.css'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -9,7 +9,7 @@ type CheckboxPropsType = DefaultInputPropsType & {
     spanClassName?: string
 }
 
-export const CustomCheckbox: React.FC<CheckboxPropsType> = (
+export const ToggleSwitch: React.FC<CheckboxPropsType> = (
     {
         type, // достаём и игнорируем, чтобы нельзя было задать другой тип инпута
         onChange, onChangeChecked,
@@ -18,25 +18,23 @@ export const CustomCheckbox: React.FC<CheckboxPropsType> = (
         ...restProps // все остальные пропсы попадут в объект restProps
     }
 ) => {
+
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange && onChange(e)
         onChangeChecked && onChangeChecked(e.currentTarget.checked)
     }
 
-    // const finalInputClassName = `${s.checkbox} ${className ? className : ''}`
-
     return (
-        <label className={s.container}>
-            {children}
-            <input
-                type={'checkbox'}
-                onChange={onChangeCallback}
-                // className={finalInputClassName}
+        <>
+            <label className={s.switch}>
+                <input type={'checkbox'}
+                       onChange={onChangeCallback}
+                />
+                    <span className={`${s.slider} ${s.round}`}></span>
 
-                {...restProps} // отдаём инпуту остальные пропсы, если они есть (checked, например, там внутри)
-            />
-            {/*{children && <span className={s.checkmark}>{children}</span>}*/}
-            <span className={s.checkmark}></span>
-        </label> // благодаря label нажатие на спан передастся в инпут
+                    {/*Квадратный переключатель*/}
+                    {/*<span className={s.slider}></span>*/}
+            </label>
+        </>
     )
 }

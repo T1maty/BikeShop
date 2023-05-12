@@ -11,6 +11,7 @@ export {StorageProductsTransferArchiveModal} from './ArchiveModals/StorageProduc
 
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 export {PrintModal} from './PrintModal/PrintModal'
+export {UserRoleModal} from './UserRoleModal/UserRoleModal'
 
 export {PayModal} from './PayModal/PayModal'
 export {ChooseClientModal} from './ChooseClientModal/ChooseClientModal'

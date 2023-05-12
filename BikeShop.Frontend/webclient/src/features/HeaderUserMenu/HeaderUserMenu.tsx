@@ -5,6 +5,8 @@ import {useTranslation} from "react-i18next"
 import {useNavigate} from "react-router-dom"
 import {useComponentVisible} from "../../shared/hooks/useComponentVisible"
 import {useAuth, User} from '../../entities'
+import useUserRoleModal from "../UserRoleModal/UserRoleModalStore"
+import {UserRoleModal} from "../UserRoleModal/UserRoleModal"
 
 interface HeaderUserMenuProps {
     user: User
@@ -16,6 +18,7 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
     const navigate = useNavigate()
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
     const logout = useAuth(s => s.logout)
+    const openUserRoleModal = useUserRoleModal(s => s.setOpenUserRoleModal)
 
     const [profileMenuItems, setProfileMenuItems] = useState([
         {
@@ -40,6 +43,13 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
             }
         },
         {
+            title: 'Должности',
+            func: () => {
+                openUserRoleModal(true)
+                setIsComponentVisible(false)
+            }
+        },
+        {
             title: 'Выйти',
             func: () => {
                 logout().then()
@@ -53,6 +63,9 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
 
     return (
         <div className={s.leftSide_burgerMenu}>
+
+            <UserRoleModal/>
+
             <div className={s.burgerMenu_iconButton}
                  onClick={() => {setIsComponentVisible(!isComponentVisible)}}
             >

@@ -70,7 +70,10 @@ export const ShopMain = () => {
                                 {/*Мастерская*/}
                             </div>
                             <div>Фотографии</div>
-                            <div>Контакты</div>
+                            <div>
+                                <a href='#contacts'>Контакты</a>
+                                {/*Контакты*/}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +128,7 @@ export const ShopMain = () => {
 
             <Workshop/>
 
-            <div className={s.contacts}>
+            <div className={s.contacts} id={'contacts'}>
                 <div className={s.container}>
                     <div className={s.title}>
                         Контакты

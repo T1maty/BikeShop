@@ -14,6 +14,7 @@ export {CustomCheckbox} from './CustomCheckbox/CustomCheckbox'
 export {CustomRadioButton} from './CustomRadioButton/CustomRadioButton'
 export {CustomModal} from './CustomModal/CustomModal'
 export {AsyncSelectSearchProduct} from './AsyncSelectSearch/AsyncSelectSearchProduct'
+export {ToggleSwitch} from './ToggleSwitch/ToggleSwitch'
 
 export {ControlledClientCard} from './Controlled/ControlledClientCard'
 export {ControlledCustomInput} from './Controlled/ControlledCustomInput'
