@@ -12,6 +12,7 @@ import {Product} from "entities"
 interface SelectProductProps {
     products: ServiceProduct[]
     setProducts: (product: ServiceProduct[]) => void
+    defaultMasterId: string
 }
 
 export const SelectProduct = (props: SelectProductProps) => {
@@ -26,7 +27,7 @@ export const SelectProduct = (props: SelectProductProps) => {
         if (actual != undefined) {
             actual.quantity++
         } else {
-            let item = conv(product)
+            let item = conv(product, props.defaultMasterId)
             item.quantity = 1
             prods.push(item)
         }
@@ -44,12 +45,15 @@ export const SelectProduct = (props: SelectProductProps) => {
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => {
+                        }}>
                             Подтвердить
                         </Button>
                     </div>
                     <div>
-                        <Button onClick={() => {setOpenSelectProductModal(false)}}>
+                        <Button onClick={() => {
+                            setOpenSelectProductModal(false)
+                        }}>
                             Отмена
                         </Button>
                     </div>

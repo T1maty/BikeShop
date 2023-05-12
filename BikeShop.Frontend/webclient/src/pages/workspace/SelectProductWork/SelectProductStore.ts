@@ -4,13 +4,13 @@ import {immer} from "zustand/middleware/immer"
 import {ServiceProduct} from "../../../entities";
 
 interface selectProductStore {
-    convert: (product: any) => ServiceProduct
+    convert: (product: any, master: string) => ServiceProduct
 }
 
 const useSelectProduct = create<selectProductStore>()(persist(devtools(immer((set) => ({
     slaveTableRows: [],
 
-    convert: (product) => {
+    convert: (product, master) => {
         let newProduct: ServiceProduct = {
             id: 0,
             productId: product.id,
@@ -23,7 +23,7 @@ const useSelectProduct = create<selectProductStore>()(persist(devtools(immer((se
             price: product.retailPrice,
             discount: 0,
             total: 0,
-            userId: 'c04b07d5-441b-4630-87b0-97b889855556',
+            userId: master,
             serviceId: 0,
 
             catalogKey: product.catalogKey,

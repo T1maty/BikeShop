@@ -8,6 +8,7 @@ import {ServiceProduct} from "../../../entities"
 interface SelectProductModalProps {
     products: ServiceProduct[]
     setProducts: (product: ServiceProduct[]) => void
+    defaultMasterId: string
 }
 
 export const SelectProductModal: React.FC<SelectProductModalProps> = (props: SelectProductModalProps) => {
@@ -18,11 +19,14 @@ export const SelectProductModal: React.FC<SelectProductModalProps> = (props: Sel
     return (
         <CustomModal
             open={selectProductModal}
-            onClose={() => {setSelectProductModal(false)}}
+            onClose={() => {
+                setSelectProductModal(false)
+            }}
         >
             <div className={s.selectProductWorkModal_mainBox}>
                 <SelectProduct products={props.products}
                                setProducts={props.setProducts}
+                               defaultMasterId={props.defaultMasterId}
                 />
             </div>
         </CustomModal>

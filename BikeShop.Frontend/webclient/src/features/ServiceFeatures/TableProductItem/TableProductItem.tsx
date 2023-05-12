@@ -32,7 +32,7 @@ export const TableProductItem: React.FC<TableItemProps> = ({name, price, count, 
                 </div>
                 <div className={s.tableItem_sum}>
                     {
-                        discount ? <div>$ -195</div> : ''
+                        discount ? <div>$ -0</div> : ''
                     }
                     <div>{r(count * price * fbts.c) + fbts.s}</div>
                 </div>

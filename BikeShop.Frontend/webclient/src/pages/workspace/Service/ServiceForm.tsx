@@ -208,6 +208,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                 />
                                 <SelectProductModal products={field.value}
                                                     setProducts={field.onChange}
+                                                    defaultMasterId={formControl.getValues('userMasterId')}
                                 />
                             </>
                         }
