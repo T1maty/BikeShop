@@ -247,6 +247,15 @@
     padding: $defaultSmallMargin;
 }
 
+// MainPage
+@mixin shiftStatus($bgColor, $fontColor) {
+    background-color: $bgColor;
+    border-radius: $smallBorderRadius;
+    padding: $defaultSmallMargin;
+    color: $fontColor;
+    text-align: center;
+}
+
 // WorkProductsModal
 @mixin workAndProductModalsButtonBlock() {
     display: flex;

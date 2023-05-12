@@ -9,7 +9,6 @@ interface MainPageStore {
     setIsLoading: (value: boolean) => void
     isClientChosen: boolean
     setIsClientChosen: (value: boolean) => void
-
     user: User
     setUser: (user: User) => void
 }
@@ -19,7 +18,6 @@ const useMainPageStore = create<MainPageStore>()(/*persist(*/devtools(immer((set
     setIsLoading: (value: boolean) => set({isLoading: value}),
     isClientChosen: false,
     setIsClientChosen: (value) => set({isClientChosen: value}),
-
     user: {
         shopId: 0,
         id: '',

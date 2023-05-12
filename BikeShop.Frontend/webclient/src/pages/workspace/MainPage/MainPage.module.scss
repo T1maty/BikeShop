@@ -3,307 +3,316 @@
 
 
 .mainPageMainBlock {
-  @include wrapperMainBlock;
+    @include wrapperMainBlock;
 
 
-  .mainPage_header {
-    display: flex;
-    margin-bottom: $defaultLargeMargin;
-    gap: $defaultLargeMargin;
-
-    .mainPage_header_leftSide {
-      display: flex;
-      flex-direction: column;
-      width: 70%;
-
-      .header_leftSide_deal {
-        @include flexOnlyBetween;
-        flex-wrap: wrap;
-        border-radius: $largeBorderRadius;
-        background-color: $themeColorDark;
-        margin-bottom: $defaultLargeMargin;
-        padding: $defaultLargeMargin;
-
-        button {
-          padding: 5px 10px;
-          height: 40px;
-        }
-      }
-
-      .header_leftSide_info {
-        @include flexOnlyBetween;
-        flex-wrap: wrap;
-        border-radius: $largeBorderRadius;
-        background-color: $themeColorDark;
-        padding: $defaultLargeMargin;
-
-        button {
-          @include flexCenter;
-          padding: 5px 10px;
-          height: 40px;
-        }
-      }
-    }
-
-    .mainPage_header_rightSide {
-      @include flexCenter;
-      background-color: $themeColorDark;
-      border-radius: $largeBorderRadius;
-      padding: $defaultLargeMargin;
-      width: 30%;
-    }
-  }
-
-
-  .mainPage_content {
-    display: flex;
-    gap: $defaultLargeMargin;
-
-    .content_leftSide {
-      background-color: $themeColorDark;
-      border-radius: $largeBorderRadius;
-      width: 50%;
-
-      .leftSide_title {
-        @include flexCenter;
-        margin-top: $defaultSmallMargin;
-      }
-
-      .leftSide_tasks {
+    .mainPage_header {
         display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        background-color: $themeColorGray;
-        margin: $defaultLargeMargin;
-        padding: $defaultSmallMargin;
-        border-radius: $largeBorderRadius;
+        margin-bottom: $defaultLargeMargin;
+        gap: $defaultLargeMargin;
 
-        .tasks_taskItem {
-          background-color: $themeColorWhite;
-          border-radius: $smallBorderRadius;
-          padding: $defaultSmallMargin;
-          margin: $defaultSmallMargin;
-          color: black;
-          width: 250px;
-          height: 100px;
-        }
-      }
-    }
-
-
-    .content_rightSide {
-      width: 50%;
-      @include flexColumn;
-
-      .rightSide_top {
-        @include flexColumn;
-        justify-content: space-between;
-        background-color: $themeColorDark;
-        border-radius: $largeBorderRadius;
-        padding: $defaultLargeMargin;
-        margin-bottom: 10px;
-        height: 60%;
-        width: 100%;
-
-        .select {
-          width: 100%;
-        }
-
-        .rightSide_top_search {
-          @include flexOnlyBetween;
-          width: 100%;
-
-          .search_chooseClientButton {
-            button {
-              width: 200px;
-              height: $largeButtonHeight;
-            }
-          }
-
-          .search_searchInput {
-            @include flexCenter;
-            width: 100%;
-            padding: $defaultSmallMargin;
-            margin-left: $defaultLargeMargin;
-            border: 2px solid $themeColorMilk;
-            border-radius: $smallBorderRadius;
-          }
-        }
-
-        .rightSide_top_info {
-          height: 60%;
-          width: 100%;
-          background-color: $themeColorGray;
-          border-radius: $largeBorderRadius;
-          overflow: auto;
-
-          .cashbox_table_wrapper {
+        .mainPage_header_leftSide {
             display: flex;
-            margin-top: 5px;
-            margin-left: 10px;
-            padding: 5px;
-            width: 97%;
+            flex-direction: column;
+            width: 70%;
 
-            .cashbox_table_left {
-              display: flex;
-              border: 2px solid white;
-              border-radius: 10px;
-              padding: 5px;
-              width: 100%;
-              margin-right: 5px;
+            .header_leftSide_deal {
+                @include flexOnlyBetween;
+                flex-wrap: wrap;
+                border-radius: $largeBorderRadius;
+                background-color: $themeColorDark;
+                margin-bottom: $defaultLargeMargin;
+                padding: $defaultLargeMargin;
 
-              .cashbox_table_name {
-                border-radius: 5px;
-                width: 90%;
-                margin-right: 5px;
-              }
-
-              .cashbox_table_price {
-                background: white;
-                color: black;
-                border-radius: 5px;
-                padding: 5px;
-                margin-right: 5px;
-              }
-
-              .cashbox_table_total {
-                background: white;
-                color: black;
-                border-radius: 5px;
-                padding: 5px;
-
-              }
-            }
-
-            .cashbox_table_remove {
-              display: flex;
-              justify-content: space-around;
-              border: 2px solid darkred;
-              border-radius: 5px;
-              padding: 5px;
-              width: 50px;
-              height: 50px;
-            }
-
-            .cashbox_table_remove:hover {
-              color: red;
-              border: 2px solid red;
-            }
-          }
-
-
-        }
-
-
-        .rightSide_top_result {
-          @include flexCenter;
-          justify-content: space-between;
-          width: 100%;
-
-          .result_chooseCashboxBtn {
-            button {
-              height: $largeButtonHeight;
-              width: 200px;
-            }
-          }
-
-          .result_cancelBtn {
-            button {
-              width: 50px;
-              height: 50px;
-              padding: 5px;
-              font-size: 20px;
-            }
-          }
-
-          .result_span {
-            @include flexCenter;
-            background-color: $themeColorGray;
-            border-radius: $smallBorderRadius;
-            padding: $largeButtonPadding;
-            height: $largeButtonHeight;
-            width: 200px;
-          }
-
-          .result_payBtn {
-            button {
-              height: $largeButtonHeight;
-              width: 150px;
-            }
-          }
-        }
-      }
-
-      .rightSide_bottom {
-        @include flexOnlyBetween;
-        background-color: $themeColorDark;
-        border-radius: $largeBorderRadius;
-        padding: $defaultLargeMargin;
-        width: 100%;
-        height: 40%;
-        margin-top: 10px;
-
-        .bottom_left {
-          @include flexColumn;
-          justify-content: center;
-          background-color: $themeColorGray;
-          border-radius: $smallBorderRadius;
-          margin-right: $defaultSmallMargin;
-          font-size: 20px;
-          width: 60%;
-        }
-
-        .bottom_right {
-          @include flexColumn;
-          justify-content: space-between;
-          width: 40%;
-
-          > div {
-            width: 100%;
-          }
-
-          .shiftStatus {
-            background-color: orange;
-            border-radius: $smallBorderRadius;
-            padding: $defaultSmallMargin;
-            color: black;
-            text-align: center;
-          }
-
-          .shiftTime {
-            @include flexCenter;
-            gap: 5px;
-          }
-
-          .shiftTiming {
-            @include flexBetween;
-            font-size: 14px;
-            text-align: center;
-            background-color: $themeColorGray;
-            border-radius: $smallBorderRadius;
-            padding: $defaultSmallMargin;
-          }
-
-          .buttons {
-            button {
-              height: $smallButtonHeight;
-              width: 100%;
-            }
-
-            .pauseWorkDay_button {
-              margin-bottom: $defaultSmallMargin;
-            }
-
-            .endWorkDay_button {
-              button {
-                &:hover {
-                  background-color: red;
+                button {
+                    padding: 5px 10px;
+                    height: 40px;
                 }
-              }
             }
-          }
+
+            .header_leftSide_info {
+                @include flexOnlyBetween;
+                flex-wrap: wrap;
+                border-radius: $largeBorderRadius;
+                background-color: $themeColorDark;
+                padding: $defaultLargeMargin;
+
+                button {
+                    @include flexCenter;
+                    padding: 5px 10px;
+                    height: 40px;
+                }
+            }
         }
-      }
+
+        .mainPage_header_rightSide {
+            @include flexCenter;
+            background-color: $themeColorDark;
+            border-radius: $largeBorderRadius;
+            padding: $defaultLargeMargin;
+            width: 30%;
+        }
     }
-  }
+
+
+    .mainPage_content {
+        display: flex;
+        gap: $defaultLargeMargin;
+
+        .content_leftSide {
+            background-color: $themeColorDark;
+            border-radius: $largeBorderRadius;
+            width: 50%;
+
+            .leftSide_title {
+                @include flexCenter;
+                margin-top: $defaultSmallMargin;
+            }
+
+            .leftSide_tasks {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                background-color: $themeColorGray;
+                margin: $defaultLargeMargin;
+                padding: $defaultSmallMargin;
+                border-radius: $largeBorderRadius;
+
+                .tasks_taskItem {
+                    background-color: $themeColorWhite;
+                    border-radius: $smallBorderRadius;
+                    padding: $defaultSmallMargin;
+                    margin: $defaultSmallMargin;
+                    color: black;
+                    width: 250px;
+                    height: 100px;
+                }
+            }
+        }
+
+
+        .content_rightSide {
+            width: 50%;
+            @include flexColumn;
+
+            .rightSide_top {
+                @include flexColumn;
+                justify-content: space-between;
+                background-color: $themeColorDark;
+                border-radius: $largeBorderRadius;
+                padding: $defaultLargeMargin;
+                margin-bottom: 10px;
+                height: 60%;
+                width: 100%;
+
+                .select {
+                    width: 100%;
+                }
+
+                .rightSide_top_search {
+                    @include flexOnlyBetween;
+                    gap: $defaultLargeMargin;
+                    width: 100%;
+
+                    .search_chooseClientButton {
+                        button {
+                            width: 200px;
+                            height: $largeButtonHeight;
+                        }
+                    }
+
+                    .search_searchInput {
+                        @include flexCenter;
+                        width: 100%;
+                        padding: $defaultSmallMargin;
+                        //margin-left: $defaultLargeMargin;
+                        border: 2px solid $themeColorMilk;
+                        border-radius: $smallBorderRadius;
+                    }
+                }
+
+                .rightSide_top_info {
+                    height: 50%;
+                    width: 100%;
+                    padding: $defaultSmallMargin;
+                    background-color: $themeColorGray;
+                    border-radius: $largeBorderRadius;
+                    overflow: auto;
+
+                    .cashbox_table_wrapper {
+                        display: flex;
+                        align-items: center;
+                        //margin-top: 5px;
+                        //margin-left: 10px;
+                        margin-bottom: 5px;
+                        //padding: 5px;
+                        //width: 97%;
+
+                        .cashbox_table_left {
+                            display: flex;
+                            border: 2px solid white;
+                            border-radius: 10px;
+                            padding: 5px;
+                            width: 100%;
+                            margin-right: 5px;
+
+                            .cashbox_table_name {
+                                border-radius: 5px;
+                                width: 90%;
+                                margin-right: 5px;
+                            }
+
+                            .cashbox_table_price {
+                                @include flexCenter;
+                                background: white;
+                                color: black;
+                                border-radius: 5px;
+                                padding: 5px;
+                                margin-right: 5px;
+                            }
+
+                            .cashbox_table_total {
+                                @include flexCenter;
+                                background: white;
+                                color: black;
+                                border-radius: 5px;
+                                padding: 5px;
+                            }
+                        }
+
+                        .cashbox_table_remove {
+                            display: flex;
+                            justify-content: space-around;
+                            border: 2px solid darkred;
+                            border-radius: 5px;
+                            padding: 5px;
+                            width: 50px;
+                            height: 50px;
+                        }
+
+                        .cashbox_table_remove:hover {
+                            color: red;
+                            border: 2px solid red;
+                        }
+                    }
+
+
+                }
+
+
+                .rightSide_top_result {
+                    @include flexCenter;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    .result_chooseCashboxBtn {
+                        button {
+                            height: $largeButtonHeight;
+                            width: 200px;
+                        }
+                    }
+
+                    .result_cancelBtn {
+                        button {
+                            width: 50px;
+                            height: 50px;
+                            padding: 5px;
+                            font-size: 20px;
+                        }
+                    }
+
+                    .result_span {
+                        @include flexCenter;
+                        background-color: $themeColorGray;
+                        border-radius: $smallBorderRadius;
+                        padding: $largeButtonPadding;
+                        height: $largeButtonHeight;
+                        width: 200px;
+                    }
+
+                    .result_payBtn {
+                        button {
+                            height: $largeButtonHeight;
+                            width: 150px;
+                        }
+                    }
+                }
+            }
+
+            .rightSide_bottom {
+                @include flexOnlyBetween;
+                background-color: $themeColorDark;
+                border-radius: $largeBorderRadius;
+                padding: $defaultLargeMargin;
+                width: 100%;
+                height: 40%;
+                margin-top: 10px;
+
+                .bottom_left {
+                    @include flexColumn;
+                    justify-content: center;
+                    background-color: $themeColorGray;
+                    border-radius: $smallBorderRadius;
+                    margin-right: $defaultSmallMargin;
+                    font-size: 20px;
+                    width: 60%;
+                }
+
+                .bottom_right {
+                    @include flexColumn;
+                    justify-content: space-between;
+                    width: 40%;
+
+                    > div {
+                        width: 100%;
+                    }
+
+                    .shiftStatus_open {
+                        @include shiftStatus(green, white);
+                    }
+
+                    .shiftStatus_pause {
+                        @include shiftStatus(orange, black);
+                    }
+
+                    .shiftStatus_closed {
+                        @include shiftStatus(red, white);
+                    }
+
+                    .shiftTime {
+                        @include flexCenter;
+                        gap: 5px;
+                    }
+
+                    .shiftTiming {
+                        @include flexBetween;
+                        font-size: 14px;
+                        text-align: center;
+                        background-color: $themeColorGray;
+                        border-radius: $smallBorderRadius;
+                        padding: $defaultSmallMargin;
+                    }
+
+                    .buttons {
+                        button {
+                            height: $smallButtonHeight;
+                            width: 100%;
+                        }
+
+                        .pauseWorkDay_button {
+                            margin-bottom: $defaultSmallMargin;
+                        }
+
+                        .endWorkDay_button {
+                            button {
+                                &:hover {
+                                    background-color: red;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
