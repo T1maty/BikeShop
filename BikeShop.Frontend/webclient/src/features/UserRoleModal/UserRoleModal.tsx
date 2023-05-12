@@ -1,6 +1,8 @@
 import React from 'react'
 import s from './UserRoleModal.module.scss'
-import {AsyncSelectSearchProduct, Button, CustomModal} from '../../shared/ui'
+import ArrowUp from '../../shared/assets/workspace/arrow-full-up.svg'
+import ArrowDown from '../../shared/assets/workspace/arrow-full-down.svg'
+import {AsyncSelectSearchProduct, Button, CustomModal, ToggleSwitch} from '../../shared/ui'
 import useUserRoleModal from "./UserRoleModalStore"
 import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore"
 
@@ -22,9 +24,9 @@ export const UserRoleModal = () => {
                 <div className={s.userRoleModal_header}>
                     <div className={s.header_groups}>
                         <div className={s.groups_groups}>
-                            <div>Админ</div>
-                            <div>Менеджер</div>
-                            <div>Разнорабочий</div>
+                            <div className={s.groups_groupsItem}>Админ</div>
+                            <div className={s.groups_groupsItem}>Менеджер</div>
+                            <div className={s.groups_groupsItem}>Младший сотрудник</div>
                         </div>
                         <Button buttonDivWrapper={s.createGroup}
                                 onClick={() => {}}
@@ -35,8 +37,19 @@ export const UserRoleModal = () => {
                     <div className={s.header_roles}>
                         <div className={s.roles_description}>1</div>
                         <div className={s.roles_tabs}>
-                            <div className={s.tabs_toggle}>1</div>
-                            <div className={s.tabs_arrows}>2</div>
+                            <div className={s.tabs_toggle}>
+                                <div>Доступные для группы</div>
+                                <ToggleSwitch/>
+                                <div>Все роли</div>
+                            </div>
+                            <div className={s.tabs_arrows}>
+                                <div>
+                                    <img src={ArrowUp} alt='arrow-up'/>
+                                </div>
+                                <div>
+                                    <img src={ArrowDown} alt='arrow-down'/>
+                                </div>
+                            </div>
                         </div>
                         <div className={s.roles_roles}>3</div>
                     </div>

@@ -32,6 +32,16 @@
                 padding: $defaultSmallMargin;
                 border-radius: $smallBorderRadius;
                 background-color: $themeColorGray;
+                @include divSmallMarginBottom;
+
+                .groups_groupsItem {
+                    padding: $defaultSmallMargin;
+                    border-radius: $smallBorderRadius;
+                    background-color: $themeColorMilk;
+                    color: black;
+                    font-size: 20px;
+                    text-align: center;
+                }
             }
             .createGroup {
                 height: 10%;
@@ -60,6 +70,8 @@
             .roles_tabs {
                 height: 10%;
                 @include flexBetween;
+                gap: $defaultLargeMargin;
+                border: 1px solid black;
 
                 > div {
                     border: 1px solid white;
@@ -67,10 +79,33 @@
                 }
 
                 .tabs_toggle {
-                    width: 70%;
+                    width: 85%;
+                    @include flexBetween;
                 }
                 .tabs_arrows {
-                    width: 30%;
+                    width: 15%;
+                    @include flexBetween;
+
+                    img {
+                        width: 30px;
+                        height: 30px;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    //> div {
+                    //    svg {
+                    //        width: 30px;
+                    //        height: 30px;
+                    //
+                    //        svg:hover {
+                    //            fill: blue;
+                    //            cursor: pointer;
+                    //        }
+                    //    }
+                    //}
                 }
             }
             .roles_roles {
