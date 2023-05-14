@@ -8,7 +8,6 @@ import {
     ChooseClientModal,
     CreateProductModal,
     EditProductCardModal,
-    EmployeeSalaryModal,
     EncashmentModal,
     EndWorkDayModal,
     GetPutMoneyModal,
@@ -21,7 +20,6 @@ import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModa
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
-import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 import ShiftTime from "./ShiftTime"
 import useCashboxStore from "../Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
@@ -47,8 +45,6 @@ export const MainPage = () => {
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
-    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
-
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
 
@@ -101,19 +97,19 @@ export const MainPage = () => {
     }
 
     const getShiftButtonUniversal = (buttonTitle: string, requestAPI: any) => {
-            return (
-                <Button buttonDivWrapper={s.pauseWorkDay_button}
-                        onClick={() => {
-                            setIsLoading(true)
-                            requestAPI(LocalStorage.userId()!).then(() => {
-                                getUserShiftStatus()
-                                setIsLoading(false)
-                            })
-                        }}
-                >
-                    {buttonTitle}
-                </Button>
-            )
+        return (
+            <Button buttonDivWrapper={s.pauseWorkDay_button}
+                    onClick={() => {
+                        setIsLoading(true)
+                        requestAPI(LocalStorage.userId()!).then(() => {
+                            getUserShiftStatus()
+                            setIsLoading(false)
+                        })
+                    }}
+            >
+                {buttonTitle}
+            </Button>
+        )
     }
 
     const getShiftButton = () => {
@@ -211,8 +207,6 @@ export const MainPage = () => {
                 <GetPutMoneyModal/>
                 <EndWorkDayModal/>
 
-                <EmployeeSalaryModal/>
-
                 <div className={s.mainPage_header}>
                     <div className={s.mainPage_header_leftSide}>
                         <div className={s.header_leftSide_deal}>
@@ -225,11 +219,6 @@ export const MainPage = () => {
                                 navigate(BikeShopPaths.WORKSPACE.CASHBOX)
                             }}>
                                 Касса
-                            </Button>
-                            <Button onClick={() => {
-                                setOpenEmployeeSalaryModal(true)
-                            }}>
-                                Новый заказ
                             </Button>
                             <Button onClick={() => {
                                 setOpenGetPutMoneyModal(true)
@@ -298,9 +287,13 @@ export const MainPage = () => {
                                 <AsyncSelectSearchProduct onSelect={addProduct}/>
                             </div>
                             <div className={s.rightSide_top_search}>
-                                <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                                <ChooseClientModal extraCallback={(user: User) => {
+                                    chooseClientHandler(user)
+                                }}/>
                                 <Button buttonDivWrapper={s.search_chooseClientButton}
-                                        onClick={() => {setOpenClientModal(true)}}
+                                        onClick={() => {
+                                            setOpenClientModal(true)
+                                        }}
                                 >
                                     Выбрать клиента
                                 </Button>
@@ -326,7 +319,9 @@ export const MainPage = () => {
                                                     </div>
                                                 </div>
                                                 <DeleteButton size={30}
-                                                              onClick={() => {setData(bill.products.filter(h => h.productId != n.productId))}}
+                                                              onClick={() => {
+                                                                  setData(bill.products.filter(h => h.productId != n.productId))
+                                                              }}
                                                 />
                                             </div>
                                         )
@@ -336,11 +331,14 @@ export const MainPage = () => {
 
                             <div className={s.rightSide_top_result}>
                                 <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                        onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
+                                        onClick={() => {
+                                            navigate(BikeShopPaths.WORKSPACE.CASHBOX)
+                                        }}>
                                     Открыть кассу
                                 </Button>
                                 <Button buttonDivWrapper={s.result_cancelBtn}
-                                        onClick={() => {}}
+                                        onClick={() => {
+                                        }}
                                 >
                                     X
                                 </Button>
@@ -355,10 +353,12 @@ export const MainPage = () => {
                                 />
                                 <PrintModal open={openPrint}
                                             setOpen={setOpenPrint}>
-                                            <CheckForShop children={res!}/>
+                                    <CheckForShop children={res!}/>
                                 </PrintModal>
                                 <Button buttonDivWrapper={s.result_payBtn}
-                                        onClick={() => {setOpenPay(true)}}
+                                        onClick={() => {
+                                            setOpenPay(true)
+                                        }}
                                 >
                                     К оплате
                                 </Button>
@@ -373,8 +373,8 @@ export const MainPage = () => {
 
                             <div className={s.bottom_right}>
                                 <div className={userShiftStatus?.lastAction.action === 'Open' ? s.shiftStatus_open :
-                                                 userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
-                                                     s.shiftStatus_closed}
+                                    userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
+                                        s.shiftStatus_closed}
                                 >
                                     {
                                         userShiftStatus?.lastAction.action === 'Open' ? 'Смена открыта' :

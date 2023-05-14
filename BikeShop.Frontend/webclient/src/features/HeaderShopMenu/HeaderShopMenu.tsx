@@ -33,6 +33,8 @@ import {CheckArchiveModal} from "../ArchiveModals/CheckArchiveModal/CheckArchive
 import {
     StorageProductsTransferArchiveModal
 } from '../ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
+import {EmployeeSalaryModal} from "../EmployeeSalaryModal/EmployeeSalaryModal";
+import useEmployeeSalaryModal from "../EmployeeSalaryModal/EmployeeSalaryModalStore";
 
 export const HeaderShopMenu = () => {
 
@@ -52,6 +54,9 @@ export const HeaderShopMenu = () => {
     const openStorageModal = useCreateStorageModal(s => s.setOpenCreateStorageModal)
     const openCurrencyModal = useCreateCurrencyModal(s => s.setOpenCreateCurrencyModal)
     const openQuantityUnitModal = useCreateQuantityUnitModal(s => s.setOpenCreateQuantityUnitModal)
+
+    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
+
 
     const [menuItems1, setMenuItems1] = useState([
         {
@@ -130,6 +135,13 @@ export const HeaderShopMenu = () => {
             }
         },
         {
+            title: 'Ставки',
+            func: () => {
+                setOpenEmployeeSalaryModal(true)
+                setIsComponentVisible(false)
+            }
+        },
+        {
             title: 'Валюты',
             func: () => {
                 openCurrencyModal(true)
@@ -201,6 +213,8 @@ export const HeaderShopMenu = () => {
             <CreateStorageModal/>
             <CreateCurrencyModal/>
             <CreateQuantityUnitModal/>
+
+            <EmployeeSalaryModal/>
 
             <div className={s.leftSide_burgerMenu}>
                 <div className={s.burgerMenu_iconButton}>
