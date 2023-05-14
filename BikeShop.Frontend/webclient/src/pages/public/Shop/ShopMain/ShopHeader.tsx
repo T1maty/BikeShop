@@ -34,7 +34,6 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
 
-    const isLoading = useCatalog(s => s.isLoading)
     const errorStatus = useCatalog(s => s.errorStatus)
     const searchProductsResult = useCatalog(s => s.searchProductsResult)
     const getSearchProducts = useCatalog(s => s.getSearchProducts)
@@ -48,6 +47,14 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
     const chooseSearchProductHandler = (pr: Product) => {
         navigate(`/shop/catalog/${pr.id}`)
         setSearchProductValue('')
+    }
+
+    const goToShopHandler = () => {
+        if (user.shopId > 0) {
+            navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+        } else {
+            navigate(BikeShopPaths.SHOP.HOME)
+        }
     }
 
     useEffect(() => {
@@ -82,7 +89,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
                             </div>
 
                             <div className={s.shop_header_left}
-                                 onClick={() => {navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)}}
+                                 onClick={goToShopHandler}
                             >
                                 <img src={ShopLogo} alt="shop-logo"/>
                             </div>

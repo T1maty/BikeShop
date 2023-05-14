@@ -44,9 +44,6 @@ export const ShopMain = () => {
         },
     ])
 
-    // вариант совмещения двух и более классов в одном
-    // const catalogGridClassName = `${s.catalog_items} ${s.catalog_items_extra}`
-
     useEffect(() => {
         getTags()
     }, [])
@@ -67,12 +64,10 @@ export const ShopMain = () => {
                             </div>
                             <div>
                                 <a href='#workshop'>Мастерская</a>
-                                {/*Мастерская*/}
                             </div>
                             <div>Фотографии</div>
                             <div>
                                 <a href='#contacts'>Контакты</a>
-                                {/*Контакты*/}
                             </div>
                         </div>
                     </div>

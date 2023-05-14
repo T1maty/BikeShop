@@ -8,7 +8,7 @@ import {LoginResponse} from "../responses/LoginResponse"
 import {AuthAPI} from "../api/AuthAPI"
 import {RegistrationData} from "../models/Auth/RegistrationData"
 import {immer} from "zustand/middleware/immer"
-import {LocalStorage} from "./LocalStorage";
+import {LocalStorage} from "./LocalStorage"
 
 interface AuthStore {
     isLoading: boolean

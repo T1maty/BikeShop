@@ -22,6 +22,7 @@ export const ShopWrapper: React.FC<ShopWrapperProps> = ({children}) => {
         if (user !== undefined) {
             setIsAuth(true)
         }
+        console.log('user', user)
     }, [isAuth])
 
     return (

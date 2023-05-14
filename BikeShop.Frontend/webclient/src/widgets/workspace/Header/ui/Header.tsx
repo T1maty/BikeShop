@@ -44,9 +44,7 @@ export const Header = () => {
                     <div className={s.currency}>
                         <Select options={allCurrencies}
                                 value={selectedCurrency}
-                                onChange={(v) => {
-                                    setSelectedCurrency(v!.id)
-                                }}
+                                onChange={(v) => {setSelectedCurrency(v!.id)}}
                                 getOptionLabel={label => label.name}
                                 styles={selectColorStyles}
                         />
