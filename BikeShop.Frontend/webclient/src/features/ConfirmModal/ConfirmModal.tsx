@@ -3,13 +3,13 @@ import s from './ConfirmModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
 
 interface ConfirmModalProps {
+    open: boolean
+    setOpen: (value: boolean) => void
     title: string
     extraCallback: () => void
-    open: boolean
-    setOpen: (v: boolean,) => void
 }
 
-export const ConfirmModal: React.FC<ConfirmModalProps> = ({title, extraCallback, setOpen, open}) => {
+export const ConfirmModal: React.FC<ConfirmModalProps> = ({ open, setOpen, title, extraCallback}) => {
 
     const confirmButtonHandler = () => {
         extraCallback()

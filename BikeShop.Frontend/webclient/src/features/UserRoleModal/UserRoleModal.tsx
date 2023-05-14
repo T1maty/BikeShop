@@ -6,19 +6,28 @@ import {AsyncSelectSearchProduct, Button, CustomModal, ToggleSwitch} from '../..
 import useUserRoleModal from "./UserRoleModalStore"
 import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
+import {RoleGroup} from "../../entities"
+import {CreateRoleGroupModal} from "./CreateRoleGroupModal";
 
 export const UserRoleModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
 
+    const addProduct = useCashboxStore(s => s.addProduct) // temp
+
     const open = useUserRoleModal(s => s.openUserRoleModal)
     const setOpen = useUserRoleModal(s => s.setOpenUserRoleModal)
     const errorStatus = useUserRoleModal(s => s.errorStatus)
 
-    const addProduct = useCashboxStore(s => s.addProduct) // temp
+    const roles = useUserRoleModal(s => s.roles)
+    const getAllRoles = useUserRoleModal(s => s.getAllRoles)
+    const groups = useUserRoleModal(s => s.groups)
+    const getAllGroups = useUserRoleModal(s => s.getAllGroups)
 
     // false - Доступные для групп, true - Все роли
     const [checked, setChecked] = useState<boolean>(false)
+    // модалка для создания группы
+    const [openCreateGroupModal, setOpenCreateGroupModal] = useState<boolean>(false)
 
     console.log('false - Доступные для группы / true - Все роли', checked)
 
@@ -29,7 +38,10 @@ export const UserRoleModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        // getArchive()
+        open && getAllRoles()
+        open && getAllGroups()
+        console.log('roles', roles)
+        console.log('groups', groups)
     }, [])
 
     return (
@@ -42,13 +54,26 @@ export const UserRoleModal = () => {
                     <div className={s.header_groups}>
                         <div className={s.groups_groups}>
                             <div className={s.groups_groupsWrapper}>
-                                <div className={s.groups_groupsItem}>Админ</div>
-                                <div className={s.groups_groupsItem}>Менеджер</div>
-                                <div className={s.groups_groupsItem}>Младший сотрудник</div>
+                                {
+                                    groups.length === 0 ?
+                                        <div style={{textAlign: 'center'}}>Создайте новую группу</div> :
+                                        groups.map((gr: RoleGroup) => {
+                                            return (
+                                                <div className={s.groups_groupsItem} key={gr.group.id}>
+                                                    {gr.group.name}
+                                                </div>
+                                            )
+                                        })
+                                }
                             </div>
                         </div>
+
+                        <CreateRoleGroupModal open={openCreateGroupModal}
+                                              setOpen={setOpenCreateGroupModal}
+                        />
+
                         <Button buttonDivWrapper={s.createGroup}
-                                onClick={() => {}}
+                                onClick={() => {setOpenCreateGroupModal(true)}}
                         >
                             Создать группу
                         </Button>

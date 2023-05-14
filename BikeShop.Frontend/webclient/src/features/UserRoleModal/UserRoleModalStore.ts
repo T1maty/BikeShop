@@ -2,6 +2,7 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../entities/enumerables/ErrorStatusTypes"
+import {CreateRoleGroup, Role, RoleAPI, RoleGroup} from "../../entities"
 
 interface UserRoleModalStore {
     openUserRoleModal: boolean
@@ -9,8 +10,12 @@ interface UserRoleModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    // archive: any[]
-    // getArchive: () => void
+    roles: Role[]
+    getAllRoles: () => void
+    groups: RoleGroup[]
+    getAllGroups: () => void
+
+    createGroup: (data: CreateRoleGroup) => void
 }
 
 const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -21,21 +26,49 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
     isLoading: false,
     errorStatus: 'default',
 
-    // archive: [],
-    // getArchive: () => {
-        // set({isLoading: true})
-        // ArchiveAPI.getArchive().then((res: any) => {
-        //     set(state => {
-        //         state.archive = res.data
-        //     })
-        //     set({isLoading: false})
-        // }).catch((error: any) => {
-        //     set({errorStatus: 'error'})
-        // }).finally(() => {
-        //     set({errorStatus: 'default'})
-        //     set({isLoading: false})
-        // })
-    // },
+    roles: [],
+    getAllRoles: () => {
+        set({isLoading: true})
+        RoleAPI.getAllRoles().then((res) => {
+            set(state => {
+                state.roles = res.data
+            })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
+    groups: [],
+    getAllGroups: () => {
+        set({isLoading: true})
+        RoleAPI.getAllRoleGroups().then((res) => {
+            set(state => {
+                state.groups = res.data
+            })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
+
+    createGroup: (data) => {
+        set({isLoading: true})
+        RoleAPI.createRoleGroup(data).then((res) => {
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+            console.log('создание группы', error)
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
 })))/*, {
     name: userRoleModalStore",
     version: 1
