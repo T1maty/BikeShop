@@ -22,7 +22,7 @@ const useCreateTagModal = create<createTagModalStore>()(persist(devtools(immer((
     setParentNode: (node) => set({parentNode: node}),
 
     createTag: (tag) => {
-        return CatalogAPI.createProductTag(tag).then()
+        return CatalogAPI.createProductTag(tag)
     }
 }))), {
     name: "createTagModalStore",

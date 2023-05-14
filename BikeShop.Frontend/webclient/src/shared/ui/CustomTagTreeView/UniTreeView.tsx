@@ -44,11 +44,12 @@ export const UniTreeView = memo((props: UniTreeView) => {
 
         data.forEach((item: any) => {
             if (item.parentId === parentId) {
+                let buf = {...item}
                 const children = buildTree(data, item.id)
                 if (children.length) {
-                    item.children = children
+                    buf.children = children
                 }
-                tree.push(item)
+                tree.push(buf)
             }
         })
 
@@ -71,12 +72,15 @@ export const UniTreeView = memo((props: UniTreeView) => {
         return (
             <div key={item.id}
                  className={cls.wrapper}
-                 onContextMenu={(e) => {e.preventDefault()}}
+                 onContextMenu={(e) => {
+                     e.preventDefault()
+                 }}
             >
                 <div style={{cursor: 'pointer'}}
                      className={cls.parent}
                 >
-                    <div className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
+                    <div
+                        className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}
                         >
@@ -102,9 +106,9 @@ export const UniTreeView = memo((props: UniTreeView) => {
 
                 {
                     hasChildren && isExpanded && (
-                    <div className={cls.child}>
-                        {item.children.map(renderItem)}
-                    </div>
+                        <div className={cls.child}>
+                            {item.children.map(renderItem)}
+                        </div>
                     )
                 }
             </div>

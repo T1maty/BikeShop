@@ -10,7 +10,7 @@ import useCatalog from './CatalogStore'
 import {DeleteButton, ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
-import {ProductFullData, ProductTag} from '../../../../entities'
+import {ProductFullData, ProductTag, useCurrency} from '../../../../entities'
 import Enumerable from "linq"
 import {ShopCatalogTreeView} from "../ShopCatalogTreeView/ShopCatalogTreeView";
 
@@ -38,6 +38,9 @@ export const Catalog = () => {
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
 
     const [filterStatus, setFilterStatus] = useState<FilterProductsType>('Popular')
     const [activeFilter1, setActiveFilter1] = useState<boolean>(false)
@@ -235,7 +238,8 @@ export const Catalog = () => {
                                             <div className={s.item_title}>{prod.product.name}</div>
                                         </div>
                                         <div className={s.item_buy}>
-                                            <div className={s.item_price}>{prod.product.retailPrice}</div>
+                                            <div
+                                                className={s.item_price}>{r(fbts.c * prod.product.retailPrice) + fbts.s}</div>
                                             <div className={s.item_cart}
                                                  onClick={() => {
                                                      addProductToCartHandler(prod)
