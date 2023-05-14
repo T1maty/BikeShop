@@ -4,7 +4,7 @@
 .employeeSalaryModal_mainBlock {
     @include defaultModalStyle;
     gap: $defaultLargeMargin;
-    min-width: 600px;
+    width: 600px;
 
     .employeeSalaryModal_title {
         @include modalTitle;
@@ -15,6 +15,7 @@
         gap: $defaultLargeMargin;
 
         .content_scrollWrapper {
+            width: 50%;
 
             .content_employeeList {
                 background-color: $themeColorMilk;
@@ -44,7 +45,7 @@
             }
         }
         .content_employeeData {
-            min-width: 300px;
+            width: 50%;
 
             .employeeData_inputs {
                 > div {
@@ -53,6 +54,7 @@
 
                 .employeeData_inputsItem {
                     @include flexBetween;
+                    gap: $defaultSmallMargin;
 
                     input {
                         width: 100px;
