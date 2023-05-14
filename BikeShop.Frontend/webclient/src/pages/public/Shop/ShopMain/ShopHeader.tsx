@@ -19,7 +19,7 @@ import SearchMagnifyIcon from '../../../../shared/assets/shop/icons/search.png'
 
 interface ShopHeaderProps {
     isAuth: boolean
-    user: User
+    user: User | undefined
     searchMobileActive: boolean
     setSearchMobileActive: (value: boolean) => void
     searchProductValue: string
@@ -50,7 +50,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
     }
 
     const goToShopHandler = () => {
-        if (user.shopId > 0) {
+        if (user !== undefined && user.shopId > 0) {
             navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
         } else {
             navigate(BikeShopPaths.SHOP.HOME)

@@ -4,12 +4,15 @@ import {Button, ControlledCustomInput} from '../../../../shared/ui'
 import {Errors} from "../../../../entities/errors/workspaceErrors"
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {AuthAPI, User} from '../../../../entities'
+import {ErrorStatusTypes} from "../../../../entities/enumerables/ErrorStatusTypes"
 
 interface ProfileInfoProps {
     user: User
+    setIsLoading: (value: boolean) => void
+    setErrorStatus: (value: ErrorStatusTypes) => void
 }
 
-export const ProfileInfo: React.FC<ProfileInfoProps> = ({user}) => {
+export const ProfileInfo: React.FC<ProfileInfoProps> = ({user, setIsLoading, setErrorStatus}) => {
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -27,10 +30,17 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({user}) => {
     })
 
     const onSubmit: SubmitHandler<any> = (data: any) => {
+        setIsLoading(true)
         AuthAPI.User.updateUserProfile(data).then((res) => {
+            setIsLoading(false)
+            setErrorStatus('success')
             console.log('обновление профиля', data)
         }).catch((error: any) => {
             console.log('ошибка профиля', error)
+            setErrorStatus('error')
+        }).finally(() => {
+            setIsLoading(false)
+            setErrorStatus('default')
         })
     }
 

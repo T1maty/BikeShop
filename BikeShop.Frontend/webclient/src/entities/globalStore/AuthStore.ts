@@ -9,12 +9,15 @@ import {AuthAPI} from "../api/AuthAPI"
 import {RegistrationData} from "../models/Auth/RegistrationData"
 import {immer} from "zustand/middleware/immer"
 import {LocalStorage} from "./LocalStorage"
+import {ErrorStatusTypes} from "../enumerables/ErrorStatusTypes"
 
 interface AuthStore {
     isLoading: boolean
     setIsLoading: (value: boolean) => void
     isAuth: boolean
     setIsAuth: (value: boolean) => void
+    errorStatus: ErrorStatusTypes
+    setErrorStatus: (value: ErrorStatusTypes) => void
 
     user: User | undefined
     shop: Shop | undefined
@@ -32,6 +35,8 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set, get) => 
     setIsLoading: (value) => set({isLoading: value}),
     isAuth: false,
     setIsAuth: (value) => set({isAuth: value}),
+    errorStatus: 'default',
+    setErrorStatus: (value) => set({errorStatus: value}),
 
     user: undefined,
     shop: undefined,
@@ -103,7 +108,7 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set, get) => 
     updateUserData: () => {
         let user = get().user
         let oldShopId = LocalStorage.shopId()
-        if (user != undefined)
+        if (user !== undefined)
             AuthAPI.User.getUserById(user.id).then((r) => {
                 localStorage.setItem('shopId', r.data.shopId.toString())
                 set(state => {

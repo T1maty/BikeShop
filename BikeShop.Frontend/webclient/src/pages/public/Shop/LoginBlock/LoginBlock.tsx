@@ -11,7 +11,7 @@ import {useAuth, User} from '../../../../entities'
 
 interface LoginBlockProps {
     isAuth: boolean
-    user: User
+    user: User | undefined
 }
 
 export const LoginBlock: React.FC<LoginBlockProps> = ({isAuth, user}) => {
