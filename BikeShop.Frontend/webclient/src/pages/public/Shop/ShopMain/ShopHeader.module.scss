@@ -25,6 +25,8 @@
 
                 .shop_header_left {
                     @include hoverCursorPointer;
+                    @include flexCenter;
+                    gap: 10px;
 
                     img {
                         width: 50px;
@@ -33,6 +35,24 @@
                         border: 2px solid white;
                         border-radius: 50%;
                         padding: 2px;
+                    }
+
+                    .logo_name {
+                        font-size: 30px;
+                        margin-right: 10px;
+
+                        @media (max-width: 990px) {
+                            font-size: 20px;
+                        }
+                        @media (max-width: 660px) {
+                            font-size: 16px;
+                        }
+                        @media (max-width: 550px) {
+                            font-size: 12px;
+                        }
+                        @media (max-width: 490px) {
+                            display: none;
+                        }
                     }
                 }
 

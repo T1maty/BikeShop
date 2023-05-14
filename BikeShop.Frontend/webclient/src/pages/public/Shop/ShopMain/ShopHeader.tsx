@@ -91,7 +91,8 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
                             <div className={s.shop_header_left}
                                  onClick={goToShopHandler}
                             >
-                                <img src={ShopLogo} alt="shop-logo"/>
+                                <div className={s.logo_image}><img src={ShopLogo} alt="shop-logo"/></div>
+                                <div className={s.logo_name}>BikeLove</div>
                             </div>
 
                             <div className={s.shop_header_right}>
