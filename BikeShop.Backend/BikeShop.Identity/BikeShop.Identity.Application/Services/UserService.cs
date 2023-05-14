@@ -2,6 +2,7 @@
 using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Application.Exceptions;
 using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -28,10 +29,30 @@ namespace BikeShop.Identity.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ApplicationUser>> GetEmployees(int ShopId)
+        public async Task<List<UserWithRoles>> GetEmployees(int ShopId)
         {
-            if(ShopId == 0)return await _userManager.Users.Where(n => n.ShopId > 0).ToListAsync();
-            else return await _userManager.Users.Where(n => n.ShopId == ShopId).ToListAsync();
+            if (ShopId == 0) 
+            {
+                var users = await _userManager.Users.Where(n => n.ShopId > 0).ToListAsync();
+                var res = new List<UserWithRoles>();
+                foreach (var n in users)
+                {
+                    var ent = new UserWithRoles { User = n, Roles = (List<string>)await _userManager.GetRolesAsync(n) };
+                    res.Add(ent);
+                }
+                return res;
+            }
+            else
+            {
+                var users = await _userManager.Users.Where(n => n.ShopId == ShopId).ToListAsync();
+                var res = new List<UserWithRoles>();
+                foreach (var n in users)
+                {
+                    var ent = new UserWithRoles { User = n, Roles = (List<string>)await _userManager.GetRolesAsync(n) };
+                    res.Add(ent);
+                }
+                return res;
+            }
         }
 
         public async Task<UserDTO> GetUserById(Guid id)
