@@ -18,7 +18,7 @@ interface UseCatalogStore {
 
     defaultProducts: ProductFullData[]
     getDefaultProducts: () => void
-    getProductsByTags: (tags: any) => void
+    getProductsByTags: (tags: string[]) => void
 
     currentProduct: ProductFullData | null
     setCurrentProduct: (product: ProductFullData | null) => void
@@ -26,9 +26,23 @@ interface UseCatalogStore {
 
     searchProductsResult: Product[]
     getSearchProducts: (inputValue: string) => void
+
+    selectedTags: ProductTag | null
+    setSelectedTags: (n: ProductTag) => void
+
+    expandedTags: number[]
+    setExpandedTags: (n: number[]) => void
 }
 
-const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useCatalog = create<UseCatalogStore>()(persist(devtools(immer((set, get) => ({
+    expandedTags: [],
+    setExpandedTags: (n) => {
+        set({expandedTags: n})
+    },
+    selectedTags: null,
+    setSelectedTags: (n) => {
+        set({selectedTags: n})
+    },
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
     errorStatus: 'default',
@@ -88,7 +102,7 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             console.log('ошибка получения по тегам', error)
         }).finally(() => {
             set({errorStatus: 'default'})
-            // set({isLoading: false})
+            set({isLoading: false})
         })
     },
 
@@ -128,9 +142,9 @@ const useCatalog = create<UseCatalogStore>()(/*persist(*/devtools(immer((set, ge
             set({errorStatus: 'default'})
         })
     }
-})))/*, {
+}))), {
     name: "useCatalog",
     version: 1
-})*/);
+}));
 
 export default useCatalog;
