@@ -14,6 +14,7 @@ import Select from 'react-select'
 import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
 import {useProductCatalogStorage} from "./ProductCatalogStorage"
 import Enumerable from "linq";
+import DisplayModal from "../../../features/ProductCatalogFeatures/DisplayModal";
 
 export const ProductCatalog = () => {
 
@@ -21,8 +22,6 @@ export const ProductCatalog = () => {
 
     const getProductCard = useEditProductCardModal(s => s.getProductCard)
     const isError = useEditProductCardModal(s => s.isError)
-    const setNotSortedToTable = useProductCatalogTableStore(s => s.setNotSortedToTable)
-
     const storages = useCreateStorageModal(s => s.storages)
     const getStorages = useCreateStorageModal(s => s.getStorages)
     const selectedStorage = useCreateStorageModal(s => s.selectedStorage)
@@ -34,6 +33,7 @@ export const ProductCatalog = () => {
     const storageData = useProductCatalogStorage(s => s.storageData)
 
     const [tags, setTags] = useState<ProductTag[]>([])
+    const [displayModal, setDisplayModal] = useState(false)
 
     useEffect(() => {
         if (isError) {
@@ -57,7 +57,7 @@ export const ProductCatalog = () => {
     return (
         <div className={s.productCatalogTable_mainBlock}>
             <EditProductCardModal/>
-
+            <DisplayModal open={displayModal} setOpen={setDisplayModal}/>
             <div className={s.productCatalogTable_leftSide}>
                 <div className={s.leftSide_header}>
                     <ProductTagCloud tags={tags} setTags={setTags}/>
@@ -70,6 +70,7 @@ export const ProductCatalog = () => {
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>
                     <Button onClick={() => {
+                        setDisplayModal(true)
                     }}>
                         Отображение
                     </Button>
@@ -95,9 +96,6 @@ export const ProductCatalog = () => {
                             styles={selectColorStyles}
                         />
                     </div>
-                    <Button onClick={setNotSortedToTable}>
-                        Неотсортированные
-                    </Button>
                 </div>
 
                 <div className={s.rightSide_table}

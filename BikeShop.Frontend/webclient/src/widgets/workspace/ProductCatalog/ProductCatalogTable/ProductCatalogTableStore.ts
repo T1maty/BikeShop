@@ -2,6 +2,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CatalogAPI, Product, UpdateProduct} from "../../../../entities"
+import Enumerable from "linq";
 
 interface productCatalogTableStore {
     isLoading: boolean
@@ -20,9 +21,26 @@ interface productCatalogTableStore {
     updateRow: (rowData: UpdateProduct) => void
 
     setNotSortedToTable: () => void
+
+    sortMode: string
+    setSortMode: (v: string) => void
+    sort: () => void
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
+    sort: () => {
+        if (get().sortMode == 'Сначала дешевые') {
+            let sortedRows = Enumerable.from(get().rows).orderBy(n => n.retailPrice).toArray()
+            set({rows: sortedRows})
+        } else if (get().sortMode == 'Сначала дорогие') {
+            let sortedRows = Enumerable.from(get().rows).orderByDescending(n => n.retailPrice).toArray()
+            set({rows: sortedRows})
+        }
+    },
+    sortMode: 'По кличеству товара на складе',
+    setSortMode: (v) => {
+        set({sortMode: v})
+    },
     isLoading: false,
     open: false,
     setOpen: (value, x, y) => set({
@@ -62,6 +80,7 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
         CatalogAPI.getProductByTag(value).then((r) => {
             set({rows: r.data})
             set({isLoading: false})
+            get().sort()
         })
     },
     addNewProduct: (product) => {
@@ -91,6 +110,7 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
                     return (r.product)
                 })
             })
+            get().sort()
             set({isLoading: false})
         }).catch((r) => {
             console.log(r)
