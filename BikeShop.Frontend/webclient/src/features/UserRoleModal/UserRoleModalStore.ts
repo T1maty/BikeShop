@@ -9,13 +9,15 @@ interface UserRoleModalStore {
     setOpenUserRoleModal: (value: boolean) => void
     isLoading: boolean
     errorStatus: ErrorStatusTypes
+    isCreateModalLoading: boolean
+    errorStatusForCreateModal: ErrorStatusTypes
 
     roles: Role[]
     getAllRoles: () => void
     groups: RoleGroup[]
     getAllGroups: () => void
 
-    createGroup: (data: CreateRoleGroup) => void
+    createGroup: (params: CreateRoleGroup) => void
 }
 
 const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer((set, get) => ({
@@ -25,6 +27,8 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
     }),
     isLoading: false,
     errorStatus: 'default',
+    isCreateModalLoading: false,
+    errorStatusForCreateModal: 'default',
 
     roles: [],
     getAllRoles: () => {
@@ -57,16 +61,21 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
         })
     },
 
-    createGroup: (data) => {
-        set({isLoading: true})
-        RoleAPI.createRoleGroup(data).then((res) => {
-            set({isLoading: false})
+    createGroup: (params) => {
+        set({isCreateModalLoading: true})
+        RoleAPI.createRoleGroup(params).then((res) => {
+            // set(state => {
+            //     state.groups.push(res.data)
+            // })
+            set({isCreateModalLoading: false})
+            set({errorStatusForCreateModal: 'success'})
+            console.log('группа создана', res)
         }).catch((error: any) => {
-            set({errorStatus: 'error'})
+            set({errorStatusForCreateModal: 'error'})
             console.log('создание группы', error)
         }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
+            set({errorStatusForCreateModal: 'default'})
+            set({isCreateModalLoading: false})
         })
     },
 })))/*, {

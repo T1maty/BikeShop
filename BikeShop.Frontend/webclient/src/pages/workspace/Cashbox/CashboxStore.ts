@@ -1,10 +1,11 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {BillWithProducts, FinancialInteractionAPI, LocalStorage, PaymentData, Product, User} from '../../../entities'
+import {BillWithProducts, FinancialInteractionAPI,
+    LocalStorage, PaymentData, Product, User} from '../../../entities'
 import {NewBillDTO} from "./models/NewBillDTO"
 import {BillProductDTO} from "./models/BillProductDTO"
-import Enumerable from "linq";
+import Enumerable from "linq"
 
 interface CashboxStore {
     isLoading: boolean
@@ -16,17 +17,13 @@ interface CashboxStore {
 
     setProducts: (value: BillProductDTO[]) => void
     addProduct: (value: Product) => void
-    paymentHandler: (data: PaymentData, onSuccess: (r: BillWithProducts) => void) => void,
+    paymentHandler: (data: PaymentData, onSuccess: (r: BillWithProducts) => void) => void
 
-    sum: number,
+    sum: number
     setSum: (v: number) => void
 }
 
 const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get) => ({
-    sum: 0,
-    setSum: (v) => {
-        set({sum: v})
-    },
     isLoading: false,
     setIsLoading: (value) => set({
         isLoading: value
@@ -92,7 +89,12 @@ const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get)
         }).finally(() => {
             set({isLoading: false})
         })
-    }
+    },
+
+    sum: 0,
+    setSum: (v) => {
+        set({sum: v})
+    },
 }))), {
     name: "cashboxStore",
     version: 1

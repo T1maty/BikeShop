@@ -31,7 +31,7 @@ export const LoginPage = () => {
                 if (data.user.shopId > 0) {
                     navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
                 } else {
-                    navigate(BikeShopPaths.SHOP.PROFILE)
+                    navigate(BikeShopPaths.SHOP.HOME)
                 }
             },
             (r: any) => {

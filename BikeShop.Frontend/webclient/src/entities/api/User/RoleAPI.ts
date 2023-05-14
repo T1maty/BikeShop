@@ -21,9 +21,15 @@ export const RoleAPI = {
             $api.get<RoleGroup[]>('/role/getallgroups')
         )
     },
-    createRoleGroup(data: CreateRoleGroup): Promise<AxiosResponse<RoleGroupResponse>> {
+    createRoleGroup(params: CreateRoleGroup): Promise<AxiosResponse<any>> {
         return (
-            $api.post<RoleGroupResponse>('/role/creategroup', data)
+            $api.post<any>(`/role/creategroup?name=${params.name}&description=${params.description}`)
+            // $api.post<any>(`/role/creategroup`, {}, {
+            //     params: {
+            //         name: params.name,
+            //         description: params.description,
+            //     }
+            // })
         )
     },
     createRole(name: string): Promise<AxiosResponse<CreateRole>> {
