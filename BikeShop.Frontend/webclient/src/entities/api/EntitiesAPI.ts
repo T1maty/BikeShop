@@ -9,8 +9,9 @@ import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 import {UpdateSpecification} from '../requests/UpdateSpecification'
 import {ProductSpecification} from "../entities/ProductSpecification"
 import {CreateOption, Currency, UpdateOption} from "entities"
-import {ProductOptionsWithVariants}
-    from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
+import {
+    ProductOptionsWithVariants
+} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
 
 export const EntitiesAPI = {
     Shop: {
@@ -44,7 +45,7 @@ export const EntitiesAPI = {
         },
         updateStorageInfo(updateData: UpdateStorage): any {
             return (
-                $api.put<UpdateStorage>('/storagecrud/update', updateData)
+                $api.post<UpdateStorage>('/storagecrud/update', updateData)
             )
         },
     },

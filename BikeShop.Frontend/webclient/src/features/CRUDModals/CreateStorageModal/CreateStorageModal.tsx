@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from './CreateStorageModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateStorageModal from './CreateStorageModalStore'
 import {UpdateStorage} from '../../../entities/requests/CreateStorage'
@@ -35,6 +34,7 @@ export const CreateStorageModal = () => {
     })
 
     const onSubmit: SubmitHandler<UpdateStorage> = (data: UpdateStorage) => {
+        console.log(data)
         if (currentStorage === null) {
             addNewStorage(data)
         }
@@ -73,7 +73,9 @@ export const CreateStorageModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.shopStorageModal_mainBlock}>
                     <div className={s.shopStorageModal_shops}>
@@ -82,7 +84,9 @@ export const CreateStorageModal = () => {
                                 storages.map(storage => (
                                     <div key={storage.id}
                                          className={storage.id === currentStorage?.id ? s.shop_item_active : s.shop_item}
-                                         onClick={() => {setCurrentStorage(storage)}}
+                                         onClick={() => {
+                                             setCurrentStorage(storage)
+                                         }}
                                     >
                                         <div><span>ID:</span> {storage.id}</div>
                                         <div><span>Название:</span> {storage.name}</div>
@@ -119,7 +123,9 @@ export const CreateStorageModal = () => {
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentStorage === null}
-                                        onClick={() => {setCurrentStorage(null)}}
+                                        onClick={() => {
+                                            setCurrentStorage(null)
+                                        }}
                                 >
                                     Отмена
                                 </Button>
