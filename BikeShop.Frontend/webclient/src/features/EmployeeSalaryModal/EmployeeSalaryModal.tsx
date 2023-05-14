@@ -87,7 +87,7 @@ export const EmployeeSalaryModal = () => {
                         <div className={s.content_scrollWrapper}>
                             <div className={s.content_employeeList}>
                                 {
-                                    employers.length === 0 ? <div>Список пуст</div> :
+                                    employers.length === 0 ? <div style={{textAlign: 'center'}}>Список пуст</div> :
 
                                     employers.map(em => {
                                         return (

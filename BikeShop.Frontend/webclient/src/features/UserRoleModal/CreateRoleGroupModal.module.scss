@@ -1,0 +1,29 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables';
+
+.roleGroupModal_mainBox {
+    @include defaultModalStyle;
+    width: 350px;
+    height: 180px;
+
+    .roleGroupModal_groupNameInput {
+        margin-bottom: 10px;
+    }
+    .roleGroupModal_groupDescriptionInput {
+        margin-bottom: 10px;
+    }
+    .roleGroupModal_buttons {
+        width: 100%;
+        @include flexBetween;
+        gap: $defaultLargeMargin;
+
+        > div {
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+            height: 40px;
+        }
+    }
+}
