@@ -31,7 +31,7 @@ export const ServiceFinalArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getEndedServices()
+        open && getEndedServices()
     }, [])
 
     if (isLoading) {

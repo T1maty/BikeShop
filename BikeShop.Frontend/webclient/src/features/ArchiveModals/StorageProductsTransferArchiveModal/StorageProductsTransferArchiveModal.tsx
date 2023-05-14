@@ -23,8 +23,8 @@ export const StorageProductsTransferArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getTransferProducts()
-        console.log(archive)
+        open && getTransferProducts()
+        // console.log(archive)
     }, [])
 
     if (isLoading) {

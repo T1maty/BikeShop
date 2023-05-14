@@ -4,7 +4,7 @@
 .checkArchiveModal_mainBox {
     @include defaultModalStyle;
     @include flexColumn;
-    width: 600px;
+    width: 550px;
 
     .checkArchiveModal_title {
         @include modalTitle;

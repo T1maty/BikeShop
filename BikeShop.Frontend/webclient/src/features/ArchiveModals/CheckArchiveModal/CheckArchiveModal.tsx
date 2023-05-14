@@ -32,8 +32,8 @@ export const CheckArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        loadArchive()
-        console.log(archive)
+        open && loadArchive()
+        // console.log(archive)
     }, [])
 
     if (isLoading) {

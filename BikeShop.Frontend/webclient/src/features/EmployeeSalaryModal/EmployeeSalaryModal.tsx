@@ -67,7 +67,7 @@ export const EmployeeSalaryModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getEmployersList()
+        open && getEmployersList()
     }, [])
 
     if (isLoading) {

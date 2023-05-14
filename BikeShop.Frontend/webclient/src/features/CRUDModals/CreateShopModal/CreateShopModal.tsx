@@ -67,7 +67,7 @@ export const CreateShopModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getShops()
+        open && getShops()
     }, [])
 
     if (isLoading) {

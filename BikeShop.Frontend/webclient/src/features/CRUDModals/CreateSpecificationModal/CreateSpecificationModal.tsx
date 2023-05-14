@@ -59,7 +59,7 @@ export const CreateSpecificationModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getSpecifications()
+        open && getSpecifications()
     }, [])
 
     if (isLoading) {

@@ -1,15 +1,19 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './UserRoleModal.module.scss'
 import ArrowUp from '../../shared/assets/workspace/arrow-full-up.svg'
 import ArrowDown from '../../shared/assets/workspace/arrow-full-down.svg'
 import {AsyncSelectSearchProduct, Button, CustomModal, ToggleSwitch} from '../../shared/ui'
 import useUserRoleModal from "./UserRoleModalStore"
 import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore"
+import {useSnackbar} from "notistack"
 
 export const UserRoleModal = () => {
 
+    const {enqueueSnackbar} = useSnackbar()
+
     const open = useUserRoleModal(s => s.openUserRoleModal)
     const setOpen = useUserRoleModal(s => s.setOpenUserRoleModal)
+    const errorStatus = useUserRoleModal(s => s.errorStatus)
 
     const addProduct = useCashboxStore(s => s.addProduct) // temp
 
@@ -17,6 +21,16 @@ export const UserRoleModal = () => {
     const [checked, setChecked] = useState<boolean>(false)
 
     console.log('false - Доступные для группы / true - Все роли', checked)
+
+    useEffect(() => {
+        if (errorStatus === 'error') {
+            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+        }
+    }, [errorStatus])
+
+    useEffect(() => {
+        // getArchive()
+    }, [])
 
     return (
         <CustomModal

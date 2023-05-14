@@ -48,7 +48,7 @@ export const ServiceArchiveModal = () => {
     }
 
     useEffect(() => {
-        getAllServicesInfo()
+        open && getAllServicesInfo()
         setIsActiveEnded(true)
     }, [])
 

@@ -98,7 +98,7 @@ export const CreateOptionModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getOptions()
+        open && getOptions()
     }, [])
 
     if (isLoading) {

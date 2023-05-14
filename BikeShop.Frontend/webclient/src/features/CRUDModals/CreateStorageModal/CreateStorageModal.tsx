@@ -63,7 +63,7 @@ export const CreateStorageModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getStorages()
+        open && getStorages()
     }, [])
 
     if (isLoading) {

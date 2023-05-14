@@ -38,7 +38,7 @@ export const SupplyInvoiceArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getArchive()
+        open && getArchive()
     }, [])
 
     if (isLoading) {

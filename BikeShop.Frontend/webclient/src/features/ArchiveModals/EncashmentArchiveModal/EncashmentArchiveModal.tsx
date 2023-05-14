@@ -8,14 +8,13 @@ import CashIcon from '../../../shared/assets/workspace/cash-icon.svg'
 import PayCardIcon from '../../../shared/assets/workspace/paycard-icon.svg'
 import MoneyIcon from '../../../shared/assets/workspace/money-icon.svg'
 import {formatDate} from "../../../shared/utils/formatDate"
-import {useCurrency} from "../../../entities";
-import Enumerable from "linq";
-import {EncashmentArchiveContext} from "./EncashmentArchiveContext";
+import {useCurrency} from "../../../entities"
+import Enumerable from "linq"
+import {EncashmentArchiveContext} from "./EncashmentArchiveContext"
 
 export const EncashmentArchiveModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
-    const navigate = useNavigate()
 
     const open = useEncashmentArchiveModal(s => s.openEncashmentArchiveModal)
     const setOpen = useEncashmentArchiveModal(s => s.setOpenEncashmentArchiveModal)
@@ -29,9 +28,6 @@ export const EncashmentArchiveModal = () => {
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
 
-    // const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
-    // const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
-
     const [context, setContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
     useEffect(() => {
@@ -41,8 +37,7 @@ export const EncashmentArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        if (open)
-            getArchive()
+        open && getArchive()
     }, [open])
 
     if (isLoading) {

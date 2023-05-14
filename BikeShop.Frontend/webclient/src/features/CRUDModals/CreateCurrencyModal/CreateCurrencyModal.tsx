@@ -66,7 +66,7 @@ export const CreateCurrencyModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getCurrencies()
+        open && getCurrencies()
     }, [])
 
     if (isLoading) {

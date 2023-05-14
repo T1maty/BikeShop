@@ -81,7 +81,7 @@ export const CreateQuantityUnitModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getQuantityUnits()
+        open && getQuantityUnits()
     }, [])
 
     if (isLoading) {

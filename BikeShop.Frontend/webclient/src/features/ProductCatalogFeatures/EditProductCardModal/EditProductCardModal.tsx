@@ -52,8 +52,8 @@ export const EditProductCardModal = () => {
     }
 
     useEffect(() => {
-        getAllOptions()
-        getAllSpecifications()
+        open && getAllOptions()
+        open && getAllSpecifications()
 
         formControl.setValue('id', currentProduct.product?.id)
         formControl.setValue('productTags', currentProduct.productTags)
@@ -81,7 +81,6 @@ export const EditProductCardModal = () => {
     useEffect(() => {
         if (errorStatus === 'success') {
             enqueueSnackbar('Изменения сохранены', {variant: 'success', autoHideDuration: 3000})
-            
         }
         if (errorStatus === 'error') {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})

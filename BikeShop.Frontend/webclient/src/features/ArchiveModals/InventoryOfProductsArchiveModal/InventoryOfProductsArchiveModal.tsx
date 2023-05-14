@@ -38,9 +38,9 @@ export const InventoryOfProductsArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        getArchive()
-        getLackArchive()
-        console.log(archive)
+        open && getArchive()
+        open && getLackArchive()
+        // console.log(archive)
     }, [])
 
     if (isLoading) {
