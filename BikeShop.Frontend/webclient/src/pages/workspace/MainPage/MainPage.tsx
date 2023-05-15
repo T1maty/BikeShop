@@ -21,7 +21,6 @@ import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModa
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
-import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 import ShiftTime from "./ShiftTime"
 import useCashboxStore from "../Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
@@ -47,6 +46,7 @@ export const MainPage = () => {
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
+
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
 
@@ -121,52 +121,6 @@ export const MainPage = () => {
             return getShiftButtonUniversal('Продолжить смену', ShiftAPI.resume)
         } else return getShiftButtonUniversal('Открыть смену', ShiftAPI.open)
     }
-
-    // const getShiftButton = () => {
-    //     if (userShiftStatus?.lastAction.action === "Open") {
-    //         return (
-    //             <Button buttonDivWrapper={s.pauseWorkDay_button}
-    //                     onClick={() => {
-    //                         setIsLoading(true)
-    //                         ShiftAPI.pause(LocalStorage.userId()!).then(() => {
-    //                             getUserShiftStatus()
-    //                             setIsLoading(false)
-    //                         })
-    //                     }}
-    //             >
-    //                 Поставить смену на паузу
-    //             </Button>
-    //         )
-    //     } else if (userShiftStatus?.lastAction.action === "Pause") {
-    //         return (
-    //             <Button buttonDivWrapper={s.pauseWorkDay_button}
-    //                     onClick={() => {
-    //                         setIsLoading(true)
-    //                         ShiftAPI.resume(LocalStorage.userId()!).then(() => {
-    //                             getUserShiftStatus()
-    //                             setIsLoading(false)
-    //                         })
-    //                     }}
-    //             >
-    //                 Продолжить смену
-    //             </Button>
-    //         )
-    //     } else {
-    //         return (
-    //             <Button buttonDivWrapper={s.pauseWorkDay_button}
-    //                     onClick={() => {
-    //                         setIsLoading(true)
-    //                         ShiftAPI.open(LocalStorage.userId()!).then(() => {
-    //                             getUserShiftStatus()
-    //                             setIsLoading(false)
-    //                         })
-    //                     }}
-    //             >
-    //                 Открыть смену
-    //             </Button>
-    //         )
-    //     }
-    // }
 
     const endShiftHandler = () => {
         if (userShiftStatus?.lastAction.action === "Pause") {
