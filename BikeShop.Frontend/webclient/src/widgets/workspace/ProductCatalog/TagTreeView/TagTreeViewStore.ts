@@ -75,8 +75,8 @@ const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, g
     },
     addNewTag: (tag) => {
         set(state => {
-            state.treeViewTags.push(tag)
-            state.expandedTags.push(tag.id.toString())
+            state.treeViewTags = [...state.treeViewTags, tag]
+            state.expandedTags = [...state.expandedTags, tag.id.toString()]
         })
     },
     deleteTag: (tagId) => {

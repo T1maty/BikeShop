@@ -34,20 +34,19 @@ export const MainPage = () => {
     const navigate = useNavigate()
     const {enqueueSnackbar} = useSnackbar()
 
-    const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
-    const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
-    const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
-    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
-    const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
-
     const shop = useAuth(s => s.shop)
 
-    const isLoading = useMainPageStore(s => s.isLoading)
-    const setIsLoading = useMainPageStore(s => s.setIsLoading)
+    const isLoading = useChooseClientModal(s => s.isLoading)
+    const setIsLoading = useChooseClientModal(s => s.setIsLoading)
+    const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
+
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
     const setUser = useMainPageStore(s => s.setUser)
 
+    const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
+    const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
+    const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
 
@@ -123,6 +122,52 @@ export const MainPage = () => {
         } else return getShiftButtonUniversal('Открыть смену', ShiftAPI.open)
     }
 
+    // const getShiftButton = () => {
+    //     if (userShiftStatus?.lastAction.action === "Open") {
+    //         return (
+    //             <Button buttonDivWrapper={s.pauseWorkDay_button}
+    //                     onClick={() => {
+    //                         setIsLoading(true)
+    //                         ShiftAPI.pause(LocalStorage.userId()!).then(() => {
+    //                             getUserShiftStatus()
+    //                             setIsLoading(false)
+    //                         })
+    //                     }}
+    //             >
+    //                 Поставить смену на паузу
+    //             </Button>
+    //         )
+    //     } else if (userShiftStatus?.lastAction.action === "Pause") {
+    //         return (
+    //             <Button buttonDivWrapper={s.pauseWorkDay_button}
+    //                     onClick={() => {
+    //                         setIsLoading(true)
+    //                         ShiftAPI.resume(LocalStorage.userId()!).then(() => {
+    //                             getUserShiftStatus()
+    //                             setIsLoading(false)
+    //                         })
+    //                     }}
+    //             >
+    //                 Продолжить смену
+    //             </Button>
+    //         )
+    //     } else {
+    //         return (
+    //             <Button buttonDivWrapper={s.pauseWorkDay_button}
+    //                     onClick={() => {
+    //                         setIsLoading(true)
+    //                         ShiftAPI.open(LocalStorage.userId()!).then(() => {
+    //                             getUserShiftStatus()
+    //                             setIsLoading(false)
+    //                         })
+    //                     }}
+    //             >
+    //                 Открыть смену
+    //             </Button>
+    //         )
+    //     }
+    // }
+
     const endShiftHandler = () => {
         if (userShiftStatus?.lastAction.action === "Pause") {
             enqueueSnackbar('Перед закрытием необходимо снять смену с паузы',
@@ -178,11 +223,6 @@ export const MainPage = () => {
                                 navigate(BikeShopPaths.WORKSPACE.CASHBOX)
                             }}>
                                 Касса
-                            </Button>
-                            <Button onClick={() => {
-                                setOpenEmployeeSalaryModal(true)
-                            }}>
-                                Новый заказ
                             </Button>
                             <Button onClick={() => {
                                 setOpenGetPutMoneyModal(true)
@@ -263,28 +303,28 @@ export const MainPage = () => {
                             </div>
 
                             <div className={s.rightSide_top_info}>
-                                {/*{*/}
-                                {/*    bill !== undefined ? bill.products.map(n => {*/}
-                                {/*        return (*/}
-                                {/*            <div className={s.cashbox_table_wrapper}>*/}
-                                {/*                <div className={s.cashbox_table_left}>*/}
-                                {/*                    <div className={s.cashbox_table_name}>*/}
-                                {/*                        {n.name}*/}
-                                {/*                    </div>*/}
-                                {/*                    <div className={s.cashbox_table_price}>*/}
-                                {/*                        {n.price * fbts.c + fbts.s}*/}
-                                {/*                    </div>*/}
-                                {/*                    <div className={s.cashbox_table_total}>*/}
-                                {/*                        {n.total * fbts.c + fbts.s}*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*                <DeleteButton size={30}*/}
-                                {/*                              onClick={() => {setData(bill.products.filter(h => h.productId != n.productId))}}*/}
-                                {/*                />*/}
-                                {/*            </div>*/}
-                                {/*        )*/}
-                                {/*    }) : ''*/}
-                                {/*}*/}
+                                {
+                                    bill.products.map(n => {
+                                        return (
+                                            <div className={s.cashbox_table_wrapper}>
+                                                <div className={s.cashbox_table_left}>
+                                                    <div className={s.cashbox_table_name}>
+                                                        {n.name}
+                                                    </div>
+                                                    <div className={s.cashbox_table_price}>
+                                                        {n.price * fbts.c + fbts.s}
+                                                    </div>
+                                                    <div className={s.cashbox_table_total}>
+                                                        {n.total * fbts.c + fbts.s}
+                                                    </div>
+                                                </div>
+                                                <DeleteButton size={30}
+                                                              onClick={() => {setData(bill.products.filter(h => h.productId != n.productId))}}
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
 
                             <div className={s.rightSide_top_result}>

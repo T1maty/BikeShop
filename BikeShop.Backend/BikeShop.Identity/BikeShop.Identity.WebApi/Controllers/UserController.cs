@@ -5,6 +5,7 @@ using BikeShop.Identity.Application.CQRS.Commands.UpdateUserPublic;
 using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
 using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.WebApi.Models.User;
 using MediatR;
@@ -189,7 +190,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("GetEmployees")]
-    public async Task<List<ApplicationUser>> GetEmployees(int ShopId)
+    public async Task<List<UserWithRoles>> GetEmployees(int ShopId)
     {
         return await _userService.GetEmployees(ShopId);
     }

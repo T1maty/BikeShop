@@ -11,7 +11,7 @@ import useCatalog from './CatalogStore'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {useSnackbar} from 'notistack'
 import Enumerable from 'linq'
-import {ProductOptionVariantBind} from '../../../../entities'
+import {ProductOptionVariantBind, useCurrency} from '../../../../entities'
 
 type SelectedOptionVariantType = {
     id: number
@@ -32,7 +32,8 @@ export const CatalogProductItem = () => {
     const setProductToCart = useShoppingCart(s => s.setProductToCart)
 
     const amountOfProduct = 10 // есть ли на складе
-
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
     const params = useParams<'productId'>()
 
     // вид отображения
@@ -108,13 +109,13 @@ export const CatalogProductItem = () => {
                         {
                             currentProduct.productTags.length === 0 ?
                                 <div className={s.cloudCategory_noTags}>У данного товара нет тегов</div> :
-                            currentProduct.productTags.map(tag => {
-                                return (
-                                    <div key={tag.productTag.id} className={s.cloudCategory_item}>
-                                        {tag.productTag.name}
-                                    </div>
-                                )
-                            })
+                                currentProduct.productTags.map(tag => {
+                                    return (
+                                        <div key={tag.productTag.id} className={s.cloudCategory_item}>
+                                            {tag.productTag.name}
+                                        </div>
+                                    )
+                                })
                         }
                     </div>
 
@@ -127,13 +128,14 @@ export const CatalogProductItem = () => {
                                           showBullets={false}
                                           thumbnailPosition={'left'}
                                           onErrorImageURL={SorryNoImage}
-                                          // additionalClass={s.imageGallery}
+                                // additionalClass={s.imageGallery}
                             />
                         </div>
 
                         <div className={s.product_info}>
                             <div className={s.product_title}>{currentProduct.product.name}</div>
-                            <div className={s.product_price}>{currentProduct.product.retailPrice}</div>
+                            <div
+                                className={s.product_price}>{r(fbts.c * currentProduct.product.retailPrice) + fbts.s}</div>
                             <div className={s.product_description}>
                                 {currentProduct.productCard.descriptionShort}
                             </div>

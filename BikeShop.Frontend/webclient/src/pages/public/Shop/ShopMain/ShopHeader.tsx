@@ -4,7 +4,7 @@ import language from '../../../../shared/assets/shop/icons/lang.png'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
 import {LoginBlock} from '../LoginBlock/LoginBlock'
-import {CustomSearchInput, LoaderScreen} from '../../../../shared/ui'
+import {CustomSearchInput} from '../../../../shared/ui'
 import {ShoppingCart} from '../ShoppingCart/ShoppingCart'
 import ShopLogo from '../../../../shared/assets/shop/icons/ShopLogo.svg'
 import CancelIcon from '../../../../shared/assets/shop/icons/cancel-icon-03.svg'
@@ -26,10 +26,11 @@ interface ShopHeaderProps {
     setSearchProductValue: (value: string) => void
 }
 
-export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
-                                                       searchMobileActive, setSearchMobileActive,
-                                                       searchProductValue, setSearchProductValue,
-}) => {
+export const ShopHeader: React.FC<ShopHeaderProps> = ({
+                                                          isAuth, user,
+                                                          searchMobileActive, setSearchMobileActive,
+                                                          searchProductValue, setSearchProductValue,
+                                                      }) => {
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -81,18 +82,24 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
 
                         <div className={s.shop_header}>
                             <div className={s.burgerMenu}
-                                 onClick={() => {setBurgerMenuActive(!burgerMenuActive)}}
+                                 onClick={() => {
+                                     setBurgerMenuActive(!burgerMenuActive)
+                                 }}
                             >
                                 <div className={s.burgerMenu_button}>
                                     <img src={burgerMenuActive ? CancelIcon : BurgerMenuIcon} alt="burger-menu"/>
                                 </div>
                             </div>
 
-                            <div className={s.shop_header_left}
-                                 onClick={goToShopHandler}
-                            >
-                                <div className={s.logo_image}><img src={ShopLogo} alt="shop-logo"/></div>
-                                <div className={s.logo_name}>BikeLove</div>
+                            <div className={s.shop_header_left}>
+                                {user != undefined && user.shopId > 0 ?
+                                    <div className={s.logo_image} onClick={goToShopHandler}><img src={ShopLogo}
+                                                                                                 alt="shop-logo"/>
+                                    </div> : <></>}
+                                <div className={s.logo_name} onClick={() => {
+                                    navigate(BikeShopPaths.SHOP.HOME)
+                                }}>BikeLove
+                                </div>
                             </div>
 
                             <div className={s.shop_header_right}>
@@ -107,14 +114,17 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
                                                        }}
                                     />
 
-                                    <div className={searchProductValue.length > 0 ? s.searchInputBox_active : s.searchInputBox}>
+                                    <div
+                                        className={searchProductValue.length > 0 ? s.searchInputBox_active : s.searchInputBox}>
                                         {
                                             searchProductsResult.length === 0
                                                 ? <div style={{textAlign: 'center'}}>Поиск...</div> :
                                                 searchProductsResult.map((pr: Product) => {
                                                     return (
                                                         <div className={s.searchInputBox_item} key={pr.id}
-                                                             onClick={() => {chooseSearchProductHandler(pr)}}
+                                                             onClick={() => {
+                                                                 chooseSearchProductHandler(pr)
+                                                             }}
                                                         >
                                                             {pr.name}
                                                         </div>
@@ -124,7 +134,9 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
                                     </div>
                                 </div>
                                 <div className={s.search_mobile}
-                                     onClick={() => {setSearchMobileActive(!searchMobileActive)}}
+                                     onClick={() => {
+                                         setSearchMobileActive(!searchMobileActive)
+                                     }}
                                 >
                                     <img src={SearchMagnifyIcon} alt='magnify-icon'/>
                                 </div>
@@ -153,14 +165,17 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({isAuth, user,
                         </div>
                     }
 
-                    <div className={searchProductValue.length > 0 ? s.searchInputBox_mobile_active : s.searchInputBox_mobile}>
+                    <div
+                        className={searchProductValue.length > 0 ? s.searchInputBox_mobile_active : s.searchInputBox_mobile}>
                         {
                             searchProductsResult.length === 0
                                 ? <div style={{textAlign: 'center'}}>Поиск...</div> :
                                 searchProductsResult.map((pr: Product) => {
                                     return (
                                         <div className={s.searchInputBox_item} key={pr.id}
-                                             onClick={() => {chooseSearchProductHandler(pr)}}
+                                             onClick={() => {
+                                                 chooseSearchProductHandler(pr)
+                                             }}
                                         >
                                             {pr.name}
                                         </div>

@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import s from './GetPutMoneyModal.module.scss'
-import {Button, ControlledCustomInput, CustomModal,
-    CustomRadioButton, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomInput, CustomModal, CustomRadioButton, LoaderScreen} from '../../../shared/ui'
 import useGetPutMoneyModal from "./GetPutMoneyModalStore"
-import {SubmitHandler, useForm, Controller} from "react-hook-form"
-import {CashboxActionRequest} from "../../../entities"
+import {Controller, SubmitHandler, useForm} from "react-hook-form"
+import {CashboxActionRequest, useCurrency} from "../../../entities"
 import {useSnackbar} from "notistack"
 
 type RadioGetPutTypes = 'Выдача' | 'Внесение'
@@ -22,6 +21,8 @@ export const GetPutMoneyModal = () => {
     const errorStatus = useGetPutMoneyModal(s => s.errorStatus)
     const createCashbox = useGetPutMoneyModal(s => s.createCashbox)
 
+    const fstb = useCurrency(s => s.fromSelectedToBase)
+
     const formControl = useForm<CashboxActionRequest>({
         defaultValues: {
             description: '',
@@ -31,9 +32,9 @@ export const GetPutMoneyModal = () => {
 
     const onSubmit: SubmitHandler<CashboxActionRequest> = (data: CashboxActionRequest) => {
         if (radioGetPut === 'Выдача') {
-            data.cash *= -1
+            data.cash *= -1 * fstb.c
         } else {
-            data.cash *= 1
+            data.cash *= fstb.c
         }
 
         data.shopId = 1
@@ -65,7 +66,9 @@ export const GetPutMoneyModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.getPutMoneyModal_mainBox}>
@@ -95,8 +98,9 @@ export const GetPutMoneyModal = () => {
                                                            placeholder={'Сумма'}
                                                            divClassName={s.sumInput}
                                                            control={formControl}
-                                                           // rules={{required: Errors[0].name}}
+                                        // rules={{required: Errors[0].name}}
                                     />
+                                    <div>{fstb.s}</div>
                                     <div className={s.infoBlock_radioButtons}>
                                         <CustomRadioButton
                                             options={radioGetPutOptions}
@@ -106,7 +110,9 @@ export const GetPutMoneyModal = () => {
                                     </div>
                                 </div>
                                 <div className={s.buttonsBlock}>
-                                    <Button onClick={() => {setOpen(false)}}>
+                                    <Button onClick={() => {
+                                        setOpen(false)
+                                    }}>
                                         Отмена
                                     </Button>
                                     <Button type={'submit'}>

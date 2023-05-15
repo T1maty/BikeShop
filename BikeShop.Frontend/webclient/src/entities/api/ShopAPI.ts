@@ -14,14 +14,14 @@ export const ShopAPI = {
             $api.get<ProductFullData[]>('/public/defaultproducts?Quantity=10')
         )
     },
-    getCatalogProductsByTag(data: any): Promise<AxiosResponse<ProductFullData[]>> {
-        return (
-            $api.get<ProductFullData[]>('/public/getproducts', data)
-        )
-    },
     getStorageId(shopId: number): Promise<AxiosResponse<number>> {
         return (
             $api.get<number>(`/shop/getstorageid?ShopId=${shopId}`)
+        )
+    },
+    getCatalogProductsByTag(tags: string[]): Promise<AxiosResponse<ProductFullData[]>> {
+        return (
+            $api.post<ProductFullData[]>(`/public/getproducts`, tags)
         )
     },
 }

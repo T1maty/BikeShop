@@ -134,7 +134,7 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productService.UpdatePrices(dto);
         }
 
-        [Authorize(Roles = "")]
+        //[Authorize(Roles = "")]
         [HttpGet("search")]
         public async Task<List<Product>> Search(string querry)
         {

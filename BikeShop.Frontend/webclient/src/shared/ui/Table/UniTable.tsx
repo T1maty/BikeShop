@@ -125,88 +125,92 @@ const TableRow = memo((props: TableRowProps) => {
     const r = useCurrency(s => s.roundUp)
 
     return (
-        <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
-            style={{backgroundColor: `${props.row.color != undefined ? props.row.color : ''}`}}
-            onDoubleClick={(event) => {
-                props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
-            }}
-
-            onContextMenu={(event) => {
-                props.setSelected([props.row])
-                props.rowOnContext ? props.rowOnContext(props.row, event) : true
-            }}
-            onClick={() => {
-                props.setSelected([props.row])
-            }}
-        >
-            {
-                props.columns.map((item, index) => {
-                    if (item.isCurrency) item.isNumber = true
-                    return (
-                        <>
-                        <td key={index}
-                            style={{textAlign: `${item.align!}`, width: `${item.width!}%`}}
-                            ref={setTriggerRef}
-                        >
-                            {
-                                item.isCurrency ?
-                                    item.isEditable ?
-                                        //Ячейка редактируемая + валюта
-                                        <div className={cls.price_column}>
-                                            <EditableSpan title={r(props.row[item.id] * fbts.c).toString()}
-                                                          onChangeInput={(newInputValue) => {
-                                                              if (item.isNumber) {
-                                                                  let newValue = (Number.parseFloat(newInputValue) * fstb.c).toString()
-                                                                  let newRow = {...props.row}
-                                                                  if (newValue != 'NaN') {
-                                                                      newRow[item.id] = newValue
-                                                                      console.log('updated')
-                                                                  }
-                                                                  props.setRow(newRow)
-                                                              }
-                                                          }}
-                                                          inputClassName={cls.currency_inputClassName1}
-                                                          spanClassName={cls.currency_spanClassName1}
-                                            />
-                                            <div>{fbts.s}</div>
-                                        </div>
-                                        //Ячейка нередактируемая + валюта
-                                        : <div>{r(props.row[item.id] * fbts.c) + ' ' + fbts.s}</div>
-
-                                    : item.isEditable ?
-                                        //Ячейка редактируемая + не валюта
-                                        <EditableSpan title={props.row[item.id]}
-                                                      onChangeInput={(newInputValue) => {
-                                                          if (item.isNumber) {
-                                                              let newValue = Number.parseFloat(newInputValue).toString()
-                                                              let newRow = {...props.row}
-                                                              if (newValue != 'NaN') {
-                                                                  newRow[item.id] = newValue
-                                                                  console.log('updated')
-                                                              }
-                                                              props.setRow(newRow)
-                                                          }
-                                                      }}
-                                                      inputClassName={cls.currency_inputClassName2}
-                                                      spanClassName={cls.currency_spanClassName2}
-                                        />
-                                        //Ячейка не редактируемая + не валюта
-                                        : <div style={{alignContent: 'center'}}>{props.row[item.id]}</div>
-                            }
-                        </td>
-                            {/*{*/}
-                            {/*    visible &&*/}
-                            {/*    <>*/}
-                            {/*        <div ref={setTooltipRef} {...getTooltipProps({className: 'tooltip-container'})}>*/}
-                            {/*            {item.label}*/}
-                            {/*        </div>*/}
-                            {/*        <div {...getArrowProps({className: 'tooltip-arrow'})} />*/}
-                            {/*    </>*/}
-                            {/*}*/}
-                        </>
-                    )
-                })
+        <>
+            {//props.selected?.includes(props.row) ? <div className={cls.rowBG}/> : <></>
             }
-        </tr>
+            <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
+                style={{backgroundColor: `${props.row.color != undefined ? props.row.color : ''}`}}
+                onDoubleClick={(event) => {
+                    props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
+                }}
+
+                onContextMenu={(event) => {
+                    props.setSelected([props.row])
+                    props.rowOnContext ? props.rowOnContext(props.row, event) : true
+                }}
+                onClick={() => {
+                    props.setSelected([props.row])
+                }}
+            >
+                {
+                    props.columns.map((item, index) => {
+                        if (item.isCurrency) item.isNumber = true
+                        return (
+                            <>
+                                <td key={index}
+                                    style={{textAlign: `${item.align!}`, width: `${item.width!}%`}}
+                                    ref={setTriggerRef}
+                                >
+                                    {
+                                        item.isCurrency ?
+                                            item.isEditable ?
+                                                //Ячейка редактируемая + валюта
+                                                <div className={cls.price_column}>
+                                                    <EditableSpan title={r(props.row[item.id] * fbts.c).toString()}
+                                                                  onChangeInput={(newInputValue) => {
+                                                                      if (item.isNumber) {
+                                                                          let newValue = (Number.parseFloat(newInputValue) * fstb.c).toString()
+                                                                          let newRow = {...props.row}
+                                                                          if (newValue != 'NaN') {
+                                                                              newRow[item.id] = newValue
+                                                                              console.log('updated')
+                                                                          }
+                                                                          props.setRow(newRow)
+                                                                      }
+                                                                  }}
+                                                                  inputClassName={cls.currency_inputClassName1}
+                                                                  spanClassName={cls.currency_spanClassName1}
+                                                    />
+                                                    <div>{fbts.s}</div>
+                                                </div>
+                                                //Ячейка нередактируемая + валюта
+                                                : <div>{r(props.row[item.id] * fbts.c) + ' ' + fbts.s}</div>
+
+                                            : item.isEditable ?
+                                                //Ячейка редактируемая + не валюта
+                                                <EditableSpan title={props.row[item.id]}
+                                                              onChangeInput={(newInputValue) => {
+                                                                  if (item.isNumber) {
+                                                                      let newValue = Number.parseFloat(newInputValue).toString()
+                                                                      let newRow = {...props.row}
+                                                                      if (newValue != 'NaN') {
+                                                                          newRow[item.id] = newValue
+                                                                          console.log('updated')
+                                                                      }
+                                                                      props.setRow(newRow)
+                                                                  }
+                                                              }}
+                                                              inputClassName={cls.currency_inputClassName2}
+                                                              spanClassName={cls.currency_spanClassName2}
+                                                />
+                                                //Ячейка не редактируемая + не валюта
+                                                : <div style={{alignContent: 'center'}}>{props.row[item.id]}</div>
+                                    }
+                                </td>
+                                {/*{*/}
+                                {/*    visible &&*/}
+                                {/*    <>*/}
+                                {/*        <div ref={setTooltipRef} {...getTooltipProps({className: 'tooltip-container'})}>*/}
+                                {/*            {item.label}*/}
+                                {/*        </div>*/}
+                                {/*        <div {...getArrowProps({className: 'tooltip-arrow'})} />*/}
+                                {/*    </>*/}
+                                {/*}*/}
+                            </>
+                        )
+                    })
+                }
+            </tr>
+        </>
     )
 })
