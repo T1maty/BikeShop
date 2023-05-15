@@ -19,6 +19,7 @@ namespace BikeShop.Service.Application.DTO
         public string Name { get; set; } = string.Empty;
         public decimal Quantity { get; set; }
         public int QuantityUnitId { get; set; }
+        public string QuantityUnitName { get; set; }
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
         public Guid UserId { get; set; }

@@ -3,7 +3,7 @@ import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput, ControlledCustomTextarea} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
 import {ServiceFormModel, useCurrency, User} from "../../../entities"
-import {SelectProductModal, SelectWorkModal} from "../../../features"
+import {PrintModal, SelectProductModal, SelectWorkModal} from "../../../features"
 import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
 import useService from "./ServiceStore"
 import useSelectProductWorkModal
@@ -12,6 +12,7 @@ import {useSnackbar} from "notistack"
 import Select from "react-select"
 import ServiceTableWork from "./ServiceTableWork"
 import ServiceTableProduct from "./ServiceTableProduct"
+import {ActGetStuffFromService} from "../../../widgets";
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -34,6 +35,9 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const [openClientModal, setOpenClientModal] = useState(false)
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
+
+    const [printAct, setPrintAct] = useState(false)
+    const [printSticker, setPrintSticker] = useState(false)
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
@@ -109,6 +113,10 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
 
     return (
         <div className={s.service_rightSide}>
+            <PrintModal open={printAct} setOpen={setPrintAct}
+                        children={<ActGetStuffFromService children={currentService}/>}/>
+            <PrintModal open={printSticker} setOpen={setPrintSticker}
+                        children={<ActGetStuffFromService children={currentService}/>}/>
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <ControlledCustomInput name={'name'}
                                        placeholder={'Техника'}

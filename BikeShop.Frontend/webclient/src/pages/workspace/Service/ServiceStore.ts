@@ -33,9 +33,16 @@ interface ServiceStore {
 
     selectedNavService: ServiceWithData | null,
     setSelectedNavService: (v: ServiceWithData) => void,
+
+    printModal: boolean
+    setPrintModal: (v: boolean) => void
 }
 
 const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
+    printModal: false,
+    setPrintModal: (v) => {
+        set({printModal: v})
+    },
     errorStatus: 'default',
     isLoading: false,
     setIsLoading: (value) => {

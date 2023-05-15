@@ -22,11 +22,13 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
+    const printModal = useService(s => s.printModal)
+    const setPrintModal = useService(s => s.setPrintModal)
 
-    const [openPrint, setOpenPrint] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [confData, setConfData] = useState<ServiceWithData>()
     const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
+
 
     const selected = ServiceStore(s => s.selectedNavService)
     const setSelected = ServiceStore(s => s.setSelectedNavService)
@@ -51,17 +53,22 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     }
 
     const updateServiceStatusHandler = (newStatus: ServiceStatus) => {
-        if (newStatus === "Ended") {
 
-        }
         updateServiceStatus({id: currentService?.service.id || -1, status: newStatus}, () => {
-            setOpenPrint(true)
+            if (newStatus === "Ended") {
+                console.log('statusChanged')
+
+                setPrintModal(true)
+            }
         })
     }
 
     return (
         <div className={s.service_leftSide}>
-
+            <PrintModal open={printModal}
+                        setOpen={setPrintModal}
+                        children={<CheckForServiceWork children={currentService!}/>}
+            />
             <ServiceNavigationContext open={navContext} setOpen={setNavContext}/>
             <ConfirmModal title={'Несохраненные изменения будут утеряны'}
                           extraCallback={() => {
@@ -71,10 +78,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                           open={confirm}
                           setOpen={setConfirm}
             />
-            <PrintModal open={openPrint}
-                        setOpen={setOpenPrint}
-                        children={<CheckForServiceWork children={currentService!}/>}
-            />
+
 
             <div className={s.leftSide_buttons}>
                 <div className={s.buttons_filter}>

@@ -37,8 +37,49 @@ public class ServiceService : IServiceService
         service.UserCreatedId = model.UserId;
         service.ClientId = model.ClientId;
 
-        var serviceWorks = _mapper.ProjectTo<ServiceWork>(model.ServiceWorks.AsQueryable()).ToList();
-        var serviceProducts = _mapper.ProjectTo<ServiceProduct>(model.ServiceProducts.AsQueryable()).ToList();
+        var serviceWorks = new List<ServiceWork>();
+        var serviceProducts = new List<ServiceProduct>();
+
+        foreach (var work in model.ServiceWorks)
+        {
+            if(work.Quantity > 0)
+            {
+                var ent = new ServiceWork();
+                ent.Name = work.Name;
+                ent.Price = work.Price;
+                ent.Quantity = work.Quantity;
+                ent.ServiceId = 0;
+                ent.ComplicationPrice = work.ComplicationPrice;
+                ent.Description = work.Description;
+                ent.Discount = work.Discount;
+                ent.WorkId = work.WorkId;
+                ent.UserId = work.UserId;
+                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+
+                serviceWorks.Add(ent);
+            }
+        }
+
+        foreach (var prod in model.ServiceProducts)
+        {
+            if (prod.Quantity > 0)
+            {
+                var ent = new ServiceProduct();
+                
+                ent.ProductId = prod.ProductId;
+                ent.SerialNumber = prod.SerialNumber;
+                ent.Quantity = prod.Quantity;
+                ent.ServiceId = 0;
+                ent.Price = prod.Price;
+                ent.Discount = prod.Discount;
+                ent.QuantityUnitId = prod.QuantityUnitId;
+                ent.QuantityUnitName= prod.QuantityUnitName;
+                ent.UserId = prod.UserId;
+                ent.Total = ent.Price * ent.Quantity - ent.Discount;
+
+                serviceProducts.Add(ent);
+            }
+        }
 
         serviceWorks.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount + n.ComplicationPrice);
         serviceProducts.ForEach(n => n.Total = (n.Quantity * n.Price) - n.Discount);
@@ -50,6 +91,10 @@ public class ServiceService : IServiceService
         service.PriceWork = serviceWorks.Select(n => n.Total).Sum();
         service.DiscountWork = serviceWorks.Select(n => n.Discount).Sum();
         service.TotalWork = service.PriceWork - service.DiscountWork;
+
+        service.Total = service.TotalWork + service.TotalProduct;
+        service.Discount = service.DiscountProduct + service.DiscountWork;
+        service.Price = service.Total + service.Discount;
 
         await UpdateReservation(new List<ProductQuantitySmplDTO>(), serviceProducts, await _shopClient.GetStorageId(model.ShopId));
 
@@ -297,6 +342,10 @@ public class ServiceService : IServiceService
         serviceCont.DiscountWork = totalWorks.Select(n => n.Discount).Sum();
         serviceCont.TotalWork = totalWorks.Select(n => n.Total).Sum();
         serviceCont.PriceWork = serviceCont.TotalWork + serviceCont.DiscountWork;
+
+        serviceCont.Total = serviceCont.TotalWork + serviceCont.TotalProduct;
+        serviceCont.Discount = serviceCont.DiscountProduct + serviceCont.DiscountWork;
+        serviceCont.Price = serviceCont.Total + serviceCont.Discount;
 
         
         await UpdateReservation(oldServiceProducts, totalProducts, await _shopClient.GetStorageId(serviceCont.ShopId));

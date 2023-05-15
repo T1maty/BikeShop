@@ -1,8 +1,9 @@
 import React from 'react'
 import s from './ActGetStuffService.module.scss'
 import {ActHeader} from "./ActHeader"
+import {ServiceWithData} from "../../../entities";
 
-export const ActGetStuffFromService = () => {
+export const ActGetStuffFromService = (props: { children: ServiceWithData | null }) => {
 
     console.log('2')
 

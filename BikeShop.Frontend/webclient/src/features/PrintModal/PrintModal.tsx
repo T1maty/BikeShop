@@ -3,6 +3,7 @@ import s from './PrintModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
 import {useReactToPrint} from 'react-to-print'
 import {useSnackbar} from 'notistack'
+import * as htmlToImage from 'html-to-image';
 
 interface PrintModalProps {
     open: boolean
@@ -24,6 +25,16 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
         },
     })
 
+    const jpgHandler = () => {
+        htmlToImage.toJpeg(document.getElementById('my-node')!, {quality: 0.95})
+            .then(function (dataUrl) {
+                var link = document.createElement('a');
+                link.download = 'my-image-name.jpeg';
+                link.href = dataUrl;
+                link.click();
+            });
+    }
+
     return (
         <CustomModal
             open={open}
@@ -36,9 +47,13 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
                     <Button onClick={printDocumentHandler}>
                         Печать
                     </Button>
+                    <Button onClick={jpgHandler}>
+                        Печать
+                    </Button>
+
                 </div>
                 <div className={s.printModal_content} ref={componentRef}>
-                    <div className={s.scrollWrapper}>
+                    <div id={"my-node"} className={s.scrollWrapper}>
                         {children}
                     </div>
                 </div>
