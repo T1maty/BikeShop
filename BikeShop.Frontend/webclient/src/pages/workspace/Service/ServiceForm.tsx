@@ -39,9 +39,15 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const [printAct, setPrintAct] = useState(false)
     const [printSticker, setPrintSticker] = useState(false)
 
+    const [selectedUserId, setSelectedUserId] = useState('')
+
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
+
+    useEffect(() => {
+        setSelectedUserId(formControl.getValues('userMasterId'))
+    }, [formControl.watch('userMasterId')])
 
     const onSubmit: SubmitHandler<ServiceFormModel> = (data: ServiceFormModel) => {
         // создание сервиса
@@ -216,7 +222,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                 />
                                 <SelectProductModal products={field.value}
                                                     setProducts={field.onChange}
-                                                    defaultMasterId={formControl.getValues('userMasterId')}
+                                                    defaultMasterId={selectedUserId}
                                 />
                             </>
                         }
@@ -235,7 +241,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                                   summ={summWorks}
                                 />
                                 <SelectWorkModal works={field.value} setWorks={field.onChange}
-                                                 defaultMasterId={formControl.getValues('userMasterId')}
+                                                 defaultMasterId={selectedUserId}
                                                  serviceId={formControl.getValues('id')}
                                 />
                             </>

@@ -48,7 +48,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children})
                         Печать
                     </Button>
                     <Button onClick={jpgHandler}>
-                        Печать
+                        JPG
                     </Button>
 
                 </div>
