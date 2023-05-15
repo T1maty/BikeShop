@@ -56,6 +56,7 @@ const ServiceTableProduct = (props: ServiceTableProps) => {
                                                           onDoubleClick={() => {
                                                               props.setData(props.data?.filter(n => n.productId != item.productId)!)
                                                           }}
+                                                          unitName={item.quantityUnitName}
                                         />
                                     </>
                                 )

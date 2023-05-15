@@ -272,7 +272,7 @@ public class ServiceService : IServiceService
                 ent.Discount = prod.Discount;
                 ent.Name = prod.Name;
                 ent.ProductId = prod.ProductId;
-                ent.QuantityUnitName = "";
+                ent.QuantityUnitName = prod.QuantityUnitName;
                 ent.Total = ent.Price * ent.Quantity - ent.Discount;
                 ent.UserId = dto.UserId;
 
