@@ -12,7 +12,8 @@ import {useSnackbar} from "notistack"
 import Select from "react-select"
 import ServiceTableWork from "./ServiceTableWork"
 import ServiceTableProduct from "./ServiceTableProduct"
-import {ActGetStuffFromService} from "../../../widgets";
+import {CheckForServiceWork} from "../../../widgets";
+import {ServiceSticker} from "../../../widgets/workspace/WorkActs/ServiceSticker";
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -55,6 +56,8 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
             console.log('create IF works, new data =', data)
             addNewService(data, () => {
                 enqueueSnackbar('Ремонт создан', {variant: 'success', autoHideDuration: 3000})
+                setPrintSticker(true)
+                setPrintAct(true)
             })
         }
 
@@ -89,6 +92,12 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
         setSummProducts(summ)
     }, [formControl.watch('serviceProducts')])
 
+    const setMaster = (v: string) => {
+        let user = masters.find(n => n.id === v)
+        if (user != null) return user
+        else return null
+    }
+
     useEffect(() => {
         formControl.reset()
 
@@ -120,9 +129,9 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     return (
         <div className={s.service_rightSide}>
             <PrintModal open={printAct} setOpen={setPrintAct}
-                        children={<ActGetStuffFromService children={currentService}/>}/>
+                        children={<CheckForServiceWork children={currentService!}/>}/>
             <PrintModal open={printSticker} setOpen={setPrintSticker}
-                        children={<ActGetStuffFromService children={currentService}/>}/>
+                        children={<ServiceSticker children={currentService!}/>}/>
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <ControlledCustomInput name={'name'}
                                        placeholder={'Техника'}
@@ -151,7 +160,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                         options={masters}
                                         isDisabled={currentService === null && !isCreating}
                                         isSearchable
-                                        value={masters.find(n => n.id === field.value)}
+                                        value={setMaster(field.value)}
                                         onChange={(value: any) => {
                                             field.onChange(value.id)
                                         }}
@@ -219,6 +228,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                                      }}
                                                      disabledButton={(currentService === null && !isCreating)}
                                                      summ={summProducts}
+                                                     setData={field.onChange}
                                 />
                                 <SelectProductModal products={field.value}
                                                     setProducts={field.onChange}

@@ -6,6 +6,7 @@ import {TableProductItem} from "../../../features"
 
 type ServiceTableProps = {
     data: ServiceProduct[] | null
+    setData: (v: ServiceProduct[]) => void
     serviceTableCallback: () => void
     disabledButton: boolean
     summ: number
@@ -52,6 +53,9 @@ const ServiceTableProduct = (props: ServiceTableProps) => {
                                                           name={item.name}
                                                           price={item.price}
                                                           count={item.quantity}
+                                                          onDoubleClick={() => {
+                                                              props.setData(props.data?.filter(n => n.productId != item.productId)!)
+                                                          }}
                                         />
                                     </>
                                 )

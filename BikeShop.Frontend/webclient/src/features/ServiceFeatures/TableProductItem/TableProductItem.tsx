@@ -6,19 +6,30 @@ interface TableItemProps {
     name: string
     price: number
     count: number
-    onPriceClick?: () => void
+    onPriceClick?: () => void,
+    onDoubleClick?: () => void
+    discount?: number
+    unitName?: string
 }
 
-export const TableProductItem: React.FC<TableItemProps> = ({name, price, count, onPriceClick}) => {
+export const TableProductItem: React.FC<TableItemProps> = ({
+                                                               name,
+                                                               price,
+                                                               count,
+                                                               onPriceClick,
+                                                               discount,
+                                                               unitName,
+                                                               onDoubleClick
+                                                           }) => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
 
-    const discount = true
-
     return (
-        <div className={s.tableItem_box}>
+        <div className={s.tableItem_box} onDoubleClick={() => {
+            onDoubleClick ? onDoubleClick() : true
+        }}>
             <div className={s.tableItem_title}>{name}</div>
             <div className={s.tableItem_numbers}>
                 <div className={s.tableItem_price}
@@ -27,12 +38,13 @@ export const TableProductItem: React.FC<TableItemProps> = ({name, price, count, 
                      }}
                 >
                     <div>{r(price * fbts.c) + fbts.s}</div>
-                    <div className={s.multiply}>x</div>
-                    <div>{count}</div>
+                    {//<div className={s.multiply}>x</div>
+                    }
+                    <div>{count} {unitName ? unitName : 'шт.'}</div>
                 </div>
                 <div className={s.tableItem_sum}>
                     {
-                        discount ? <div>$ -0</div> : ''
+                        discount ? discount > 0 ? <div>$ -0</div> : '' : ''
                     }
                     <div>{r(count * price * fbts.c) + fbts.s}</div>
                 </div>

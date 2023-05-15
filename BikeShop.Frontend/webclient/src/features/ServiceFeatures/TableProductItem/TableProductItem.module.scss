@@ -2,43 +2,43 @@
 @import '../../../app/styles/variables/variables';
 
 .tableItem_box {
-    @include flexBetween;
-    width: 95%; // ?
-    border: 2px solid $themeColorWhite;
-    border-radius: $smallBorderRadius;
-    margin: $defaultExtraSmallMargin;
-    padding: 3px 5px;
+  @include flexBetween;
+  width: 95%; // ?
+  border: 2px solid $themeColorWhite;
+  border-radius: $smallBorderRadius;
+  margin: $defaultExtraSmallMargin;
+  padding: 3px 5px;
 
-    .tableItem_title {
-        word-break: break-word;
-        margin-right: $defaultSmallMargin;
+  .tableItem_title {
+    word-break: break-word;
+    margin-right: $defaultSmallMargin;
+  }
+
+  .tableItem_numbers {
+    @include flexCenter;
+
+    .tableItem_price {
+      color: black;
+      background-color: $themeColorWhite;
+      border-radius: $smallBorderRadius;
+      padding: 5px;
+      margin-right: $defaultSmallMargin;
+      min-width: 80px;
+      text-align: center;
+
+      .multiply {
+        padding: 0 3px;
+      }
     }
 
-    .tableItem_numbers {
-        @include flexCenter;
-
-        .tableItem_price {
-            color: black;
-            background-color: $themeColorWhite;
-            border-radius: $smallBorderRadius;
-            padding: 5px;
-            margin-right: $defaultSmallMargin;
-            min-width: 80px;
-            @include flexCenter;
-
-            .multiply {
-                padding: 0 3px;
-            }
-        }
-
-        .tableItem_sum {
-            color: black;
-            background-color: $themeColorWhite;
-            border-radius: $smallBorderRadius;
-            padding: 5px;
-            min-width: 80px;
-            @include flexColumn;
-            gap: 5px;
-        }
+    .tableItem_sum {
+      color: black;
+      background-color: $themeColorWhite;
+      border-radius: $smallBorderRadius;
+      padding: 5px;
+      min-width: 80px;
+      @include flexColumn;
+      gap: 5px;
     }
+  }
 }

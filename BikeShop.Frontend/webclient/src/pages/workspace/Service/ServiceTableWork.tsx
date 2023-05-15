@@ -52,6 +52,9 @@ const ServiceTableWork = (props: ServiceTableProps) => {
                                                           name={item.name}
                                                           price={item.price}
                                                           count={item.quantity}
+                                                          onDoubleClick={() => {
+                                                              props.setData(props.data?.filter(n => n.workId != item.workId)!)
+                                                          }}
                                                           onPriceClick={() => {
                                                               if (item.complicationPrice === 0 && item.description === '') {
                                                                   let newData = props.data?.map((value, indeX) => {
