@@ -101,19 +101,19 @@ export const MainPage = () => {
     }
 
     const getShiftButtonUniversal = (buttonTitle: string, requestAPI: any) => {
-            return (
-                <Button buttonDivWrapper={s.pauseWorkDay_button}
-                        onClick={() => {
-                            setIsLoading(true)
-                            requestAPI(LocalStorage.userId()!).then(() => {
-                                getUserShiftStatus()
-                                setIsLoading(false)
-                            })
-                        }}
-                >
-                    {buttonTitle}
-                </Button>
-            )
+        return (
+            <Button buttonDivWrapper={s.pauseWorkDay_button}
+                    onClick={() => {
+                        setIsLoading(true)
+                        requestAPI(LocalStorage.userId()!).then(() => {
+                            getUserShiftStatus()
+                            setIsLoading(false)
+                        })
+                    }}
+            >
+                {buttonTitle}
+            </Button>
+        )
     }
 
     const getShiftButton = () => {
@@ -252,9 +252,13 @@ export const MainPage = () => {
                                 <AsyncSelectSearchProduct onSelect={addProduct}/>
                             </div>
                             <div className={s.rightSide_top_search}>
-                                <ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                                <ChooseClientModal extraCallback={(user: User) => {
+                                    chooseClientHandler(user)
+                                }}/>
                                 <Button buttonDivWrapper={s.search_chooseClientButton}
-                                        onClick={() => {setOpenClientModal(true)}}
+                                        onClick={() => {
+                                            setOpenClientModal(true)
+                                        }}
                                 >
                                     Выбрать клиента
                                 </Button>
@@ -265,7 +269,7 @@ export const MainPage = () => {
 
                             <div className={s.rightSide_top_info}>
                                 {
-                                    bill.products.map(n => {
+                                    bill.products?.map(n => {
                                         return (
                                             <div className={s.cashbox_table_wrapper}>
                                                 <div className={s.cashbox_table_left}>
@@ -280,7 +284,9 @@ export const MainPage = () => {
                                                     </div>
                                                 </div>
                                                 <DeleteButton size={30}
-                                                              onClick={() => {setData(bill.products.filter(h => h.productId != n.productId))}}
+                                                              onClick={() => {
+                                                                  setData(bill.products.filter(h => h.productId != n.productId))
+                                                              }}
                                                 />
                                             </div>
                                         )
@@ -290,11 +296,14 @@ export const MainPage = () => {
 
                             <div className={s.rightSide_top_result}>
                                 <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                        onClick={() => {navigate(BikeShopPaths.WORKSPACE.CASHBOX)}}>
+                                        onClick={() => {
+                                            navigate(BikeShopPaths.WORKSPACE.CASHBOX)
+                                        }}>
                                     Открыть кассу
                                 </Button>
                                 <Button buttonDivWrapper={s.result_cancelBtn}
-                                        onClick={() => {}}
+                                        onClick={() => {
+                                        }}
                                 >
                                     X
                                 </Button>
@@ -309,10 +318,12 @@ export const MainPage = () => {
                                 />
                                 <PrintModal open={openPrint}
                                             setOpen={setOpenPrint}>
-                                            <CheckForShop children={res!}/>
+                                    <CheckForShop children={res!}/>
                                 </PrintModal>
                                 <Button buttonDivWrapper={s.result_payBtn}
-                                        onClick={() => {setOpenPay(true)}}
+                                        onClick={() => {
+                                            setOpenPay(true)
+                                        }}
                                 >
                                     К оплате
                                 </Button>
@@ -327,8 +338,8 @@ export const MainPage = () => {
 
                             <div className={s.bottom_right}>
                                 <div className={userShiftStatus?.lastAction.action === 'Open' ? s.shiftStatus_open :
-                                                 userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
-                                                     s.shiftStatus_closed}
+                                    userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
+                                        s.shiftStatus_closed}
                                 >
                                     {
                                         userShiftStatus?.lastAction.action === 'Open' ? 'Смена открыта' :
