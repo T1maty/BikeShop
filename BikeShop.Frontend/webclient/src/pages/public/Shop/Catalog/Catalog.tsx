@@ -92,6 +92,7 @@ export const Catalog = () => {
                 })
         }
     }
+
     const setCurrentProductToStore = (product: ProductFullData) => {
         // setCurrentProduct(product) // оставить или нет?!
         navigate(`/shop/catalog/${product.product.id}`)
@@ -108,9 +109,11 @@ export const Catalog = () => {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
         }
     }, [errorStatus])
+
     useEffect(() => {
         getTags()
     }, [])
+
     useEffect(() => {
         setActiveFilter1(true)
 

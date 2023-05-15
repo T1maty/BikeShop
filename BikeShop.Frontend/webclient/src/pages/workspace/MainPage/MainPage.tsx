@@ -25,6 +25,7 @@ import ShiftTime from "./ShiftTime"
 import useCashboxStore from "../Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
 import {CheckForShop} from "../../../widgets"
+import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 
 type ShiftStatusTypes = 'Open' | 'Closed' | 'Pause'
 
@@ -46,6 +47,7 @@ export const MainPage = () => {
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
     const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
+    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
 
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
@@ -177,6 +179,11 @@ export const MainPage = () => {
                                 navigate(BikeShopPaths.WORKSPACE.CASHBOX)
                             }}>
                                 Касса
+                            </Button>
+                            <Button onClick={() => {
+                                setOpenEmployeeSalaryModal(true)
+                            }}>
+                                Новый заказ
                             </Button>
                             <Button onClick={() => {
                                 setOpenGetPutMoneyModal(true)
