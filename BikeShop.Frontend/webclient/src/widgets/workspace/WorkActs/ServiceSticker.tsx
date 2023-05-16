@@ -7,5 +7,5 @@ export const ServiceSticker = (props: { children: ServiceWithData }) => {
             <div>{props.children.service.id}</div>
             <div>{props.children.service.clientId}</div>
         </div>
-    );
-};
+    )
+}

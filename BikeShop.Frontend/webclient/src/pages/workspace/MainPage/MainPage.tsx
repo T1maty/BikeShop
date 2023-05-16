@@ -180,11 +180,11 @@ export const MainPage = () => {
                             }}>
                                 Касса
                             </Button>
-                            <Button onClick={() => {
-                                setOpenEmployeeSalaryModal(true)
-                            }}>
-                                Новый заказ
-                            </Button>
+                            {/*<Button onClick={() => {*/}
+                            {/*    setOpenEmployeeSalaryModal(true)*/}
+                            {/*}}>*/}
+                            {/*    Новый заказ*/}
+                            {/*</Button>*/}
                             <Button onClick={() => {
                                 setOpenGetPutMoneyModal(true)
                             }}>

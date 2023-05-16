@@ -7,10 +7,22 @@
     .workAct_mainBox {
         @include workActMainBlock;
 
-        .client_info {
-            //font-size: 18px;
+        @include workActDateBlock;
+
+        .workAct_title {
             line-height: $minLineHeight;
-            //text-align: center;
+
+            .title_title {
+                font-weight: bold;
+            }
+
+            .title_info {
+
+            }
+        }
+
+        .client_info {
+            line-height: $minLineHeight;
 
             .info_title {
                 font-weight: bold;
