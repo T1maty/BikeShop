@@ -92,13 +92,14 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                             </div>
 
                             <div className={s.shop_header_left}>
-                                {user != undefined && user.shopId > 0 ?
-                                    <div className={s.logo_image} onClick={goToShopHandler}><img src={ShopLogo}
-                                                                                                 alt="shop-logo"/>
-                                    </div> : <></>}
-                                <div className={s.logo_name} onClick={() => {
-                                    navigate(BikeShopPaths.SHOP.HOME)
-                                }}>BikeLove
+                                {
+                                    user !== undefined && user.shopId > 0 ?
+                                    <div className={s.logo_image} onClick={goToShopHandler}>
+                                        <img src={ShopLogo} alt="shop-logo"/>
+                                    </div> : ''
+                                }
+                                <div className={s.logo_name} onClick={() => {navigate(BikeShopPaths.SHOP.HOME)}}>
+                                    BikeLove
                                 </div>
                             </div>
 
