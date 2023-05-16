@@ -29,7 +29,6 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const [confData, setConfData] = useState<ServiceWithData>()
     const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
-
     const selected = ServiceStore(s => s.selectedNavService)
     const setSelected = ServiceStore(s => s.setSelectedNavService)
 
@@ -53,11 +52,9 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     }
 
     const updateServiceStatusHandler = (newStatus: ServiceStatus) => {
-
         updateServiceStatus({id: currentService?.service.id || -1, status: newStatus}, () => {
             if (newStatus === "Ended") {
                 console.log('statusChanged')
-
                 setPrintModal(true)
             }
         })

@@ -1,11 +1,9 @@
 import React from 'react'
 import s from './ActGetStuffService.module.scss'
 import {ActHeader} from "./ActHeader"
-import {ServiceWithData} from "../../../entities";
+import {ServiceWithData} from "../../../entities"
 
 export const ActGetStuffFromService = (props: { children: ServiceWithData | null }) => {
-
-    console.log('2')
 
     return (
         <div className={s.workAct_wrapper}>

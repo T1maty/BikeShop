@@ -12,8 +12,8 @@ import {useSnackbar} from "notistack"
 import Select from "react-select"
 import ServiceTableWork from "./ServiceTableWork"
 import ServiceTableProduct from "./ServiceTableProduct"
-import {CheckForServiceWork} from "../../../widgets";
-import {ServiceSticker} from "../../../widgets/workspace/WorkActs/ServiceSticker";
+import {CheckForServiceWork} from "../../../widgets"
+import {ServiceSticker} from "../../../widgets/workspace/WorkActs/ServiceSticker"
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 

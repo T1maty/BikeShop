@@ -1,5 +1,5 @@
-import React from 'react';
-import {ServiceWithData} from "../../../entities";
+import React from 'react'
+import {ServiceWithData} from "../../../entities"
 
 export const ServiceSticker = (props: { children: ServiceWithData }) => {
     return (
