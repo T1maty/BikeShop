@@ -1,42 +1,46 @@
 .wrapper {
-  user-select: none;
-  background: #4b4b4b;
-  color: white;
-  border-radius: 5px;
+    user-select: none;
+    //background: #4b4b4b;
+    //color: white;
+    //border-radius: 5px;
 
-  .parent {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    .parent {
+        //padding-top: 5px;
+        //padding-bottom: 5px;
+        padding: 3px 0;
 
-    .selected {
-      background-color: #5C636A;
-      border-radius: 5px;
-      height: 100%;
+        .selected {
+            //background-color: #5C636A;
+            //border-radius: 5px;
+            color: darkorange;
+            font-weight: bold;
+            height: 100%;
+        }
+
+        .innerWrap {
+            display: flex;
+            align-items: center;
+
+            .toggle {
+                width: 25px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .content {
+                width: 100%;
+                word-break: break-word;
+            }
+        }
     }
 
-    .innerWrap {
-      display: flex;
-      flex-direction: row;
-
-      .toggle {
-        width: 25px;
-        display: flex;
-        justify-content: center;
-      }
-
-      .content {
-        width: 100%;
-        word-break: break-word;
-      }
+    .parent:hover {
+        //background-color: grey;
+        //border-radius: 5px;
+        color: darkorange;
     }
-  }
 
-  .parent:hover {
-    background-color: grey;
-    border-radius: 5px;
-  }
-
-  .child {
-    margin-left: 16px;
-  }
+    .child {
+        margin-left: 16px;
+    }
 }

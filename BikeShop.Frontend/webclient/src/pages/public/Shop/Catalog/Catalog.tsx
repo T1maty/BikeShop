@@ -12,7 +12,7 @@ import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
 import {ProductFullData, ProductTag, useCurrency} from '../../../../entities'
 import Enumerable from "linq"
-import {ShopCatalogTreeView} from "../ShopCatalogTreeView/ShopCatalogTreeView";
+import {ShopCatalogTreeView} from "../ShopCatalogTreeView/ShopCatalogTreeView"
 
 type FilterProductsType = 'Popular' | 'Cheap' | 'Expensive' | 'New'
 
@@ -168,6 +168,7 @@ export const Catalog = () => {
                         </div>
                         <div className={s.right_filters}>
                             <div className={s.filter_buttons}>
+
                                 <div>Сначала:</div>
                                 <div className={activeFilter1 ? s.filter_itemActive : s.filter_item}
                                      onClick={() => {

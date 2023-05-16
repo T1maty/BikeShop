@@ -33,10 +33,10 @@
 
       .tagsList {
         padding-left: 10px;
-        @include divSmallMarginBottom;
+        @include divExtraSmallMarginBottom;
 
         .tagsList_item {
-          //line-height: $minLineHeight;
+
           &:hover {
             color: gold;
             cursor: pointer;

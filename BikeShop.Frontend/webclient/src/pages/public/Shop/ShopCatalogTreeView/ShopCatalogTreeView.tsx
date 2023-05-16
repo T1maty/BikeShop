@@ -1,16 +1,20 @@
-import React from 'react';
-import useCatalog from "../Catalog/CatalogStore";
+import React from 'react'
+import useCatalog from "../Catalog/CatalogStore"
 import cls from './ShopCatalogTreeView.module.scss'
-import {ProductTag} from "../../../../entities";
-import Enumerable from "linq";
-import {useSnackbar} from "notistack";
+import {ProductTag} from "../../../../entities"
+import Enumerable from "linq"
+import {useSnackbar} from "notistack"
+import ArrowDown from '../../../../shared/assets/shop/icons/arrow-square-down.svg'
+import ArrowRight from '../../../../shared/assets/shop/icons/arrow-square-right.svg'
 
 export const ShopCatalogTreeView = () => {
 
+    const {enqueueSnackbar} = useSnackbar()
+
     const tags = useCatalog(s => s.tags)
     const setUserCurrentTag = useCatalog(s => s.setUserCurrentTag)
-    const {enqueueSnackbar} = useSnackbar()
     const userCurrentTags = useCatalog(s => s.userCurrentTags)
+
     const selected = useCatalog(s => s.selectedTags)
     const setSelected = useCatalog(s => s.setSelectedTags)
     const expandedItems = useCatalog(s => s.expandedTags)
@@ -29,7 +33,6 @@ export const ShopCatalogTreeView = () => {
     }
 
     const renderItem = (item: any) => {
-
         const isExpanded = expandedItems.includes(item.id)
         const hasChildren = item.children && item.children.length > 0
 
@@ -53,22 +56,30 @@ export const ShopCatalogTreeView = () => {
         return (
             <div key={item.id}
                  className={cls.wrapper}
-                 onContextMenu={(e) => {
-                     e.preventDefault()
-                 }}
+                 onContextMenu={(e) => {e.preventDefault()}}
             >
                 <div style={{cursor: 'pointer'}}
                      className={cls.parent}
                 >
                     <div
                         className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}
-                        onClick={() => {
-                            setSelected(item)
-                        }}>
+                        onClick={() => {setSelected(item)}}
+                    >
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}
                         >
-                            {hasChildren && (isExpanded ? '\\/' : '>')}
+                            {/*{hasChildren && (isExpanded ? '\\/' : '>')}*/}
+                            {
+                                hasChildren && (isExpanded ?
+                                    <div>
+                                        <img src={ArrowDown} alt='arrow-down' width={20} height={20}/>
+                                    </div>
+                                        :
+                                        <div>
+                                            <img src={ArrowRight} alt='arrow-right' width={20} height={20}/>
+                                        </div>
+                                )
+                            }
                         </div>
 
                         <div className={cls.content}
@@ -121,5 +132,5 @@ export const ShopCatalogTreeView = () => {
         <>
             {tags !== undefined ? buildTree(tags, 0).map(renderItem) : false}
         </>
-    );
-};
+    )
+}
