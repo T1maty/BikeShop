@@ -128,10 +128,14 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
 
     return (
         <div className={s.service_rightSide}>
-            <PrintModal open={printAct} setOpen={setPrintAct}
-                        children={<CheckForServiceWork children={currentService!}/>}/>
-            <PrintModal open={printSticker} setOpen={setPrintSticker}
-                        children={<ServiceSticker children={currentService!}/>}/>
+            <PrintModal open={printAct}
+                        setOpen={setPrintAct}
+                        children={<CheckForServiceWork children={currentService!}/>}
+            />
+            <PrintModal open={printSticker}
+                        setOpen={setPrintSticker}
+                        children={<ServiceSticker children={currentService!}/>}
+            />
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <ControlledCustomInput name={'name'}
                                        placeholder={'Техника'}

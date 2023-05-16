@@ -81,6 +81,7 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                             </div>
                         </div> : ''
                 }
+
                 {
                     props.children.products.length > 0 ?
                         <div className={s.workAct_products}>
@@ -132,6 +133,7 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                             </div>
                         </div> : ''
                 }
+
                 <div className={s.workAct_discount}>
                     {
                         props.children.service.discount > 0 ?
@@ -148,7 +150,6 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                 </div>
                             </> : ''
                     }
-
                 </div>
                 <div className={s.workAct_result}>
                     К оплате: {r(props.children.service.total * fbts.c) + fbts.s}
