@@ -33,8 +33,17 @@ export const ActServiceWork = (props: { children: ServiceWithData }) => {
                                             return (
                                                 <>
                                                 <tr>
-                                                    <td style={{width: '220px'}}>
-                                                        {n.name}
+                                                    <td style={{width: '220px', textAlign: 'left'}}>
+                                                        {
+                                                            n.complicationPrice > 0 ?
+                                                                <>
+                                                                    <div>{n.name}</div>
+                                                                    <div style={{fontStyle: 'italic', fontSize: '14px', paddingLeft: '10px'}}>
+                                                                        {n.description} (+ {n.complicationPrice} {fbts.s})
+                                                                    </div>
+                                                                </>
+                                                                : n.name
+                                                        }
                                                     </td>
                                                     <td style={{width: '50px'}}>
                                                         {n.price}
@@ -46,25 +55,25 @@ export const ActServiceWork = (props: { children: ServiceWithData }) => {
                                                         {n.price * n.quantity}
                                                     </td>
                                                 </tr>
-                                                    {
-                                                        n.complicationPrice > 0 ?
-                                                            <tr>
-                                                                <td style={{width: '220px', fontStyle: 'italic', textAlign: 'left'}}>
-                                                                    {/*<div>{n.name}:</div>*/}
-                                                                    <div style={{paddingLeft: '5px', fontSize: '14px'}}>{n.description}</div>
-                                                                </td>
-                                                                <td style={{width: '50px'}}>
-                                                                    {n.complicationPrice}
-                                                                </td>
-                                                                <td style={{width: '34px'}}>
-                                                                    1
-                                                                </td>
-                                                                <td style={{width: '55px'}}>
-                                                                    {n.complicationPrice}
-                                                                </td>
-                                                            </tr>
-                                                            : ''
-                                                    }
+                                                    {/*{*/}
+                                                    {/*    n.complicationPrice > 0 ?*/}
+                                                    {/*        <tr>*/}
+                                                    {/*            <td style={{width: '220px', fontStyle: 'italic',*/}
+                                                    {/*                textAlign: 'left', fontSize: '14px'}}>*/}
+                                                    {/*                {n.description}*/}
+                                                    {/*            </td>*/}
+                                                    {/*            <td style={{width: '50px'}}>*/}
+                                                    {/*                {n.complicationPrice}*/}
+                                                    {/*            </td>*/}
+                                                    {/*            <td style={{width: '34px'}}>*/}
+                                                    {/*                1*/}
+                                                    {/*            </td>*/}
+                                                    {/*            <td style={{width: '55px'}}>*/}
+                                                    {/*                {n.complicationPrice}*/}
+                                                    {/*            </td>*/}
+                                                    {/*        </tr>*/}
+                                                    {/*        : ''*/}
+                                                    {/*}*/}
                                                 </>
                                             )
                                         })
