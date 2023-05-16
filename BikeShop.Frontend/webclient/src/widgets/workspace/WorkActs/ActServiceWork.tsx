@@ -31,6 +31,7 @@ export const ActServiceWork = (props: { children: ServiceWithData }) => {
                                     {
                                         props.children.works.map((n) => {
                                             return (
+                                                <>
                                                 <tr>
                                                     <td style={{width: '220px'}}>
                                                         {n.name}
@@ -45,6 +46,25 @@ export const ActServiceWork = (props: { children: ServiceWithData }) => {
                                                         {n.price * n.quantity}
                                                     </td>
                                                 </tr>
+                                                    {
+                                                        n.complicationPrice > 0 ?
+                                                            <tr>
+                                                                <td style={{width: '220px', fontStyle: 'italic'}}>
+                                                                    {n.name}: {n.description}
+                                                                </td>
+                                                                <td style={{width: '50px'}}>
+                                                                    {n.complicationPrice}
+                                                                </td>
+                                                                <td style={{width: '34px'}}>
+                                                                    1
+                                                                </td>
+                                                                <td style={{width: '55px'}}>
+                                                                    {n.complicationPrice}
+                                                                </td>
+                                                            </tr>
+                                                            : ''
+                                                    }
+                                                </>
                                             )
                                         })
                                     }

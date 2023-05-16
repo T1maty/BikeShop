@@ -44,7 +44,7 @@ const ServiceTableWork = (props: ServiceTableProps) => {
             <div className={s.tableBox_table}>
                 <div className={s.scroll_wrapper}>
                     {
-                        (props.data != null) && (props.data.length != 0) ?
+                        (props.data !== null) && (props.data.length != 0) ?
                             props.data.map((item, index) => {
                                 return (
                                     <>
@@ -61,7 +61,7 @@ const ServiceTableWork = (props: ServiceTableProps) => {
                                                                       if (indeX === index) {
                                                                           return {
                                                                               ...value,
-                                                                              description: 'Описание ослажнения'
+                                                                              description: 'Описание осложнения'
                                                                           }
                                                                       } else {
                                                                           return value
