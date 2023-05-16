@@ -45,20 +45,41 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                     {
                                         props.children.works.map((n) => {
                                             return (
-                                                <tr>
-                                                    <td style={{width: '220px'}}>
-                                                        {n.name}
-                                                    </td>
-                                                    <td style={{width: '50px'}}>
-                                                        {n.price}
-                                                    </td>
-                                                    <td style={{width: '34px'}}>
-                                                        {n.quantity}
-                                                    </td>
-                                                    <td style={{width: '55px'}}>
-                                                        {n.price * n.quantity}
-                                                    </td>
-                                                </tr>
+                                                <>
+                                                    <tr>
+                                                        <td style={{width: '220px'}}>
+                                                            {n.name}
+                                                        </td>
+                                                        <td style={{width: '50px'}}>
+                                                            {n.price}
+                                                        </td>
+                                                        <td style={{width: '34px'}}>
+                                                            {n.quantity}
+                                                        </td>
+                                                        <td style={{width: '55px'}}>
+                                                            {n.price * n.quantity}
+                                                        </td>
+                                                    </tr>
+                                                    {
+                                                        n.complicationPrice > 0 ?
+                                                            <tr>
+                                                                <td style={{width: '220px', fontStyle: 'italic', textAlign: 'left'}}>
+                                                                    {/*<div>{n.name}:</div>*/}
+                                                                    <div style={{paddingLeft: '5px', fontSize: '14px'}}>{n.description}</div>
+                                                                </td>
+                                                                <td style={{width: '50px'}}>
+                                                                    {n.complicationPrice}
+                                                                </td>
+                                                                <td style={{width: '34px'}}>
+                                                                    1
+                                                                </td>
+                                                                <td style={{width: '55px'}}>
+                                                                    {n.complicationPrice}
+                                                                </td>
+                                                            </tr>
+                                                            : ''
+                                                    }
+                                                </>
                                             )
                                         })
                                     }

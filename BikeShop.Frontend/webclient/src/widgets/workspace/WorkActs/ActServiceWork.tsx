@@ -49,8 +49,9 @@ export const ActServiceWork = (props: { children: ServiceWithData }) => {
                                                     {
                                                         n.complicationPrice > 0 ?
                                                             <tr>
-                                                                <td style={{width: '220px', fontStyle: 'italic'}}>
-                                                                    {n.name}: {n.description}
+                                                                <td style={{width: '220px', fontStyle: 'italic', textAlign: 'left'}}>
+                                                                    {/*<div>{n.name}:</div>*/}
+                                                                    <div style={{paddingLeft: '5px', fontSize: '14px'}}>{n.description}</div>
                                                                 </td>
                                                                 <td style={{width: '50px'}}>
                                                                     {n.complicationPrice}
