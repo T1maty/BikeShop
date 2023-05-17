@@ -230,15 +230,14 @@ export const Catalog = () => {
                                 defaultProducts.map(prod => (
                                     <div key={prod.product.id} className={s.content_item}>
                                         <div className={s.item_content}
-                                             onClick={() => {
-                                                 setCurrentProductToStore(prod)
-                                             }}
+                                             onClick={() => {setCurrentProductToStore(prod)}}
                                         >
                                             <div className={s.item_image}>
                                                 {
                                                     prod.productImages.length < 1 ?
                                                         <div className={s.item_noImage}>
-                                                            <div className={s.item_noImage_title}>Sorry, no photo!
+                                                            <div className={s.item_noImage_title}>
+                                                                Sorry, no photo!
                                                             </div>
                                                             <div className={s.item_noImage_icon}>
                                                                 <img src={NoProductImage} alt="no-product-image"/>
@@ -251,11 +250,9 @@ export const Catalog = () => {
                                         </div>
                                         <div className={s.item_buy}>
                                             <div
-                                                className={s.item_price}>{r(fbts.c * prod.product.retailPrice) + fbts.s}</div>
+                                                className={s.item_price}>{r(fbts.c * prod.product.retailPrice) + ' ' + fbts.s}</div>
                                             <div className={s.item_cart}
-                                                 onClick={() => {
-                                                     addProductToCartHandler(prod)
-                                                 }}
+                                                 onClick={() => {addProductToCartHandler(prod)}}
                                             >
                                                 <img
                                                     src={Enumerable.from(cartProducts).select(n => n.product.id).contains(prod.product.id)

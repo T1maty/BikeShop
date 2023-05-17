@@ -54,7 +54,6 @@ export const ShopCatalogTreeView = () => {
             }
         }
 
-
         return (
             <div key={item.id}
                  className={cls.wrapper}
@@ -66,10 +65,10 @@ export const ShopCatalogTreeView = () => {
                      className={cls.parent}
                 >
                     <div
-                        className={(selected[0] === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`) + (Enumerable.from(userCurrentTags).select(n => n.id).contains(item?.id) ? ` ${cls.incloud}` : '')}
-                        onClick={() => {
-                            setSelected(item.id)
-                        }}
+                        className={(selected[0] === item?.id ? `${cls.selected} ${cls.innerWrap}` :
+                            `${cls.innerWrap}`) + (Enumerable.from(userCurrentTags)
+                            .select(n => n.id).contains(item?.id) ? ` ${cls.incloud}` : '')}
+                        onClick={() => {setSelected(item.id)}}
                     >
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}
@@ -89,13 +88,8 @@ export const ShopCatalogTreeView = () => {
                         </div>
 
                         <div className={cls.content}
-                             onClick={() => {
-                                 addUserCurrentTagHandler(item)
-                             }}
-
-                             onDoubleClick={() => {
-
-                             }}
+                             onClick={() => {addUserCurrentTagHandler(item)}}
+                             onDoubleClick={() => {}}
                         >
                             {item.name}
                         </div>
@@ -105,7 +99,6 @@ export const ShopCatalogTreeView = () => {
                 {
                     hasChildren && isExpanded && (
                         <div className={cls.child}>
-
                             {// @ts-ignore
                                 item.children.map(renderItem)}
                         </div>
