@@ -34,6 +34,8 @@ export const Catalog = () => {
     const defaultProducts = useCatalog(s => s.defaultProducts)
     const getDefaultProducts = useCatalog(s => s.getDefaultProducts)
     const getProductsByTags = useCatalog(s => s.getProductsByTags)
+    const tagsWithChildrens = useCatalog(s => s.tagsWithChildrens)
+    const selectedTags = useCatalog(s => s.selectedTags)
     // const setCurrentProduct = useCatalog(s => s.setCurrentProduct)
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
@@ -120,7 +122,13 @@ export const Catalog = () => {
         if (userCurrentTags.length === 0) {
             getDefaultProducts()
         } else {
-            getProductsByTags(Enumerable.from(userCurrentTags).select(n => n.id).toArray())
+            let ids = Enumerable.from(userCurrentTags).select(n => n.id).toArray()
+            Enumerable.from(tagsWithChildrens.filter(n => ids.includes(n.tag.id))).select(n => n.childrenIds).forEach(n => {
+                ids = ids.concat(n)
+            })
+            ids = ids.concat(selectedTags)
+            console.log('Поиск по айдишникам', ids)
+            getProductsByTags(ids)
         }
     }, [userCurrentTags])
 

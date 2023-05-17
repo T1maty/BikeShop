@@ -30,9 +30,9 @@ namespace BikeShop.Products.WebApi.Controllers
         }
 
         [HttpPost("search")]
-        public async Task Serch()
+        public async Task<List<Product>> Serch(string querry)
         {
-
+            return await _publicService.Serch(querry);
         }
 
         [HttpPost("getproducts")]

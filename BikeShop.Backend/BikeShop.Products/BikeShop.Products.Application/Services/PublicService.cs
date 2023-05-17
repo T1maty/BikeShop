@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BikeShop.Products.Application.Services
 {
@@ -40,7 +41,9 @@ namespace BikeShop.Products.Application.Services
             {
                 if (!cards.ContainsKey(item))
                 {
-                    cards.Add(item, await getProductCard(item));
+                    var card = await getProductCard(item);
+                    if (!cards.ContainsKey(card.productCard.Id))
+                    cards.Add(item, card);
                 }
             }
             return cards.Values.ToList();
@@ -55,9 +58,20 @@ namespace BikeShop.Products.Application.Services
             return tags;
         }
 
-        public async Task Serch()
+        public async Task<List<Product>> Serch(string querry)
         {
-            throw new NotImplementedException();
+            var res = querry.ToLower().Split(" ");
+            var contQR = _context.Products.Where(n => n.Enabled == true).Where(n=>n.RetailVisibility == true);
+            foreach (var item in res)
+            {
+                contQR = contQR.Where(n => n.Name.ToLower().Contains(item)
+                                        || n.Id.ToString().Contains(item)
+                                        || n.CatalogKey.ToLower().Contains(item)
+                                        || n.Barcode.ToLower().Contains(item)
+                                        || n.ManufacturerBarcode.ToLower().Contains(item));
+            }
+
+            return await contQR.Take(10).ToListAsync();
         }
 
         public async Task<List<ProductCardDTO>> getCards(List<Product> products)

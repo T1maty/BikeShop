@@ -3,6 +3,8 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CatalogAPI, Product, ProductCardAPI, ProductFullData, ProductTag, ShopAPI} from '../../../../entities'
 import {ErrorStatusTypes} from '../../../../entities/enumerables/ErrorStatusTypes'
+import Enumerable from "linq";
+import {ProductTagWithChildrens} from "../../../../entities/models/ProductTagWithChildrens";
 
 interface UseCatalogStore {
     isLoading: boolean
@@ -10,6 +12,8 @@ interface UseCatalogStore {
     errorStatus: ErrorStatusTypes
 
     tags: ProductTag[]
+    tagsProc: ProductTagWithChildrens[]
+    tagsWithChildrens: ProductTagWithChildrens[]
     getTags: () => void
     userCurrentTags: ProductTag[]
     setUserCurrentTagsArray: (array: any[]) => void
@@ -27,21 +31,25 @@ interface UseCatalogStore {
     searchProductsResult: Product[]
     getSearchProducts: (inputValue: string) => void
 
-    selectedTags: ProductTag | null
-    setSelectedTags: (n: ProductTag) => void
+    selectedTags: string[]
+    setSelectedTags: (n: string) => void
 
-    expandedTags: number[]
-    setExpandedTags: (n: number[]) => void
+    expandedTags: string[]
+    setExpandedTags: (n: string[]) => void
 }
 
 const useCatalog = create<UseCatalogStore>()(persist(devtools(immer((set, get) => ({
     expandedTags: [],
+    tagsProc: [],
+    tagsWithChildrens: [],
     setExpandedTags: (n) => {
-        set({expandedTags: n})
+        set({userCurrentTags: get().userCurrentTags.filter(k => !n.includes(k.id))})
+        let data = n.filter(n => !Enumerable.from(get().userCurrentTags).select(n => n.id).contains(n))
+        set({expandedTags: data})
     },
-    selectedTags: null,
+    selectedTags: [],
     setSelectedTags: (n) => {
-        set({selectedTags: n})
+        set({selectedTags: [n]})
     },
     isLoading: false,
     setIsLoading: (value) => set({isLoading: value}),
@@ -55,6 +63,29 @@ const useCatalog = create<UseCatalogStore>()(persist(devtools(immer((set, get) =
                 state.tags = res.data
                 console.log('все теги', state.tags)
             })
+            let childrenData: ProductTagWithChildrens[] = []
+            const recurssion = (archive: ProductTag[], parent: string = '0') => {
+                let dt: ProductTagWithChildrens[] = []
+                archive.forEach(n => {
+                    if (n.parentId == parent) {
+                        const childrens = recurssion(archive, n.id)
+                        let ent = {
+                            tag: n,
+                            childrens: childrens,
+                            childrenIds: Enumerable.from(childrens).select(k => k.tag.id).toArray()
+                        }
+                        dt.push(ent)
+                        childrenData.push(ent)
+                    }
+                })
+                return dt
+            }
+
+            let dt: ProductTagWithChildrens[] = recurssion(res.data)
+            set({tagsProc: dt})
+            set({tagsWithChildrens: childrenData})
+            console.log('recurssion', dt)
+
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
@@ -67,9 +98,15 @@ const useCatalog = create<UseCatalogStore>()(persist(devtools(immer((set, get) =
     setUserCurrentTagsArray: (array) => set(state => {
         state.userCurrentTags = array
     }),
-    setUserCurrentTag: (tag) => set(state => {
-        state.userCurrentTags.push(tag)
-    }),
+    setUserCurrentTag: (tag) => {
+        let childrens = get().tagsWithChildrens.find(n => n.tag.id == tag.id)?.childrenIds
+        let newData = get().userCurrentTags.filter(n => !childrens?.includes(n.id))
+        newData.push(tag)
+        set({userCurrentTags: newData})
+        let n = get().expandedTags
+        let data = n.filter(n => !Enumerable.from(get().userCurrentTags).select(n => n.id).contains(n))
+        set({expandedTags: data})
+    },
     deleteUserCurrentTag: (filteredTags) => set(state => {
         state.userCurrentTags = filteredTags
     }),

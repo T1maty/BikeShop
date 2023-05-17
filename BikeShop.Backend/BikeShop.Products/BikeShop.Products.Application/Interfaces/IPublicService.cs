@@ -12,7 +12,7 @@ namespace BikeShop.Products.Application.Interfaces
     {
         public Task<List<ProductTag>> GetTags();
         public Task<List<ProductCardDTO>> DefaultProducts(int Quantity);
-        public Task Serch();
+        public Task<List<Product>> Serch(string querry);
         public Task<List<ProductCardDTO>> GetProducts(List<int> ids);
 
         public Task<List<ProductCardDTO>> getCards(List<Product> products);

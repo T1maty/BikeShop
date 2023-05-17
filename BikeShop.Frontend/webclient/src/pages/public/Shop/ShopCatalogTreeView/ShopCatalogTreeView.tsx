@@ -34,14 +34,15 @@ export const ShopCatalogTreeView = () => {
 
     const renderItem = (item: any) => {
         const isExpanded = expandedItems.includes(item.id)
+        // @ts-ignore
         const hasChildren = item.children && item.children.length > 0
 
-        const handleExpand = (id: number) => {
+        const handleExpand = (id: string) => {
             setExpandedItems([...expandedItems, id])
         }
 
-        const handleCollapse = (id: number) => {
-            setExpandedItems(expandedItems.filter((item: number) => item !== id))
+        const handleCollapse = (id: string) => {
+            setExpandedItems(expandedItems.filter(item => item !== id))
         }
 
         const onClickHandlerCollapsed = () => {
@@ -53,17 +54,22 @@ export const ShopCatalogTreeView = () => {
             }
         }
 
+
         return (
             <div key={item.id}
                  className={cls.wrapper}
-                 onContextMenu={(e) => {e.preventDefault()}}
+                 onContextMenu={(e) => {
+                     e.preventDefault()
+                 }}
             >
                 <div style={{cursor: 'pointer'}}
                      className={cls.parent}
                 >
                     <div
-                        className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}
-                        onClick={() => {setSelected(item)}}
+                        className={(selected[0] === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`) + (Enumerable.from(userCurrentTags).select(n => n.id).contains(item?.id) ? ` ${cls.incloud}` : '')}
+                        onClick={() => {
+                            setSelected(item.id)
+                        }}
                     >
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}
@@ -71,9 +77,9 @@ export const ShopCatalogTreeView = () => {
                             {/*{hasChildren && (isExpanded ? '\\/' : '>')}*/}
                             {
                                 hasChildren && (isExpanded ?
-                                    <div>
-                                        <img src={ArrowDown} alt='arrow-down' width={20} height={20}/>
-                                    </div>
+                                        <div>
+                                            <img src={ArrowDown} alt='arrow-down' width={20} height={20}/>
+                                        </div>
                                         :
                                         <div>
                                             <img src={ArrowRight} alt='arrow-right' width={20} height={20}/>
@@ -84,15 +90,11 @@ export const ShopCatalogTreeView = () => {
 
                         <div className={cls.content}
                              onClick={() => {
-                                 // setSelected(item)
-                                 //onNodeClick ? onNodeClick(item) : true
-                             }}
-                             onContextMenu={(event) => {
-                                 // onNodeContext ? onNodeContext(item, event) : true
-                             }}
-                             onDoubleClick={() => {
                                  addUserCurrentTagHandler(item)
-                                 // onNodeDoubleClick ? onNodeDoubleClick(item) : true
+                             }}
+
+                             onDoubleClick={() => {
+
                              }}
                         >
                             {item.name}
@@ -103,7 +105,9 @@ export const ShopCatalogTreeView = () => {
                 {
                     hasChildren && isExpanded && (
                         <div className={cls.child}>
-                            {item.children.map(renderItem)}
+
+                            {// @ts-ignore
+                                item.children.map(renderItem)}
                         </div>
                     )
                 }
