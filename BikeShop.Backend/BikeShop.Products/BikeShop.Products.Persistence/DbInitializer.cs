@@ -23,20 +23,6 @@ public static class DbInitializer
                     "https://api.delfi.ee/media-api-image-cropper/v1/07f235c0-7579-11ed-9cac-31655ba2167a.jpg?noup&w=1200&h=711"
             });
 
-        if (!context.ProductTags.Any())
-            context.ProductTags.AddRange(
-                new ProductTag()
-                {
-                    Id = 1,
-                    Name = "test1"
-                },
-                new ProductTag()
-                {
-                    Id = 2,
-                    Name = "test2"
-                }
-            );
-
         context.SaveChanges();
     }
 }

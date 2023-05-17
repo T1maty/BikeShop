@@ -6,6 +6,6 @@ public class DbInitializer
 {
     public static void Initialize(DbContext context)
     {
-        context.Database.EnsureCreated();
+        //context.Database.EnsureCreated();
     }
 }

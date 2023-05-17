@@ -7,7 +7,7 @@ public class DbInitializer
 {
     public static void Initialize(AuthDbContext context)
     {
-        context.Database.EnsureCreated();
-        context.Database.Migrate();
+        //context.Database.EnsureCreated();
+        //context.Database.Migrate();
     }
 }

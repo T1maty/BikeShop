@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeShop.Acts.Persistenсe.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230425114205_payout")]
-    partial class payout
+    [Migration("20230517131901_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -365,7 +365,7 @@ namespace BikeShop.Acts.Persistenсe.Migrations
                     b.ToTable("Payouts");
                 });
 
-            modelBuilder.Entity("BikeShop.Acts.Domain.Entities.SupplyInvoice", b =>
+            modelBuilder.Entity("BikeShop.Acts.Domain.Entities.ProductMove", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -373,6 +373,105 @@ namespace BikeShop.Acts.Persistenсe.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("MovingFromSkladId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovingToSkladId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserCreated")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserUpdated")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductMoves");
+                });
+
+            modelBuilder.Entity("BikeShop.Acts.Domain.Entities.ProductMoveProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CatalogKey")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ManufacturerBarcode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductMoveId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("QuantityUnitName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductMoveProducts");
+                });
+
+            modelBuilder.Entity("BikeShop.Acts.Domain.Entities.SupplyInvoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("AdditionalPrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("DeliveryPrice")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Description")
                         .IsRequired()
