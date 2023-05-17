@@ -4,6 +4,8 @@ services:
     container_name: bikeshop-identity
     image: nomadrilius/bikeshop.identity
     hostname: bikeshop.identity
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports: 
       - 5001:80
     restart: on-failure
@@ -12,6 +14,8 @@ services:
     container_name: bikeshop-products
     image: nomadrilius/bikeshop.products
     hostname: bikeshop.products
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports: 
       - 5002:80
     restart: on-failure
@@ -20,6 +24,8 @@ services:
     container_name: bikeshop-service
     image: nomadrilius/bikeshop.service
     hostname: bikeshop.service
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports: 
       - 5003:80
     restart: on-failure
@@ -28,6 +34,8 @@ services:
     container_name: bikeshop-shop
     image: nomadrilius/bikeshop.shop
     hostname: bikeshop.shop
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports: 
       - 5004:80
     restart: on-failure
@@ -36,6 +44,8 @@ services:
     container_name: bikeshop-fileservice
     image: nomadrilius/bikeshop.fileservice
     hostname: bikeshop.fileservice
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports: 
       - 5005:80
     restart: on-failure
@@ -44,6 +54,8 @@ services:
     container_name: bikeshop-payments
     image: nomadrilius/bikeshop.payments
     hostname: bikeshop.payments
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports: 
       - 5006:80
     restart: on-failure
@@ -52,6 +64,8 @@ services:
     container_name: bikeshop-acts
     image: nomadrilius/bikeshop.acts
     hostname: bikeshop.acts
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports: 
       - 5007:80
     restart: on-failure
