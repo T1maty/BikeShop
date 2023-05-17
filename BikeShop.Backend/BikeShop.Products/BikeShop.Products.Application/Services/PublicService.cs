@@ -42,7 +42,7 @@ namespace BikeShop.Products.Application.Services
                 if (!cards.ContainsKey(item))
                 {
                     var card = await getProductCard(item);
-                    if (!cards.ContainsKey(card.productCard.Id))
+                    if (!cards.ContainsKey(card.product.Id))
                     cards.Add(item, card);
                 }
             }
