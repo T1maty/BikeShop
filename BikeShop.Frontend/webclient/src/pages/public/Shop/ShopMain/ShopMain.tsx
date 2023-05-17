@@ -2,9 +2,7 @@
 import s from './ShopMain.module.scss'
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../../app/routes/paths"
-import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
-import {RegistrationForm} from '../RegistrationForm/RegistrationForm'
 import useCatalog from "../Catalog/CatalogStore"
 import {Workshop} from './Workshop'
 
@@ -32,6 +30,7 @@ export const ShopMain = () => {
     const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
     const setUserCurrentTag = useCatalog(s => s.setUserCurrentTag)
+    const setUserCurrentTagsArray = useCatalog(s => s.setUserCurrentTagsArray)
 
     const [sliderImages, setSliderImages] = useState([
         {
@@ -48,6 +47,12 @@ export const ShopMain = () => {
         getTags()
     }, [])
 
+    const openCategoryHandler = (v: number) => {
+        setUserCurrentTagsArray([])
+        setUserCurrentTag(tags[v])
+        navigate(BikeShopPaths.SHOP.CATALOG)
+    }
+
     return (
         <div className={s.shop_wrapper}>
 
@@ -59,13 +64,16 @@ export const ShopMain = () => {
                 <div className={s.menu}>
                     <div className={s.container}>
                         <div className={s.menu_items}>
-                            <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG)}}>
+                            <div onClick={() => {
+                                navigate(BikeShopPaths.SHOP.CATALOG)
+                            }}>
                                 Каталог
                             </div>
                             <div>
                                 <a href='#workshop'>Мастерская</a>
                             </div>
-                            <div>Фотографии</div>
+                            {//<div>Фотографии</div>
+                            }
                             <div>
                                 <a href='#contacts'>Контакты</a>
                             </div>
@@ -76,38 +84,53 @@ export const ShopMain = () => {
                 <div className={s.catalog}>
                     <div className={s.container}>
                         <div className={s.catalog_items}>
-                            <div className={s.catalog_item4}>
+                            <div className={s.catalog_item4} onClick={() => {
+                                openCategoryHandler(1)
+                            }}>
                                 <img src={catalogSpares} alt="catalog-spares"/>
                             </div>
-                            <div className={s.catalog_item5}>
+                            <div className={s.catalog_item5} onClick={() => {
+                                openCategoryHandler(2)
+                            }}>
                                 <img src={catalogProtection} alt="catalog-spares"/>
                             </div>
                             <div className={s.catalog_item1}
                                  onClick={() => {
-                                     setUserCurrentTag(tags[1])
-                                     navigate(BikeShopPaths.SHOP.CATALOG)}
-                                }
+                                     openCategoryHandler(3)
+                                 }}
                             >
                                 <img src={catalogBikes} alt="catalog-spares"/>
                             </div>
 
-                            <div className={s.catalog_item6}>
+                            <div className={s.catalog_item6} onClick={() => {
+                                openCategoryHandler(3)
+                            }}>
                                 <img src={catalogClothes} alt="catalog-spares"/>
                             </div>
-                            <div className={s.catalog_item2}>
+                            <div className={s.catalog_item2} onClick={() => {
+                                openCategoryHandler(4)
+                            }}>
                                 <img src={catalogSamokat} alt="catalog-spares"/>
                             </div>
-                            <div className={s.catalog_item7}>
+                            <div className={s.catalog_item7} onClick={() => {
+                                openCategoryHandler(5)
+                            }}>
                                 <img src={catalogRaznoe} alt="catalog-accessories"/>
                             </div>
 
-                            <div className={s.catalog_item3}>
+                            <div className={s.catalog_item3} onClick={() => {
+                                openCategoryHandler(6)
+                            }}>
                                 <img src={catalogAccessories} alt="catalog-food"/>
                             </div>
-                            <div className={s.catalog_item8}>
+                            <div className={s.catalog_item8} onClick={() => {
+                                openCategoryHandler(7)
+                            }}>
                                 <img src={catalogChemistry} alt="catalog-accessories"/>
                             </div>
-                            <div className={s.catalog_item9}>
+                            <div className={s.catalog_item9} onClick={() => {
+                                openCategoryHandler(8)
+                            }}>
                                 <img src={catalogFood} alt="catalog-accessories"/>
                             </div>
                         </div>
@@ -158,7 +181,7 @@ export const ShopMain = () => {
 
             {/*<div className={s.map}>*/}
             {/*    <img src={Map} alt="map"/>*/}
-                {/*<RegistrationForm/>*/}
+            {/*<RegistrationForm/>*/}
             {/*</div>*/}
 
         </div>
