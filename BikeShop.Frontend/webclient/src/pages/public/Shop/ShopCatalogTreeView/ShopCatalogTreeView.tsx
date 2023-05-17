@@ -67,7 +67,7 @@ export const ShopCatalogTreeView = () => {
                     <div
                         className={(selected[0] === item?.id ? `${cls.selected} ${cls.innerWrap}` :
                             `${cls.innerWrap}`) + (Enumerable.from(userCurrentTags)
-                            .select(n => n.id).contains(item?.id) ? ` ${cls.incloud}` : '')}
+                            .select(n => n.id).contains(item?.id) ? ` ${cls.inCloud}` : '')}
                         onClick={() => {setSelected(item.id)}}
                     >
                         <div className={cls.toggle}

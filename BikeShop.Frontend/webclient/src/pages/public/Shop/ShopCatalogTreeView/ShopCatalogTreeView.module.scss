@@ -1,54 +1,58 @@
 .wrapper {
-  user-select: none;
-  //background: #4b4b4b;
-  //color: white;
-  //border-radius: 5px;
-
-  .parent {
-    //padding-top: 5px;
-    //padding-bottom: 5px;
-    padding: 3px 0;
-
-    .selected {
-      //background-color: #5C636A;
-      //border-radius: 5px;
-      color: darkorange;
-      font-weight: bold;
-      height: 100%;
-    }
-
-    .incloud {
-      background-color: #5C636A;
-      border-radius: 5px;
-      color: white;
-      padding-bottom: 2px;
-      padding-top: 2px;
-    }
-
-    .innerWrap {
-      display: flex;
-      align-items: center;
-
-      .toggle {
-        width: 25px;
-        display: flex;
-        justify-content: center;
-      }
-
-      .content {
-        width: 100%;
-        word-break: break-word;
-      }
-    }
-  }
-
-  .parent:hover {
-    //background-color: grey;
+    user-select: none;
+    //position: fixed;
+    //background: #4b4b4b;
+    //color: white;
     //border-radius: 5px;
-    color: darkorange;
-  }
 
-  .child {
-    margin-left: 16px;
-  }
+    .parent {
+        //padding-top: 5px;
+        //padding-bottom: 5px;
+        padding: 3px 0;
+
+        .selected {
+            //background-color: #5C636A;
+            //border-radius: 5px;
+            color: darkorange;
+            font-weight: bold;
+            height: 100%;
+        }
+
+        .inCloud {
+            //background-color: #5C636A;
+            //border-radius: 5px;
+            //color: white;
+            //padding-bottom: 2px;
+            //padding-top: 2px;
+
+            color: darkorange;
+            font-weight: bold;
+        }
+
+        .innerWrap {
+            display: flex;
+            align-items: center;
+
+            .toggle {
+                width: 25px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .content {
+                width: 100%;
+                word-break: break-word;
+            }
+        }
+    }
+
+    .parent:hover {
+        //background-color: grey;
+        //border-radius: 5px;
+        color: darkorange;
+    }
+
+    .child {
+        margin-left: 16px;
+    }
 }
