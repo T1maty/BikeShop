@@ -9,7 +9,6 @@ import {Workshop} from './Workshop'
 import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.png'
 import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
-import Map from '../../../../shared/assets/shop/images/map-00.png'
 import WorkshopBanner from '../../../../shared/assets/shop/images/workshop-banner.png'
 
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
@@ -70,12 +69,12 @@ export const ShopMain = () => {
                                 Каталог
                             </div>
                             <div>
-                                <a href='#workshop'>Мастерская</a>
+                                <a href='#workshop'>Майстерня</a>
                             </div>
                             {//<div>Фотографии</div>
                             }
                             <div>
-                                <a href='#contacts'>Контакты</a>
+                                <a href='#contacts'>Контакти</a>
                             </div>
                         </div>
                     </div>
@@ -149,30 +148,32 @@ export const ShopMain = () => {
             <div className={s.contacts} id={'contacts'}>
                 <div className={s.container}>
                     <div className={s.title}>
-                        Контакты
+                        Контакти
                     </div>
                     <div className={s.info}>
                         <div className={s.info_map}>
-                            <img src={Map} alt="map"/>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2538.993829339626!2d30.403271115944754!3d50.47845859322708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cde0c8ab3a3d%3A0xc0fe0f4500ffe63e!2z0JLQtdC70L7QvNCw0LPQsNC30LjQvSBCaWtlTG92ZQ!5e0!3m2!1suk!2sua!4v1648033484127!5m2!1suk!2sua"
+                                width="700" height="450" loading="lazy"></iframe>
                         </div>
                         <div className={s.info_address}>
                             <div className={s.address_title}>
-                                <div>Веломагазин</div>
-                                <div>г.Киев, ул.Щербакова, 1</div>
+                                <div>Наш магазин</div>
+                                <div>м.Киев, вул.Щербаківського, 59</div>
                             </div>
                             <div className={s.address_time}>
                                 <div className={s.time_one}>
                                     <div>Режим работы</div>
-                                    <div>ПН-ПТ: 10:00-20:00</div>
-                                    <div>СБ-ВС: 10:00-20:00</div>
+                                    <div>ПН-ПТ: 10:00-18:00</div>
+                                    <div>СБ-ВС: 10:00-18:00</div>
                                 </div>
                                 <div className={s.time_two}>
-                                    <div>Контактный номер</div>
-                                    <div>+38 (099) 139 23 85</div>
+                                    <div>Контактний номер</div>
+                                    <div>+38 (093) 211 89 30</div>
                                 </div>
                             </div>
                             <div className={s.address_gallery}>
-                                Галерея
+
                             </div>
                         </div>
                     </div>

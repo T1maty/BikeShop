@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import s from './ShoppingCart.module.scss'
 import cart from "../../../../shared/assets/shop/icons/cart.png"
-import {Button, DeleteButton} from '../../../../shared/ui'
+import {Button} from '../../../../shared/ui'
 import useShoppingCart from "./ShoppingCartStore"
 import RemoveIcon from "../../../../shared/assets/workspace/remove-icon.svg"
 import NoProductImage from '../../../../shared/assets/shop/icons/bicycle-02.svg'
@@ -26,7 +26,8 @@ export const ShoppingCart = React.memo(() => {
 
     const productCartQuantityHandler = (product: ShoppingCartProductType, action: number) => {
         setCartProducts(cartProducts.map(el => el.product.id === product.product.id ?
-            {...el, productQuantity: el.productQuantity + action,
+            {
+                ...el, productQuantity: el.productQuantity + action,
                 productTotalSum: ((el.productQuantity + action) * el.product.retailPrice)
             } : el)
         )
@@ -38,7 +39,9 @@ export const ShoppingCart = React.memo(() => {
 
     return (
         <div className={s.cart_mainBox}>
-            <div onClick={() => {setIsComponentVisible(!isComponentVisible)}}>
+            <div onClick={() => {
+                setIsComponentVisible(!isComponentVisible)
+            }}>
                 <img src={cart} alt="cart-logo"/>
             </div>
 
@@ -76,8 +79,10 @@ export const ShoppingCart = React.memo(() => {
                                                             <div>x</div>
 
                                                             <Button // buttonDivWrapper={s.cartListItem_decreaseBtn}
-                                                                    disabled={cartProd.productQuantity === 1}
-                                                                    onClick={() => {productCartQuantityHandler(cartProd,-1)}}
+                                                                disabled={cartProd.productQuantity === 1}
+                                                                onClick={() => {
+                                                                    productCartQuantityHandler(cartProd, -1)
+                                                                }}
                                                             >
                                                                 -
                                                             </Button>
@@ -87,13 +92,16 @@ export const ShoppingCart = React.memo(() => {
                                                             </div>
 
                                                             <Button // buttonDivWrapper={s.cartListItem_increaseBtn}
-                                                                    onClick={() => {productCartQuantityHandler(cartProd, 1)}}
+                                                                onClick={() => {
+                                                                    productCartQuantityHandler(cartProd, 1)
+                                                                }}
                                                             >
                                                                 +
                                                             </Button>
 
                                                             <div className={s.cartListItem_quantityUnit}>шт. =</div>
-                                                            <div className={s.cartListItem_productTotalSum}>{cartProd.productTotalSum}</div>
+                                                            <div
+                                                                className={s.cartListItem_productTotalSum}>{cartProd.productTotalSum}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -101,7 +109,9 @@ export const ShoppingCart = React.memo(() => {
                                                     {/*<DeleteButton size={30} onClick={() => {deleteProductFromCartHandler(cartProd.product.id)}}/>*/}
                                                     <img src={RemoveIcon} alt="remove-icon"
                                                          className={s.imageList_deleteItem}
-                                                         onClick={() => {deleteProductFromCartHandler(cartProd.product.id)}}
+                                                         onClick={() => {
+                                                             deleteProductFromCartHandler(cartProd.product.id)
+                                                         }}
                                                     />
                                                 </div>
                                             </div>
@@ -121,8 +131,10 @@ export const ShoppingCart = React.memo(() => {
                                     <Button buttonDivWrapper={s.result_orderButton}
                                             onClick={() => {
                                                 setIsComponentVisible(false)
-                                                navigate(BikeShopPaths.SHOP.ORDER)}
+                                                navigate(BikeShopPaths.SHOP.ORDER)
                                             }
+                                            }
+                                            disabled={true}
                                     >
                                         Создать заказ
                                     </Button>
