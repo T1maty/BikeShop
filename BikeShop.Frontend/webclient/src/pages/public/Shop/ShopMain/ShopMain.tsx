@@ -10,6 +10,7 @@ import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.
 import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
 import WorkshopBanner from '../../../../shared/assets/shop/images/workshop-banner.png'
+import WorkshopBannerText from '../../../../shared/assets/shop/images/workshop-banner-text.png'
 
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
 import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
@@ -139,7 +140,7 @@ export const ShopMain = () => {
 
             <div className={s.workshop_banner} id={'workshop'}>
                 <div className={s.container}>
-                    <img src={WorkshopBanner} alt="workshop-banner"/>
+                    <img src={WorkshopBannerText} alt="workshop-banner"/>
                 </div>
             </div>
 
