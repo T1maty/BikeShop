@@ -11,7 +11,6 @@ import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
 import WorkshopBanner from '../../../../shared/assets/shop/images/workshop-banner.png'
 import WorkshopBannerWithText from '../../../../shared/assets/shop/images/workshop-banner-with-text.png'
-import WorkshopBannerText from '../../../../shared/assets/shop/images/workshop-banner-text.png'
 
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
 import catalogProtection from '../../../../shared/assets/shop/images/catalog-protection.png'
@@ -22,7 +21,7 @@ import catalogAccessories from '../../../../shared/assets/shop/images/catalog-ac
 import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
 import catalogRaznoe from '../../../../shared/assets/shop/images/catalog-raznoe.png'
 import catalogSamokat from '../../../../shared/assets/shop/images/catalog-samokat.png'
-import {mapURL} from '../../../../shared/config/mapURL';
+import {mapURL} from '../../../../shared/config/mapURL'
 
 
 export const ShopMain = () => {
@@ -66,16 +65,12 @@ export const ShopMain = () => {
                 <div className={s.menu}>
                     <div className={s.container}>
                         <div className={s.menu_items}>
-                            <div onClick={() => {
-                                navigate(BikeShopPaths.SHOP.CATALOG)
-                            }}>
+                            <div onClick={() => {navigate(BikeShopPaths.SHOP.CATALOG)}}>
                                 Каталог
                             </div>
                             <div>
                                 <a href='#workshop'>Майстерня</a>
                             </div>
-                            {//<div>Фотографии</div>
-                            }
                             <div>
                                 <a href='#contacts'>Контакти</a>
                             </div>
@@ -142,10 +137,7 @@ export const ShopMain = () => {
 
             <div className={s.workshop_banner} id={'workshop'}>
                 <div className={s.container}>
-                    <img src={WorkshopBanner} alt="workshop-banner"/>
-                    <div>
-                        <img src={WorkshopBannerText} alt="workshop-banner-text"/>
-                    </div>
+                    <img src={WorkshopBannerWithText} alt="workshop-banner"/>
                 </div>
             </div>
 
