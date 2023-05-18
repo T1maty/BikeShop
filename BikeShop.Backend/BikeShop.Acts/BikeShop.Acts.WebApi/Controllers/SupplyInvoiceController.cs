@@ -10,7 +10,7 @@ namespace BikeShop.Acts.WebApi.Controllers
     [Produces("application/json")]
     [ApiController]
     [Route("supplyinvoice")]
-    public class SupplyInvoiceController
+    public class SupplyInvoiceController : ControllerBase
     {
         private readonly ISupplyInvoiceService _supplyInvoiceService;
 

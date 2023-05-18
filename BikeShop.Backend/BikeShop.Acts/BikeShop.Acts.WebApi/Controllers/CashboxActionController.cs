@@ -8,7 +8,7 @@ namespace BikeShop.Acts.WebApi.Controllers
     [Produces("application/json")]
     [ApiController]
     [Route("cashboxaction")]
-    public class CashboxActionController
+    public class CashboxActionController : ControllerBase
     {
         private readonly ICashboxActionService _actionService;
 

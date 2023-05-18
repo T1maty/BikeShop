@@ -33,4 +33,24 @@ public class ImageController : ControllerBase
 
         return link;
     }
+
+    [HttpPost("uploadactimg/{imgId:int}")]
+    public async Task<string> AddActImage(int imgId,
+        [FromForm] IFormFile imageFile)
+    {
+        var imagePublicName = "act_img_" + imgId;
+        var result = await _imageFileService.UploadImageAsync(imageFile, imagePublicName);
+
+        return result;
+    }
+
+    [HttpGet("getlinkact/{imgId:int}")]
+    public async Task<string> GetLinkAct(int imgId)
+    {
+        var imagePublicId = "act_img_" + imgId;
+        var link = _imageFileService.GetImageLink(imagePublicId);
+
+        return link;
+    }
+
 }

@@ -25,6 +25,8 @@ builder.Services.Configure<DefaultValuesConfiguration>(builder.Configuration.Get
 builder.Services.AddSingleton(resolver =>
     resolver.GetRequiredService<IOptions<DefaultValuesConfiguration>>().Value);
 
+builder.Services.AddRefitClient<IFileserviceClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:FileService"]));
 builder.Services.AddRefitClient<IProductClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
 builder.Services.AddRefitClient<IShopClient>()

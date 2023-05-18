@@ -8,7 +8,7 @@ namespace BikeShop.Acts.WebApi.Controllers
     [Produces("application/json")]
     [ApiController]
     [Route("encashment")]
-    public class EncashmentController
+    public class EncashmentController : ControllerBase
     {
         private readonly IEncashmentService _encashmentService;
 

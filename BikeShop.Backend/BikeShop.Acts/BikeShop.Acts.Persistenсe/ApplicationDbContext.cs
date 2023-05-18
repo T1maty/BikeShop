@@ -19,6 +19,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ProductMove> ProductMoves { get; set; }
     public DbSet<ProductMoveProduct> ProductMoveProducts { get; set; }
     public DbSet<Payout> Payouts { get; set; }
+    public DbSet<ActImage> ActImages { get; set; }
+    public DbSet<PrintQueue> PrintQueues { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
