@@ -10,6 +10,7 @@ import HeaderPhoto1 from '../../../../shared/assets/shop/images/header-photo_01.
 import HeaderPhoto2 from '../../../../shared/assets/shop/images/header-photo_02.jpg'
 import HeaderPhotoWide from '../../../../shared/assets/shop/images/header-photo_wide.jpg'
 import WorkshopBanner from '../../../../shared/assets/shop/images/workshop-banner.png'
+import WorkshopBannerWithText from '../../../../shared/assets/shop/images/workshop-banner-with-text.png'
 import WorkshopBannerText from '../../../../shared/assets/shop/images/workshop-banner-text.png'
 
 import catalogBikes from '../../../../shared/assets/shop/images/catalog-bikes.png'
@@ -21,6 +22,7 @@ import catalogAccessories from '../../../../shared/assets/shop/images/catalog-ac
 import catalogFood from '../../../../shared/assets/shop/images/catalog-food.png'
 import catalogRaznoe from '../../../../shared/assets/shop/images/catalog-raznoe.png'
 import catalogSamokat from '../../../../shared/assets/shop/images/catalog-samokat.png'
+import {mapURL} from '../../../../shared/config/mapURL';
 
 
 export const ShopMain = () => {
@@ -140,7 +142,10 @@ export const ShopMain = () => {
 
             <div className={s.workshop_banner} id={'workshop'}>
                 <div className={s.container}>
-                    <img src={WorkshopBannerText} alt="workshop-banner"/>
+                    <img src={WorkshopBanner} alt="workshop-banner"/>
+                    <div>
+                        <img src={WorkshopBannerText} alt="workshop-banner-text"/>
+                    </div>
                 </div>
             </div>
 
@@ -154,7 +159,7 @@ export const ShopMain = () => {
                     <div className={s.info}>
                         <div className={s.info_map}>
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2538.993829339626!2d30.403271115944754!3d50.47845859322708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cde0c8ab3a3d%3A0xc0fe0f4500ffe63e!2z0JLQtdC70L7QvNCw0LPQsNC30LjQvSBCaWtlTG92ZQ!5e0!3m2!1suk!2sua!4v1648033484127!5m2!1suk!2sua"
+                                src={mapURL}
                                 width="700" height="450" loading="lazy"></iframe>
                         </div>
                         <div className={s.info_address}>
