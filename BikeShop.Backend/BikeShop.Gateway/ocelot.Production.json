@@ -99,6 +99,22 @@
       ],
       "SwaggerKey": "fileservice"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/image/uploadactimg/{imgId}",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/image/uploadactimg/{imgId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.fileservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "fileservice"
+    },
 
     {
       "UpstreamPathTemplate": "/api/image/getlink",
@@ -115,7 +131,21 @@
       ],
       "SwaggerKey": "fileservice"
     },
-	
+	{
+      "UpstreamPathTemplate": "/api/image/getlinkact/{imgId}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/image/getlinkact/{imgId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.fileservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "fileservice"
+    },
 	
 	
 	
@@ -1865,6 +1895,51 @@
         "Put"
       ],
       "DownstreamPathTemplate": "/productmove/execute",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/print/addqueue",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/print/addqueue",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/print/getqueue",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/print/getqueue",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/print/DeleteQueue",
+      "UpstreamHttpMethod": [
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/print/DeleteQueue",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
