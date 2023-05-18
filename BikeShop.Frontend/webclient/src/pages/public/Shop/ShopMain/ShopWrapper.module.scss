@@ -15,5 +15,9 @@
         //background-color: $themeColorSomeWhite;
         background-color: white;
         margin-top: 80px;
+
+        @media (max-width: 880px) {
+            margin-top: var(--navbar-shop-height-mobile);
+        }
     }
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import s from './ProfileAvatar.module.scss'
 import {User} from '../../../../entities'
 import {BikeShopPaths} from '../../../../app/routes/paths'
 import {useNavigate} from 'react-router-dom'
@@ -30,7 +31,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({user}) => {
     }
 
     return (
-        <div style={avatarStyles} onClick={() => {navigate(BikeShopPaths.SHOP.PROFILE)}}>
+        <div className={s.avatar} onClick={() => {navigate(BikeShopPaths.SHOP.PROFILE)}}>
             {generateAvatarName(user.lastName, user.firstName)}
         </div>
     )

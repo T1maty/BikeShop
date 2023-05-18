@@ -23,6 +23,10 @@
                 height: var(--navbar-shop-height);
                 @include flexBetween;
 
+                @media (max-width: 880px) {
+                    height: var(--navbar-shop-height-mobile);
+                }
+
                 .shop_header_left {
                     @include hoverCursorPointer;
                     @include flexCenter;
@@ -35,6 +39,10 @@
                         border: 2px solid white;
                         border-radius: 50%;
                         padding: 2px;
+
+                        @media (max-width: 880px) {
+                            width: 30px;
+                        }
                     }
 
                     .logo_name {
@@ -146,7 +154,7 @@
         // поиск для мобильных устройств
         .input_mobile {
             position: absolute;
-            top: 80px;
+            top: 50px;
             left: 0;
 
             input {
@@ -157,30 +165,6 @@
 
         .searchInputBox_mobile {
             display: none;
-
-            //@media(max-width: 880px) {
-            //    display: flex;
-            //    flex-direction: column;
-            //
-            //    position: absolute;
-            //    top: 119px;
-            //    left: 0;
-            //    width: 100%;
-            //    height: 100px;
-            //    background-color: white;
-            //    border: 1px solid black;
-            //    padding: 10px;
-            //    color: black;
-            //}
-            //
-            //.searchInputBox_item {
-            //    padding: 5px;
-            //
-            //    &:hover {
-            //        cursor: pointer;
-            //        background-color: darkorange;
-            //    }
-            //}
         }
         .searchInputBox_mobile_active {
             display: none;
@@ -190,7 +174,7 @@
                 flex-direction: column;
 
                 position: absolute;
-                top: 119px;
+                top: 89px;
                 left: 0;
                 width: 100%;
                 height: 100px;
