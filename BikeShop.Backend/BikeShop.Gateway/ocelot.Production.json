@@ -1957,7 +1957,7 @@
       "UpstreamPathTemplate": "/printhub",
       "DownstreamPathTemplate": "/printhub",
       "DownstreamScheme": "ws",
-	  "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+	  "UpstreamHttpMethod": [ "Get", "Post"]
       "DownstreamHostAndPorts": [
         {
           "Host": "bikeshop.acts",
