@@ -46,6 +46,7 @@ app.UseSwaggerForOcelotUI(opt =>
     opt.PathToSwaggerGenerator = "/swagger/docs";
 }, config => { config.RoutePrefix = string.Empty; });
 
+app.UseWebSockets();
 app.UseOcelot().Wait();
 
 app.Run();
