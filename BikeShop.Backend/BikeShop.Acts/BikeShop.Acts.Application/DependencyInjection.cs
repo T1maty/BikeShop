@@ -1,6 +1,7 @@
 ﻿
 using BikeShop.Acts.Application.Interfaces;
 using BikeShop.Acts.Application.Services;
+using BikeShop.Acts.WebApi.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BikeShop.Products.Application;
@@ -16,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IPayoutService, PayoutService>();
         services.AddScoped<IProductMoveService, ProductMoveService>();
         services.AddScoped<IPrintService, PrintService>();
+        services.AddScoped<PrintQueueHub>();
 
 
         return services;

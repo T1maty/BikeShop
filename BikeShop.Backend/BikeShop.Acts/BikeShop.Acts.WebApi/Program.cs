@@ -1,4 +1,5 @@
 using BikeShop.Acts.Application.Refit;
+using BikeShop.Acts.WebApi.Controllers;
 using BikeShop.Products.Application;
 using BikeShop.Products.Application.Common.Configurations;
 using BikeShop.Products.Persistence;
@@ -32,6 +33,8 @@ builder.Services.AddRefitClient<IProductClient>()
 builder.Services.AddRefitClient<IShopClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Shop"]));
 
+
+builder.Services.AddSignalR(); 
 
 // Подключение контроллеров, так же настройка именования JSON данных
 builder.Services.AddControllers()
@@ -110,8 +113,9 @@ app.UseSwaggerUI(config =>
     config.SwaggerEndpoint("swagger/v1/swagger.json", "BikeShop.Products API");
 });
 
+
 app.UseHttpsRedirection();
 app.MapControllers();
-
+app.MapHub<PrintQueueHub>("/printhub");
 
 app.Run();

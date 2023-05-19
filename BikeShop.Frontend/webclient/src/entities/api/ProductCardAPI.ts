@@ -1,8 +1,9 @@
 import {AxiosResponse} from "axios"
-import {$api} from "shared"
 import {ProductFullData} from '../index'
-import {UpdateProductCardFormModel}
-    from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardFormModel"
+import {
+    UpdateProductCardFormModel
+} from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardFormModel"
+import {$api} from "../../shared";
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {

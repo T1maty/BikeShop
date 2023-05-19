@@ -1,6 +1,7 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
 using BikeShop.Acts.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BikeShop.Acts.WebApi.Controllers
 {
@@ -10,16 +11,28 @@ namespace BikeShop.Acts.WebApi.Controllers
     public class PrintController : ControllerBase
     {
         private readonly IPrintService _printService;
+        private readonly PrintQueueHub _pq;
+        private readonly IHubContext<PrintQueueHub> _hubContext;
 
-        public PrintController(IPrintService printService)
+        public PrintController(IPrintService printService, PrintQueueHub pq, IHubContext<PrintQueueHub> hubContext)
         {
             _printService = printService;
+            _pq = pq;
+            _hubContext = hubContext;
         }
 
         [HttpPost("addqueue")]
         public async Task<PrintQueue> AddQueue(int actId, string dataName, string printSettings, int? prioriry, int agentId, [FromForm] IFormFile? imageFile)
         {
-            return await _printService.AddQueue(actId,dataName,printSettings,prioriry,agentId,imageFile);
+            var ent = await _printService.AddQueue(actId, dataName, printSettings, prioriry, agentId, imageFile);
+            await _pq.Trigger(await GetQueue(agentId), _hubContext);
+            return ent;
+        }
+
+        [HttpPost("triggerprint")]
+        public async Task Trigger(int agentId)
+        {
+            await  _pq.Trigger(await GetQueue(agentId), _hubContext);
         }
 
         [HttpGet("getqueue")]

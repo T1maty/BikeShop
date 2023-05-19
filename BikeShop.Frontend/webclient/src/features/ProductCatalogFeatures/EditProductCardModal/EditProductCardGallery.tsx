@@ -30,6 +30,7 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
             if (file.size < 7000000) {
                 let formData = new FormData();
+                console.log(file)
                 formData.append('imageFile', file)
 
                 setIsLoading(true)
@@ -124,10 +125,13 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
                                         <img src={RemoveIcon} alt="remove-icon"
                                              className={s.imageList_deleteItem}
-                                             // onClick={() => {
-                                             //     setConfirm(true)
-                                             // }}
-                                             onClick={() => {deleteImageHandler(img.id); console.log('id from click', img.id)}}
+                                            // onClick={() => {
+                                            //     setConfirm(true)
+                                            // }}
+                                             onClick={() => {
+                                                 deleteImageHandler(img.id);
+                                                 console.log('id from click', img.id)
+                                             }}
                                         />
                                         <ConfirmModal title={'Вы действительно хотите удалить изображение?'}
                                                       extraCallback={() => {
