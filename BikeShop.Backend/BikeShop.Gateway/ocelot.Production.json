@@ -1955,9 +1955,8 @@
 	
 	{
       "UpstreamPathTemplate": "/printhub",
-      "UpstreamHttpMethod": [ "Pos", "Put", "Get"]
       "DownstreamPathTemplate": "/printhub",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "ws",
       "DownstreamHostAndPorts": [
         {
           "Host": "bikeshop.acts",
