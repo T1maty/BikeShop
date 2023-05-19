@@ -1955,7 +1955,7 @@
 	
 	{
       "UpstreamPathTemplate": "/printhub",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "HEAD", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH" ]
+      "UpstreamHttpMethod": [ "Pos", "Put", "Get"]
       "DownstreamPathTemplate": "/printhub",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
