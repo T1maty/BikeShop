@@ -1963,6 +1963,10 @@
           "Port": 80
         }
       ],
+	  "QoSOptions": {
+        "TimeoutValue": 320000
+      },
+      "Priority": 50
     },
 	{
       "UpstreamPathTemplate": "/printhub/{path}",
@@ -1974,6 +1978,10 @@
           "Port": 80
         }
       ],
+	  "QoSOptions": {
+        "TimeoutValue": 320000
+      },
+      "Priority": 50
     }
 	
 	
