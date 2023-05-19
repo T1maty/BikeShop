@@ -1948,6 +1948,22 @@
         }
       ],
       "SwaggerKey": "acts"
+    },
+	
+	
+	
+	
+	{
+      "UpstreamPathTemplate": "/printhub",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "HEAD", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH" ]
+      "DownstreamPathTemplate": "/printhub",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
     }
 	
 	
