@@ -1,4 +1,3 @@
-import {$api} from "shared"
 import {AxiosResponse} from "axios"
 import {CreateShopResponse} from "../responses/ShopResponse"
 import {CreateShop, UpdateShop} from "../requests/CreateShop"
@@ -8,10 +7,14 @@ import {CreateStorageResponse} from "../responses/StorageResponse"
 import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
 import {UpdateSpecification} from '../requests/UpdateSpecification'
 import {ProductSpecification} from "../entities/ProductSpecification"
-import {CreateOption, Currency, UpdateOption} from "entities"
+
 import {
     ProductOptionsWithVariants
 } from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
+import {Currency} from "../models/Others/Currency";
+import {CreateOption} from "../requests/CreateOption";
+import {UpdateOption} from "../requests/UpdateOption";
+import {$api} from "../../shared";
 
 export const EntitiesAPI = {
     Shop: {
@@ -38,7 +41,7 @@ export const EntitiesAPI = {
                 $api.get<CreateStorageResponse[]>('/storagecrud/getall')
             )
         },
-        addNewStorage(data: CreateStorage): any {
+        addNewStorage(data: CreateStorage): Promise<AxiosResponse<CreateStorage>> {
             return (
                 $api.post<CreateStorage>('/storagecrud/create', data)
             )

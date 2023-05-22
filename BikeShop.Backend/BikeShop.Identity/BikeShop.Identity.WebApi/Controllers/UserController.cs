@@ -182,7 +182,6 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    [Authorize(Roles = "admin")]
     [HttpGet("search")]
     public async Task<List<ApplicationUser>> Search(string Querry, int Take)
     {
