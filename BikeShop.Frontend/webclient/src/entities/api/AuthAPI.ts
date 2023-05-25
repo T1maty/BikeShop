@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios"
-import {$api} from "shared"
+import {$api} from "../../shared/http/axios"
 import {
     CreateUser,
     GetUsersResponse,

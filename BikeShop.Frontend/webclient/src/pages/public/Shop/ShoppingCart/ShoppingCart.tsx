@@ -134,7 +134,7 @@ export const ShoppingCart = React.memo(() => {
                                                 navigate(BikeShopPaths.SHOP.ORDER)
                                             }
                                             }
-                                            disabled={true}
+                                            // disabled={true}
                                     >
                                         Создать заказ
                                     </Button>
