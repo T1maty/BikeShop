@@ -38,6 +38,16 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
             });
     }
 
+    const pngHandler = () => {
+        htmlToImage.toPng(document.getElementById('my-node')!, {quality: 1, pixelRatio: 3})
+            .then(function (dataUrl) {
+                var link = document.createElement('a');
+                link.download = 'my-image-name.png';
+                link.href = dataUrl;
+                link.click();
+            });
+    }
+
     function dataURLtoFile(dataurl: string, filename: string) {
         var arr = dataurl.split(','),
             mime = arr[0].match(/:(.*?);/)![1],
@@ -51,7 +61,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
     }
 
     const agent = () => {
-        htmlToImage.toJpeg(document.getElementById('my-node')!, {quality: 0.95})
+        htmlToImage.toPng(document.getElementById('my-node')!, {quality: 1, pixelRatio: 3})
             .then(function (dataUrl) {
                 let file = dataURLtoFile(dataUrl, "ActImage")
                 console.log(file)
@@ -64,7 +74,13 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
                     JSON.stringify(settings),
                     100,
                     1)
-            });
+            }).then(n => {
+            enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
+        });
+    }
+
+    const PDF = () => {
+
     }
 
     return (
@@ -81,6 +97,9 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
                     </Button>
                     <Button onClick={jpgHandler}>
                         JPG
+                    </Button>
+                    <Button onClick={pngHandler}>
+                        PNG
                     </Button>
                     <Button onClick={agent}>
                         Печать агентом

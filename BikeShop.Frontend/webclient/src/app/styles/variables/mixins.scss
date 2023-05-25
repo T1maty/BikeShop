@@ -2,62 +2,62 @@
 
 // container mixins
 @mixin defaultContainer() {
-    max-width: 1400px;
-    margin: 0 auto;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 @mixin defaultContainerForShop() {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
 @mixin wrapperMainBlock() {
-    min-height: calc(100vh - var(--navbar-height));
-    padding: $defaultLargeMargin;
+  min-height: calc(100vh - var(--navbar-height));
+  padding: $defaultLargeMargin;
 }
 
 // flex mixins
 @mixin flexCenter() {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @mixin flexOnlyBetween() {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 @mixin flexBetween() {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @mixin flexColumnOnly() {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin flexColumn() {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 // default modal-window styles
 @mixin defaultModalStyle() {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 450px;
-    padding: $defaultLargeMargin;
-    transform: translate(-50%, -50%);
-    background-color: $themeColorDark;
-    border-radius: $largeBorderRadius;
-    border: 1px solid white;
-    color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 450px;
+  padding: $defaultLargeMargin;
+  transform: translate(-50%, -50%);
+  background-color: $themeColorDark;
+  border-radius: $largeBorderRadius;
+  border: 1px solid white;
+  color: white;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -65,265 +65,265 @@
 // mixins for UI components //
 // textField with border
 @mixin defaultFiledStyle() {
-    @include flexCenter;
-    max-width: 250px;
-    padding: 10px;
-    border: 2px solid $themeColorMilk;
-    border-radius: 10px;
+  @include flexCenter;
+  max-width: 250px;
+  padding: 10px;
+  border: 2px solid $themeColorMilk;
+  border-radius: 10px;
 }
 
 @mixin widthHeightFull() {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 // block styles
 @mixin defaultBlockStyles($bgColor) {
-    background-color: $bgColor;
-    padding: $defaultLargeMargin;
-    border-radius: $smallBorderRadius;
-    width: 100%;
+  background-color: $bgColor;
+  padding: $defaultLargeMargin;
+  border-radius: $smallBorderRadius;
+  width: 100%;
 }
 
 // title styles
 @mixin largeFontSize() {
-    font-size: 40px;
-    font-weight: bold;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 @mixin titleCenter() {
-    text-align: center;
-    margin-bottom: $defaultSmallMargin;
+  text-align: center;
+  margin-bottom: $defaultSmallMargin;
 }
 
 @mixin modalTitle() {
-    font-weight: bold;
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: $defaultLargeMargin;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: $defaultLargeMargin;
 }
 
 // button styles
 @mixin defaultMediumButton() {
-    width: 100%;
-    padding: $defaultSmallMargin 0;
+  width: 100%;
+  padding: $defaultSmallMargin 0;
 }
 
 @mixin defaultLargeButton() {
-    width: 100%;
-    padding: $defaultLargeMargin 0;
+  width: 100%;
+  padding: $defaultLargeMargin 0;
 }
 
 @mixin deleteButton() {
-    button {
-        background-color: #ff6b6b;
+  button {
+    background-color: #ff6b6b;
 
-        &:hover {
-            background-color: red;
-        }
+    &:hover {
+      background-color: red;
     }
+  }
 }
 
 @mixin editProfileButton {
-    button {
-        padding: 10px;
-        background-color: #32DA75;
-        border-radius: $smallBorderRadius;
-        font-weight: bold;
+  button {
+    padding: 10px;
+    background-color: #32DA75;
+    border-radius: $smallBorderRadius;
+    font-weight: bold;
 
-        &:hover {
-            opacity: 0.7;
-        }
+    &:hover {
+      opacity: 0.7;
     }
+  }
 }
 
 // delete icon-button
 @mixin deleteIconButton() {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 5px;
-    width: 20px;
-    height: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  width: 20px;
+  height: 20px;
 
-    &:hover {
-        cursor: pointer;
-        filter: contrast(3);
-    }
+  &:hover {
+    cursor: pointer;
+    filter: contrast(3);
+  }
 }
 
 // hover styles
 @mixin hoverCursorPointer {
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @mixin hoverCursorPointerOpacity {
-    > div {
-        &:hover {
-            cursor: pointer;
-            opacity: 0.5;
-        }
+  > div {
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
     }
+  }
 }
 
 @mixin hoverItem() {
-    padding: 5px 0;
-    &:hover {
-        cursor: pointer;
-        background-color: $themeColorGray;
-    }
+  padding: 5px 0;
+  &:hover {
+    cursor: pointer;
+    background-color: $themeColorGray;
+  }
 }
 
 @mixin hoverProfileMenuItem() {
-    padding: $defaultSmallMargin 0;
-    &:hover {
-        cursor: pointer;
-        color: orange;
-    }
+  padding: $defaultSmallMargin 0;
+  &:hover {
+    cursor: pointer;
+    color: orange;
+  }
 }
 
 // div styles
 @mixin divExtraSmallMarginBottom() {
-    > div:not(:last-child) {
-        margin-bottom: $defaultExtraSmallMargin;
-    }
+  > div:not(:last-child) {
+    margin-bottom: $defaultExtraSmallMargin;
+  }
 }
 
 @mixin divSmallMarginBottom() {
-    > div:not(:last-child) {
-        margin-bottom: $defaultSmallMargin;
-    }
+  > div:not(:last-child) {
+    margin-bottom: $defaultSmallMargin;
+  }
 }
 
 @mixin divLargeMarginBottom() {
-    > div:not(:last-child) {
-        margin-bottom: $defaultLargeMargin;
-    }
+  > div:not(:last-child) {
+    margin-bottom: $defaultLargeMargin;
+  }
 }
 
 @mixin divExtraLargeMarginBottom() {
-    > div:not(:last-child) {
-        margin-bottom: $defaultExtraLargeMargin;
-    }
+  > div:not(:last-child) {
+    margin-bottom: $defaultExtraLargeMargin;
+  }
 }
 
 // input type File styles
 @mixin inputTypeFile($borderColor) {
-    @include flexCenter;
+  @include flexCenter;
 
-    .inputFile {
-        width: 100%;
-        max-width: 100%;
-        padding: 15px;
-        border-radius: 10px;
-        border: 2px solid $borderColor;
-        font: inherit;
-    }
-    .inputFile::file-selector-button {
-        border: none;
-        border-radius: 5px;
-        margin-right: 20px;
-        padding: 10px 20px;
-        background: $headerColor;
-        color: #fff;
-        cursor: pointer;
-        transition: background .2s ease-in-out;
-    }
-    .inputFile::file-selector-button:hover {
-        background: $headerColorHover;
-    }
+  .inputFile {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid $borderColor;
+    font: inherit;
+  }
+  .inputFile::file-selector-button {
+    border: none;
+    border-radius: 5px;
+    margin-right: 20px;
+    padding: 10px 20px;
+    background: $headerColor;
+    color: #fff;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+  }
+  .inputFile::file-selector-button:hover {
+    background: $headerColorHover;
+  }
 }
 
 // Service
 @mixin serviceItemCommonStyles() {
-    word-break: break-word;
-    @include flexBetween;
-    gap: 5px;
-    width: 100%;
-    border-radius: $smallBorderRadius;
-    border: 1px solid $themeColorMilk;
-    padding: $defaultSmallMargin;
+  word-break: break-word;
+  @include flexBetween;
+  gap: 5px;
+  width: 100%;
+  border-radius: $smallBorderRadius;
+  border: 1px solid $themeColorMilk;
+  padding: $defaultSmallMargin;
 }
 
 // MainPage
 @mixin shiftStatus($bgColor, $fontColor) {
-    background-color: $bgColor;
-    border-radius: $smallBorderRadius;
-    padding: $defaultSmallMargin;
-    color: $fontColor;
-    text-align: center;
+  background-color: $bgColor;
+  border-radius: $smallBorderRadius;
+  padding: $defaultSmallMargin;
+  color: $fontColor;
+  text-align: center;
 }
 
 // WorkProductsModal
 @mixin workAndProductModalsButtonBlock() {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 
-    button {
-        height: 40px;
-        width: 100%;
-    }
+  button {
+    height: 40px;
+    width: 100%;
+  }
 
-    > div {
-        width: 100%;
-    }
+  > div {
+    width: 100%;
+  }
 }
 
 // CatalogProductItem
 @mixin CatalogProductItemIsAvailableLabel($bgColor) {
-    @include flexCenter;
-    text-align: center;
-    padding: $defaultSmallMargin;
-    border-radius: $smallBorderRadius;
-    background-color: $bgColor;
-    line-height: 1.1;
-    color: white;
+  @include flexCenter;
+  text-align: center;
+  padding: $defaultSmallMargin;
+  border-radius: $smallBorderRadius;
+  background-color: $bgColor;
+  line-height: 1.1;
+  color: white;
 }
 
 // ShopProfile //
 // menuItem
 @mixin shopProfileMenuItem() {
-    @include hoverProfileMenuItem;
-    @include flexOnlyBetween;
-    align-items: center;
-    gap: 10px;
+  @include hoverProfileMenuItem;
+  @include flexOnlyBetween;
+  align-items: center;
+  gap: 10px;
 
-    .listItem_icon {
-        border: 1px solid black;
-        width: 30px;
-        height: 30px;
-    }
+  .listItem_icon {
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+  }
 
-    .listItem_title {
+  .listItem_title {
 
-    }
+  }
 }
 
 // menuUser
 @mixin shopProfileMenuUser($bgColor) {
-    @include flexOnlyBetween;
-    gap: $defaultLargeMargin;
-    margin-bottom: $defaultExtraLargeMargin;
-    padding: $defaultLargeMargin;
-    background-color: $bgColor;
+  @include flexOnlyBetween;
+  gap: $defaultLargeMargin;
+  margin-bottom: $defaultExtraLargeMargin;
+  padding: $defaultLargeMargin;
+  background-color: $bgColor;
 
-    .user_info {
-        @include flexColumn;
-        gap: $defaultSmallMargin;
+  .user_info {
+    @include flexColumn;
+    gap: $defaultSmallMargin;
 
-        .info_name {
-            width: 100%;
-            border-bottom: 1px solid black;
-            font-size: 20px;
-            padding-bottom: $defaultSmallMargin;
-        }
-
-        .info_text {
-
-        }
+    .info_name {
+      width: 100%;
+      border-bottom: 1px solid black;
+      font-size: 20px;
+      padding-bottom: $defaultSmallMargin;
     }
+
+    .info_text {
+
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -333,606 +333,610 @@
 
 @mixin registrationBlock($buttonWidth) {
 
-    // custom variants here
+  // custom variants here
 
-    .loginForm_title {
-        margin: 30px 0 30px 0;
-        font-size: 30px;
-        font-weight: bold;
-        color: $themeColorMilk;
-    }
-    .loginForm_form {
+  .loginForm_title {
+    margin: 30px 0 30px 0;
+    font-size: 30px;
+    font-weight: bold;
+    color: $themeColorMilk;
+  }
+  .loginForm_form {
+    margin-bottom: $defaultSmallMargin;
+
+    form {
+      > div {
         margin-bottom: $defaultSmallMargin;
-
-        form {
-            > div {
-                margin-bottom: $defaultSmallMargin;
-            }
-        }
+      }
     }
-    .loginForm_submitButton {
-        width: $buttonWidth;
-        display: flex;
-        justify-content: center;
+  }
+  .loginForm_submitButton {
+    width: $buttonWidth;
+    display: flex;
+    justify-content: center;
 
-        button {
-            width: 100%;
-            height: 50px;
-        }
+    button {
+      width: 100%;
+      height: 50px;
     }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // LoaderScreen
 
 @mixin loaderScreenStyles($background) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background: $background;
+
+  .loader {
+    @include flexCenter;
     height: 100%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    background: $background;
 
-    .loader {
-        @include flexCenter;
-        height: 100%;
-
-        img {
-            width: 200px;
-            height: auto;
-        }
+    img {
+      width: 200px;
+      height: auto;
     }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // BurgerMenu
 
 @mixin burgerMenuAllStyles($transform) {
-    position: fixed;
-    top: 80px; // высота хедера
-    left: 0;
+  position: fixed;
+  top: 80px; // высота хедера
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transform: $transform;
+  //transition: all 0.5s;
+  z-index: 30;
+
+  .burgerMenu_blur {
     width: 100vw;
     height: 100vh;
-    transform: $transform;
-    //transition: all 0.5s;
-    z-index: 30;
+    backdrop-filter: blur(1px);
+    left: 50%; // равно ширине бургер-меню
+    position: absolute;
 
-    .burgerMenu_blur {
-        width: 100vw;
-        height: 100vh;
-        backdrop-filter: blur(1px);
-        left: 50%; // равно ширине бургер-меню
-        position: absolute;
-
-        // меню на всю ширину
-        @media (max-width: 445px) {
-            backdrop-filter: none;
-        }
+    // меню на всю ширину
+    @media (max-width: 445px) {
+      backdrop-filter: none;
     }
-    .burgerMenu_content {
-        width: 50%; // ширина бургер-меню
-        height: 100%;
-        background-color: black;
-        opacity: 0.9;
-        //transition: all 1s;
+  }
+  .burgerMenu_content {
+    width: 50%; // ширина бургер-меню
+    height: 100%;
+    background-color: black;
+    opacity: 0.9;
+    //transition: all 1s;
 
-        // меню на всю ширину
-        @media (max-width: 445px) {
-            width: 100%;
-        }
-
-        .burgerMenu_title {
-            padding: 10px 0;
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .burgerMenu_items {
-            padding: 20px;
-            @include divLargeMarginBottom;
-            @include hoverCursorPointer;
-
-            .menu_item {
-                display: flex;
-                align-items: center;
-                gap: 20px;
-
-                .item_icon {
-                    img {
-                        width: 25px;
-                        height: 25px;
-                    }
-                }
-
-                .item_title {
-                    &:hover {
-                        color: orange;
-                    }
-                }
-            }
-        }
+    // меню на всю ширину
+    @media (max-width: 445px) {
+      width: 100%;
     }
+
+    .burgerMenu_title {
+      padding: 10px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .burgerMenu_items {
+      padding: 20px;
+      @include divLargeMarginBottom;
+      @include hoverCursorPointer;
+
+      .menu_item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .item_icon {
+          img {
+            width: 25px;
+            height: 25px;
+          }
+        }
+
+        .item_title {
+          &:hover {
+            color: orange;
+          }
+        }
+      }
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // CreateShopModal
 
 @mixin createShopStorageModal($itemsColumnHeight, $columnWidth2, $columnWidth3) {
-    .shopStorageModal_shops {
-        background-color: $themeColorMilk;
-        padding: $defaultLargeMargin;
-        border-radius: $smallBorderRadius;
-        width: $columnWidth2; // высота колонки со скроллом
+  .shopStorageModal_shops {
+    background-color: $themeColorMilk;
+    padding: $defaultLargeMargin;
+    border-radius: $smallBorderRadius;
+    width: $columnWidth2; // высота колонки со скроллом
 
-        // вторая колонка
-        .shopStorageModal_shopList {
-            @include divSmallMarginBottom;
-            padding-right: $defaultSmallMargin;
-            overflow-y: auto;
-            max-height: $itemsColumnHeight; // высота колонки с элементами
-            @include activeEntity;
-        }
+    // вторая колонка
+    .shopStorageModal_shopList {
+      @include divSmallMarginBottom;
+      padding-right: $defaultSmallMargin;
+      overflow-y: auto;
+      max-height: $itemsColumnHeight; // высота колонки с элементами
+      @include activeEntity;
     }
+  }
 
-    // третья колонка
-    .shopStorageModal_createBlock {
-        width: $columnWidth3; // высота колонки с формами
-        @include createEntityForm;
-    }
+  // третья колонка
+  .shopStorageModal_createBlock {
+    width: $columnWidth3; // высота колонки с формами
+    @include createEntityForm;
+  }
 }
 
 // CreateShopModal Active Entity Item
 @mixin activeEntity() {
-    .shop_item {
-        > div:not(:last-child) {
-            margin-bottom: $defaultExtraSmallMargin;
-        }
-
-        border-radius: $smallBorderRadius;
-        border: 1px solid white;
-        padding: 10px;
-        color: black;
-
-        &:hover {
-            cursor: pointer;
-            background-color: $themeColorDark;
-            color: white;
-        }
-
-        > div {
-            span {
-                font-weight: bold;
-            }
-        }
+  .shop_item {
+    > div:not(:last-child) {
+      margin-bottom: $defaultExtraSmallMargin;
     }
-    .shop_item_active {
-        > div:not(:last-child) {
-            margin-bottom: $defaultExtraSmallMargin;
-        }
 
-        border-radius: $smallBorderRadius;
-        background-color: $themeColorDark;
-        border: 1px solid white;
-        padding: 10px;
-        color: white;
+    border-radius: $smallBorderRadius;
+    border: 1px solid white;
+    padding: 10px;
+    color: black;
 
-        > div {
-            span {
-                font-weight: bold;
-            }
-        }
+    &:hover {
+      cursor: pointer;
+      background-color: $themeColorDark;
+      color: white;
     }
+
+    > div {
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+  .shop_item_active {
+    > div:not(:last-child) {
+      margin-bottom: $defaultExtraSmallMargin;
+    }
+
+    border-radius: $smallBorderRadius;
+    background-color: $themeColorDark;
+    border: 1px solid white;
+    padding: 10px;
+    color: white;
+
+    > div {
+      span {
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 // CreateShopModal FormStyles
 @mixin createEntityForm() {
-    form {
-        @include divLargeMarginBottom;
+  form {
+    @include divLargeMarginBottom;
 
-        .shopStorageModal_inputFields {
-            background-color: $themeColorGray;
-            padding: $defaultLargeMargin;
-            border-radius: $smallBorderRadius;
-            @include divSmallMarginBottom;
+    .shopStorageModal_inputFields {
+      background-color: $themeColorGray;
+      padding: $defaultLargeMargin;
+      border-radius: $smallBorderRadius;
+      @include divSmallMarginBottom;
 
-            .infoBlock_input {
-                //
-            }
+      .infoBlock_input {
+        //
+      }
 
-            .infoBlock_checkbox {
-                @include flexCenter;
-                height: 40px;
-                border: 1px solid $themeColorMilk;
-                border-radius: $extraSmallBorderRadius;
+      .infoBlock_checkbox {
+        @include flexCenter;
+        height: 40px;
+        border: 1px solid $themeColorMilk;
+        border-radius: $extraSmallBorderRadius;
 
-                // чтобы чекбокс был сбоку
-                display: flex;
-                justify-content: flex-start;
-                padding-left: 15px;
-            }
+        // чтобы чекбокс был сбоку
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 15px;
+      }
 
-            .infoBlock_cancelBtn {
-                display: flex;
-                gap: $defaultLargeMargin;
+      .infoBlock_cancelBtn {
+        display: flex;
+        gap: $defaultLargeMargin;
 
-                button {
-                    @include defaultMediumButton;
-                }
-            }
+        button {
+          @include defaultMediumButton;
         }
-
-        .footer_buttons {
-            @include flexOnlyBetween;
-            gap: $defaultLargeMargin;
-
-            > div {
-                width: 100%;
-            }
-
-            button {
-                padding: 20px;
-                width: 100%;
-            }
-        }
+      }
     }
+
+    .footer_buttons {
+      @include flexOnlyBetween;
+      gap: $defaultLargeMargin;
+
+      > div {
+        width: 100%;
+      }
+
+      button {
+        padding: 20px;
+        width: 100%;
+      }
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // WorkActs
 
 @mixin workActWrapperBlock {
-    display: flex;
-    justify-content: center;
-    color: black;
+  display: flex;
+  justify-content: center;
+  color: black;
 }
 
 @mixin workActMainBlock {
-    min-width: 400px;
-    height: 100%;
-    border: 1px solid black;
-    background-color: white;
-    padding: $defaultSmallMargin;
-    @include divSmallMarginBottom;
+  min-width: 400px;
+  height: 100%;
+  border: 1px solid black;
+  background-color: white;
+  padding: $defaultSmallMargin;
+  @include divSmallMarginBottom;
 }
 
 @mixin workActHeaderBlock {
-    width: 50%;
+  width: 50%;
 
-    .header_title {
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: $defaultSmallMargin;
-    }
-    .header_content {
+  .header_title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: $defaultSmallMargin;
+  }
+  .header_content {
 
-    }
+  }
 }
 
 @mixin workActProductBlock {
-    width: 100%;
+  width: 100%;
 
-    .works_content {
-        background-color: $themeColorMilk;
-        border-radius: $smallBorderRadius;
-        text-align: center;
-        min-height: 100px;
-        margin-bottom: $defaultSmallMargin;
-        padding: $defaultSmallMargin;
+  .works_content {
+    background-color: white;
+    border-radius: $smallBorderRadius;
+    text-align: center;
+    min-height: 100px;
+    margin-bottom: $defaultSmallMargin;
+    padding: $defaultSmallMargin;
 
-        // табличка в чеке
-        table {
-            word-break: break-word;
-            border-collapse: collapse;
-            border: 2px solid $themeColorMilk;
+    // табличка в чеке
+    table {
+      word-break: break-word;
+      border-collapse: collapse;
+      border: 2px solid white;
 
-            th, td {
-                border: 1px solid black;
-            }
-        }
+      th, td {
+        border: 1px solid black;
+      }
     }
-    .works_result {
-        text-align: right;
-        line-height: $minLineHeight;
-    }
+  }
+  .works_result {
+    text-align: right;
+    line-height: $minLineHeight;
+  }
 }
 
 @mixin workActDateBlock() {
-    .workAct_date {
-        font-size: 18px;
-        line-height: $minLineHeight;
-        text-align: center;
+  .workAct_date {
+    font-size: 18px;
+    line-height: $minLineHeight;
+    text-align: center;
 
-        .date_title {
-            font-weight: bold;
-        }
-
-        .date_date {
-
-        }
+    .date_title {
+      font-weight: bold;
     }
+
+    .date_date {
+
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // CreateOptionModal
 
 @mixin currentOption($titleColor) {
-    @include hoverCursorPointer;
+  @include hoverCursorPointer;
 
-    .optionsList_item {
-        margin-bottom: 10px;
+  .optionsList_item {
+    margin-bottom: 10px;
+    border-radius: $smallBorderRadius;
+    max-height: 100px;
+    overflow: auto;
+    color: $titleColor;
+    position: relative;
+
+    .optionsList_VariantsList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-right: 40px; // чтобы не наезжало на кнопку
+
+      .variant_item {
+        background-color: $themeColorMilk;
         border-radius: $smallBorderRadius;
-        max-height: 100px;
-        overflow: auto;
-        color: $titleColor;
-        position: relative;
-
-        .optionsList_VariantsList {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-right: 40px; // чтобы не наезжало на кнопку
-
-            .variant_item {
-                background-color: $themeColorMilk;
-                border-radius: $smallBorderRadius;
-                padding: 5px 10px;
-                color: black;
-            }
-        }
-
-        .optionsList_deleteList {
-            position: absolute;
-            top: -2px;
-            right: 4px;
-
-            img {
-                width: 40px;
-                height: 40px;
-
-                &:hover {
-                    cursor: pointer;
-                    filter: contrast(3);
-                }
-            }
-        }
+        padding: 5px 10px;
+        color: black;
+      }
     }
+
+    .optionsList_deleteList {
+      position: absolute;
+      top: -2px;
+      right: 4px;
+
+      img {
+        width: 40px;
+        height: 40px;
+
+        &:hover {
+          cursor: pointer;
+          filter: contrast(3);
+        }
+      }
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // EncashmentModal
 
 @mixin encashmentModalTitle() {
-    .title {
-        //font-weight: bold;
-        font-size: 20px;
-        margin-bottom: 10px;
-        text-decoration: underline;
-    }
-    .info {
-        font-size: 18px;
-    }
+  .title {
+    //font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+  }
+  .info {
+    font-size: 18px;
+  }
 }
 
 @mixin encashmentTextarea($textareaWidth, $textareaHeight) {
-    .report {
-        border: 1px solid $themeColorMilk;
-        border-radius: $extraSmallBorderRadius;
-        padding: $defaultSmallMargin;
-        width: $textareaWidth;
-        height: $textareaHeight;
+  .report {
+    border: 1px solid $themeColorMilk;
+    border-radius: $extraSmallBorderRadius;
+    padding: $defaultSmallMargin;
+    width: $textareaWidth;
+    height: $textareaHeight;
 
-        textarea {
-            resize: none;
-            width: 100%;
-            height: 100%;
-            padding: $defaultSmallMargin;
-            border: none;
-            background-color: transparent;
-            font-size: 16px;
-            color: white;
-        }
-
-        ::placeholder {
-            color: white;
-            opacity: 0.7;
-        }
+    textarea {
+      resize: none;
+      width: 100%;
+      height: 100%;
+      padding: $defaultSmallMargin;
+      border: none;
+      background-color: transparent;
+      font-size: 16px;
+      color: white;
     }
+
+    ::placeholder {
+      color: white;
+      opacity: 0.7;
+    }
+  }
 }
 
 @mixin modalDateBlock() {
-    .content_cash {
-        height: 100%;
-        @include flexColumnOnly;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 0 10px;
+  .content_cash {
+    height: 100%;
+    @include flexColumnOnly;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 10px;
 
-        .cashBlock {
-            @include flexCenter;
+    .cashBlock {
+      @include flexCenter;
 
-            .cashBlock_img {
-                img {
-                    width: 25px;
-                    height: 25px;
-                }
-            }
-            .cashBlock_info {
-                padding-left: 10px;
-                font-size: 20px;
-            }
+      .cashBlock_img {
+        img {
+          width: 25px;
+          height: 25px;
         }
-    }
-    .content_date {
-        @include divSmallMarginBottom;
-        line-height: $minLineHeight;
-        border-left: 2px solid $themeColorMilk;
+      }
+
+      .cashBlock_info {
         padding-left: 10px;
-        height: 100%;
-        @include flexColumnOnly;
-        justify-content: center;
+        font-size: 20px;
+      }
     }
+  }
+  .content_date {
+    @include divSmallMarginBottom;
+    line-height: $minLineHeight;
+    border-left: 2px solid $themeColorMilk;
+    padding-left: 10px;
+    height: 100%;
+    @include flexColumnOnly;
+    justify-content: center;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // SupplyInvoiceArchiveModal
 
 @mixin supplyInvoiceStatus($bgColor) {
-    @include flexCenter;
-    background-color: $bgColor;
-    border-radius: $extraSmallBorderRadius;
-    margin-right: $defaultSmallMargin;
-    width: 20px;
-    padding: $defaultSmallMargin;
-    //min-height: 100%;
-    color: black;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
+  @include flexCenter;
+  background-color: $bgColor;
+  border-radius: $extraSmallBorderRadius;
+  margin-right: $defaultSmallMargin;
+  width: 20px;
+  padding: $defaultSmallMargin;
+  //min-height: 100%;
+  color: black;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
 }
 
 @mixin SupplyInvoiceArchiveModal($secondColWidth) {
-    .supplyInvoiceArchiveModal_item {
-        @include flexOnlyBetween;
-        background-color: $themeColorGray;
-        border: 1px solid $themeColorMilk;
-        border-radius: $smallBorderRadius;
-        padding: $defaultSmallMargin;
-        @include hoverCursorPointer;
-        width: $secondColWidth;
+  .supplyInvoiceArchiveModal_item {
+    @include flexOnlyBetween;
+    background-color: $themeColorGray;
+    border: 1px solid $themeColorMilk;
+    border-radius: $smallBorderRadius;
+    padding: $defaultSmallMargin;
+    @include hoverCursorPointer;
+    width: $secondColWidth;
 
-        .status_WaitingPayment {
-            @include supplyInvoiceStatus($bgColorProfileStatusWaitingPayment);
-        }
-
-        .status_Ready {
-            @include supplyInvoiceStatus($bgColorProfileStatusReady);
-        }
-
-        .status_Canceled {
-            @include supplyInvoiceStatus($bgColorProfileStatusCanceled);
-        }
-
-        .item_content {
-            width: 90%;
-
-            .item_contentTop {
-                @include flexBetween;
-                font-weight: bold;
-                font-size: 20px;
-                margin-bottom: $defaultSmallMargin;
-
-                > div:not(:last-child) {
-                    border-right: 2px solid $themeColorMilk;
-                    padding-right: 10px;
-                }
-
-                .item_contentTop_number {
-
-                }
-
-                .item_contentTop_qty {
-
-                }
-
-                .item_contentTop_totalNum {
-
-                }
-
-                .item_contentTop_sum {
-
-                }
-            }
-
-            .item_contentBottom {
-                @include flexBetween;
-
-                .item_contentBottom_info {
-                    line-height: $minLineHeight;
-                }
-
-                .item_contentBottom_date {
-                    @include divSmallMarginBottom;
-                    line-height: $minLineHeight;
-                    border-left: 2px solid $themeColorMilk;
-                    padding-left: 10px;
-                }
-            }
-        }
+    .status_WaitingPayment {
+      @include supplyInvoiceStatus($bgColorProfileStatusWaitingPayment);
     }
+
+    .status_Ready {
+      @include supplyInvoiceStatus($bgColorProfileStatusReady);
+    }
+
+    .status_Canceled {
+      @include supplyInvoiceStatus($bgColorProfileStatusCanceled);
+    }
+
+    .item_content {
+      width: 90%;
+
+      .item_contentTop {
+        @include flexBetween;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: $defaultSmallMargin;
+
+        > div:not(:last-child) {
+          border-right: 2px solid $themeColorMilk;
+          padding-right: 10px;
+        }
+
+        .item_contentTop_number {
+
+        }
+
+        .item_contentTop_qty {
+
+        }
+
+        .item_contentTop_totalNum {
+
+        }
+
+        .item_contentTop_sum {
+
+        }
+      }
+
+      .item_contentBottom {
+        @include flexBetween;
+
+        .item_contentBottom_info {
+          line-height: $minLineHeight;
+        }
+
+        .item_contentBottom_date {
+          @include divSmallMarginBottom;
+          line-height: $minLineHeight;
+          border-left: 2px solid $themeColorMilk;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // Workspace ProfileAdmin Styles
 @mixin profileAdminMenuStyles() {
-    @include wrapperMainBlock;
-    display: flex;
-    gap: $defaultLargeMargin;
+  @include wrapperMainBlock;
+  display: flex;
+  gap: $defaultLargeMargin;
 
-    .profile_navMenu {
-        border-radius: $largeBorderRadius;
-        background-color: $themeColorDark;
-        padding: $defaultExtraLargeMargin;
-        width: 25%;
-        font-size: 20px;
-        text-align: center;
-        @include divExtraLargeMarginBottom;
+  .profile_navMenu {
+    border-radius: $largeBorderRadius;
+    background-color: $themeColorDark;
+    padding: $defaultExtraLargeMargin;
+    width: 25%;
+    font-size: 20px;
+    text-align: center;
+    @include divExtraLargeMarginBottom;
 
-        > div {
-            &:hover {
-                cursor: pointer;
-                color: gold;
-                //background-color: $themeColorGray;
-            }
-        }
-
-        .activeMenu {
-            color: gold;
-        }
+    > div {
+      &:hover {
+        cursor: pointer;
+        color: gold;
+        //background-color: $themeColorGray;
+      }
     }
+
+    .activeMenu {
+      color: gold;
+    }
+  }
 }
 
 @mixin profileAdminSalaryFormStyles($resultMarginBottom) {
-    width: 50%;
+  width: 50%;
 
-    fieldset {
-        border-radius: $smallBorderRadius;
+  fieldset {
+    border-radius: $smallBorderRadius;
 
-        .salary_info {
-            margin-top: 10px;
-            @include divExtraLargeMarginBottom;
+    .salary_info {
+      margin-top: 10px;
+      @include divExtraLargeMarginBottom;
 
-            .salary_info1 {
-                @include divSmallMarginBottom;
-            }
-            .salary_info2 {
-                @include divSmallMarginBottom;
-            }
-            .salary_result {
-                margin-bottom: $resultMarginBottom;
-            }
-        }
-        .calcButton {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+      .salary_info1 {
+        @include divSmallMarginBottom;
+      }
 
-            button {
-                height: 50px;
-            }
-        }
+      .salary_info2 {
+        @include divSmallMarginBottom;
+      }
+
+      .salary_result {
+        margin-bottom: $resultMarginBottom;
+      }
     }
+
+    .calcButton {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      button {
+        height: 50px;
+      }
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
 // ShopProfile Order
 
 @mixin orderStatus($bgColor) {
-    @include flexCenter;
-    background-color: $bgColor;
-    border-radius: $extraSmallBorderRadius;
-    margin-right: $defaultSmallMargin;
-    width: 20px;
-    height: 50px;
+  @include flexCenter;
+  background-color: $bgColor;
+  border-radius: $extraSmallBorderRadius;
+  margin-right: $defaultSmallMargin;
+  width: 20px;
+  height: 50px;
 }
