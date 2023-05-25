@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//export const API_URL = "https://bikeshop.1gb.ua/api";
-export const API_URL = "https://api.bikelove.com.ua/api";
+export const API_URL = "https://bikeshop.1gb.ua/api";
+//export const API_URL = "https://api.bikelove.com.ua/api";
 
 const $api = axios.create({
 
