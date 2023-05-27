@@ -172,7 +172,7 @@ namespace BikeShop.Products.Application.Services
             ids = ids.Remove(ids.Length - 4);
 
 
-            MySqlCommand command1 = new MySqlCommand($"SELECT catalog_key, name, price_in, price_out, bar_code, id FROM tovars WHERE {ids}", dbConnection);
+            MySqlCommand command1 = new MySqlCommand($"SELECT catalog_key, name, price_in, price_out, bar_code, id, category FROM tovars WHERE {ids}", dbConnection);
             MySqlDataAdapter adapter1 = new MySqlDataAdapter(command1);
             DataTable dt1 = new DataTable();
             adapter1.Fill(dt1);
@@ -186,7 +186,7 @@ namespace BikeShop.Products.Application.Services
             var buf = new Dictionary<Product, decimal>();
             foreach (DataRow row in dt1.Rows)
             {
-                var net = new Product { Barcode = row[4].ToString(), CatalogKey = row[0].ToString(), CheckStatus = "JustCreatedByScript", DealerPrice = 0, IncomePrice = decimal.Parse(row[2].ToString()) / ((decimal)37.5), RetailPrice = decimal.Parse(row[3].ToString())/((decimal)37.5), Name = row[1].ToString(), QuantityUnitId = 1, BrandId = 1, QuantityUnitName = prodQuantUnits[1] };
+                var net = new Product { Barcode = row[4].ToString(), CatalogKey = row[0].ToString(), CheckStatus = "JustCreatedByScript", DealerPrice = 0, IncomePrice = decimal.Parse(row[2].ToString()) / ((decimal)37.5), RetailPrice = decimal.Parse(row[3].ToString())/((decimal)37.5), Name = row[1].ToString(), QuantityUnitId = 1, BrandId = 1, QuantityUnitName = prodQuantUnits[1], Category = row[6]==null?"": row[6].ToString() };
                 np.Add(net) ;
                 buf.Add(net, prodQuantOldDict[int.Parse(row[5].ToString())]);
             }

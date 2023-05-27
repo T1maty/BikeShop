@@ -8,6 +8,15 @@
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5006"
+    },
+    "Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5006"
     }
   }
 }

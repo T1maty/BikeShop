@@ -25,7 +25,7 @@ namespace BikeShop.Products.WebApi.Controllers {
         {
             return await _storageCRUDService.Read();
         }
-        [Authorize(Roles = "storagecrud_create")]
+        //[Authorize(Roles = "storagecrud_create")]
         [HttpPost("create")]
         public async Task<Storage> Create([FromBody] CreateStorageDTO dto)
         {

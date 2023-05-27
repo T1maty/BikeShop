@@ -9,6 +9,16 @@
       "applicationUrl": "http://localhost:5002",
       "nativeDebugging": true,
       "sqlDebugging": true
+    },
+    "Production": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5002",
+      "nativeDebugging": true,
+      "sqlDebugging": true
     }
   }
 }

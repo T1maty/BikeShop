@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bikeshop.Shop.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230420222244_addCashboxHistory")]
-    partial class addCashboxHistory
+    [Migration("20230526095914_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,12 @@ namespace Bikeshop.Shop.Persistence.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<decimal>("AfterActionCash")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("AfterActionTerminal")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<decimal>("CashAction")
                         .HasColumnType("decimal(65,30)");
@@ -152,6 +158,41 @@ namespace Bikeshop.Shop.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShopScheduleItems");
+                });
+
+            modelBuilder.Entity("BikeShop.Shop.Domain.Entities.UserSalary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("ShopPercent")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<decimal>("WorkPercent")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("WorkshopPercent")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserSalaries");
                 });
 
             modelBuilder.Entity("BikeShop.Shop.Domain.Entities.UserShiftItem", b =>
