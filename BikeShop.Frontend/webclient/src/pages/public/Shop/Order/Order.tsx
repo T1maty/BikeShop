@@ -4,8 +4,15 @@ import {Button, ControlledCustomInput} from '../../../../shared/ui'
 import {Errors} from '../../../../entities/errors/workspaceErrors'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
+import { useNavigate } from 'react-router-dom'
+import { useComponentVisible } from 'shared/hooks/useComponentVisible'
+import ClientSearchModal from 'features/ClientSearchModal/ClientSearchModal'
 
 export const Order = () => {
+
+    const navigate = useNavigate()
+    const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
+
 
     const cartProducts = useShoppingCart(s => s.cartProducts)
     const shoppingCartSum = useShoppingCart(s => s.shoppingCartSum)
@@ -131,12 +138,16 @@ export const Order = () => {
                                     <div className={s.price_item_total}>{shoppingCartSum + 0}</div>
                                 </div>
                                 <hr/>
-                                <div className={s.price_confirmButton}>
-                                    <Button onClick={() => {
-                                    }}>
-                                        Подтвердить заказ
-                                    </Button>
-                                </div>
+                                {isComponentVisible ?
+                                    <ClientSearchModal setIsComponentVisible={setIsComponentVisible}/> : 
+                                    <div className={s.price_confirmButton}>
+                                        <Button onClick={() => {
+                                            setIsComponentVisible(true)
+                                        }}>
+                                            Подтвердить заказ
+                                        </Button>
+                                    </div>    
+                                }
                             </div>
                         </div>
                     </div>
