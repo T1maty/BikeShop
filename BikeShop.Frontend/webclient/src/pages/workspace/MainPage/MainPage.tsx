@@ -5,7 +5,6 @@ import {BillWithProducts, LocalStorage, PaymentData, ShiftAPI, useAuth, useCurre
 import {useNavigate} from "react-router-dom"
 import {AsyncSelectSearchProduct, Button, DeleteButton, LoaderScreen} from '../../../shared/ui'
 import {
-    ChooseClientModal,
     CreateProductModal,
     EditProductCardModal,
     EmployeeSalaryModal,
@@ -65,6 +64,7 @@ export const MainPage = () => {
     const [openPay, setOpenPay] = useState(false)
     const [res, setRes] = useState<BillWithProducts>()
     const [openPrint, setOpenPrint] = useState(false)
+    const [openClientSearch, setOpenClientSearch] = useState(false)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -252,9 +252,11 @@ export const MainPage = () => {
                                 <AsyncSelectSearchProduct onSelect={addProduct}/>
                             </div>
                             <div className={s.rightSide_top_search}>
-                                <ChooseClientModal extraCallback={(user: User) => {
-                                    chooseClientHandler(user)
-                                }}/>
+
+                                {
+                                    //<ClientSearchModal setIsComponentVisible={setOpenClientSearch} isVisible={openClientSearch} onSuccess={handler}/>
+                                    //<ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                                }
                                 <Button buttonDivWrapper={s.search_chooseClientButton}
                                         onClick={() => {
                                             setOpenClientModal(true)

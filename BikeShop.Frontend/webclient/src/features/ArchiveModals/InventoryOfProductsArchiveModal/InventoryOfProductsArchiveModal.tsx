@@ -38,10 +38,10 @@ export const InventoryOfProductsArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getArchive()
-        open && getLackArchive()
+        open ? getArchive() : false
+        open ? getLackArchive() : false
         // console.log(archive)
-    }, [])
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -50,10 +50,14 @@ export const InventoryOfProductsArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <InventoryArchiveContext open={context} setOpen={setContext}/>
-                <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => {e.preventDefault()}}>
+                <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => {
+                    e.preventDefault()
+                }}>
                     <Button buttonDivWrapper={s.newInventory_btn}
                             onClick={() => {
                                 InventarizationAPI.create(LocalStorage.shopId()!, LocalStorage.userId()!).then(n => {
@@ -89,7 +93,9 @@ export const InventoryOfProductsArchiveModal = () => {
                                             <>
                                                 <div className={s.supplyInvoiceArchiveModal_item}
                                                      key={el.inventarization.id}
-                                                     onClick={() => {setSelected(el)}}
+                                                     onClick={() => {
+                                                         setSelected(el)
+                                                     }}
                                                      onDoubleClick={() => {
                                                          console.log(el)
                                                          setInventariazation(el);
@@ -165,7 +171,7 @@ export const InventoryOfProductsArchiveModal = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    : <div className={s.no_shortFall}>{''}</div>
+                                                        : <div className={s.no_shortFall}>{''}</div>
                                                 }
                                             </>
                                         )

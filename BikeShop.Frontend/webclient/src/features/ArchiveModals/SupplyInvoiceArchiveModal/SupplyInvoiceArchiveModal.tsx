@@ -10,6 +10,7 @@ import useSupplyInvoice from "../../../pages/workspace/ProductsCount/SupplyInvoi
 import {BikeShopPaths} from "../../../app/routes/paths"
 import {formatDate} from "../../../shared/utils/formatDate"
 import {SupplyInvoiceArchiveModalContext} from "./SupplyInvoiceArchiveModalContext";
+import {useCurrency} from "../../../entities";
 
 export const SupplyInvoiceArchiveModal = () => {
 
@@ -29,6 +30,9 @@ export const SupplyInvoiceArchiveModal = () => {
     const setSelectedSupplyInvoice = useSupplyInvoiceArchiveModal(s => s.setSelectedSupplyInvoice)
     const selectedSupplyInvoice = useSupplyInvoiceArchiveModal(s => s.selectedSupplyInvoice)
 
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
+
     const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
     useEffect(() => {
@@ -38,8 +42,8 @@ export const SupplyInvoiceArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getArchive()
-    }, [])
+        open ? getArchive() : false
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -98,7 +102,7 @@ export const SupplyInvoiceArchiveModal = () => {
                                                     {Enumerable.from(el.supplyInvoiceProducts).select(n => n.quantity).sum()} ед.
                                                 </div>
                                                 <div className={s.item_contentTop_sum}>
-                                                    {el.supplyInvoice.total} ГРН.
+                                                    {r(el.supplyInvoice.total * fbts.c) + fbts.s}
                                                 </div>
                                             </div>
                                             <div className={s.item_contentBottom}>

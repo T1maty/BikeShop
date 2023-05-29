@@ -67,8 +67,8 @@ export const EmployeeSalaryModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getEmployersList()
-    }, [])
+        open ? getEmployersList() : false
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -77,7 +77,9 @@ export const EmployeeSalaryModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.employeeSalaryModal_mainBlock}>
                     <div className={s.employeeSalaryModal_title}>
@@ -89,17 +91,19 @@ export const EmployeeSalaryModal = () => {
                                 {
                                     employers.length === 0 ? <div style={{textAlign: 'center'}}>Список пуст</div> :
 
-                                    employers.map(em => {
-                                        return (
-                                            <div key={em.user.id}
-                                                 className={em.user.id === currentEmployee?.user.id ?
-                                                     s.employeeList_item_active : s.employeeList_item}
-                                                 onClick={() => {selectCurrentEmployeeHandler(em)}}
-                                            >
-                                                {em.user.lastName} {em.user.firstName} {em.user.patronymic}
-                                            </div>
-                                        )
-                                    })
+                                        employers.map(em => {
+                                            return (
+                                                <div key={em.user.id}
+                                                     className={em.user.id === currentEmployee?.user.id ?
+                                                         s.employeeList_item_active : s.employeeList_item}
+                                                     onClick={() => {
+                                                         selectCurrentEmployeeHandler(em)
+                                                     }}
+                                                >
+                                                    {em.user.lastName} {em.user.firstName} {em.user.patronymic}
+                                                </div>
+                                            )
+                                        })
                                 }
                             </div>
                         </div>
@@ -138,7 +142,10 @@ export const EmployeeSalaryModal = () => {
 
                                     <Button buttonDivWrapper={s.inputs_cancelBtn}
                                             disabled={currentEmployee === null}
-                                            onClick={() => {setCurrentEmployee(null); formControl.reset()}}
+                                            onClick={() => {
+                                                setCurrentEmployee(null);
+                                                formControl.reset()
+                                            }}
                                     >
                                         Отмена
                                     </Button>

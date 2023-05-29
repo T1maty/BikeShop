@@ -65,10 +65,12 @@ export const ShopCatalogTreeView = () => {
                      className={cls.parent}
                 >
                     <div
-                        className={(selected[0] === item?.id ? `${cls.selected} ${cls.innerWrap}` :
+                        className={((selected != undefined && selected.length > 0 && selected[0] === item?.id) ? `${cls.selected} ${cls.innerWrap}` :
                             `${cls.innerWrap}`) + (Enumerable.from(userCurrentTags)
                             .select(n => n.id).contains(item?.id) ? ` ${cls.inCloud}` : '')}
-                        onClick={() => {setSelected(item.id)}}
+                        onClick={() => {
+                            setSelected(item.id)
+                        }}
                     >
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}
@@ -88,8 +90,11 @@ export const ShopCatalogTreeView = () => {
                         </div>
 
                         <div className={cls.content}
-                             onClick={() => {addUserCurrentTagHandler(item)}}
-                             onDoubleClick={() => {}}
+                             onClick={() => {
+                                 addUserCurrentTagHandler(item)
+                             }}
+                             onDoubleClick={() => {
+                             }}
                         >
                             {item.name}
                         </div>

@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from './CreateCurrencyModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput,
-    LoaderScreen, CustomModal} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateCurrencyModal from "./CreateCurrencyModalStore"
 import {Currency} from "../../../entities"
@@ -66,8 +65,8 @@ export const CreateCurrencyModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getCurrencies()
-    }, [])
+        open ? getCurrencies() : false
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -76,7 +75,9 @@ export const CreateCurrencyModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.shopStorageModal_mainBlock}>
                     <div className={s.shopStorageModal_shops}>
@@ -85,7 +86,9 @@ export const CreateCurrencyModal = () => {
                                 currencies.map(cur => (
                                     <div key={cur.id}
                                          className={cur.id === currentCurrency?.id ? s.shop_item_active : s.shop_item}
-                                         onClick={() => {setCurrentCurrency(cur)}}
+                                         onClick={() => {
+                                             setCurrentCurrency(cur)
+                                         }}
                                     >
                                         <div><span>ID:</span> {cur.id}</div>
                                         <div><span>Название:</span> {cur.name}</div>
@@ -129,7 +132,9 @@ export const CreateCurrencyModal = () => {
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentCurrency === null}
-                                        onClick={() => {setCurrentCurrency(null)}}
+                                        onClick={() => {
+                                            setCurrentCurrency(null)
+                                        }}
                                 >
                                     Отмена
                                 </Button>

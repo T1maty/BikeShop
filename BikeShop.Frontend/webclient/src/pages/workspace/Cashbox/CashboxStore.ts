@@ -1,8 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {BillWithProducts, FinancialInteractionAPI,
-    LocalStorage, PaymentData, Product, User} from '../../../entities'
+import {BillWithProducts, FinancialInteractionAPI, LocalStorage, PaymentData, Product, User} from '../../../entities'
 import {NewBillDTO} from "./models/NewBillDTO"
 import {BillProductDTO} from "./models/BillProductDTO"
 import Enumerable from "linq"
@@ -12,7 +11,7 @@ interface CashboxStore {
     setIsLoading: (value: boolean) => void
 
     bill: NewBillDTO
-    user: User
+    user: User | null
     setUser: (user: User) => void
 
     setProducts: (value: BillProductDTO[]) => void
@@ -30,14 +29,16 @@ const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get)
     }),
 
     bill: {} as NewBillDTO,
-    user: {} as User,
+    user: null,
     setUser: (user) => set({
         user: user
     }),
 
     setProducts: (value) => {
         set(state => {
-            state.bill.products = value
+            let data = value.filter(n => n.quantity != 0)
+            data.forEach(n => n.total = n.price * n.quantity - n.discount)
+            state.bill.products = data
         })
     },
     addProduct: (n) => {

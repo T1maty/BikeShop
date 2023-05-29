@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from './CreateShopModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateShopModal from './CreateShopModalStore'
 import {UpdateShop} from '../../../entities'
@@ -67,8 +66,8 @@ export const CreateShopModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getShops()
-    }, [])
+        open ? getShops() : false;
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -77,7 +76,9 @@ export const CreateShopModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.shopStorageModal_mainBlock}>
                     <div className={s.shopStorageModal_shops}>
@@ -85,7 +86,9 @@ export const CreateShopModal = () => {
                             {shops.map(shop => (
                                 <div key={shop.id}
                                      className={shop.id === currentShop?.id ? s.shop_item_active : s.shop_item}
-                                     onClick={() => {setCurrentShop(shop)}}
+                                     onClick={() => {
+                                         setCurrentShop(shop)
+                                     }}
                                 >
                                     <div><span>ID:</span> {shop.id}</div>
                                     <div><span>Название:</span> {shop.name}</div>
@@ -133,7 +136,9 @@ export const CreateShopModal = () => {
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentShop === null}
-                                        onClick={() => {setCurrentShop(null)}}
+                                        onClick={() => {
+                                            setCurrentShop(null)
+                                        }}
                                 >
                                     Отмена
                                 </Button>

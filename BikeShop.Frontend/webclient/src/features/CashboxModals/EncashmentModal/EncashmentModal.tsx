@@ -3,9 +3,11 @@ import s from './EncashmentModal.module.scss'
 import {Button, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import useEncashmentModal from "./EncashmentModalStore"
 import {Controller, SubmitHandler, useForm} from 'react-hook-form'
-import {EncashmentAPI, LocalStorage, useAuth, useCurrency} from "../../../entities";
+import {Encashment, EncashmentAPI, LocalStorage, useAuth, useCurrency} from "../../../entities";
 import {CreateEncashment} from "../../../entities/requests/CreateEncashment";
 import {useSnackbar} from "notistack";
+import {PrintModal} from "../../PrintModal/PrintModal";
+import {EncashmentPaper} from "../../../widgets/workspace/Invoices/Encashment/EncashmentPaper";
 
 export const EncashmentModal = () => {
 
@@ -19,6 +21,8 @@ export const EncashmentModal = () => {
     const {enqueueSnackbar} = useSnackbar()
 
     const [rest, setRest] = useState('0')
+    const [print, setPrint] = useState(false)
+    const [result, setResult] = useState<Encashment | null>(null)
 
     const formControl = useForm<CreateEncashment>({
         defaultValues: {
@@ -42,11 +46,12 @@ export const EncashmentModal = () => {
     const onSubmit: SubmitHandler<CreateEncashment> = (data: CreateEncashment) => {
         console.log(data)
         let nd = {...data, cash: (data.cash * fstb.c)}
-        EncashmentAPI.create(nd).then(() => {
+        EncashmentAPI.create(nd).then((r) => {
             enqueueSnackbar('Инкассация создана', {variant: 'success', autoHideDuration: 10000})
             loginToShop(shop?.id!)
             formControl.reset()
-            setOpen(false)
+            setResult(r.data)
+            setPrint(true)
         }).catch(() => {
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 10000})
         })
@@ -59,6 +64,11 @@ export const EncashmentModal = () => {
                 setOpen(false)
             }}
         >
+            <PrintModal open={print} setOpen={setPrint} children={<EncashmentPaper encashmant={result!}/>}
+                        finaly={() => {
+                            setOpen(false);
+                            setPrint(false)
+                        }}/>
             <form onSubmit={formControl.handleSubmit(onSubmit)}>
                 <div className={s.encashmentModal_mainBox}>
                     <div className={s.encashment_header}>

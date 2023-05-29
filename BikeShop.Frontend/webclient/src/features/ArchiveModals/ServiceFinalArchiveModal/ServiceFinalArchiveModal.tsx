@@ -31,8 +31,8 @@ export const ServiceFinalArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getEndedServices()
-    }, [])
+        open ? getEndedServices() : false
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>

@@ -52,5 +52,6 @@ export const columns: UniTableColumn[] = [
         width: 10,
         minWidth: 70,
         align: 'left',
+        isCurrency: true
     },
 ]

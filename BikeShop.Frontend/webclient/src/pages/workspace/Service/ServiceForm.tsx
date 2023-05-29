@@ -46,6 +46,14 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
 
+    const checkForZero = (onChange: (d: any[]) => void) => {
+        const func = (data: any[]) => {
+            let newData = data.filter(n => n.quantity != 0)
+            onChange(newData)
+        }
+        return func
+    }
+
     useEffect(() => {
         setSelectedUserId(formControl.getValues('userMasterId'))
     }, [formControl.watch('userMasterId')])
@@ -79,7 +87,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     useEffect(() => {
         let summ = 0
         formControl.getValues('serviceWorks')?.forEach(n => {
-            summ += (n.price * n.quantity)
+            summ += (n.price * n.quantity + n.complicationPrice - n.discount)
         })
         setSummWorks(summ)
     }, [formControl.watch('serviceWorks')])
@@ -87,7 +95,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     useEffect(() => {
         let summ = 0
         formControl.getValues('serviceProducts')?.forEach(n => {
-            summ += (n.price * n.quantity)
+            summ += (n.price * n.quantity - n.discount)
         })
         setSummProducts(summ)
     }, [formControl.watch('serviceProducts')])
@@ -232,10 +240,10 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                                      }}
                                                      disabledButton={(currentService === null && !isCreating)}
                                                      summ={summProducts}
-                                                     setData={field.onChange}
+                                                     setData={checkForZero(field.onChange)}
                                 />
                                 <SelectProductModal products={field.value}
-                                                    setProducts={field.onChange}
+                                                    setProducts={checkForZero(field.onChange)}
                                                     defaultMasterId={selectedUserId}
                                 />
                             </>
@@ -247,14 +255,14 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                         render={({field}: any) =>
                             <>
                                 <ServiceTableWork data={field.value}
-                                                  setData={field.onChange}
+                                                  setData={checkForZero(field.onChange)}
                                                   serviceTableCallback={() => {
                                                       setOpenSelectWorkModal(true)
                                                   }}
                                                   disabledButton={(currentService === null && !isCreating)}
                                                   summ={summWorks}
                                 />
-                                <SelectWorkModal works={field.value} setWorks={field.onChange}
+                                <SelectWorkModal works={field.value} setWorks={checkForZero(field.onChange)}
                                                  defaultMasterId={selectedUserId}
                                                  serviceId={formControl.getValues('id')}
                                 />

@@ -255,5 +255,13 @@ namespace BikeShop.Products.Application.Services
             await _context.ProductReservations.AddRangeAsync(reservationToAdd);
             await _context.SaveChangesAsync(new CancellationToken());
         }
+
+        public async Task<string> AITemplate()
+        {
+            var res = "";
+            var prods = await _context.Products.Take(100).ToListAsync();
+            prods.ForEach(n => res += $"Id:{n.Id} Name:{n.Name};");
+            return res;
+        }
     }
 }

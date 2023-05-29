@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {devtools} from "zustand/middleware";
+import {devtools, persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {SupplyInvoiceDTO} from "../../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO";
 import {SupplyInvoiceProduct} from "../../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct";
@@ -19,7 +19,7 @@ interface SupplyInvoiceStore {
     setVisible: (value: boolean) => void
 }
 
-const useSupplyInvoice = create<SupplyInvoiceStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useSupplyInvoice = create<SupplyInvoiceStore>()(persist(devtools(immer((set, get) => ({
     currentSupplyInvoice: {
         supplyInvoiceProducts: [], supplyInvoice: {
             shopId: 1,
@@ -53,9 +53,9 @@ const useSupplyInvoice = create<SupplyInvoiceStore>()(/*persist(*/devtools(immer
             state.visible = value
         })
     }
-})))/*, {
-    name: "cashboxStore",
+}))), {
+    name: "supplyInvoiceStore",
     version: 1
-})*/);
+}));
 
 export default useSupplyInvoice;

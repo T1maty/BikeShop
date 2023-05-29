@@ -1,12 +1,12 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import s from '../ProductsCountStyles.module.scss'
-import {Button, CustomInput, EditableSpan, UniTable} from '../../../../shared/ui'
+import {AsyncSelectSearchProduct, Button, CustomInput, EditableSpan, UniTable} from '../../../../shared/ui'
 import {columns} from './SupplyInvoiceTableConfig'
 import {ChooseProductModal} from '../../../../features'
 import useSupplyInvoice from './models/SupplyInvoiceStore'
 import Enumerable from 'linq'
 import {SupplyInvoiceDTO} from '../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
-import {ProductQuantity, SupplyInvoiceAPI, useCurrency} from '../../../../entities'
+import {Product, SupplyInvoiceAPI, useCurrency} from '../../../../entities'
 import {SupplyInvoiceProduct} from '../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
 import {useSnackbar} from "notistack"
 
@@ -25,6 +25,9 @@ export const SupplyInvoice = () => {
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
+
+    const [sum, setSum] = useState(0)
+    const [add, setAdd] = useState(0)
 
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
@@ -71,8 +74,7 @@ export const SupplyInvoice = () => {
         }
     }
 
-    const addDataToChooseProductModalHandler = (value: any) => {
-        let n = value as ProductQuantity
+    const addDataToChooseProductModalHandler = (n: Product) => {
         let finded = false
         let newData = currentSupplyInvoice.supplyInvoiceProducts.map((np: SupplyInvoiceProduct) => {
             if (n.id === np.productId) {
@@ -92,7 +94,7 @@ export const SupplyInvoice = () => {
             incomePrice: n.incomePrice,
             brandName: 'No',
             quantity: 1,
-            total: n.incomePrice * n.quantity,
+            total: n.incomePrice,
             id: 0,
             createdAt: Date.now().toString(),
             updatedAt: Date.now().toString(),
@@ -101,6 +103,17 @@ export const SupplyInvoice = () => {
         setProducts(newData)
     }
 
+    useEffect(() => {
+        setSum(Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.total).sum())
+        setAdd(currentSupplyInvoice.supplyInvoice.deliveryPrice + currentSupplyInvoice.supplyInvoice.additionalPrice)
+        if (sum + add != currentSupplyInvoice.supplyInvoice.total) {
+            setCurrentSupplyInvoice({
+                ...currentSupplyInvoice,
+                supplyInvoice: {...currentSupplyInvoice.supplyInvoice, total: sum + add}
+            })
+        }
+    }, [currentSupplyInvoice])
+
     return (
         <div className={s.arrivalOfProducts_mainBlock}>
             <div className={s.arrivalOfProducts_leftSide}>
@@ -108,7 +121,8 @@ export const SupplyInvoice = () => {
                     {isCreating ? 'Новый приход товара' : "Приход номер " + currentSupplyInvoice.supplyInvoice.id}
                 </div>
                 <div className={s.leftSide_uploadFile}>
-                    <input type="file" id="file" onChange={uploadHandler} className={s.inputFile}/>
+                    {//<input type="file" id="file" onChange={uploadHandler} className={s.inputFile}/>
+                    }
                 </div>
                 <div className={s.leftSide_info}>
                     <CustomInput
@@ -123,11 +137,15 @@ export const SupplyInvoice = () => {
                     />
                 </div>
                 <Button buttonDivWrapper={s.button_chooseItem}
-                        onClick={() => {setVis(true)}}
+                        onClick={() => {
+                            setVis(true)
+                        }}
                 >
                     Выбрать товар
                 </Button>
+                <AsyncSelectSearchProduct onSelect={addDataToChooseProductModalHandler}/>
                 <div className={s.leftSide_delivery}>
+                    Доствка:
                     <EditableSpan title={r(currentSupplyInvoice.supplyInvoice.deliveryPrice * fbts.c)}
                                   onChangeInput={(value) => {
                                       setCurrentSupplyInvoice({
@@ -140,6 +158,7 @@ export const SupplyInvoice = () => {
                                   }}
                     />
                     {fbts.s}
+                    Остальное:
                     <EditableSpan title={r(currentSupplyInvoice.supplyInvoice.additionalPrice * fbts.c)}
                                   onChangeInput={(value) => {
                                       setCurrentSupplyInvoice({
@@ -158,10 +177,10 @@ export const SupplyInvoice = () => {
                     <div>Позиций: {currentSupplyInvoice.supplyInvoiceProducts?.length}</div>
                     <div>Единиц: {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.quantity).sum()}</div>
                     <div>Приходная сумма:
-                        {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.total).sum()}
+                        {r(sum * fbts.c) + fbts.s}
                     </div>
-                    <div>Расходы: 99</div>
-                    <div>Итого: 99999999</div>
+                    <div>Расходы: {r(add * fbts.c) + fbts.s}</div>
+                    <div>Итого: {r(currentSupplyInvoice.supplyInvoice.total * fbts.c) + fbts.s}</div>
                 </div>
                 <div className={s.leftSide_footerButtons}>
                     <Button buttonDivWrapper={s.button_save}
@@ -191,7 +210,9 @@ export const SupplyInvoice = () => {
                                     slaveColumns={columns}
                                     setDataSlaveTable={setProducts}
                                     data={currentSupplyInvoice.supplyInvoiceProducts} open={vis}
-                                    addData={(value: any) => {addDataToChooseProductModalHandler(value)}}
+                                    addData={(value: any) => {
+                                        addDataToChooseProductModalHandler(value)
+                                    }}
                 />
                 <UniTable rows={currentSupplyInvoice.supplyInvoiceProducts}
                           columns={columns}

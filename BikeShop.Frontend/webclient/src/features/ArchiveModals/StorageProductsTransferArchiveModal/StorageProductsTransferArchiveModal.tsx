@@ -23,9 +23,9 @@ export const StorageProductsTransferArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getTransferProducts()
+        open ? getTransferProducts() : false
         // console.log(archive)
-    }, [])
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -34,7 +34,9 @@ export const StorageProductsTransferArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.serviceFinalArchiveModal_mainBlock}>
                     <div className={s.serviceFinalArchiveModal_title}>

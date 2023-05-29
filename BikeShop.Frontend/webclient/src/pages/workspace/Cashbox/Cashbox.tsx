@@ -218,7 +218,7 @@ export const Cashbox = () => {
                                     </div>
                                 </div>
                                 <div className={s.buttonsBlock_two}>
-                                    {sum + bts.s}
+                                    {sum * bts.c + bts.s}
                                 </div>
 
                                 <div className={s.rightSideBottom_payBlock}>

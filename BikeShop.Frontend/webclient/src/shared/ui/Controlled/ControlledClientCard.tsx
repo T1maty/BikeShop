@@ -17,11 +17,12 @@ interface ControlledClientCardProps {
     setState: (state: boolean) => void
 }
 
+
 export const ControlledClientCard = (props: ControlledClientCardProps) => {
 
     const isLoading = useService(s => s.isLoading)
     const setIsLoading = useService(s => s.setIsLoading)
-    const [user, setUser] = useState<User>()
+    const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
         let id = props.control.getValues(props.name)
@@ -56,7 +57,9 @@ export const ControlledClientCard = (props: ControlledClientCardProps) => {
                         }
 
                         <ClientCard user={user}
-                                    onDoubleClick={() => {if (!props.disabled) props.setState(true)}}
+                                    onDoubleClick={() => {
+                                        if (!props.disabled) props.setState(true)
+                                    }}
                         />
                         <ChooseClientModal state={props.state}
                                            setState={props.setState}

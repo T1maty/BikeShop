@@ -56,5 +56,10 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _storageService.GetFromBRUA();
         }
 
+        [HttpGet("AITemplate")]
+        public async Task<string> AITemplate()
+        {
+            return await _storageService.AITemplate();
+        }
     }
 }

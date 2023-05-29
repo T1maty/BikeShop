@@ -63,8 +63,8 @@ export const CreateStorageModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getStorages()
-    }, [])
+        open ? getStorages() : false;
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>

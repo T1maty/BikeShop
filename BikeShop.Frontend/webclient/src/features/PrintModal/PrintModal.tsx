@@ -12,9 +12,10 @@ interface PrintModalProps {
     setOpen: (value: boolean) => void
     children: ReactElement
     id?: number
+    finaly?: () => void
 }
 
-export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, id}) => {
+export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, id, finaly}) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -25,6 +26,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
         pageStyle: "@page { size: 2.5in 4in }",
         onAfterPrint: () => {
             enqueueSnackbar('Печать выполнена', {variant: 'success', autoHideDuration: 3000})
+            finaly ? finaly() : false
         },
     })
 
@@ -35,6 +37,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
                 link.download = 'my-image-name.jpeg';
                 link.href = dataUrl;
                 link.click();
+                finaly ? finaly() : false
             });
     }
 
@@ -45,6 +48,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
                 link.download = 'my-image-name.png';
                 link.href = dataUrl;
                 link.click();
+                finaly ? finaly() : false
             });
     }
 
@@ -57,6 +61,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n);
         }
+        finaly ? finaly() : false
         return new File([u8arr], filename, {type: mime});
     }
 
@@ -75,6 +80,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
                     100,
                     1)
             }).then(n => {
+            finaly ? finaly() : false
             enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
         });
     }

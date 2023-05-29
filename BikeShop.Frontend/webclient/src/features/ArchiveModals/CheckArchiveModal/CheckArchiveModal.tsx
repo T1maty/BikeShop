@@ -32,9 +32,9 @@ export const CheckArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && loadArchive()
+        open ? loadArchive() : false
         // console.log(archive)
-    }, [])
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -43,7 +43,9 @@ export const CheckArchiveModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.checkArchiveModal_mainBox}>
                     <div className={s.checkArchiveModal_title}>

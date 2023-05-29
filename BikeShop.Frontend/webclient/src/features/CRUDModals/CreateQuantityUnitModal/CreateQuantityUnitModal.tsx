@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from './CreateQuantityUnitModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, LoaderScreen} from '../../../shared/ui'
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateQuantityUnitModal from "./CreateQuantityUnitModalStore"
 import {UpdateQuantityUnit} from "../../../entities"
@@ -81,8 +80,8 @@ export const CreateQuantityUnitModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getQuantityUnits()
-    }, [])
+        open ? getQuantityUnits() : false
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -91,7 +90,9 @@ export const CreateQuantityUnitModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.shopStorageModal_mainBlock}>
                     <div className={s.shopStorageModal_tree}>

@@ -7,7 +7,7 @@ import {LocalStorage, PaymentData, User} from "../../entities"
 interface PayModalProps {
     open: boolean
     setOpen: (value: boolean) => void
-    user?: User
+    user: User | null
     summ: number
     result: (value: PaymentData) => void
 }
@@ -42,12 +42,9 @@ export const PayModal = (props: PayModalProps) => {
                 </div>
 
                 <div className={s.payModal_payType}>
+
                     <Button onClick={() => {
-                    }}>
-                        Использовать терминал
-                    </Button>
-                    <Button onClick={() => {
-                    }}>
+                    }} disabled={props.user === null}>
                         Оплата с баланса
                     </Button>
                 </div>
@@ -73,13 +70,19 @@ export const PayModal = (props: PayModalProps) => {
                     <div className={s.cashbackBlock_info}>
                     </div>
                     <div className={s.cashbackBlock_buttons}>
-                        <Button buttonDivWrapper={s.cancelButton}
-                                onClick={() => {
-                                    props.setOpen(false)
-                                }}
-                        >
-                            Отмена
+
+                        <Button onClick={() => {
+                            props.result({
+                                cash: 0,
+                                card: props.summ,
+                                bankCount: 0,
+                                personalBalance: 0
+                            })
+                            props.setOpen(false)
+                        }}>
+                            Использовать терминал
                         </Button>
+                        <br/>
                         <Button onClick={() => {
                             props.result({
                                 cash: props.summ,
@@ -90,7 +93,15 @@ export const PayModal = (props: PayModalProps) => {
                             props.setOpen(false)
                         }}
                         >
-                            Оплатить
+                            Наличка
+                        </Button>
+                        <br/>
+                        <Button buttonDivWrapper={s.cancelButton}
+                                onClick={() => {
+                                    props.setOpen(false)
+                                }}
+                        >
+                            Отмена
                         </Button>
                     </div>
                 </div>

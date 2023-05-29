@@ -2,15 +2,16 @@ import React, {useEffect, useState} from 'react'
 import s from './EncashmentArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
-import {useNavigate} from 'react-router-dom'
 import useEncashmentArchiveModal from './EncashmentArchiveModalStore'
 import CashIcon from '../../../shared/assets/workspace/cash-icon.svg'
 import PayCardIcon from '../../../shared/assets/workspace/paycard-icon.svg'
 import MoneyIcon from '../../../shared/assets/workspace/money-icon.svg'
 import {formatDate} from "../../../shared/utils/formatDate"
-import {useCurrency} from "../../../entities"
+import {Encashment, useCurrency} from "../../../entities"
 import Enumerable from "linq"
 import {EncashmentArchiveContext} from "./EncashmentArchiveContext"
+import {PrintModal} from "../../PrintModal/PrintModal";
+import {EncashmentPaper} from "../../../widgets/workspace/Invoices/Encashment/EncashmentPaper";
 
 export const EncashmentArchiveModal = () => {
 
@@ -29,6 +30,8 @@ export const EncashmentArchiveModal = () => {
     const r = useCurrency(s => s.roundUp)
 
     const [context, setContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
+    const [print, setPrint] = useState(false)
+    const [p, sp] = useState<Encashment | null>(null)
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -37,7 +40,7 @@ export const EncashmentArchiveModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getArchive()
+        open ? getArchive() : false
     }, [open])
 
     if (isLoading) {
@@ -51,6 +54,7 @@ export const EncashmentArchiveModal = () => {
                     setOpen(false)
                 }}
             >
+                <PrintModal open={print} setOpen={setPrint} children={<EncashmentPaper encashmant={p!}/>}/>
                 <EncashmentArchiveContext open={context} setOpen={setContext}/>
                 <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => e.preventDefault()}>
                     <div className={s.encashmentArchiveModal_title}>
@@ -62,9 +66,8 @@ export const EncashmentArchiveModal = () => {
                                 return (
                                     <div className={s.supplyInvoiceArchiveModal_item} key={el.id}
                                          onDoubleClick={() => {
-                                             // setIsCreating(false)
-                                             // setCurrentSupplyInvoice(el);
-                                             // navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                             sp(el)
+                                             setPrint(true)
                                          }}
                                          onContextMenu={e => {
                                              setSelected(el)

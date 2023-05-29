@@ -5,6 +5,7 @@ import {useCurrency} from "../../../entities"
 interface TableItemProps {
     name: string
     price: number
+    cPrice?: number
     count: number
     onPriceClick?: () => void,
     onDoubleClick?: () => void
@@ -19,7 +20,7 @@ export const TableProductItem: React.FC<TableItemProps> = ({
                                                                onPriceClick,
                                                                discount,
                                                                unitName,
-                                                               onDoubleClick
+                                                               onDoubleClick, cPrice
                                                            }) => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
@@ -46,7 +47,7 @@ export const TableProductItem: React.FC<TableItemProps> = ({
                     {
                         discount ? discount > 0 ? <div>$ -0</div> : '' : ''
                     }
-                    <div>{r(count * price * fbts.c) + fbts.s}</div>
+                    <div>{r((count * price + ((cPrice != undefined) ? cPrice : 0)) * fbts.c) + fbts.s}</div>
                 </div>
             </div>
         </div>

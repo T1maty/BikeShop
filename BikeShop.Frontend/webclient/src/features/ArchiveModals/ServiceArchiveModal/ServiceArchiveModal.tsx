@@ -48,9 +48,9 @@ export const ServiceArchiveModal = () => {
     }
 
     useEffect(() => {
-        open && getAllServicesInfo()
+        open ? getAllServicesInfo() : false
         setIsActiveEnded(true)
-    }, [])
+    }, [open])
 
     return (
         <CustomModal
