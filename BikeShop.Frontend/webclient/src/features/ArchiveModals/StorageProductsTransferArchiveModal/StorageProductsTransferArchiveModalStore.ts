@@ -2,7 +2,9 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {ServiceAPI} from "../../../entities"
+import {ProductStorageMoveFullData} from "../../../entities/models/Acts/ProductStorageMove/ProductStorageMoveFullData";
+import {ProductStorageMoveAPI} from "../../../entities/api/Acts/ProductStorageMoveAPI";
+import {LocalStorage} from "../../../entities";
 
 interface StorageProductsTransferArchiveModalStore {
     openStorageProductsTransferArchiveModal: boolean
@@ -10,8 +12,8 @@ interface StorageProductsTransferArchiveModalStore {
     isLoading: boolean
     errorStatus: ErrorStatusTypes
 
-    archive: any[]
-    getTransferProducts: () => any // надо исправить тип
+    archive: ProductStorageMoveFullData[]
+    getTransferProducts: () => void
 }
 
 const useStorageProductsTransferArchiveModalStore = create<StorageProductsTransferArchiveModalStore>()(persist(devtools(immer((set) => ({
@@ -22,13 +24,11 @@ const useStorageProductsTransferArchiveModalStore = create<StorageProductsTransf
     errorStatus: 'default',
 
     archive: [],
-    // заглушка
     getTransferProducts: () => {
         set({isLoading: true});
-        return ServiceAPI.getAllServicesInfo().then(res => {
+        ProductStorageMoveAPI.getByShop(LocalStorage.shopId()!, 100).then(res => {
             set(state => {
                 state.archive = res.data
-                    .filter((item) => item.service.status === 'Ended')
             })
             set({isLoading: false})
         }).catch((error: any) => {

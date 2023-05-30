@@ -46,21 +46,16 @@ export const StorageProductsTransfer = () => {
                 <div className={s.leftSide_title}>
                     {isCreating ? 'Новый акт перемещения' : currentSupplyInvoice.supplyInvoice.id}
                 </div>
-                {
-                    false ?
-                        <div className={s.leftSide_uploadFile}>
-                            <input type="file" id="file" onChange={uploadHandler} className={s.inputFile}/>
-                        </div>
-                        : ''
-                }
                 <div style={{color: 'black'}}>
                     <Select
                         className={s.options_search}
                         placeholder={'Со склада'}
                         isSearchable={false}
-                        options={storages}
+                        options={storages.filter(n => n.id != selectedStorageForTransferTo?.id)}
                         value={selectedStorageForTransferFrom}
-                        onChange={(v) => {setSelectedStorageForTransferFrom(v!.id)}}
+                        onChange={(v) => {
+                            setSelectedStorageForTransferFrom(v!.id)
+                        }}
                         getOptionLabel={label => label.name}
                         getOptionValue={value => value.name}
                         styles={selectColorStyles}
@@ -71,9 +66,11 @@ export const StorageProductsTransfer = () => {
                         className={s.options_search}
                         placeholder={'На склад'}
                         isSearchable={false}
-                        options={storages}
+                        options={storages.filter(n => n.id != selectedStorageForTransferFrom?.id)}
                         value={selectedStorageForTransferTo}
-                        onChange={(v) => {setSelectedStorageForTransferTo(v!.id)}}
+                        onChange={(v) => {
+                            setSelectedStorageForTransferTo(v!.id)
+                        }}
                         getOptionLabel={label => label.name}
                         getOptionValue={value => value.name}
                         styles={selectColorStyles}
@@ -83,12 +80,15 @@ export const StorageProductsTransfer = () => {
                     Дополнительная информация
                 </div>
                 <Button buttonDivWrapper={s.button_chooseItem}
-                        onClick={() => {setVis(true)}}
+                        onClick={() => {
+                            setVis(true)
+                        }}
                 >
                     Выбрать товар
                 </Button>
                 <div className={s.leftSide_search}>
-                    <AsyncSelectSearchProduct onSelect={() => {}}/>
+                    <AsyncSelectSearchProduct onSelect={() => {
+                    }}/>
                 </div>
                 <div className={s.leftSide_metrika}>
                     <div className={s.metrika_title}>Метрика:</div>

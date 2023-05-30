@@ -24,7 +24,7 @@ export const StorageProductsTransferArchiveModal = () => {
 
     useEffect(() => {
         open ? getTransferProducts() : false
-        // console.log(archive)
+        console.log(archive)
     }, [open])
 
     if (isLoading) {
