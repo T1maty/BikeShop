@@ -8,14 +8,14 @@ export const ProductStorageMoveAPI = {
             $api.get<ProductStorageMoveFullData[]>(`/productmove/getbyshop?ShopId=${shopId}&Take=${take}`)
         )
     },
-    create(): Promise<AxiosResponse<ProductStorageMoveFullData>> {
+    create(data: ProductStorageMoveFullData): Promise<AxiosResponse<ProductStorageMoveFullData>> {
         return (
-            $api.post<ProductStorageMoveFullData>(``)
+            $api.post<ProductStorageMoveFullData>(`/productmove/create`, data)
         )
     },
-    update(): Promise<AxiosResponse<ProductStorageMoveFullData>> {
+    update(data: ProductStorageMoveFullData): Promise<AxiosResponse<ProductStorageMoveFullData>> {
         return (
-            $api.put<ProductStorageMoveFullData>(``)
+            $api.put<ProductStorageMoveFullData>(`/productmove/update`, data)
         )
     },
     transfer(): Promise<AxiosResponse<ProductStorageMoveFullData>> {

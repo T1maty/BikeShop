@@ -50,6 +50,7 @@ namespace BikeShop.Acts.Application.Services
             }
 
             await _context.ProductMoveProducts.AddRangeAsync(np);
+            await _context.SaveChangesAsync(new CancellationToken());
 
             return new ProductMoveWithProducts { ProductMove = ent, Products = np };
         }
@@ -131,6 +132,7 @@ namespace BikeShop.Acts.Application.Services
                     p.Name = prod.Name;
                     p.QuantityUnitName = prod.QuantityUnitName;
                     p.UpdatedAt = DateTime.Now;
+                  
 
                     actualProds.Add(p);
                     existProds.Remove(prod.Id);
@@ -147,6 +149,7 @@ namespace BikeShop.Acts.Application.Services
                     p.Description = prod.Description;
                     p.Name = prod.Name;
                     p.QuantityUnitName = prod.QuantityUnitName;
+                    p.ProductMoveId = ent.Id;
 
                     actualProds.Add(p);
                     newProds.Add(p);

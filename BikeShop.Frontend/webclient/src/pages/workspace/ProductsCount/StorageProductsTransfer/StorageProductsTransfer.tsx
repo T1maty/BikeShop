@@ -1,40 +1,36 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from '../ProductsCountStyles.module.scss'
-import {AsyncSelectSearchProduct, Button, UniTable} from '../../../../shared/ui'
+import {AsyncSelectSearchProduct, Button, CustomInput, UniTable} from '../../../../shared/ui'
 import {ChooseProductModal} from '../../../../features'
 import Select from 'react-select'
 import Enumerable from 'linq'
-import {SupplyInvoiceDTO} from '../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
-import {ProductQuantity, SupplyInvoiceAPI} from '../../../../entities'
-import {SupplyInvoiceProduct} from '../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
-import useSupplyInvoice from "../SupplyInvoice/models/SupplyInvoiceStore"
-import {columns} from "../SupplyInvoice/SupplyInvoiceTableConfig"
+import {columns} from "./StorageProductTransferTableConfig"
 import {selectColorStyles} from '../../../../app/styles/variables/selectColorStyles'
-import useCreateStorageModal from '../../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
+import {useProsuctStorageTransfer} from "./StorageProductTtransferStore";
+import {useSnackbar} from "notistack";
 
 export const StorageProductsTransfer = () => {
 
     const [vis, setVis] = useState(false)
+    const {enqueueSnackbar} = useSnackbar()
 
-    const storages = useCreateStorageModal(s => s.storages)
-    const getStorages = useCreateStorageModal(s => s.getStorages)
-    const selectedStorageForTransferFrom = useCreateStorageModal(s => s.selectedStorageForTransferFrom)
-    const setSelectedStorageForTransferFrom = useCreateStorageModal(s => s.setSelectedStorageForTransferFrom)
-    const selectedStorageForTransferTo = useCreateStorageModal(s => s.selectedStorageForTransferTo)
-    const setSelectedStorageForTransferTo = useCreateStorageModal(s => s.setSelectedStorageForTransferTo)
+    const storages = useProsuctStorageTransfer(s => s.storages)
+    const getStorages = useProsuctStorageTransfer(s => s.getStorages)
 
-    const currentSupplyInvoice = useSupplyInvoice(s => s.currentSupplyInvoice)
-    const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
-    const isCreating = useSupplyInvoice(s => s.isCreating)
-    const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
-    const setProducts = useSupplyInvoice(s => s.setProducts)
+    const selectedStorageForTransferFrom = useProsuctStorageTransfer(s => s.selectedStorageForTransferFrom)
+    const setSelectedStorageForTransferFrom = useProsuctStorageTransfer(s => s.setSelectedStorageForTransferFrom)
+    const selectedStorageForTransferTo = useProsuctStorageTransfer(s => s.selectedStorageForTransferTo)
+    const setSelectedStorageForTransferTo = useProsuctStorageTransfer(s => s.setSelectedStorageForTransferTo)
 
-    const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length) {
-            const file = e.target.files[0]
-            console.log('file: ', file)
-        }
-    }
+    const current = useProsuctStorageTransfer(s => s.currentMove)
+    const setCurrentProducts = useProsuctStorageTransfer(s => s.setCurrentProducts)
+    const addProduct = useProsuctStorageTransfer(s => s.addProduct)
+    const setDescription = useProsuctStorageTransfer(s => s.setDescription)
+
+    const isCreating = useProsuctStorageTransfer(s => s.isCreating)
+
+    const saveHandler = useProsuctStorageTransfer(s => s.saveHandler)
+    const clearCurrent = useProsuctStorageTransfer(s => s.clearCurrent)
 
     useEffect(() => {
         getStorages()
@@ -44,7 +40,7 @@ export const StorageProductsTransfer = () => {
         <div className={s.arrivalOfProducts_mainBlock}>
             <div className={s.arrivalOfProducts_leftSide}>
                 <div className={s.leftSide_title}>
-                    {isCreating ? 'Новый акт перемещения' : currentSupplyInvoice.supplyInvoice.id}
+                    {isCreating ? 'Новый акт перемещения' : current.productMove.id}
                 </div>
                 <div style={{color: 'black'}}>
                     <Select
@@ -77,7 +73,9 @@ export const StorageProductsTransfer = () => {
                     />
                 </div>
                 <div className={s.leftSide_info}>
-                    Дополнительная информация
+                    <CustomInput placeholder={'Опис'} value={current.productMove.description} onChange={(n) => {
+                        setDescription(n.target.value)
+                    }}/>
                 </div>
                 <Button buttonDivWrapper={s.button_chooseItem}
                         onClick={() => {
@@ -87,62 +85,28 @@ export const StorageProductsTransfer = () => {
                     Выбрать товар
                 </Button>
                 <div className={s.leftSide_search}>
-                    <AsyncSelectSearchProduct onSelect={() => {
-                    }}/>
+                    <AsyncSelectSearchProduct onSelect={addProduct}/>
                 </div>
                 <div className={s.leftSide_metrika}>
                     <div className={s.metrika_title}>Метрика:</div>
-                    <div>Позиций: {currentSupplyInvoice.supplyInvoiceProducts?.length}</div>
-                    <div>Единиц: {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.quantity).sum()}</div>
-                    <div>Приходная сумма:
-                        {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.total).sum()}
-                    </div>
-                    <div>Расходы: 99</div>
-                    <div>Итого: 99999999</div>
+                    <div>Позиций: {current.products?.length}</div>
+                    <div>Единиц: {Enumerable.from(current.products).select(n => n.quantity).sum()}</div>
                 </div>
                 <div className={s.leftSide_footerButtons}>
                     <Button buttonDivWrapper={s.button_save}
                             onClick={() => {
-                                let data = {
-                                    ...currentSupplyInvoice,
-                                    supplyInvoice: {
-                                        ...currentSupplyInvoice.supplyInvoice,
-                                        user: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-                                    }
-                                }
-                                console.log(data)
+                                saveHandler(() => {
+                                    enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
+                                }, () => {
+                                    enqueueSnackbar('Ошибка сервара', {variant: 'error', autoHideDuration: 3000})
 
-                                if (isCreating) {
-                                    SupplyInvoiceAPI.create(data).then((r: any) => {
-                                        setIsCreating(false)
-                                        setCurrentSupplyInvoice(r.data)
-                                        console.log(r)
-                                    }).catch((r: any) => {
-                                        console.log(r)
-                                    })
-                                } else {
-                                    SupplyInvoiceAPI.update(data).then((r: any) => {
-                                        setCurrentSupplyInvoice(r.data)
-                                        console.log(r)
-                                    }).catch((r: any) => {
-                                        console.log(r)
-                                    })
-                                }
+                                })
                             }}
                     >
                         Сохранить акт
                     </Button>
                     <Button buttonDivWrapper={s.button_cancel}
-                            onClick={() => {
-                                setCurrentSupplyInvoice({
-                                    supplyInvoiceProducts: [], supplyInvoice: {
-                                        shopId: 1,
-                                        user: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-                                        description: '',
-                                    }
-                                } as unknown as SupplyInvoiceDTO)
-                                setIsCreating(true)
-                            }}
+                            onClick={clearCurrent}
                     >
                         Отмена
                     </Button>
@@ -152,41 +116,13 @@ export const StorageProductsTransfer = () => {
             <div className={s.arrivalOfProducts_rightSide}>
 
                 <ChooseProductModal slaveColumns={columns}
-                                    setDataSlaveTable={setProducts}
-                                    data={currentSupplyInvoice.supplyInvoiceProducts} open={vis}
-                                    addData={(value: any) => {
-                                        let n = value as ProductQuantity
-                                        let finded = false
-                                        let newData = currentSupplyInvoice.supplyInvoiceProducts.map((np: SupplyInvoiceProduct) => {
-                                            if (n.id === np.productId) {
-                                                finded = true
-                                                return ({...np, quantity: np.quantity + 1})
-                                            } else return np
-                                        })
-                                        if (!finded) newData.push({
-                                            supplyInvoiceId: 0,
-                                            productId: n.id,
-                                            name: n.name,
-                                            description: '',
-                                            catalogKey: n.catalogKey,
-                                            barcode: n.barcode,
-                                            manufBarcode: n.manufacturerBarcode ? n.manufacturerBarcode : '',
-                                            quantityUnitName: n.quantityUnitName,
-                                            incomePrice: n.incomePrice,
-                                            brandName: 'No',
-                                            quantity: 1,
-                                            total: n.incomePrice * n.quantity,
-                                            id: 0,
-                                            createdAt: Date.now().toString(),
-                                            updatedAt: Date.now().toString(),
-                                            enabled: true
-                                        } as SupplyInvoiceProduct)
-                                        setProducts(newData)
-                                    }}
+                                    setDataSlaveTable={setCurrentProducts}
+                                    data={current.products} open={vis}
+                                    addData={addProduct}
                                     setOpen={setVis}/>
-                <UniTable rows={currentSupplyInvoice.supplyInvoiceProducts}
+                <UniTable rows={current.products}
                           columns={columns}
-                          setRows={setProducts}
+                          setRows={setCurrentProducts}
                 />
 
             </div>
