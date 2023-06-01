@@ -3,13 +3,27 @@ import s from './StorageProductsList.module.scss'
 import {formatDate} from '../../../shared/utils/formatDate'
 import CashIcon from '../../../shared/assets/workspace/cash-icon.svg'
 import {ProductStorageMoveFullData} from "../../../entities/models/Acts/ProductStorageMove/ProductStorageMoveFullData";
+import {useNavigate} from "react-router-dom";
+import {BikeShopPaths} from "../../../app/routes/paths";
+import {
+    useProsuctStorageTransfer
+} from "../../../pages/workspace/ProductsCount/StorageProductsTransfer/StorageProductTtransferStore";
+import useStorageProductsTransferArchiveModalStore from "./StorageProductsTransferArchiveModalStore";
+import {useSnackbar} from "notistack";
 
 interface StorageProductsListProps {
     archive: ProductStorageMoveFullData[]
+    isOpennable: boolean
 }
 
-export const StorageProductsList: React.FC<StorageProductsListProps> = ({archive}) => {
-    console.log("archive:", archive)
+export const StorageProductsList: React.FC<StorageProductsListProps> = ({archive, isOpennable}) => {
+    const navigate = useNavigate();
+    const {enqueueSnackbar} = useSnackbar()
+
+    const load = useProsuctStorageTransfer(s => s.openHandler)
+    const setOpen = useStorageProductsTransferArchiveModalStore(s => s.setOpenStorageProductsTransferArchiveModal)
+    const {setOpenContext, setSelected} = useStorageProductsTransferArchiveModalStore(s => s)
+
     return (
         <>
             {
@@ -18,9 +32,20 @@ export const StorageProductsList: React.FC<StorageProductsListProps> = ({archive
                         <div className={s.supplyInvoiceArchiveModal_item}
                              key={item.productMove.id}
                              onDoubleClick={() => {
-                                 // setIsCreating(false)
-                                 // setCurrentSupplyInvoice(el);
-                                 // navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                 if (isOpennable) {
+                                     load(item)
+                                     setOpen(false)
+                                     navigate(BikeShopPaths.WORKSPACE.STORAGE_PRODUCTS_TRANSFER)
+                                 } else {
+                                     enqueueSnackbar('Вы не можете открыть это перемещение', {
+                                         variant: 'warning',
+                                         autoHideDuration: 3000
+                                     })
+                                 }
+                             }}
+                             onContextMenu={e => {
+                                 setSelected(item)
+                                 setOpenContext({o: true, x: e.clientX, y: e.clientY})
                              }}
                         >
                             <div className={s.item_content}>

@@ -17,6 +17,8 @@ interface SupplyInvoiceArchiveModalStore {
 
     selectedSupplyInvoice: SupplyInvoiceDTO | null
     setSelectedSupplyInvoice: (value: SupplyInvoiceDTO) => void
+
+
 }
 
 const useSupplyInvoiceArchiveModal = create<SupplyInvoiceArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({

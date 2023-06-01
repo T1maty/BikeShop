@@ -45,6 +45,7 @@ namespace BikeShop.Acts.Application.Services
                 prod.CatalogKey = p.CatalogKey;
                 prod.QuantityUnitName = p.QuantityUnitName;
                 prod.ProductMoveId = ent.Id;
+                prod.Description = p.Description;
 
                 np.Add(prod);
             }
@@ -132,7 +133,7 @@ namespace BikeShop.Acts.Application.Services
                     p.Name = prod.Name;
                     p.QuantityUnitName = prod.QuantityUnitName;
                     p.UpdatedAt = DateTime.Now;
-                  
+                    p.Description = p.Description;
 
                     actualProds.Add(p);
                     existProds.Remove(prod.Id);
@@ -150,6 +151,7 @@ namespace BikeShop.Acts.Application.Services
                     p.Name = prod.Name;
                     p.QuantityUnitName = prod.QuantityUnitName;
                     p.ProductMoveId = ent.Id;
+                    p.Description = p.Description;
 
                     actualProds.Add(p);
                     newProds.Add(p);

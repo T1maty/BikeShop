@@ -18,14 +18,14 @@ export const ProductStorageMoveAPI = {
             $api.put<ProductStorageMoveFullData>(`/productmove/update`, data)
         )
     },
-    transfer(): Promise<AxiosResponse<ProductStorageMoveFullData>> {
+    transfer(actId: number, userId: string): Promise<AxiosResponse<ProductStorageMoveFullData>> {
         return (
-            $api.put<ProductStorageMoveFullData>(``)
+            $api.put<ProductStorageMoveFullData>(`productmove/transfer?ActId=${actId}&User=${userId}`)
         )
     },
-    execute(): Promise<AxiosResponse<ProductStorageMoveFullData>> {
+    execute(actId: number, userId: string): Promise<AxiosResponse<ProductStorageMoveFullData>> {
         return (
-            $api.put<ProductStorageMoveFullData>(``)
+            $api.put<ProductStorageMoveFullData>(`/productmove/execute?ActId=${actId}&User=${userId}`)
         )
     },
 }
