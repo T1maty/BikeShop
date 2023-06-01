@@ -57,9 +57,11 @@ const useStorageProductsTransferArchiveModalStore = create<StorageProductsTransf
     toTransfer: (s, f) => {
         set({isLoading: true});
         ProductStorageMoveAPI.transfer(get().selected!.productMove.id, LocalStorage.userId()!).then(res => {
-            let index = get().archive.indexOf(get().archive.find(h => h.productMove.id === res.data.productMove.id)!)
             set({
-                archive: get().archive.splice(index, index, res.data)
+                archive: get().archive.map(n => {
+                    if (n.productMove.id === res.data.productMove.id) return res.data
+                    else return n
+                })
             })
             set({isLoading: false})
             s()
@@ -74,9 +76,11 @@ const useStorageProductsTransferArchiveModalStore = create<StorageProductsTransf
     execute: (s, f) => {
         set({isLoading: true});
         ProductStorageMoveAPI.execute(get().selected!.productMove.id, LocalStorage.userId()!).then(res => {
-            let index = get().archive.indexOf(get().archive.find(h => h.productMove.id === res.data.productMove.id)!)
             set({
-                archive: get().archive.splice(index, index, res.data)
+                archive: get().archive.map(n => {
+                    if (n.productMove.id === res.data.productMove.id) return res.data
+                    else return n
+                })
             })
             set({isLoading: false})
             s()

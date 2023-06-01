@@ -26,7 +26,7 @@ namespace BikeShop.Products.Application.Services
         public async Task AddProductsToStorage(List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId)
         {
             var prodsAsDict = products.ToDictionary(p => p.ProductId, n => n);
-            var storageItems = _context.StorageProducts.Where(n=>n.StorageId == storageId).Where(n => prodsAsDict.Keys.Contains(n.ProductId)).ToDictionary(n=>n.ProductId, n=>n);
+            var storageItems = await _context.StorageProducts.Where(n=>n.StorageId == storageId).Where(n => prodsAsDict.Keys.Contains(n.ProductId)).ToDictionaryAsync(n=>n.ProductId, n=>n);
             var productsEntitiesDict = await _context.Products.Where(n => prodsAsDict.Select(m=>m.Key).Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n);
             var newItems = new Dictionary<int, StorageProduct>();
             var newMoves = new Dictionary<int, ProductStorageMove>();
@@ -34,7 +34,8 @@ namespace BikeShop.Products.Application.Services
             {
                 if (storageItems.ContainsKey(product.ProductId))
                 {
-                    storageItems[product.ProductId].Quantity += product.Quantity;
+                    var it = storageItems[product.ProductId];
+                    it.Quantity += product.Quantity;
                 }
                 else
                 {
