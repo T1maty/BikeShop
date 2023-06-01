@@ -14,10 +14,15 @@ import {User as UserResType}  from "../../entities/models/Auth/User"
 
 type ClientSearchModalType = {
     setIsComponentVisible: Dispatch<SetStateAction<boolean>>
+    onSuccess: (phone: string) => any
+}
+type UsersType = {
+    onSuccess: (phone: string) => any
 }
 type UserType = {
     key?: string,
     userInfo: UserInfoType
+    onSuccess: (phone: string) => any
 }
 export type UserInfoType = {
     user: UserResType,
@@ -25,10 +30,12 @@ export type UserInfoType = {
 
 // Компонента для создания элемента списка всех найденных пользователей
 // В качестве примера пока выводится только телефон пользователя
+// После клика на пользователя в родительскую компоненту передаются 
+// данные этого пользователя и модуль убирается
 
 const User: FC<UserType> = (props) => {
     return (
-        <div className={s.userInfo}>
+        <div className={s.userInfo} onClick={() => props.onSuccess(props.userInfo.user.phoneNumber)}>
             User number: {props.userInfo.user.phoneNumber}
         </div>
     )
@@ -38,11 +45,11 @@ const User: FC<UserType> = (props) => {
 // Если список пуст или сервер вернул другую ошибку, то вместо списка 
 // выводится соответсвующее сообщение
 
-const Users = () => {
+const Users: FC<UsersType> = ({onSuccess}) => {
     const users = useAddNewUser(s => s.users)
     const errorStatus = useAddNewUser(s => s.errorStatus)
 
-    const userList = users.map( (p: UserInfoType) => <User key={p.user.id} userInfo={p}/>)
+    const userList = users.map( (p: UserInfoType) => <User key={p.user.id} userInfo={p} onSuccess={onSuccess}/>)
 
     return (
         <div>
@@ -58,11 +65,12 @@ const Users = () => {
 
 // Во время получения данных с сервера выводится крутилка
 
-const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible}) => {
+const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, onSuccess}) => {
     
     const create = useAddNewUser(s => s.create)
     const findUser = useAddNewUser(s => s.findUser)
     const isLoading = useAddNewUser(s => s.isLoading)
+    const setUsers = useAddNewUser(s => s.setUsers)
 
     const formControl = useForm<CreateUser>({
         defaultValues: {
@@ -80,7 +88,6 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible}) =
                 fio: data.firstName,
                 phoneNumber: data.phone
             }
-            console.log('findData', findData)
             findUser(findData)
         }      
     }
@@ -89,17 +96,23 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible}) =
     const handleSubmitCreate: SubmitHandler<CreateUser> = (data: CreateUser) => {
         create(data, 
             (res) => {
-                console.log(res)
+                // onSuccess
                 setIsComponentVisible(false)
             },
             (res) => {
-                console.log(res)
+                // onFailure
             })
     }
     
     // обработчик нажатия на кнопку отмены
     const handleCancel = () => {
         setIsComponentVisible(false)
+    }
+
+    const handleSuccessChoise = (phone: string) => {
+        setUsers([])
+        setIsComponentVisible(false)
+        onSuccess(phone)
     }
     
     return (
@@ -114,7 +127,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible}) =
                     Поисковый запрос
                 </Button>
                 <div>
-                    <Users />
+                    <Users onSuccess={handleSuccessChoise}/>
                 </div>
                 <div className={s.searchForm_form}>
                     <div>
