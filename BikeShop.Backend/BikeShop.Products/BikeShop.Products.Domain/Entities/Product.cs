@@ -17,7 +17,7 @@ public class Product : BaseEntity
     public decimal RetailPrice { get; set; }
 
     public int BrandId { get; set; } = 1;
-    [JsonIgnore] public Brand? Brand { get; set; }
+    [JsonIgnore] public Brand Brand { get; set; }
 
     public string CheckStatus { get; set; } = "JustCreatedByUser";
     public bool RetailVisibility { get; set; } = false;
