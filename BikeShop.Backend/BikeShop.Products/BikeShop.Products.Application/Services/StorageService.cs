@@ -26,22 +26,27 @@ namespace BikeShop.Products.Application.Services
         public async Task AddProductsToStorage(List<ProductQuantitySmplDTO> products, int storageId, string source, int sourceId)
         {
             var prodsAsDict = products.ToDictionary(p => p.ProductId, n => n);
-            var storageItems = await _context.StorageProducts.Where(n=>n.StorageId == storageId).Where(n => prodsAsDict.Keys.Contains(n.ProductId)).ToDictionaryAsync(n=>n.ProductId, n=>n);
-            var productsEntitiesDict = await _context.Products.Where(n => prodsAsDict.Select(m=>m.Key).Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n);
+            var storageItems = await _context.StorageProducts.Where(n=>n.StorageId == storageId)
+                .Where(n => prodsAsDict.Keys.Contains(n.ProductId))
+                .ToDictionaryAsync(n=>n.ProductId, n=>n);
+            var productsEntitiesDict = await _context.Products
+                .Where(n => prodsAsDict
+                .Select(m=>m.Key)
+                .Contains(n.Id))
+                .ToDictionaryAsync(n => n.Id, n => n);
             var newItems = new Dictionary<int, StorageProduct>();
             var newMoves = new Dictionary<int, ProductStorageMove>();
             foreach (var product in products)
             {
-                if (storageItems.ContainsKey(product.ProductId))
+                if (storageItems.TryGetValue(product.ProductId, out StorageProduct value))
                 {
-                    var it = storageItems[product.ProductId];
-                    it.Quantity += product.Quantity;
+                    value.Quantity += product.Quantity;
                 }
                 else
                 {
-                    if (newItems.ContainsKey(product.ProductId))
+                    if (newItems.TryGetValue(product.ProductId, out StorageProduct value2))
                     {
-                        newItems[product.ProductId].Quantity += product.Quantity;
+                        value2.Quantity += product.Quantity;
                     }
                     else
                     {
@@ -50,14 +55,28 @@ namespace BikeShop.Products.Application.Services
                 }
 
 
-                if (newMoves.ContainsKey(product.ProductId))
+                if (newMoves.TryGetValue(product.ProductId, out ProductStorageMove value3))
                 {
-                    newMoves[product.ProductId].Quantity += product.Quantity;
+                    value3.Quantity += product.Quantity;
                 }
                 else
                 {
                     var prod = productsEntitiesDict[product.ProductId];
-                    var productMove = new ProductStorageMove { ProductId = product.ProductId, CatalogKey = prod.CatalogKey, Enabled = prod.Enabled, MoveDirection = MoveDirection.Get(MoveDirectionEnum.MovingToStorage), PriceCurrencyId = 0, IncomePrice = prod.IncomePrice, ProductName = prod.Name, Quantity = product.Quantity, RetailPrice = prod.RetailPrice, StorageId = storageId, DealerPrice = prod.DealerPrice, QuantityUnitId = prod.QuantityUnitId, ProductMoveSource = ProductMoveSource.Get(ProductMoveSource.Get(source)), SourceId = sourceId };
+                    var productMove = new ProductStorageMove { 
+                        ProductId = product.ProductId, 
+                        CatalogKey = prod.CatalogKey, 
+                        Enabled = prod.Enabled, 
+                        MoveDirection = MoveDirection.Get(MoveDirectionEnum.MovingToStorage), 
+                        PriceCurrencyId = 0, 
+                        IncomePrice = prod.IncomePrice, 
+                        ProductName = prod.Name, 
+                        Quantity = product.Quantity, 
+                        RetailPrice = prod.RetailPrice, 
+                        StorageId = storageId, 
+                        DealerPrice = prod.DealerPrice, 
+                        QuantityUnitId = prod.QuantityUnitId, 
+                        ProductMoveSource = ProductMoveSource.Get(ProductMoveSource.Get(source)), 
+                        SourceId = sourceId };
                     newMoves.Add(product.ProductId, productMove);
                 }
             }

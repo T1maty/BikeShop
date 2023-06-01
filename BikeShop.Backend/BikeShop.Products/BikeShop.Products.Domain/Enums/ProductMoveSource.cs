@@ -24,6 +24,7 @@ namespace BikeShop.Products.Domain.Enums
             b.Add("SupplyInvoice", ProductMoveSourceEnum.IncomeAct);
             b.Add("Order", ProductMoveSourceEnum.Order);
             b.Add("Service", ProductMoveSourceEnum.Service);
+            b.Add("ProductMove", ProductMoveSourceEnum.Service);
             return b;
         }
         public static Dictionary<string, ProductMoveSourceEnum> Get()
