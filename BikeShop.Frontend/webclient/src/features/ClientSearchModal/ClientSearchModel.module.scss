@@ -98,5 +98,9 @@
     border-bottom: 1px solid white;
     text-align: center;
     padding: 5px;
-    
+
+    &:hover {
+        cursor: pointer;
+        background-color: green
+    }
 }

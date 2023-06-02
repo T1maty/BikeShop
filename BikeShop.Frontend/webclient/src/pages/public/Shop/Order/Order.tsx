@@ -38,6 +38,10 @@ export const Order = () => {
         //
     }
 
+    const handleSuccessChoise = (phone: string) => {
+        console.log('You have choose the user with number ' + `${phone}`)
+    }
+
     return (
         <div className={s.order_mainBox}>
             <div className={s.container}>
@@ -139,7 +143,7 @@ export const Order = () => {
                                 </div>
                                 <hr/>
                                 {isComponentVisible ?
-                                    <ClientSearchModal setIsComponentVisible={setIsComponentVisible}/> : 
+                                    <ClientSearchModal setIsComponentVisible={setIsComponentVisible} onSuccess={handleSuccessChoise}/> : 
                                     <div className={s.price_confirmButton}>
                                         <Button onClick={() => {
                                             setIsComponentVisible(true)
