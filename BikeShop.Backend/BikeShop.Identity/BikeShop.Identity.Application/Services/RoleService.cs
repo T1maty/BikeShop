@@ -48,7 +48,7 @@ namespace BikeShop.Identity.Application.Services
         {
             var group = await _context.RoleGroups.ToListAsync();
             var binds = await _context.RoleGroupBinds.ToListAsync();
-            return group.Select(n => new RoleGroupWithRoles { group = n, Roles = binds.Where(n=>n.RoleGroupId == n.Id).ToList() }).ToList();
+            return group.Select(n => new RoleGroupWithRoles { group = n, Roles = binds.Where(n1=>n1.RoleGroupId == n.Id).ToList() }).ToList();
         }
 
         public async Task<IdentityUser> SetGroupToUser(int GroupId, Guid UserId)

@@ -15,6 +15,8 @@ interface UserRoleModalStore {
     roles: Role[]
     getAllRoles: () => void
     groups: RoleGroup[]
+    selectedGroup: RoleGroup | null
+    setSelectedGroup: (n: RoleGroup) => void
     getAllGroups: () => void
 
     createGroup: (params: CreateRoleGroup) => void
@@ -46,6 +48,11 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
             set({isLoading: false})
         })
     },
+
+    selectedGroup: null,
+    setSelectedGroup: (n) => {
+        set({selectedGroup: n})
+    },
     groups: [],
     getAllGroups: () => {
         set({isLoading: true})
@@ -53,7 +60,7 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
             set(state => {
                 state.groups = res.data
             })
-            console.log('roleGroups:', res.data)
+            console.log('groups:', res.data)
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
@@ -67,7 +74,7 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
         set({isCreateModalLoading: true})
         RoleAPI.createRoleGroup(params).then((res) => {
             set(state => {
-                state.groups.push(res.data)
+                state.groups.push({group: res.data, roles: []})
             })
             set({isCreateModalLoading: false})
             set({errorStatusForCreateModal: 'success'})

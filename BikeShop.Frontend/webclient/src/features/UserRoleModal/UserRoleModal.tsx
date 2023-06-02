@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react'
 import s from './UserRoleModal.module.scss'
 import ArrowUp from '../../shared/assets/workspace/arrow-full-up.svg'
 import ArrowDown from '../../shared/assets/workspace/arrow-full-down.svg'
-import {AsyncSelectSearchProduct, Button, CustomModal, LoaderScreen, ToggleSwitch} from '../../shared/ui'
+import {Button, CustomModal, LoaderScreen, ToggleSwitch} from '../../shared/ui'
 import useUserRoleModal from "./UserRoleModalStore"
 import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
-import {RoleGroup} from "../../entities"
 import {CreateRoleGroupModal} from "./CreateRoleGroupModal"
+import AsyncSelect from "react-select/async";
 
 export const UserRoleModal = () => {
 
@@ -24,6 +24,8 @@ export const UserRoleModal = () => {
     const getAllRoles = useUserRoleModal(s => s.getAllRoles)
     const groups = useUserRoleModal(s => s.groups)
     const getAllGroups = useUserRoleModal(s => s.getAllGroups)
+    const selectedGroup = useUserRoleModal(s => s.selectedGroup)
+    const setSelectedGroup = useUserRoleModal(s => s.setSelectedGroup)
 
     // false - Доступные для групп, true - Все роли
     const [checked, setChecked] = useState<boolean>(false)
@@ -62,9 +64,13 @@ export const UserRoleModal = () => {
                                     {
                                         groups.length === 0 ?
                                             <div style={{textAlign: 'center'}}>Создайте новую группу</div> :
-                                            groups.map((gr: RoleGroup) => {
+                                            groups.map((gr) => {
                                                 return (
-                                                    <div className={s.groups_groupsItem} key={gr.group.id}>
+                                                    <div
+                                                        className={selectedGroup?.group.id != gr.group.id ? s.groups_groupsItem : s.groups_groupsItem_selected}
+                                                        key={gr.group.id} onClick={() => {
+                                                        setSelectedGroup(gr)
+                                                    }}>
                                                         {gr.group.name}
                                                     </div>
                                                 )
@@ -88,10 +94,15 @@ export const UserRoleModal = () => {
                         <div className={s.header_roles}>
                             <div className={s.roles_description}>
                                 <div className={s.roles_descriptionWrapper}>
-                                    <div className={s.roles_descriptionItem}>
-                                        <div className={s.descriptionItem_name}>Название</div>
-                                        <div className={s.roles_descriptionItem_description}>Описание</div>
-                                    </div>
+                                    {selectedGroup?.roles.map(n => {
+                                        return (
+                                            <div className={s.roles_descriptionItem}>
+                                                <div className={s.descriptionItem_name}>{n.role}</div>
+                                                <div
+                                                    className={s.roles_descriptionItem_description}>{n.description}</div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
                             <div className={s.roles_tabs}>
@@ -129,7 +140,7 @@ export const UserRoleModal = () => {
                     <div className={s.userRoleModal_bottom}>
                         <div className={s.bottom_deals}>
                             <div className={s.deals_select}>
-                                <AsyncSelectSearchProduct onSelect={addProduct}/>
+                                <AsyncSelect/>
                             </div>
                             <div className={s.deals_content}>
                                 <div className={s.deals_contentWrapper}>
