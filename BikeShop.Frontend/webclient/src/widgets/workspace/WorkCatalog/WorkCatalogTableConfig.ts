@@ -28,6 +28,7 @@ export const columns: UniTableColumn[] = [
         label: 'Описание',
         width: 20,
         minWidth: 70,
-        align: 'center',
+        align: 'left',
+        limit: 80
     },
 ]

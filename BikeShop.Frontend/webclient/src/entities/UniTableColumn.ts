@@ -8,4 +8,5 @@ export interface UniTableColumn {
     isEditable?: boolean
     isNumber?: boolean
     isCurrency?: boolean
+    limit?: number
 }

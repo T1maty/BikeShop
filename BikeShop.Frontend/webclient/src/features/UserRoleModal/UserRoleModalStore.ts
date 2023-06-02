@@ -37,6 +37,7 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
             set(state => {
                 state.roles = res.data
             })
+            console.log('roles:', res.data)
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
@@ -52,6 +53,7 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
             set(state => {
                 state.groups = res.data
             })
+            console.log('roleGroups:', res.data)
             set({isLoading: false})
         }).catch((error: any) => {
             set({errorStatus: 'error'})
@@ -64,9 +66,9 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
     createGroup: (params) => {
         set({isCreateModalLoading: true})
         RoleAPI.createRoleGroup(params).then((res) => {
-            // set(state => {
-            //     state.groups.push(res.data)
-            // })
+            set(state => {
+                state.groups.push(res.data)
+            })
             set({isCreateModalLoading: false})
             set({errorStatusForCreateModal: 'success'})
             console.log('группа создана', res)

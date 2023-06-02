@@ -35,6 +35,7 @@ import {
 } from '../ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
 import {EmployeeSalaryModal} from "../EmployeeSalaryModal/EmployeeSalaryModal";
 import useEmployeeSalaryModal from "../EmployeeSalaryModal/EmployeeSalaryModalStore";
+import useUserRoleModal from "../UserRoleModal/UserRoleModalStore";
 
 export const HeaderShopMenu = () => {
 
@@ -56,6 +57,7 @@ export const HeaderShopMenu = () => {
     const openQuantityUnitModal = useCreateQuantityUnitModal(s => s.setOpenCreateQuantityUnitModal)
 
     const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
+    const setOpenRoleModal = useUserRoleModal(s => s.setOpenUserRoleModal)
 
 
     const [menuItems1, setMenuItems1] = useState([
@@ -138,6 +140,13 @@ export const HeaderShopMenu = () => {
             title: 'Ставки',
             func: () => {
                 setOpenEmployeeSalaryModal(true)
+                setIsComponentVisible(false)
+            }
+        },
+        {
+            title: 'Роли',
+            func: () => {
+                setOpenRoleModal(true)
                 setIsComponentVisible(false)
             }
         },

@@ -35,6 +35,7 @@ namespace BikeShop.Identity.Application.Services
         {
             var ent = new RoleGroup() { Name = Name,Description = Description };
             await _context.RoleGroups.AddAsync(ent);
+            await _context.SaveChangesAsync(new CancellationToken());
             return ent;
         }
 
@@ -62,6 +63,7 @@ namespace BikeShop.Identity.Application.Services
             var group = await _context.RoleGroups.FindAsync(GroupId);
             var bind = new RoleGroupBind { GroupName = group.Name, Description = Description, Role = Role, RoleGroupId = group.Id };
             await _context.RoleGroupBinds.AddAsync(bind);
+            await _context.SaveChangesAsync(new CancellationToken());
             return new RoleGroupWithRoles { group = group, Roles = await _context.RoleGroupBinds.Where(n => n.RoleGroupId == group.Id).ToListAsync() };
         }
 

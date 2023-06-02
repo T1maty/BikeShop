@@ -39,11 +39,9 @@ export const UserRoleModal = () => {
     }, [errorStatus])
 
     useEffect(() => {
-        open && getAllRoles()
-        open && getAllGroups()
-        console.log('roles', roles)
-        console.log('groups', groups)
-    }, [])
+        open ? getAllRoles() : false
+        open ? getAllGroups() : false
+    }, [open])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -115,9 +113,13 @@ export const UserRoleModal = () => {
                             </div>
                             <div className={s.roles_roles}>
                                 <div className={s.roles_rolesWrapper}>
-                                    <div className={s.roles_rolesItem}>
-                                        Название роли
-                                    </div>
+                                    {roles.map(n => {
+                                        return (
+                                            <div className={s.roles_rolesItem} key={n.id}>
+                                                {n.name}
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         </div>

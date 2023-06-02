@@ -84,6 +84,7 @@ export const UpdateWorkModal = (props: UpdateWorkModalProps) => {
                                                rules={{required: 'Обязательное поле'}}
                         />
                         <ControlledCustomInput name={'price'}
+                                               isCurrecy
                                                placeholder={'Цена'}
                                                control={formControl}
                                                rules={{required: 'Обязательное поле'}}
