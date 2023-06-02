@@ -43,13 +43,13 @@ namespace BikeShop.Identity.WebApi.Controllers
         }
 
         [HttpPut("setgrouptouser")]
-        public async Task<IdentityUser> SetGroupToUser(int GroupId, Guid UserId)
+        public async Task<UserWithRoles> SetGroupToUser(int GroupId, Guid UserId)
         {
             return await _roleService.SetGroupToUser(GroupId, UserId);
         }
 
         [HttpPut("setroletouser")]
-        public async Task<IdentityUser> SetRoleToUser(string Role, Guid UserId)
+        public async Task<UserWithRoles> SetRoleToUser(string Role, Guid UserId)
         {
             return await _roleService.SetRoleToUser(Role, UserId);
         }
@@ -60,5 +60,16 @@ namespace BikeShop.Identity.WebApi.Controllers
             return await _roleService.Create(Name);
         }
 
+        [HttpDelete("removerolefromgroup")]
+        public async Task<RoleGroupWithRoles> RemoveRoleFromGroup(int GroupId, string Role)
+        {
+            return await _roleService.RemoveRoleFromGroup(GroupId, Role);
+        }
+
+        [HttpDelete("removerolefromuser")]
+        public async Task<UserWithRoles> RemoveRoleFromUser(Guid UserId, string Role)
+        {
+            return await _roleService.RemoveRoleFromUser(UserId, Role);
+        }
     }
 }

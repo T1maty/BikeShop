@@ -51,11 +51,31 @@ namespace BikeShop.Identity.Application.Services
             return group.Select(n => new RoleGroupWithRoles { group = n, Roles = binds.Where(n1=>n1.RoleGroupId == n.Id).ToList() }).ToList();
         }
 
-        public async Task<IdentityUser> SetGroupToUser(int GroupId, Guid UserId)
+        public async Task<RoleGroupWithRoles> RemoveRoleFromGroup(int GroupId, string Role)
+        {
+            var ent = _context.RoleGroupBinds.Where(n => n.RoleGroupId == GroupId).Where(n => n.Role == Role);
+            _context.RoleGroupBinds.RemoveRange(ent);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            var group = await _context.RoleGroups.FindAsync(GroupId);
+            var roles = await _context.RoleGroupBinds.Where(n => n.RoleGroupId == GroupId).ToListAsync();
+
+            return new RoleGroupWithRoles { group = group, Roles = roles };
+        }
+
+        public async Task<UserWithRoles> RemoveRoleFromUser(Guid UserId, string Role)
+        {
+            var user = await _userManager.FindByIdAsync(UserId.ToString());
+            await _userManager.RemoveFromRoleAsync(user, Role);
+            return new UserWithRoles { User = user, Roles = (List<string>)await _userManager.GetRolesAsync(user) };
+        }
+
+        public async Task<UserWithRoles> SetGroupToUser(int GroupId, Guid UserId)
         {
             var roles = await _context.RoleGroupBinds.Where(n => n.RoleGroupId == GroupId).Select(n => n.Role).ToListAsync();
             await _userManager.AddToRolesAsync(await _userManager.FindByIdAsync(UserId.ToString()),roles);
-            return await _userManager.FindByIdAsync(UserId.ToString());
+            var user = await _userManager.FindByIdAsync(UserId.ToString());
+            return new UserWithRoles { Roles = (List<string>)await _userManager.GetRolesAsync(user), User = user };
         }
 
         public async Task<RoleGroupWithRoles> SetRoleToGroup(string Role, int GroupId, string Description)
@@ -67,10 +87,12 @@ namespace BikeShop.Identity.Application.Services
             return new RoleGroupWithRoles { group = group, Roles = await _context.RoleGroupBinds.Where(n => n.RoleGroupId == group.Id).ToListAsync() };
         }
 
-        public async Task<IdentityUser> SetRoleToUser(string Role, Guid UserId)
+        public async Task<UserWithRoles> SetRoleToUser(string Role, Guid UserId)
         {
             await _userManager.AddToRoleAsync(await _userManager.FindByIdAsync(UserId.ToString()), Role);
-            return await _userManager.FindByIdAsync(UserId.ToString());
+            var user = await _userManager.FindByIdAsync(UserId.ToString());
+            return new UserWithRoles { Roles = (List<string>)await _userManager.GetRolesAsync(user), User = user };
+
         }
     }
 }
