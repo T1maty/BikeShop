@@ -183,7 +183,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("search")]
-    public async Task<List<ApplicationUser>> Search(string Querry, int Take)
+    public async Task<List<UserWithRoles>> Search(string Querry, int Take)
     {
         return await _userService.Search(Querry, Take);
     }

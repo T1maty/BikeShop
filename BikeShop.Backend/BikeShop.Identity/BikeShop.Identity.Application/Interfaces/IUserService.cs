@@ -18,7 +18,7 @@ namespace BikeShop.Identity.Application.Interfaces
 
         public Task SetUsersShop(Guid userId, int shopId);
 
-        public Task<List<ApplicationUser>> Search(string Querry, int Take);
+        public Task<List<UserWithRoles>> Search(string Querry, int Take);
         public Task<List<UserWithRoles>> GetEmployees(int ShopId);
         public Task addUserToRole(Guid userId, string Role);
     }

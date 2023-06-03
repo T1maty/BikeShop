@@ -81,7 +81,7 @@ namespace BikeShop.Identity.Application.Services
             return dict;
         }
 
-        public async Task<List<ApplicationUser>> Search(string Querry, int Take)
+        public async Task<List<UserWithRoles>> Search(string Querry, int Take)
         {
             var res = Querry.ToLower().Split(" ");
             var contQR = _userManager.Users;
@@ -95,7 +95,14 @@ namespace BikeShop.Identity.Application.Services
                                         || n.PhoneNumber.ToLower().Contains(item));
             }
 
-            return await contQR.Take(Take).ToListAsync();
+            var users = await contQR.Take(Take).ToListAsync();
+            var resp = new List<UserWithRoles>();
+            foreach (var user in users)
+            {
+                resp.Add(new UserWithRoles { User = user, Roles = (List<string>)(await _userManager.GetRolesAsync(user)) });
+            }
+
+            return resp;
         }
 
         public async Task SetUsersShop(Guid userId, int shopId)
