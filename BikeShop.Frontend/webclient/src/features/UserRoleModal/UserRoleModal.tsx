@@ -2,14 +2,15 @@ import React, {useEffect, useState} from 'react'
 import s from './UserRoleModal.module.scss'
 import ArrowUp from '../../shared/assets/workspace/arrow-full-up.svg'
 import ArrowDown from '../../shared/assets/workspace/arrow-full-down.svg'
-import {Button, CustomModal, LoaderScreen, ToggleSwitch} from '../../shared/ui'
+import {Button, CustomInput, CustomModal, LoaderScreen, ToggleSwitch} from '../../shared/ui'
 import useUserRoleModal from "./UserRoleModalStore"
 import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
 import {CreateRoleGroupModal} from "./CreateRoleGroupModal"
 import Enumerable from "linq";
 import {AsyncSelectSearchUser} from "../../shared/ui/AsyncSelectSearch/AsyncSelectSearchUser";
-import {User} from "../../entities";
+import {UserWithRoles} from "../../entities/models/Auth/UserWithRoles";
+import {RoleAPI} from "../../entities";
 
 export const UserRoleModal = () => {
 
@@ -34,12 +35,15 @@ export const UserRoleModal = () => {
     const selectedGroupRole = useUserRoleModal(s => s.selectedGroupRole)
     const roleToGroup = useUserRoleModal(s => s.roleToGroup)
     const roleFromGroup = useUserRoleModal(s => s.roleFromGroup)
+    const removeRoleFromGroup = useUserRoleModal(s => s.removeRoleFromGroup)
+    const createRole = useUserRoleModal(s => s.createRole)
 
     // false - Доступные для групп, true - Все роли
     const [checked, setChecked] = useState<boolean>(false)
     // модалка для создания группы
     const [openCreateGroupModal, setOpenCreateGroupModal] = useState<boolean>(false)
-    const [user, setUser] = useState<User | null>(null)
+    const [user, setUser] = useState<UserWithRoles | null>(null)
+    const [input, setInput] = useState('')
 
 
     console.log('false - Доступные для группы / true - Все роли', checked)
@@ -54,6 +58,10 @@ export const UserRoleModal = () => {
         open ? getAllRoles() : false
         open ? getAllGroups() : false
     }, [open])
+
+    useEffect(() => {
+        setSelectedGroup(groups.find(n => n.group.id === selectedGroup?.group.id)!)
+    }, [groups])
 
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
@@ -114,6 +122,15 @@ export const UserRoleModal = () => {
                                                 <div className={s.descriptionItem_name}>{n.role}</div>
                                                 <div
                                                     className={s.roles_descriptionItem_description}>{n.description}</div>
+                                                <div className={s.d_b} onClick={() => {
+                                                    removeRoleFromGroup(n.role, () => {
+                                                        enqueueSnackbar('Роль удалена из группы', {
+                                                            variant: 'success',
+                                                            autoHideDuration: 3000
+                                                        })
+                                                    })
+                                                }}>X
+                                                </div>
                                             </div>
                                         )
                                     })}
@@ -158,7 +175,7 @@ export const UserRoleModal = () => {
                                         if (!checked && selectedGroup != null) {
                                             return !Enumerable.from(selectedGroup.roles).select(h => h.role).contains(n.name)
                                         } else {
-                                            return true
+                                            return !Enumerable.from(user?.roles!).contains(n.name)
                                         }
                                     }).map(n => {
                                         return (
@@ -186,32 +203,68 @@ export const UserRoleModal = () => {
                             </div>
                             <div className={s.deals_content}>
                                 <div className={s.deals_contentWrapper}>
-                                    <div className={s.deals_contentItem}>
-                                        Описание роли
-                                    </div>
+                                    {user?.roles.map(n => {
+                                        return (
+                                            <div className={s.deals_contentItem}>
+                                                {n}
+                                                <div className={s.del_but} onClick={() => {
+                                                    RoleAPI.removeRoleFromUser(user?.user.id, n).then(r => {
+                                                        setUser(r.data)
+                                                        enqueueSnackbar('Роль удалена у пользователя', {
+                                                            variant: 'success',
+                                                            autoHideDuration: 3000
+                                                        })
+                                                    })
+                                                }}>X
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         </div>
                         <div className={s.bottom_buttons}>
                             <Button buttonDivWrapper={s.applyOne}
                                     onClick={() => {
+                                        RoleAPI.setRoleToUser(selectedRole?.name!, user?.user.id!).then(r => {
+                                            setUser(r.data)
+                                            enqueueSnackbar('Роль присвоена пользователю', {
+                                                variant: 'success',
+                                                autoHideDuration: 3000
+                                            })
+                                        })
                                     }}
                             >
                                 Дать пользователю выбранное право
                             </Button>
                             <Button buttonDivWrapper={s.applyTwo}
                                     onClick={() => {
+                                        RoleAPI.setGroupToUser(selectedGroup?.group.id!, user?.user.id!).then(r => {
+                                            setUser(r.data)
+                                            enqueueSnackbar('Группа присвоена пользователю', {
+                                                variant: 'success',
+                                                autoHideDuration: 3000
+                                            })
+                                        })
                                     }}
                             >
                                 Дать пользователю права выбранной группы
                             </Button>
                             <Button buttonDivWrapper={s.close}
                                     onClick={() => {
-                                        setOpen(false)
+                                        createRole(input, () => {
+                                            enqueueSnackbar('Роль создана', {
+                                                variant: 'success',
+                                                autoHideDuration: 3000
+                                            })
+                                        })
                                     }}
                             >
-                                Закрыть
+                                Создать роль
                             </Button>
+                            <CustomInput value={input} onChange={(r) => {
+                                setInput(r.target.value)
+                            }}/>
                         </div>
                     </div>
                 </div>

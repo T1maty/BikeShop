@@ -10,6 +10,7 @@ import {
     Shop,
     User
 } from '../index'
+import {UserWithRoles} from "../models/Auth/UserWithRoles";
 
 export const AuthAPI = {
     Login: {
@@ -66,9 +67,9 @@ export const AuthAPI = {
                 $api.put<any>('/user/updatepublic', data)
             )
         },
-        search(querry: string, take: number): Promise<AxiosResponse<User[]>> {
+        search(querry: string, take: number): Promise<AxiosResponse<UserWithRoles[]>> {
             return (
-                $api.get<User[]>(`/user/search?Querry=${querry}&Take=${take}`)
+                $api.get<UserWithRoles[]>(`/user/search?Querry=${querry}&Take=${take}`)
             )
         },
     },

@@ -22,11 +22,13 @@ interface UserRoleModalStore {
     selectedGroup: RoleGroup | null
     setSelectedGroup: (n: RoleGroup) => void
     getAllGroups: () => void
+    removeRoleFromGroup: (role: string, onSuccess: () => void) => void
 
     selectedGroupRole: RoleToGroupBind | null
     setSelectGroupRole: (n: RoleToGroupBind | null) => void
 
     createGroup: (params: CreateRoleGroup) => void
+    createRole: (name: string, onSuccess: () => void) => void
 
     roleToGroup: (onSuccess: () => void, onFail: () => void) => void
     roleFromGroup: (onSuccess: () => void, onFail: () => void) => void
@@ -49,6 +51,40 @@ const useUserRoleModal = create<UserRoleModalStore>()(/*persist(*/devtools(immer
     errorStatus: 'default',
     isCreateModalLoading: false,
     errorStatusForCreateModal: 'default',
+
+    createRole: (name, s) => {
+        RoleAPI.createRole(name).then((res) => {
+            set({
+                roles: [...get().roles, res.data]
+            })
+            set({isLoading: false})
+            s()
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
+
+    removeRoleFromGroup: (r, s) => {
+        RoleAPI.removeRoleFromGroup(get().selectedGroup?.group.id!, r).then((res) => {
+            set({
+                groups: get().groups.map(n => {
+                    if (n.group.id === res.data.group.id) return res.data
+                    else return n
+                })
+            })
+            console.log('roles:', res.data)
+            set({isLoading: false})
+            s()
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
 
     roleToGroup: (s, f) => {
         RoleAPI.setRoleToGroup({

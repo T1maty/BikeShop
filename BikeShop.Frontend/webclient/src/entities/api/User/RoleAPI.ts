@@ -5,10 +5,8 @@ import {RoleGroup} from "../../models/RoleGroup"
 import {CreateRole} from "../../requests/CreateRole"
 import {SetRoleToGroupRequestParams} from "../../requests/SetRoleToGroupRequestParams"
 import {CreateRoleGroup} from "../../requests/CreateRoleGroup"
-import {SetRoleGroupToUserRequestParams} from "../../requests/SetRoleGroupToUserRequestParams"
-import {SetRoleGroupToUserResponse} from "../../responses/SetRoleGroupToUserResponse"
-import {SetRoleToUserRequestParams} from "../../requests/SetRoleToUserRequestParams"
 import {RoleGroupResponse} from "../../responses/RoleGroupResponse";
+import {UserWithRoles} from "../../models/Auth/UserWithRoles";
 
 export const RoleAPI = {
     getAllRoles(): Promise<AxiosResponse<Role[]>> {
@@ -41,14 +39,19 @@ export const RoleAPI = {
             $api.delete<RoleGroup>(`/role/removerolefromgroup?GroupId=${groupId}&Role=${role}`)
         )
     },
-    setGroupToUser(data: SetRoleGroupToUserRequestParams): Promise<AxiosResponse<SetRoleGroupToUserResponse>> {
+    removeRoleFromUser(userId: string, role: string): Promise<AxiosResponse<UserWithRoles>> {
         return (
-            $api.put<SetRoleGroupToUserResponse>('/role/setgrouptouser', data)
+            $api.delete<UserWithRoles>(`/role/removerolefromuser?UserId=${userId}&Role=${role}`)
         )
     },
-    setRoleToUser(data: SetRoleToUserRequestParams): Promise<AxiosResponse<SetRoleGroupToUserResponse>> {
+    setGroupToUser(groupId: number, userId: string): Promise<AxiosResponse<UserWithRoles>> {
         return (
-            $api.put<SetRoleGroupToUserResponse>('/role/setroletouser', data)
+            $api.put<UserWithRoles>(`/role/setgrouptouser?GroupId=${groupId}&UserId=${userId}`)
+        )
+    },
+    setRoleToUser(role: string, userId: string): Promise<AxiosResponse<UserWithRoles>> {
+        return (
+            $api.put<UserWithRoles>(`/role/setroletouser?Role=${role}&UserId=${userId}`)
         )
     },
 }
