@@ -26,7 +26,7 @@ export const RoleAPI = {
     },
     createRole(name: string): Promise<AxiosResponse<CreateRole>> {
         return (
-            $api.post<CreateRole>(`/role/creategroup?name=${name}`)
+            $api.post<CreateRole>(`/role/create?Name=${name}`)
         )
     },
     setRoleToGroup(data: SetRoleToGroupRequestParams): Promise<AxiosResponse<RoleGroup>> {
