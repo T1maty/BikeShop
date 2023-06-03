@@ -33,7 +33,12 @@ export const RoleAPI = {
     },
     setRoleToGroup(data: SetRoleToGroupRequestParams): Promise<AxiosResponse<RoleGroup>> {
         return (
-            $api.put<RoleGroup>('/role/setroletogroup', data)
+            $api.put<RoleGroup>(`/role/setroletogroup?Role=${data.role}&GroupId=${data.groupId}&Description=${data.description}`)
+        )
+    },
+    removeRoleFromGroup(groupId: number, role: string): Promise<AxiosResponse<RoleGroup>> {
+        return (
+            $api.delete<RoleGroup>(`/role/removerolefromgroup?GroupId=${groupId}&Role=${role}`)
         )
     },
     setGroupToUser(data: SetRoleGroupToUserRequestParams): Promise<AxiosResponse<SetRoleGroupToUserResponse>> {

@@ -66,5 +66,10 @@ export const AuthAPI = {
                 $api.put<any>('/user/updatepublic', data)
             )
         },
+        search(querry: string, take: number): Promise<AxiosResponse<User[]>> {
+            return (
+                $api.get<User[]>(`/user/search?Querry=${querry}&Take=${take}`)
+            )
+        },
     },
 }

@@ -7,7 +7,9 @@ import useUserRoleModal from "./UserRoleModalStore"
 import useCashboxStore from "../../pages/workspace/Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
 import {CreateRoleGroupModal} from "./CreateRoleGroupModal"
-import AsyncSelect from "react-select/async";
+import Enumerable from "linq";
+import {AsyncSelectSearchUser} from "../../shared/ui/AsyncSelectSearch/AsyncSelectSearchUser";
+import {User} from "../../entities";
 
 export const UserRoleModal = () => {
 
@@ -26,11 +28,19 @@ export const UserRoleModal = () => {
     const getAllGroups = useUserRoleModal(s => s.getAllGroups)
     const selectedGroup = useUserRoleModal(s => s.selectedGroup)
     const setSelectedGroup = useUserRoleModal(s => s.setSelectedGroup)
+    const selectedRole = useUserRoleModal(s => s.selectedRole)
+    const setSelectedRole = useUserRoleModal(s => s.setSelectedRole)
+    const setSelectGroupRole = useUserRoleModal(s => s.setSelectGroupRole)
+    const selectedGroupRole = useUserRoleModal(s => s.selectedGroupRole)
+    const roleToGroup = useUserRoleModal(s => s.roleToGroup)
+    const roleFromGroup = useUserRoleModal(s => s.roleFromGroup)
 
     // false - Доступные для групп, true - Все роли
     const [checked, setChecked] = useState<boolean>(false)
     // модалка для создания группы
     const [openCreateGroupModal, setOpenCreateGroupModal] = useState<boolean>(false)
+    const [user, setUser] = useState<User | null>(null)
+
 
     console.log('false - Доступные для группы / true - Все роли', checked)
 
@@ -69,6 +79,7 @@ export const UserRoleModal = () => {
                                                     <div
                                                         className={selectedGroup?.group.id != gr.group.id ? s.groups_groupsItem : s.groups_groupsItem_selected}
                                                         key={gr.group.id} onClick={() => {
+                                                        setSelectGroupRole(null)
                                                         setSelectedGroup(gr)
                                                     }}>
                                                         {gr.group.name}
@@ -96,7 +107,10 @@ export const UserRoleModal = () => {
                                 <div className={s.roles_descriptionWrapper}>
                                     {selectedGroup?.roles.map(n => {
                                         return (
-                                            <div className={s.roles_descriptionItem}>
+                                            <div key={n.id} onClick={() => {
+                                                setSelectGroupRole(n)
+                                            }}
+                                                 className={n.id === selectedGroupRole?.id ? `${s.roles_descriptionItem} ${s.roles_descriptionItem_nselected}` : `${s.roles_descriptionItem} ${s.roles_descriptionItem_selected}`}>
                                                 <div className={s.descriptionItem_name}>{n.role}</div>
                                                 <div
                                                     className={s.roles_descriptionItem_description}>{n.description}</div>
@@ -114,19 +128,45 @@ export const UserRoleModal = () => {
                                     <div>Все роли</div>
                                 </div>
                                 <div className={s.tabs_arrows}>
-                                    <div>
+                                    <div onClick={() => {
+                                        roleToGroup(() => {
+                                            enqueueSnackbar('Успех', {
+                                                variant: 'success',
+                                                autoHideDuration: 3000
+                                            })
+                                        }, () => {
+                                        })
+                                    }}>
                                         <img src={ArrowUp} alt='arrow-up'/>
                                     </div>
-                                    <div>
+                                    <div onClick={() => {
+                                        roleFromGroup(() => {
+                                            enqueueSnackbar('Успех', {
+                                                variant: 'success',
+                                                autoHideDuration: 3000
+                                            })
+                                        }, () => {
+                                        })
+                                    }}>
                                         <img src={ArrowDown} alt='arrow-down'/>
                                     </div>
                                 </div>
                             </div>
                             <div className={s.roles_roles}>
                                 <div className={s.roles_rolesWrapper}>
-                                    {roles.map(n => {
+                                    {roles.filter(n => {
+                                        if (!checked && selectedGroup != null) {
+                                            return !Enumerable.from(selectedGroup.roles).select(h => h.role).contains(n.name)
+                                        } else {
+                                            return true
+                                        }
+                                    }).map(n => {
                                         return (
-                                            <div className={s.roles_rolesItem} key={n.id}>
+                                            <div
+                                                className={n.id != selectedRole?.id ? s.roles_rolesItem : s.roles_rolesItem_selected}
+                                                key={n.id} onClick={() => {
+                                                setSelectedRole(n)
+                                            }}>
                                                 {n.name}
                                             </div>
                                         )
@@ -140,7 +180,9 @@ export const UserRoleModal = () => {
                     <div className={s.userRoleModal_bottom}>
                         <div className={s.bottom_deals}>
                             <div className={s.deals_select}>
-                                <AsyncSelect/>
+                                <AsyncSelectSearchUser onSelect={(r) => {
+                                    setUser(r)
+                                }} value={user}/>
                             </div>
                             <div className={s.deals_content}>
                                 <div className={s.deals_contentWrapper}>

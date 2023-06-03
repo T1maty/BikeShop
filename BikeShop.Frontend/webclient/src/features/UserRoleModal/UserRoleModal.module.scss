@@ -85,15 +85,23 @@
           padding-right: 5px;
           overflow-y: auto;
 
+          .roles_descriptionItem_selected {
+            background-color: $themeColorMilk;
+          }
+
+          .roles_descriptionItem_nselected {
+            background-color: #808080FF;
+          }
+
           .roles_descriptionItem {
             padding: $defaultSmallMargin;
             border-radius: $smallBorderRadius;
-            background-color: $themeColorMilk;
             color: black;
             font-size: 20px;
             display: flex;
             align-items: center;
             gap: $defaultLargeMargin;
+
 
             > div {
               word-break: break-word;
@@ -164,6 +172,15 @@
             border-radius: $smallBorderRadius;
             background-color: $themeColorMilk;
             color: black;
+            font-size: 20px;
+            text-align: center;
+          }
+
+          .roles_rolesItem_selected {
+            padding: $defaultSmallMargin;
+            border-radius: $smallBorderRadius;
+            background-color: #808080FF;
+            color: white;
             font-size: 20px;
             text-align: center;
           }
