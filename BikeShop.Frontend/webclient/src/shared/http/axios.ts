@@ -1,11 +1,13 @@
 import axios from "axios";
 
-export const API_URL = "https://bikeshop.1gb.ua/api";
-//export const API_URL = "https://api.bikelove.com.ua/api";
+const environment = process.env.NODE_ENV;
+
+export const API_URL_DEVELOPMENT = "https://bikeshop.1gb.ua/api";
+export const API_URL_PRODUCTION = "https://api.bikelove.com.ua/api";
 
 export const $api = axios.create({
 
-    baseURL: API_URL,
+    baseURL: environment === "production" ? API_URL_PRODUCTION : API_URL_DEVELOPMENT,
     headers: {
         //"Content-Type": "application/json",
     },

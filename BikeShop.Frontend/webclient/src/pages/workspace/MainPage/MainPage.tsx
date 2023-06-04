@@ -25,6 +25,7 @@ import useCashboxStore from "../Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
 import {CheckForShop} from "../../../widgets"
 import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
+import useSupplyInvoice from "../ProductsCount/SupplyInvoice/models/SupplyInvoiceStore";
 
 type ShiftStatusTypes = 'Open' | 'Closed' | 'Pause'
 
@@ -60,6 +61,9 @@ export const MainPage = () => {
     const setData = useCashboxStore(s => s.setProducts)
     const addProduct = useCashboxStore(s => s.addProduct)
     const paymentHandler = useCashboxStore(s => s.paymentHandler)
+
+    const clearCurrentSupplyInvoice = useSupplyInvoice(s => s.clearCurrent)
+
 
     const [openPay, setOpenPay] = useState(false)
     const [res, setRes] = useState<BillWithProducts>()
@@ -207,17 +211,10 @@ export const MainPage = () => {
                                 Каталог услуг
                             </Button>
                             <Button onClick={() => {
+                                clearCurrentSupplyInvoice()
                                 navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
                             }}>
-                                Приходные накладные
-                            </Button>
-                            <Button onClick={() => {
-                            }}>
-                                Клиенты
-                            </Button>
-                            <Button onClick={() => {
-                            }}>
-                                Заказы
+                                Новая приходная накладная
                             </Button>
                         </div>
                     </div>

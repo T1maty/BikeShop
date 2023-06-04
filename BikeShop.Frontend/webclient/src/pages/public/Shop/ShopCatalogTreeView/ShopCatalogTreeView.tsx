@@ -34,7 +34,7 @@ export const ShopCatalogTreeView = () => {
 
     const renderItem = (item: any) => {
         const isExpanded = expandedItems.includes(item.id)
-        // @ts-ignore
+
         const hasChildren = item.children && item.children.length > 0
 
         const handleExpand = (id: string) => {
@@ -91,9 +91,9 @@ export const ShopCatalogTreeView = () => {
 
                         <div className={cls.content}
                              onClick={() => {
-                                 addUserCurrentTagHandler(item)
                              }}
                              onDoubleClick={() => {
+                                 addUserCurrentTagHandler(item)
                              }}
                         >
                             {item.name}

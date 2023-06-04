@@ -25,7 +25,6 @@ export const Catalog = () => {
     const isLoading = useCatalog(s => s.isLoading)
     const errorStatus = useCatalog(s => s.errorStatus)
 
-    const tags = useCatalog(s => s.tags)
     const getTags = useCatalog(s => s.getTags)
     const userCurrentTags = useCatalog(s => s.userCurrentTags)
     const setUserCurrentTagsArray = useCatalog(s => s.setUserCurrentTagsArray)
@@ -119,7 +118,7 @@ export const Catalog = () => {
     useEffect(() => {
         setActiveFilter1(true)
 
-        if (userCurrentTags.length === 0) {
+        if (userCurrentTags.length === 0 && selectedTags.length === 0) {
             getDefaultProducts()
         } else {
             let ids = Enumerable.from(userCurrentTags).select(n => n.id).toArray()
@@ -130,7 +129,7 @@ export const Catalog = () => {
             console.log('Поиск по айдишникам', ids)
             getProductsByTags(ids)
         }
-    }, [userCurrentTags])
+    }, [userCurrentTags, selectedTags])
 
     if (isLoading) {
         return <ShopLoader/>
@@ -154,8 +153,8 @@ export const Catalog = () => {
                             <div className={s.cloudCategory_title}>Облако категорий</div>
                             <div className={s.cloudCategory_content}>
                                 <div className={s.cloudTag_title}>
-                                    <div>Выбранные категории:</div>
-                                    <DeleteButton size={35} onClick={clearUserCurrentTagsArrayHandler}/>
+                                    <div>Выбранные теги:</div>
+                                    <DeleteButton size={25} onClick={clearUserCurrentTagsArrayHandler}/>
                                 </div>
                                 {
                                     userCurrentTags.length === 0 ? '' :
@@ -230,7 +229,9 @@ export const Catalog = () => {
                                 defaultProducts.map(prod => (
                                     <div key={prod.product.id} className={s.content_item}>
                                         <div className={s.item_content}
-                                             onClick={() => {setCurrentProductToStore(prod)}}
+                                             onClick={() => {
+                                                 setCurrentProductToStore(prod)
+                                             }}
                                         >
                                             <div className={s.item_image}>
                                                 {
@@ -252,7 +253,9 @@ export const Catalog = () => {
                                             <div
                                                 className={s.item_price}>{r(fbts.c * prod.product.retailPrice) + ' ' + fbts.s}</div>
                                             <div className={s.item_cart}
-                                                 onClick={() => {addProductToCartHandler(prod)}}
+                                                 onClick={() => {
+                                                     addProductToCartHandler(prod)
+                                                 }}
                                             >
                                                 <img
                                                     src={Enumerable.from(cartProducts).select(n => n.product.id).contains(prod.product.id)

@@ -12,6 +12,8 @@ interface SupplyInvoiceStore {
     setCurrentSupplyInvoice: (value: SupplyInvoiceDTO) => void
     setProducts: (value: SupplyInvoiceProduct[]) => void
 
+    clearCurrent: () => void
+
     isCreating: boolean,
     setIsCreating: (value: boolean) => void
 
@@ -20,9 +22,24 @@ interface SupplyInvoiceStore {
 }
 
 const useSupplyInvoice = create<SupplyInvoiceStore>()(persist(devtools(immer((set, get) => ({
+    clearCurrent: () => {
+        set({
+            currentSupplyInvoice: {
+                supplyInvoiceProducts: [], supplyInvoice: {
+                    shopId: LocalStorage.shopId(),
+                    user: LocalStorage.userId(),
+                    description: '',
+                    additionalPrice: 0,
+                    deliveryPrice: 0
+                }
+            } as unknown as SupplyInvoiceDTO
+        })
+        set({isCreating: true})
+    },
+
     currentSupplyInvoice: {
         supplyInvoiceProducts: [], supplyInvoice: {
-            shopId: 1,
+            shopId: LocalStorage.shopId(),
             user: LocalStorage.userId(),
             description: '',
             additionalPrice: 0,

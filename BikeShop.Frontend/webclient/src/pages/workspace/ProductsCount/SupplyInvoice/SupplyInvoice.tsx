@@ -5,7 +5,6 @@ import {columns} from './SupplyInvoiceTableConfig'
 import {ChooseProductModal} from '../../../../features'
 import useSupplyInvoice from './models/SupplyInvoiceStore'
 import Enumerable from 'linq'
-import {SupplyInvoiceDTO} from '../../../../entities/models/Acts/SupplyInvoice/SupplyInvoiceDTO'
 import {Product, SupplyInvoiceAPI, useCurrency} from '../../../../entities'
 import {SupplyInvoiceProduct} from '../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
 import {useSnackbar} from "notistack"
@@ -21,6 +20,7 @@ export const SupplyInvoice = () => {
     const isCreating = useSupplyInvoice(s => s.isCreating)
     const setIsCreating = useSupplyInvoice(s => s.setIsCreating)
     const setProducts = useSupplyInvoice(s => s.setProducts)
+    const clearCurrent = useSupplyInvoice(s => s.clearCurrent)
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
@@ -190,14 +190,7 @@ export const SupplyInvoice = () => {
                     </Button>
                     <Button buttonDivWrapper={s.button_cancel}
                             onClick={() => {
-                                setCurrentSupplyInvoice({
-                                    supplyInvoiceProducts: [], supplyInvoice: {
-                                        shopId: 1,
-                                        user: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-                                        description: '',
-                                    }
-                                } as unknown as SupplyInvoiceDTO)
-                                setIsCreating(true)
+                                clearCurrent()
                             }}
                     >
                         Отмена
