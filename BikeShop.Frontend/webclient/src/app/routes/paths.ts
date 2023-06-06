@@ -10,6 +10,9 @@ export const BikeShopPaths = {
         PRODUCT: '/shop/catalog/:productId',
         PROFILE: '/shop/profile',
         ORDER: '/shop/order',
+        PUBLIC_OFFER: '/public-offer',
+        ABOUT_US: '/about-us',
+        DELIVERY_INFO: '/delivery'
     },
     WORKSPACE: {
         MAIN_PAGE: '/workspace/main-page',

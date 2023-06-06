@@ -1,14 +1,33 @@
 import {BikeShopPaths} from './paths'
 import {createBrowserRouter} from 'react-router-dom'
 import {
-    Cashbox, Catalog, CatalogProductItem, LoginPage, MainPage, Order, ProductCatalog,
-    Profile, RegistrationPage, Service, ShopMain, ShopWrapper, WorkCatalog,
-    StorageProductsTransfer, StuffProfile, AdminControl, InventarizationPage, SupplyInvoice
+    AdminControl,
+    Cashbox,
+    Catalog,
+    CatalogProductItem,
+    InventarizationPage,
+    LoginPage,
+    MainPage,
+    Order,
+    ProductCatalog,
+    Profile,
+    RegistrationPage,
+    Service,
+    ShopMain,
+    ShopWrapper,
+    StorageProductsTransfer,
+    StuffProfile,
+    SupplyInvoice,
+    WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
-import {BarcodeScannerListenerProvider}
-    from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
+import {
+    BarcodeScannerListenerProvider
+} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 import {CheckAuthEmployee} from "../providers/RouteProviders/CheckAuthEmployee"
+import PublicOfferPage from "../../pages/public/Shop/InfoPages/PublicOfferPage";
+import AboutUsPage from "../../pages/public/Shop/InfoPages/AboutUsPage";
+import DeliveryPayment from "../../pages/public/Shop/InfoPages/DeliveryPayment";
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -69,6 +88,24 @@ export const routes = createBrowserRouter([
         path: BikeShopPaths.SHOP.ORDER,
         element: <ShopWrapper>
             <Order/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.PUBLIC_OFFER,
+        element: <ShopWrapper>
+            <PublicOfferPage/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.ABOUT_US,
+        element: <ShopWrapper>
+            <AboutUsPage/>
+        </ShopWrapper>
+    },
+    {
+        path: BikeShopPaths.SHOP.DELIVERY_INFO,
+        element: <ShopWrapper>
+            <DeliveryPayment/>
         </ShopWrapper>
     },
 

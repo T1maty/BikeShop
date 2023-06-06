@@ -97,6 +97,7 @@ export const ShopCatalogTreeView = () => {
                              }}
                         >
                             {item.name}
+                            
                         </div>
                     </div>
                 </div>
