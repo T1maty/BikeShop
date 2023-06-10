@@ -9,7 +9,7 @@ namespace BikeShop.Payments.WebApi.Controllers
     [Produces("application/json")]
     [ApiController]
     [Route("financialinteraction")]
-    public class FinancialInteractionController
+    public class FinancialInteractionController : ControllerBase
     {
         private readonly IFinancialInteractionService _interactionService;
 

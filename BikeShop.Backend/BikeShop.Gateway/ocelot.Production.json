@@ -2030,6 +2030,40 @@
 	
 	
 	{
+      "UpstreamPathTemplate": "/api/order/getbyshop",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/order/getbyshop",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/order/publiccreate",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/order/publiccreate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	
+	
+	
+	
+	{
       "UpstreamPathTemplate": "/printhub",
       "DownstreamPathTemplate": "/printhub",
       "DownstreamScheme": "ws",

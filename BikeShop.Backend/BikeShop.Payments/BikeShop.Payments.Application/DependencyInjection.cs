@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddScoped<ICurrencyService, CurrencyService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IFinancialInteractionService, FinancialInteractionService>();
+        services.AddScoped<IOrderService, OrderService>();
 
         return services;
     }
