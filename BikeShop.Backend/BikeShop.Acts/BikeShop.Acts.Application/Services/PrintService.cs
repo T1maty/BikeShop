@@ -24,9 +24,10 @@ namespace BikeShop.Acts.Application.Services
             _fileservice = fileservice;
         }
 
-        public async Task<PrintQueue> AddQueue(int actId, string dataName, string printSettings, int? prioriry, int agentId, IFormFile? imageFile)
+        public async Task<PrintQueue> AddQueue(int actId, string dataName, string? printSettings, int? prioriry, int agentId, IFormFile? imageFile)
         {
             if (prioriry == null) prioriry = 100;
+            if (string.IsNullOrEmpty(printSettings)) printSettings = (await _context.PrintSettings.Where(n=>n.AgentId ==agentId).Where(n=>n.Name == dataName).FirstOrDefaultAsync()).Settings;
             string url = "";
             if(imageFile == null)
             {

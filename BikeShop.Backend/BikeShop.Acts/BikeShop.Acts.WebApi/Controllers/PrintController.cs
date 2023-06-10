@@ -24,7 +24,7 @@ namespace BikeShop.Acts.WebApi.Controllers
         }
 
         [HttpPost("addqueue")]
-        public async Task<PrintQueue> AddQueue(int actId, string dataName, string printSettings, int? prioriry, int agentId, [FromForm] IFormFile? imageFile)
+        public async Task<PrintQueue> AddQueue(int actId, string dataName, string? printSettings, int? prioriry, int agentId, [FromForm] IFormFile? imageFile)
         {
             var ent = await _printService.AddQueue(actId, dataName, printSettings, prioriry, agentId, imageFile);
             await _pq.Trigger(await GetQueue(agentId), _hubContext);
