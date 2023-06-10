@@ -43,7 +43,7 @@ const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, g
         state.treeViewTags.push(tag)
     }),
     removeTreeViewTag: (tagId) => set(state => {
-        state.treeViewTags.filter((value) => {
+        state.treeViewTags = state.treeViewTags.filter((value) => {
             return value.id != tagId
         })
     }),

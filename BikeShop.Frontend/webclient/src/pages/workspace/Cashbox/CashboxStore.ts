@@ -28,18 +28,16 @@ const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get)
         isLoading: value
     }),
 
-    bill: {} as NewBillDTO,
+    bill: {products: []} as unknown as NewBillDTO,
     user: null,
     setUser: (user) => set({
         user: user
     }),
 
     setProducts: (value) => {
-        set(state => {
-            let data = value.filter(n => n.quantity != 0)
-            data.forEach(n => n.total = n.price * n.quantity - n.discount)
-            state.bill.products = data
-        })
+        let data = value.filter(n => n.quantity != 0)
+        data.forEach(n => n.total = n.price * n.quantity - n.discount)
+        set({bill: {...get().bill, products: data}})
     },
     addProduct: (n) => {
         let bill = get().bill

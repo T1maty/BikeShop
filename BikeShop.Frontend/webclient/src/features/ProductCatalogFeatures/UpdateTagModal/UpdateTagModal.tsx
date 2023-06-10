@@ -40,6 +40,8 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
     }, [tag])
 
     const onSubmit: SubmitHandler<UpdateTag> = (data: UpdateTag) => {
+        data.isCollapsed = tag.isCollapsed
+        data.parentId = tag.parentId
         update(data).then((r) => {
             setClose()
             props.onSuccess ? props.onSuccess(data) : true

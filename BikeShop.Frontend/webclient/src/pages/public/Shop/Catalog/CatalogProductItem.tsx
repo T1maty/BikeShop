@@ -42,8 +42,8 @@ export const CatalogProductItem = () => {
     const [selectedOptionVariant, setSelectedOptionVariant] = useState<SelectedOptionVariantType[]>([])
 
     // для стилей описания товара
-    const [isCharacteristic, setIsCharacteristic] = useState<boolean>(true)
-    const [isDetails, setIsDetails] = useState<boolean>(false)
+    const [isCharacteristic, setIsCharacteristic] = useState<boolean>(false)
+    const [isDetails, setIsDetails] = useState<boolean>(true)
     // const [isDelivery, setIsDelivery] = useState<boolean>(false)
 
     // преобразование галереи под нужный тип библиотеки
@@ -121,7 +121,7 @@ export const CatalogProductItem = () => {
 
                     <div className={s.product}>
                         <div className={s.product_images}>
-                            <ImageGallery items={myImages && myImages.length > 0 ? myImages : noImages}
+                            <ImageGallery items={myImages}
                                           showPlayButton={false}
                                           showIndex={true}
                                           showNav={true}

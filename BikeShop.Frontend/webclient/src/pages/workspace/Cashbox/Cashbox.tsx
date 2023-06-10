@@ -12,7 +12,6 @@ import {useTranslation} from "react-i18next"
 import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider"
-import {useBarcode} from "../../../app/providers/BarcodeScannerListenerProvider/useBarcode"
 
 export const Cashbox = () => {
 
@@ -27,7 +26,6 @@ export const Cashbox = () => {
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const logUser = useAuth(s => s.user)
-    const lastBarcode = useBarcode(s => s.lastBarcode)
 
     const sum = useCashboxStore(s => s.sum)
     const setSum = useCashboxStore(s => s.setSum)
@@ -60,7 +58,8 @@ export const Cashbox = () => {
         })
     }
 
-    useEffect(() => {
+    const onBarcodeHandler = (lastBarcode: string) => {
+        enqueueSnackbar(`Штрихкод ${lastBarcode}`, {variant: 'default', autoHideDuration: 3000})
         if (lastBarcode == '') return
         console.log('Barcode: ', lastBarcode)
         CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
@@ -69,7 +68,7 @@ export const Cashbox = () => {
         }).catch(() => {
             enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
         })
-    }, [lastBarcode])
+    }
 
     useEffect(() => {
         let sum = 0
@@ -83,7 +82,7 @@ export const Cashbox = () => {
         return <LoaderScreen variant={'ellipsis'}/>
     } else {
         return (
-            <BarcodeScannerListenerProvider>
+            <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
                 <div className={s.cashboxMainBlock}>
 
                     <PrintModal open={openPrint}

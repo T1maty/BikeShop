@@ -1,7 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import s from "./MainPage.module.scss"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {BillWithProducts, LocalStorage, PaymentData, ShiftAPI, useAuth, useCurrency, User} from "../../../entities"
+import {
+    BillWithProducts,
+    CatalogAPI,
+    LocalStorage,
+    PaymentData,
+    ShiftAPI,
+    useAuth,
+    useCurrency,
+    User
+} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {AsyncSelectSearchProduct, Button, DeleteButton, LoaderScreen} from '../../../shared/ui'
 import {
@@ -26,6 +35,9 @@ import {useSnackbar} from "notistack"
 import {CheckForShop} from "../../../widgets"
 import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 import useSupplyInvoice from "../ProductsCount/SupplyInvoice/models/SupplyInvoiceStore";
+import {
+    BarcodeScannerListenerProvider
+} from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
 
 type ShiftStatusTypes = 'Open' | 'Closed' | 'Pause'
 
@@ -143,6 +155,18 @@ export const MainPage = () => {
         }
     }
 
+    const onBarcodeHandler = (lastBarcode: string) => {
+        enqueueSnackbar(`Штрихкод ${lastBarcode}`, {variant: 'default', autoHideDuration: 3000})
+        if (lastBarcode == '') return
+        console.log('Barcode: ', lastBarcode)
+        CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
+            enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
+            addProduct(n.data)
+        }).catch(() => {
+            enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
+        })
+    }
+
     useEffect(() => {
         let sum = 0
         bill.products?.forEach(n => {
@@ -160,221 +184,223 @@ export const MainPage = () => {
     } else {
 
         return (
-            <div className={s.mainPageMainBlock}>
+            <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
+                <div className={s.mainPageMainBlock}>
 
-                <CreateProductModal/>
-                <EditProductCardModal/>
+                    <CreateProductModal/>
+                    <EditProductCardModal/>
 
-                <EncashmentModal/>
-                <GetPutMoneyModal/>
-                <EndWorkDayModal/>
+                    <EncashmentModal/>
+                    <GetPutMoneyModal/>
+                    <EndWorkDayModal/>
 
-                <EmployeeSalaryModal/>
+                    <EmployeeSalaryModal/>
 
-                <div className={s.mainPage_header}>
-                    <div className={s.mainPage_header_leftSide}>
-                        <div className={s.header_leftSide_deal}>
-                            <Button onClick={() => {
-                                navigate(BikeShopPaths.WORKSPACE.SERVICE)
-                            }}>
-                                Новый ремонт
-                            </Button>
-                            <Button onClick={() => {
-                                navigate(BikeShopPaths.WORKSPACE.CASHBOX)
-                            }}>
-                                Касса
-                            </Button>
-                            {/*<Button onClick={() => {*/}
-                            {/*    setOpenEmployeeSalaryModal(true)*/}
-                            {/*}}>*/}
-                            {/*    Новый заказ*/}
-                            {/*</Button>*/}
-                            <Button onClick={() => {
-                                setOpenGetPutMoneyModal(true)
-                            }}>
-                                Акт внесения
-                            </Button>
-                            <Button onClick={() => {
-                                setOpenEncashmentModal(true)
-                            }}>
-                                Инкассация
-                            </Button>
-                        </div>
-
-                        <div className={s.header_leftSide_info}>
-                            <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
-                                Каталог товаров
-                            </Button>
-                            <Button onClick={() => {
-                                navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
-                            }}>
-                                Каталог услуг
-                            </Button>
-                            <Button onClick={() => {
-                                clearCurrentSupplyInvoice()
-                                navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
-                            }}>
-                                Новая приходная накладная
-                            </Button>
-                        </div>
-                    </div>
-
-                    <div className={s.mainPage_header_rightSide}>
-                        Здесь будет что-то интересное
-                    </div>
-                </div>
-
-
-                <div className={s.mainPage_content}>
-                    <div className={s.content_leftSide}>
-                        <div className={s.leftSide_title}>
-                            Персональные задания
-                        </div>
-                        <div className={s.leftSide_tasks}>
-                            {
-                                tasks.map(t => {
-                                    return (
-                                        <div key={t.id} className={s.tasks_taskItem}>
-                                            {t.task}
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-
-                    <div className={s.content_rightSide}>
-                        <div className={s.rightSide_top}>
-                            <div className={s.select}>
-                                <AsyncSelectSearchProduct onSelect={addProduct}/>
-                            </div>
-                            <div className={s.rightSide_top_search}>
-
-                                {
-                                    //<ClientSearchModal setIsComponentVisible={setOpenClientSearch} isVisible={openClientSearch} onSuccess={handler}/>
-                                    //<ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
-                                }
-                                <Button buttonDivWrapper={s.search_chooseClientButton}
-                                        onClick={() => {
-                                            setOpenClientModal(true)
-                                        }}
-                                >
-                                    Выбрать клиента
+                    <div className={s.mainPage_header}>
+                        <div className={s.mainPage_header_leftSide}>
+                            <div className={s.header_leftSide_deal}>
+                                <Button onClick={() => {
+                                    navigate(BikeShopPaths.WORKSPACE.SERVICE)
+                                }}>
+                                    Мастерская
                                 </Button>
-                                <div className={s.search_searchInput}>
-                                    {user && user.lastName} {user && user.firstName} {user && user.patronymic}
-                                </div>
+                                <Button onClick={() => {
+                                    navigate(BikeShopPaths.WORKSPACE.CASHBOX)
+                                }}>
+                                    Касса
+                                </Button>
+                                {/*<Button onClick={() => {*/}
+                                {/*    setOpenEmployeeSalaryModal(true)*/}
+                                {/*}}>*/}
+                                {/*    Новый заказ*/}
+                                {/*</Button>*/}
+                                <Button onClick={() => {
+                                    setOpenGetPutMoneyModal(true)
+                                }}>
+                                    Акт внесения
+                                </Button>
+                                <Button onClick={() => {
+                                    setOpenEncashmentModal(true)
+                                }}>
+                                    Инкассация
+                                </Button>
                             </div>
 
-                            <div className={s.rightSide_top_info}>
+                            <div className={s.header_leftSide_info}>
+                                <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
+                                    Каталог товаров
+                                </Button>
+                                <Button onClick={() => {
+                                    navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
+                                }}>
+                                    Каталог услуг
+                                </Button>
+                                <Button onClick={() => {
+                                    clearCurrentSupplyInvoice()
+                                    navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                }}>
+                                    Новая приходная накладная
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className={s.mainPage_header_rightSide}>
+                            Здесь будет что-то интересное
+                        </div>
+                    </div>
+
+
+                    <div className={s.mainPage_content}>
+                        <div className={s.content_leftSide}>
+                            <div className={s.leftSide_title}>
+                                Персональные задания
+                            </div>
+                            <div className={s.leftSide_tasks}>
                                 {
-                                    bill.products?.map(n => {
+                                    tasks.map(t => {
                                         return (
-                                            <div className={s.cashbox_table_wrapper}>
-                                                <div className={s.cashbox_table_left}>
-                                                    <div className={s.cashbox_table_name}>
-                                                        {n.name}
-                                                    </div>
-                                                    <div className={s.cashbox_table_price}>
-                                                        {n.price * fbts.c + fbts.s}
-                                                    </div>
-                                                    <div className={s.cashbox_table_total}>
-                                                        {n.total * fbts.c + fbts.s}
-                                                    </div>
-                                                </div>
-                                                <DeleteButton size={30}
-                                                              onClick={() => {
-                                                                  setData(bill.products.filter(h => h.productId != n.productId))
-                                                              }}
-                                                />
+                                            <div key={t.id} className={s.tasks_taskItem}>
+                                                {t.task}
                                             </div>
                                         )
                                     })
                                 }
                             </div>
-
-                            <div className={s.rightSide_top_result}>
-                                <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                        onClick={() => {
-                                            navigate(BikeShopPaths.WORKSPACE.CASHBOX)
-                                        }}>
-                                    Открыть кассу
-                                </Button>
-                                <Button buttonDivWrapper={s.result_cancelBtn}
-                                        onClick={() => {
-                                        }}
-                                >
-                                    X
-                                </Button>
-                                <div className={s.result_span}>
-                                    {sum * fbts.c + fbts.s}
-                                </div>
-                                <PayModal open={openPay}
-                                          setOpen={setOpenPay}
-                                          user={user}
-                                          summ={sum}
-                                          result={paymentResultHandler}
-                                />
-                                <PrintModal open={openPrint}
-                                            setOpen={setOpenPrint}>
-                                    <CheckForShop children={res!}/>
-                                </PrintModal>
-                                <Button buttonDivWrapper={s.result_payBtn}
-                                        onClick={() => {
-                                            setOpenPay(true)
-                                        }}
-                                >
-                                    К оплате
-                                </Button>
-                            </div>
                         </div>
 
-                        <div className={s.rightSide_bottom}>
-                            <div className={s.bottom_left}>
-                                <div>Касса: {shop?.cashboxCash ? r(shop?.cashboxCash * fbts.c) + ' ' + fbts.s : 'Ошибка'}</div>
-                                <div>Терминал: {shop?.cashboxCash ? r(shop?.cashboxTerminal * fbts.c) + ' ' + fbts.s : 'Ошибка'}</div>
-                            </div>
+                        <div className={s.content_rightSide}>
+                            <div className={s.rightSide_top}>
+                                <div className={s.select}>
+                                    <AsyncSelectSearchProduct onSelect={addProduct}/>
+                                </div>
+                                <div className={s.rightSide_top_search}>
 
-                            <div className={s.bottom_right}>
-                                <div className={userShiftStatus?.lastAction.action === 'Open' ? s.shiftStatus_open :
-                                    userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
-                                        s.shiftStatus_closed}
-                                >
                                     {
-                                        userShiftStatus?.lastAction.action === 'Open' ? 'Смена открыта' :
-                                            userShiftStatus?.lastAction.action === 'Pause' ? 'Пауза' : 'Смена закрыта'
+                                        //<ClientSearchModal setIsComponentVisible={setOpenClientSearch} isVisible={openClientSearch} onSuccess={handler}/>
+                                        //<ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
+                                    }
+                                    <Button buttonDivWrapper={s.search_chooseClientButton}
+                                            onClick={() => {
+                                                setOpenClientModal(true)
+                                            }}
+                                    >
+                                        Выбрать клиента
+                                    </Button>
+                                    <div className={s.search_searchInput}>
+                                        {user && user.lastName} {user && user.firstName} {user && user.patronymic}
+                                    </div>
+                                </div>
+
+                                <div className={s.rightSide_top_info}>
+                                    {
+                                        bill.products?.map(n => {
+                                            return (
+                                                <div className={s.cashbox_table_wrapper}>
+                                                    <div className={s.cashbox_table_left}>
+                                                        <div className={s.cashbox_table_name}>
+                                                            {n.name}
+                                                        </div>
+                                                        <div className={s.cashbox_table_price}>
+                                                            {n.price * fbts.c + fbts.s}
+                                                        </div>
+                                                        <div className={s.cashbox_table_total}>
+                                                            {n.total * fbts.c + fbts.s}
+                                                        </div>
+                                                    </div>
+                                                    <DeleteButton size={30}
+                                                                  onClick={() => {
+                                                                      setData(bill.products.filter(h => h.productId != n.productId))
+                                                                  }}
+                                                    />
+                                                </div>
+                                            )
+                                        })
                                     }
                                 </div>
-                                <div className={s.shiftTime}>
-                                    <div style={{textDecoration: 'underline'}}>Время смены:</div>
-                                    <div><ShiftTime/></div>
-                                </div>
-                                <div className={s.shiftTiming}>
-                                    <div>
-                                        <div>Открыто в:</div>
-                                        <div>10:00</div>
-                                    </div>
-                                    <div>
-                                        <div>До конца смены:</div>
-                                        <div>10:00</div>
-                                    </div>
-                                </div>
-                                <div className={s.buttons}>
-                                    {getShiftButton()}
 
-                                    <Button buttonDivWrapper={s.endWorkDay_button}
-                                            onClick={endShiftHandler}
+                                <div className={s.rightSide_top_result}>
+                                    <Button buttonDivWrapper={s.result_chooseCashboxBtn}
+                                            onClick={() => {
+                                                navigate(BikeShopPaths.WORKSPACE.CASHBOX)
+                                            }}>
+                                        Открыть кассу
+                                    </Button>
+                                    <Button buttonDivWrapper={s.result_cancelBtn}
+                                            onClick={() => {
+                                            }}
                                     >
-                                        Закончить смену
+                                        X
+                                    </Button>
+                                    <div className={s.result_span}>
+                                        {sum * fbts.c + fbts.s}
+                                    </div>
+                                    <PayModal open={openPay}
+                                              setOpen={setOpenPay}
+                                              user={user}
+                                              summ={sum}
+                                              result={paymentResultHandler}
+                                    />
+                                    <PrintModal open={openPrint}
+                                                setOpen={setOpenPrint}>
+                                        <CheckForShop children={res!}/>
+                                    </PrintModal>
+                                    <Button buttonDivWrapper={s.result_payBtn}
+                                            onClick={() => {
+                                                setOpenPay(true)
+                                            }}
+                                    >
+                                        К оплате
                                     </Button>
                                 </div>
                             </div>
+
+                            <div className={s.rightSide_bottom}>
+                                <div className={s.bottom_left}>
+                                    <div>Касса: {shop?.cashboxCash != undefined ? r(shop?.cashboxCash * fbts.c) + ' ' + fbts.s : 'Ошибка'}</div>
+                                    <div>Терминал: {shop?.cashboxCash != undefined ? r(shop?.cashboxTerminal * fbts.c) + ' ' + fbts.s : 'Ошибка'}</div>
+                                </div>
+
+                                <div className={s.bottom_right}>
+                                    <div className={userShiftStatus?.lastAction.action === 'Open' ? s.shiftStatus_open :
+                                        userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
+                                            s.shiftStatus_closed}
+                                    >
+                                        {
+                                            userShiftStatus?.lastAction.action === 'Open' ? 'Смена открыта' :
+                                                userShiftStatus?.lastAction.action === 'Pause' ? 'Пауза' : 'Смена закрыта'
+                                        }
+                                    </div>
+                                    <div className={s.shiftTime}>
+                                        <div style={{textDecoration: 'underline'}}>Время смены:</div>
+                                        <div><ShiftTime/></div>
+                                    </div>
+                                    <div className={s.shiftTiming}>
+                                        <div>
+                                            <div>Открыто в:</div>
+                                            <div>10:00</div>
+                                        </div>
+                                        <div>
+                                            <div>До конца смены:</div>
+                                            <div>10:00</div>
+                                        </div>
+                                    </div>
+                                    <div className={s.buttons}>
+                                        {getShiftButton()}
+
+                                        <Button buttonDivWrapper={s.endWorkDay_button}
+                                                onClick={endShiftHandler}
+                                        >
+                                            Закончить смену
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </BarcodeScannerListenerProvider>
         )
     }
 }

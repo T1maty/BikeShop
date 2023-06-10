@@ -13,12 +13,32 @@ interface createTagModalStore {
     targetTag: ProductTag
 
     updateTag: (tag: UpdateTag) => Promise<AxiosResponse>
+    moveTag: (tag: ProductTag, parentId: string, onSuccess: (r: ProductTag) => void, onFail: () => void) => void
 }
 
 const useUpdateTagModal = create<createTagModalStore>()(persist(devtools(immer((set) => ({
     open: false,
     targetTag: {} as ProductTag,
 
+    moveTag: (tag, parentId, onSuccess, onFail) => {
+        let data: UpdateTag = {
+            id: tag.id,
+            name: tag.name,
+            parentId: parentId,
+            isCollapsed: tag.isCollapsed,
+            isRetailVisible: tag.isRetailVisible,
+            isB2BVisible: tag.isB2BVisible,
+            isUniversal: tag.isUniversal,
+            sortOrder: tag.sortOrder,
+        }
+        $api.put('/tag/update', data).then((r) => {
+            let tag1 = tag
+            tag1.parentId = parentId
+            onSuccess(tag1)
+        }).catch(() => {
+            onFail()
+        })
+    },
     openTagModal: (tag) => {
         set({open: true})
         set({targetTag: tag})

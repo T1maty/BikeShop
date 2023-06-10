@@ -13,5 +13,8 @@ namespace BikeShop.Acts.Application.Interfaces
         public Task<PrintQueue> AddQueue(int actId, string dataName, string printSettings, int? prioriry, int agentId, IFormFile? imageFile);
         public Task<List<PrintQueue>> GetQueue(int AgentId);
         public Task DeleteQueue(int QueueId);
+        public Task<List<PrintSettings>> GetAllPrintSettings();
+        public Task<PrintSettings> CreatePrinterSettings(int AgentId, string Name, string Settings);
+        public Task<PrintSettings> UpdatePrinterSettings(int Id, int AgentId, string Name, string Settings);
     }
 }

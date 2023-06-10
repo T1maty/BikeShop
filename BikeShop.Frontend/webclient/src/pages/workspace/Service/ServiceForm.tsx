@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput, ControlledCustomTextarea} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
-import {ServiceFormModel, useCurrency, User} from "../../../entities"
+import {CatalogAPI, LocalStorage, ServiceFormModel, useCurrency, User} from "../../../entities"
 import {PrintModal, SelectProductModal, SelectWorkModal} from "../../../features"
 import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
 import useService from "./ServiceStore"
@@ -13,7 +13,11 @@ import Select from "react-select"
 import ServiceTableWork from "./ServiceTableWork"
 import ServiceTableProduct from "./ServiceTableProduct"
 import {CheckForServiceWork} from "../../../widgets"
-import {ServiceSticker} from "../../../widgets/workspace/WorkActs/ServiceSticker"
+import {ServiceSticker} from "../../../widgets/workspace/Invoices/Service/ServiceSticker"
+import {
+    BarcodeScannerListenerProvider
+} from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
+import useSelectProduct from "../SelectProductWork/SelectProductStore";
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -32,6 +36,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const setCurrentService = useService(s => s.setCurrentService)
     const addNewService = useService(s => s.addNewService)
     const updateService = useService(s => s.updateService)
+    const conv = useSelectProduct(s => s.convert)
 
     const [openClientModal, setOpenClientModal] = useState(false)
     const [summProducts, setSummProducts] = useState(0)
@@ -125,6 +130,31 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
         }
     }, [currentService])
 
+    const onBarcodeHandler = (lastBarcode: string) => {
+        enqueueSnackbar(`Штрихкод ${lastBarcode}`, {variant: 'default', autoHideDuration: 3000})
+
+        console.log('Barcode: ', lastBarcode)
+        CatalogAPI.getProductByBarcode(lastBarcode).then(r => {
+            enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
+            let prods = formControl.getValues('serviceProducts')
+
+            let actual = prods.find(n => n.productId === r.data.id)
+            if (actual != undefined) {
+                actual.quantity++
+            } else {
+                let item = conv(r.data, selectedUserId)
+                item.userId = LocalStorage.userId()!
+                item.quantity = 1
+                prods.push(item)
+            }
+
+            formControl.setValue('serviceProducts', prods)
+
+        }).catch(() => {
+            enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
+        })
+    }
+
     useEffect(() => {
         if (errorStatus === 'success') {
             enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
@@ -135,142 +165,146 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     }, [errorStatus])
 
     return (
-        <div className={s.service_rightSide}>
-            <PrintModal open={printAct}
-                        setOpen={setPrintAct}
-                        children={<CheckForServiceWork children={currentService!}/>}
-            />
-            <PrintModal open={printSticker}
-                        setOpen={setPrintSticker}
-                        children={<ServiceSticker children={currentService!}/>}
-            />
-            <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                <ControlledCustomInput name={'name'}
-                                       placeholder={'Техника'}
-                                       control={formControl}
-                                       rules={{required: Errors[0].name}}
-                                       divClassName={s.rightSide_stuffInput}
-                                       disabled={currentService === null && !isCreating}
+        <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
+            <div className={s.service_rightSide}>
+
+                <PrintModal open={printAct}
+                            setOpen={setPrintAct}
+                            children={<CheckForServiceWork children={currentService!}/>}
                 />
-                <div className={s.rightSide_infoFields}>
-                    <div className={s.infoFields_content}>
-                        <ControlledCustomTextarea name={'clientDescription'}
-                                                  placeholder={'Детальное описание'}
-                                                  control={formControl}
-                                                  rules={{required: Errors[0].name}}
-                                                  divClassName={s.content_detailsInput}
-                                                  disabled={currentService === null && !isCreating}
-                        />
-                        <div className={s.content_selectMaster}>
-                            <Controller
-                                name={'userMasterId'}
-                                control={formControl.control}
-                                render={({field}: any) =>
-                                    <Select
-                                        className={s.select_box}
-                                        placeholder={'Мастер'}
-                                        options={masters}
-                                        isDisabled={currentService === null && !isCreating}
-                                        isSearchable
-                                        value={setMaster(field.value)}
-                                        onChange={(value: any) => {
-                                            field.onChange(value.id)
-                                        }}
-                                        noOptionsMessage={() => 'Мастер не найден'}
-                                        getOptionLabel={label => label!.firstName}
-                                        getOptionValue={value => value!.firstName}
-                                    />
-                                }
+                <PrintModal open={printSticker}
+                            setOpen={setPrintSticker}
+                            children={<ServiceSticker children={currentService!}/>}
+                />
+
+                <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                    <ControlledCustomInput name={'name'}
+                                           placeholder={'Техника'}
+                                           control={formControl}
+                                           rules={{required: Errors[0].name}}
+                                           divClassName={s.rightSide_stuffInput}
+                                           disabled={currentService === null && !isCreating}
+                    />
+                    <div className={s.rightSide_infoFields}>
+                        <div className={s.infoFields_content}>
+                            <ControlledCustomTextarea name={'clientDescription'}
+                                                      placeholder={'Детальное описание'}
+                                                      control={formControl}
+                                                      rules={{required: Errors[0].name}}
+                                                      divClassName={s.content_detailsInput}
+                                                      disabled={currentService === null && !isCreating}
                             />
-                        </div>
+                            <div className={s.content_selectMaster}>
+                                <Controller
+                                    name={'userMasterId'}
+                                    control={formControl.control}
+                                    render={({field}: any) =>
+                                        <Select
+                                            className={s.select_box}
+                                            placeholder={'Мастер'}
+                                            options={masters}
+                                            isDisabled={currentService === null && !isCreating}
+                                            isSearchable
+                                            value={setMaster(field.value)}
+                                            onChange={(value: any) => {
+                                                field.onChange(value.id)
+                                            }}
+                                            noOptionsMessage={() => 'Мастер не найден'}
+                                            getOptionLabel={label => label!.firstName}
+                                            getOptionValue={value => value!.firstName}
+                                        />
+                                    }
+                                />
+                            </div>
 
-                        <div className={s.content_buttons}>
-                            <div className={s.content_saveBtn}>
-                                {
-                                    isCreating ?
-                                        <Button className={s.content_saveBtn} type={'submit'}
-                                                disabled={!formControl.formState.isDirty}>Сохранить</Button>
-                                        :
-                                        formControl.getValues('id') > 0 ?
+                            <div className={s.content_buttons}>
+                                <div className={s.content_saveBtn}>
+                                    {
+                                        isCreating ?
                                             <Button className={s.content_saveBtn} type={'submit'}
-                                                    disabled={!formControl.formState.isDirty}>Обновить</Button>
+                                                    disabled={!formControl.formState.isDirty}>Сохранить</Button>
                                             :
-                                            <Button className={s.content_saveBtn}
-                                                    onClick={() => {
-                                                        formControl.reset()
-                                                        setIsCreating(true)
-                                                        setOpenClientModal(true)
-                                                    }}
-                                            >
-                                                Создать
-                                            </Button>
-                                }
-                            </div>
-                            <div className={s.content_sumField}>
-                                {r((summWorks + summProducts) * fbts.c) + fbts.s}
+                                            formControl.getValues('id') > 0 ?
+                                                <Button className={s.content_saveBtn} type={'submit'}
+                                                        disabled={!formControl.formState.isDirty}>Обновить</Button>
+                                                :
+                                                <Button className={s.content_saveBtn}
+                                                        onClick={() => {
+                                                            formControl.reset()
+                                                            setIsCreating(true)
+                                                            setOpenClientModal(true)
+                                                        }}
+                                                >
+                                                    Создать
+                                                </Button>
+                                    }
+                                </div>
+                                <div className={s.content_sumField}>
+                                    {r((summWorks + summProducts) * fbts.c) + fbts.s}
+                                </div>
                             </div>
                         </div>
+                        <div className={s.infoFields_clientCard}>
+                            <ControlledClientCard name={'clientId'}
+                                                  control={formControl}
+                                                  disabled={!isCreating}
+                                                  state={openClientModal}
+                                                  setState={setOpenClientModal}
+                                                  rules={{validate: (value: User) => value?.id !== null}}
+                            />
+                            <Button buttonDivWrapper={s.clientCard_cancelButton}
+                                    disabled={currentService === null && !isCreating}
+                                    onClick={clearAllServiceInfo}
+                            >
+                                Отмена
+                            </Button>
+                        </div>
                     </div>
-                    <div className={s.infoFields_clientCard}>
-                        <ControlledClientCard name={'clientId'}
-                                              control={formControl}
-                                              disabled={!isCreating}
-                                              state={openClientModal}
-                                              setState={setOpenClientModal}
-                                              rules={{validate: (value: User) => value?.id !== null}}
-                        />
-                        <Button buttonDivWrapper={s.clientCard_cancelButton}
-                                disabled={currentService === null && !isCreating}
-                                onClick={clearAllServiceInfo}
-                        >
-                            Отмена
-                        </Button>
-                    </div>
-                </div>
 
-                <div className={s.rightSide_tables}>
-                    <Controller
-                        name={'serviceProducts'}
-                        control={formControl.control}
-                        render={({field}: any) =>
-                            <>
-                                <ServiceTableProduct data={field.value}
-                                                     serviceTableCallback={() => {
-                                                         setOpenSelectProductModal(true)
-                                                     }}
-                                                     disabledButton={(currentService === null && !isCreating)}
-                                                     summ={summProducts}
-                                                     setData={checkForZero(field.onChange)}
-                                />
-                                <SelectProductModal products={field.value}
-                                                    setProducts={checkForZero(field.onChange)}
-                                                    defaultMasterId={selectedUserId}
-                                />
-                            </>
-                        }
-                    />
-                    <Controller
-                        name={'serviceWorks'}
-                        control={formControl.control}
-                        render={({field}: any) =>
-                            <>
-                                <ServiceTableWork data={field.value}
-                                                  setData={checkForZero(field.onChange)}
-                                                  serviceTableCallback={() => {
-                                                      setOpenSelectWorkModal(true)
-                                                  }}
-                                                  disabledButton={(currentService === null && !isCreating)}
-                                                  summ={summWorks}
-                                />
-                                <SelectWorkModal works={field.value} setWorks={checkForZero(field.onChange)}
-                                                 defaultMasterId={selectedUserId}
-                                                 serviceId={formControl.getValues('id')}
-                                />
-                            </>
-                        }
-                    />
-                </div>
-            </form>
-        </div>
+                    <div className={s.rightSide_tables}>
+                        <Controller
+                            name={'serviceProducts'}
+                            control={formControl.control}
+                            render={({field}: any) =>
+                                <>
+                                    <ServiceTableProduct data={field.value}
+                                                         serviceTableCallback={() => {
+                                                             setOpenSelectProductModal(true)
+                                                         }}
+                                                         disabledButton={(currentService === null && !isCreating)}
+                                                         summ={summProducts}
+                                                         setData={checkForZero(field.onChange)}
+                                    />
+                                    <SelectProductModal products={field.value}
+                                                        setProducts={checkForZero(field.onChange)}
+                                                        defaultMasterId={selectedUserId}
+                                    />
+                                </>
+                            }
+                        />
+                        <Controller
+                            name={'serviceWorks'}
+                            control={formControl.control}
+                            render={({field}: any) =>
+                                <>
+                                    <ServiceTableWork data={field.value}
+                                                      setData={checkForZero(field.onChange)}
+                                                      serviceTableCallback={() => {
+                                                          setOpenSelectWorkModal(true)
+                                                      }}
+                                                      disabledButton={(currentService === null && !isCreating)}
+                                                      summ={summWorks}
+                                    />
+                                    <SelectWorkModal works={field.value} setWorks={checkForZero(field.onChange)}
+                                                     defaultMasterId={selectedUserId}
+                                                     serviceId={formControl.getValues('id')}
+                                    />
+                                </>
+                            }
+                        />
+                    </div>
+                </form>
+            </div>
+        </BarcodeScannerListenerProvider>
     )
 }

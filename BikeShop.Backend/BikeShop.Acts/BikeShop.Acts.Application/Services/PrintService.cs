@@ -54,15 +54,41 @@ namespace BikeShop.Acts.Application.Services
             return ent;
         }
 
+        public async Task<PrintSettings> CreatePrinterSettings(int AgentId, string Name, string Settings)
+        {
+            var ent = new PrintSettings { Settings= Settings, Name = Name, AgentId = AgentId };
+            await _context.PrintSettings.AddAsync(ent);
+            await _context.SaveChangesAsync(new CancellationToken());
+            return ent;
+        }
+
         public async Task DeleteQueue(int QueueId)
         {
             _context.PrintQueues.Remove(await _context.PrintQueues.FindAsync(QueueId));
             await _context.SaveChangesAsync(new CancellationToken());
         }
 
+        public async Task<List<PrintSettings>> GetAllPrintSettings()
+        {
+            return await _context.PrintSettings.ToListAsync();
+        }
+
         public async Task<List<PrintQueue>> GetQueue(int AgentId)
         {
             return await _context.PrintQueues.Where(n=>n.AgentId == AgentId).ToListAsync();
+        }
+
+        public async Task<PrintSettings> UpdatePrinterSettings(int Id, int AgentId, string Name, string Settings)
+        {
+            var ent = await _context.PrintSettings.FindAsync(Id);
+            if (ent == null) { throw new Exception(); }
+
+            ent.Name = Name;
+            ent.AgentId = AgentId;
+            ent.Settings = Settings;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+            return ent;
         }
     }
 }

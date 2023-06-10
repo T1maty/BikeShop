@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {ProductTag} from "../../../../entities"
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
 import useCreateTagModal from '../../../../features/ProductCatalogFeatures/CreateTagModal/CreateTagModalStore'
@@ -6,6 +6,8 @@ import useTagTreeView from './TagTreeViewStore'
 import useCreateProductModal
     from "../../../../features/ProductCatalogFeatures/CreateProductModal/CreateProductModalStore"
 import useUpdateTagModal from '../../../../features/ProductCatalogFeatures/UpdateTagModal/UpdateTagModalStore'
+import {ChooseProductTagModal} from "../../../../features";
+import {useSnackbar} from "notistack";
 
 export const TagTreeViewContextMenu = () => {
 
@@ -20,8 +22,17 @@ export const TagTreeViewContextMenu = () => {
     const contextXY = useTagTreeView(s => s.contextMenuXY)
 
     const treeViewData = useTagTreeView(s => s.treeViewTags)
+    const removeTreeViewTag = useTagTreeView(s => s.removeTreeViewTag)
+    const addTreeViewTag = useTagTreeView(s => s.addTreeViewTag)
     const allTags = useTagTreeView(s => s.treeViewTags)
     const selectedTag = useTagTreeView(s => s.selectedTag)
+
+    const moveTag = useUpdateTagModal(s => s.moveTag)
+
+    const [v, sV] = useState(false)
+    const [tag, setTag] = useState<ProductTag | null>(null)
+    const {enqueueSnackbar} = useSnackbar()
+
 
     const settings = [
         {
@@ -65,25 +76,36 @@ export const TagTreeViewContextMenu = () => {
         {
             name: 'Переместить',
             click: () => {
-                // code here
-            }
-        },
-        {
-            name: 'Удалить',
-            click: () => {
-                // code here
+                setContextVisible(false, 0, 0)
+                sV(true)
+                setTag(treeViewData.find(n => n.id === selectedTag)!)
             }
         },
     ]
 
     return (
-        <ContextMenu
-            isOpen={contextMenuVisible}
-            onClose={() => {setContextVisible(false, 0, 0)}}
-            settings={settings}
-            top={contextXY.Y}
-            left={contextXY.X}
-        />
+        <>
+            <ChooseProductTagModal open={v} setOpen={sV} onTagDoubleClick={(t) => {
+                moveTag(tag!, t.id, (tag) => {
+                    removeTreeViewTag(tag.id)
+                    addTreeViewTag(tag)
+                    sV(false)
+                    enqueueSnackbar('Тег перемещен', {variant: 'success', autoHideDuration: 3000})
+                }, () => {
+                    sV(false)
+                    enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+                })
+            }}/>
+            <ContextMenu
+                isOpen={contextMenuVisible}
+                onClose={() => {
+                    setContextVisible(false, 0, 0)
+                }}
+                settings={settings}
+                top={contextXY.Y}
+                left={contextXY.X}
+            />
+        </>
     )
 }
 

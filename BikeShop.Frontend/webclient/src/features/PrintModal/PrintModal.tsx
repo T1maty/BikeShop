@@ -1,4 +1,4 @@
-import React, {ReactElement, useRef} from 'react'
+import React, {ReactElement, useEffect, useRef} from 'react'
 import s from './PrintModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
 import {useReactToPrint} from 'react-to-print'
@@ -12,10 +12,11 @@ interface PrintModalProps {
     setOpen: (value: boolean) => void
     children: ReactElement
     id?: number
-    finaly?: () => void
+    finaly?: () => void,
+    trigger?: 'agent' | null
 }
 
-export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, id, finaly}) => {
+export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, id, finaly, trigger}) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -40,6 +41,12 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
                 finaly ? finaly() : false
             });
     }
+
+    useEffect(() => {
+        if (trigger === 'agent') {
+            agent()
+        }
+    }, [trigger])
 
     const pngHandler = () => {
         htmlToImage.toPng(document.getElementById('my-node')!, {quality: 1, pixelRatio: 3})

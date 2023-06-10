@@ -1,19 +1,16 @@
-import {BarcodeScannerListener} from "../../../widgets"
 import {memo, useEffect} from "react";
 import {useBarcode} from "./useBarcode";
 
 interface props {
     children: JSX.Element
+    onBarcodeRead: (barcode: string) => void
 }
 
 export const BarcodeScannerListenerProvider = memo((props: props) => {
-
-    //const [barcode, setBarcode] = useState('')
-
     const sb = useBarcode(s => s.setBarcode)
 
     const h = (event: KeyboardEvent) => {
-        sb(event.key)
+        sb(event.key, props.onBarcodeRead)
     }
 
     useEffect(() => {
@@ -26,10 +23,9 @@ export const BarcodeScannerListenerProvider = memo((props: props) => {
     console.log('listener Loaded')
 
     return (
-        <div>
-            <BarcodeScannerListener/>
+        <>
             {props.children}
-        </div>
+        </>
     );
 });
 

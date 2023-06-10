@@ -21,6 +21,7 @@ public interface IApplicationDbContext
     public DbSet<ProductMoveProduct> ProductMoveProducts { get; set; }
     public DbSet<ActImage> ActImages { get; set; }
     public DbSet<PrintQueue> PrintQueues { get; set; }
+    public DbSet<PrintSettings> PrintSettings { get; set; }
 
 
 

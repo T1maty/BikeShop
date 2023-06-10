@@ -25,6 +25,8 @@ export const useEmployee = create<EmployeeStore>()(persist(devtools(immer((set) 
             set(state => {
                 state.shiftStatus = r.data
             })
+        }).catch(() => {
+            set({shiftStatus: undefined})
         })
     }
 }))), {

@@ -1966,11 +1966,56 @@
       "SwaggerKey": "acts"
     },
 	{
-      "UpstreamPathTemplate": "/api/print/DeleteQueue",
+      "UpstreamPathTemplate": "/api/print/deletequeue",
       "UpstreamHttpMethod": [
         "Delete"
       ],
-      "DownstreamPathTemplate": "/print/DeleteQueue",
+      "DownstreamPathTemplate": "/print/deletequeue",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/print/getallprintersettings",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/print/getallprintersettings",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/print/createprintersettings",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/print/createprintersettings",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/print/updateprintersettings",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/print/updateprintersettings",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

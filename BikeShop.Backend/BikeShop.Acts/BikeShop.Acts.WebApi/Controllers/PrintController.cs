@@ -2,6 +2,8 @@
 using BikeShop.Acts.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
+using System.Xml.Linq;
 
 namespace BikeShop.Acts.WebApi.Controllers
 {
@@ -45,6 +47,24 @@ namespace BikeShop.Acts.WebApi.Controllers
         public async Task DeleteQueue(int QueueId)
         {
             await _printService.DeleteQueue(QueueId);
+        }
+
+        [HttpGet("getallprintersettings")]
+        public async Task<List<PrintSettings>> GetAllPrintSettings()
+        {
+            return await _printService.GetAllPrintSettings();
+        }
+
+        [HttpPost("createprintersettings")]
+        public async Task<PrintSettings> CreatePrinterSettings(int AgentId, string Name, string Settings)
+        {
+            return await _printService.CreatePrinterSettings(AgentId, Name, Settings);
+        }
+
+        [HttpPut("updateprintersettings")]
+        public async Task<PrintSettings> UpdatePrinterSettings(int Id, int AgentId, string Name, string Settings)
+        {
+            return await _printService.UpdatePrinterSettings(Id, AgentId, Name, Settings);
         }
     }
 }

@@ -21,9 +21,6 @@ import {
     WorkCatalog
 } from '../../pages'
 import {OnlyWithoutAuthRoute, WorkspaceHeaderProvider} from '../../entities'
-import {
-    BarcodeScannerListenerProvider
-} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 import {CheckAuthEmployee} from "../providers/RouteProviders/CheckAuthEmployee"
 import PublicOfferPage from "../../pages/public/Shop/InfoPages/PublicOfferPage";
 import AboutUsPage from "../../pages/public/Shop/InfoPages/AboutUsPage";
@@ -116,11 +113,9 @@ export const routes = createBrowserRouter([
     {
         path: BikeShopPaths.WORKSPACE.MAIN_PAGE,
         element: <CheckAuthEmployee>
-            <BarcodeScannerListenerProvider>
-                <WorkspaceHeaderProvider>
-                    <MainPage/>
-                </WorkspaceHeaderProvider>
-            </BarcodeScannerListenerProvider>
+            <WorkspaceHeaderProvider>
+                <MainPage/>
+            </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },
     {

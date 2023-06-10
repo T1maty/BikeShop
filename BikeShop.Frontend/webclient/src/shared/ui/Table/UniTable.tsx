@@ -132,7 +132,7 @@ const TableRow = memo((props: TableRowProps) => {
                         let cellId = props.row.id + '_' + item.id
 
                         let limitedData = props.row[item.id]
-                        let shopTip = item.limit! < props.row[item.id].toString().length
+                        let shopTip = item.limit! < props.row[item.id]?.toString().length
                         if (item.limit != undefined && shopTip) limitedData = props.row[item.id].slice(0, item.limit) + '...'
 
                         return (

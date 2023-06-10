@@ -2,11 +2,12 @@ import React from 'react'
 import s from './ChooseProductTagModal.module.scss'
 import {TagTreeView} from "../../../widgets"
 import {CustomModal} from "../../../shared/ui"
+import {ProductTag} from "../../../entities";
 
 interface ChooseProductTagModalProps {
     open: boolean
     setOpen: (value: boolean) => void
-    onTagDoubleClick?: (tag: any) => void
+    onTagDoubleClick?: (tag: ProductTag) => void
 }
 
 export const ChooseProductTagModal: React.FC<ChooseProductTagModalProps> = ({onTagDoubleClick, open, setOpen}) => {
@@ -14,7 +15,9 @@ export const ChooseProductTagModal: React.FC<ChooseProductTagModalProps> = ({onT
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
+            onClose={() => {
+                setOpen(false)
+            }}
         >
             <div className={s.addProductCardTagModal_mainBox}>
                 <div className={s.addProductCardTagModal_content}>
