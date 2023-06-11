@@ -2,6 +2,7 @@
 using BikeShop.Payments.Domain.DTO.Requests.Order;
 using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Payments.Domain.Entities;
+using BikeShop.Payments.Domain.Enumerables;
 using BikeShop.Products.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,26 +32,50 @@ namespace BikeShop.Payments.Application.Services
 
         public async Task<OrderWithProducts> PublicCreate(PublicCreateOrderDTO dto)
         {
-            var order = new Order
-            {
-             ClientEmail = dto.Order.ClientEmail,
-              ClientFIO= dto.Order.ClientFIO,
-                ClientId=dto.Order.ClientId, ClientPhone=dto.Order.ClientPhone, DeliveryInfo=dto.Order.DeliveryInfo, DeliveryType=dto.Order.DeliveryType,
-                 Description = "", DescriptionUser=dto.Order.DescriptionUser, DiscountId=dto.Order.DiscountId, IsPayed = false, ShopId =dto.Order.ShopId,
-                  
-            };
-
-            await _context.Orders.AddAsync(order);
-            await _context.SaveChangesAsync(new CancellationToken());
-
             var products = new List<OrderProduct>();
             foreach (var product in dto.Products)
             {
                 products.Add(new OrderProduct
                 {
-
+                    CatalogKey = product.CatalogKey,
+                    Discount = product.Discount,
+                    Description = product.Description,
+                    Name = product.Name,
+                    Price = product.Price,
+                    ProductId = product.ProductId,
+                    Quantity = product.Quantity,
+                    QuantityUnitId = product.QuantityUnitId,
+                    QuantityUnitName = product.QuantityUnitName,
+                    SerialNumber = product.SerialNumber,
+                    Total = product.Price * product.Quantity - product.Discount
                 });
             }
+
+            var order = new Order
+            {
+             ClientEmail = dto.Order.ClientEmail,
+              ClientFIO= dto.Order.ClientFIO,
+                ClientId=dto.Order.ClientId, 
+                ClientPhone=dto.Order.ClientPhone, 
+                DeliveryInfo=dto.Order.DeliveryInfo, 
+                DeliveryType=dto.Order.DeliveryType,
+                 Description = "", 
+                DescriptionUser=dto.Order.DescriptionUser, 
+                DiscountId=dto.Order.DiscountId, 
+                IsPayed = false, 
+                ShopId =dto.Order.ShopId,
+                  OrderStatus = OrderStatus.Created, 
+                OrderType = OrderType.Retail, 
+                UserFIO = "", 
+                UserId = null, 
+                TotalDiscount = products.Select(n=>n.Discount).Sum(), 
+                TotalPrice = products.Select(n=>n.Total).Sum()
+            };
+
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            products.ForEach(n => n.OrderId = order.Id);
 
             await _context.OrderProducts.AddRangeAsync(products);
             await _context.SaveChangesAsync(new CancellationToken());

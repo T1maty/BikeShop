@@ -13,7 +13,7 @@ namespace BikeShop.Payments.Domain.Enumerables
     }
     public class PaymentTarget
     {
-        public static string Cashbox { get { return "Cashbox"; } set { } }
-        public static string Workshop { get { return "Workshop"; } set { } }
+        public static string Cashbox { get { return "Cashbox"; } }
+        public static string Workshop { get { return "Workshop"; } }
     }
 }
