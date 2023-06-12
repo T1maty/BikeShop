@@ -52,21 +52,25 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                                                 n.complicationPrice > 0 ?
                                                                     <>
                                                                         <div>{n.name}</div>
-                                                                        <div style={{fontStyle: 'italic', fontSize: '14px', paddingLeft: '10px'}}>
-                                                                            {n.description} (+ {n.complicationPrice} {fbts.s})
+                                                                        <div style={{
+                                                                            fontStyle: 'italic',
+                                                                            fontSize: '14px',
+                                                                            paddingLeft: '10px'
+                                                                        }}>
+                                                                            {n.description} (+ {r(n.complicationPrice * fbts.c) + fbts.s})
                                                                         </div>
                                                                     </>
                                                                     : n.name
                                                             }
                                                         </td>
                                                         <td style={{width: '50px'}}>
-                                                            {n.price}
+                                                            {r(n.price * fbts.c) + fbts.s}
                                                         </td>
                                                         <td style={{width: '34px'}}>
                                                             {n.quantity}
                                                         </td>
                                                         <td style={{width: '55px'}}>
-                                                            {n.price * n.quantity}
+                                                            {r((n.price * n.quantity + n.complicationPrice) * fbts.c) + fbts.s}
                                                         </td>
                                                     </tr>
                                                     {/*{*/}
@@ -134,13 +138,13 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                                         {n.name}
                                                     </td>
                                                     <td style={{width: '50px'}}>
-                                                        {n.price}
+                                                        {r(n.price * fbts.c) + fbts.s}
                                                     </td>
                                                     <td style={{width: '34px'}}>
                                                         {n.quantity}
                                                     </td>
                                                     <td style={{width: '55px'}}>
-                                                        {n.price * n.quantity}
+                                                        {r(n.price * n.quantity * fbts.c) + fbts.s}
                                                     </td>
                                                 </tr>
                                             )

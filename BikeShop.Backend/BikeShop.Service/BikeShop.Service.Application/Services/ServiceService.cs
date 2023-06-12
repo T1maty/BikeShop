@@ -37,6 +37,17 @@ public class ServiceService : IServiceService
         service.UserCreatedId = model.UserId;
         service.ClientId = model.ClientId;
 
+        var users = await _identityClient.GetDictionary(new List<string> { model.UserId.ToString(), model.ClientId.ToString(), model.UserMasterId.ToString()});
+        var user = users[model.UserId.ToString()];
+        var client = users[model.ClientId.ToString()];
+        var master = users[model.UserMasterId.ToString()];
+        service.UserFIO = user.lastName + " " + user.firstName + " " + user.patronymic;
+        service.UserPhone = user.phoneNumber;
+        service.ClientFIO = client.lastName + " " + client.firstName + " " + client.patronymic;
+        service.ClientPhone = client.phoneNumber;
+        service.MasterFIO = master.lastName + " " + master.firstName + " " + master.patronymic;
+        service.MasterPhone = master.phoneNumber;
+
         var serviceWorks = new List<ServiceWork>();
         var serviceProducts = new List<ServiceProduct>();
 
@@ -230,6 +241,15 @@ public class ServiceService : IServiceService
         serviceCont.WorkDiscountId = dto.WorkDiscountId;
         serviceCont.UserUpdatedId = dto.UserId;
         serviceCont.UpdatedAt = DateTime.Now;
+
+        var users = await _identityClient.GetDictionary(new List<string> { dto.UserId.ToString(), dto.UserMasterId.ToString() });
+        var user = users[dto.UserId.ToString()];
+        var master = users[dto.UserMasterId.ToString()];
+        serviceCont.UserFIO = user.lastName + " " + user.firstName + " " + user.patronymic;
+        serviceCont.UserPhone = user.phoneNumber;
+        serviceCont.MasterFIO = master.lastName + " " + master.firstName + " " + master.patronymic;
+        serviceCont.MasterPhone = master.phoneNumber;
+
 
         var existProds = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToDictionaryAsync(n=>n.Id, n=>n);
         var newProds = new List<ServiceProduct>();

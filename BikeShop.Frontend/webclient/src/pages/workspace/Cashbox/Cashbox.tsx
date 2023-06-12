@@ -86,7 +86,7 @@ export const Cashbox = () => {
                 <div className={s.cashboxMainBlock}>
 
                     <PrintModal open={openPrint}
-                                setOpen={setOpenPrint}>
+                                setOpen={setOpenPrint} printAgentName={'Bill'}>
                         <CheckForShop children={res!}/>
                     </PrintModal>
 

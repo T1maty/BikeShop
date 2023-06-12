@@ -49,10 +49,13 @@ export const ServiceNavigationContext = (props: p) => {
     ]
     return (
         <>
-            <PrintModal open={v1} setOpen={sv1} children={<ServiceIncomeInvoice children={selected!}/>}/>
-            <PrintModal open={v2} setOpen={sv2} children={<ServiceSticker children={selected!}/>}/>
+            <PrintModal open={v1} setOpen={sv1} children={<ServiceIncomeInvoice children={selected!}/>}
+                        printAgentName={'WorkshopIn'}/>
+            <PrintModal open={v2} setOpen={sv2} children={<ServiceSticker children={selected!}/>}
+                        printAgentName={'WorkshopSticker'}/>
             <PrintModal open={v3} setOpen={sv3} children={<ActServiceWork children={selected!}/>}/>
-            <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={selected!}/>}/>
+            <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={selected!}/>}
+                        printAgentName={'WorkshopOut'}/>
 
             <ContextMenu
                 isOpen={props.open.o}

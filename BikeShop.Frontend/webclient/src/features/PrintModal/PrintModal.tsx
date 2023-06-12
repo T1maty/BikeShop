@@ -14,9 +14,18 @@ interface PrintModalProps {
     id?: number
     finaly?: () => void,
     trigger?: 'agent' | null
+    printAgentName?: string
 }
 
-export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, id, finaly, trigger}) => {
+export const PrintModal: React.FC<PrintModalProps> = ({
+                                                          open,
+                                                          setOpen,
+                                                          children,
+                                                          id,
+                                                          finaly,
+                                                          trigger,
+                                                          printAgentName
+                                                      }) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -77,13 +86,13 @@ export const PrintModal: React.FC<PrintModalProps> = ({open, setOpen, children, 
             .then(function (dataUrl) {
                 let file = dataURLtoFile(dataUrl, "ActImage")
                 console.log(file)
-                let settings: PrintSettings = {copies: 1, pageWight: 500, printerName: "Win2Image"}
+                let settings: PrintSettings = {copies: 1, pageWight: 501, printerName: "Win2Image"}
                 let formData = new FormData();
                 formData.append('imageFile', file)
                 PrintAPI.addQueue(formData,
                     id ? id : 0,
-                    "Bill",
-                    JSON.stringify(settings),
+                    printAgentName ? printAgentName : '',
+                    '',
                     100,
                     1)
             }).then(n => {

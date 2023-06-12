@@ -69,10 +69,13 @@ export const ProductCatalogTableContextMenu = () => {
             <PrintModal open={o1}
                         setOpen={so1}
                         children={<ProductSticker product={selected[0]} cur={cur!}/>}
+                        printAgentName={'ProductSticker'}
             />
             <ContextMenu
                 isOpen={contextMenuVisible}
-                onClose={() => {setContextVisible(false, 0, 0)}}
+                onClose={() => {
+                    setContextVisible(false, 0, 0)
+                }}
                 settings={settings}
                 top={contextXY.Y}
                 left={contextXY.X}
