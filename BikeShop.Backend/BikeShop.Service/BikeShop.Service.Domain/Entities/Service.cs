@@ -10,20 +10,20 @@ public class Service : BaseEntity
     
     public Guid ClientId { get; set; } // Id клиента, чей байк ремонтируют
     public string ClientDescription { get; set; } = string.Empty; // Описание клиента
-    public string ClientFIO { get; set; }
-    public string ClientPhone { get; set; }
-    
+    public string ClientFIO { get; set; } = "";
+    public string ClientPhone { get; set; } = "";
+
     public Guid UserCreatedId { get; set; } // Id пользователья который создал запись
     public Guid UserUpdatedId { get; set; }
 
-    public string UserFIO { get; set; }
-    public string UserPhone { get; set; }
+    public string UserFIO { get; set; } = "";
+    public string UserPhone { get; set; } = "";
 
     public string UserCreatedDescription { get; set; } = String.Empty;// описание описание того кто создал
 
     public Guid UserMasterId { get; set; }// Id ремонтника
-    public string MasterFIO { get; set; }
-    public string MasterPhone { get; set; }
+    public string MasterFIO { get; set; } = "";
+    public string MasterPhone { get; set; } = "";
     public string UserMasterDescription { get; set; } = String.Empty;
 
     public Guid UserDeletedId { get; set; }// Id юзера который удалил
