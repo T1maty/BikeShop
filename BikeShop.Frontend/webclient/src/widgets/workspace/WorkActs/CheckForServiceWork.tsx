@@ -1,17 +1,27 @@
 import React from 'react'
 import s from './CheckStyles.module.scss'
-import {ServiceWithData, useCurrency} from "../../../entities"
+import {ServiceWithData, useAuth, useCurrency} from "../../../entities"
 import {formatDate} from "../../../shared/utils/formatDate"
+import {InvoiceHeader} from "../Invoices/Service/InvoiceHeader";
 
 export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
 
+    const shop = useAuth(s => s.shop)
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
+    const employee = useAuth(s => s.user)
+
+    let fio = props.children.service.clientFIO.split(' ')
+    while (fio.length < 3) fio.push('')
 
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>
 
+                <InvoiceHeader fn={fio[0]} ln={fio[1]} ptr={fio[2]} phone={props.children.service.clientPhone}
+                               shop={shop!}/>
+
+                <br/>
                 <div className={s.workAct_date}>
                     <div className={s.date_title}>
                         Чек №{props.children.service.id}
@@ -73,25 +83,6 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                                             {r((n.price * n.quantity + n.complicationPrice) * fbts.c) + fbts.s}
                                                         </td>
                                                     </tr>
-                                                    {/*{*/}
-                                                    {/*    n.complicationPrice > 0 ?*/}
-                                                    {/*        <tr>*/}
-                                                    {/*            <td style={{width: '220px', fontStyle: 'italic',*/}
-                                                    {/*                textAlign: 'left', fontSize: '14px'}}>*/}
-                                                    {/*                {n.description}*/}
-                                                    {/*            </td>*/}
-                                                    {/*            <td style={{width: '50px'}}>*/}
-                                                    {/*                {n.complicationPrice}*/}
-                                                    {/*            </td>*/}
-                                                    {/*            <td style={{width: '34px'}}>*/}
-                                                    {/*                1*/}
-                                                    {/*            </td>*/}
-                                                    {/*            <td style={{width: '55px'}}>*/}
-                                                    {/*                {n.complicationPrice}*/}
-                                                    {/*            </td>*/}
-                                                    {/*        </tr>*/}
-                                                    {/*        : ''*/}
-                                                    {/*}*/}
                                                 </>
                                             )
                                         })
@@ -187,6 +178,19 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                 </div>
                 <div className={s.workAct_result}>
                     К оплате: {r(props.children.service.total * fbts.c) + fbts.s}
+                </div>
+
+                <div className={s.agreement_policy}>
+                    Підпис замовника підтверджує надання послуг в повному обсяці та відсутніть притензій.
+                </div>
+                <div className={s.shop_signature}>
+                    <div style={{fontWeight: 'bold'}}>Подпись сотрудника</div>
+                    <div>{employee?.firstName + ' ' + employee?.lastName!}</div>
+                </div>
+                <hr color={'black'}/>
+                <div className={s.client_signature}>
+                    <div style={{fontWeight: 'bold'}}>Подпись клиента</div>
+                    <div>{props.children.service.userFIO}</div>
                 </div>
 
             </div>

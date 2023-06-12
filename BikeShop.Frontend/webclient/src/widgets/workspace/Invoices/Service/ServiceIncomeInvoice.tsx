@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import s from '../../WorkActs/ActGetStuffService.module.scss'
-import {AuthAPI, ServiceWithData, useAuth, User} from "../../../../entities"
+import {ServiceWithData, useAuth} from "../../../../entities"
 import {formatDate} from "../../../../shared/utils/formatDate"
 import {InvoiceHeader} from "./InvoiceHeader"
 
@@ -9,19 +9,16 @@ export const ServiceIncomeInvoice = (props: { children: ServiceWithData }) => {
     const shop = useAuth(s => s.shop)
     const employee = useAuth(s => s.user)
 
-    const [user, setUser] = useState<User | null>(null)
+    let fio = props.children.service.clientFIO.split(' ')
 
-    useEffect(() => {
-        AuthAPI.User.getUserById(props.children.service.clientId).then((r) => {
-            setUser(r.data)
-        })
-    }, [props.children])
+    while (fio.length < 3) fio.push('')
 
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>
 
-                <InvoiceHeader client={user} shop={shop!}/>
+                <InvoiceHeader fn={fio[0]} ln={fio[1]} ptr={fio[2]} phone={props.children.service.clientPhone}
+                               shop={shop!}/>
 
                 <div className={s.workAct_date}>
                     <div className={s.date_title}>
@@ -59,7 +56,7 @@ export const ServiceIncomeInvoice = (props: { children: ServiceWithData }) => {
                 </div>
                 <div className={s.client_signature}>
                     <div style={{fontWeight: 'bold'}}>Подпись клиента</div>
-                    <div>{user?.lastName + ' ' + user?.firstName}</div>
+                    <div>{props.children.service.userFIO}</div>
                 </div>
             </div>
         </div>

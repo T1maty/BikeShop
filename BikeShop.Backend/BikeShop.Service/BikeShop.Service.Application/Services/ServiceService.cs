@@ -247,6 +247,9 @@ public class ServiceService : IServiceService
         var users = await _identityClient.GetDictionary(new List<string> { dto.UserId.ToString(), dto.UserMasterId.ToString() });
         var user = users[dto.UserId.ToString()];
         var master = users[dto.UserMasterId.ToString()];
+        var client = users[serviceCont.ClientId.ToString()];
+        serviceCont.ClientFIO = client.lastName + " " + client.firstName + " " + client.patronymic;
+        serviceCont.ClientPhone = client.phoneNumber;
         serviceCont.UserFIO = user.lastName + " " + user.firstName + " " + user.patronymic;
         serviceCont.UserPhone = user.phoneNumber;
         serviceCont.MasterFIO = master.lastName + " " + master.firstName + " " + master.patronymic;

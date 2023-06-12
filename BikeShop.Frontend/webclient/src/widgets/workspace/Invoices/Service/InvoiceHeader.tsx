@@ -1,8 +1,8 @@
 import React from 'react'
-import {Shop, User} from "../../../../entities"
+import {Shop} from "../../../../entities"
 import s from "../../WorkActs/ActHeader.module.scss"
 
-export const InvoiceHeader = (props: { client: User | null, shop: Shop }) => {
+export const InvoiceHeader = (props: { fn: string, ln: string, ptr: string, phone: string, shop: Shop }) => {
 
     return (
         <>
@@ -10,17 +10,10 @@ export const InvoiceHeader = (props: { client: User | null, shop: Shop }) => {
                 <div className={s.header_customer}>
                     <div className={s.header_title}>Заказчик</div>
                     <div className={s.header_content}>
-                        {
-                            props.client === null ?
-                            <div>Загрузка</div>
-                            :
-                            <>
-                                <div>{props.client.firstName}</div>
-                                <div>{props.client.lastName}</div>
-                                <div>{props.client.patronymic}</div>
-                                <div>{props.client.phoneNumber}</div>
-                            </>
-                        }
+                        <div>{props.fn}</div>
+                        <div>{props.ln}</div>
+                        <div>{props.ptr}</div>
+                        <div>{props.phone}</div>
                     </div>
                 </div>
                 <div className={s.header_master}>
