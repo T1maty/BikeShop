@@ -87,6 +87,8 @@ public class ServiceService : IServiceService
                 ent.QuantityUnitName= prod.QuantityUnitName;
                 ent.UserId = prod.UserId;
                 ent.Total = ent.Price * ent.Quantity - ent.Discount;
+                ent.Name = prod.Name;
+                ent.CatalogKey = prod.CatalogKey;
 
                 serviceProducts.Add(ent);
             }
