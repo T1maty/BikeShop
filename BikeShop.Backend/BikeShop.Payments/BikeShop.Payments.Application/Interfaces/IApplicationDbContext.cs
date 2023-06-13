@@ -16,6 +16,7 @@ public interface IApplicationDbContext
     public DbSet<BillProduct> BillProducts { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderProduct> OrderProducts { get; set; }
+    public DbSet<CheckboxSettings> CheckboxSettings { get; set; }
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

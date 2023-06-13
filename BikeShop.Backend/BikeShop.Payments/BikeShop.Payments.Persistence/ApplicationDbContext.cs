@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderProduct> OrderProducts { get; set; }
 
+    public DbSet<CheckboxSettings> CheckboxSettings { get; set; }
 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -26,5 +27,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        //modelBuilder.Entity<Bill>().Property(n=>n.UUID).ValueGeneratedOnAdd().HasDefaultValueSql("UUID()"); ;
     }
 }

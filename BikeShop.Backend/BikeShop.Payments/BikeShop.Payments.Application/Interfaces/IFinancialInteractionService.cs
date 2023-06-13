@@ -1,4 +1,5 @@
-﻿using BikeShop.Payments.Domain.DTO.Requests;
+﻿using BikeShop.Payments.Domain.DTO.Refit.Checkbox;
+using BikeShop.Payments.Domain.DTO.Requests;
 using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Payments.Domain.Entities;
 using System;
@@ -14,5 +15,6 @@ namespace BikeShop.Payments.Application.Interfaces
         public Task<BillWithProducts> NewBill(NewBillDTO dto);
         public Task<List<BillWithProducts>> GetBillsByUser(Guid UserId, DateTime Start, DateTime Finish);
         public Task<List<BillWithProducts>> GetBillsByShop(int ShopId, int Take);
+        public Task<byte[]> Test();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BikeShop.Payments.Application.Interfaces;
+using BikeShop.Payments.Domain.DTO.Refit.Checkbox;
 using BikeShop.Payments.Domain.DTO.Requests;
 using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Payments.Domain.Entities;
@@ -34,6 +35,12 @@ namespace BikeShop.Payments.WebApi.Controllers
         public async Task<List<BillWithProducts>> GetBillsByShop(int ShopId, int Take)
         {
             return await _interactionService.GetBillsByShop(ShopId, Take);
+        }
+
+        [HttpGet("test")]
+        public async Task<byte[]> Test()
+        {
+            return await _interactionService.Test();
         }
     }
 }

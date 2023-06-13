@@ -1,4 +1,5 @@
 using BikeShop.Acts.Application.Refit;
+using BikeShop.Payments.Application.Refit;
 using BikeShop.Products.Application;
 using BikeShop.Products.Application.Common.Configurations;
 using BikeShop.Products.Application.Common.Mappings;
@@ -7,6 +8,7 @@ using BikeShop.Products.Persistence;
 using BikeShop.Products.WebApi.Middleware;
 using BikeShop.Products.WebApi.Models.Validation;
 using BikeShop.Service.Application.RefitClients;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.Extensions.Options;
 using Refit;
 using System.Net.Mime;
@@ -32,6 +34,8 @@ builder.Services.AddRefitClient<IShopClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Shop"]));
 builder.Services.AddRefitClient<IProductClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
+builder.Services.AddRefitClient<ICheckboxClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Checkbox"]));
 
 // Подключение контроллеров, так же настройка именования JSON данных
 builder.Services.AddControllers()

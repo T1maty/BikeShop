@@ -10,6 +10,7 @@ namespace BikeShop.Payments.Domain.DTO.Requests
     {
         public int CurrencyId { get; set; }
         public string Description { get; set; }
+        public bool? IsFiscal { get; set; } = true;
 
         public List<BillProductDTO> Products { get; set; }
     }

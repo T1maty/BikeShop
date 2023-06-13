@@ -35,4 +35,7 @@ export interface Bill {
     userId
         :
         string
+    uuid: string
+    qrcode: string
+    fiscalId: string
 }
