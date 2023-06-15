@@ -2,6 +2,8 @@
 WORKDIR /app
 EXPOSE 80
 
+ENV TZ=Europe/Kiev
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["BikeShop.Acts.Domain/BikeShop.Acts.Domain.csproj", "BikeShop.Acts.Domain/BikeShop.Acts.Domain.csproj"]
