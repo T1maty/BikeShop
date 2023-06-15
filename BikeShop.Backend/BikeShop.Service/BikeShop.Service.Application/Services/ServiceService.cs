@@ -30,23 +30,43 @@ public class ServiceService : IServiceService
         _shopClient = shopClient;
     }
 
+    private async Task<Domain.Entities.Service> UpdateUsersData (Domain.Entities.Service service)
+    {
+        var users = await _identityClient.GetDictionary(new List<string> { service.UserUpdatedId.ToString(), service.ClientId.ToString(), service.UserMasterId.ToString() });
+        UserDTO user, client, master;
+
+        users.TryGetValue(service.UserUpdatedId.ToString(), out user);
+        users.TryGetValue(service.ClientId.ToString(), out client);
+        users.TryGetValue(service.UserMasterId.ToString(), out master);
+
+        if (user.lastName != null) service.UserFIO += (user.lastName+" ");
+        if (user.firstName != null) service.UserFIO += (user.firstName + " ");
+        if (user.patronymic != null) service.UserFIO += (user.patronymic + " ");
+        service.UserFIO = service.UserFIO.TrimEnd();
+
+        if (client.lastName != null) service.ClientFIO += (client.lastName + " ");
+        if (client.firstName != null) service.ClientFIO += (client.firstName + " ");
+        if (client.patronymic != null) service.ClientFIO += (client.patronymic + " ");
+        service.ClientFIO = service.ClientFIO.TrimEnd();
+
+        if (master.lastName != null) service.MasterFIO += (master.lastName + " ");
+        if (master.firstName != null) service.MasterFIO += (master.firstName + " ");
+        if (master.patronymic != null) service.MasterFIO += (master.patronymic + " ");
+        service.MasterFIO = service.MasterFIO.TrimEnd();
+
+        return service;
+    }
+
     public async Task<ServiceWithProductsWorksDTO> CreateService(CreateServiceModel model)
     {
         var service = _mapper.Map<Domain.Entities.Service>(model);
 
         service.UserCreatedId = model.UserId;
+        service.UserUpdatedId = model.UserId;
+
         service.ClientId = model.ClientId;
 
-        var users = await _identityClient.GetDictionary(new List<string> { model.UserId.ToString(), model.ClientId.ToString(), model.UserMasterId.ToString()});
-        var user = users[model.UserId.ToString()];
-        var client = users[model.ClientId.ToString()];
-        var master = users[model.UserMasterId.ToString()];
-        service.UserFIO = user.lastName + " " + user.firstName + " " + user.patronymic;
-        service.UserPhone = user.phoneNumber;
-        service.ClientFIO = client.lastName + " " + client.firstName + " " + client.patronymic;
-        service.ClientPhone = client.phoneNumber;
-        service.MasterFIO = master.lastName + " " + master.firstName + " " + master.patronymic;
-        service.MasterPhone = master.phoneNumber;
+        service = await UpdateUsersData(service);
 
         var serviceWorks = new List<ServiceWork>();
         var serviceProducts = new List<ServiceProduct>();
@@ -244,16 +264,7 @@ public class ServiceService : IServiceService
         serviceCont.UserUpdatedId = dto.UserId;
         serviceCont.UpdatedAt = DateTime.Now;
 
-        var users = await _identityClient.GetDictionary(new List<string> { dto.UserId.ToString(), dto.UserMasterId.ToString() });
-        var user = users[dto.UserId.ToString()];
-        var master = users[dto.UserMasterId.ToString()];
-        var client = users[serviceCont.ClientId.ToString()];
-        serviceCont.ClientFIO = client.lastName + " " + client.firstName + " " + client.patronymic;
-        serviceCont.ClientPhone = client.phoneNumber;
-        serviceCont.UserFIO = user.lastName + " " + user.firstName + " " + user.patronymic;
-        serviceCont.UserPhone = user.phoneNumber;
-        serviceCont.MasterFIO = master.lastName + " " + master.firstName + " " + master.patronymic;
-        serviceCont.MasterPhone = master.phoneNumber;
+        serviceCont = await UpdateUsersData(serviceCont);
 
 
         var existProds = await _context.ServiceProducts.Where(n => n.ServiceId == dto.Id).ToDictionaryAsync(n=>n.Id, n=>n);
