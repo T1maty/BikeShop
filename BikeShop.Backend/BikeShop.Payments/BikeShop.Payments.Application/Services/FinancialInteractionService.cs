@@ -102,8 +102,8 @@ namespace BikeShop.Payments.Application.Services
 
             products.ForEach(n => n.BillId = bill.Id);
             await _context.BillProducts.AddRangeAsync(products);
-            //await _paymentService.NewPayment(new CreatePayment { ShopId = dto.ShopId, UserId = dto.UserId, Card = dto.Card, Cash = dto.Cash, ClientId = dto.ClientId, BankCount = dto.BankCount, CurrencyId = dto.CurrencyId, PersonalBalance = dto.PersonalBalance, Target = PaymentTarget.Cashbox, TargetId = bill.Id });
-            //await _productClient.AddProductsToStorage(products.Select(n => new Acts.Domain.Refit.ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), await _shopClient.GetStorageId(dto.ShopId), "Bill", bill.Id);
+            await _paymentService.NewPayment(new CreatePayment { ShopId = dto.ShopId, UserId = dto.UserId, Card = dto.Card, Cash = dto.Cash, ClientId = dto.ClientId, BankCount = dto.BankCount, CurrencyId = dto.CurrencyId, PersonalBalance = dto.PersonalBalance, Target = PaymentTarget.Cashbox, TargetId = bill.Id });
+            await _productClient.AddProductsToStorage(products.Select(n => new Acts.Domain.Refit.ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), await _shopClient.GetStorageId(dto.ShopId), "Bill", bill.Id);
             await _context.SaveChangesAsync(new CancellationToken());
 
             if (dto.IsFiscal == null || dto.IsFiscal == true)
