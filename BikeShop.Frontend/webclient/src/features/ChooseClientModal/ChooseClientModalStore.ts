@@ -1,5 +1,5 @@
 import {create} from "zustand"
-import {devtools, persist} from "zustand/middleware"
+import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {AxiosResponse} from "axios"
 import {AuthAPI, CreateUser, SearchClient, User} from '../../entities'
@@ -19,7 +19,7 @@ interface ChooseClientModalStore {
     setPhoneNumber: (value: string) => void
 
     findUser: (data: SearchClient) => any
-    addNewUser: (data: CreateUser) => Promise<AxiosResponse<CreateUser>>
+    addNewUser: (data: CreateUser) => Promise<AxiosResponse<User>>
 }
 
 const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtools(immer((set) => ({
@@ -40,9 +40,11 @@ const useChooseClientModal = create<ChooseClientModalStore>()(/*persist(*/devtoo
         set({isLoadingDiv: true})
         AuthAPI.User.findUser(data)
             .then((res: any) => {
-            set(state => {state.users = [...res.data.users]})
-            set({isLoadingDiv: false})
-        }).catch((error: any) => {
+                set(state => {
+                    state.users = [...res.data.users]
+                })
+                set({isLoadingDiv: false})
+            }).catch((error: any) => {
             console.log('пользователь не найден', error)
         })
     },

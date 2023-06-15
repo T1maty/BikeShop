@@ -190,7 +190,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                             <ControlledCustomTextarea name={'clientDescription'}
                                                       placeholder={'Детальное описание'}
                                                       control={formControl}
-                                                      rules={{required: Errors[0].name}}
+                                                      rules={{required: "Заполнить!"}}
                                                       divClassName={s.content_detailsInput}
                                                       disabled={currentService === null && !isCreating}
                             />
@@ -198,21 +198,27 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                 <Controller
                                     name={'userMasterId'}
                                     control={formControl.control}
+                                    rules={{required: "Обязательно выберете мастера"}}
                                     render={({field}: any) =>
-                                        <Select
-                                            className={s.select_box}
-                                            placeholder={'Мастер'}
-                                            options={masters}
-                                            isDisabled={currentService === null && !isCreating}
-                                            isSearchable
-                                            value={setMaster(field.value)}
-                                            onChange={(value: any) => {
-                                                field.onChange(value.id)
-                                            }}
-                                            noOptionsMessage={() => 'Мастер не найден'}
-                                            getOptionLabel={label => label!.firstName}
-                                            getOptionValue={value => value!.firstName}
-                                        />
+                                        <>
+                                            <Select
+                                                className={s.select_box}
+                                                placeholder={'Мастер'}
+                                                options={masters}
+                                                isDisabled={currentService === null && !isCreating}
+                                                isSearchable
+                                                value={setMaster(field.value)}
+                                                onChange={(value: any) => {
+                                                    field.onChange(value.id)
+                                                }}
+                                                noOptionsMessage={() => 'Мастер не найден'}
+                                                getOptionLabel={label => label!.firstName}
+                                                getOptionValue={value => value!.firstName}
+                                            />
+                                            {formControl.formState.errors['userMasterId'] ?
+                                                <div
+                                                    className={s.error}>{formControl.formState.errors['userMasterId']?.message}</div> : <></>}
+                                        </>
                                     }
                                 />
                             </div>

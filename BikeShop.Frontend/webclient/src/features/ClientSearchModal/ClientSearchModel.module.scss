@@ -50,27 +50,6 @@
   margin-bottom: 10px;
 }
 
-.wrapper_submitButton { // wrapper кнопки поискового запроса
-  width: 300px;
-  height: 100%;
-  background-color: transparent;
-  border-radius: $extraSmallBorderRadius;
-  padding: 10px 0;
-  font-size: 20px;
-
-  :hover {
-    background-color: green;
-  }
-}
-
-.search_submitButton {
-
-  opacity: 0.7;
-  background-color: transparent;
-  width: 100%;
-
-}
-
 .create_buttons {
   @include flexOnlyBetween;
   gap: $defaultLargeMargin;
@@ -98,18 +77,5 @@
   .cancel_Button button {
     background-color: transparent;
     width: 100%;
-  }
-
-}
-
-.userInfo {
-  min-height: 20px;
-  border-bottom: 1px solid white;
-  text-align: center;
-  padding: 5px;
-
-  &:hover {
-    cursor: pointer;
-    background-color: green
   }
 }

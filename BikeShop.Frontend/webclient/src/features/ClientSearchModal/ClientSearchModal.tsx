@@ -76,6 +76,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
 
     // обработчик нажатия на кнопку поиска пользователя
     const handleSubmitSearch: SubmitHandler<CreateUser> = (data: CreateUser) => {
+        data.phone = '+380' + data.phone
         if (!!data.firstName) {
             const findData = {
                 fio: data.firstName,
@@ -107,6 +108,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
     const handleSuccessChoise = (user: UserWithRoles) => {
         setIsComponentVisible(false)
         onSuccess(user.user)
+        formControl.reset()
     }
 
     return (
@@ -139,8 +141,12 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                                                        rules={{
                                                            // required: 'Поле обязательно для заполнения',
                                                            minLength: {
-                                                               value: 4,
-                                                               message: 'Минимальная длина 4 символа'
+                                                               value: 10,
+                                                               message: 'Минимальная длина 10 символа'
+                                                           },
+                                                           maxLength: {
+                                                               value: 10,
+                                                               message: 'Максимальная длина 10 символа'
                                                            },
                                                            pattern: {
                                                                value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
@@ -155,6 +161,9 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                                                        placeholder={'Имя'}
                                                        control={formControl}
                                                        divClassName={s.searchInput}
+                                                       rules={{
+                                                           required: 'Поле обязательно для заполнения',
+                                                       }}
                                 />
                             </div>
                             <div>

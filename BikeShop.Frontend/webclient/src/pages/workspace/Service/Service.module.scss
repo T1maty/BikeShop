@@ -2,190 +2,194 @@
 @import '../../../app/styles/variables/variables';
 
 .serviceBlock {
-    @include wrapperMainBlock;
-    display: flex;
-    gap: $defaultLargeMargin;
+  @include wrapperMainBlock;
+  display: flex;
+  gap: $defaultLargeMargin;
 
-    .service_leftSide {
-        @include flexColumn;
-        width: 25%;
+  .service_leftSide {
+    @include flexColumn;
+    width: 25%;
 
-        .leftSide_buttons {
-            border-radius: $largeBorderRadius;
-            background-color: $themeColorDark;
-            padding: $defaultLargeMargin;
-            margin-bottom: $defaultLargeMargin;
-            width: 100%;
+    .leftSide_buttons {
+      border-radius: $largeBorderRadius;
+      background-color: $themeColorDark;
+      padding: $defaultLargeMargin;
+      margin-bottom: $defaultLargeMargin;
+      width: 100%;
 
-            .buttons_filter {
-                width: 100%;
-                margin-bottom: $defaultLargeMargin;
+      .buttons_filter {
+        width: 100%;
+        margin-bottom: $defaultLargeMargin;
 
-                @include divSmallMarginBottom;
+        @include divSmallMarginBottom;
 
-                button {
-                    width: 100%;
-                    padding: 5px 10px;
-                }
-            }
-
-            .content_title {
-                border-radius: $largeBorderRadius;
-                background-color: $themeColorGray;
-                padding: $defaultLargeMargin;
-                @include flexColumn;
-                justify-content: center;
-                height: 88px;
-
-                @include divSmallMarginBottom;
-
-                .content_startBtn {
-                    width: 100%;
-                    @include flexCenter;
-
-                    button {
-                        width: 100%;
-                        padding: 10px 0;
-                    }
-                }
-
-                .content_inProcessButtons {
-                    @include flexOnlyBetween;
-                    gap: $defaultSmallMargin;
-                }
-
-                .content_doneButtons {
-                    @include flexOnlyBetween;
-                    gap: $defaultSmallMargin;
-                }
-            }
-
+        button {
+          width: 100%;
+          padding: 5px 10px;
         }
+      }
 
-        .leftSide_content {
-            border-radius: $largeBorderRadius;
-            background-color: $themeColorDark;
-            padding: $defaultLargeMargin;
-            @include widthHeightFull;
-
-            .content_info {
-                @include flexColumn;
-                margin-top: $defaultSmallMargin;
-                text-align: center;
-                overflow-y: auto; // надо будет пофиксить!
-                max-height: 560px;
-                @include divSmallMarginBottom;
-                padding-right: 5px;
-
-                .serviceItem {
-                    @include hoverItem;
-                    @include serviceItemCommonStyles;
-                }
-
-                .serviceItem_active {
-                    background-color: $themeColorGray;
-                    cursor: default;
-                    @include serviceItemCommonStyles;
-                }
-
-                .serviceItem_WaitingSupply {
-                    @include hoverItem;
-                    color: $filterButtonWaitingColorExtra;
-                }
-
-                .serviceItem_selected {
-                    @include hoverItem;
-                    //background-color: #4b4b4b;
-                    @include serviceItemCommonStyles;
-                }
-            }
-        }
-    }
-
-    .service_rightSide {
-        @include flexColumnOnly;
+      .content_title {
         border-radius: $largeBorderRadius;
-        background-color: $themeColorDark;
+        background-color: $themeColorGray;
         padding: $defaultLargeMargin;
-        width: 75%;
+        @include flexColumn;
+        justify-content: center;
+        height: 88px;
 
-        .rightSide_stuffInput {
-            @include flexCenter;
-            margin-bottom: $defaultLargeMargin;
+        @include divSmallMarginBottom;
+
+        .content_startBtn {
+          width: 100%;
+          @include flexCenter;
+
+          button {
             width: 100%;
+            padding: 10px 0;
+          }
         }
 
-        .rightSide_infoFields {
-            @include flexOnlyBetween;
-            margin-bottom: $defaultLargeMargin;
-            width: 100%;
-            gap: $defaultLargeMargin;
-
-            .infoFields_content {
-                @include flexColumnOnly;
-                @include divLargeMarginBottom;
-                justify-content: space-between;
-                width: 60%;
-
-                .content_detailsInput {
-                    height: 100%;
-
-                    //input {
-                    //    min-height: 80px;
-                    //}
-                }
-
-                .content_selectMaster {
-                    color: black
-                }
-
-                .content_buttons {
-                    @include flexBetween;
-                    gap: $defaultLargeMargin;
-
-                    .content_saveBtn {
-                        z-index: 0;
-                        width: 100%;
-
-                        button {
-                            width: 100%;
-                            height: $largeButtonHeight;
-                        }
-
-                    }
-
-                    .content_sumField {
-                        @include defaultFiledStyle;
-                        width: 200px;
-                        height: $largeButtonHeight;
-                    }
-                }
-
-            }
-
-            .infoFields_clientCard {
-                @include flexColumnOnly;
-                justify-content: space-between;
-                width: 40%;
-
-                .clientCard_cancelButton {
-                    @include flexCenter;
-                    margin-top: $defaultSmallMargin;
-                    width: 100%;
-
-                    button {
-                        width: 100%;
-                        height: 50px;
-                    }
-                }
-            }
+        .content_inProcessButtons {
+          @include flexOnlyBetween;
+          gap: $defaultSmallMargin;
         }
 
-        .rightSide_tables {
-            @include flexBetween;
-            @include widthHeightFull;
-            column-gap: 20px;
-            height: auto;
+        .content_doneButtons {
+          @include flexOnlyBetween;
+          gap: $defaultSmallMargin;
         }
+      }
+
     }
+
+    .leftSide_content {
+      border-radius: $largeBorderRadius;
+      background-color: $themeColorDark;
+      padding: $defaultLargeMargin;
+      @include widthHeightFull;
+
+      .content_info {
+        @include flexColumn;
+        margin-top: $defaultSmallMargin;
+        text-align: center;
+        overflow-y: auto; // надо будет пофиксить!
+        max-height: 560px;
+        @include divSmallMarginBottom;
+        padding-right: 5px;
+
+        .serviceItem {
+          @include hoverItem;
+          @include serviceItemCommonStyles;
+        }
+
+        .serviceItem_active {
+          background-color: $themeColorGray;
+          cursor: default;
+          @include serviceItemCommonStyles;
+        }
+
+        .serviceItem_WaitingSupply {
+          @include hoverItem;
+          color: $filterButtonWaitingColorExtra;
+        }
+
+        .serviceItem_selected {
+          @include hoverItem;
+          //background-color: #4b4b4b;
+          @include serviceItemCommonStyles;
+        }
+      }
+    }
+  }
+
+  .service_rightSide {
+    @include flexColumnOnly;
+    border-radius: $largeBorderRadius;
+    background-color: $themeColorDark;
+    padding: $defaultLargeMargin;
+    width: 75%;
+
+    .rightSide_stuffInput {
+      @include flexCenter;
+      margin-bottom: $defaultLargeMargin;
+      width: 100%;
+    }
+
+    .rightSide_infoFields {
+      @include flexOnlyBetween;
+      margin-bottom: $defaultLargeMargin;
+      width: 100%;
+      gap: $defaultLargeMargin;
+
+      .infoFields_content {
+        @include flexColumnOnly;
+        @include divLargeMarginBottom;
+        justify-content: space-between;
+        width: 60%;
+
+        .content_detailsInput {
+          height: 100%;
+
+          //input {
+          //    min-height: 80px;
+          //}
+        }
+
+        .content_selectMaster {
+          color: black;
+
+          .error {
+            color: red;
+          }
+        }
+
+        .content_buttons {
+          @include flexBetween;
+          gap: $defaultLargeMargin;
+
+          .content_saveBtn {
+            z-index: 0;
+            width: 100%;
+
+            button {
+              width: 100%;
+              height: $largeButtonHeight;
+            }
+
+          }
+
+          .content_sumField {
+            @include defaultFiledStyle;
+            width: 200px;
+            height: $largeButtonHeight;
+          }
+        }
+
+      }
+
+      .infoFields_clientCard {
+        @include flexColumnOnly;
+        justify-content: space-between;
+        width: 40%;
+
+        .clientCard_cancelButton {
+          @include flexCenter;
+          margin-top: $defaultSmallMargin;
+          width: 100%;
+
+          button {
+            width: 100%;
+            height: 50px;
+          }
+        }
+      }
+    }
+
+    .rightSide_tables {
+      @include flexBetween;
+      @include widthHeightFull;
+      column-gap: 20px;
+      height: auto;
+    }
+  }
 }
