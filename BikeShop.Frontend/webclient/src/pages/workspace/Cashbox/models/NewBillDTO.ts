@@ -10,5 +10,6 @@ export interface NewBillDTO {
     shopId: string
     currencyId: number
     description: string
+
     products: BillProductDTO[]
 }

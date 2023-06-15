@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeShop.Products.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230505101242_prodQuantName1")]
-    partial class prodQuantName1
+    [Migration("20230615121932_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,6 +193,7 @@ namespace BikeShop.Products.Persistence.Migrations
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("ManufacturerBarcode")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -214,6 +215,12 @@ namespace BikeShop.Products.Persistence.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserCreated")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserUpdated")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 

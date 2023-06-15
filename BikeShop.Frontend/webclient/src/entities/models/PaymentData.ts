@@ -3,4 +3,5 @@ export interface PaymentData {
     bankCount: number,
     card: number,
     personalBalance: number,
+    isFiscal: boolean
 }

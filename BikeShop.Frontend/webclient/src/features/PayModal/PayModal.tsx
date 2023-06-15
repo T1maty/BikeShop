@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, CustomInput, CustomModal} from '../../shared/ui'
+import {Button, CustomCheckbox, CustomInput, CustomModal} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import {ClientCard} from "../../widgets"
 import {LocalStorage, PaymentData, User} from "../../entities"
@@ -15,6 +15,7 @@ interface PayModalProps {
 export const PayModal = (props: PayModalProps) => {
 
     const [cash, setCash] = useState<number>()
+    const [isFiscal, setIsFiscal] = useState<boolean>(true)
 
     return (
         <CustomModal
@@ -71,8 +72,12 @@ export const PayModal = (props: PayModalProps) => {
                     </div>
                     <div className={s.cashbackBlock_buttons}>
 
+                        <CustomCheckbox checked={isFiscal} onChangeChecked={setIsFiscal} children={'Фискализация'}/>
+                        <br/>
+                        <br/>
                         <Button onClick={() => {
                             props.result({
+                                isFiscal: isFiscal,
                                 cash: 0,
                                 card: props.summ,
                                 bankCount: 0,
@@ -85,6 +90,7 @@ export const PayModal = (props: PayModalProps) => {
                         <br/>
                         <Button onClick={() => {
                             props.result({
+                                isFiscal: isFiscal,
                                 cash: props.summ,
                                 card: 0,
                                 bankCount: 0,
