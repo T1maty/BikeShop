@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import s from './Order.module.scss'
-import {Button, ControlledCustomInput} from '../../../../shared/ui'
+import {ControlledCustomInput} from '../../../../shared/ui'
 import {Errors} from '../../../../entities/errors/workspaceErrors'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
-import { useNavigate } from 'react-router-dom'
-import { useComponentVisible } from 'shared/hooks/useComponentVisible'
-import ClientSearchModal from 'features/ClientSearchModal/ClientSearchModal'
+import {useNavigate} from 'react-router-dom'
+import {useComponentVisible} from 'shared/hooks/useComponentVisible'
 
 export const Order = () => {
 
@@ -142,16 +141,7 @@ export const Order = () => {
                                     <div className={s.price_item_total}>{shoppingCartSum + 0}</div>
                                 </div>
                                 <hr/>
-                                {isComponentVisible ?
-                                    <ClientSearchModal setIsComponentVisible={setIsComponentVisible} onSuccess={handleSuccessChoise}/> : 
-                                    <div className={s.price_confirmButton}>
-                                        <Button onClick={() => {
-                                            setIsComponentVisible(true)
-                                        }}>
-                                            Подтвердить заказ
-                                        </Button>
-                                    </div>    
-                                }
+
                             </div>
                         </div>
                     </div>

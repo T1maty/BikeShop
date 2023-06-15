@@ -2,73 +2,83 @@
 @import '../../../app/styles/variables/variables';
 
 .workAct_wrapper {
-    @include workActWrapperBlock;
-    @media print {
-        @page {
-            size: 50mm 150mm;
-        }
+  @include workActWrapperBlock;
+  @media print {
+    @page {
+      size: 50mm 150mm;
+    }
+  }
+
+  .workAct_mainBox {
+    @include workActMainBlock;
+
+    .img {
+      width: 200px; /* you can use % */
+      height: auto;
     }
 
-    .workAct_mainBox {
-        @include workActMainBlock;
-
-        .shop_title {
-            font-size: 26px;
-            text-align: center;
-        }
-
-        @include workActDateBlock;
-
-        .workAct_title {
-            font-size: 18px;
-            line-height: $minLineHeight;
-            text-align: center;
-
-            .title_title {
-                font-weight: bold;
-            }
-
-            .title_info {
-
-            }
-        }
-
-        .workAct_works {
-            .works_names {
-                margin-bottom: $defaultSmallMargin;
-
-                :first-child {
-                    margin-bottom: 5px;
-                }
-            }
-            .works_result {
-
-            }
-
-            @include workActProductBlock;
-        }
-
-        .workAct_products {
-            @include workActProductBlock;
-        }
-
-        .workAct_discount {
-            margin-top: $defaultLargeMargin;
-            padding-top: $defaultSmallMargin;
-            //border-top: 1px solid black;
-            line-height: $minLineHeight;
-            text-align: right;
-            width: 100%;
-        }
-
-        .workAct_result {
-            width: 100%;
-            text-align: center;
-            font-weight: bold;
-            font-size: 24px;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-            padding: $defaultSmallMargin 0;
-        }
+    .shop_title {
+      font-size: 26px;
+      text-align: center;
     }
+
+    @include workActDateBlock;
+
+    .workAct_title {
+      font-size: 18px;
+      line-height: $minLineHeight;
+      text-align: center;
+
+      .title_title {
+        font-weight: bold;
+      }
+
+      .title_info {
+
+      }
+    }
+
+    .workAct_works {
+      .works_names {
+        margin-bottom: $defaultSmallMargin;
+
+        :first-child {
+          margin-bottom: 5px;
+        }
+      }
+
+      .works_result {
+
+      }
+
+      @include workActProductBlock;
+    }
+
+    .workAct_products {
+      @include workActProductBlock;
+    }
+
+    .workAct_discount {
+      margin-top: $defaultLargeMargin;
+      padding-top: $defaultSmallMargin;
+      //border-top: 1px solid black;
+      line-height: $minLineHeight;
+      text-align: right;
+      width: 100%;
+    }
+
+    .workAct_result {
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: 24px;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      padding: $defaultSmallMargin 0;
+
+
+    }
+
+
+  }
 }

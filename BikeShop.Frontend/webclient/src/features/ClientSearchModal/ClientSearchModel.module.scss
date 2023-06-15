@@ -2,105 +2,114 @@
 @import '../../app/styles/variables/variables.scss';
 
 .searchPage_container {
-    background-color: $themeColorGray;
-    @include flexCenter;
-    height: 100vh;
+  background-color: $themeColorGray;
+  @include flexCenter;
 
-    .searchForm_mainBox {
-        background-color: $themeColorDark;
-        border: 1px solid white;
-        border-radius: $smallBorderRadius;
-        width: 350px;
-        min-height: 370px;
-        max-height: 430px;
-        @include flexColumn;
-        padding: 0 40px;
-
-        @include registrationBlock(268px); // main layout styles
+  .searchForm_mainBox {
+    background-color: $themeColorDark;
+    border-radius: $smallBorderRadius;
+    width: 500px;
+    min-height: 370px;
+    max-height: 430px;
+    @include flexColumn;
+    padding: 0 40px;
 
 
-        
-        .haveAccount {
-            margin-top: 10px;
-            margin-bottom: 20px;
-
-            &:hover {
-                cursor: pointer;
-                color: #1876D1;
-                opacity: 1;
-            }
-        }
+    .select {
+      margin-top: 10px;
+      width: 100%;
     }
+
+    .haveAccount {
+      margin-top: 10px;
+      margin-bottom: 20px;
+
+      &:hover {
+        cursor: pointer;
+        color: #1876D1;
+        opacity: 1;
+      }
+    }
+  }
 }
 
 
 .searchForm_form {
-    padding: 20px 10px
+  padding: 20px 10px;
+
+  .text {
+    text-align: center;
+    color: white;
+    font-size: larger;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
 }
 
 .searchInput {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .wrapper_submitButton { // wrapper кнопки поискового запроса
-    width: 300px;
-    height: 100%;
-    background-color: transparent;
-    border-radius: $extraSmallBorderRadius;
-    padding: 10px 0;
-    font-size: 20px;
-    
-    :hover {
-        background-color: green;
-    }
+  width: 300px;
+  height: 100%;
+  background-color: transparent;
+  border-radius: $extraSmallBorderRadius;
+  padding: 10px 0;
+  font-size: 20px;
+
+  :hover {
+    background-color: green;
+  }
 }
 
 .search_submitButton {
-    border: 1px solid white;
-    opacity: 0.7;
-    background-color: transparent;
-    width: 100%;
+
+  opacity: 0.7;
+  background-color: transparent;
+  width: 100%;
 
 }
+
 .create_buttons {
-    @include flexOnlyBetween;
-    gap: $defaultLargeMargin;
-    margin-bottom: $defaultLargeMargin;
-    width: 280px;
-    height: 50px;
+  @include flexOnlyBetween;
+  gap: $defaultLargeMargin;
+  margin-bottom: $defaultLargeMargin;
+  width: 280px;
+  height: 50px;
 
-    > div {
-        width: 100%;
+  > div {
+    width: 100%;
+  }
+
+  button {
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
     }
+  }
 
-    button {
-        opacity: 0.7;
+  .create_submitButton button {
+    background-color: green;
+    width: 160px;
+  }
 
-        &:hover {
-            opacity: 1;
-        }
-    }
-
-    .create_submitButton button {
-        background-color: green;
-        width: 160px;
-    }
-
-    .cancel_Button button {
-        background-color: transparent;
-        width: 100%;
-    }
+  .cancel_Button button {
+    background-color: transparent;
+    width: 100%;
+  }
 
 }
 
 .userInfo {
-    min-height: 20px;
-    border-bottom: 1px solid white;
-    text-align: center;
-    padding: 5px;
+  min-height: 20px;
+  border-bottom: 1px solid white;
+  text-align: center;
+  padding: 5px;
 
-    &:hover {
-        cursor: pointer;
-        background-color: green
-    }
+  &:hover {
+    cursor: pointer;
+    background-color: green
+  }
 }

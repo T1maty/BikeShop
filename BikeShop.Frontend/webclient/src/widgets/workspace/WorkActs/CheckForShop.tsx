@@ -11,6 +11,7 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
     const client = useCashboxStore(s => s.user)
     const discount = false // пофиксить!
 
+    let base64: string = 'data:image/png;base64, ' + props.children.bill.qrCode
     return (
         <div className={s.workAct_wrapper}>
             <div className={s.workAct_mainBox}>
@@ -31,34 +32,34 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
                     <div className={s.works_content}>
                         <table>
                             <thead>
-                                <tr>
-                                    <th style={{width: '220px'}}>Название</th>
-                                    <th style={{width: '50px'}}>Цена</th>
-                                    <th style={{width: '34px'}}>Шт.</th>
-                                    <th style={{width: '55px'}}>Итого</th>
-                                </tr>
+                            <tr>
+                                <th style={{width: '220px'}}>Название</th>
+                                <th style={{width: '50px'}}>Цена</th>
+                                <th style={{width: '34px'}}>Шт.</th>
+                                <th style={{width: '55px'}}>Итого</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {
-                                    props.children.products.map((n) => {
-                                        return (
-                                            <tr>
-                                                <td style={{width: '220px'}}>
-                                                    {n.name}
-                                                </td>
-                                                <td style={{width: '50px'}}>
-                                                    {n.price}
-                                                </td>
-                                                <td style={{width: '34px'}}>
-                                                    {n.quantity}
-                                                </td>
-                                                <td style={{width: '55px'}}>
-                                                    {n.price * n.quantity}
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                            {
+                                props.children.products.map((n) => {
+                                    return (
+                                        <tr>
+                                            <td style={{width: '220px'}}>
+                                                {n.name}
+                                            </td>
+                                            <td style={{width: '50px'}}>
+                                                {n.price}
+                                            </td>
+                                            <td style={{width: '34px'}}>
+                                                {n.quantity}
+                                            </td>
+                                            <td style={{width: '55px'}}>
+                                                {n.price * n.quantity}
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
                             </tbody>
                         </table>
                     </div>
@@ -94,6 +95,9 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
                 <div className={s.workAct_result}>
                     К оплате: {props.children.bill.total + findCurrency(props.children.bill.currencyId)?.symbol!}
                 </div>
+
+                <img className={s.img} src={base64} alt={''}/>
+
 
             </div>
         </div>

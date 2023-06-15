@@ -57,9 +57,9 @@ export const AuthAPI = {
                 $api.get<User[]>(`/user/find?fio=${data.fio}&phone=${data.phoneNumber}`)
             )
         },
-        addNewUser(data: CreateUser): Promise<AxiosResponse<any>> {
+        addNewUser(data: CreateUser): Promise<AxiosResponse<User>> {
             return (
-                $api.post<CreateUser>('/user/create', data)
+                $api.post<User>('/user/create', data)
             )
         },
         updateUserProfile(data: any): Promise<AxiosResponse<any>> {

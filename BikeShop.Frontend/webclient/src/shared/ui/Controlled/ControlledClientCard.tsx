@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {ClientCard} from "../../../widgets"
-import {ChooseClientModal} from "../../../features"
 import {AuthAPI, User} from '../../../entities'
 import {Controller, UseFormReturn} from "react-hook-form"
 import {RegisterOptions} from "react-hook-form/dist/types/validator"
 import {AxiosResponse} from "axios"
 import useService from '../../../pages/workspace/Service/ServiceStore'
+import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
 
 interface ControlledClientCardProps {
     control: UseFormReturn<any>
@@ -61,14 +61,14 @@ export const ControlledClientCard = (props: ControlledClientCardProps) => {
                                         if (!props.disabled) props.setState(true)
                                     }}
                         />
-                        <ChooseClientModal state={props.state}
-                                           setState={props.setState}
-                                           extraCallback={(user: User) => {
+                        <ClientSearchModal setIsComponentVisible={props.setState} isComponentVisible={props.state}
+                                           onSuccess={(user: User) => {
                                                setUser(user)
                                                field.onChange(user.id)
                                                props.setState(false)
-                                           }}
-                        />
+                                           }
+                                           }></ClientSearchModal>
+
                     </div>
                 }
             />

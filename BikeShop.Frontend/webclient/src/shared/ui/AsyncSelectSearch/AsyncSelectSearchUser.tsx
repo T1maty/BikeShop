@@ -35,7 +35,7 @@ export const AsyncSelectSearchUser = (props: { onSelect: (value: UserWithRoles) 
                 getOptionLabel={label => label!.user.phoneNumber + ' | ' + label!.user.firstName + ' ' + label!.user.lastName + ' ' + label!.user.patronymic}
                 getOptionValue={value => value!.user.firstName}
                 placeholder={'Поиск'}
-                noOptionsMessage={() => 'Чебурек не найдена'}
+                noOptionsMessage={() => 'Чебурек не найден'}
             />
         </div>
     )

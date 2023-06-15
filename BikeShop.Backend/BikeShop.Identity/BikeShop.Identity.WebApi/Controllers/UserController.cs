@@ -5,6 +5,7 @@ using BikeShop.Identity.Application.CQRS.Commands.UpdateUserPublic;
 using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
 using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Domain.DTO.Request;
 using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.WebApi.Models.User;
@@ -112,16 +113,9 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateUserModel model)
+    public async Task<ApplicationUser> CreateUser([FromBody] CreateUserDTO dto)
     {
-        // Если невалидная модель
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        var command = _mapper.Map<CreateUserCommand>(model);
-        await _mediator.Send(command);
-
-        return Ok();
+        return await _userService.CreateUser(dto);
     }
 
     /// <summary>

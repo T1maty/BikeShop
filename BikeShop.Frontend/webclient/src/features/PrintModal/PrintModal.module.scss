@@ -2,40 +2,43 @@
 @import '../../app/styles/variables/variables';
 
 .printModal_mainBox {
-    @include defaultModalStyle;
-    @include flexColumn;
-    min-width: 500px;
+  @include defaultModalStyle;
+  @include flexColumn;
+  min-width: 500px;
 
-    .printModal_buttons {
-        width: 100%;
-        display: flex;
-        gap: $defaultExtraLargeMargin;
-        background-color: $themeColorGray;
-        padding: $defaultLargeMargin;
-        border-radius: $smallBorderRadius;
-        margin-bottom: $defaultSmallMargin;
+  .printModal_buttons {
+    width: 100%;
+    display: flex;
+    gap: $defaultExtraLargeMargin;
+    background-color: $themeColorGray;
+    padding: $defaultLargeMargin;
+    border-radius: $smallBorderRadius;
+    margin-bottom: $defaultSmallMargin;
 
-        > div {
-            width: 100%;
-        }
-        button {
-            padding: $defaultSmallMargin;
-            width: 100%;
-        }
+    > div {
+      width: 100%;
     }
 
-    .printModal_content {
-        min-width: 100%;
-        background-color: $themeColorGray;
-        padding: $defaultLargeMargin;
-        border-radius: $smallBorderRadius;
-        display: flex;
-        justify-content: center;
-
-        .scrollWrapper {
-            overflow-y: auto;
-            max-height: 600px;
-            padding-right: 5px;
-        }
+    button {
+      padding: $defaultSmallMargin;
+      width: 100%;
     }
+  }
+
+  .printModal_content {
+    min-width: 100%;
+    background-color: $themeColorGray;
+    padding: $defaultLargeMargin;
+    border-radius: $smallBorderRadius;
+    display: flex;
+    justify-content: center;
+
+    .scrollWrapper {
+      overflow-y: auto;
+      max-height: 600px;
+      padding-right: 5px;
+
+
+    }
+  }
 }

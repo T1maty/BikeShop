@@ -2,6 +2,7 @@
 using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Application.Exceptions;
 using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Domain.DTO.Request;
 using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
 using MediatR;
@@ -117,6 +118,58 @@ namespace BikeShop.Identity.Application.Services
         public async Task addUserToRole(Guid userId, string Role)
         {
             await _userManager.AddToRoleAsync(await _userManager.FindByIdAsync(userId.ToString()), Role);
+        }
+
+        public async Task<ApplicationUser> CreateUser(CreateUserDTO model)
+        {
+            var existingUserByPhone = await _userManager.FindByNameAsync(model.Phone);
+            if (existingUserByPhone is not null)
+                throw new AlreadyExistsException($"Create user error. User with phone {model.Phone} already exists")
+                {
+                    Error = "phone_already_exists",
+                    ErrorDescription = "Create user error. User with given phone already exists",
+                    ReasonField = "phone"
+                };
+
+
+            // Создаю пользователя из запроса
+            var user = new ApplicationUser
+            {
+                UserName = model.Phone,
+                PhoneNumber = model.Phone,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Patronymic = model.Patronymic
+            };
+
+
+            // Добавляю пользователя в бд
+            var result = await _userManager.CreateAsync(user, RandomString(8));
+            if (!result.Succeeded)
+
+                throw new RegistrationException($"Error while user '{model.Phone}' registration")
+                {
+
+
+
+
+                    Error = "error_registration",
+                    ErrorDescription = "Registration error. Perhaps the password does not match the requirements",
+                    ReasonField = "password"
+                };
+
+            // Даю стандартную роль пользователю
+            await _userManager.AddToRoleAsync(user, "user");
+
+            return user;
+        }
+
+        private static string RandomString(int length)
+        {
+            var _random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
     }
 }
