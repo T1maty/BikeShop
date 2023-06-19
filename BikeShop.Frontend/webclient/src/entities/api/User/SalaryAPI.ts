@@ -10,9 +10,9 @@ export const SalaryAPI = {
             $api.get<SalaryResponse>(`/salary/byuser?UserId=${userId}`)
         )
     },
-    updateEmployeeSalary(params: UpdateSalaryParams): Promise<AxiosResponse<SalaryResponse>> {
+    updateEmployeeSalary(p: UpdateSalaryParams): Promise<AxiosResponse<SalaryResponse>> {
         return (
-            $api.put<SalaryResponse>(`/salary/update`)
+            $api.put<SalaryResponse>(`/salary/update?UserId=${p.userId}&Rate=${p.rate}&ShopPercent=${p.shopPercent}&WorkPercent=${p.workPercent}&WorkshopPercent=${p.workshopPercent}`)
         )
     },
     calculateSalary(userId: string, start: string, finish: string): Promise<AxiosResponse<CalculatedSalary>> {

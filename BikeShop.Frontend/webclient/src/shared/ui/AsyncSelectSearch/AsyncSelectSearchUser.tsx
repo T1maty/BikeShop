@@ -3,7 +3,7 @@ import AsyncSelect from 'react-select/async'
 import {AuthAPI} from '../../../entities'
 import {UserWithRoles} from "../../../entities/models/Auth/UserWithRoles";
 
-export const AsyncSelectSearchUser = (props: { onSelect: (value: UserWithRoles) => void, value?: UserWithRoles | null }) => {
+export const AsyncSelectSearchUser = (props: { onSelect: (value: UserWithRoles) => void, value?: UserWithRoles | null, inputValue?: string, inputChange?: (v: string) => void }) => {
 
     const [value, setValue] = useState<UserWithRoles | null>(null)
 
@@ -25,6 +25,9 @@ export const AsyncSelectSearchUser = (props: { onSelect: (value: UserWithRoles) 
                 cacheOptions
                 defaultOptions
                 isClearable
+
+                inputValue={props.inputValue}
+                onInputChange={props.inputChange}
                 value={props.value != undefined ? props.value : value}
                 loadOptions={loadOptions}
                 onChange={(r) => {

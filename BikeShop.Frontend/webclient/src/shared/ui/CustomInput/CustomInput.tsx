@@ -1,6 +1,6 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes,
-    KeyboardEvent, ReactNode} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode} from 'react'
 import s from './CustomInput.module.scss'
+import InputMask from "react-input-mask";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
@@ -18,6 +18,7 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     spanClassName?: string
     color?: 'black'
     searchInput?: 'white' | 'black'
+    mask?: string
 }
 
 // @ts-ignore
@@ -35,6 +36,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
         color,
         searchInput,
         id,
+        mask,
 
         ...restProps // все остальные пропсы попадут в объект restProps
     }, forwardRef
@@ -68,14 +70,23 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
 
     return (
         <div className={finalInputDivWrapperClassName}>
-            <input
-                id={id}
-                type={'text'}
+            <InputMask
+                mask={mask === undefined ? '' : mask}
+                value={restProps.value}
                 onChange={onChangeCallback}
-                onKeyPress={onKeyPressCallback}
-                className={finalInputClassName}
-                {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-            />
+                placeholder={restProps.placeholder}
+                autoComplete={"off"}
+            >
+                <input
+                    autoComplete={"off"}
+                    id={id}
+                    name={restProps.placeholder}
+                    type={'text'}
+                    onKeyPress={onKeyPressCallback}
+                    className={finalInputClassName}
+                />
+            </InputMask>
+
             {/*<span className={s.cancelIcon}></span>*/}
 
             {
@@ -94,13 +105,6 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
                     : ''
             }
 
-            {/*вариант строки с id*/}
-            {/*<span*/}
-            {/*    id={id ? id + '-span' : undefined}*/}
-            {/*    className={finalSpanClassName}*/}
-            {/*>*/}
-            {/*    {error}*/}
-            {/*</span>*/}
         </div>
     )
 })

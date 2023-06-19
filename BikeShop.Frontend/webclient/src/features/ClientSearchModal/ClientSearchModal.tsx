@@ -1,5 +1,5 @@
 import s from './ClientSearchModel.module.scss'
-import {FC} from "react"
+import {FC, useState} from "react"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {ControlledCustomInput} from 'shared/ui/Controlled/ControlledCustomInput'
 import {LoaderScreen} from "shared/ui/LoaderScreen/LoaderScreen"
@@ -11,6 +11,8 @@ import {CustomModal} from "../../shared/ui";
 import {AsyncSelectSearchUser} from "../../shared/ui/AsyncSelectSearch/AsyncSelectSearchUser";
 import {UserWithRoles} from "../../entities/models/Auth/UserWithRoles";
 import {useSnackbar} from "notistack";
+import {phoneMaskRemove} from "../../shared/utils/phoneMaskRemove";
+
 
 // Всплывающий модуль для поиска пользователя по ФИО или телефону и создания нового
 // пользователя при необходимости
@@ -63,8 +65,11 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
     const isLoading = useAddNewUser(s => s.isLoading)
     const setUsers = useAddNewUser(s => s.setUsers)
     const {enqueueSnackbar} = useSnackbar()
+    const [select, setSelect1] = useState('')
 
-
+    const setSelect = (v: string) => {
+        if (v != '') setSelect1(v)
+    }
     const formControl = useForm<CreateUser>({
         defaultValues: {
             phone: '',
@@ -76,7 +81,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
 
     // обработчик нажатия на кнопку поиска пользователя
     const handleSubmitSearch: SubmitHandler<CreateUser> = (data: CreateUser) => {
-        data.phone = '+380' + data.phone
+        data.phone = phoneMaskRemove(data.phone)
         if (!!data.firstName) {
             const findData = {
                 fio: data.firstName,
@@ -88,6 +93,8 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
 
     // обработчик нажатия на кнопку создания пользователя
     const handleSubmitCreate: SubmitHandler<CreateUser> = (data: CreateUser) => {
+        data.phone = phoneMaskRemove(data.phone)
+        /*
         create(data,
             (res) => {
                 enqueueSnackbar('Пользователь создан и выбран', {variant: 'success', autoHideDuration: 3000})
@@ -98,6 +105,8 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                 enqueueSnackbar('Ошибка создания', {variant: 'error', autoHideDuration: 3000})
                 // onFailure
             })
+
+         */
     }
 
     // обработчик нажатия на кнопку отмены
@@ -110,6 +119,16 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
         onSuccess(user.user)
         formControl.reset()
     }
+
+    const phoneHelper = () => {
+        let v = phoneMaskRemove(formControl.getValues('phone'))
+
+        if (v === '+38__________') {
+            console.log(v)
+            formControl.setValue('phone', select)
+        }
+    }
+
 
     return (
         <CustomModal
@@ -125,7 +144,8 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                 <div className={s.searchForm_mainBox}>
 
                     <div className={s.select}>
-                        <AsyncSelectSearchUser onSelect={handleSuccessChoise}/>
+                        <AsyncSelectSearchUser onSelect={handleSuccessChoise}
+                                               inputChange={setSelect}/>
                     </div>
 
 
@@ -133,23 +153,25 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
 
                         <div className={s.searchForm_form}>
                             <div className={s.text}>Создание нового клиента</div>
-                            <div>
+                            <div onClick={phoneHelper}>
 
                                 <ControlledCustomInput name={'phone'}
                                                        placeholder={'Телефон'}
+                                                       mask={"+38 (999) 999-99-99"}
                                                        control={formControl}
+                                                       autocompleteOff
                                                        rules={{
-                                                           // required: 'Поле обязательно для заполнения',
+                                                           required: 'Поле обязательно для заполнения',
                                                            minLength: {
-                                                               value: 10,
-                                                               message: 'Минимальная длина 10 символа'
+                                                               value: 19,
+                                                               message: 'Неверная длинна телефона'
                                                            },
                                                            maxLength: {
-                                                               value: 10,
-                                                               message: 'Максимальная длина 10 символа'
+                                                               value: 19,
+                                                               message: 'Неверная длинна телефона'
                                                            },
                                                            pattern: {
-                                                               value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                                                               value: /^(\s*)?(\+)?([- _():=+]?\d[- ():=+]?){10,14}(\s*)?$/,
                                                                message: 'Неверный формат номера телефона'
                                                            }
                                                        }}
@@ -159,6 +181,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                             <div>
                                 <ControlledCustomInput name={'firstName'}
                                                        placeholder={'Имя'}
+                                                       autocompleteOff
                                                        control={formControl}
                                                        divClassName={s.searchInput}
                                                        rules={{
@@ -168,6 +191,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                             </div>
                             <div>
                                 <ControlledCustomInput name={'lastName'}
+                                                       autocompleteOff
                                                        placeholder={'Фамилия'}
                                                        control={formControl}
                                                        divClassName={s.searchInput}
@@ -175,6 +199,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                             </div>
                             <div>
                                 <ControlledCustomInput name={'patronymic'}
+                                                       autocompleteOff
                                                        placeholder={'Отчество'}
                                                        control={formControl}
                                                        divClassName={s.searchInput}
@@ -188,7 +213,9 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                                     Создать
                                 </Button>
                                 <Button buttonDivWrapper={s.cancel_Button}
-                                        onClick={formControl.handleSubmit(handleCancel)}>
+                                        onClick={
+                                            formControl.handleSubmit(handleCancel)
+                                        }>
                                     Отмена
                                 </Button>
                             </div>

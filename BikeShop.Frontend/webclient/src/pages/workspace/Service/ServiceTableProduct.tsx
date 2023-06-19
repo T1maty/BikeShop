@@ -22,6 +22,18 @@ const ServiceTableProduct = (props: ServiceTableProps) => {
         props.serviceTableCallback()
     }
 
+    const setQuantity = (q: number, item: ServiceProduct) => {
+        props.setData(props.data!.map(n => {
+            if (n.productId === item.productId) {
+                let newItem = n
+                newItem.quantity = q
+                return newItem
+            } else {
+                return n
+            }
+        }))
+    }
+
     return (
         <div className={s.tableBox}>
             <div className={s.tableBox_buttons}>
@@ -53,8 +65,11 @@ const ServiceTableProduct = (props: ServiceTableProps) => {
                                                           name={item.name}
                                                           price={item.price}
                                                           count={item.quantity}
+                                                          setQuantity={(q) => {
+                                                              setQuantity(q, item)
+                                                          }}
                                                           onDoubleClick={() => {
-                                                              props.setData(props.data?.filter(n => n.productId != item.productId)!)
+                                                              //props.setData(props.data?.filter(n => n.productId != item.productId)!)
                                                           }}
                                                           unitName={item.quantityUnitName}
                                         />

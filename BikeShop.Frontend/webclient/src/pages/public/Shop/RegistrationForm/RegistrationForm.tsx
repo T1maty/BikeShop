@@ -7,6 +7,7 @@ import {RegistrationData, useAuth} from '../../../../entities'
 import {useSnackbar} from 'notistack'
 import {useNavigate} from 'react-router-dom'
 import {BikeShopPaths} from "../../../../app/routes/paths"
+import {phoneMaskRemove} from "../../../../shared/utils/phoneMaskRemove";
 
 export const RegistrationForm = () => {
 
@@ -23,6 +24,7 @@ export const RegistrationForm = () => {
     })
 
     const onSubmit: SubmitHandler<RegistrationData> = (data: RegistrationData) => {
+        data.phone = phoneMaskRemove(data.phone)
         register(data, () => {
             navigate(BikeShopPaths.COMMON.LOGIN)
         })
@@ -38,12 +40,12 @@ export const RegistrationForm = () => {
                     <div>
                         <ControlledCustomInput name={'phone'}
                                                placeholder={'Номер телефона'}
+                                               mask={"+38 (999) 999-99-99"}
                                                control={formControl}
                                                rules={{
                                                    required: 'Поле обязательно для заполнения',
-                                                   minLength: {value: 4, message: 'Минимальная длина 4 символа'},
                                                    pattern: {
-                                                       value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                                                       value: /^(\s*)?(\+)?([- _():=+]?\d[- ():=+]?){10,14}(\s*)?$/,
                                                        message: 'Неверный формат номера телефона'
                                                    }
                                                }}

@@ -21,6 +21,18 @@ const ServiceTableWork = (props: ServiceTableProps) => {
         props.serviceTableCallback()
     }
 
+    const setQuantity = (q: number, item: ServiceWork) => {
+        props.setData(props.data!.map(n => {
+            if (n.workId === item.workId) {
+                let newItem = n
+                newItem.quantity = q
+                return newItem
+            } else {
+                return n
+            }
+        }))
+    }
+
     return (
         <div className={s.tableBox}>
             <div className={s.tableBox_buttons}>
@@ -53,8 +65,11 @@ const ServiceTableWork = (props: ServiceTableProps) => {
                                                           price={item.price}
                                                           count={item.quantity}
                                                           cPrice={item.complicationPrice}
+                                                          setQuantity={(q) => {
+                                                              setQuantity(q, item)
+                                                          }}
                                                           onDoubleClick={() => {
-                                                              props.setData(props.data?.filter(n => n.workId != item.workId)!)
+                                                              //props.setData(props.data?.filter(n => n.workId != item.workId)!)
                                                           }}
                                                           onPriceClick={() => {
                                                               if (item.complicationPrice === 0 && item.description === '') {

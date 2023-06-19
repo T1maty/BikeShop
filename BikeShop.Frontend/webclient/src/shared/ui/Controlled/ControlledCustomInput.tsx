@@ -14,6 +14,8 @@ interface ControlledCustomInputProps {
     divClassName?: any
     disabled?: boolean
     isCurrecy?: boolean
+    mask?: string
+    autocompleteOff?: boolean
 }
 
 export const ControlledCustomInput = (props: ControlledCustomInputProps) => {
@@ -35,6 +37,7 @@ export const ControlledCustomInput = (props: ControlledCustomInputProps) => {
         } else return field.onChange(n.target.value)
     }
 
+
     return (
         <div className={props.divClassName}>
 
@@ -49,6 +52,8 @@ export const ControlledCustomInput = (props: ControlledCustomInputProps) => {
                                      onChange={n => {
                                          getOnChange(field, n)
                                      }}
+                                     autoComplete={props.autocompleteOff ? 'off' : undefined}
+                                     mask={props.mask}
                                      placeholder={props.placeholder}
                                      type={props.type}
                                      error={!!props.control.formState.errors[props.name]}

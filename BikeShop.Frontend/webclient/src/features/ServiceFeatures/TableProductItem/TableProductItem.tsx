@@ -11,6 +11,7 @@ interface TableItemProps {
     onDoubleClick?: () => void
     discount?: number
     unitName?: string
+    setQuantity: (q: number) => void
 }
 
 export const TableProductItem: React.FC<TableItemProps> = ({
@@ -20,7 +21,7 @@ export const TableProductItem: React.FC<TableItemProps> = ({
                                                                onPriceClick,
                                                                discount,
                                                                unitName,
-                                                               onDoubleClick, cPrice
+                                                               onDoubleClick, cPrice, setQuantity
                                                            }) => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
@@ -41,7 +42,17 @@ export const TableProductItem: React.FC<TableItemProps> = ({
                     <div>{r(price * fbts.c) + fbts.s}</div>
                     {//<div className={s.multiply}>x</div>
                     }
-                    <div>{count} {unitName ? unitName : 'шт.'}</div>
+                    <div className={s.tableItemQuantity}>
+                        <div className={s.removeButton} onClick={() => {
+                            setQuantity(count - 1)
+                        }}>-
+                        </div>
+                        {count} {unitName ? unitName : 'шт'}
+                        <div className={s.addButton} onClick={() => {
+                            setQuantity(count + 1)
+                        }}>+
+                        </div>
+                    </div>
                 </div>
                 <div className={s.tableItem_sum}>
                     {

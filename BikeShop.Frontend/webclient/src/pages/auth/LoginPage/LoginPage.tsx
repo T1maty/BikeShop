@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import s from '../LoginPage/LoginPage.module.scss'
 import {SubmitHandler, useForm} from "react-hook-form"
 import {useNavigate} from "react-router-dom"
@@ -8,6 +8,7 @@ import {Button, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import {useTranslation} from "react-i18next"
 import {useSnackbar} from "notistack"
+import {phoneMaskRemove} from "../../../shared/utils/phoneMaskRemove";
 
 export const LoginPage = () => {
 
@@ -26,6 +27,7 @@ export const LoginPage = () => {
     })
 
     const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
+        data.phone = phoneMaskRemove(data.phone)
         login(data,
             (data) => {
                 if (data.user.shopId > 0) {
@@ -58,6 +60,7 @@ export const LoginPage = () => {
                         <div className={s.loginForm_form}>
                             <div className={s.phone}>
                                 <ControlledCustomInput name={'phone'}
+                                                       mask={"+38 (999) 999-99-99"}
                                                        placeholder={'Почта или номер телефона'}
                                                        control={formControl}
                                                        rules={{
@@ -67,7 +70,7 @@ export const LoginPage = () => {
                                                                message: 'Минимальная длина 4 символа'
                                                            },
                                                            pattern: {
-                                                               value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                                                               value: /^(\s*)?(\+)?([- _():=+]?\d[- ():=+]?){10,14}(\s*)?$/,
                                                                message: 'Неверный формат номера телефона'
                                                            }
                                                        }}
@@ -82,7 +85,9 @@ export const LoginPage = () => {
                         </div>
                         <div className={s.loginForm_buttons}>
                             <Button buttonDivWrapper={s.loginForm_registerButton}
-                                    onClick={() => {navigate(BikeShopPaths.COMMON.REGISTRATION)}}
+                                    onClick={() => {
+                                        navigate(BikeShopPaths.COMMON.REGISTRATION)
+                                    }}
                             >
                                 Регистрация
                             </Button>

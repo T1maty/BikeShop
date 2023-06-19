@@ -29,6 +29,39 @@
       .multiply {
         padding: 0 3px;
       }
+
+
+      .tableItemQuantity {
+        user-select: none;
+        display: flex;
+        justify-content: space-between;
+
+        .addButton {
+          border: 1px solid black;
+          padding: 2px 3px 2px 2px;
+          border-radius: 5px;
+        }
+
+        .addButton:hover {
+          background: #4b4b4b;
+          color: white;
+          cursor: pointer;
+        }
+
+        .removeButton {
+          border: 1px solid black;
+          padding: 2px 4px 2px 4px;
+          margin-right: 3px;
+          border-radius: 5px;
+        }
+
+        .removeButton:hover {
+          background: #4b4b4b;
+          color: white;
+          cursor: pointer;
+        }
+      }
+
     }
 
     .tableItem_sum {
