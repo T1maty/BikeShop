@@ -94,7 +94,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
     // обработчик нажатия на кнопку создания пользователя
     const handleSubmitCreate: SubmitHandler<CreateUser> = (data: CreateUser) => {
         data.phone = phoneMaskRemove(data.phone)
-        /*
+
         create(data,
             (res) => {
                 enqueueSnackbar('Пользователь создан и выбран', {variant: 'success', autoHideDuration: 3000})
@@ -106,7 +106,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                 // onFailure
             })
 
-         */
+         
     }
 
     // обработчик нажатия на кнопку отмены
@@ -161,15 +161,6 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                                                        control={formControl}
                                                        autocompleteOff
                                                        rules={{
-                                                           required: 'Поле обязательно для заполнения',
-                                                           minLength: {
-                                                               value: 19,
-                                                               message: 'Неверная длинна телефона'
-                                                           },
-                                                           maxLength: {
-                                                               value: 19,
-                                                               message: 'Неверная длинна телефона'
-                                                           },
                                                            pattern: {
                                                                value: /^(\s*)?(\+)?([- _():=+]?\d[- ():=+]?){10,14}(\s*)?$/,
                                                                message: 'Неверный формат номера телефона'

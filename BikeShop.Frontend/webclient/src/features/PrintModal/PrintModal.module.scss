@@ -3,7 +3,7 @@
 
 .printModal_mainBox {
   @include defaultModalStyle;
-  @include flexColumn;
+  @include flexCenter;
   min-width: 500px;
 
   .printModal_buttons {
@@ -15,10 +15,6 @@
     border-radius: $smallBorderRadius;
     margin-bottom: $defaultSmallMargin;
 
-    > div {
-      width: 100%;
-    }
-
     button {
       padding: $defaultSmallMargin;
       width: 100%;
@@ -26,7 +22,6 @@
   }
 
   .printModal_content {
-    min-width: 100%;
     background-color: $themeColorGray;
     padding: $defaultLargeMargin;
     border-radius: $smallBorderRadius;
@@ -34,8 +29,6 @@
     justify-content: center;
 
     .scrollWrapper {
-      overflow-y: auto;
-      max-height: 600px;
       padding-right: 5px;
 
 

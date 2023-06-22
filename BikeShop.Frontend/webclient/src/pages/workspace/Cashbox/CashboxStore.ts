@@ -83,7 +83,6 @@ const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get)
         set({isLoading: true})
 
         FinancialInteractionAPI.NewBill.create(res).then((r) => {
-            set({isLoading: false})
             onSuccess(r.data)
         }).finally(() => {
             set({isLoading: false})

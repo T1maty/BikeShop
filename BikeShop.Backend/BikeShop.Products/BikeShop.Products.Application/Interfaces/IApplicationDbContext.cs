@@ -31,6 +31,8 @@ public interface IApplicationDbContext
     DbSet<OptionVariant> OptionVariants { get; set; }
     DbSet<ProductOptionVariantBind> ProductOptionVariantBinds { get; set; }
 
+    DbSet<TagToCategoryBind> TagToCategoryBinds { get; set; }
+
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

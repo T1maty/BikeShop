@@ -1,27 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import s from "./MainPage.module.scss"
 import {BikeShopPaths} from "../../../app/routes/paths"
-import {
-    BillWithProducts,
-    CatalogAPI,
-    LocalStorage,
-    PaymentData,
-    ShiftAPI,
-    useAuth,
-    useCurrency,
-    User
-} from "../../../entities"
+import {CatalogAPI, LocalStorage, ShiftAPI, useAuth, useCurrency} from "../../../entities"
 import {useNavigate} from "react-router-dom"
-import {AsyncSelectSearchProduct, Button, DeleteButton, LoaderScreen} from '../../../shared/ui'
+import {Button, LoaderScreen} from '../../../shared/ui'
 import {
     CreateProductModal,
     EditProductCardModal,
     EmployeeSalaryModal,
     EncashmentModal,
     EndWorkDayModal,
-    GetPutMoneyModal,
-    PayModal,
-    PrintModal
+    GetPutMoneyModal
 } from '../../../features'
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
@@ -32,12 +21,12 @@ import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
 import ShiftTime from "./ShiftTime"
 import useCashboxStore from "../Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
-import {CheckForShop} from "../../../widgets"
 import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 import useSupplyInvoice from "../ProductsCount/SupplyInvoice/models/SupplyInvoiceStore";
 import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
+import {MainPageCashbox} from "../../../widgets/workspace/MainPageCashbox/MainPageCashbox";
 
 type ShiftStatusTypes = 'Open' | 'Closed' | 'Pause'
 
@@ -74,13 +63,11 @@ export const MainPage = () => {
     const addProduct = useCashboxStore(s => s.addProduct)
     const paymentHandler = useCashboxStore(s => s.paymentHandler)
 
+    const isLoadingCashbox = useCashboxStore(s => s.isLoading)
+
+
     const clearCurrentSupplyInvoice = useSupplyInvoice(s => s.clearCurrent)
 
-
-    const [openPay, setOpenPay] = useState(false)
-    const [res, setRes] = useState<BillWithProducts>()
-    const [openPrint, setOpenPrint] = useState(false)
-    const [openClientSearch, setOpenClientSearch] = useState(false)
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -100,21 +87,6 @@ export const MainPage = () => {
     console.log('shift', userShiftStatus?.hours)
     console.log('shiftStart', userShiftStatus?.lastAction.time)
 
-    const chooseClientHandler = (user: User) => {
-        setUser(user)
-        setIsClientChosen(true)
-        setOpenClientModal(false)
-    }
-
-    const paymentResultHandler = (value: PaymentData) => {
-        paymentHandler(value, (r) => {
-            enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 4000})
-            setRes(r)
-            console.log(r)
-            setOpenPrint(true)
-            setData([])
-        })
-    }
 
     const getShiftButtonUniversal = (buttonTitle: string, requestAPI: any) => {
         return (
@@ -269,90 +241,9 @@ export const MainPage = () => {
                         </div>
 
                         <div className={s.content_rightSide}>
-                            <div className={s.rightSide_top}>
-                                <div className={s.select}>
-                                    <AsyncSelectSearchProduct onSelect={addProduct}/>
-                                </div>
-                                <div className={s.rightSide_top_search}>
 
-                                    {
-                                        //<ClientSearchModal setIsComponentVisible={setOpenClientSearch} isVisible={openClientSearch} onSuccess={handler}/>
-                                        //<ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
-                                    }
-                                    <Button buttonDivWrapper={s.search_chooseClientButton}
-                                            onClick={() => {
-                                                setOpenClientModal(true)
-                                            }}
-                                    >
-                                        Выбрать клиента
-                                    </Button>
-                                    <div className={s.search_searchInput}>
-                                        {user && user.lastName} {user && user.firstName} {user && user.patronymic}
-                                    </div>
-                                </div>
+                            <MainPageCashbox/>
 
-                                <div className={s.rightSide_top_info}>
-                                    {
-                                        bill.products?.map(n => {
-                                            return (
-                                                <div className={s.cashbox_table_wrapper}>
-                                                    <div className={s.cashbox_table_left}>
-                                                        <div className={s.cashbox_table_name}>
-                                                            {n.name}
-                                                        </div>
-                                                        <div className={s.cashbox_table_price}>
-                                                            {n.price * fbts.c + fbts.s}
-                                                        </div>
-                                                        <div className={s.cashbox_table_total}>
-                                                            {n.total * fbts.c + fbts.s}
-                                                        </div>
-                                                    </div>
-                                                    <DeleteButton size={30}
-                                                                  onClick={() => {
-                                                                      setData(bill.products.filter(h => h.productId != n.productId))
-                                                                  }}
-                                                    />
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-
-                                <div className={s.rightSide_top_result}>
-                                    <Button buttonDivWrapper={s.result_chooseCashboxBtn}
-                                            onClick={() => {
-                                                navigate(BikeShopPaths.WORKSPACE.CASHBOX)
-                                            }}>
-                                        Открыть кассу
-                                    </Button>
-                                    <Button buttonDivWrapper={s.result_cancelBtn}
-                                            onClick={() => {
-                                            }}
-                                    >
-                                        X
-                                    </Button>
-                                    <div className={s.result_span}>
-                                        {sum * fbts.c + fbts.s}
-                                    </div>
-                                    <PayModal open={openPay}
-                                              setOpen={setOpenPay}
-                                              user={user}
-                                              summ={sum}
-                                              result={paymentResultHandler}
-                                    />
-                                    <PrintModal open={openPrint}
-                                                setOpen={setOpenPrint}>
-                                        <CheckForShop children={res!}/>
-                                    </PrintModal>
-                                    <Button buttonDivWrapper={s.result_payBtn}
-                                            onClick={() => {
-                                                setOpenPay(true)
-                                            }}
-                                    >
-                                        К оплате
-                                    </Button>
-                                </div>
-                            </div>
 
                             <div className={s.rightSide_bottom}>
                                 <div className={s.bottom_left}>
@@ -397,6 +288,7 @@ export const MainPage = () => {
                             </div>
 
                         </div>
+
                     </div>
 
                 </div>

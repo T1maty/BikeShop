@@ -108,8 +108,8 @@ namespace BikeShop.Payments.Application.Services
 
             if (dto.IsFiscal == null || dto.IsFiscal == true)
             {
-                var goods = dto.Products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = (int)(n.Price * 100) } }).ToList();
-                var payment = new Pymnt { value = goods.Select(n => n.quantity / 1000 * n.good.price).Sum(), label = "Pay", type = "CASHLESS" };
+                var goods = dto.Products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = (int)(n.Price * 37 * 100) } }).ToList();
+                var payment = new Pymnt { value = goods.Select(n => n.quantity / 1000 * n.good.price * 37).Sum(), label = "Pay", type = "CASHLESS" };
                 var receipt = new Receipt { payments = new List<Pymnt> { payment }, goods = goods, id = bill.UUID };
 
                 var settings = await _context.CheckboxSettings.FirstOrDefaultAsync();

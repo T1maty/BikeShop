@@ -21,4 +21,5 @@ public interface IProductService
     public Task<List<Product>> Search(string querry);
     public Task<Product> Update(UpdateProductDTO dto);
     public Task<Product> Create(CreateProductDTO dto);
+    public Task AddArray(List<AddArrayProductDTO> dto);
 }

@@ -592,7 +592,6 @@
 @mixin workActMainBlock {
   min-width: 400px;
   height: 100%;
-  border: 1px solid black;
   background-color: white;
   padding: $defaultSmallMargin;
   @include divSmallMarginBottom;

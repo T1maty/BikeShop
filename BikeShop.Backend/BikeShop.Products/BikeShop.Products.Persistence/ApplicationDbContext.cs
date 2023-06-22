@@ -29,6 +29,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Option> Options { get; set; }
     public DbSet<OptionVariant> OptionVariants { get; set; }
     public DbSet<ProductOptionVariantBind> ProductOptionVariantBinds { get; set; }
+    public DbSet<TagToCategoryBind> TagToCategoryBinds { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

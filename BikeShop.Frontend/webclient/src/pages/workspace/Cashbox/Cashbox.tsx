@@ -30,7 +30,6 @@ export const Cashbox = () => {
     const sum = useCashboxStore(s => s.sum)
     const setSum = useCashboxStore(s => s.setSum)
     const isLoading = useCashboxStore(s => s.isLoading)
-    const setIsLoading = useCashboxStore(s => s.setIsLoading)
     const user = useCashboxStore(s => s.user)
     const setUser = useCashboxStore(s => s.setUser)
     const bill = useCashboxStore(s => s.bill)
@@ -41,6 +40,9 @@ export const Cashbox = () => {
     const bts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
     const currency = useCurrency(s => s.selectedCurrency)
+
+    const [printTrigger, setPrintTrigger] = useState<null | 'agent'>(null)
+
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -53,7 +55,10 @@ export const Cashbox = () => {
             enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 3000})
             setRes(r)
             console.log(r)
+
             setOpenPrint(true)
+            setPrintTrigger("agent")
+
             setData([])
         })
     }
@@ -85,7 +90,9 @@ export const Cashbox = () => {
             <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
                 <div className={s.cashboxMainBlock}>
 
-                    <PrintModal open={openPrint}
+                    <PrintModal open={openPrint} trigger={printTrigger} finaly={() => {
+                        setOpenPrint(false)
+                    }}
                                 setOpen={setOpenPrint} printAgentName={'Bill'}>
                         <CheckForShop children={res!}/>
                     </PrintModal>

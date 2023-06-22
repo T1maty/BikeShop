@@ -48,6 +48,9 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
         data.dealerPrice = data.dealerPrice * fstb.c
         data.retailPrice = data.retailPrice * fstb.c
         data.incomePrice = data.incomePrice * fstb.c
+
+        console.log(data)
+
         create(data).then((r) => {
             setOpen(false)
             props.onSuccess ? props.onSuccess(r.data) : true
@@ -56,7 +59,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
             enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 10000})
         }).catch(r => {
             let message = error(r.response.data.errorDescription).toString()
-            formControl.setError(r.response.data.reasonField, {type: 'serverError', message: message})
+            //formControl.setError(r.response.data.reasonField, {type: 'serverError', message: message})
             enqueueSnackbar(message, {variant: 'error', autoHideDuration: 10000})
             console.error(r.response.data)
         })
@@ -131,7 +134,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
                         }}>
                             Отмена
                         </Button>
-                        <Button type={'submit'}>
+                        <Button type={"submit"}>
                             Создать товар
                         </Button>
                     </div>

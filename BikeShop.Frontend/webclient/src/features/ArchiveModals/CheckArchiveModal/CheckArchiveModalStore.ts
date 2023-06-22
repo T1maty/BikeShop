@@ -26,7 +26,7 @@ const useCheckArchiveModal = create<CheckArchiveModalStore>()(persist(devtools(i
 
     loadArchive: () => {
         set({isLoading: true});
-        FinancialInteractionAPI.getByShop(LocalStorage.shopId()!, 100).then(res => {
+        FinancialInteractionAPI.getByShop(LocalStorage.shopId()!, 1000).then(res => {
             set(state => {
                 state.archive = res.data
             })

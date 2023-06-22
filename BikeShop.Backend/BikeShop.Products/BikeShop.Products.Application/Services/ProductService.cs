@@ -278,5 +278,53 @@ namespace BikeShop.Products.Application.Services
 
             return barcode;
         }
+
+        public async Task AddArray(List<AddArrayProductDTO> dto)
+        {
+            var existKeys = await _context.Products.Select(n=>n.CatalogKey).ToListAsync();
+
+            var newProds = dto.Where(n => !existKeys.Contains(n.catalog_key)).ToList();
+            var existProds = dto.Where(n => existKeys.Contains(n.catalog_key)).Select(n=>n.catalog_key).ToList();
+
+            var existProdsEnts = _context.Products.Where(n => existProds.Contains(n.CatalogKey));
+
+            foreach (var i in existProdsEnts)
+            {
+                i.Category = dto.Where(n => n.catalog_key == i.CatalogKey).FirstOrDefault().category;
+            }
+
+            var products = new List<Product>();
+
+            var barcodes = await _context.Products.Select(p => p.Barcode).ToArrayAsync();
+
+            foreach (var p in newProds)
+            {
+                products.Add(new Product
+                {
+                     IncomePrice = decimal.Parse(p.price_in),
+                     DealerPrice = decimal.Parse(p.price_out),
+                     RetailPrice = decimal.Parse(p.price_out),
+                      CatalogKey= p.catalog_key,
+                      Name = p.name,
+                      QuantityUnitName = "шт."
+                });
+            }
+
+            await _context.Products.AddRangeAsync(products);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            var cards = new List<ProductCard>();
+
+            foreach (var i in products)
+            {
+                var bc = GenerateUniqueBarcode(i.Id, barcodes);
+                i.Barcode = bc;
+                barcodes.Append(bc);
+                cards.Add(new ProductCard { ProductId = i.Id });
+            }
+
+            await _context.ProductsCards.AddRangeAsync(cards);
+            await _context.SaveChangesAsync(new CancellationToken());
+        }
     }
 }

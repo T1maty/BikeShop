@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef} from 'react'
+import React, {ReactElement, useEffect, useRef, useState} from 'react'
 import s from './PrintModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
 import {useReactToPrint} from 'react-to-print'
@@ -6,6 +6,8 @@ import {useSnackbar} from 'notistack'
 import * as htmlToImage from 'html-to-image';
 import {PrintAPI} from "../../entities/api/Acts/PrintAPI";
 import {PrintSettings} from "../../entities/models/PrintSettings";
+import {Loader} from "../../shared/ui/Loader/Loader";
+import html2canvas from "html2canvas";
 
 interface PrintModalProps {
     open: boolean
@@ -13,7 +15,7 @@ interface PrintModalProps {
     children: ReactElement
     id?: number
     finaly?: () => void,
-    trigger?: 'agent' | null
+    trigger?: 'agent' | 'png' | null
     printAgentName?: string
 }
 
@@ -30,6 +32,24 @@ export const PrintModal: React.FC<PrintModalProps> = ({
     const {enqueueSnackbar} = useSnackbar()
 
     const componentRef = useRef<HTMLDivElement>(null)
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    function saveComponentAsImage() {
+
+        window.scrollTo(0, 0);
+        html2canvas(componentRef.current!, {
+            scrollY: -window.scrollY,
+
+        }).then(function (canvas) {
+            var img = canvas.toDataURL();
+            var link = document.createElement('a');
+            link.download = 'my-image-name.jpeg';
+            link.href = img;
+            link.click();
+
+        });
+    }
 
     const printDocumentHandler = useReactToPrint({
         content: () => componentRef.current,
@@ -53,12 +73,23 @@ export const PrintModal: React.FC<PrintModalProps> = ({
 
     useEffect(() => {
         if (trigger === 'agent') {
-            agent()
+            setTimeout(() => {
+                agent()
+            }, 100)
+        } else if (trigger === 'png') {
+            setTimeout(() => {
+                pngHandler()
+            }, 100)
+
         }
     }, [trigger])
 
+
     const pngHandler = () => {
-        htmlToImage.toPng(document.getElementById('my-node')!, {quality: 1, pixelRatio: 3})
+        htmlToImage.toPng(componentRef.current!, {
+            quality: 1,
+            pixelRatio: 3
+        })
             .then(function (dataUrl) {
                 var link = document.createElement('a');
                 link.download = 'my-image-name.png';
@@ -82,7 +113,8 @@ export const PrintModal: React.FC<PrintModalProps> = ({
     }
 
     const agent = () => {
-        htmlToImage.toPng(document.getElementById('my-node')!, {quality: 1, pixelRatio: 3})
+        setIsLoading(true)
+        htmlToImage.toPng(componentRef.current!, {quality: 1, pixelRatio: 3})
             .then(function (dataUrl) {
                 let file = dataURLtoFile(dataUrl, "ActImage")
                 console.log(file)
@@ -98,6 +130,8 @@ export const PrintModal: React.FC<PrintModalProps> = ({
             }).then(n => {
             finaly ? finaly() : false
             enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
+        }).finally(() => {
+            setIsLoading(false)
         });
     }
 
@@ -113,23 +147,27 @@ export const PrintModal: React.FC<PrintModalProps> = ({
             }}
         >
             <div className={s.printModal_mainBox}>
-                <div className={s.printModal_buttons}>
-                    <Button onClick={printDocumentHandler}>
-                        Печать
-                    </Button>
-                    <Button onClick={jpgHandler}>
-                        JPG
-                    </Button>
-                    <Button onClick={pngHandler}>
-                        PNG
-                    </Button>
-                    <Button onClick={agent}>
-                        Печать агентом
-                    </Button>
 
-                </div>
-                <div className={s.printModal_content} ref={componentRef}>
-                    <div id={"my-node"} className={s.scrollWrapper}>
+                {isLoading ? <Loader variant={"ellipsis"}/> :
+                    <div className={s.printModal_buttons}>
+                        <Button onClick={printDocumentHandler}>
+                            Печать
+                        </Button>
+                        <Button onClick={saveComponentAsImage}>
+                            JPG
+                        </Button>
+                        <Button onClick={
+                            pngHandler}>
+                            PNG
+                        </Button>
+                        <Button onClick={agent}>
+                            Печать агентом
+                        </Button>
+
+                    </div>
+                }
+                <div className={s.printModal_content}>
+                    <div id={"my-node"} className={s.scrollWrapper} ref={componentRef}>
                         {children}
                     </div>
                 </div>

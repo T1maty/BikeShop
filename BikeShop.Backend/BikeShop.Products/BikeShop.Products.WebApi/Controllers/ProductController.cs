@@ -140,5 +140,11 @@ namespace BikeShop.Products.WebApi.Controllers
         {
             return await _productService.Search(querry);
         }
+
+        [HttpPut("addArray")]
+        public async Task AddArray(List<AddArrayProductDTO> dto)
+        {
+            await _productService.AddArray(dto);
+        }
     }
 }

@@ -7,6 +7,7 @@ import useCashboxStore from "../../../pages/workspace/Cashbox/CashboxStore"
 export const CheckForShop = (props: { children: BillWithProducts }) => {
 
     const findCurrency = useCurrency(s => s.find)
+    const r = useCurrency(s => s.roundUp)
     const user = useAuth(s => s.user)
     const client = useCashboxStore(s => s.user)
     const discount = false // пофиксить!
@@ -48,13 +49,13 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
                                                 {n.name}
                                             </td>
                                             <td style={{width: '50px'}}>
-                                                {n.price}
+                                                {r(n.price)}
                                             </td>
                                             <td style={{width: '34px'}}>
                                                 {n.quantity}
                                             </td>
                                             <td style={{width: '55px'}}>
-                                                {n.price * n.quantity}
+                                                {r(n.price * n.quantity)}
                                             </td>
                                         </tr>
                                     )
@@ -77,7 +78,7 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
                         <div>
                             Всего: {' '}
                             <span style={{fontWeight: 'bold'}}>
-                                {props.children.bill.total + props.children.bill.discount + findCurrency(props.children.bill.currencyId)?.symbol!}
+                                {r(props.children.bill.total + props.children.bill.discount) + findCurrency(props.children.bill.currencyId)?.symbol!}
                             </span>
                         </div>
                         {
@@ -85,7 +86,7 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
                                 <div>
                                     Скидка: {' '}
                                     <span style={{fontWeight: 'bold'}}>
-                                        {props.children.bill.discount + findCurrency(props.children.bill.currencyId)?.symbol!}
+                                        {r(props.children.bill.discount) + findCurrency(props.children.bill.currencyId)?.symbol!}
                                     </span>
                                 </div>
                                 : ''
@@ -93,7 +94,7 @@ export const CheckForShop = (props: { children: BillWithProducts }) => {
                     </div>
                 </div>
                 <div className={s.workAct_result}>
-                    К оплате: {props.children.bill.total + findCurrency(props.children.bill.currencyId)?.symbol!}
+                    К оплате: {r(props.children.bill.total) + findCurrency(props.children.bill.currencyId)?.symbol!}
                 </div>
 
                 <img className={s.img} src={base64} alt={''}/>
