@@ -8,8 +8,8 @@ namespace BikeShop.Products.Domain.Entities
 {
     public class TagToCategoryBind : BaseEntity
     {
-        public int TagId { get; set; }
-        public string TagName { get; set; }
-        public string CategoryName { get; set; }
+        public int TagId { get; set; } = 0;
+        public string TagName { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
     }
 }

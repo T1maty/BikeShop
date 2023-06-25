@@ -13,5 +13,6 @@ namespace BikeShop.Payments.Domain.Entities
         public string PIN { get; set; }
         public string Key { get; set; }
         public Guid ShiftId { get; set; }
+        
     }
 }

@@ -290,7 +290,9 @@ namespace BikeShop.Products.Application.Services
 
             foreach (var i in existProdsEnts)
             {
-                i.Category = dto.Where(n => n.catalog_key == i.CatalogKey).FirstOrDefault().category;
+                var temp = dto.Where(n => n.catalog_key == i.CatalogKey).FirstOrDefault();
+                if (temp != null)
+                i.Category = temp.category;
             }
 
             var products = new List<Product>();
