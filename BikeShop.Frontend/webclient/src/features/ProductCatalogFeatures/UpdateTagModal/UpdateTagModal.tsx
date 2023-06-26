@@ -26,6 +26,7 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
             isRetailVisible: false,
             isB2BVisible: false,
             isUniversal: false,
+            isCollapsed: false,
             id: '0'
         }
     })
@@ -37,10 +38,10 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         control.setValue('isRetailVisible', tag.isRetailVisible)
         control.setValue('isB2BVisible', tag.isB2BVisible)
         control.setValue('isUniversal', tag.isUniversal)
+        control.setValue('isCollapsed', tag.isCollapsed)
     }, [tag])
 
     const onSubmit: SubmitHandler<UpdateTag> = (data: UpdateTag) => {
-        data.isCollapsed = tag.isCollapsed
         data.parentId = tag.parentId
         update(data).then((r) => {
             setClose()
@@ -56,6 +57,7 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         control.setValue('isRetailVisible', false)
         control.setValue('isB2BVisible', false)
         control.setValue('isUniversal', false)
+        control.setValue('isCollapsed', false)
     }
 
     return (
@@ -97,6 +99,10 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
                         />
                         <ControlledCustomCheckbox name={'isUniversal'}
                                                   label={'Универсальный тег'}
+                                                  control={control}
+                        />
+                        <ControlledCustomCheckbox name={'isCollapsed'}
+                                                  label={'Свернут по умолчанию'}
                                                   control={control}
                         />
                         <Button type={'submit'}>

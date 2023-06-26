@@ -931,6 +931,21 @@
       ],
       "SwaggerKey": "products"
     },
+	{
+      "UpstreamPathTemplate": "/api/internal/productsAvailable",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/internal/productsAvailable",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
 	
 	
 	

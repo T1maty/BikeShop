@@ -46,5 +46,11 @@ namespace BikeShop.Products.WebApi.Controllers
         {
             await _internalService.SetProductTags(prodId, tags);
         }
+
+        [HttpGet("productsAvailable")]
+        public async Task<List<ResponseProductWithTags>> productsAvailable()
+        {
+            return await _internalService.productsAvailable();
+        }
     }
 }

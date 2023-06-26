@@ -24,6 +24,25 @@ namespace BikeShop.Products.Application.Services
             return await _context.TagToCategoryBinds.ToListAsync(); 
         }
 
+        public async Task<List<ResponseProductWithTags>> productsAvailable()
+        {
+            var prodsIds = await _context.StorageProducts.Where(n=>n.Quantity > 0).Select(n => n.ProductId).ToListAsync();
+            var prods = _context.Products.Where(n => prodsIds.Contains(n.Id));
+            var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
+
+
+            var tags = await _context.ProductTags.Where(n => r.Select(q => q.ProductTagId).Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n.Name);
+
+            var answ = new List<ResponseProductWithTags>();
+
+            foreach (var p in await prods.ToListAsync())
+            {
+                var ent = new ResponseProductWithTags { product = p, tags = r.Where(n => n.ProductId == p.Id).ToDictionary(n => n.ProductTagId, n => tags[n.ProductTagId]) };
+                answ.Add(ent);
+            }
+            return answ;
+        }
+
         public async Task<List<ResponseProductWithTags>> ProductsByCat(string Cat)
         {
             var prods = _context.Products.Where(n=>n.Category == Cat);
