@@ -106,12 +106,12 @@ namespace BikeShop.Products.Application.Services
             allCats.Clear();
             allCats.AddRange(uniqueStrings);
 
-            var existCats = await _context.TagToCategoryBinds.Select(n => n.CategoryName.ToLower()).ToListAsync();
+            var existCats = await _context.TagToCategoryBinds.Select(n => n.CategoryName).ToListAsync();
 
             var newCats = new List<TagToCategoryBind>();
 
             allCats.ForEach(n => {
-                if (!existCats.Contains(n.ToLower())) newCats.Add(new TagToCategoryBind { CategoryName = n });
+                if (!existCats.Contains(n)) newCats.Add(new TagToCategoryBind { CategoryName = n });
             });
 
             await _context.TagToCategoryBinds.AddRangeAsync(newCats);

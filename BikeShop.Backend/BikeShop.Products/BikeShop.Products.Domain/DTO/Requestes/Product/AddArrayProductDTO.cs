@@ -14,6 +14,8 @@ namespace BikeShop.Products.Domain.DTO.Requestes.Product
         public string quantity { get; set; }
         public string price_in { get; set; }
         public string price_out { get; set; }
+        public string description { get; set; }
+        public string photo { get; set; }
         
     }
 }

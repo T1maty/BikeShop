@@ -41,8 +41,14 @@ namespace BikeShop.Products.Application.Services
         {
             var ids = ProductService.GetTagListFromString(tagsIds);
 
-            var productsIds = await _context.TagToProductBinds.Where(bind => ids.Contains(bind.ProductTagId))
-            .Select(bind => bind.ProductId).ToListAsync();
+            var qeurry = _context.TagToProductBinds;
+
+            foreach (var i in tagsIds)
+            {
+                qeurry.Where(n => n.ProductTagId == i);
+            }
+
+            var productsIds = await qeurry.Select(bind => bind.ProductId).ToListAsync();
 
             var products = await _context.Products.Where(product => productsIds.Contains(product.Id))
             .ToListAsync();
@@ -288,11 +294,16 @@ namespace BikeShop.Products.Application.Services
 
             var existProdsEnts = _context.Products.Where(n => existProds.Contains(n.CatalogKey));
 
+            var newImgs = new List<ProductImg>();
+
+
             foreach (var i in existProdsEnts)
             {
                 var temp = dto.Where(n => n.catalog_key == i.CatalogKey).FirstOrDefault();
                 if (temp != null)
                 i.Category = temp.category;
+
+                newImgs.Add(new ProductImg { ProductId = i.Id, Url = temp.photo});
             }
 
             var products = new List<Product>();
@@ -322,9 +333,15 @@ namespace BikeShop.Products.Application.Services
                 var bc = GenerateUniqueBarcode(i.Id, barcodes);
                 i.Barcode = bc;
                 barcodes.Append(bc);
-                cards.Add(new ProductCard { ProductId = i.Id });
+
+                var ent = dto.Where(n=>n.catalog_key ==i.CatalogKey).FirstOrDefault();
+
+                cards.Add(new ProductCard { ProductId = i.Id, Description =  ent.description});
+
+                newImgs.Add(new ProductImg { ProductId = i.Id, Url = ent.photo });
             }
 
+            await _context.ProductImgs.AddRangeAsync(newImgs);
             await _context.ProductsCards.AddRangeAsync(cards);
             await _context.SaveChangesAsync(new CancellationToken());
         }

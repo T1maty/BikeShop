@@ -35,7 +35,14 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<List<ProductCardDTO>> GetProducts(List<int> ids)
         {
-            var prods = await _context.TagToProductBinds.Where(n=>n.Enabled == true).Where(n=>ids.Contains(n.ProductTagId)).Include(n=>n.ProductTag).Where(n=>n.ProductTag.Enabled == true).Where(n => n.ProductTag.IsRetailVisible == true).Select(n=>n.ProductId).ToListAsync();
+            var qeurry = _context.TagToProductBinds;
+
+            foreach (var i in ids)
+            {
+                qeurry.Where(n => n.ProductTagId == i);
+            }
+
+            var prods = await qeurry.Where(n=>n.Enabled == true).Include(n=>n.ProductTag).Where(n=>n.ProductTag.Enabled == true).Where(n => n.ProductTag.IsRetailVisible == true).Select(n=>n.ProductId).ToListAsync();
             var cards = new Dictionary<int,ProductCardDTO>();
             foreach (var item in prods)
             {
