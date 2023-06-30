@@ -41,16 +41,26 @@ namespace BikeShop.Products.Application.Services
         {
             var ids = ProductService.GetTagListFromString(tagsIds);
 
-            var qeurry = _context.TagToProductBinds;
+            var qeurry = _context.TagToProductBinds.Where(n => ids.Contains(n.ProductTagId));
 
-            foreach (var i in tagsIds)
+            var prodIdsList = await qeurry.Select(n=>n.ProductId).Distinct().ToListAsync();
+            var prodsWhitelist = new List<int>();
+
+
+            foreach (var i in prodIdsList)
             {
-                qeurry.Where(n => n.ProductTagId == i);
+                var binds = await qeurry.Where(n => n.ProductId == i).Select(n=>n.ProductTagId).ToListAsync();
+
+                var bad = false;
+                foreach (var j in ids)
+                {
+                    if(!binds.Contains(j)) bad = true;
+                }
+
+                if(!bad) prodsWhitelist.Add(i);
             }
 
-            var productsIds = await qeurry.Select(bind => bind.ProductId).ToListAsync();
-
-            var products = await _context.Products.Where(product => productsIds.Contains(product.Id))
+            var products = await _context.Products.Where(product => prodsWhitelist.Contains(product.Id)).Take(Take)
             .ToListAsync();
 
             return products;

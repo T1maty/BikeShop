@@ -108,37 +108,46 @@ namespace BikeShop.Payments.Application.Services
 
             if (dto.IsFiscal == null || dto.IsFiscal == true)
             {
-                var goods = dto.Products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = (int)(n.Price * 37 * 100) } }).ToList();
-                var payment = new Pymnt { value = goods.Select(n => n.quantity / 1000 * n.good.price * 37).Sum(), label = "Pay", type = "CASHLESS" };
-                var receipt = new Receipt { payments = new List<Pymnt> { payment }, goods = goods, id = bill.UUID };
-
-                var settings = await _context.CheckboxSettings.FirstOrDefaultAsync();
-
-                var check = await _checkbox.CheckSignature(settings.BearerToken);
-
-                if (check.StatusCode == HttpStatusCode.Unauthorized || check.StatusCode == HttpStatusCode.Forbidden) settings.BearerToken = await LoginToCheckbox();
-                else if (check.StatusCode != HttpStatusCode.OK) throw new Exception();
-
-                SellResponse res;
                 try
                 {
-                    res = await _checkbox.Sell(receipt, settings.BearerToken);
+                    var goods = dto.Products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = int.Parse((n.Price * 37 * 100).ToString()) } }).ToList();
+                    var payment = new Pymnt { value = goods.Select(n => int.Parse((n.quantity / 1000 * n.good.price * 37).ToString())).Sum(), label = "Pay", type = "CASHLESS" };
+                    var receipt = new Receipt { payments = new List<Pymnt> { payment }, goods = goods, id = bill.UUID };
+
+                    var settings = await _context.CheckboxSettings.FirstOrDefaultAsync();
+
+                    var check = await _checkbox.CheckSignature(settings.BearerToken);
+
+                    if (check.StatusCode == HttpStatusCode.Unauthorized || check.StatusCode == HttpStatusCode.Forbidden) settings.BearerToken = await LoginToCheckbox();
+                    else if (check.StatusCode != HttpStatusCode.OK) throw new Exception();
+
+                    SellResponse res;
+                    try
+                    {
+                        res = await _checkbox.Sell(receipt, settings.BearerToken);
+                    }
+                    catch (Exception e)
+                    {
+                        await _checkbox.CreateShift(settings.Key, settings.BearerToken);
+                        res = await _checkbox.Sell(receipt, settings.BearerToken);
+                    }
+
+                    var qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
+                    while (qr.StatusCode == HttpStatusCode.FailedDependency)
+                    {
+                        await Task.Delay(1000);
+                        qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
+                    }
+                    bill.FiscalId = res.id;
+                    bill.QRCode = Convert.ToBase64String(await qr.Content.ReadAsByteArrayAsync());
+                    await _context.SaveChangesAsync(new CancellationToken());
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    await _checkbox.CreateShift(settings.Key, settings.BearerToken);
-                    res = await _checkbox.Sell(receipt, settings.BearerToken);
+
+                    
                 }
                 
-                var qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
-                while (qr.StatusCode == HttpStatusCode.FailedDependency)
-                {
-                    await Task.Delay(1000);
-                    qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
-                }
-                bill.FiscalId = res.id;
-                bill.QRCode = Convert.ToBase64String(await qr.Content.ReadAsByteArrayAsync());
-                await _context.SaveChangesAsync(new CancellationToken());
             }
 
             return new BillWithProducts { bill = bill, products = products};
