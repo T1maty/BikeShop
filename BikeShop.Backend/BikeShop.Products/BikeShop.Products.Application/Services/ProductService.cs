@@ -49,25 +49,39 @@ namespace BikeShop.Products.Application.Services
             var ids = ProductService.GetTagListFromString(tagsIds);
 
             var tags = await _context.ProductTags.ToListAsync();
-            var childIds = Get(ids, tags);
-            childIds.AddRange(ids);
 
+            var tagsTree = new List<List<int>>();
+            var allIds = new List<int> ();
 
+            foreach (var i in ids)
+            {
+                var res = new List<int> { i };
+                var range = Get(new List<int> { i }, tags);
+                res.AddRange( range);
+                allIds.AddRange( range );
+                tagsTree.Add(res);
+            }
 
-            var qeurry = _context.TagToProductBinds.Where(n => childIds.Contains(n.ProductTagId));
+            allIds.AddRange(ids);
 
-            var prodIdsList = await qeurry.Select(n=>n.ProductId).Distinct().ToListAsync();
+            var prodIdsList = await _context.TagToProductBinds.Where(n => allIds.Contains(n.ProductTagId)).Select(n=>n.ProductId).Distinct().ToListAsync();
+            var allBinds = await _context.TagToProductBinds.Where(n => prodIdsList.Contains(n.ProductId)).ToListAsync();
             var prodsWhitelist = new List<int>();
 
 
             foreach (var i in prodIdsList)
             {
-                var binds = await qeurry.Where(n => n.ProductId == i).Select(n=>n.ProductTagId).ToListAsync();
-
+                //бинды проверяемого товара
+                var binds = allBinds.Where(n => n.ProductId == i).Select(n=>n.ProductTagId);
                 var bad = false;
-                foreach (var j in ids)
+                foreach (var j in tagsTree)
                 {
-                    if(!binds.Contains(j)) bad = true;
+                    var finded = true;
+                    foreach (var k in j)
+                    {
+                        if (binds.Contains(k)) finded = false;
+                    }
+                    if(finded)bad = true;
                 }
 
                 if(!bad) prodsWhitelist.Add(i);
