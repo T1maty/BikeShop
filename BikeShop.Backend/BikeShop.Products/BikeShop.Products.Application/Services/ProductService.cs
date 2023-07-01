@@ -40,7 +40,7 @@ namespace BikeShop.Products.Application.Services
         public List<int> Get(List<int> parents, List<ProductTag> data)
         {
             var childs = data.Where(n => parents.Contains(n.ParentId)).Select(n => n.Id).ToList();
-            childs.AddRange(Get(childs, data));
+            if(childs.Count > 0)childs.AddRange(Get(childs, data));
             return childs;
         }
 
