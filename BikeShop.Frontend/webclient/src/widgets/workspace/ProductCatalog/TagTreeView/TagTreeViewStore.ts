@@ -25,9 +25,15 @@ interface TagTreeViewStore {
     addNewTag: (tag: ProductTag) => void
     deleteTag: (tagId: string) => Promise<AxiosResponse>
     updateTag: (tag: UpdateTag) => void
+
+    getChildTags: (id: string) => string[]
 }
 
 const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, get) => ({
+    getChildTags: (id) => {
+        var tag = get().treeViewTags.find(n => n.id === id)
+        return []
+    },
     contextMenuVisible: false,
     setContextMenuVisible: (value, x, y) => set({
         contextMenuVisible: value,

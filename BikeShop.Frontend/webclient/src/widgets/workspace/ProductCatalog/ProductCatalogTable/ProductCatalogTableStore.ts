@@ -77,7 +77,7 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
 
         set({isLoading: true})
 
-        CatalogAPI.getProductByTag(value).then((r) => {
+        CatalogAPI.getProductByTag(value, 100).then((r) => {
             set({rows: r.data})
             set({isLoading: false})
             get().sort()

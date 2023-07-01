@@ -37,11 +37,24 @@ namespace BikeShop.Products.Application.Services
             return await _context.Products.Where(n => Ids.Contains(n.Id)).ToListAsync();
         }
 
+        public List<int> Get(List<int> parents, List<ProductTag> data)
+        {
+            var childs = data.Where(n => parents.Contains(n.ParentId)).Select(n => n.Id).ToList();
+            childs.AddRange(Get(childs, data));
+            return childs;
+        }
+
         public async Task<List<Product>> GetProductsByTags(string tagsIds, int Take)
         {
             var ids = ProductService.GetTagListFromString(tagsIds);
 
-            var qeurry = _context.TagToProductBinds.Where(n => ids.Contains(n.ProductTagId));
+            var tags = await _context.ProductTags.ToListAsync();
+            var childIds = Get(ids, tags);
+            childIds.AddRange(ids);
+
+
+
+            var qeurry = _context.TagToProductBinds.Where(n => childIds.Contains(n.ProductTagId));
 
             var prodIdsList = await qeurry.Select(n=>n.ProductId).Distinct().ToListAsync();
             var prodsWhitelist = new List<int>();

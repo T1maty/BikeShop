@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios"
-import {$api} from "shared"
+
 import {
     CreateProduct,
     CreateTag,
@@ -11,6 +11,7 @@ import {
     UpdateProduct,
     UpdateProductPrices
 } from '../index'
+import {$api} from "../../shared";
 
 export const CatalogAPI = {
     searchProductByName(inputValue: string): Promise<AxiosResponse<Product[]>> {
@@ -18,9 +19,9 @@ export const CatalogAPI = {
             $api.get<Product[]>(`/product/search?querry=${inputValue}`)
         )
     },
-    getProductByTag(value: any): Promise<AxiosResponse<Product[]>> {
+    getProductByTag(value: string, Take: number): Promise<AxiosResponse<Product[]>> {
         return (
-            $api.get<Product[]>('/product/getbytags/' + value + '?storageId=1')
+            $api.get<Product[]>(`/product/getbytags/${value}?Take=${Take}`)
         )
     },
     createProduct(data: CreateProduct): Promise<AxiosResponse<Product[]>> {
