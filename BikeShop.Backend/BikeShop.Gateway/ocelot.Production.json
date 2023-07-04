@@ -1955,6 +1955,21 @@
       ],
       "SwaggerKey": "acts"
     },
+	{
+      "UpstreamPathTemplate": "/api/payoutact/salarypayout",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/payoutact/salarypayout",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
 	
 	
 	{
