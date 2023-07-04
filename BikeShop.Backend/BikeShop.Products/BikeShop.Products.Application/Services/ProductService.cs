@@ -47,48 +47,48 @@ namespace BikeShop.Products.Application.Services
         public async Task<List<Product>> GetProductsByTags(string tagsIds, int Take)
         {
             var ids = ProductService.GetTagListFromString(tagsIds);
-
             var tags = await _context.ProductTags.ToListAsync();
-
             var tagsTree = new List<List<int>>();
-            var allIds = new List<int> ();
+            var allIds = new List<int>();
 
             foreach (var i in ids)
             {
                 var res = new List<int> { i };
                 var range = Get(new List<int> { i }, tags);
-                res.AddRange( range);
-                allIds.AddRange( range );
+                res.AddRange(range);
+                allIds.AddRange(range);
                 tagsTree.Add(res);
             }
 
             allIds.AddRange(ids);
 
-            var prodIdsList = await _context.TagToProductBinds.Where(n => allIds.Contains(n.ProductTagId)).Select(n=>n.ProductId).Distinct().ToListAsync();
-            var allBinds = await _context.TagToProductBinds.Where(n => prodIdsList.Contains(n.ProductId)).ToListAsync();
-            var prodsWhitelist = new List<int>();
+            var prodIdsList = await _context.TagToProductBinds
+                .Where(n => allIds.Contains(n.ProductTagId))
+                .Select(n => n.ProductId)
+                .Distinct()
+                .ToListAsync();
 
+            var allBinds = await _context.TagToProductBinds
+                .Where(n => prodIdsList.Contains(n.ProductId))
+                .ToListAsync();
+
+            var prodsWhitelist = new List<int>();
 
             foreach (var i in prodIdsList)
             {
-                //бинды проверяемого товара
-                var binds = allBinds.Where(n => n.ProductId == i).Select(n=>n.ProductTagId);
-                var bad = false;
-                foreach (var j in tagsTree)
-                {
-                    var finded = true;
-                    foreach (var k in j)
-                    {
-                        if (binds.Contains(k)) finded = false;
-                    }
-                    if(finded)bad = true;
-                }
+                var binds = allBinds.Where(n => n.ProductId == i).Select(n => n.ProductTagId);
+                var bad = tagsTree.Any(j => !j.Any(k => binds.Contains(k)));
 
-                if(!bad) prodsWhitelist.Add(i);
+                if (!bad)
+                {
+                    prodsWhitelist.Add(i);
+                }
             }
 
-            var products = await _context.Products.Where(product => prodsWhitelist.Contains(product.Id)).Take(Take)
-            .ToListAsync();
+            var products = await _context.Products
+                .Where(product => prodsWhitelist.Contains(product.Id))
+                .Take(Take)
+                .ToListAsync();
 
             return products;
         }

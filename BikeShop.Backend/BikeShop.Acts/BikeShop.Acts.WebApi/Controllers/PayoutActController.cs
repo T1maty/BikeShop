@@ -29,5 +29,11 @@ namespace BikeShop.Acts.WebApi.Controllers
         {
             return await _payoutService.Get(Take);
         }
+
+        [HttpPost("salarypayout")]
+        public async Task<Payout> SalaryPayout(SalaryPayoutDTO dto)
+        {
+            return await _payoutService.SalaryPayOut(dto);
+        }
     }
 }

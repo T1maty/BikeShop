@@ -22,6 +22,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ActImage> ActImages { get; set; }
     public DbSet<PrintQueue> PrintQueues { get; set; }
     public DbSet<PrintSettings> PrintSettings { get; set; }
+    public DbSet<SalaryPaymentHistory> SalaryPaymentHistory { get; set; }
 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

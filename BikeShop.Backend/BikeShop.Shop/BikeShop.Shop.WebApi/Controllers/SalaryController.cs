@@ -34,5 +34,11 @@ namespace BikeShop.Shop.WebApi.Controllers
         {
             return await _salaryService.Calculate(UserId, Start, Finish);
         }
+
+        [HttpPost("reset")]
+        public async Task<CalculateSalary> Reset(Guid UserId)
+        {
+            return await _salaryService.Reset(UserId);
+        }
     }
 }

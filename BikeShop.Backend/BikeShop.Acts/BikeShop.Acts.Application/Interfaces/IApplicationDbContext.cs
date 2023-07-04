@@ -22,7 +22,7 @@ public interface IApplicationDbContext
     public DbSet<ActImage> ActImages { get; set; }
     public DbSet<PrintQueue> PrintQueues { get; set; }
     public DbSet<PrintSettings> PrintSettings { get; set; }
-
+    public DbSet<SalaryPaymentHistory> SalaryPaymentHistory { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс
