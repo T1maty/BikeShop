@@ -5,7 +5,7 @@ export const slaveColumns: UniTableColumn[] = [
         id: 'productId',
         label: 'Артикул',
         minWidth: 70,
-        align: 'right',
+        align: 'center',
     },
     {
         id: 'name',
@@ -17,7 +17,7 @@ export const slaveColumns: UniTableColumn[] = [
         id: 'quantity',
         label: 'Количество',
         minWidth: 70,
-        align: 'right',
+        align: 'center',
         isEditable: true,
         isNumber: true
     },

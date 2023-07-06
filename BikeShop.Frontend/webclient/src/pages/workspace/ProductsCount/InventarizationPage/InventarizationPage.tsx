@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import s from "../ProductsCountStyles.module.scss"
-import {Button, UniTable} from "../../../../shared/ui"
+import {AsyncSelectSearchProduct, Button, UniTable} from "../../../../shared/ui"
 import {useInventarization} from "./InventarizationPageStore"
 import {slaveColumns} from "./models/SlaveTableColumns"
-import {InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../../entities"
+import {CatalogAPI, InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../../entities"
 import {MasterTableColumns} from "./models/MasterTableColumns"
 import {useSnackbar} from "notistack";
+import {Product} from "entities";
+import {
+    BarcodeScannerListenerProvider
+} from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
 
 export const InventarizationPage = () => {
     const {enqueueSnackbar} = useSnackbar()
@@ -34,7 +38,7 @@ export const InventarizationPage = () => {
         setSelectedM(toInvStorage[0])
     }
 
-    const setInventarizationHandler = (r: any) => {
+    const setInventarizationHandler = (r: Product) => {
         let exist = false
         let data = currentInventarization.products.map(n => {
             if (n.productId === r.id) {
@@ -51,7 +55,7 @@ export const InventarizationPage = () => {
         if (exist) {
             setProducts(data)
         } else {
-            setProducts([...data, {
+            let n = {
                 id: 0,
                 createdAt: Date.now().toLocaleString(),
                 updatedAt: Date.now().toLocaleString(),
@@ -73,7 +77,9 @@ export const InventarizationPage = () => {
                 retailTotal: r.retailPrice,
                 userCreated: LocalStorage.userId()!,
                 userUpdated: LocalStorage.userId()!
-            }])
+            }
+            setProducts([...data, n as InventarizationProduct])
+            setSelectedS(n as InventarizationProduct)
         }
     }
 
@@ -92,83 +98,101 @@ export const InventarizationPage = () => {
         })
     }
 
+    const onBarcodeHandler = (lastBarcode: string) => {
+        enqueueSnackbar(`Штрихкод ${lastBarcode}`, {variant: 'default', autoHideDuration: 3000})
+        if (lastBarcode == '') return
+        console.log('Barcode: ', lastBarcode)
+        CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
+            enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
+            setInventarizationHandler(n.data)
+        }).catch(() => {
+            enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
+        })
+    }
+
     useEffect(() => {
         updateToIv()
     }, [])
 
     return (
-        <div className={s.arrivalOfProducts_mainBlock}>
-            <div className={s.arrivalOfProducts_leftSide}>
-                <div className={s.leftSide_title}>
-                    {`Инвентаризация №${currentInventarization.inventarization.id}`}
-                </div>
+        <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
+            <div className={s.arrivalOfProducts_mainBlock}>
+                <div className={s.arrivalOfProducts_leftSide}>
+                    <div className={s.leftSide_title}>
+                        {`Инвентаризация №${currentInventarization.inventarization.id}`}
+                    </div>
 
-                <div className={s.leftSide_info}>Дополнительная информация</div>
-                <Button buttonDivWrapper={s.button_chooseItem}
-                        onClick={() => {
-                            setSelectedM(toInvStorage[0])
-                        }}
-                >
-                    Выбрать товар
-                </Button>
-                <div className={s.leftSide_delivery}>
-                    <div>Доставка</div>
-                    <div>Расходы</div>
-                </div>
-                <div className={s.leftSide_metrika}>
-                    <div className={s.metrika_title}>Метрика:</div>
-                    <div>Позиций: {}</div>
-                    <div>Единиц: {}</div>
-                    <div>Приходная сумма: {}</div>
-                    <div>Расходы: 99</div>
-                    <div>Итого: 99999999</div>
-                </div>
-                <div className={s.leftSide_footerButtons}>
-                    <Button buttonDivWrapper={s.button_cancel}
+                    <div className={s.leftSide_info}>Дополнительная информация</div>
+                    <Button buttonDivWrapper={s.button_chooseItem}
                             onClick={() => {
+                                setSelectedM(toInvStorage[0])
                             }}
                     >
-                        Отмена
+                        Выбрать товар
                     </Button>
-                    <Button buttonDivWrapper={s.button_save}
-                            onClick={saveInventarizationActHandler}
-                    >
-                        Сохранить акт
-                    </Button>
+                    <AsyncSelectSearchProduct onSelect={setInventarizationHandler}/>
+                    <div className={s.leftSide_metrika}>
+                        <div className={s.metrika_title}>Осталось:</div>
+                        <div>Позиций: {toInvStorage.length}</div>
+                    </div>
+                    <div className={s.leftSide_metrika}>
+                        <div className={s.metrika_title}>Пробито:</div>
+                        <div>Позиций: {currentInventarization.products.length}</div>
+                    </div>
+                    <div className={s.leftSide_footerButtons}>
+                        <Button buttonDivWrapper={s.button_cancel}
+                                onClick={() => {
+                                }}
+                        >
+                            Отмена
+                        </Button>
+                        <Button buttonDivWrapper={s.button_save}
+                                onClick={saveInventarizationActHandler}
+                        >
+                            Сохранить акт
+                        </Button>
+                    </div>
+                </div>
+
+                <div className={s.inventoryOfProducts_rightSide}>
+                    <UniTable rows={toInvStorage.slice(0, 100)}
+                              columns={MasterTableColumns}
+                              setRows={setProducts}
+                              rowOnDoubleClick={(r: any) => {
+                                  setInventarizationHandler(r)
+                              }}
+                              selected={[selectedM]}
+                              setSelected={(v) => {
+                                  setSelectedM(v[0])
+                                  let l = currentInventarization.products.find(n => n.productId === v[0].id)
+                                  setSelectedS(l)
+
+
+                                  //setShareSelected(v[0].productId)
+                                  //handler()
+                              }}
+                              rowOnClick={(d) => {
+                                  //setShareSelected((d as Product).id)
+                              }}
+                    />
+                    <UniTable rows={currentInventarization.products}
+                              columns={slaveColumns}
+                              setRows={setProducts}
+                              selected={[selectedS!]}
+                              setSelected={(v) => {
+                                  setSelectedS(v[0])
+                                  setSelectedM(toInvStorage.find(n => n.id === v[0].productId))
+
+
+                                  //setShareSelected(v[0].productId)
+                                  //handler()
+                              }}
+                              rowOnClick={(d) => {
+                                  //setShareSelected((d as InventarizationProduct).productId)
+                              }}
+                    />
                 </div>
             </div>
-
-            <div className={s.inventoryOfProducts_rightSide}>
-                <UniTable rows={toInvStorage}
-                          columns={MasterTableColumns}
-                          setRows={setProducts}
-                          rowOnDoubleClick={(r: any) => {
-                              setInventarizationHandler(r)
-                          }}
-                          selected={[selectedM]}
-                          setSelected={(v) => {
-                              setSelectedM(v[0])
-                              setShareSelected(v[0].productId)
-                              //handler()
-                          }}
-                          rowOnClick={(d) => {
-                              //setShareSelected((d as Product).id)
-                          }}
-                />
-                <UniTable rows={currentInventarization.products}
-                          columns={slaveColumns}
-                          setRows={setProducts}
-                          selected={[selectedS!]}
-                          setSelected={(v) => {
-                              setSelectedS(v[0])
-                              setShareSelected(v[0].productId)
-                              //handler()
-                          }}
-                          rowOnClick={(d) => {
-                              //setShareSelected((d as InventarizationProduct).productId)
-                          }}
-                />
-            </div>
-        </div>
+        </BarcodeScannerListenerProvider>
     )
 }

@@ -18,7 +18,7 @@ interface InventarizationStore {
     loadFromStorage: () => void
 
     selectedM: Product | null,
-    setSelectedM: (value: Product) => void
+    setSelectedM: (value: Product | undefined) => void
 }
 
 export const useInventarization = create<InventarizationStore>()(persist(devtools(immer((set, get) => ({
@@ -28,6 +28,17 @@ export const useInventarization = create<InventarizationStore>()(persist(devtool
     },
     recalculate: () => {
 
+
+        let data = get().toInvStorage.map(n => {
+            let ent = get().currentInventarization.products.find(s => s.productId === n.id)
+
+            if (ent != undefined) {
+                // @ts-ignore
+                return {...n, quantity: n.quantity - ent.quantity}
+            } else return n
+            // @ts-ignore
+        }).filter(k => k.quantity != 0)
+        set({toInvStorage: data})
     },
     setInventariazation: (value) => {
         set(state => {
@@ -36,8 +47,9 @@ export const useInventarization = create<InventarizationStore>()(persist(devtool
     },
     setProducts: (value) => {
         set(state => {
-            state.currentInventarization.products = value
+            state.currentInventarization.products = value.filter(n => n.quantity > 0)
         })
+        get().recalculate();
     },
     toInvStorage: [],
     loadFromStorage: () => {

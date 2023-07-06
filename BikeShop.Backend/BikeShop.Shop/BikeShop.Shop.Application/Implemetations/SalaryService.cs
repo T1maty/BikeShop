@@ -75,6 +75,11 @@ namespace BikeShop.Shop.Application.Implemetations
             }
         }
 
+        public async Task<CalculateSalary> Reset(Guid UserId)
+        {
+            _context.
+        }
+
         public async Task<UserSalary> UpdateSalary(Guid UserId, decimal Rate, decimal ShopPercent, decimal WorkPercent, decimal WorkshopPercent)
         {
             var ent = await _context.UserSalaries.Where(n => n.UserId == UserId).FirstOrDefaultAsync();

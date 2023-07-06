@@ -29,11 +29,19 @@ namespace BikeShop.Acts.Application.Services
             _shopClient = shopClient;
         }
 
+        public async Task ExecuteLack(int ActId)
+        {
+            var act = await _context.InventarizationLacks.FindAsync(ActId);
+
+            var products = await _context.InventarizationLackProducts.Where(n => n.InventariazationLackId == act.Id).ToListAsync();
+            var dto = products.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList();
+            await _productClient.AddProductsToStorage(dto, await _shopClient.GetStorageId(act.ShopId), "InventarizationLack", act.Id) ;
+        }
+
         public async Task<InventarizationLackWithProducts> CloseAct(int ActId, Guid UserId)
         {
             var inv = await _context.Inventarizations.FindAsync(ActId);
             if (inv == null || inv.Status == "Closed") throw new Exception();
-// || inv.Status == "Closed"
             inv.Status = "Closed";
             inv.UpdatedAt = DateTime.Now;
             inv.UserUpdatedId= UserId;

@@ -5,7 +5,7 @@ export const MasterTableColumns: UniTableColumn[] = [
         id: 'id',
         label: 'Артикул',
         minWidth: 70,
-        align: 'right',
+        align: 'center',
     },
     {
         id: 'name',

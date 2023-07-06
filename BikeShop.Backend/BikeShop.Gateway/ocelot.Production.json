@@ -1924,6 +1924,21 @@
       ],
       "SwaggerKey": "acts"
     },
+	{
+      "UpstreamPathTemplate": "/api/inventarization/executelack",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/inventarization/executelack",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
 	
 	{
       "UpstreamPathTemplate": "/api/payoutact/create",

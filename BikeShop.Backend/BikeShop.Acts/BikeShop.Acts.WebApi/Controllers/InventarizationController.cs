@@ -47,5 +47,11 @@ namespace BikeShop.Acts.WebApi.Controllers
         {
             return await _inventarizationService.GetLackByShop(ShopId);
         }
+
+        [HttpPost("executelack")]
+        public async Task ExecuteLack(int ActId)
+        {
+            await _inventarizationService.ExecuteLack(ActId);
+        }
     }
 }
