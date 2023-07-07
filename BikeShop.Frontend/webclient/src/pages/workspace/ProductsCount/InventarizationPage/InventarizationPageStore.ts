@@ -11,7 +11,7 @@ interface InventarizationStore {
     setInventariazation: (value: InventarizationFullData) => void
     setProducts: (value: InventarizationProduct[]) => void
 
-
+    toInvStart: Product[]
     toInvStorage: Product[]
     updateToIv: () => void
     recalculate: () => void
@@ -27,17 +27,30 @@ export const useInventarization = create<InventarizationStore>()(persist(devtool
         inventarization: {shopId: LocalStorage.shopId()!} as unknown as Inventarization
     },
     recalculate: () => {
-
-
-        let data = get().toInvStorage.map(n => {
+        let data = get().toInvStart.map(n => {
             let ent = get().currentInventarization.products.find(s => s.productId === n.id)
 
             if (ent != undefined) {
                 // @ts-ignore
-                return {...n, quantity: n.quantity - ent.quantity}
-            } else return n
+                return {...n, quantity: n.quantity - ent.quantity} as Product
+            } else return n as Product
             // @ts-ignore
         }).filter(k => k.quantity != 0)
+
+        let additional = get().currentInventarization.products.map(n => {
+            let ent = data.find(j => j.id === n.productId)
+            // @ts-ignore
+            if (ent === null && get().toInvStart.find(h => h.id === n.productId).quantity - n.quantity != 0) return {
+                ...n,
+                // @ts-ignore
+                quantity: get().toInvStart.find(h => h.id === n.productId)!.quantity - n.quantity
+            } as Product
+        })
+
+        additional.forEach(k => {
+            if (k != undefined) data.push(k)
+        })
+
         set({toInvStorage: data})
     },
     setInventariazation: (value) => {
@@ -52,6 +65,7 @@ export const useInventarization = create<InventarizationStore>()(persist(devtool
         get().recalculate();
     },
     toInvStorage: [],
+    toInvStart: [],
     loadFromStorage: () => {
 
     },
@@ -63,17 +77,11 @@ export const useInventarization = create<InventarizationStore>()(persist(devtool
                     console.log('Товары на инвентуру', h.data)
 
                     let data = h.data.map(n => {
-                        let ent = get().currentInventarization.products.find(s => s.productId === n.id)
                         let quant = t.data.find(h => h.productId === n.id)
-                        if (ent != undefined && quant != undefined) return {
-                            ...n,
-                            quantity: quant.available - ent.quantity
-                        }
-                        else if (quant != undefined) return {...n, quantity: quant.available}
-                        else return {...n, quantity: 0}
-                        // @ts-ignore
+                        return {...n, quantity: quant != undefined ? quant.available : 0}
                     }).filter(k => k.quantity != 0)
-                    set({toInvStorage: data})
+                    set({toInvStart: data})
+                    get().recalculate();
                 })
             })
         })

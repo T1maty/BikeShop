@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react'
+import React, {memo, useEffect, useRef, useState} from 'react'
 import cls from './UniTable.module.scss'
 import {Loader} from '../Loader/Loader'
 import {EditableSpan} from '../EditableSpan/EditableSpan'
@@ -43,6 +43,8 @@ export const UniTable = (props: TableProps) => {
         if (props.setSelected != null) return props.setSelected
         else return setSelected
     }
+
+
     return (
         <>
             <table className={`${props.className} ${cls.table}`}>
@@ -53,6 +55,7 @@ export const UniTable = (props: TableProps) => {
                 {
                     !props.isLoading ?
                         props.rows?.map((item: any, index) => {
+
                             return <TableRow key={index}
                                              row={item}
                                              setRow={(newRow: any) => {
@@ -110,9 +113,23 @@ const TableRow = memo((props: TableRowProps) => {
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
 
+    const ref = useRef<HTMLTableRowElement | null>(null);
+
+    const scrollToRef = () => {
+        ref.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    };
+
+    useEffect(() => {
+        if (props.selected?.includes(props.row)) scrollToRef()
+    }, [props.selected])
+
     return (
         <>
-            <tr className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
+            <tr ref={ref}
+                className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
                 style={{backgroundColor: `${props.row.color != undefined ? props.row.color : ''}`}}
                 onDoubleClick={(event) => {
                     props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true

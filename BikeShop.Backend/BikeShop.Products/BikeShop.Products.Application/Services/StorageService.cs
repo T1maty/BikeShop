@@ -143,8 +143,8 @@ namespace BikeShop.Products.Application.Services
             var QuantityUnits = _context.QuantityUnits.ToDictionary(n => n.Id, n => n);
 
             //Создаем списки доступных и зарезервированных продуктов
-            var productQuantityDTOAvailable = prodQuantAvailableDict.Select(n => new ProductQuantityDTO { Product = products[n.Key], Quantity = n.Value, QuantityUnit = QuantityUnits[products[n.Key].QuantityUnitId] }).ToList();
-            var productQuantityDTOReserved = prodQuantReservedDict.Select(n => new ProductQuantityDTO { Product = products[n.Key], Quantity = n.Value, QuantityUnit = QuantityUnits[products[n.Key].QuantityUnitId] }).ToList();
+            var productQuantityDTOAvailable = prodQuantAvailableDict.Where(n=>n.Value != 0).Select(n => new ProductQuantityDTO { Product = products[n.Key], Quantity = n.Value, QuantityUnit = QuantityUnits[products[n.Key].QuantityUnitId] }).ToList();
+            var productQuantityDTOReserved = prodQuantReservedDict.Where(n => n.Value != 0).Select(n => new ProductQuantityDTO { Product = products[n.Key], Quantity = n.Value, QuantityUnit = QuantityUnits[products[n.Key].QuantityUnitId] }).ToList();
 
             //Сущность склада
             var storage = await _context.Storages.FindAsync(storageId);

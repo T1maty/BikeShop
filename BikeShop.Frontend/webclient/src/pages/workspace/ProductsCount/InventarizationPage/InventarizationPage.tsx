@@ -23,21 +23,6 @@ export const InventarizationPage = () => {
 
     const [selectedS, setSelectedS] = useState<InventarizationProduct>()
 
-    const [shareSelected, setShareSelected] = useState<number>()
-
-    useEffect(() => {
-        setSelectedM(toInvStorage[0])
-    }, [])
-
-    const handler = () => {
-        console.log(selectedM)
-        console.log(selectedS)
-        console.log(shareSelected)
-        console.log('shareSelected')
-        //setSelectedS(shareSelected)
-        setSelectedM(toInvStorage[0])
-    }
-
     const setInventarizationHandler = (r: Product) => {
         let exist = false
         let data = currentInventarization.products.map(n => {
@@ -155,7 +140,7 @@ export const InventarizationPage = () => {
                 </div>
 
                 <div className={s.inventoryOfProducts_rightSide}>
-                    <UniTable rows={toInvStorage.slice(0, 100)}
+                    <UniTable rows={toInvStorage.slice(0, 1000)}
                               columns={MasterTableColumns}
                               setRows={setProducts}
                               rowOnDoubleClick={(r: any) => {
