@@ -34,7 +34,7 @@ namespace BikeShop.Acts.Application.Services
             var act = await _context.InventarizationLacks.FindAsync(ActId);
 
             var products = await _context.InventarizationLackProducts.Where(n => n.InventariazationLackId == act.Id).ToListAsync();
-            var dto = products.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList();
+            var dto = products.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity}).ToList();
             await _productClient.AddProductsToStorage(dto, await _shopClient.GetStorageId(act.ShopId), "InventarizationLack", act.Id) ;
         }
 
