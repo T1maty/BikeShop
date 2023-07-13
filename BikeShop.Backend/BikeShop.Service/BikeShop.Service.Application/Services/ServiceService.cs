@@ -20,14 +20,16 @@ public class ServiceService : IServiceService
     private readonly IIdentityClient _identityClient;
     private readonly IProductsClient _productsClient;
     private readonly IShopClient _shopClient;
+    private readonly IPaymentsClient _paymentsClient;
 
-    public ServiceService(IApplicationDbContext context, IMapper mapper, IIdentityClient identityClient, IProductsClient productsClient, IShopClient shopClient)
+    public ServiceService(IApplicationDbContext context, IMapper mapper, IIdentityClient identityClient, IProductsClient productsClient, IShopClient shopClient, IPaymentsClient paymentsClient)
     {
         _context = context;
         _mapper = mapper;
         _identityClient = identityClient;
         _productsClient = productsClient;
         _shopClient = shopClient;
+        _paymentsClient = paymentsClient;
     }
 
     private async Task<Domain.Entities.Service> UpdateUsersData (Domain.Entities.Service service)
@@ -393,18 +395,10 @@ public class ServiceService : IServiceService
 
     public async Task<ServiceWithProductsWorksDTO> UpdateStatus(string status, int id)
     {
-        if (StatusDict.Get().ContainsKey(status))
+        if (StatusDict.Get().ContainsKey(status) && status != "Ended")
         {
             var service = await _context.Services.FindAsync(id);
             service.Status = status;
-
-            if(status == "Ended")
-            {
-                var storageId = await _shopClient.GetStorageId(service.ShopId);
-                var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
-                await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
-                await _productsClient.AddProductsToStorage(oldServiceProducts.Select(n=> new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity*-1}).ToList(), storageId, "Service", id);
-            }
 
             await _context.SaveChangesAsync(new CancellationToken());
         }
@@ -424,5 +418,31 @@ public class ServiceService : IServiceService
         data.OldReservationProducts = OldProducts;
         data.NewReservationProducts = NewProducts.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToList();
         await _productsClient.UpdateReservationProducts(data, storageId);
+    }
+
+    public async Task<ServiceWithProductsWorksDTO> EndService(int id, decimal cash, decimal bankCount, decimal card, decimal personalBalance, bool isFiscal)
+    {
+        var service = await _context.Services.FindAsync(id);
+
+        if (service.Status == "Ready")
+        {
+            var storageId = await _shopClient.GetStorageId(service.ShopId);
+            var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
+            await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
+            await _productsClient.AddProductsToStorage(oldServiceProducts.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), storageId, "Service", id);
+
+            var payment = new CreatePayment { BankCount = bankCount, Card = card, Cash = cash, ClientId = service.ClientId, CurrencyId = 1, PersonalBalance = personalBalance, ShopId = service.ShopId, Target = "Service", TargetId = service.Id, UserId = service.UserCreatedId };
+            await _paymentsClient.NewPayment(payment);
+            await _context.SaveChangesAsync(new CancellationToken());
+        }
+        else
+        {
+            throw Errors.StatusNotFound;
+        }
+
+
+
+        var r = await GetServiceById(id);
+        return r;
     }
 }

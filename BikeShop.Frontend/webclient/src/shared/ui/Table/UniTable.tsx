@@ -114,12 +114,38 @@ const TableRow = memo((props: TableRowProps) => {
     const r = useCurrency(s => s.roundUp)
 
     const ref = useRef<HTMLTableRowElement | null>(null);
+    const [isInViewport, setIsInViewport] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsInViewport(entry.isIntersecting);
+            },
+            {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1,
+            }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, [ref]);
 
     const scrollToRef = () => {
-        ref.current?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-        });
+        if (!isInViewport) {
+            ref.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            });
+        }
     };
 
     useEffect(() => {

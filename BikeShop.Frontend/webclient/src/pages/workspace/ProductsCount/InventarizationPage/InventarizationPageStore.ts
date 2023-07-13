@@ -10,6 +10,9 @@ interface InventarizationStore {
     currentInventarization: InventarizationFullData
     setInventariazation: (value: InventarizationFullData) => void
     setProducts: (value: InventarizationProduct[]) => void
+    addProduct: (v: Product) => void
+    addedHistory: Product[]
+    addProductToHistory: (v: Product) => void
 
     toInvStart: Product[]
     toInvStorage: Product[]
@@ -19,9 +22,71 @@ interface InventarizationStore {
 
     selectedM: Product | null,
     setSelectedM: (value: Product | undefined) => void
+
+    selectedS: InventarizationProduct | null,
+    setSelectedS: (v: InventarizationProduct | null) => void
 }
 
 export const useInventarization = create<InventarizationStore>()(persist(devtools(immer((set, get) => ({
+    selectedS: null,
+    setSelectedS: (v) => {
+        set({selectedS: v})
+    },
+    addProduct: (p) => {
+        get().addProductToHistory(p)
+        let products = get().currentInventarization.products
+        let ent = products.find(n => n.productId === p.id)
+        if (ent != undefined) {
+            let added: InventarizationProduct | null = null
+            get().setProducts(products.map(n => {
+                if (n.productId === p.id) {
+                    let nq = parseFloat(n.quantity.toString()) + 1
+                    added = {
+                        ...n,
+                        quantity: nq,
+                        dealerTotal: nq * n.dealerPrice,
+                        retailTotal: nq * n.retailPrice,
+                        incomeTotal: nq * n.incomePrice
+                    }
+                    return added
+                }
+                return n
+            }));
+            get().setSelectedS(added)
+        } else {
+            let n = {
+                id: 0,
+                createdAt: Date.now().toLocaleString(),
+                updatedAt: Date.now().toLocaleString(),
+                enabled: true,
+                inventariazationId: get().currentInventarization.inventarization.id,
+                productId: p.id,
+                name: p.name,
+                description: '',
+                catalogKey: p.catalogKey,
+                barcode: p.barcode,
+                manufBarcode: p.manufacturerBarcode != null ? p.manufacturerBarcode : '',
+                quantityUnitName: p.quantityUnitName,
+                incomePrice: p.incomePrice,
+                dealerPrice: p.dealerPrice,
+                retailPrice: p.retailPrice,
+                quantity: 1,
+                incomeTotal: p.incomePrice,
+                dealerTotal: p.dealerPrice,
+                retailTotal: p.retailPrice,
+                userCreated: LocalStorage.userId()!,
+                userUpdated: LocalStorage.userId()!
+            } as InventarizationProduct
+            get().setProducts([...products, n])
+            get().setSelectedS(n)
+        }
+    },
+    addedHistory: [],
+    addProductToHistory: (v) => {
+        set(state => {
+            state.addedHistory.push(v)
+        })
+    },
     currentInventarization: {
         products: [],
         inventarization: {shopId: LocalStorage.shopId()!} as unknown as Inventarization

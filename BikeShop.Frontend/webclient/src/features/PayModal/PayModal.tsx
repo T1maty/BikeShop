@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Button, CustomCheckbox, CustomInput, CustomModal} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import {ClientCard} from "../../widgets"
-import {LocalStorage, PaymentData, User} from "../../entities"
+import {LocalStorage, PaymentData, useCurrency, User} from "../../entities"
 
 interface PayModalProps {
     open: boolean
@@ -16,6 +16,8 @@ export const PayModal = (props: PayModalProps) => {
 
     const [cash, setCash] = useState<number>()
     const [isFiscal, setIsFiscal] = useState<boolean>(true)
+
+    const r = useCurrency(f => f.roundUp)
 
     return (
         <CustomModal
@@ -31,7 +33,7 @@ export const PayModal = (props: PayModalProps) => {
                         К оплате:
                     </div>
                     <div className={s.header_sum}>
-                        {props.summ * LocalStorage.currency.fbts() + LocalStorage.currency.symbol()!}
+                        {r(props.summ * LocalStorage.currency.fbts()) + LocalStorage.currency.symbol()!}
                     </div>
                 </div>
 

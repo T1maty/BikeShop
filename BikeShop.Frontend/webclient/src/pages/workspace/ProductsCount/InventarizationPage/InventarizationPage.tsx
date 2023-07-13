@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import s from "../ProductsCountStyles.module.scss"
 import {AsyncSelectSearchProduct, Button, UniTable} from "../../../../shared/ui"
 import {useInventarization} from "./InventarizationPageStore"
 import {slaveColumns} from "./models/SlaveTableColumns"
-import {CatalogAPI, InventarizationAPI, InventarizationProduct, LocalStorage} from "../../../../entities"
+import {CatalogAPI, InventarizationAPI, LocalStorage} from "../../../../entities"
 import {MasterTableColumns} from "./models/MasterTableColumns"
 import {useSnackbar} from "notistack";
-import {Product} from "entities";
 import {
     BarcodeScannerListenerProvider
 } from 'app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider'
@@ -19,54 +18,11 @@ export const InventarizationPage = () => {
     const updateToIv = useInventarization(s => s.updateToIv)
     const selectedM = useInventarization(s => s.selectedM)
     const setSelectedM = useInventarization(s => s.setSelectedM)
+    const addedHistory = useInventarization(s => s.addedHistory)
+    const addProduct = useInventarization(s => s.addProduct)
 
-
-    const [selectedS, setSelectedS] = useState<InventarizationProduct>()
-
-    const setInventarizationHandler = (r: Product) => {
-        let exist = false
-        let data = currentInventarization.products.map(n => {
-            if (n.productId === r.id) {
-                exist = true
-                return {
-                    ...n,
-                    quantity: n.quantity + 1,
-                    incomeTotal: n.incomePrice * n.quantity + 1,
-                    retailTotal: n.retailPrice * n.quantity + 1,
-                    dealerTotal: n.dealerPrice * n.quantity + 1
-                }
-            } else return n
-        })
-        if (exist) {
-            setProducts(data)
-        } else {
-            let n = {
-                id: 0,
-                createdAt: Date.now().toLocaleString(),
-                updatedAt: Date.now().toLocaleString(),
-                enabled: true,
-                inventariazationId: currentInventarization.inventarization.id,
-                productId: r.id,
-                name: r.name,
-                description: '',
-                catalogKey: r.catalogKey,
-                barcode: r.barcode,
-                manufBarcode: r.manufacturerBarcode != null ? r.manufacturerBarcode : '',
-                quantityUnitName: r.quantityUnitName,
-                incomePrice: r.incomePrice,
-                dealerPrice: r.dealerPrice,
-                retailPrice: r.retailPrice,
-                quantity: 1,
-                incomeTotal: r.incomePrice,
-                dealerTotal: r.dealerPrice,
-                retailTotal: r.retailPrice,
-                userCreated: LocalStorage.userId()!,
-                userUpdated: LocalStorage.userId()!
-            }
-            setProducts([...data, n as InventarizationProduct])
-            setSelectedS(n as InventarizationProduct)
-        }
-    }
+    const selectedS = useInventarization(s => s.selectedS)
+    const setSelectedS = useInventarization(s => s.setSelectedS)
 
     const saveInventarizationActHandler = () => {
         let data = {
@@ -85,11 +41,10 @@ export const InventarizationPage = () => {
 
     const onBarcodeHandler = (lastBarcode: string) => {
         enqueueSnackbar(`Штрихкод ${lastBarcode}`, {variant: 'default', autoHideDuration: 3000})
-        if (lastBarcode == '') return
-        console.log('Barcode: ', lastBarcode)
+        if (lastBarcode === '') return
         CatalogAPI.getProductByBarcode(lastBarcode).then(n => {
+            addProduct(n.data)
             enqueueSnackbar('Товар добавлен', {variant: 'success', autoHideDuration: 3000})
-            setInventarizationHandler(n.data)
         }).catch(() => {
             enqueueSnackbar('Товар не найден', {variant: 'warning', autoHideDuration: 5000})
         })
@@ -106,8 +61,6 @@ export const InventarizationPage = () => {
                     <div className={s.leftSide_title}>
                         {`Инвентаризация №${currentInventarization.inventarization.id}`}
                     </div>
-
-                    <div className={s.leftSide_info}>Дополнительная информация</div>
                     <Button buttonDivWrapper={s.button_chooseItem}
                             onClick={() => {
                                 setSelectedM(toInvStorage[0])
@@ -115,7 +68,12 @@ export const InventarizationPage = () => {
                     >
                         Выбрать товар
                     </Button>
-                    <AsyncSelectSearchProduct onSelect={setInventarizationHandler}/>
+                    <AsyncSelectSearchProduct onSelect={addProduct}/>
+                    <div className={s.history}>
+                        {[...addedHistory].reverse().map((p, index) => {
+                            return (<div className={s.hist_item} key={index}>{p.name}</div>)
+                        })}
+                    </div>
                     <div className={s.leftSide_metrika}>
                         <div className={s.metrika_title}>Осталось:</div>
                         <div>Позиций: {toInvStorage.length}</div>
@@ -144,13 +102,13 @@ export const InventarizationPage = () => {
                               columns={MasterTableColumns}
                               setRows={setProducts}
                               rowOnDoubleClick={(r: any) => {
-                                  setInventarizationHandler(r)
+                                  addProduct(r)
                               }}
                               selected={[selectedM]}
                               setSelected={(v) => {
                                   setSelectedM(v[0])
                                   let l = currentInventarization.products.find(n => n.productId === v[0].id)
-                                  setSelectedS(l)
+                                  setSelectedS(l ? l : null)
 
 
                                   //setShareSelected(v[0].productId)
@@ -167,10 +125,6 @@ export const InventarizationPage = () => {
                               setSelected={(v) => {
                                   setSelectedS(v[0])
                                   setSelectedM(toInvStorage.find(n => n.id === v[0].productId))
-
-
-                                  //setShareSelected(v[0].productId)
-                                  //handler()
                               }}
                               rowOnClick={(d) => {
                                   //setShareSelected((d as InventarizationProduct).productId)

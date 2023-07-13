@@ -5,6 +5,7 @@ using BikeShop.Service.Domain.DTO.Response;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.Service;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BikeShop.Service.WebApi.Controllers;
 
@@ -84,18 +85,19 @@ public class ServiceController : ControllerBase
     {
         return await _serviceService.UpdateStatus(status, id);
     }
-    
+    [HttpPut("endservice")]
+    public async Task<ServiceWithProductsWorksDTO> EndService([FromQuery] int id, decimal cash, decimal bankCount, decimal card, decimal personalBalance, bool isFiscal)
+    {
+        return await _serviceService.EndService(id, cash, bankCount, card, personalBalance, isFiscal);
+    }
     [HttpPost("create")]
     public async Task<ServiceWithProductsWorksDTO> Create([FromBody] CreateServiceModel model)
     {
-
         return await _serviceService.CreateService(model);
     }
-
     [HttpGet("getbyid")]
     public async Task<ServiceWithProductsWorksDTO> GetById([FromQuery] int Id)
     {
-
         return await _serviceService.GetServiceById(Id);
     }
 

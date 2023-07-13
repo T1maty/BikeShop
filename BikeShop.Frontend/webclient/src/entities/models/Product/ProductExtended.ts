@@ -4,6 +4,6 @@ import {QuantityUnit} from "../Others/QuantityUnit"
 export interface ProductExtended {
     product: Product
 
-    quantityUnit: QuantityUnit
+    quantityUnit: QuantityUnit | null
     quantity: number
 }

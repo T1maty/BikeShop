@@ -4,8 +4,8 @@ import {Button} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import useService from "./ServiceStore"
 import ServiceStore, {ServiceListStatusType} from "./ServiceStore"
-import {EnumServiceStatus, ServiceFormModel, ServiceStatus, ServiceWithData} from "../../../entities"
-import {ConfirmModal, PrintModal} from "../../../features"
+import {EnumServiceStatus, PaymentData, ServiceFormModel, ServiceStatus, ServiceWithData} from "../../../entities"
+import {ConfirmModal, PayModal, PrintModal} from "../../../features"
 import {CheckForServiceWork} from "../../../widgets"
 import {UseFormReturn} from "react-hook-form"
 import {ServiceNavigationContext} from "./ServiceNavigationContex"
@@ -24,8 +24,10 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const updateServiceStatus = useService(s => s.updateServiceStatus)
     const printModal = useService(s => s.printModal)
     const setPrintModal = useService(s => s.setPrintModal)
+    const endService = useService(s => s.endService)
 
     const [confirm, setConfirm] = useState(false);
+    const [payModal, setPayModal] = useState(false);
     const [confData, setConfData] = useState<ServiceWithData>()
     const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
@@ -60,8 +62,19 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
         })
     }
 
+    const updateServiceStatusHandlerEnded = (r: PaymentData) => {
+        endService(currentService?.service.id || -1, r, () => {
+        })
+    }
+
     return (
         <div className={s.service_leftSide}>
+            <PayModal open={payModal} setOpen={setPayModal} user={null} summ={currentService!.service.total}
+                      result={(r) => {
+                          console.log(r)
+                          updateServiceStatusHandlerEnded(r)
+                          setPayModal(false)
+                      }}/>
             <PrintModal open={printModal}
                         setOpen={setPrintModal}
                         children={<CheckForServiceWork children={currentService!}/>}
@@ -148,7 +161,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                             </Button>
                             <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
-                                        updateServiceStatusHandler('Ended')
+                                        setPayModal(true)
                                     }}>
                                 Выдать велосипед
                             </Button>

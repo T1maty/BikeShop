@@ -1,10 +1,10 @@
 import {AxiosResponse} from 'axios'
-import {$api} from 'shared'
 import {GetUsersResponse} from '../responses/GetUsersResponse'
 import {ServiceWithData} from "../models/ServiceWithData"
 import {LocalStorage} from "../globalStore/LocalStorage"
 import {Work} from "../models/Service/Work"
 import {UpdateServiceStatus} from "../requests/UpdateServiceStatus"
+import {$api} from "../../shared";
 
 export const ServiceAPI = {
     getMasters(): any {
@@ -35,6 +35,11 @@ export const ServiceAPI = {
     searchWork: function (querry: string): Promise<AxiosResponse<Work[]>> {
         return (
             $api.get<Work[]>(`/work/search?Querry=${querry}`)
+        )
+    },
+    endService(id: number, cash: number, bankCount: number, card: number, personalBalance: number, isFiscal: boolean): Promise<AxiosResponse<ServiceWithData>> {
+        return (
+            $api.put<ServiceWithData>(`service/endservice?id=${id}&cash=${cash}&bankCount=${bankCount}&card=${card}&personalBalance=${personalBalance}&isFiscal=${isFiscal}`)
         )
     },
 }

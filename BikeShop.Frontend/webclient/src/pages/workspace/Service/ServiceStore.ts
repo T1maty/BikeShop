@@ -1,7 +1,15 @@
 import {create} from 'zustand'
-import {devtools} from 'zustand/middleware'
+import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
-import {LocalStorage, ServiceAPI, ServiceFormModel, ServiceWithData, UpdateServiceStatus, User} from '../../../entities'
+import {
+    LocalStorage,
+    PaymentData,
+    ServiceAPI,
+    ServiceFormModel,
+    ServiceWithData,
+    UpdateServiceStatus,
+    User
+} from '../../../entities'
 import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
@@ -36,9 +44,28 @@ interface ServiceStore {
 
     printModal: boolean
     setPrintModal: (v: boolean) => void
+
+    endService: (id: number, paymentData: PaymentData, onSuccess: () => void) => void
 }
 
-const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => ({
+    endService: (id, pd, s) => {
+        set({isLoading: true})
+        ServiceAPI.endService(id, pd.cash, pd.bankCount, pd.card, pd.personalBalance, pd.isFiscal).then((g) => {
+            let newData = get().services.map((i) => {
+                if (i.service.id === g.data.service.id) return g.data
+                return i
+            })
+            get().setServices(newData)
+            get().filter()
+            s()
+        }).catch(() => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
     printModal: false,
     setPrintModal: (v) => {
         set({printModal: v})
@@ -202,9 +229,9 @@ const useService = create<ServiceStore>()(/*persist(*/devtools(immer((set, get) 
     setSelectedNavService: (v) => {
         set({selectedNavService: v})
     }
-})))/*, {
+}))), {
     name: "serviceStore",
     version: 1
-})*/);
+}));
 
 export default useService;

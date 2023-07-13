@@ -15,4 +15,5 @@ public interface IServiceService
 
     public Task<List<ServiceWork>> GetWorksByMaster(Guid userId);
     public Task<List<ServiceProduct>> GetProductsByMaster(Guid userId);
+    public Task<ServiceWithProductsWorksDTO> EndService(int id, decimal cash, decimal bankCount, decimal card, decimal personalBalance, bool isFiscal);
 }

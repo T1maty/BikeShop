@@ -5,6 +5,7 @@
   @include wrapperMainBlock;
   @include flexOnlyBetween;
   gap: $defaultLargeMargin;
+  height: 100%;
 
   .arrivalOfProducts_leftSide {
     background-color: $themeColorDark;
@@ -13,7 +14,7 @@
     @include flexColumn;
     @include divExtraLargeMarginBottom;
     width: 30%;
-    //height: 90%; // ?
+    height: 90%;
 
     > div {
       //border: 1px solid white;
@@ -53,6 +54,22 @@
 
     .leftSide_search {
 
+    }
+
+    .history {
+      background-color: $themeColorGray;
+      border-radius: $smallBorderRadius;
+      padding: $defaultLargeMargin;
+      height: 250px;
+      overflow: auto;
+
+      .hist_item {
+        margin-bottom: 5px;
+        padding: 5px;
+        border-radius: $smallBorderRadius;
+        background-color: $themeColorMilk;
+        color: black;
+      }
     }
 
     .leftSide_metrika {

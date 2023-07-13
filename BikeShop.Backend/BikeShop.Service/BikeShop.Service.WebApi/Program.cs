@@ -37,6 +37,9 @@ builder.Services.AddRefitClient<IProductsClient>()
 builder.Services.AddRefitClient<IShopClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Shop"]));
 
+builder.Services.AddRefitClient<IPaymentsClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Payments"]));
+
 
 // Регистрация конфигурации автомаппера
 builder.Services.AddAutoMapper(config =>

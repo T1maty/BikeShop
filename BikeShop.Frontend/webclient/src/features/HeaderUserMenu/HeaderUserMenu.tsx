@@ -36,20 +36,6 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
             }
         },
         {
-            title: 'Админ',
-            func: () => {
-                navigate(BikeShopPaths.WORKSPACE.ADMIN)
-                setIsComponentVisible(false)
-            }
-        },
-        {
-            title: 'Должности',
-            func: () => {
-                openUserRoleModal(true)
-                setIsComponentVisible(false)
-            }
-        },
-        {
             title: 'Выйти',
             func: () => {
                 logout().then()
