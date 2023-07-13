@@ -1136,6 +1136,21 @@
       ],
       "SwaggerKey": "service"
     },
+	{
+      "UpstreamPathTemplate": "/api/service/endservice",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/service/endservice",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.service",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "service"
+    },
     {
       "UpstreamPathTemplate": "/api/service/create",
       "UpstreamHttpMethod": [
