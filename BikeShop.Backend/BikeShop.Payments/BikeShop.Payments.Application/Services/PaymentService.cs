@@ -48,7 +48,7 @@ namespace BikeShop.Payments.Application.Services
                 UserId = dto.UserId,
             };
 
-            if(dto.Target == PaymentTarget.Cashbox)
+            if(dto.Target == PaymentTarget.Cashbox && dto.Target == PaymentTarget.Workshop)
             {
                 await _shopClient.Action(dto.ShopId, dto.Target, dto.TargetId, dto.Cash, dto.Card);
             }

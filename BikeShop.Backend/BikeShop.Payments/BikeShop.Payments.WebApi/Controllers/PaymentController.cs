@@ -7,7 +7,7 @@ namespace BikeShop.Payments.WebApi.Controllers
 {
     [Produces("application/json")]
     [ApiController]
-    [Route("currency")]
+    [Route("payments")]
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentService _paymentService;
@@ -23,7 +23,7 @@ namespace BikeShop.Payments.WebApi.Controllers
             return await _paymentService.GetPayments(limit);
         }
 
-        [HttpPost]
+        [HttpPost("newpayment")]
         public async Task<Payment> NewPayment(CreatePayment dto)
         {
             return await _paymentService.NewPayment(dto);

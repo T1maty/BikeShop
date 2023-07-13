@@ -422,6 +422,7 @@ public class ServiceService : IServiceService
 
     public async Task<ServiceWithProductsWorksDTO> EndService(int id, decimal cash, decimal bankCount, decimal card, decimal personalBalance, bool isFiscal)
     {
+        
         var service = await _context.Services.FindAsync(id);
 
         if (service.Status == "Ready")
@@ -431,7 +432,7 @@ public class ServiceService : IServiceService
             await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
             await _productsClient.AddProductsToStorage(oldServiceProducts.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), storageId, "Service", id);
 
-            var payment = new CreatePayment { BankCount = bankCount, Card = card, Cash = cash, ClientId = service.ClientId, CurrencyId = 1, PersonalBalance = personalBalance, ShopId = service.ShopId, Target = "Service", TargetId = service.Id, UserId = service.UserCreatedId };
+            var payment = new CreatePayment { BankCount = bankCount, Card = card, Cash = cash, ClientId = service.ClientId, CurrencyId = 1, PersonalBalance = personalBalance, ShopId = service.ShopId, Target = "Workshop", TargetId = service.Id, UserId = service.UserCreatedId };
             await _paymentsClient.NewPayment(payment);
             await _context.SaveChangesAsync(new CancellationToken());
         }
@@ -439,6 +440,7 @@ public class ServiceService : IServiceService
         {
             throw Errors.StatusNotFound;
         }
+        
 
 
 
