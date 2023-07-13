@@ -427,6 +427,7 @@ public class ServiceService : IServiceService
 
         if (service.Status == "Ready")
         {
+            service.Status = "Ended";
             var storageId = await _shopClient.GetStorageId(service.ShopId);
             var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
             await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
