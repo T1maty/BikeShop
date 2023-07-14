@@ -34,7 +34,7 @@ namespace BikeShop.Acts.Application.Services
             {
                 var data = JsonConvert.DeserializeObject<PrinterSettings>(printSettings);
                 var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
-                if (data.printerName != null) actual.printerName = data.printerName;
+                if (string.IsNullOrWhiteSpace(data.printerName)) actual.printerName = data.printerName;
                 if (data.pageWight != 0) actual.pageWight = data.pageWight;
                 if (data.copies != 0) actual.copies = data.copies;
                 storagedSettings = JsonConvert.SerializeObject(actual);
