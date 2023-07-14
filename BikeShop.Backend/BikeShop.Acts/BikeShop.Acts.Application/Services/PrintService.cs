@@ -32,12 +32,19 @@ namespace BikeShop.Acts.Application.Services
             var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == agentId).Where(n => n.Name == dataName).FirstOrDefaultAsync()).Settings;
             if(printSettings != null)
             {
-                var data = JsonConvert.DeserializeObject<PrinterSettings>(printSettings);
-                var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
-                if (!string.IsNullOrWhiteSpace(data.printerName)) actual.printerName = data.printerName;
-                if (data.pageWight != 0) actual.pageWight = data.pageWight;
-                if (data.copies != 0) actual.copies = data.copies;
-                storagedSettings = JsonConvert.SerializeObject(actual);
+                try
+                {
+                    var data = JsonConvert.DeserializeObject<PrinterSettings>(printSettings);
+                    var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+                    if (!string.IsNullOrWhiteSpace(data.printerName)) actual.printerName = data.printerName;
+                    if (data.pageWight != 0) actual.pageWight = data.pageWight;
+                    if (data.copies != 0) actual.copies = data.copies;
+                    storagedSettings = JsonConvert.SerializeObject(actual);
+                }
+                catch (Exception)
+                {
+                }
+               
             }
 
             string url = "";

@@ -16,6 +16,7 @@ interface PrintModalProps {
     finaly?: () => void,
     trigger?: 'agent' | 'png' | null
     printAgentName?: string
+    copies?: number
 }
 
 export const PrintModal: React.FC<PrintModalProps> = ({
@@ -25,7 +26,8 @@ export const PrintModal: React.FC<PrintModalProps> = ({
                                                           id,
                                                           finaly,
                                                           trigger,
-                                                          printAgentName
+                                                          printAgentName,
+                                                          copies
                                                       }) => {
 
     const {enqueueSnackbar} = useSnackbar()
@@ -119,7 +121,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
                 console.log(file)
                 //let settings: PrintSettings = {copies: 1, pageWight: 501, printerName: "Win2Image"}
                 let settings: string = ""
-                if (printAgentName === "ProductSticker") settings = "{\"copies\": 3,\"pageWight\": 0,\"printerName\": \"\"}"
+                if (printAgentName === "ProductSticker") settings = `{"copies": ${copies != undefined ? copies : 1},"pageWight": 0,"printerName": ""}`
                 let formData = new FormData();
                 formData.append('imageFile', file)
                 PrintAPI.addQueue(formData,

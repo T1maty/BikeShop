@@ -18,6 +18,7 @@ const ProductStickerManager = (props: { items: SupplyInvoiceProduct[] }) => {
     const [openPrint, setOpenPrint] = useState(false)
     const [curProd, setCurProd] = useState<Product | null>(null)
     const [trigger, setTrigger] = useState<'agent' | null>(null)
+    const [copies, setCopies] = useState(1)
 
     const [queue, setQueue] = useState<TableRow[]>([])
 
@@ -41,6 +42,7 @@ const ProductStickerManager = (props: { items: SupplyInvoiceProduct[] }) => {
 
     const printQueue = () => {
         console.log(products.length)
+        setCopies(products[0].quantitySticker)
         setCurProd({...products[0].product})
         setOpenPrint(true)
         let data = [...products]
@@ -57,7 +59,7 @@ const ProductStickerManager = (props: { items: SupplyInvoiceProduct[] }) => {
                 setOpen(false)
             }}
         >
-            <PrintModal open={openPrint} setOpen={setOpenPrint}
+            <PrintModal open={openPrint} setOpen={setOpenPrint} copies={copies}
                         children={<ProductSticker product={curProd!} cur={cur!}/>} printAgentName={'ProductSticker'}
                         trigger={trigger} finaly={() => {
                 console.log(queue.length)
@@ -65,6 +67,7 @@ const ProductStickerManager = (props: { items: SupplyInvoiceProduct[] }) => {
                 if (queue.length === 0) {
                     setOpenPrint(false)
                 } else {
+                    setCopies(queue[0].quantitySticker)
                     setCurProd({...queue[0].product})
                     let data = [...queue]
                     data.splice(0, 1)
