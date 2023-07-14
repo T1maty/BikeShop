@@ -236,8 +236,8 @@ namespace BikeShop.Products.Application.Services
         public async Task<List<ProductStorageQuantity>> GetIdByStorage(int storageId)
         {
             //Получаем словари для всех товаров на складе, а так же зарезервированных товаров на складе.
-            var prodQuantDict = await _context.StorageProducts.Where(n => n.StorageId == storageId).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
-            var prodQuantReservedDict = await _context.ProductReservations.Where(n => n.StorageId == storageId).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
+            var prodQuantDict = await _context.StorageProducts.Where(n => n.StorageId == storageId).Where(n=>n.Quantity != 0).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
+            var prodQuantReservedDict = await _context.ProductReservations.Where(n => n.StorageId == storageId).Where(n => n.Quantity != 0).ToDictionaryAsync(n => n.ProductId, n => n.Quantity);
 
             //Получаем доступные товары отнимая от товаров на складе зарезервированные товары
             var prodQuantAvailableDict = prodQuantDict;
