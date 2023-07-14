@@ -5,6 +5,8 @@ import useSupplyInvoiceArchiveModal from "./SupplyInvoiceArchiveModalStore";
 import {useSnackbar} from "notistack";
 import useSupplyInvoice from "../../../pages/workspace/ProductsCount/SupplyInvoice/models/SupplyInvoiceStore";
 import {SupplyInvoice} from "../../../entities/entities/Acts/SupplyInvoice/SupplyInvoice";
+import ProductStickerManager from "../../ProductStickerManager/ProductStickerManager";
+import useProductStickerManager from "../../ProductStickerManager/ProductStickerManagerStore";
 
 interface p {
     open: { o: boolean, x: number, y: number },
@@ -17,6 +19,8 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
     const setArchive = useSupplyInvoiceArchiveModal(s => s.setArchive)
     const archive = useSupplyInvoiceArchiveModal(s => s.archive)
     const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
+    const setManagerOpen = useProductStickerManager(s => s.setOpen)
+
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -57,15 +61,17 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
         {
             name: 'Менеджер стикеров',
             click: () => {
-
+                setManagerOpen(true)
             }
         }
     ]
     return (
         <>
+            <ProductStickerManager items={selectedSupplyInvoice ? selectedSupplyInvoice.supplyInvoiceProducts : []}/>
             <ContextMenu
                 isOpen={props.open.o}
                 onClose={() => {
+                    //setManagerOpen(false)
                     props.setOpen({o: false, x: 0, y: 0});
                 }}
                 settings={settings}

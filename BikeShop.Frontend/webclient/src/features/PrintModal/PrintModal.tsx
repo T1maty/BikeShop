@@ -126,11 +126,11 @@ export const PrintModal: React.FC<PrintModalProps> = ({
                     printAgentName ? printAgentName : '',
                     '',
                     100,
-                    1)
-            }).then(n => {
-            finaly ? finaly() : false
-            enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
-        }).finally(() => {
+                    1).then(n => {
+                    enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
+                })
+            }).finally(() => {
+            finaly != undefined ? finaly() : false
             setIsLoading(false)
         });
     }

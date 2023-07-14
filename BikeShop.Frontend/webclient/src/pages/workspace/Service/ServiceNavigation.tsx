@@ -69,7 +69,8 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
 
     return (
         <div className={s.service_leftSide}>
-            <PayModal open={payModal} setOpen={setPayModal} user={null} summ={currentService!.service.total}
+            <PayModal open={payModal} setOpen={setPayModal} user={null}
+                      summ={currentService ? currentService?.service.total : 0}
                       result={(r) => {
                           console.log(r)
                           updateServiceStatusHandlerEnded(r)

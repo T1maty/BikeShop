@@ -1,9 +1,11 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
 using BikeShop.Acts.Application.Refit;
+using BikeShop.Acts.Domain.DTO;
 using BikeShop.Acts.Domain.Entities;
 using BikeShop.Products.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,17 @@ namespace BikeShop.Acts.Application.Services
         public async Task<PrintQueue> AddQueue(int actId, string dataName, string? printSettings, int? prioriry, int agentId, IFormFile? imageFile)
         {
             if (prioriry == null) prioriry = 100;
-            if (string.IsNullOrEmpty(printSettings)) printSettings = (await _context.PrintSettings.Where(n=>n.AgentId ==agentId).Where(n=>n.Name == dataName).FirstOrDefaultAsync()).Settings;
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == agentId).Where(n => n.Name == dataName).FirstOrDefaultAsync()).Settings;
+            if(printSettings != null)
+            {
+                var data = JsonConvert.DeserializeObject<PrinterSettings>(printSettings);
+                var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+                if (data.printerName != null) actual.printerName = data.printerName;
+                if (data.pageWight != 0) actual.pageWight = data.pageWight;
+                if (data.copies != 0) actual.copies = data.copies;
+                storagedSettings = JsonConvert.SerializeObject(actual);
+            }
+
             string url = "";
             if(imageFile == null)
             {
@@ -47,7 +59,7 @@ namespace BikeShop.Acts.Application.Services
                 await _context.ActImages.AddAsync(img);
             }
 
-            var ent = new PrintQueue { AgentId = agentId, DataName = dataName, DataURL =  url, PrintSettings = printSettings, Priority = (int)prioriry};
+            var ent = new PrintQueue { AgentId = agentId, DataName = dataName, DataURL =  url, PrintSettings = storagedSettings, Priority = (int)prioriry};
 
             await _context.PrintQueues.AddAsync(ent);
             await _context.SaveChangesAsync(new CancellationToken());

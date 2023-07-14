@@ -1,12 +1,14 @@
 import {create} from "zustand"
-import {devtools} from "zustand/middleware"
+import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {InventarizationAPI, LocalStorage} from "../../../entities"
-import {InventarizationFullData}
-    from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData"
-import {InventoryLackFullData}
-    from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventoryLackFullData"
+import {
+    InventarizationFullData
+} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventarizationFullData"
+import {
+    InventoryLackFullData
+} from "../../../pages/workspace/ProductsCount/InventarizationPage/models/InventoryLackFullData"
 
 interface InventoryOfProductsArchiveModalStore {
     openInventoryOfProductsArchiveModal: boolean
@@ -26,7 +28,7 @@ interface InventoryOfProductsArchiveModalStore {
     setSelected: (v: InventarizationFullData) => void
 }
 
-const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModalStore>()(persist(devtools(immer((set, get) => ({
     setLackArchive: (v) => {
         set({lackArchive: v})
     },
@@ -66,9 +68,9 @@ const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModa
             set({isLoading: false})
         })
     },
-})))/*, {
+}))), {
     name: "inventoryOfProductsArchiveModal",
     version: 1
-})*/);
+}));
 
 export default useInventoryOfProductsArchiveModal;
