@@ -69,7 +69,7 @@ namespace BikeShop.Acts.Application.Services
                         var lp = new InventarizationLackProduct();
                         lp.InventariazationLackId = lack.Id;
                         lp.ProductId = prod.ProductId;
-                        lp.Quantity = prodQuant.Quantity * -1;
+                        lp.Quantity = prodQuant.Quantity;
                         lp.QuantityUnitName = prodQuant.QuantityUnit.Name;
                         lp.RetailPrice = prodQuant.Product.RetailPrice;
                         lp.IncomePrice = prodQuant.Product.IncomePrice;
