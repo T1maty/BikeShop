@@ -50,13 +50,16 @@ namespace BikeShop.Acts.Application.Services
             else
             {
                 var img = new ActImage { ActId= actId, ActType = dataName };
+                await _context.ActImages.AddAsync(img);
+                await _context.SaveChangesAsync(new CancellationToken());
+
                 var stream = imageFile.OpenReadStream();
                 var streamPart = new StreamPart(stream, imageFile.FileName, "image/jpeg");
 
                 url = await _fileservice.AddActImage(img.Id, streamPart);
                 img.ImageURL = url;
 
-                await _context.ActImages.AddAsync(img);
+                
             }
 
             var ent = new PrintQueue { AgentId = agentId, DataName = dataName, DataURL =  url, PrintSettings = storagedSettings, Priority = (int)prioriry};

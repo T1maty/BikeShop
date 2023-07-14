@@ -11,6 +11,6 @@ namespace BikeShop.Acts.Domain.Entities
     {
         public string ActType { get; set; }
         public int ActId { get; set; }
-        public string ImageURL { get; set; }
+        public string ImageURL { get; set; } = string.Empty;
     }
 }
