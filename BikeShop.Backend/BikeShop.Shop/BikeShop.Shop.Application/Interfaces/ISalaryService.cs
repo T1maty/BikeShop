@@ -14,5 +14,6 @@ namespace BikeShop.Shop.Application.Interfaces
         public Task<UserSalary> Get(Guid UserId);
         public Task<CalculateSalary> Calculate(Guid UserId, DateTime Start, DateTime Finish);
         public Task<CalculateSalary> Reset(Guid UserId);
+        public Task<CalculateSalary> Current(Guid UserId);
     }
 }

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './ServiceFinalArchiveModal.module.scss'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
@@ -11,6 +11,8 @@ import ClientIcon from '../../../shared/assets/workspace/user-icon.svg'
 import MasterIcon from '../../../shared/assets/workspace/mechanic-icon.svg'
 import {ServiceWithData} from "../../../entities"
 import {formatDate} from 'shared/utils/formatDate'
+import {CheckForServiceWork} from "../../../widgets";
+import {PrintModal} from "../../PrintModal/PrintModal";
 
 export const ServiceFinalArchiveModal = () => {
 
@@ -23,6 +25,10 @@ export const ServiceFinalArchiveModal = () => {
     const errorStatus = useServiceFinalArchiveModal(s => s.errorStatus)
     const archive = useServiceFinalArchiveModal(s => s.archive)
     const getEndedServices = useServiceFinalArchiveModal(s => s.getEndedServices)
+
+    const [v4, sv4] = useState(false)
+    const [service, setService] = useState<ServiceWithData>()
+
 
     useEffect(() => {
         if (errorStatus === 'error') {
@@ -46,6 +52,8 @@ export const ServiceFinalArchiveModal = () => {
                 }}
             >
                 <div className={s.serviceFinalArchiveModal_mainBlock}>
+                    <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={service!}/>}
+                                printAgentName={'WorkshopOut'}/>
                     <div className={s.serviceFinalArchiveModal_title}>
                         Архив завершённых ремонтов
                     </div>
@@ -55,9 +63,8 @@ export const ServiceFinalArchiveModal = () => {
                                 return (
                                     <div className={s.supplyInvoiceArchiveModal_item} key={service.service.id}
                                          onDoubleClick={() => {
-                                             // setIsCreating(false)
-                                             // setCurrentSupplyInvoice(el);
-                                             // navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                             setService(service)
+                                             sv4(true)
                                          }}
                                     >
                                         <div className={s.item_content}>

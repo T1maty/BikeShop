@@ -11,11 +11,13 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
     const r = useCurrency(s => s.roundUp)
     const employee = useAuth(s => s.user)
 
+
     let fio = props.children.service.clientFIO.split(' ')
     while (fio.length < 3) fio.push('')
 
     return (
         <div className={s.workAct_wrapper}>
+
             <div className={s.workAct_mainBox}>
 
                 <InvoiceHeader fn={fio[0]} ln={fio[1]} ptr={fio[2]} phone={props.children.service.clientPhone}
@@ -185,12 +187,12 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                 </div>
                 <div className={s.shop_signature}>
                     <div style={{fontWeight: 'bold'}}>Подпись сотрудника</div>
-                    <div>{employee?.firstName + ' ' + employee?.lastName!}</div>
+                    <div>{props.children.service.userFIO}</div>
                 </div>
                 <hr color={'black'}/>
                 <div className={s.client_signature}>
                     <div style={{fontWeight: 'bold'}}>Подпись клиента</div>
-                    <div>{props.children.service.userFIO}</div>
+                    <div>{props.children.service.clientFIO}</div>
                 </div>
 
             </div>

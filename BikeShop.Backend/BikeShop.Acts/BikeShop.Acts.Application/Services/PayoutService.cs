@@ -37,6 +37,11 @@ namespace BikeShop.Acts.Application.Services
             return await _context.Payouts.Where(n => n.Enabled == true).Take(Take).ToListAsync();
         }
 
+        public async Task<List<SalaryPaymentHistory>> SalaryHistory(Guid user)
+        {
+            return await _context.SalaryPaymentHistory.Where(n=>n.UserId== user).OrderByDescending(n=>n.Time).ToListAsync();
+        }
+
         public async Task<Payout> SalaryPayOut(SalaryPayoutDTO dto)
         {
             var lastPayment = await _context.SalaryPaymentHistory.Where(n => n.UserId == dto.User).FirstOrDefaultAsync();

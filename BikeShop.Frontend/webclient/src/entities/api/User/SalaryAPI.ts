@@ -20,4 +20,9 @@ export const SalaryAPI = {
             $api.get<CalculatedSalary>(`/salary/calculate?UserId=${userId}&Start=${start}&Finish=${finish}`)
         )
     },
+    history(userId: string): Promise<AxiosResponse<CalculatedSalary>> {
+        return (
+            $api.get<CalculatedSalary>(`/salary/calculate?UserId=${userId}`)
+        )
+    },
 }

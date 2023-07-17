@@ -1767,6 +1767,36 @@
       ],
       "SwaggerKey": "shop"
     },
+	{
+      "UpstreamPathTemplate": "/api/salary/reset",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/salary/reset",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+	{
+      "UpstreamPathTemplate": "/api/salary/current",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/salary/current",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
 	
 	
 	
@@ -1991,6 +2021,21 @@
         "Post"
       ],
       "DownstreamPathTemplate": "/payoutact/salarypayout",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/payoutact/salaryhistory",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/payoutact/salaryhistory",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

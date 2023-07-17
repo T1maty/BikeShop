@@ -4,6 +4,8 @@ import {ServiceWithData} from '../../../entities'
 import useServiceArchiveModal from "./ServiceArchiveModalStore"
 import {Button, CustomModal} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
+import {PrintModal} from "../../PrintModal/PrintModal";
+import {CheckForServiceWork} from "../../../widgets";
 
 type ServiceArchiveModalStatusType = 'Ended' | 'Canceled' | 'Deleted'
 
@@ -25,6 +27,8 @@ export const ServiceArchiveModal = () => {
     const [isActiveEnded, setIsActiveEnded] = useState<boolean>(false)
     const [isActiveCanceled, setIsActiveCanceled] = useState<boolean>(false)
     const [isActiveDeleted, setIsActiveDeleted] = useState<boolean>(false)
+
+    const [v4, sv4] = useState(false)
 
     // для стилей выбранного элемента
     const [activeId, setActiveId] = useState<number | null>(null)
@@ -60,6 +64,10 @@ export const ServiceArchiveModal = () => {
             }}
         >
             <div className={s.archiveModal_mainBox}>
+
+                <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={currentService!}/>}
+                            printAgentName={'WorkshopOut'}/>
+
                 <div className={s.archiveModal_title}>Архив ремонтов</div>
                 <div className={s.archiveModal_services}>
                     <div className={s.archiveModal_serviceList}>
@@ -107,6 +115,9 @@ export const ServiceArchiveModal = () => {
                                                      className={service.service.id === activeId ? s.serviceItem_active : s.serviceItem}
                                                      onClick={() => {
                                                          chooseServiceItem(service)
+                                                     }}
+                                                     onDoubleClick={() => {
+                                                         sv4(true)
                                                      }}
                                                 >
                                                     {service.service.name}

@@ -37,24 +37,32 @@ public class ServiceService : IServiceService
         var users = await _identityClient.GetDictionary(new List<string> { service.UserUpdatedId.ToString(), service.ClientId.ToString(), service.UserMasterId.ToString() });
         UserDTO user, client, master;
 
-        users.TryGetValue(service.UserUpdatedId.ToString(), out user);
-        users.TryGetValue(service.ClientId.ToString(), out client);
-        users.TryGetValue(service.UserMasterId.ToString(), out master);
+        if (users.TryGetValue(service.UserUpdatedId.ToString(), out user))
+        {
+            service.UserFIO = "";
+            if (user.lastName != null) service.UserFIO += (user.lastName + " ");
+            if (user.firstName != null) service.UserFIO += (user.firstName + " ");
+            if (user.patronymic != null) service.UserFIO += (user.patronymic + " ");
+            service.UserFIO = service.UserFIO.TrimEnd();
+        }
 
-        if (user.lastName != null) service.UserFIO += (user.lastName+" ");
-        if (user.firstName != null) service.UserFIO += (user.firstName + " ");
-        if (user.patronymic != null) service.UserFIO += (user.patronymic + " ");
-        service.UserFIO = service.UserFIO.TrimEnd();
+        if (users.TryGetValue(service.ClientId.ToString(), out client))
+        {
+            service.ClientFIO = "";
+            if (client.lastName != null) service.ClientFIO += (client.lastName + " ");
+            if (client.firstName != null) service.ClientFIO += (client.firstName + " ");
+            if (client.patronymic != null) service.ClientFIO += (client.patronymic + " ");
+            service.ClientFIO = service.ClientFIO.TrimEnd();
+        }
 
-        if (client.lastName != null) service.ClientFIO += (client.lastName + " ");
-        if (client.firstName != null) service.ClientFIO += (client.firstName + " ");
-        if (client.patronymic != null) service.ClientFIO += (client.patronymic + " ");
-        service.ClientFIO = service.ClientFIO.TrimEnd();
-
-        if (master.lastName != null) service.MasterFIO += (master.lastName + " ");
-        if (master.firstName != null) service.MasterFIO += (master.firstName + " ");
-        if (master.patronymic != null) service.MasterFIO += (master.patronymic + " ");
-        service.MasterFIO = service.MasterFIO.TrimEnd();
+        if (users.TryGetValue(service.UserMasterId.ToString(), out master))
+        {
+            service.MasterFIO = "";
+            if (master.lastName != null) service.MasterFIO += (master.lastName + " ");
+            if (master.firstName != null) service.MasterFIO += (master.firstName + " ");
+            if (master.patronymic != null) service.MasterFIO += (master.patronymic + " ");
+            service.MasterFIO = service.MasterFIO.TrimEnd();
+        }
 
         return service;
     }

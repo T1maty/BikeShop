@@ -7,7 +7,6 @@ import {InvoiceHeader} from "./InvoiceHeader"
 export const ServiceIncomeInvoice = (props: { children: ServiceWithData }) => {
 
     const shop = useAuth(s => s.shop)
-    const employee = useAuth(s => s.user)
 
     let fio = props.children.service.clientFIO.split(' ')
 
@@ -47,16 +46,15 @@ export const ServiceIncomeInvoice = (props: { children: ServiceWithData }) => {
                     </div>
                 </div>
                 <div className={s.agreement_policy}>
-                    С правилами и условиями настоящего Соглашения в полном объеме
-                    до начала использования Сервиса ознакомлен и согласен
+                    Підтверджую передачу техніки до майстерні.
                 </div>
                 <div className={s.shop_signature}>
                     <div style={{fontWeight: 'bold'}}>Подпись сотрудника</div>
-                    <div>{employee?.firstName + ' ' + employee?.lastName!}</div>
+                    <div>{props.children.service.userFIO}</div>
                 </div>
                 <div className={s.client_signature}>
                     <div style={{fontWeight: 'bold'}}>Подпись клиента</div>
-                    <div>{props.children.service.userFIO}</div>
+                    <div>{props.children.service.clientFIO}</div>
                 </div>
             </div>
         </div>

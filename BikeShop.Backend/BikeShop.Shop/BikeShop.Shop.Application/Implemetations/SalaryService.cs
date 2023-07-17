@@ -61,6 +61,11 @@ namespace BikeShop.Shop.Application.Implemetations
             return ent;
         }
 
+        public Task<CalculateSalary> Current(Guid UserId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<UserSalary> Get(Guid UserId)
         {
             var ent = await _context.UserSalaries.Where(n => n.UserId == UserId).FirstOrDefaultAsync();
@@ -77,7 +82,7 @@ namespace BikeShop.Shop.Application.Implemetations
 
         public async Task<CalculateSalary> Reset(Guid UserId)
         {
-            _context.
+            throw new NotImplementedException();
         }
 
         public async Task<UserSalary> UpdateSalary(Guid UserId, decimal Rate, decimal ShopPercent, decimal WorkPercent, decimal WorkshopPercent)

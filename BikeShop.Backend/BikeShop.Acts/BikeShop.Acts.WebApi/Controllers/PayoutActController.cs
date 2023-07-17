@@ -35,5 +35,11 @@ namespace BikeShop.Acts.WebApi.Controllers
         {
             return await _payoutService.SalaryPayOut(dto);
         }
+
+        [HttpGet("salaryhistory")]
+        public async Task<List<SalaryPaymentHistory>> SalaryHistory(Guid user)
+        {
+            return await _payoutService.SalaryHistory(user);
+        }
     }
 }

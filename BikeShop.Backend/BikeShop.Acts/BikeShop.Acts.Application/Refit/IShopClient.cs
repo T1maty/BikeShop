@@ -21,5 +21,7 @@ namespace BikeShop.Service.Application.RefitClients
 
         [Get("/salary/calculate")]
         public Task<CalculateSalary> CalculateSalary(Guid UserId, DateTime Start, DateTime Finish);
+        [Get("/salary/reset")]
+        public Task<CalculateSalary> Reset(Guid UserId);
     }
 }

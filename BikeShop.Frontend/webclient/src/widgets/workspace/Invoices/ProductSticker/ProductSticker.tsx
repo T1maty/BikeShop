@@ -1,10 +1,11 @@
 import React from 'react'
-import {Currency, Product} from "../../../../entities"
+import {Currency, Product, useCurrency} from "../../../../entities"
 import s from './ProductSticker.module.scss'
 import Barcode from "react-barcode"
 
 export const ProductSticker = (props: { product: Product, cur: Currency }) => {
 
+    const r = useCurrency(c => c.roundUp)
     return (
         <div className={s.wrapper}>
             <div className={s.name}>
@@ -12,7 +13,7 @@ export const ProductSticker = (props: { product: Product, cur: Currency }) => {
             </div>
             <Barcode value={props.product.barcode} format={"EAN13"} height={60}/>
             <div className={s.price}>
-                {props.product.retailPrice * props.cur.coefficient + props.cur.symbol}
+                {r(props.product.retailPrice * props.cur.coefficient) + props.cur.symbol}
             </div>
         </div>
     )
