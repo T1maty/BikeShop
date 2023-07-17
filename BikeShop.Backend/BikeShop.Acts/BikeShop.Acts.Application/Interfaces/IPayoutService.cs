@@ -13,5 +13,6 @@ namespace BikeShop.Acts.Application.Interfaces
         public Task<Payout> Create(CreatePayoutDTO dto);
         public Task<List<Payout>> Get(int Take);
         public Task<Payout> SalaryPayOut(SalaryPayoutDTO dto);
+        public Task<List<SalaryPaymentHistory>> SalaryHistory(Guid user);
     }
 }

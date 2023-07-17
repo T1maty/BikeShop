@@ -23,10 +23,14 @@ const useStuffProfile = create<StuffProfileStore>()(/*persist(*/devtools(immer((
     errorStatus: 'default',
 
     calculate: () => {
-        SalaryAPI.calculateSalary(LocalStorage.userId()!, "03/01/2009 05:42:00", "12/05/2023 13:34:00").then(r => {
-            console.log(r.data)
-            set({calculateData: r.data})
+        SalaryAPI.history(LocalStorage.userId()!).then((r1) => {
+            console.log("paymentsHistory:", r1)
+            SalaryAPI.calculateSalary(LocalStorage.userId()!, r1.data[0].time, "").then(r => {
+                console.log("currentSalary", r.data)
+                set({calculateData: r.data})
+            })
         })
+
     },
     user: {} as User,
     getUser: () => {

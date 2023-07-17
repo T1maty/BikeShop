@@ -3,6 +3,7 @@ import {SalaryResponse} from '../../responses/SalaryResponse'
 import {AxiosResponse} from 'axios'
 import {UpdateSalaryParams} from "../../requests/UpdateSalaryParams"
 import {CalculatedSalary} from "../../models/CalculatedSalary";
+import {SalaryPaymentHistory} from "../../entities/SalaryPaymentHistory";
 
 export const SalaryAPI = {
     getEmployeeSalaryById(userId: string): Promise<AxiosResponse<SalaryResponse>> {
@@ -20,9 +21,9 @@ export const SalaryAPI = {
             $api.get<CalculatedSalary>(`/salary/calculate?UserId=${userId}&Start=${start}&Finish=${finish}`)
         )
     },
-    history(userId: string): Promise<AxiosResponse<CalculatedSalary>> {
+    history(userId: string): Promise<AxiosResponse<SalaryPaymentHistory[]>> {
         return (
-            $api.get<CalculatedSalary>(`/salary/calculate?UserId=${userId}`)
+            $api.get<SalaryPaymentHistory[]>(`/payoutact/salaryhistory?user=${userId}`)
         )
     },
 }
