@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './AdminControlSalary.module.scss'
 import {Button, ControlledCustomInput, LoaderScreen} from '../../../shared/ui'
 import {SubmitHandler, useForm} from 'react-hook-form'
@@ -6,6 +6,9 @@ import useAdminControl from './AdminControlStore'
 import {useSnackbar} from 'notistack'
 import {selectColorStylesWhite} from '../../../app/styles/variables/selectColorStylesWhite'
 import Select from 'react-select'
+import {useCurrency} from "../../../entities";
+import useStuffProfile from "../StuffProfile/StuffProfileStore";
+import {formatDate} from "../../../shared/utils/formatDate";
 
 export const AdminControlSalary = () => {
 
@@ -17,6 +20,23 @@ export const AdminControlSalary = () => {
     const setSelectedEmployee = useAdminControl(s => s.setSelectedEmployee)
     const employers = useAdminControl(s => s.employers)
     const getEmployersList = useAdminControl(s => s.getEmployersList)
+    const calculateData = useStuffProfile(s => s.calculateData);
+    const calc = useStuffProfile(s => s.calculate);
+
+    const [sum, setSum] = useState(0)
+    useEffect(() => {
+        if (calculateData != null) {
+            let sum = 0
+            sum += calculateData.serviceWorks
+            sum += calculateData.seviceProducts
+            sum += calculateData.billsTotal
+            sum += calculateData.rate
+            setSum(sum)
+        }
+    }, [calculateData])
+    const r = useCurrency(s => s.roundUp)
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const load = useStuffProfile(s => s.calculate);
 
     const formControl = useForm<any>({
         defaultValues: {
@@ -69,7 +89,9 @@ export const AdminControlSalary = () => {
                                     isSearchable={false}
                                     options={employers}
                                     value={selectedEmployee}
-                                    onChange={(v) => {setSelectedEmployee(v!.user.id)}}
+                                    onChange={(v) => {
+                                        setSelectedEmployee(v!.user.id)
+                                    }}
                                     getOptionLabel={label => label.user.lastName}
                                     getOptionValue={value => value.user.lastName}
                                     styles={selectColorStylesWhite}
@@ -95,7 +117,8 @@ export const AdminControlSalary = () => {
                                 />
                             </div>
                             <Button buttonDivWrapper={s.calcButton}
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                    }}
                             >
                                 Рассчитать
                             </Button>
@@ -103,7 +126,13 @@ export const AdminControlSalary = () => {
                     </div>
                     <div className={s.stuffProfileWork_hours}>
                         {/*<div>Смен: 20</div>*/}
-                        <div>Часов: 200</div>
+                        <div>Часов: {calculateData?.hours}</div>
+                        <div>Начало: {formatDate(calculateData?.periodStart ? calculateData?.periodStart : "")}</div>
+                        <div>Конец: {formatDate(calculateData?.periodFinish ? calculateData?.periodFinish : "")}</div>
+                        <br/>
+                        <div>Чеки: {calculateData?.bills}</div>
+                        <div>Услуги сервисов шт.: {calculateData?.serviceWorks}</div>
+                        <div>Товары сервисов шт.: {calculateData?.seviceProducts}</div>
                     </div>
 
                     <div className={s.stuffProfileWork_salary}>
@@ -111,17 +140,25 @@ export const AdminControlSalary = () => {
                             <legend>Зарплата на текущий момент</legend>
                             <div className={s.salary_info}>
                                 <div className={s.salary_info1}>
-                                    <div>Ремонты:</div>
-                                    <div>Продажа ремонтов:</div>
-                                    <div>Продажи:</div>
-                                    <div>Ставка:</div>
+                                    <div>Ремонты: {r(calculateData ? calculateData.workTotal * fbts.c : 0) + fbts.s}</div>
+                                    <div>Продажи
+                                        ремонтов: {r(calculateData ? calculateData.productsTotal * fbts.c : 0) + fbts.s}</div>
+                                    <div>Продажи: {r(calculateData ? calculateData.billsTotal * fbts.c : 0) + fbts.s}</div>
+                                    <div>Ставка: {r(calculateData ? calculateData.rate * fbts.c : 0) + fbts.s}</div>
                                 </div>
                                 <div className={s.salary_info2}>
-                                    <div>Бонусы:</div>
-                                    <div>Штрафы:</div>
+                                    <div>Бонусы: 0</div>
+                                    <div>Штрафы: 0</div>
                                 </div>
-                                <div className={s.salary_result}>Итого:</div>
+                                <div className={s.salary_result}>Итого: {r(sum * fbts.c) + fbts.s}</div>
                             </div>
+                            <Button buttonDivWrapper={s.calcButton}
+                                    onClick={() => {
+                                        calc(selectedEmployee!.user.id);
+                                    }}
+                            >
+                                Рассчитать
+                            </Button>
                         </fieldset>
                     </div>
 
@@ -138,7 +175,8 @@ export const AdminControlSalary = () => {
                         </div>
                         <Button type={'submit'}
                                 buttonDivWrapper={s.giveMoneyButton}
-                                onClick={() => {}}
+                                onClick={() => {
+                                }}
                         >
                             Сформировать выплату
                         </Button>

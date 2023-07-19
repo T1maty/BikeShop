@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -139,7 +140,7 @@ namespace BikeShop.Identity.Application.Services
                 PhoneNumber = model.Phone,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Patronymic = model.Patronymic
+                Patronymic = model.Patronymic,
             };
 
 
@@ -171,5 +172,51 @@ namespace BikeShop.Identity.Application.Services
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
+
+        private static string GenerateSecret(int length)
+        {
+            var _random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        private static string Hash(string secret)
+        {
+            var h = SHA256.Create();
+            var b = h.ComputeHash(Encoding.UTF8.GetBytes(secret));
+            StringBuilder sb = new StringBuilder(b.Length * 2);
+            foreach (byte i in b)
+            {
+                sb.AppendFormat("{0:x2}", i);
+            }
+
+            return sb.ToString();
+        }
+
+        public async Task<string> RegenerateSecret(Guid user)
+        {
+            var u = await _userManager.FindByIdAsync(user.ToString());
+            var s = GenerateSecret(30);
+
+            u.Secret = Hash(s);
+            await _userManager.UpdateAsync(u);
+            return s;
+        }
+
+        public async Task<UserWithRoles> GetUserBySecret(string secret)
+        {
+            var user = await _userManager.Users.Where(n => n.Secret == Hash(secret)).FirstOrDefaultAsync();
+
+            return await GetUserByIdWithRoles(user.Id);
+        }
+
+        private async Task<UserWithRoles> GetUserByIdWithRoles(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return new UserWithRoles { Roles = (List<string>)roles, User = user };
+        }
     }
-}
+    }

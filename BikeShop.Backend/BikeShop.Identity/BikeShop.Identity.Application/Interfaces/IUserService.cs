@@ -23,5 +23,7 @@ namespace BikeShop.Identity.Application.Interfaces
         public Task<List<UserWithRoles>> GetEmployees(int ShopId);
         public Task addUserToRole(Guid userId, string Role);
         public Task<ApplicationUser> CreateUser(CreateUserDTO model);
+        public Task<string> RegenerateSecret(Guid user);
+        public Task<UserWithRoles> GetUserBySecret(string secret);
     }
 }

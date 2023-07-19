@@ -16,7 +16,7 @@ export const SalaryAPI = {
             $api.put<SalaryResponse>(`/salary/update?UserId=${p.userId}&Rate=${p.rate}&ShopPercent=${p.shopPercent}&WorkPercent=${p.workPercent}&WorkshopPercent=${p.workshopPercent}`)
         )
     },
-    calculateSalary(userId: string, start: string, finish: string): Promise<AxiosResponse<CalculatedSalary>> {
+    calculateSalary(userId: string, start: string | null, finish: string | null): Promise<AxiosResponse<CalculatedSalary>> {
         return (
             $api.get<CalculatedSalary>(`/salary/calculate?UserId=${userId}&Start=${start}&Finish=${finish}`)
         )

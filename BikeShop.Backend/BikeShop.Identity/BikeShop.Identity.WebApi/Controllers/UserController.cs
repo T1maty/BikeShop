@@ -1,13 +1,16 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
 using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
+using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
 using BikeShop.Identity.Application.CQRS.Commands.UpdateUserPublic;
 using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
 using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Application.Interfaces;
+using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.Domain.DTO.Request;
 using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
+using BikeShop.Identity.WebApi.Models.Auth;
 using BikeShop.Identity.WebApi.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,13 +28,19 @@ public class UserController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
     private readonly IUserService _userService;
+    private readonly JwtService _jwtService; // для генерации JWT-токенов
+    private readonly CookieService _cookieService; // для вставки рефреш токена в куки
 
-    public UserController(IMapper mapper, IMediator mediator, IUserService userService)
+    public UserController(IMapper mapper, IMediator mediator, IUserService userService, JwtService jwtService, CookieService cookieService)
     {
         _mapper = mapper;
         _mediator = mediator;
         _userService = userService;
+        _jwtService = jwtService;
+        _cookieService = cookieService;
     }
+
+
 
 
 
@@ -193,4 +202,38 @@ public class UserController : ControllerBase
     {
         await _userService.addUserToRole(user, role);
     }
+
+    [HttpPut("regeneratesecrete")]
+    public async Task<string> RegenerateSecret(Guid user)
+    {
+        return await _userService.RegenerateSecret(user);
+    }
+
+    [HttpPost("secretlogin")]
+    public async Task<ActionResult<LoginResponseModel>> SecretLogin(string secret)
+    {
+        var uvd = await _userService.GetUserBySecret(secret);
+
+        // Создаю/обновляю рефреш сессию для пользователя и получаю рефреш токен
+        var setSessionCommand = new SetRefreshSessionCommand { UserId = Guid.Parse(uvd.User.Id) };
+        var refreshToken = await _mediator.Send(setSessionCommand);
+
+        // Добавляю рефреш токен в httpOnly cookie
+        _cookieService.AddRefreshCookieToResponse(HttpContext.Response, refreshToken);
+
+        // Генерирую access token для пользователя
+        var accessToken = _jwtService.GenerateUserJwt(uvd.User, uvd.Roles);
+
+        var userResponseModel = _mapper.Map<LoginResponseUserModel>(uvd.User);
+        userResponseModel.Roles = uvd.Roles;
+
+        return Ok(new LoginResponseModel
+        {
+            AccessToken = accessToken,
+            User = userResponseModel
+        });
+    }
+
+
+
 }

@@ -2,59 +2,60 @@
 @import '../../../app/styles/variables/variables';
 
 .serviceFinalArchiveModal_mainBlock {
-    @include defaultModalStyle;
-    width: 700px;
+  @include defaultModalStyle;
+  width: 700px;
 
-    .serviceFinalArchiveModal_title {
-        @include modalTitle;
-    }
+  .serviceFinalArchiveModal_title {
+    @include modalTitle;
+  }
 
-    .serviceFinalArchiveModal_list {
-        @include divLargeMarginBottom;
-        max-height: 550px;
-        overflow: auto;
-        padding-right: 10px;
+  .serviceFinalArchiveModal_list {
+    @include divLargeMarginBottom;
+    max-height: 550px;
+    overflow: auto;
+    padding-right: 10px;
 
-        .supplyInvoiceArchiveModal_item {
-            @include flexOnlyBetween;
-            background-color: $themeColorGray;
-            border: 1px solid $themeColorMilk;
-            border-radius: $smallBorderRadius;
-            padding: $defaultSmallMargin;
-            @include hoverCursorPointer;
+    .supplyInvoiceArchiveModal_item {
+      @include flexOnlyBetween;
+      background-color: $themeColorGray;
+      border: 1px solid $themeColorMilk;
+      border-radius: $smallBorderRadius;
+      padding: $defaultSmallMargin;
+      @include hoverCursorPointer;
 
-            .item_content {
-                @include flexBetween;
+      .item_content {
+        @include flexBetween;
 
-                .content_info {
-                    height: 100%;
-                    width: 300px;
-                    font-size: 20px;
-                    border-right: 2px solid $themeColorMilk;
-                    padding-right: 10px;
-                    @include flexColumnOnly;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    @include divSmallMarginBottom;
+        .content_info {
+          height: 100%;
+          width: 300px;
+          font-size: 20px;
+          border-right: 2px solid $themeColorMilk;
+          padding-right: 10px;
+          @include flexColumnOnly;
+          justify-content: space-between;
+          align-items: flex-start;
+          @include divSmallMarginBottom;
 
-                    .cashBlock {
-                        @include flexCenter;
+          .cashBlock {
+            @include flexCenter;
 
-                        .cashBlock_img {
-                            img {
-                                width: 25px;
-                                height: 25px;
-                            }
-                        }
-                        .cashBlock_info {
-                            padding-left: 10px;
-                            font-size: 20px;
-                        }
-                    }
-                }
-
-                @include modalDateBlock;
+            .cashBlock_img {
+              img {
+                width: 35px;
+                height: 35px;
+              }
             }
+
+            .cashBlock_info {
+              padding-left: 10px;
+              font-size: 20px;
+            }
+          }
         }
+
+        @include modalDateBlock;
+      }
     }
+  }
 }

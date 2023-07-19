@@ -26,7 +26,7 @@ namespace BikeShop.Acts.Application.Services
         public async Task<Encashment> Create(CreateEncashmentDTO dto)
         {
             var shop = await _shopClient.GetById(dto.ShopId);
-            var ent = new Encashment { ShopId = dto.ShopId, Card = dto.Cash, Cash = dto.Cash, CashRemain = shop.CashboxCash - dto.Cash , Description = dto.Description, Status = "InShop", UserCreated = dto.UserId,  UserUpdated = dto.UserId };
+            var ent = new Encashment { ShopId = dto.ShopId, Card = shop.CashboxTerminal, Cash = dto.Cash, CashRemain = shop.CashboxCash - dto.Cash , Description = dto.Description, Status = "InShop", UserCreated = dto.UserId,  UserUpdated = dto.UserId };
             await _context.Encashments.AddAsync(ent);
             await _context.SaveChangesAsync(new CancellationToken());
 

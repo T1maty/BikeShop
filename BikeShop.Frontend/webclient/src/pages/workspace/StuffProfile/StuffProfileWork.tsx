@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useCurrency, User} from "../../../entities"
+import {LocalStorage, useCurrency, User} from "../../../entities"
 import s from './StuffProfileWork.module.scss'
 import {Button} from "../../../shared/ui"
 import useStuffProfile from "./StuffProfileStore";
@@ -58,7 +58,7 @@ export const StuffProfileWork: React.FC<StuffProfileWorkProps> = ({user}) => {
 
                     <Button buttonDivWrapper={s.calcButton}
                             onClick={() => {
-                                load();
+                                load(LocalStorage.userId()!);
                             }}
                     >
                         Рассчитать

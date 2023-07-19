@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BikeShop.Identity.Application.Common.Mappings;
+using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
 
 namespace BikeShop.Identity.WebApi.Models.Auth;

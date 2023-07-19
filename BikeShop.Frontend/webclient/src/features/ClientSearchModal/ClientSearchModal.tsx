@@ -106,7 +106,7 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                 // onFailure
             })
 
-         
+
     }
 
     // обработчик нажатия на кнопку отмены
@@ -170,6 +170,14 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                                 />
                             </div>
                             <div>
+                                <ControlledCustomInput name={'lastName'}
+                                                       autocompleteOff
+                                                       placeholder={'Фамилия'}
+                                                       control={formControl}
+                                                       divClassName={s.searchInput}
+                                />
+                            </div>
+                            <div>
                                 <ControlledCustomInput name={'firstName'}
                                                        placeholder={'Имя'}
                                                        autocompleteOff
@@ -178,14 +186,6 @@ const ClientSearchModal: FC<ClientSearchModalType> = ({setIsComponentVisible, is
                                                        rules={{
                                                            required: 'Поле обязательно для заполнения',
                                                        }}
-                                />
-                            </div>
-                            <div>
-                                <ControlledCustomInput name={'lastName'}
-                                                       autocompleteOff
-                                                       placeholder={'Фамилия'}
-                                                       control={formControl}
-                                                       divClassName={s.searchInput}
                                 />
                             </div>
                             <div>

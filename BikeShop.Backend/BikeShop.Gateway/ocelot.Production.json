@@ -1385,6 +1385,36 @@
       ],
       "SwaggerKey": "identity"
     },
+	{
+      "UpstreamPathTemplate": "/api/user/regeneratesecrete",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/user/regeneratesecrete",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/user/secretlogin",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/user/secretlogin",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
 	
 	{
       "UpstreamPathTemplate": "/api/role/getall",

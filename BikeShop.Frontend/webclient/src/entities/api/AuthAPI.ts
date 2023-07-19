@@ -19,6 +19,13 @@ export const AuthAPI = {
                 $api.post<LoginResponse>('/auth/login', loginData)
             )
         },
+
+        secretLogin(secret: string): Promise<AxiosResponse<LoginResponse>> {
+            return (
+                $api.post<LoginResponse>(`/user/secret`)
+            )
+        },
+
         logout(): Promise<AxiosResponse<any>> {
             return (
                 $api.post('/auth/logout')

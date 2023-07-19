@@ -36,6 +36,7 @@ export const MainPage = () => {
     const {enqueueSnackbar} = useSnackbar()
 
     const shop = useAuth(s => s.shop)
+    const logout = useAuth(s => s.logout)
 
     const isLoading = useChooseClientModal(s => s.isLoading)
     const setIsLoading = useChooseClientModal(s => s.setIsLoading)
@@ -95,6 +96,7 @@ export const MainPage = () => {
                         setIsLoading(true)
                         requestAPI(LocalStorage.userId()!).then(() => {
                             getUserShiftStatus()
+                            logout()
                             setIsLoading(false)
                         })
                     }}
@@ -122,6 +124,7 @@ export const MainPage = () => {
             ShiftAPI.close(LocalStorage.userId()!)
                 .then(() => {
                     getUserShiftStatus()
+
                     setIsLoading(false)
                 })
         }

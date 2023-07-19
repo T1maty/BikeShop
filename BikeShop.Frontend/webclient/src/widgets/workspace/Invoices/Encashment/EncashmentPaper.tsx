@@ -12,7 +12,7 @@ export const EncashmentPaper = (props: { encashmant: Encashment }) => {
             <div>Дата: {formatDate(props.encashmant.createdAt)}</div>
             <div>Наличка: {r(props.encashmant.cash * fbts.c) + fbts.s}</div>
             <div>Терминал:{r(props.encashmant.card * fbts.c) + fbts.s}</div>
-            <div>Остаток:{r(props.encashmant.card * fbts.c) + fbts.s}</div>
+            <div>Остаток:{r(props.encashmant.cashRemain * fbts.c) + fbts.s}</div>
             <div>Id юзера:{props.encashmant.userCreated}</div>
             <div>Id магазина:{props.encashmant.shopId}</div>
             <div>Описание:{props.encashmant.description}</div>

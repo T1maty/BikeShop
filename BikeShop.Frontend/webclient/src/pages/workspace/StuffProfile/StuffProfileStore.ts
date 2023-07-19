@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {LocalStorage, SalaryAPI, User} from "../../../entities"
+import {SalaryAPI, User} from "../../../entities"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {CalculatedSalary} from "../../../entities/models/CalculatedSalary";
 
@@ -13,7 +13,7 @@ interface StuffProfileStore {
     getUser: () => void
 
     calculateData: CalculatedSalary | null
-    calculate: () => void
+    calculate: (userId: string) => void
 }
 
 // стор на всякий случай
@@ -22,10 +22,10 @@ const useStuffProfile = create<StuffProfileStore>()(/*persist(*/devtools(immer((
     isLoading: false,
     errorStatus: 'default',
 
-    calculate: () => {
-        SalaryAPI.history(LocalStorage.userId()!).then((r1) => {
+    calculate: (u) => {
+        SalaryAPI.history(u).then((r1) => {
             console.log("paymentsHistory:", r1)
-            SalaryAPI.calculateSalary(LocalStorage.userId()!, r1.data[0].time, "").then(r => {
+            SalaryAPI.calculateSalary(u, r1.data[0] ? r1.data[0].time : "1/1/0001 12:00:00 AM", "1/1/0001 12:00:00 AM").then(r => {
                 console.log("currentSalary", r.data)
                 set({calculateData: r.data})
             })
