@@ -28,6 +28,8 @@ interface AuthStore {
     loginToShop: (shopId: number) => void
 
     updateUserData: () => void
+
+    secretLogin: (secret: string, onSuccess?: (value: LoginResponse) => void, onFailure?: (value: AxiosResponse) => void) => void
 }
 
 export const useAuth = create<AuthStore>()(persist(devtools(immer((set, get) => ({
@@ -67,6 +69,37 @@ export const useAuth = create<AuthStore>()(persist(devtools(immer((set, get) => 
         }).catch(((r: AxiosResponse<LoginResponse>) => {
             console.log('login error', r)
             onFailure ? onFailure(r) : false
+        })).finally(() => {
+            set({isLoading: false})
+        })
+    },
+
+    secretLogin: (secret, s, f) => {
+        set({isLoading: true})
+        AuthAPI.Login.secretLogin(secret).then((r: AxiosResponse<LoginResponse>) => {
+            console.log('login store', r)
+
+            localStorage.setItem('accessToken', r.data.accessToken)
+            localStorage.setItem('userId', r.data.user.id)
+            localStorage.setItem('shopId', r.data.user.shopId.toString())
+
+            set(state => {
+                state.user = r.data.user
+            })
+
+            console.log('login user', r.data.user)
+
+            if (r.data.user.shopId > 0) {
+                set(state => {
+                    state.loginToShop(r.data.user.shopId)
+                })
+            }
+
+            s ? s(r.data) : false
+            set({isLoading: false})
+        }).catch(((r: AxiosResponse<LoginResponse>) => {
+            console.log('login error', r)
+            f ? f(r) : false
         })).finally(() => {
             set({isLoading: false})
         })

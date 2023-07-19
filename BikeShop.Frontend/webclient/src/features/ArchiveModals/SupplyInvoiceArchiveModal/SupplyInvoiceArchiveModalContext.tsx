@@ -7,6 +7,8 @@ import useSupplyInvoice from "../../../pages/workspace/ProductsCount/SupplyInvoi
 import {SupplyInvoice} from "../../../entities/entities/Acts/SupplyInvoice/SupplyInvoice";
 import ProductStickerManager from "../../ProductStickerManager/ProductStickerManager";
 import useProductStickerManager from "../../ProductStickerManager/ProductStickerManagerStore";
+import {usePriceManager} from "../../PriceManagerModal/PricaManagerModalStore";
+import PriceManagerModal from "../../PriceManagerModal/PriceManagerModal";
 
 interface p {
     open: { o: boolean, x: number, y: number },
@@ -20,6 +22,8 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
     const archive = useSupplyInvoiceArchiveModal(s => s.archive)
     const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
     const setManagerOpen = useProductStickerManager(s => s.setOpen)
+    const setPriceManager = usePriceManager(s => s.setOpen)
+    const setProductsToPriceManager = usePriceManager(s => s.setProductsFromSupply)
 
 
     const {enqueueSnackbar} = useSnackbar()
@@ -63,10 +67,18 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
             click: () => {
                 setManagerOpen(true)
             }
+        },
+        {
+            name: 'Менеджер цен',
+            click: () => {
+                setPriceManager(true)
+                setProductsToPriceManager(selectedSupplyInvoice!.supplyInvoiceProducts)
+            }
         }
     ]
     return (
         <>
+            <PriceManagerModal/>
             <ProductStickerManager items={selectedSupplyInvoice ? selectedSupplyInvoice.supplyInvoiceProducts : []}/>
             <ContextMenu
                 isOpen={props.open.o}

@@ -234,6 +234,12 @@ public class UserController : ControllerBase
         });
     }
 
+    [HttpPost("getFromBRUA")]
+    public async Task<string> gfb()
+    {
+        return await _userService.gfb();
+    }
+
 
 
 }

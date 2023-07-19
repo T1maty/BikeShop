@@ -15,6 +15,7 @@ namespace BikeShop.Shop.Domain.DTO.Salary
 
         public decimal Rate { get; set; }
         public TimeSpan Hours { get; set; }
+        public decimal TotalHours { get; set; }
 
         public decimal BillsTotal { get; set; }
         public decimal ProductsTotal { get; set; }

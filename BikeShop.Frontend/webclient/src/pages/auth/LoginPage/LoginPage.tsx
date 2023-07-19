@@ -9,6 +9,9 @@ import {Errors} from '../../../entities/errors/workspaceErrors'
 import {useTranslation} from "react-i18next"
 import {useSnackbar} from "notistack"
 import {phoneMaskRemove} from "../../../shared/utils/phoneMaskRemove";
+import {
+    BarcodeScannerListenerProvider
+} from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
 
 export const LoginPage = () => {
 
@@ -17,6 +20,7 @@ export const LoginPage = () => {
     const navigate = useNavigate()
 
     const login = useAuth(s => s.login)
+    const secretLogin = useAuth(s => s.secretLogin)
     const isLoading = useAuth(s => s.isLoading)
 
     const formControl = useForm<LoginData>({
@@ -25,6 +29,22 @@ export const LoginPage = () => {
             password: '',
         }
     })
+
+    const onBarcodeHandler = (lastBarcode: string) => {
+        enqueueSnackbar(`Секрет считан`, {variant: 'default', autoHideDuration: 3000})
+        if (lastBarcode == '') return
+        console.log('Barcode: ', lastBarcode)
+        secretLogin(lastBarcode, (data) => {
+            enqueueSnackbar('Успешный вход', {variant: 'success', autoHideDuration: 3000})
+            if (data.user.shopId > 0) {
+                navigate(BikeShopPaths.WORKSPACE.MAIN_PAGE)
+            } else {
+                navigate(BikeShopPaths.SHOP.HOME)
+            }
+        }, () => {
+            enqueueSnackbar('Ошибка входа', {variant: 'warning', autoHideDuration: 5000})
+        })
+    }
 
     const onSubmit: SubmitHandler<LoginData> = (data: LoginData) => {
         data.phone = phoneMaskRemove(data.phone)
@@ -50,55 +70,58 @@ export const LoginPage = () => {
     } else {
 
         return (
-            <div className={s.loginPage_container}>
-                <div className={s.loginForm_mainBox}>
+            <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
 
-                    <div className={s.loginForm_title}>
-                        Авторизация
-                    </div>
-                    <form onSubmit={formControl.handleSubmit(onSubmit)}>
-                        <div className={s.loginForm_form}>
-                            <div className={s.phone}>
-                                <ControlledCustomInput name={'phone'}
-                                                       mask={"+38 (999) 999-99-99"}
-                                                       placeholder={'Почта или номер телефона'}
+                <div className={s.loginPage_container}>
+                    <div className={s.loginForm_mainBox}>
+
+                        <div className={s.loginForm_title}>
+                            Авторизация
+                        </div>
+                        <form onSubmit={formControl.handleSubmit(onSubmit)}>
+                            <div className={s.loginForm_form}>
+                                <div className={s.phone}>
+                                    <ControlledCustomInput name={'phone'}
+                                                           mask={"+38 (999) 999-99-99"}
+                                                           placeholder={'Почта или номер телефона'}
+                                                           control={formControl}
+                                                           rules={{
+                                                               required: 'Поле обязательно для заполнения',
+                                                               minLength: {
+                                                                   value: 4,
+                                                                   message: 'Минимальная длина 4 символа'
+                                                               },
+                                                               pattern: {
+                                                                   value: /^(\s*)?(\+)?([- _():=+]?\d[- ():=+]?){10,14}(\s*)?$/,
+                                                                   message: 'Неверный формат номера телефона'
+                                                               }
+                                                           }}
+                                    />
+                                </div>
+                                <ControlledCustomInput name={'password'}
+                                                       type={'password'}
+                                                       placeholder={'Пароль'}
                                                        control={formControl}
-                                                       rules={{
-                                                           required: 'Поле обязательно для заполнения',
-                                                           minLength: {
-                                                               value: 4,
-                                                               message: 'Минимальная длина 4 символа'
-                                                           },
-                                                           pattern: {
-                                                               value: /^(\s*)?(\+)?([- _():=+]?\d[- ():=+]?){10,14}(\s*)?$/,
-                                                               message: 'Неверный формат номера телефона'
-                                                           }
-                                                       }}
+                                                       rules={{required: Errors[0].name}}
                                 />
                             </div>
-                            <ControlledCustomInput name={'password'}
-                                                   type={'password'}
-                                                   placeholder={'Пароль'}
-                                                   control={formControl}
-                                                   rules={{required: Errors[0].name}}
-                            />
-                        </div>
-                        <div className={s.loginForm_buttons}>
-                            <Button buttonDivWrapper={s.loginForm_registerButton}
-                                    onClick={() => {
-                                        navigate(BikeShopPaths.COMMON.REGISTRATION)
-                                    }}
-                            >
-                                Регистрация
-                            </Button>
-                            <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
-                                Вход
-                            </Button>
-                        </div>
-                    </form>
+                            <div className={s.loginForm_buttons}>
+                                <Button buttonDivWrapper={s.loginForm_registerButton}
+                                        onClick={() => {
+                                            navigate(BikeShopPaths.COMMON.REGISTRATION)
+                                        }}
+                                >
+                                    Регистрация
+                                </Button>
+                                <Button type={'submit'} buttonDivWrapper={s.loginForm_loginButton}>
+                                    Вход
+                                </Button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
-            </div>
+            </BarcodeScannerListenerProvider>
         )
     }
 }

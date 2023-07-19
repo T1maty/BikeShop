@@ -22,7 +22,7 @@ export const AuthAPI = {
 
         secretLogin(secret: string): Promise<AxiosResponse<LoginResponse>> {
             return (
-                $api.post<LoginResponse>(`/user/secret`)
+                $api.post<LoginResponse>(`/user/secretlogin?secret=${secret}`)
             )
         },
 

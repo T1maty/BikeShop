@@ -6,6 +6,7 @@ export interface CalculatedSalary {
     hours: string,
     billsTotal: number,
     productsTotal: number,
+    totalHours: number,
     workTotal: number,
     bills: number,
     serviceWorks: number,

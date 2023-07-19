@@ -54,7 +54,8 @@ namespace BikeShop.Shop.Application.Implemetations
             ent.BillsTotal = billsTotal / 100 * prms.ShopPercent;
 
             ent.Hours = hours;
-            ent.Rate = (decimal.Parse(hours.TotalHours.ToString())) * prms.Rate;
+            ent.TotalHours = (decimal.Parse(hours.TotalHours.ToString()));
+            ent.Rate = ent.TotalHours * prms.Rate;
 
             ent.UserId = UserId;
 

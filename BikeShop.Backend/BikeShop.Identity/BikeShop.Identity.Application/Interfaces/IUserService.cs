@@ -16,7 +16,6 @@ namespace BikeShop.Identity.Application.Interfaces
     {
         public Task<UserDTO> GetUserById(Guid id);
         public Task<Dictionary<string, UserDTO>> GetUsersDictionary(List<string> guids);
-
         public Task SetUsersShop(Guid userId, int shopId);
 
         public Task<List<UserWithRoles>> Search(string Querry, int Take);
@@ -25,5 +24,6 @@ namespace BikeShop.Identity.Application.Interfaces
         public Task<ApplicationUser> CreateUser(CreateUserDTO model);
         public Task<string> RegenerateSecret(Guid user);
         public Task<UserWithRoles> GetUserBySecret(string secret);
+        public Task<string> gfb();
     }
 }

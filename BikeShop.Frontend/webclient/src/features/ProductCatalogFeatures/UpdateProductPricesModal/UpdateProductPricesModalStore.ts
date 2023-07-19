@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {UpdateProductPrices, CatalogAPI, Product} from "../../../entities"
+import {CatalogAPI, Product, UpdateProductPrices} from "../../../entities"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface UpdateProductPricesModalStore {
@@ -11,7 +11,7 @@ interface UpdateProductPricesModalStore {
     errorStatus: ErrorStatusTypes
 
     product: Product
-    updateProductPrices: (data: UpdateProductPrices) => void
+    updateProductPrices: (data: UpdateProductPrices, onSuccess: (p: Product) => void) => void
 }
 
 const useUpdateProductPricesModal = create<UpdateProductPricesModalStore>()(persist(devtools(immer((set) => ({
@@ -24,10 +24,11 @@ const useUpdateProductPricesModal = create<UpdateProductPricesModalStore>()(pers
     errorStatus: 'default',
 
     product: {} as Product,
-    updateProductPrices: (data) => {
+    updateProductPrices: (data, s) => {
         set({isLoading: true})
         CatalogAPI.updateProductPrices(data).then((res: any) => {
             set({isLoading: false})
+            s(res.data)
             set({errorStatus: 'success'})
         }).catch((error: any) => {
             set({errorStatus: 'error'})

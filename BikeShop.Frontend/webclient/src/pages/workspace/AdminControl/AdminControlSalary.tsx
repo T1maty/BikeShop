@@ -125,8 +125,7 @@ export const AdminControlSalary = () => {
                         </div>
                     </div>
                     <div className={s.stuffProfileWork_hours}>
-                        {/*<div>Смен: 20</div>*/}
-                        <div>Часов: {calculateData?.hours}</div>
+                        <div>Часов: {calculateData?.totalHours}</div>
                         <div>Начало: {formatDate(calculateData?.periodStart ? calculateData?.periodStart : "")}</div>
                         <div>Конец: {formatDate(calculateData?.periodFinish ? calculateData?.periodFinish : "")}</div>
                         <br/>

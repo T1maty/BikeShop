@@ -10,7 +10,9 @@ export const BarcodeScannerListenerProvider = memo((props: props) => {
     const sb = useBarcode(s => s.setBarcode)
 
     const h = (event: KeyboardEvent) => {
-        sb(event.key, props.onBarcodeRead)
+        //console.log(event.key, event.key.length)
+        if (event.key.length === 1 || event.key === 'Enter')
+            sb(event.key, props.onBarcodeRead)
     }
 
     useEffect(() => {

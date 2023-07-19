@@ -34,8 +34,7 @@ export const StuffProfileWork: React.FC<StuffProfileWorkProps> = ({user}) => {
                 Отработка
             </div>
             <div className={s.stuffProfileWork_hours}>
-                <div>Смен:</div>
-                <div>Часов: {calculateData?.hours}</div>
+                <div>Часов: {calculateData?.totalHours}</div>
             </div>
 
             <div className={s.stuffProfileWork_salary}>
@@ -43,9 +42,9 @@ export const StuffProfileWork: React.FC<StuffProfileWorkProps> = ({user}) => {
                     <legend>Зарплата на текущий момент</legend>
                     <div className={s.salary_info}>
                         <div className={s.salary_info1}>
-                            <div>Ремонты: {r(calculateData ? calculateData.serviceWorks * fbts.c : 0) + fbts.s}</div>
+                            <div>Ремонты: {r(calculateData ? calculateData.workTotal * fbts.c : 0) + fbts.s}</div>
                             <div>Продажи
-                                ремонтов: {r(calculateData ? calculateData.seviceProducts * fbts.c : 0) + fbts.s}</div>
+                                ремонтов: {r(calculateData ? calculateData.productsTotal * fbts.c : 0) + fbts.s}</div>
                             <div>Продажи: {r(calculateData ? calculateData.billsTotal * fbts.c : 0) + fbts.s}</div>
                             <div>Ставка: {r(calculateData ? calculateData.rate * fbts.c : 0) + fbts.s}</div>
                         </div>

@@ -124,7 +124,8 @@ export const MainPage = () => {
             ShiftAPI.close(LocalStorage.userId()!)
                 .then(() => {
                     getUserShiftStatus()
-
+                    logout()
+                    navigate(BikeShopPaths.COMMON.LOGIN)
                     setIsLoading(false)
                 })
         }

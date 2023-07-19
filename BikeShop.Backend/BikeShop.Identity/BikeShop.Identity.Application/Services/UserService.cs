@@ -8,8 +8,10 @@ using BikeShop.Identity.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -217,6 +219,30 @@ namespace BikeShop.Identity.Application.Services
             var roles = await _userManager.GetRolesAsync(user);
 
             return new UserWithRoles { Roles = (List<string>)roles, User = user };
+        }
+
+        public async Task<string> gfb()
+        {
+            string connectionString = "Server=zf452963.mysql.tools;Database=zf452963_db;Uid=zf452963_db;Pwd=Q9kUMTVr;";
+            MySqlConnection dbConnection = new MySqlConnection(connectionString);
+
+            MySqlCommand command = new MySqlCommand("SELECT telephone FROM clients", dbConnection);
+
+            dbConnection.Open();
+
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            string response = "";
+
+            foreach (DataRow row in dt.Rows)
+            {
+                response += (row[0].ToString() + ", ");
+            }
+
+            return response;
         }
     }
     }
