@@ -14,4 +14,7 @@ public class ApplicationUser : IdentityUser
     public string Bike { get; set; } = string.Empty;
     public decimal Balance { get; set; }
     public decimal CreditLimit { get; set; }
+
+    public DateTime Created { get; set; } = DateTime.Now;
+    public DateTime Updated { get; set; } = DateTime.Now;
 }

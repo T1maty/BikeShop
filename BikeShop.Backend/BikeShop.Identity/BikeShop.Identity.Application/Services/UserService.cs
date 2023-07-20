@@ -246,14 +246,14 @@ namespace BikeShop.Identity.Application.Services
                 var fio = row[1].ToString().Trim().Split(" ");
                 if(fio.Length == 1)
                 {
-                    userData = new CreateUserDTO { FirstName = fio[0], Phone = row[0].ToString() };
+                    userData = new CreateUserDTO { FirstName = fio[0], Phone = "+38"+row[0].ToString() };
                 }else if(fio.Length == 2) 
                 {
-                    userData = new CreateUserDTO { FirstName = fio[0], LastName = fio[1], Phone = row[0].ToString() };
+                    userData = new CreateUserDTO { FirstName = fio[0], LastName = fio[1], Phone = "+38" + row[0].ToString() };
                 }
                 else
                 {
-                    userData = new CreateUserDTO { LastName = fio[0], FirstName = fio[1], Patronymic = fio[2], Phone = row[0].ToString() };
+                    userData = new CreateUserDTO { LastName = fio[0], FirstName = fio[1], Patronymic = fio[2], Phone = "+38" + row[0].ToString() };
                 }
 
                 try
