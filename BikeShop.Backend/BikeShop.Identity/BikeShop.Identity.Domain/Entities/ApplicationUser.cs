@@ -10,8 +10,8 @@ public class ApplicationUser : IdentityUser
     public string? Patronymic { get; set; }
     public int ShopId { get; set; }
     public string Secret { get; set; } = string.Empty;
-    
+
+    public string Bike { get; set; } = string.Empty;
     public decimal Balance { get; set; }
-    public int BalanceCurrencyId { get; set; }
     public decimal CreditLimit { get; set; }
 }

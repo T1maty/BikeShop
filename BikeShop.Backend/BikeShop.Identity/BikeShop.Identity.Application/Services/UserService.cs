@@ -123,7 +123,7 @@ namespace BikeShop.Identity.Application.Services
             await _userManager.AddToRoleAsync(await _userManager.FindByIdAsync(userId.ToString()), Role);
         }
 
-        public async Task<ApplicationUser> CreateUser(CreateUserDTO model)
+        public async Task<ApplicationUser> CreateUser(CreateUserDTO model, string bike = "")
         {
             var existingUserByPhone = await _userManager.FindByNameAsync(model.Phone);
             if (existingUserByPhone is not null)
@@ -138,6 +138,7 @@ namespace BikeShop.Identity.Application.Services
             // Создаю пользователя из запроса
             var user = new ApplicationUser
             {
+                Bike = bike,
                 UserName = model.Phone,
                 PhoneNumber = model.Phone,
                 FirstName = model.FirstName,
@@ -226,7 +227,7 @@ namespace BikeShop.Identity.Application.Services
             string connectionString = "Server=zf452963.mysql.tools;Database=zf452963_db;Uid=zf452963_db;Pwd=Q9kUMTVr;";
             MySqlConnection dbConnection = new MySqlConnection(connectionString);
 
-            MySqlCommand command = new MySqlCommand("SELECT telephone FROM clients", dbConnection);
+            MySqlCommand command = new MySqlCommand("SELECT telephone, name, bike FROM clients", dbConnection);
 
             dbConnection.Open();
 
@@ -237,12 +238,37 @@ namespace BikeShop.Identity.Application.Services
 
             string response = "";
 
+            int success = 0, fail = 0;
+
             foreach (DataRow row in dt.Rows)
             {
-                response += (row[0].ToString() + ", ");
+                CreateUserDTO userData;
+                var fio = row[1].ToString().Trim().Split(" ");
+                if(fio.Length == 1)
+                {
+                    userData = new CreateUserDTO { FirstName = fio[0], Phone = row[0].ToString() };
+                }else if(fio.Length == 2) 
+                {
+                    userData = new CreateUserDTO { FirstName = fio[0], LastName = fio[1], Phone = row[0].ToString() };
+                }
+                else
+                {
+                    userData = new CreateUserDTO { LastName = fio[0], FirstName = fio[1], Patronymic = fio[2], Phone = row[0].ToString() };
+                }
+
+                try
+                {
+                    await CreateUser(userData, row[2].ToString());
+                    success++;
+                }
+                catch (Exception)
+                {
+                    fail++;
+                }
+                
             }
 
-            return response;
+            return $"Success: {success}, Fail: {fail}, Total: {dt.Rows.Count}";
         }
     }
     }
