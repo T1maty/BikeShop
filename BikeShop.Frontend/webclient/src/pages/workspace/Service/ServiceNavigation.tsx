@@ -22,9 +22,14 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
-    const printModal = useService(s => s.printModal)
-    const setPrintModal = useService(s => s.setPrintModal)
+    const printModal = useService(s => s.printModalOut)
+    const setPrintModal = useService(s => s.setPrintModalOut)
+    const trigger = useService(s => s.triggerOut)
+    const setTrigger = useService(s => s.setTriggerOut)
+
+
     const endService = useService(s => s.endService)
+    const setIsCreating = useService(s => s.setIsCreating)
 
     const [confirm, setConfirm] = useState(false);
     const [payModal, setPayModal] = useState(false);
@@ -55,10 +60,6 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
 
     const updateServiceStatusHandler = (newStatus: ServiceStatus) => {
         updateServiceStatus({id: currentService?.service.id || -1, status: newStatus}, () => {
-            if (newStatus === "Ended") {
-                console.log('statusChanged')
-                setPrintModal(true)
-            }
         })
     }
 
@@ -76,7 +77,12 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                           updateServiceStatusHandlerEnded(r)
                           setPayModal(false)
                       }}/>
-            <PrintModal open={printModal}
+
+
+            <PrintModal open={printModal} trigger={trigger} printAgentName={'WorkshopOut'} finaly={() => {
+                setPrintModal(false)
+                setTrigger(null)
+            }}
                         setOpen={setPrintModal}
                         children={<CheckForServiceWork children={currentService!}/>}
             />
@@ -129,6 +135,8 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                                 disabled={currentService === null || props.children.formState.isDirty}
                                 onClick={() => {
                                     updateServiceStatusHandler('InProcess')
+                                    filterServicesUniversalHandler('InProcess',
+                                        false, true, false)
                                 }}>
                             Начать ремонт
                         </Button>
@@ -139,12 +147,17 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                             <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         updateServiceStatusHandler('WaitingSupply')
+                                        filterServicesUniversalHandler('Waiting',
+                                            true, false, false,
+                                            'WaitingSupply')
                                     }}>
                                 Остановить ремонт
                             </Button>
                             <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         updateServiceStatusHandler('Ready')
+                                        filterServicesUniversalHandler('Ready',
+                                            false, false, true)
                                     }}>
                                 Закончить ремонт
                             </Button>
@@ -157,6 +170,8 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                             <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         updateServiceStatusHandler('InProcess')
+                                        filterServicesUniversalHandler('InProcess',
+                                            false, true, false)
                                     }}>
                                 Продолжить ремонт
                             </Button>

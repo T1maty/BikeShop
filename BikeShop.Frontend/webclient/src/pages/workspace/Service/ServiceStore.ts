@@ -2,6 +2,7 @@ import {create} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
 import {immer} from 'zustand/middleware/immer'
 import {
+    EnumServiceStatus,
     LocalStorage,
     PaymentData,
     ServiceAPI,
@@ -42,13 +43,68 @@ interface ServiceStore {
     selectedNavService: ServiceWithData | null,
     setSelectedNavService: (v: ServiceWithData) => void,
 
-    printModal: boolean
-    setPrintModal: (v: boolean) => void
 
     endService: (id: number, paymentData: PaymentData, onSuccess: () => void) => void
+
+    printModalSticker: boolean
+    setPrintModalSticker: (v: boolean) => void
+    triggerSticker: "agent" | null
+    setTriggerSticker: (v: "agent" | null) => void
+
+    printModalIn: boolean
+    setPrintModalIn: (v: boolean) => void
+    triggerIn: "agent" | null
+    setTriggerIn: (v: "agent" | null) => void
+
+    printModalOut: boolean
+    setPrintModalOut: (v: boolean) => void
+    triggerOut: "agent" | null
+    setTriggerOut: (v: "agent" | null) => void
+
+    printModalOutSmall: boolean
+    setPrintModalOutSmall: (v: boolean) => void
+    triggerOutSmall: "agent" | null
+    setTriggerOutSmall: (v: "agent" | null) => void
 }
 
 const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => ({
+    triggerSticker: null,
+    printModalSticker: false,
+    setTriggerSticker: (v) => {
+        set({triggerSticker: v})
+    },
+    setPrintModalSticker: (v) => {
+        set({printModalSticker: v})
+    },
+
+    triggerIn: null,
+    printModalIn: false,
+    setTriggerIn: (v) => {
+        set({triggerIn: v})
+    },
+    setPrintModalIn: (v) => {
+        set({printModalIn: v})
+    },
+
+    triggerOut: null,
+    printModalOut: false,
+    setTriggerOut: (v) => {
+        set({triggerOut: v})
+    },
+    setPrintModalOut: (v) => {
+        set({printModalOut: v})
+    },
+
+    triggerOutSmall: null,
+    printModalOutSmall: false,
+    setTriggerOutSmall: (v) => {
+        set({triggerOutSmall: v})
+    },
+    setPrintModalOutSmall: (v) => {
+        set({printModalOutSmall: v})
+    },
+
+
     endService: (id, pd, s) => {
         set({isLoading: true})
         ServiceAPI.endService(id, pd.cash, pd.bankCount, pd.card, pd.personalBalance, pd.isFiscal).then((g) => {
@@ -58,6 +114,12 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             })
             get().setServices(newData)
             get().filter()
+            get().setPrintModalOut(true)
+            get().setTriggerOut('agent')
+            setTimeout(() => {
+                get().setPrintModalOutSmall(true)
+                get().setTriggerOutSmall('agent')
+            }, 1000)
             s()
         }).catch(() => {
             set({errorStatus: 'error'})
@@ -66,10 +128,7 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             set({isLoading: false})
         })
     },
-    printModal: false,
-    setPrintModal: (v) => {
-        set({printModal: v})
-    },
+
     errorStatus: 'default',
     isLoading: false,
     setIsLoading: (value) => {
@@ -125,7 +184,7 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
         set(state => {
             state.filteredServices = state.services
                 .filter((item) =>
-                    item.service.status === 'Waiting' || item.service.status === 'WaitingSupply')
+                    item.service.status === get().serviceListStatus)
         })
     },
 
@@ -155,11 +214,16 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             set(state => {
                 state.services.push(res.data)
             })
+            set({serviceListStatus: EnumServiceStatus.Waiting})
             get().filter()
             set({isCreating: false})
             set(state => {
                 state.currentService = state.services[state.services.length - 1]
             })
+
+            get().setPrintModalIn(true)
+            get().setTriggerIn('agent')
+
             onSuccess();
             set({isLoading: false})
         }).catch((error: any) => {
@@ -181,7 +245,6 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
                 } else return (ser)
             })
             set({services: newArchive})
-            set({serviceListStatus: 'Waiting'})
             get().filter()
             set({currentService: res.data})
             onSuccess()

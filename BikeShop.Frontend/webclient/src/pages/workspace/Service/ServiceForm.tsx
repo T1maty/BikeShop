@@ -30,6 +30,15 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const isCreating = useService(s => s.isCreating)
     const setIsCreating = useService(s => s.setIsCreating)
 
+    const setPrintModalIn = useService(s => s.setPrintModalIn)
+    const printModalIn = useService(s => s.printModalIn)
+    const setTriggerIn = useService(s => s.setTriggerIn)
+    const triggerIn = useService(s => s.triggerIn)
+    const setPrintModalSticker = useService(s => s.setPrintModalSticker)
+    const printModalSticker = useService(s => s.printModalSticker)
+    const setTriggerSticker = useService(s => s.setTriggerSticker)
+    const triggerSticker = useService(s => s.triggerSticker)
+
     const masters = useService(s => s.masters)
 
     const currentService = useService(s => s.currentService)
@@ -38,12 +47,10 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const updateService = useService(s => s.updateService)
     const conv = useSelectProduct(s => s.convert)
 
+
     const [openClientModal, setOpenClientModal] = useState(false)
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
-
-    const [printAct, setPrintAct] = useState(false)
-    const [printSticker, setPrintSticker] = useState(false)
 
     const [selectedUserId, setSelectedUserId] = useState('')
 
@@ -69,8 +76,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
             console.log('create IF works, new data =', data)
             addNewService(data, () => {
                 enqueueSnackbar('Ремонт создан', {variant: 'success', autoHideDuration: 3000})
-                setPrintSticker(true)
-                setPrintAct(true)
             })
         }
 
@@ -167,17 +172,26 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     return (
         <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
             <div className={s.service_rightSide}>
-
-                <PrintModal open={printAct}
-                            setOpen={setPrintAct}
-                            children={<CheckForServiceWork children={currentService!}/>}
-                />
-                <PrintModal open={printSticker}
-                            setOpen={setPrintSticker}
-                            children={<ServiceSticker children={currentService!}/>}
-                />
-
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
+
+                    <PrintModal open={printModalIn} trigger={triggerIn} finaly={() => {
+                        setTriggerIn(null)
+                        setPrintModalIn(false)
+                        setPrintModalSticker(true)
+                        setTriggerSticker("agent")
+                    }}
+                                setOpen={setPrintModalIn}
+                                children={<CheckForServiceWork children={currentService!}/>}
+                                printAgentName={"WorkshopIn"}
+                    />
+                    <PrintModal open={printModalSticker} trigger={triggerSticker} finaly={() => {
+                        setTriggerSticker(null)
+                        setPrintModalSticker(false)
+                    }}
+                                setOpen={setPrintModalSticker} printAgentName={"WorkshopSticker"}
+                                children={<ServiceSticker children={currentService!}/>}
+                    />
+
                     <ControlledCustomInput name={'name'}
                                            placeholder={'Техника'}
                                            control={formControl}
