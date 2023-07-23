@@ -40,6 +40,7 @@ public class ServiceService : IServiceService
         if (users.TryGetValue(service.UserUpdatedId.ToString(), out user))
         {
             service.UserFIO = "";
+            service.UserPhone = user.phoneNumber;
             if (user.lastName != null) service.UserFIO += (user.lastName + " ");
             if (user.firstName != null) service.UserFIO += (user.firstName + " ");
             if (user.patronymic != null) service.UserFIO += (user.patronymic + " ");
@@ -49,6 +50,7 @@ public class ServiceService : IServiceService
         if (users.TryGetValue(service.ClientId.ToString(), out client))
         {
             service.ClientFIO = "";
+            service.ClientPhone = client.phoneNumber;
             if (client.lastName != null) service.ClientFIO += (client.lastName + " ");
             if (client.firstName != null) service.ClientFIO += (client.firstName + " ");
             if (client.patronymic != null) service.ClientFIO += (client.patronymic + " ");
@@ -58,6 +60,7 @@ public class ServiceService : IServiceService
         if (users.TryGetValue(service.UserMasterId.ToString(), out master))
         {
             service.MasterFIO = "";
+            service.MasterPhone = master.phoneNumber;
             if (master.lastName != null) service.MasterFIO += (master.lastName + " ");
             if (master.firstName != null) service.MasterFIO += (master.firstName + " ");
             if (master.patronymic != null) service.MasterFIO += (master.patronymic + " ");

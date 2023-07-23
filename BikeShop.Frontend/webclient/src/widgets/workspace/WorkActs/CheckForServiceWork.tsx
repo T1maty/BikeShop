@@ -26,7 +26,7 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                 <br/>
                 <div className={s.workAct_date}>
                     <div className={s.date_title}>
-                        Чек №{props.children.service.id}
+                        Акт виконаних робіт №{props.children.service.id}
                     </div>
                     <div className={s.date_date}>
                         {formatDate(props.children.service.createdAt)}
@@ -34,7 +34,7 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                 </div>
                 <div className={s.workAct_title}>
                     <div className={s.title_title}>
-                        Ремонтируемая техника:
+                        Ремонтуєма техніка:
                     </div>
                     <div className={s.title_info}>
                         {props.children.service.name}
@@ -47,10 +47,10 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th style={{width: '220px'}}>Название</th>
-                                        <th style={{width: '50px'}}>Цена</th>
+                                        <th style={{width: '220px'}}>Назва</th>
+                                        <th style={{width: '50px'}}>Ціна</th>
                                         <th style={{width: '34px'}}>Шт.</th>
-                                        <th style={{width: '55px'}}>Итого</th>
+                                        <th style={{width: '55px'}}>Разом</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -116,10 +116,10 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th style={{width: '220px'}}>Название</th>
-                                        <th style={{width: '50px'}}>Цена</th>
+                                        <th style={{width: '220px'}}>Назва</th>
+                                        <th style={{width: '50px'}}>Ціна</th>
                                         <th style={{width: '34px'}}>Шт.</th>
-                                        <th style={{width: '55px'}}>Итого</th>
+                                        <th style={{width: '55px'}}>Разом</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -147,12 +147,12 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                                 </table>
                             </div>
                             <div className={s.works_result}>
-                                <div>Скидка: <span
+                                <div>Знижка: <span
                                     style={{fontWeight: 'bold'}}>
                                         {r(props.children.service.discountProduct * fbts.c) + fbts.s}
                                     </span>
                                 </div>
-                                <div>Всего товаров: <span
+                                <div>Всього товару: <span
                                     style={{fontWeight: 'bold'}}>
                                         {r(props.children.service.totalProduct * fbts.c) + fbts.s}
                                     </span>
@@ -165,12 +165,12 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                     {
                         props.children.service.discount > 0 ?
                             <>
-                                <div>Сумма без скидки: <span
+                                <div>Разом без знижки: <span
                                     style={{fontWeight: 'bold'}}>
                                         {r(props.children.service.total - props.children.service.discount * fbts.c) + fbts.s}
                                     </span>
                                 </div>
-                                <div>Скидка: <span
+                                <div>Знижка: <span
                                     style={{fontWeight: 'bold'}}>
                                         {r(props.children.service.discount * fbts.c) + fbts.s}
                                     </span>
@@ -179,20 +179,16 @@ export const CheckForServiceWork = (props: { children: ServiceWithData }) => {
                     }
                 </div>
                 <div className={s.workAct_result}>
-                    К оплате: {r(props.children.service.total * fbts.c) + fbts.s}
+                    До сплати: {r(props.children.service.total * fbts.c) + fbts.s}
                 </div>
 
-                <div className={s.agreement_policy}>
-                    Підпис замовника підтверджує надання послуг в повному обсяці та відсутніть притензій.
-                </div>
                 <div className={s.shop_signature}>
-                    <div style={{fontWeight: 'bold'}}>Подпись сотрудника</div>
-                    <div>{props.children.service.userFIO}</div>
-                </div>
-                <hr color={'black'}/>
-                <div className={s.client_signature}>
-                    <div style={{fontWeight: 'bold'}}>Подпись клиента</div>
-                    <div>{props.children.service.clientFIO}</div>
+                    <div>Ваш майстер: {props.children.service.masterFIO}</div>
+                    <br/>
+                    <br/>
+                    <div style={{fontWeight: 'bold'}}>Підпис співробітника</div>
+                    <hr color={'black'}/>
+                    <div>Видав: {props.children.service.userFIO}</div>
                 </div>
 
             </div>

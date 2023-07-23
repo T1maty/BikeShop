@@ -2,58 +2,64 @@
 @import '../../../app/styles/variables/variables';
 
 .workAct_wrapper {
-    @include workActWrapperBlock;
+  @include workActWrapperBlock;
 
-    .workAct_mainBox {
-        @include workActMainBlock;
+  .workAct_mainBox {
+    @include workActMainBlock;
 
-        @include workActDateBlock;
+    @include workActDateBlock;
 
-        .workAct_title {
-            line-height: $minLineHeight;
+    .workAct_title {
+      line-height: $minLineHeight;
 
-            .title_title {
-                font-weight: bold;
-            }
+      .title_title {
+        font-weight: bold;
+      }
 
-            .title_info {
+      .title_info {
 
-            }
-        }
-
-        .client_info {
-            line-height: $minLineHeight;
-
-            .info_title {
-                font-weight: bold;
-            }
-            .info_content {
-
-            }
-        }
-        .agreement_policy {
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-            padding: 10px 0;
-            margin-bottom: 25px;
-        }
-        .shop_signature {
-            :first-child {
-                border-bottom: 1px solid black;
-                padding-bottom: 5px;
-            }
-            :last-child {
-                padding-top: 5px;
-            }
-        }
-        .client_signature {
-            :first-child {
-                border-bottom: 1px solid black;
-                padding-bottom: 5px;
-            }
-            :last-child {
-                padding-top: 5px;
-            }
-        }
+      }
     }
+
+    .client_info {
+      line-height: $minLineHeight;
+
+      .info_title {
+        font-weight: bold;
+      }
+
+      .info_content {
+
+      }
+    }
+
+    .agreement_policy {
+      border-top: 1px solid black;
+
+      padding: 10px 0;
+      margin-bottom: 25px;
+    }
+
+    .shop_signature {
+      :first-child {
+        border-bottom: 1px solid black;
+        padding-bottom: 5px;
+      }
+
+      :last-child {
+        padding-top: 5px;
+      }
+    }
+
+    .client_signature {
+      :first-child {
+        border-bottom: 1px solid black;
+        padding-bottom: 5px;
+      }
+
+      :last-child {
+        padding-top: 5px;
+      }
+    }
+  }
 }

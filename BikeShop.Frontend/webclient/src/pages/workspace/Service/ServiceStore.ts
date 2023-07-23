@@ -65,9 +65,16 @@ interface ServiceStore {
     setPrintModalOutSmall: (v: boolean) => void
     triggerOutSmall: "agent" | null
     setTriggerOutSmall: (v: "agent" | null) => void
+
+    isPrinting: boolean
+    setIsPrinting: (v: boolean) => void
 }
 
 const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => ({
+    isPrinting: false,
+    setIsPrinting: (v) => {
+        set({isPrinting: v})
+    },
     triggerSticker: null,
     printModalSticker: false,
     setTriggerSticker: (v) => {
@@ -114,12 +121,12 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             })
             get().setServices(newData)
             get().filter()
-            get().setPrintModalOut(true)
-            get().setTriggerOut('agent')
-            setTimeout(() => {
-                get().setPrintModalOutSmall(true)
-                get().setTriggerOutSmall('agent')
-            }, 1000)
+
+            if (get().isPrinting) {
+                get().setPrintModalOut(true)
+                get().setTriggerOut('agent')
+            }
+
             s()
         }).catch(() => {
             set({errorStatus: 'error'})
@@ -220,9 +227,10 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             set(state => {
                 state.currentService = state.services[state.services.length - 1]
             })
-
-            get().setPrintModalIn(true)
-            get().setTriggerIn('agent')
+            if (get().isPrinting) {
+                get().setPrintModalIn(true)
+                get().setTriggerIn('agent')
+            }
 
             onSuccess();
             set({isLoading: false})

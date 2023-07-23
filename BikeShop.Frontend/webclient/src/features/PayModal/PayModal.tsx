@@ -9,13 +9,14 @@ interface PayModalProps {
     setOpen: (value: boolean) => void
     user: User | null
     summ: number
-    result: (value: PaymentData) => void
+    result: (value: PaymentData, isPrint: boolean) => void
 }
 
 export const PayModal = (props: PayModalProps) => {
 
     const [cash, setCash] = useState<number>()
     const [isFiscal, setIsFiscal] = useState<boolean>(true)
+    const [isPrint, setIsPrint] = useState<boolean>(true)
 
     const r = useCurrency(f => f.roundUp)
 
@@ -77,6 +78,9 @@ export const PayModal = (props: PayModalProps) => {
                         <CustomCheckbox checked={isFiscal} onChangeChecked={setIsFiscal} children={'Фискализация'}/>
                         <br/>
                         <br/>
+                        <CustomCheckbox checked={isPrint} onChangeChecked={setIsPrint} children={'Печать'}/>
+                        <br/>
+                        <br/>
                         <Button onClick={() => {
                             props.result({
                                 isFiscal: isFiscal,
@@ -84,7 +88,7 @@ export const PayModal = (props: PayModalProps) => {
                                 card: props.summ,
                                 bankCount: 0,
                                 personalBalance: 0
-                            })
+                            }, isPrint)
                             props.setOpen(false)
                         }}>
                             Использовать терминал
@@ -97,7 +101,7 @@ export const PayModal = (props: PayModalProps) => {
                                 card: 0,
                                 bankCount: 0,
                                 personalBalance: 0
-                            })
+                            }, isPrint)
                             props.setOpen(false)
                         }}
                         >

@@ -21,16 +21,19 @@ export const ServiceIncomeInvoice = (props: { children: ServiceWithData }) => {
 
                 <div className={s.workAct_date}>
                     <div className={s.date_title}>
+                        Акт прийому техніки до майстерні
+                    </div>
+                    <div className={s.date_title}>
                         № {props.children.service.id}
                     </div>
                     <div className={s.date_date}>
-                        {formatDate(props.children.service.createdAt)}
+                        від {formatDate(props.children.service.createdAt)}
                     </div>
                 </div>
 
                 <div className={s.workAct_title}>
                     <div className={s.title_title}>
-                        Техника, передаваемая на ремонт:
+                        На ремонт до майстерні передано:
                     </div>
                     <div className={s.title_info}>
                         {props.children.service.name}
@@ -39,21 +42,24 @@ export const ServiceIncomeInvoice = (props: { children: ServiceWithData }) => {
 
                 <div className={s.client_info}>
                     <div className={s.info_title}>
-                        Пожелания заказчика:
+                        Побажання замовника:
                     </div>
                     <div className={s.info_content}>
                         {props.children.service.clientDescription}
                     </div>
                 </div>
                 <div className={s.agreement_policy}>
-                    Підтверджую передачу техніки до майстерні.
+                    Цей акт підтверджує на передачу зазначеної техніки клієнта на ремонт до майстерні, для надання
+                    послуг з ремонту та обслуговування.
                 </div>
                 <div className={s.shop_signature}>
-                    <div style={{fontWeight: 'bold'}}>Подпись сотрудника</div>
+                    <div style={{fontWeight: 'bold'}}>Підпис співробітника</div>
                     <div>{props.children.service.userFIO}</div>
                 </div>
+                <br/>
+                <br/>
                 <div className={s.client_signature}>
-                    <div style={{fontWeight: 'bold'}}>Подпись клиента</div>
+                    <div style={{fontWeight: 'bold'}}>Підпис клієнта</div>
                     <div>{props.children.service.clientFIO}</div>
                 </div>
             </div>

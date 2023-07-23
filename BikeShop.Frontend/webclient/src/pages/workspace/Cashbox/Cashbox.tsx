@@ -49,15 +49,17 @@ export const Cashbox = () => {
         setOpenClientModal(false)
     }
 
-    const paymentResultHandler = (value: PaymentData) => {
+    const paymentResultHandler = (value: PaymentData, ip: boolean) => {
 
         paymentHandler(value, (r) => {
             enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 3000})
             setRes(r)
             console.log(r)
 
-            setOpenPrint(true)
-            setPrintTrigger("agent")
+            if (ip) {
+                setOpenPrint(true)
+                setPrintTrigger("agent")
+            }
 
             setData([])
         })

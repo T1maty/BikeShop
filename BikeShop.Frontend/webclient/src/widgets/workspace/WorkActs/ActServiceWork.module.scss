@@ -2,36 +2,42 @@
 @import '../../../app/styles/variables/variables';
 
 .workAct_wrapper {
-    @include workActWrapperBlock;
+  @include workActWrapperBlock;
 
-    .workAct_mainBox {
-        @include workActMainBlock;
+  .workAct_mainBox {
+    @include workActMainBlock;
 
-        .workAct_works {
-            @include workActProductBlock;
-        }
-
-        .workAct_products {
-            @include workActProductBlock;
-        }
-
-        .workAct_discount {
-            margin-top: $defaultLargeMargin;
-            padding-top: $defaultSmallMargin;
-            //border-top: 1px solid black;
-            line-height: $minLineHeight;
-            text-align: right;
-            width: 100%;
-        }
-
-        .workAct_result {
-            width: 100%;
-            text-align: center;
-            font-weight: bold;
-            font-size: 24px;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-            padding: $defaultSmallMargin 0;
-        }
+    .workAct_works {
+      @include workActProductBlock;
     }
+
+    .workAct_products {
+      @include workActProductBlock;
+    }
+
+    .workAct_discount {
+      margin-top: $defaultLargeMargin;
+      padding-top: $defaultSmallMargin;
+      //border-top: 1px solid black;
+      line-height: $minLineHeight;
+      text-align: right;
+      width: 100%;
+    }
+
+    .workAct_result {
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: 24px;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      padding: $defaultSmallMargin 0;
+    }
+
+    .title {
+      text-align: center;
+      font-weight: bolder;
+      font-size: larger;
+    }
+  }
 }

@@ -27,7 +27,7 @@ export const ServiceNavigationContext = (props: p) => {
             }
         },
         {
-            name: 'Смета',
+            name: 'Акт выдачи внутренний',
             click: () => {
                 sv3(true)
 
@@ -53,7 +53,8 @@ export const ServiceNavigationContext = (props: p) => {
                         printAgentName={'WorkshopIn'}/>
             <PrintModal open={v2} setOpen={sv2} children={<ServiceSticker children={selected!}/>}
                         printAgentName={'WorkshopSticker'}/>
-            <PrintModal open={v3} setOpen={sv3} children={<ActServiceWork children={selected!}/>}/>
+            <PrintModal open={v3} setOpen={sv3} children={<ActServiceWork children={selected!}/>}
+                        printAgentName={"WorkshopOutSmall"}/>
             <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={selected!}/>}
                         printAgentName={'WorkshopOut'}/>
 
