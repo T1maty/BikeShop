@@ -129,9 +129,9 @@ export const AdminControlSalary = () => {
                         <div>Начало: {formatDate(calculateData?.periodStart ? calculateData?.periodStart : "")}</div>
                         <div>Конец: {formatDate(calculateData?.periodFinish ? calculateData?.periodFinish : "")}</div>
                         <br/>
-                        <div>Чеки: {calculateData?.bills}</div>
-                        <div>Услуги сервисов шт.: {calculateData?.serviceWorks}</div>
-                        <div>Товары сервисов шт.: {calculateData?.seviceProducts}</div>
+                        <div>Чеки: {calculateData?.bills.length}</div>
+                        <div>Услуги сервисов шт.: {calculateData?.serviceWorks.length}</div>
+                        <div>Товары сервисов шт.: {calculateData?.seviceProducts.length}</div>
                     </div>
 
                     <div className={s.stuffProfileWork_salary}>

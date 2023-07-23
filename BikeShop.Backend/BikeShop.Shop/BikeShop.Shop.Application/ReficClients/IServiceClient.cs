@@ -11,9 +11,9 @@ namespace BikeShop.Shop.Application.ReficClients
     public interface IServiceClient
     {
         [Get("/service/getworksbymaster")]
-        public Task<List<ServiceWork>> GetWorksByMaster(Guid userId);
+        public Task<List<ServiceWork>> GetWorksByMaster(Guid userId, DateTime Start, DateTime Finish);
 
         [Get("/service/getproductsbymaster")]
-        public Task<List<ServiceProduct>> GetProductsByMaster(Guid userId);
+        public Task<List<ServiceProduct>> GetProductsByMaster(Guid userId, DateTime Start, DateTime Finish);
     }
 }

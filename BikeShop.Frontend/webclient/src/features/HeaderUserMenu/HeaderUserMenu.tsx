@@ -57,7 +57,7 @@ export const HeaderUserMenu: React.FC<HeaderUserMenuProps> = ({user}) => {
                      setIsComponentVisible(!isComponentVisible)
                  }}
             >
-                {user?.lastName === null ? 'Новый ' : user.lastName} {user?.firstName === null ? 'сотрудник' : user.firstName}
+                {user?.lastName === undefined ? 'Новый ' : user.lastName} {user?.firstName === undefined ? 'сотрудник' : user.firstName}
             </div>
             {
                 isComponentVisible ?

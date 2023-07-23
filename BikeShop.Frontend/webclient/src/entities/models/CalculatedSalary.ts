@@ -1,3 +1,7 @@
+import {BillWithProducts} from "./BillWithProducts";
+import {ServiceWork} from "../entities/Service/ServiceWork";
+import {ServiceProduct} from "../entities/Service/ServiceProduct";
+
 export interface CalculatedSalary {
     userId: string,
     periodStart: string,
@@ -8,7 +12,7 @@ export interface CalculatedSalary {
     productsTotal: number,
     totalHours: number,
     workTotal: number,
-    bills: number,
-    serviceWorks: number,
-    seviceProducts: number
+    bills: BillWithProducts[],
+    serviceWorks: ServiceWork[],
+    seviceProducts: ServiceProduct[]
 }

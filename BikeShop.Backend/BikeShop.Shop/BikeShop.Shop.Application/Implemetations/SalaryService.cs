@@ -34,8 +34,8 @@ namespace BikeShop.Shop.Application.Implemetations
             var prms = await Get(UserId);
             var hours = await _shiftService.GetHours(UserId, Start, Finish);
 
-            var prods = await _serviceClient.GetProductsByMaster(UserId);
-            var works = await _serviceClient.GetWorksByMaster(UserId);
+            var prods = await _serviceClient.GetProductsByMaster(UserId, Start, Finish);
+            var works = await _serviceClient.GetWorksByMaster(UserId, Start, Finish);
             var bills = await _paymentClient.GetBillsByUser(UserId, Start, Finish);
 
             ent.ServiceWorks = works;

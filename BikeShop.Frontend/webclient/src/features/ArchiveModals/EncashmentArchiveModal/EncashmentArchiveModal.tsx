@@ -89,7 +89,7 @@ export const EncashmentArchiveModal = () => {
                                                     №{el.id}
                                                 </div>
                                                 <div className={s.item_contentTop_number}>
-                                                    Иванов Василий
+                                                    {el.userCreated}
                                                 </div>
                                                 <div>
                                                     {el.description}

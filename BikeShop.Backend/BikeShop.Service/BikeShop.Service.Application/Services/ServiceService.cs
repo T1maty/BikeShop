@@ -160,9 +160,9 @@ public class ServiceService : IServiceService
         return r;
     }
 
-    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid userId)
+    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid userId, DateTime Start, DateTime Finish)
     {
-        var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Select(n=>n.Id);
+        var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Where(n=>n.UpdatedAt>Start).Where(n=>n.UpdatedAt<Finish).Select(n=>n.Id);
         var prods = _context.ServiceProducts.Where(n => services.Contains(n.ServiceId)).Where(n=>n.UserId == userId).Where(n=>n.Enabled == true);
         return await prods.ToListAsync();
     }
@@ -254,9 +254,9 @@ public class ServiceService : IServiceService
         return res;
     }
 
-    public async Task<List<ServiceWork>> GetWorksByMaster(Guid userId)
+    public async Task<List<ServiceWork>> GetWorksByMaster(Guid userId, DateTime Start, DateTime Finish)
     {
-        var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Select(n => n.Id);
+        var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Where(n => n.UpdatedAt > Start).Where(n => n.UpdatedAt < Finish).Select(n => n.Id);
         var works = _context.ServiceWorks.Where(n => services.Contains(n.ServiceId)).Where(n => n.UserId == userId).Where(n => n.Enabled == true);
         return await works.ToListAsync();
     }
@@ -439,6 +439,7 @@ public class ServiceService : IServiceService
         if (service.Status == "Ready")
         {
             service.Status = "Ended";
+            service.UpdatedAt = DateTime.Now;
             var storageId = await _shopClient.GetStorageId(service.ShopId);
             var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
             await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
