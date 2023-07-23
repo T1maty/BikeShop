@@ -27,8 +27,8 @@ export const AdminControlSalary = () => {
     useEffect(() => {
         if (calculateData != null) {
             let sum = 0
-            sum += calculateData.serviceWorks
-            sum += calculateData.seviceProducts
+            sum += calculateData.workTotal
+            sum += calculateData.productsTotal
             sum += calculateData.billsTotal
             sum += calculateData.rate
             setSum(sum)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BikeShop.Payments.Domain.DTO.Responses;
+using BikeShop.Service.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +23,9 @@ namespace BikeShop.Shop.Domain.DTO.Salary
         public decimal ProductsTotal { get; set; }
         public decimal WorkTotal { get; set; }
 
-        public int Bills { get; set; }
-        public int ServiceWorks { get; set; }
-        public int SeviceProducts { get; set; }
+        public List<BillWithProducts> Bills { get; set; }
+        public List<ServiceWork> ServiceWorks { get; set; }
+        public List<ServiceProduct> SeviceProducts { get; set; }
 
         
     }

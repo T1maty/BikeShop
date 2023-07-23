@@ -38,9 +38,9 @@ namespace BikeShop.Shop.Application.Implemetations
             var works = await _serviceClient.GetWorksByMaster(UserId);
             var bills = await _paymentClient.GetBillsByUser(UserId, Start, Finish);
 
-            ent.ServiceWorks = works.Count;
-            ent.SeviceProducts = prods.Count;
-            ent.Bills = bills.Count;
+            ent.ServiceWorks = works;
+            ent.SeviceProducts = prods;
+            ent.Bills = bills;
 
             ent.PeriodStart = Start;
             ent.PeriodFinish = Finish;
