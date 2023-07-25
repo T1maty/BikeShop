@@ -9,5 +9,7 @@ public interface IAuthDbContext
     DbSet<RefreshSession> RefreshSessions { get; set; }
     public DbSet<RoleGroup> RoleGroups { get; set; }
     public DbSet<RoleGroupBind> RoleGroupBinds { get; set; }
+    public DbSet<UserBalanceActionHistory> UserBalanceActionHistories { get; set; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
