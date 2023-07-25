@@ -255,6 +255,21 @@
       ],
       "SwaggerKey": "payments"
     },
+	{
+      "UpstreamPathTemplate": "/api/financialinteraction/replenishuserbalance",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/financialinteraction/replenishuserbalance",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 
 
 {
@@ -1415,6 +1430,26 @@
       ],
       "SwaggerKey": "identity"
     },
+	
+	
+	
+	{
+      "UpstreamPathTemplate": "/api/balance/getusers",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/balance/getusers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	
+	
 	
 	{
       "UpstreamPathTemplate": "/api/role/getall",

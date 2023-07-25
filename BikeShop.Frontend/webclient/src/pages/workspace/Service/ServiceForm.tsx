@@ -182,7 +182,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                     }}
                                 setOpen={setPrintModalIn}
                                 children={<CheckForServiceWork children={currentService!}/>}
-                                printAgentName={"WorkshopIn"}
+                                printAgentName={"WorkshopIn"} copies={2}
                     />
                     <PrintModal open={printModalSticker} trigger={triggerSticker} finaly={() => {
                         setTriggerSticker(null)

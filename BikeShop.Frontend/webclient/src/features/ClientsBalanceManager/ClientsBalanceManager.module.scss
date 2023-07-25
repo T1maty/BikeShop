@@ -1,0 +1,30 @@
+@import '../../app/styles/variables/mixins';
+@import '../../app/styles/variables/variables.scss';
+
+.wrapper {
+  @include wrapperMainBlock;
+  @include flexOnlyBetween;
+  gap: $defaultLargeMargin;
+
+  .left {
+    background-color: $themeColorDark;
+    border-radius: $largeBorderRadius;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 70%;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .right {
+    background-color: $themeColorDark;
+    border-radius: $largeBorderRadius;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 30%;
+    padding: 20px;
+    gap: 20px;
+  }
+}

@@ -28,14 +28,16 @@ namespace BikeShop.Payments.Application.Services
         private readonly IPaymentService _paymentService;
         private readonly IProductClient _productClient;
         private readonly IShopClient _shopClient;
+        private readonly IIdentityClient _identityClient;
 
-        public FinancialInteractionService(ICheckboxClient checkbox, IApplicationDbContext context, IPaymentService paymentService, IProductClient productClient, IShopClient shopClient)
+        public FinancialInteractionService(ICheckboxClient checkbox, IApplicationDbContext context, IPaymentService paymentService, IProductClient productClient, IShopClient shopClient, IIdentityClient identityClient)
         {
             _checkbox = checkbox;
             _context = context;
             _paymentService = paymentService;
             _productClient = productClient;
             _shopClient = shopClient;
+            _identityClient = identityClient;
         }
 
         public async Task<List<BillWithProducts>> GetBillsByShop(int ShopId, int Take)
@@ -172,6 +174,13 @@ namespace BikeShop.Payments.Application.Services
             var res = await _checkbox.GerQRCode(new Guid("89a380a7-fbfb-435d-ab85-e8ad0b811ac5"), "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiQVBJIiwianRpIjoiYmY4MWNhNzQtZmY5OS00ZWYwLWE0ZWMtMDBjNWRlZDk4ZTMyIiwic3ViIjoiNTliMWI4OTQtYTY4Mi00MDBiLTk3ZWEtM2EyYmQ1NTllMDY2IiwibmJmIjoxNjg2NjUyNDI1LCJpYXQiOjE2ODY2NTI0MjV9.HSBV0_cS6z1l7aQ4MzyH2eU_CqrRzgJJ9xAv56O1HvE");
             var data = await res.Content.ReadAsByteArrayAsync();
             return data;
+        }
+
+        public async Task<Payment> ReplenishUserBalance(PaymentDTO dto)
+        {
+            var p = new CreatePayment { BankCount = dto.BankCount, Card = dto.Card, Cash = dto.Cash, ClientId = dto.ClientId, CurrencyId = 1, PersonalBalance = dto.PersonalBalance, ShopId = dto.ShopId, UserId = dto.UserId, Target = PaymentTarget.ReplenishBalance, TargetId = 0 };
+            await _identityClient.EditBalance(dto.ClientId, dto.Card + dto.Cash + dto.PersonalBalance + dto.BankCount, true);
+            return await _paymentService.NewPayment(p);
         }
     }
 }

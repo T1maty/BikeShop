@@ -1,7 +1,7 @@
 .wrapper {
   background: white;
   width: 250px;
-  height: 170px;
+  height: 156px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,22 @@
     color: black;
     text-align: center;
     font-size: 14px;
-    padding: 0 5px;
+    margin-top: 3px;
+    max-height: 30px;
+
+    //max-width: 290px;
+    //height: 40px;
+    //white-space: nowrap;
+    //overflow: hidden;
+    //text-overflow: ellipsis;
+  }
+
+  .catalog_key {
+    font-weight: bolder;
+    color: black;
+    text-align: left;
+    font-size: 10px;
+
     max-height: 30px;
 
     //max-width: 290px;

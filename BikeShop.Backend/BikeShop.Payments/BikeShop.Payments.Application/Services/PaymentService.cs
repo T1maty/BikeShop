@@ -1,4 +1,5 @@
 ﻿using BikeShop.Payments.Application.Interfaces;
+using BikeShop.Payments.Application.Refit;
 using BikeShop.Payments.Domain.DTO.Requests;
 using BikeShop.Payments.Domain.Entities;
 using BikeShop.Payments.Domain.Enumerables;
@@ -19,11 +20,13 @@ namespace BikeShop.Payments.Application.Services
     {
         private readonly IApplicationDbContext _context;
         private readonly IShopClient _shopClient;
+        private readonly IIdentityClient _identityClient;
 
-        public PaymentService(IApplicationDbContext context, IShopClient shopClient)
+        public PaymentService(IApplicationDbContext context, IShopClient shopClient, IIdentityClient identityClient)
         {
             _context = context;
             _shopClient = shopClient;
+            _identityClient = identityClient;
         }
 
         public async Task<List<Payment>> GetPayments(int limit)
@@ -48,9 +51,15 @@ namespace BikeShop.Payments.Application.Services
                 UserId = dto.UserId,
             };
 
-            if(dto.Target == PaymentTarget.Cashbox || dto.Target == PaymentTarget.Workshop)
+            if(dto.Target == PaymentTarget.Cashbox || dto.Target == PaymentTarget.Workshop || dto.Target == PaymentTarget.ReplenishBalance)
             {
+                if(dto.Card != 0 || dto.Cash != 0)
                 await _shopClient.Action(dto.ShopId, dto.Target, dto.TargetId, dto.Cash, dto.Card);
+
+                if (dto.PersonalBalance != 0)
+                {
+                    await _identityClient.EditBalance(dto.ClientId, dto.PersonalBalance * -1, true);
+                }
             }
 
             await _context.Payments.AddAsync(payment);

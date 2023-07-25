@@ -22,6 +22,7 @@ export const BikeShopPaths = {
         WORK_CATALOG: '/workspace/work-catalog',
         PROFILE: '/workspace/profile',
         ADMIN: '/workspace/admin',
+        CRM: '/workspace/crm',
 
         ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
         INVENTARIZATION: '/workspace/inventarization',

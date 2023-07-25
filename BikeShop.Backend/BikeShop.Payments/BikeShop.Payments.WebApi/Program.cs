@@ -36,6 +36,8 @@ builder.Services.AddRefitClient<IProductClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Products"]));
 builder.Services.AddRefitClient<ICheckboxClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Checkbox"]));
+builder.Services.AddRefitClient<IIdentityClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Identity"]));
 
 // Подключение контроллеров, так же настройка именования JSON данных
 builder.Services.AddControllers()

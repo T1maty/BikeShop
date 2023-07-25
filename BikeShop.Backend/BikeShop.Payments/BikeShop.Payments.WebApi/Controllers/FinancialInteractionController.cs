@@ -37,6 +37,12 @@ namespace BikeShop.Payments.WebApi.Controllers
             return await _interactionService.GetBillsByShop(ShopId, Take);
         }
 
+        [HttpPost("replenishuserbalance")]
+        public async Task<Payment> ReplenishUserBalance(PaymentDTO dto)
+        {
+            return await _interactionService.ReplenishUserBalance(dto);
+        }
+
         [HttpGet("test")]
         public async Task<byte[]> Test()
         {

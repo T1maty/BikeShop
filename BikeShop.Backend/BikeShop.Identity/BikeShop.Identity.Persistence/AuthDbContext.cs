@@ -14,6 +14,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>, IAuthDbContext
     public DbSet<RefreshSession> RefreshSessions { get; set; }
     public DbSet<RoleGroup> RoleGroups { get; set; }
     public DbSet<RoleGroupBind> RoleGroupBinds { get; set; }
+    public DbSet<UserBalanceActionHistory> UserBalanceActionHistories { get; set; }
 
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)

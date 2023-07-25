@@ -25,6 +25,7 @@ import {CheckAuthEmployee} from "../providers/RouteProviders/CheckAuthEmployee"
 import PublicOfferPage from "../../pages/public/Shop/InfoPages/PublicOfferPage";
 import AboutUsPage from "../../pages/public/Shop/InfoPages/AboutUsPage";
 import DeliveryPayment from "../../pages/public/Shop/InfoPages/DeliveryPayment";
+import CRMPage from "../../pages/workspace/CRM/CRMPage";
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -187,6 +188,14 @@ export const routes = createBrowserRouter([
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <AdminControl/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.CRM,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <CRMPage/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },

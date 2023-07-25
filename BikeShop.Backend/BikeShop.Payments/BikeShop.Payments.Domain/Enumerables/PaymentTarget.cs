@@ -15,5 +15,6 @@ namespace BikeShop.Payments.Domain.Enumerables
     {
         public static string Cashbox { get { return "Cashbox"; } }
         public static string Workshop { get { return "Workshop"; } }
+        public static string ReplenishBalance { get { return "ReplenishBalance"; } }
     }
 }

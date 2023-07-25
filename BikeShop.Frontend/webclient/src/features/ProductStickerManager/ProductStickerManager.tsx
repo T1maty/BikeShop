@@ -23,29 +23,32 @@ const ProductStickerManager = (props: { items: SupplyInvoiceProduct[] }) => {
     const [queue, setQueue] = useState<TableRow[]>([])
 
     useEffect(() => {
-        console.log(props.items)
-        CatalogAPI.getProductsByIds(Enumerable.from(props.items).select(g => g.productId).toArray()).then((result) => {
-            let data = props.items.map(n => {
-                return {
-                    id: n.productId,
-                    name: n.name,
-                    catalogKey: n.catalogKey,
-                    quantity: n.quantity,
-                    quantitySticker: n.quantity,
-                    product: result.data.find(h => h.id === n.productId)
-                } as TableRow
+        if (open) {
+            console.log(props.items)
+            CatalogAPI.getProductsByIds(Enumerable.from(props.items).select(g => g.productId).toArray()).then((result) => {
+                let data = props.items.map(n => {
+                    return {
+                        id: n.productId,
+                        name: n.name,
+                        catalogKey: n.catalogKey,
+                        quantity: n.quantity,
+                        quantitySticker: n.quantity,
+                        product: result.data.find(h => h.id === n.productId)
+                    } as TableRow
+                })
+                setProducts(data)
+                console.log(data)
             })
-            setProducts(data)
-            console.log(data)
-        })
-    }, [props.items])
+        }
+    }, [open])
 
     const printQueue = () => {
         console.log(products.length)
-        setCopies(products[0].quantitySticker)
-        setCurProd({...products[0].product})
+        let toPrint = products.filter(n => n.quantitySticker > 0)
+        setCopies(toPrint[0].quantitySticker)
+        setCurProd({...toPrint[0].product})
         setOpenPrint(true)
-        let data = [...products]
+        let data = [...toPrint]
         data.splice(0, 1)
         console.log(data.length)
         setQueue(data)

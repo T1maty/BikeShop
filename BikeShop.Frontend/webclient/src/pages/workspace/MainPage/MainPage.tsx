@@ -217,6 +217,12 @@ export const MainPage = () => {
                                 }}>
                                     Новая приходная накладная
                                 </Button>
+                                <Button onClick={() => {
+                                    clearCurrentSupplyInvoice()
+                                    navigate(BikeShopPaths.WORKSPACE.CRM)
+                                }}>
+                                    Балансы
+                                </Button>
                             </div>
                         </div>
 
