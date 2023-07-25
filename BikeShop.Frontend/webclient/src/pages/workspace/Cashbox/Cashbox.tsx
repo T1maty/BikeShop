@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from './Cashbox.module.scss'
-import {ChooseClientModal, ChooseDiscountModal, ChooseProductModal, PayModal, PrintModal} from '../../../features'
+import {ChooseDiscountModal, ChooseProductModal, PayModal, PrintModal} from '../../../features'
 import {AsyncSelectSearchProduct, Button, LoaderScreen, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
@@ -12,6 +12,7 @@ import {useTranslation} from "react-i18next"
 import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider"
+import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
 
 export const Cashbox = () => {
 
@@ -22,6 +23,7 @@ export const Cashbox = () => {
     const [open, setOpen] = useState(false)
     const [openPrint, setOpenPrint] = useState(false)
     const [openPay, setOpenPay] = useState(false)
+    const [clientSearch, setClientSearch] = useState(false)
     const [res, setRes] = useState<BillWithProducts>()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
@@ -42,12 +44,6 @@ export const Cashbox = () => {
     const currency = useCurrency(s => s.selectedCurrency)
 
     const [printTrigger, setPrintTrigger] = useState<null | 'agent'>(null)
-
-
-    const chooseClientHandler = (user: User) => {
-        setUser(user)
-        setOpenClientModal(false)
-    }
 
     const paymentResultHandler = (value: PaymentData, ip: boolean) => {
 
@@ -91,7 +87,10 @@ export const Cashbox = () => {
         return (
             <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
                 <div className={s.cashboxMainBlock}>
-
+                    <ClientSearchModal setIsComponentVisible={setClientSearch} isComponentVisible={clientSearch}
+                                       onSuccess={(u) => {
+                                           setUser(u)
+                                       }}/>
                     <PrintModal open={openPrint} trigger={printTrigger} finaly={() => {
                         setOpenPrint(false)
                     }}
@@ -128,14 +127,11 @@ export const Cashbox = () => {
                         </div>
 
                         <div className={s.leftSide_client}>
-                            <ChooseClientModal extraCallback={(user: User) => {
-                                chooseClientHandler(user)
-                            }}/>
 
                             <ClientCard user={user}/>
                             <div className={s.leftSide_client_buttons}>
                                 <Button buttonDivWrapper={s.client_buttons_choose}
-                                        onClick={() => setOpenClientModal(true)}
+                                        onClick={() => setClientSearch(true)}
                                 >
                                     Выбрать клиента
                                 </Button>

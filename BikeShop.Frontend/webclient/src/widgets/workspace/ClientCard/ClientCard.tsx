@@ -1,6 +1,6 @@
 import React from 'react'
 import s from "./ClientCard.module.scss"
-import {User} from "../../../entities"
+import {useCurrency, User} from "../../../entities"
 
 interface ClientCardProps {
     user: User | null
@@ -8,6 +8,9 @@ interface ClientCardProps {
 }
 
 export const ClientCard: React.FC<ClientCardProps> = ({user, onDoubleClick}) => {
+
+    const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
 
     return (
         <div className={s.clientCard_background}
@@ -24,8 +27,9 @@ export const ClientCard: React.FC<ClientCardProps> = ({user, onDoubleClick}) => 
             </p>
             <p><span>Номер телефона:</span> {user?.phoneNumber ? user?.phoneNumber : 'Клиент не выбран'}</p>
             {/*<p><span>Почта:</span> {email}</p>*/}
-            <p><span>Баланс:</span> {user?.balance ? user?.balance : 0}</p>
-            <p><span>Кредитный лимит:</span> {user?.creditLimit ? user?.creditLimit : 0}</p>
+            <p><span>Баланс:</span> {user?.balance ? r(user?.balance * fbts.c) + fbts.s : 0 + fbts.s}</p>
+            <p><span>Кредитный лимит:</span> {user?.creditLimit ? r(user?.creditLimit * fbts.c) + fbts.s : 0 + fbts.s}
+            </p>
         </div>
     )
 }

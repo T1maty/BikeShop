@@ -79,5 +79,10 @@ export const AuthAPI = {
                 $api.get<UserWithRoles[]>(`/user/search?Querry=${querry}&Take=${take}`)
             )
         },
+        getUsersWithBalance(): Promise<AxiosResponse<User[]>> {
+            return (
+                $api.get<User[]>(`/balance/getusers`)
+            )
+        },
     },
 }

@@ -1432,13 +1432,28 @@
     },
 	
 	
-	
+
 	{
       "UpstreamPathTemplate": "/api/balance/getusers",
       "UpstreamHttpMethod": [
         "Get"
       ],
       "DownstreamPathTemplate": "/balance/getusers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.identity",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+	{
+      "UpstreamPathTemplate": "/api/balance/setcreditlimit",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/balance/setcreditlimit",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

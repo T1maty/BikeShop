@@ -48,8 +48,16 @@ export const PayModal = (props: PayModalProps) => {
                 <div className={s.payModal_payType}>
 
                     <Button onClick={() => {
-                    }} disabled={props.user === null}>
-                        Оплата с баланса
+                        props.result({
+                            isFiscal: isFiscal,
+                            cash: 0,
+                            card: 0,
+                            bankCount: 0,
+                            personalBalance: props.summ
+                        }, isPrint)
+                        props.setOpen(false)
+                    }} disabled={props.user === null || (props.user.balance + props.user.creditLimit) < props.summ}>
+                        {(props.user != null && (props.user.balance + props.user.creditLimit) < props.summ) ? "Недостатньо коштів на балансі" : "Оплатити з балансу"}
                     </Button>
                 </div>
 

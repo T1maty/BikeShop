@@ -40,5 +40,13 @@ namespace BikeShop.Identity.Application.Services
         {
             return await _userManager.Users.Where(n => n.Balance != 0).ToListAsync();
         }
+
+        public async Task<ApplicationUser> SetCreditLimit(Guid userId, decimal amount)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            user.CreditLimit = amount;
+            await _userManager.UpdateAsync(user);
+            return user;
+        }
     }
 }

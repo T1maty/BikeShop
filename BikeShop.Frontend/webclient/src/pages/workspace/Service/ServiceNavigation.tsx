@@ -4,7 +4,15 @@ import {Button} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import useService from "./ServiceStore"
 import ServiceStore, {ServiceListStatusType} from "./ServiceStore"
-import {EnumServiceStatus, PaymentData, ServiceFormModel, ServiceStatus, ServiceWithData} from "../../../entities"
+import {
+    AuthAPI,
+    EnumServiceStatus,
+    PaymentData,
+    ServiceFormModel,
+    ServiceStatus,
+    ServiceWithData,
+    User
+} from "../../../entities"
 import {ConfirmModal, PayModal, PrintModal} from "../../../features"
 import {ActServiceWork, CheckForServiceWork} from "../../../widgets"
 import {UseFormReturn} from "react-hook-form"
@@ -14,6 +22,7 @@ import {formatDateNoYear} from "../../../shared/utils/formatDateNoYear"
 export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
     const isLoading = useService(s => s.isLoading)
+    const setIsLoading = useService(s => s.setIsLoading)
     const serviceListStatus = useService(s => s.serviceListStatus)
     const setServiceListStatus = useService(s => s.setServiceListStatus)
     const services = useService(s => s.services)
@@ -39,6 +48,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
 
     const [confirm, setConfirm] = useState(false);
     const [payModal, setPayModal] = useState(false);
+    const [paymentUser, setPaymentUser] = useState<User | null>(null);
     const [confData, setConfData] = useState<ServiceWithData>()
     const [navContext, setNavContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
 
@@ -76,7 +86,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
 
     return (
         <div className={s.service_leftSide}>
-            <PayModal open={payModal} setOpen={setPayModal} user={null}
+            <PayModal open={payModal} setOpen={setPayModal} user={paymentUser}
                       summ={currentService ? currentService?.service.total : 0}
                       result={(r, ip) => {
                           console.log(r)
@@ -197,8 +207,13 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                             <Button disabled={currentService === null || props.children.formState.isDirty}
                                     onClick={() => {
                                         setPayModal(true)
+                                        AuthAPI.User.getUserById(currentService!.service.clientId).then(r => {
+                                            setPaymentUser(r.data)
+                                        }).catch(() => {
+                                            setPaymentUser(null)
+                                        })
                                     }}>
-                                Выдать велосипед
+                                Видати велосипед
                             </Button>
                         </div>
                     }

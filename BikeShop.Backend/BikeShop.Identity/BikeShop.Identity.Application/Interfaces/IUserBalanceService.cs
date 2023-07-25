@@ -11,6 +11,7 @@ namespace BikeShop.Identity.Application.Interfaces
     {
         public Task<List<ApplicationUser>> GetUsers();
         public Task<ApplicationUser> EditBalance(Guid userId, decimal amount, bool checkLimit);
+        public Task<ApplicationUser> SetCreditLimit(Guid userId, decimal amount);
 
     }
 }

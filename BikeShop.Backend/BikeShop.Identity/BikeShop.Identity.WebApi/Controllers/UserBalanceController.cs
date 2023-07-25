@@ -27,5 +27,11 @@ namespace BikeShop.Identity.WebApi.Controllers
         {
             return await _userBalanceService.EditBalance(userId, amount, checkLimit);
         }
+
+        [HttpPut("setcreditlimit")]
+        public async Task<ApplicationUser> SetCreditLimit(Guid userId, decimal amount)
+        {
+            return await _userBalanceService.SetCreditLimit(userId, amount);
+        }
     }
 }

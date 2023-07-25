@@ -11,6 +11,7 @@ import {BikeShopPaths} from "../../../app/routes/paths";
 import {PayModal, PrintModal} from "../../../features";
 import {CheckForShop} from "../WorkActs/CheckForShop";
 import {Loader} from "../../../shared/ui/Loader/Loader";
+import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
 
 export const MainPageCashbox = () => {
 
@@ -20,8 +21,8 @@ export const MainPageCashbox = () => {
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
-    const user = useMainPageStore(s => s.user)
-    const setUser = useMainPageStore(s => s.setUser)
+    const user = useCashboxStore(s => s.user)
+    const setUser = useCashboxStore(s => s.setUser)
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
 
@@ -33,6 +34,7 @@ export const MainPageCashbox = () => {
     const paymentHandler = useCashboxStore(s => s.paymentHandler)
 
     const [openPay, setOpenPay] = useState(false)
+    const [cs, sCs] = useState(false)
     const [res, setRes] = useState<BillWithProducts>()
     const [openPrint, setOpenPrint] = useState(false)
     const [printTrigger, setPrintTrigger] = useState<null | 'agent'>(null)
@@ -65,25 +67,23 @@ export const MainPageCashbox = () => {
         <div className={s.rightSide_top}>
             {isLoading ? <Loader variant={"ellipsis"}/> :
                 <>
+                    <ClientSearchModal setIsComponentVisible={sCs} isComponentVisible={cs} onSuccess={(u) => {
+                        setUser(u)
+                    }}/>
                     <div className={s.select}>
                         <AsyncSelectSearchProduct onSelect={addProduct}/>
                     </div>
                     <div className={s.rightSide_top_search}>
-
-                        {
-                            //<ClientSearchModal setIsComponentVisible={setOpenClientSearch} isVisible={openClientSearch} onSuccess={handler}/>
-                            //<ChooseClientModal extraCallback={(user: User) => {chooseClientHandler(user)}}/>
-                        }
-                        <Button buttonDivWrapper={s.search_chooseClientButton}
-                                onClick={() => {
-                                    setOpenClientModal(true)
-                                }}
-                        >
-                            Выбрать клиента
-                        </Button>
-                        <div className={s.search_searchInput}>
-                            {user && user.lastName} {user && user.firstName} {user && user.patronymic}
+                        <div className={s.search_searchInput} onDoubleClick={() => {
+                            sCs(true)
+                        }}>
+                            {user === null ? "Оберіть клієнта" : `Клієнт: ${user.lastName} ${user.firstName} ${user.patronymic}`}
                         </div>
+                        <DeleteButton size={30}
+                                      onClick={() => {
+                                          setUser(null)
+                                      }}
+                        />
                     </div>
 
                     <div className={s.rightSide_top_info}>

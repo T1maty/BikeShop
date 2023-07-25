@@ -12,7 +12,7 @@ interface CashboxStore {
 
     bill: NewBillDTO
     user: User | null
-    setUser: (user: User) => void
+    setUser: (user: User | null) => void
 
     setProducts: (value: BillProductDTO[]) => void
     addProduct: (value: Product) => void
@@ -79,10 +79,13 @@ const useCashboxStore = create<CashboxStore>()(persist(devtools(immer((set, get)
         res.description = ''
         res.shopId = LocalStorage.shopId()!
         res.currencyId = LocalStorage.currency.id()
+        let usr = get().user?.id
+        if (usr != undefined) res.clientId = usr
         console.log(res)
         set({isLoading: true})
 
         FinancialInteractionAPI.NewBill.create(res).then((r) => {
+            get().setUser(null)
             onSuccess(r.data)
         }).finally(() => {
             set({isLoading: false})
