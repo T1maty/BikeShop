@@ -25,6 +25,7 @@ export const MainPageCashbox = () => {
     const setUser = useCashboxStore(s => s.setUser)
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
+    const r = useCurrency(s => s.roundUp)
 
     const isLoading = useCashboxStore(s => s.isLoading)
     const sum = useCashboxStore(s => s.sum)
@@ -96,10 +97,10 @@ export const MainPageCashbox = () => {
                                                 {n.name}
                                             </div>
                                             <div className={s.cashbox_table_price}>
-                                                {n.price * fbts.c + fbts.s}
+                                                {r(n.price * fbts.c) + fbts.s}
                                             </div>
                                             <div className={s.cashbox_table_total}>
-                                                {n.total * fbts.c + fbts.s}
+                                                {r(n.total * fbts.c) + fbts.s}
                                             </div>
                                         </div>
                                         <DeleteButton size={30}
