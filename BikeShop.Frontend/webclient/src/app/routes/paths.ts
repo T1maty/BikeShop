@@ -23,6 +23,7 @@ export const BikeShopPaths = {
         PROFILE: '/workspace/profile',
         ADMIN: '/workspace/admin',
         CRM: '/workspace/crm',
+        ORDERS: '/workspace/orders',
 
         ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
         INVENTARIZATION: '/workspace/inventarization',
