@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.ResponseCompression;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -14,6 +15,12 @@ builder.Configuration.AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}
 // Добавляю оцелот и сваггер для него, который подтягивает документацию из всех микросервисов
 builder.Services.AddOcelot(builder.Configuration);
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
+builder.Services.AddResponseCompression(options =>
+{
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+    options.MimeTypes = new[] { "application/json", "text/tab-separated-values", "application/javascript", "text/csv", "text" };
+});
 
 // Настройка CORS-политик для доступа из браузера
 builder.Services.AddCors(options =>
@@ -40,6 +47,8 @@ app.UseCors(x => x
     .AllowCredentials()); // allow credentials
 
 app.MapControllers();
+
+app.UseResponseCompression();
 
 // Сваггер оцелота, который подтягивает всю опенапи документацию из микросервисов, роут на корень 
 app.UseSwaggerForOcelotUI(opt =>
