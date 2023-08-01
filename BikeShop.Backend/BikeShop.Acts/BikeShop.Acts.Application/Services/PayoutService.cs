@@ -1,6 +1,7 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
 using BikeShop.Acts.Domain.DTO.Requests.Payout;
 using BikeShop.Acts.Domain.Entities;
+using BikeShop.Acts.Domain.Refit;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
 using Microsoft.EntityFrameworkCore;

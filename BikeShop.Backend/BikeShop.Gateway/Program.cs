@@ -51,6 +51,7 @@ app.MapControllers();
 app.UseResponseCompression();
 
 // Сваггер оцелота, который подтягивает всю опенапи документацию из микросервисов, роут на корень 
+
 app.UseSwaggerForOcelotUI(opt =>
 {
     opt.PathToSwaggerGenerator = "/swagger/docs";

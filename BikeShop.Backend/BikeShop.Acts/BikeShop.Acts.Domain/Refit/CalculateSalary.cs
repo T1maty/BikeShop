@@ -19,9 +19,5 @@ namespace BikeShop.Acts.Domain.Refit
         public decimal BillsTotal { get; set; }
         public decimal ProductsTotal { get; set; }
         public decimal WorkTotal { get; set; }
-
-        public int Bills { get; set; }
-        public int ServiceWorks { get; set; }
-        public int SeviceProducts { get; set; }
     }
 }
