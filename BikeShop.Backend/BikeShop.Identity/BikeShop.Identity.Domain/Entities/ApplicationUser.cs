@@ -9,6 +9,7 @@ public class ApplicationUser : IdentityUser
     public string? LastName { get; set; }
     public string? Patronymic { get; set; }
     public int ShopId { get; set; }
+    public bool IsEmployee { get; set; } = false;
     public string Secret { get; set; } = string.Empty;
 
     public string Bike { get; set; } = string.Empty;

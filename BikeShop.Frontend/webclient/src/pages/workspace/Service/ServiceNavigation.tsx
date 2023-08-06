@@ -13,8 +13,7 @@ import {
     ServiceWithData,
     User
 } from "../../../entities"
-import {ConfirmModal, PayModal, PrintModal} from "../../../features"
-import {ActServiceWork, CheckForServiceWork} from "../../../widgets"
+import {ConfirmModal, PayModal} from "../../../features"
 import {UseFormReturn} from "react-hook-form"
 import {ServiceNavigationContext} from "./ServiceNavigationContex"
 import {formatDateNoYear} from "../../../shared/utils/formatDateNoYear"
@@ -31,20 +30,9 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const filteredServices = useService(s => s.filteredServices)
     const setFilteredServices = useService(s => s.setFilteredServices)
     const updateServiceStatus = useService(s => s.updateServiceStatus)
-    const printModal = useService(s => s.printModalOut)
-    const setPrintModal = useService(s => s.setPrintModalOut)
-    const trigger = useService(s => s.triggerOut)
-    const setTrigger = useService(s => s.setTriggerOut)
     const setIsPrinting = useService(s => s.setIsPrinting)
-    const setPrintModalOutSmall = useService(s => s.setPrintModalOutSmall)
-    const setTriggerOutSmall = useService(s => s.setTriggerOutSmall)
-    const printModalOutSmall = useService(s => s.printModalOutSmall)
-
-    const triggerOutSmall = useService(s => s.triggerOutSmall)
-
 
     const endService = useService(s => s.endService)
-    const setIsCreating = useService(s => s.setIsCreating)
 
     const [confirm, setConfirm] = useState(false);
     const [payModal, setPayModal] = useState(false);
@@ -95,25 +83,6 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
                           setPayModal(false)
                       }}/>
 
-
-            <PrintModal open={printModal} trigger={trigger} printAgentName={'WorkshopOut'} finaly={() => {
-                setPrintModal(false)
-                setTrigger(null)
-                setPrintModalOutSmall(true)
-                setTriggerOutSmall('agent')
-            }}
-                        setOpen={setPrintModal}
-                        children={<CheckForServiceWork children={currentService!}/>}
-            />
-
-            <PrintModal open={printModalOutSmall} trigger={triggerOutSmall} printAgentName={'WorkshopOutSmall'}
-                        finaly={() => {
-                            setPrintModalOutSmall(false)
-                            setTriggerOutSmall(null)
-                        }}
-                        setOpen={setPrintModalOutSmall}
-                        children={<ActServiceWork children={currentService!}/>}
-            />
 
             <ServiceNavigationContext open={navContext} setOpen={setNavContext}/>
             <ConfirmModal title={'Несохраненные изменения будут утеряны'}

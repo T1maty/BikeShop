@@ -7,6 +7,9 @@ import {ServiceNavigation} from "./ServiceNavigation"
 import {useSnackbar} from 'notistack'
 import {useForm} from "react-hook-form"
 import {ServiceFormModel} from "../../../entities"
+import {PrintModal} from "../../../features";
+import {ActServiceWork, CheckForServiceWork} from "../../../widgets";
+import {ServiceSticker} from "../../../widgets/workspace/Invoices/Service/ServiceSticker";
 
 export const Service = () => {
 
@@ -16,6 +19,28 @@ export const Service = () => {
     const errorStatus = useService(s => s.errorStatus)
     const getMasters = useService(s => s.getMasters)
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
+
+    const setPrintModalIn = useService(s => s.setPrintModalIn)
+    const printModalIn = useService(s => s.printModalIn)
+    const setTriggerIn = useService(s => s.setTriggerIn)
+    const triggerIn = useService(s => s.triggerIn)
+    const setPrintModalSticker = useService(s => s.setPrintModalSticker)
+    const printModalSticker = useService(s => s.printModalSticker)
+    const setTriggerSticker = useService(s => s.setTriggerSticker)
+    const triggerSticker = useService(s => s.triggerSticker)
+
+    const printModalOut = useService(s => s.printModalOut)
+    const setPrintModalOut = useService(s => s.setPrintModalOut)
+    const triggerOut = useService(s => s.triggerOut)
+    const setTriggerOut = useService(s => s.setTriggerOut)
+
+    const setIsPrinting = useService(s => s.setIsPrinting)
+    const setPrintModalOutSmall = useService(s => s.setPrintModalOutSmall)
+    const setTriggerOutSmall = useService(s => s.setTriggerOutSmall)
+    const printModalOutSmall = useService(s => s.printModalOutSmall)
+    const triggerOutSmall = useService(s => s.triggerOutSmall)
+    const currentService = useService(s => s.currentService)
+
 
     const formControl = useForm<ServiceFormModel>({
         defaultValues: {
@@ -54,7 +79,48 @@ export const Service = () => {
     } else {
 
         return (
-            <div className={s.serviceBlock} onContextMenu={e => {e.preventDefault()}}>
+            <div className={s.serviceBlock} onContextMenu={e => {
+                e.preventDefault()
+            }}>
+
+                <PrintModal open={printModalIn} trigger={triggerIn} finaly={() => {
+                    setTriggerIn(null)
+                    setPrintModalIn(false)
+                    setPrintModalSticker(true)
+                    setTriggerSticker("agent")
+                }}
+                            setOpen={setPrintModalIn}
+                            children={<CheckForServiceWork children={currentService!}/>}
+                            printAgentName={"WorkshopIn"} copies={2}
+                />
+                <PrintModal open={printModalSticker} trigger={triggerSticker} finaly={() => {
+                    setTriggerSticker(null)
+                    setPrintModalSticker(false)
+                }}
+                            setOpen={setPrintModalSticker} printAgentName={"WorkshopSticker"}
+                            children={<ServiceSticker children={currentService!}/>}
+                />
+
+                <PrintModal open={printModalOut} trigger={triggerOut} printAgentName={'WorkshopOut'} finaly={() => {
+                    setPrintModalOut(false)
+                    setTriggerOut(null)
+                    setPrintModalOutSmall(true)
+                    setTriggerOutSmall('agent')
+                }}
+                            setOpen={setPrintModalOut}
+                            children={<CheckForServiceWork children={currentService!}/>}
+                />
+
+                <PrintModal open={printModalOutSmall} trigger={triggerOutSmall} printAgentName={'WorkshopOutSmall'}
+                            finaly={() => {
+                                setPrintModalOutSmall(false)
+                                setTriggerOutSmall(null)
+                            }}
+                            setOpen={setPrintModalOutSmall}
+                            children={<ActServiceWork children={currentService!}/>}
+                />
+
+
                 <ServiceNavigation children={formControl}/>
                 <ServiceForm children={formControl}/>
             </div>

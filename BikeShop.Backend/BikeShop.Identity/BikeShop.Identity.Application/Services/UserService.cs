@@ -270,5 +270,22 @@ namespace BikeShop.Identity.Application.Services
 
             return $"Success: {success}, Fail: {fail}, Total: {dt.Rows.Count}";
         }
+
+        public async Task<UserResponseWithRoles> GetUserResponseWithRoles(Guid id)
+        {
+            var appUser = await _userManager.FindByIdAsync(id.ToString());
+            var roles = await _userManager.GetRolesAsync(appUser);
+
+            var userResp = new UserResponseWithRoles { User = new UserResponse
+            {
+                 Balance= appUser.Balance,
+                  Bike = appUser.Bike, Created = appUser.Created, CreditLimit = appUser.CreditLimit, Email= appUser.Email, EmailConfirmed = appUser.EmailConfirmed,
+                   FirstName= appUser.FirstName, Id=Guid.Parse(appUser.Id), IsEmployee=appUser.IsEmployee, LastName = appUser.LastName , Patronymic = appUser.Patronymic , PhoneNumber = appUser.PhoneNumber,
+                    PhoneNumberConfirmed = appUser.PhoneNumberConfirmed, ShopId = appUser.ShopId, TwoFactorEnabled = appUser.TwoFactorEnabled, Updated = appUser.Updated
+            }, Roles = (List<string>)roles };
+
+
+            return userResp;
+        }
     }
     }

@@ -3,7 +3,7 @@ import s from "./Service.module.scss"
 import {Button, ControlledClientCard, ControlledCustomInput, ControlledCustomTextarea} from '../../../shared/ui'
 import {Errors} from "../../../entities/errors/workspaceErrors"
 import {CatalogAPI, LocalStorage, ServiceFormModel, useCurrency, User} from "../../../entities"
-import {PrintModal, SelectProductModal, SelectWorkModal} from "../../../features"
+import {SelectProductModal, SelectWorkModal} from "../../../features"
 import {Controller, SubmitHandler, UseFormReturn} from "react-hook-form"
 import useService from "./ServiceStore"
 import useSelectProductWorkModal
@@ -12,8 +12,6 @@ import {useSnackbar} from "notistack"
 import Select from "react-select"
 import ServiceTableWork from "./ServiceTableWork"
 import ServiceTableProduct from "./ServiceTableProduct"
-import {CheckForServiceWork} from "../../../widgets"
-import {ServiceSticker} from "../../../widgets/workspace/Invoices/Service/ServiceSticker"
 import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
@@ -30,14 +28,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const isCreating = useService(s => s.isCreating)
     const setIsCreating = useService(s => s.setIsCreating)
 
-    const setPrintModalIn = useService(s => s.setPrintModalIn)
-    const printModalIn = useService(s => s.printModalIn)
-    const setTriggerIn = useService(s => s.setTriggerIn)
-    const triggerIn = useService(s => s.triggerIn)
-    const setPrintModalSticker = useService(s => s.setPrintModalSticker)
-    const printModalSticker = useService(s => s.printModalSticker)
-    const setTriggerSticker = useService(s => s.setTriggerSticker)
-    const triggerSticker = useService(s => s.triggerSticker)
 
     const masters = useService(s => s.masters)
 
@@ -174,23 +164,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
             <div className={s.service_rightSide}>
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
 
-                    <PrintModal open={printModalIn} trigger={triggerIn} finaly={() => {
-                        setTriggerIn(null)
-                        setPrintModalIn(false)
-                        setPrintModalSticker(true)
-                        setTriggerSticker("agent")
-                    }}
-                                setOpen={setPrintModalIn}
-                                children={<CheckForServiceWork children={currentService!}/>}
-                                printAgentName={"WorkshopIn"} copies={2}
-                    />
-                    <PrintModal open={printModalSticker} trigger={triggerSticker} finaly={() => {
-                        setTriggerSticker(null)
-                        setPrintModalSticker(false)
-                    }}
-                                setOpen={setPrintModalSticker} printAgentName={"WorkshopSticker"}
-                                children={<ServiceSticker children={currentService!}/>}
-                    />
 
                     <ControlledCustomInput name={'name'}
                                            placeholder={'Техника'}

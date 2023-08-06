@@ -83,6 +83,71 @@
   
   
   
+  
+  
+  {
+      "UpstreamPathTemplate": "/api/outcome/getbyshop",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/outcome/getbyshop",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/outcome/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/outcome/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/outcome/execute",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/outcome/execute",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+	{
+      "UpstreamPathTemplate": "/api/outcome/update",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/outcome/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "acts"
+    },
+  
+  
+  
 
     {
       "UpstreamPathTemplate": "/api/image/upload/{imgId}",

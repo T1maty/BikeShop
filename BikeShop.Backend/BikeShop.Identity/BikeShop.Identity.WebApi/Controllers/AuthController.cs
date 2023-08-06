@@ -6,7 +6,10 @@ using BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSession;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserById;
 using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 using BikeShop.Identity.Application.Exceptions;
+using BikeShop.Identity.Application.Interfaces;
 using BikeShop.Identity.Application.Services;
+using BikeShop.Identity.Domain.DTO.Request;
+using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.WebApi.Models.Auth;
 using BikeShop.Identity.WebApi.Models.Validation;
 using MediatR;
@@ -25,14 +28,18 @@ public class AuthController : ControllerBase
 
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
+    private readonly IAuthService _authService;
 
-    public AuthController(JwtService jwtService, IMapper mapper, IMediator mediator, CookieService cookieService)
+    public AuthController(JwtService jwtService, CookieService cookieService, IMapper mapper, IMediator mediator, IAuthService authService)
     {
         _jwtService = jwtService;
         _cookieService = cookieService;
         _mapper = mapper;
         _mediator = mediator;
+        _authService = authService;
     }
+
+
 
     /// <summary>
     /// Логин пользователя и создании сессии. Получение JWT-токенов доступа и рефреша.
@@ -89,7 +96,7 @@ public class AuthController : ControllerBase
     /// </summary>
     /// 
     /// <remarks>
-    /// Создание нового пользователя в базе с указанными данными. Ничего не возвращает, для логина нужен будет отдельный запрос.
+    /// Создание нового пользователя в базе с указанными данными. Возвращает созданного юзера. Обязательные поля - телефон и пароль. Остально - опционально
     /// </remarks>
     /// 
     /// <param name="model">Модель регистрации пользователя</param>
@@ -104,19 +111,9 @@ public class AuthController : ControllerBase
     [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(IException), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ValidationResultModel), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Register(RegisterModel model)
+    public async Task<UserResponseWithRoles> Register(RegisterFullDTO dto)
     {
-        // Если невалидная модель
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        // Создаю пользователя и получаю его айди
-        var command = _mapper.Map<CreateUserCommand>(model);
-        var id = await _mediator.Send(command);
-
-        //Console.WriteLine("Registered new user. ID: " + id);
-
-        return Ok();
+        return await _authService.Register(dto);
     }
 
     /// <summary>

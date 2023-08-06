@@ -17,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IPayoutService, PayoutService>();
         services.AddScoped<IProductMoveService, ProductMoveService>();
         services.AddScoped<IPrintService, PrintService>();
+        services.AddScoped<IOutcomeActService, OutcomeActService>();
         services.AddScoped<PrintQueueHub>();
 
 

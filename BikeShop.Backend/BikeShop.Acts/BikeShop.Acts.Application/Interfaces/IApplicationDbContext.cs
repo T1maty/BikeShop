@@ -23,6 +23,8 @@ public interface IApplicationDbContext
     public DbSet<PrintQueue> PrintQueues { get; set; }
     public DbSet<PrintSettings> PrintSettings { get; set; }
     public DbSet<SalaryPaymentHistory> SalaryPaymentHistory { get; set; }
+    public DbSet<OutcomeAct> OutcomeActs { get; set; }
+    public DbSet<OutcomeActProduct> OutcomeActProducts { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс

@@ -24,6 +24,7 @@ namespace BikeShop.Identity.Application.Interfaces
         public Task<ApplicationUser> CreateUser(CreateUserDTO model, string bike = "");
         public Task<string> RegenerateSecret(Guid user);
         public Task<UserWithRoles> GetUserBySecret(string secret);
+        public Task<UserResponseWithRoles> GetUserResponseWithRoles(Guid id);
         public Task<string> gfb();
     }
 }

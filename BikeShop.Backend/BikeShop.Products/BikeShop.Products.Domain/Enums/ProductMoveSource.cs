@@ -13,7 +13,8 @@ namespace BikeShop.Products.Domain.Enums
         Order,
         Service,
         ProductMove,
-        InventarizationLack
+        InventarizationLack,
+        OutcomeAct
     }
 
 
@@ -23,6 +24,7 @@ namespace BikeShop.Products.Domain.Enums
         {
             var b = new Dictionary<string, ProductMoveSourceEnum>();
             b.Add("Bill", ProductMoveSourceEnum.Bill);
+            b.Add("OutcomeAct", ProductMoveSourceEnum.Bill);
             b.Add("SupplyInvoice", ProductMoveSourceEnum.IncomeAct);
             b.Add("Order", ProductMoveSourceEnum.Order);
             b.Add("Service", ProductMoveSourceEnum.Service);
