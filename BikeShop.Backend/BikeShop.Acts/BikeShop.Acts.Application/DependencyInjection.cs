@@ -10,6 +10,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
+        services.AddScoped<IOutcomeActService, OutcomeActService>();
         services.AddScoped<ISupplyInvoiceService, SupplyInvoiceService>();
         services.AddScoped<IEncashmentService, EncashmentService>();
         services.AddScoped<ICashboxActionService, CashboxActionService>();
@@ -17,7 +18,6 @@ public static class DependencyInjection
         services.AddScoped<IPayoutService, PayoutService>();
         services.AddScoped<IProductMoveService, ProductMoveService>();
         services.AddScoped<IPrintService, PrintService>();
-        services.AddScoped<IOutcomeActService, OutcomeActService>();
         services.AddScoped<PrintQueueHub>();
 
 

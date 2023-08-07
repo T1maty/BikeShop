@@ -21,7 +21,7 @@ namespace BikeShop.Acts.Application.Refit
         [Post("/storage/getbystorage")]
         public Task<List<Product>> GetProductsByIdsArray(List<int> Ids);
 
-        [Get("getall")]
+        [Get("/quantityunit/getall")]
         public Task<List<QuantityUnit>> GetAllQuantityUnits();
 
     }
