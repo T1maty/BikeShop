@@ -34,13 +34,16 @@ namespace BikeShop.Acts.Application.Services
         {
             var user = await _identityClient.GetById(dto.OutcomeAct.UserId);
             var FIO = user.lastName + " " + user.firstName + " " + user.patronymic;
+            //var FIO = "XUI";
             var act = new OutcomeAct { Description = dto.OutcomeAct.Description, OutcomeActStatus = "Created", ShopId= dto.OutcomeAct.ShopId, UserCreatedId = dto.OutcomeAct.UserId, UserUpdatedId = dto.OutcomeAct.UserId, UserCreatedFIO = FIO, UserUpdatedFIO = FIO};
+
+            var quantUnits = (await _productClient.GetAllQuantityUnits()).ToDictionary(n => n.Id, n => n.Name);
+            var pE = (await _productClient.GetProductsByIdsArray(dto.Products.Select(n => n.ProductId).ToList())).ToDictionary(n => n.Id, n => n);
 
             await _context.OutcomeActs.AddAsync(act);
             await _context.SaveChangesAsync(new CancellationToken());
 
-            var quantUnits = (await _productClient.GetAllQuantityUnits()).ToDictionary(n=>n.Id, n=>n.Name);
-            var pE = (await _productClient.GetProductsByIdsArray(dto.Products.Select(n=>n.ProductId).ToList())).ToDictionary(n=>n.Id, n=>n);
+            
             var products = dto.Products.Select(n => new OutcomeActProduct
             {
                 OutcomeActId = act.Id,
