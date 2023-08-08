@@ -1,0 +1,20 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.supplyInvoiceArchiveModal_mainBlock {
+    @include defaultModalStyle;
+    width: 550px;
+
+    .supplyInvoiceArchiveModal_title {
+        @include modalTitle;
+    }
+
+    .supplyInvoiceArchiveModal_list {
+        @include divLargeMarginBottom;
+        max-height: 550px;
+        overflow: auto;
+        padding-right: 10px;
+
+        @include SupplyInvoiceArchiveModal(100%);
+    }
+}

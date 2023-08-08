@@ -175,7 +175,7 @@ export const SupplyInvoice = () => {
                 <div className={s.leftSide_metrika}>
                     <div className={s.metrika_title}>Метрика:</div>
                     <div>Позиций: {currentSupplyInvoice.supplyInvoiceProducts?.length}</div>
-                    <div>Единиц: {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => n.quantity).sum()}</div>
+                    <div>Единиц: {Enumerable.from(currentSupplyInvoice.supplyInvoiceProducts).select(n => parseFloat(n.quantity.toString())).sum()}</div>
                     <div>Приходная сумма:
                         {r(sum * fbts.c) + fbts.s}
                     </div>

@@ -27,6 +27,7 @@ import AboutUsPage from "../../pages/public/Shop/InfoPages/AboutUsPage";
 import DeliveryPayment from "../../pages/public/Shop/InfoPages/DeliveryPayment";
 import CRMPage from "../../pages/workspace/CRM/CRMPage";
 import OrderManager from "../../features/OrderManager/OrderManager";
+import OutcomeActPage from "../../pages/workspace/ProductsCount/OutcomeActPage/OutcomeActPage";
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -205,6 +206,15 @@ export const routes = createBrowserRouter([
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <OrderManager/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+
+    {
+        path: BikeShopPaths.WORKSPACE.OUTCOME_ACT,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <OutcomeActPage/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },

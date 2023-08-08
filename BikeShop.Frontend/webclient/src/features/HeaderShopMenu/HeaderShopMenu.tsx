@@ -36,6 +36,8 @@ import {
 import {EmployeeSalaryModal} from "../EmployeeSalaryModal/EmployeeSalaryModal";
 import useEmployeeSalaryModal from "../EmployeeSalaryModal/EmployeeSalaryModalStore";
 import useUserRoleModal from "../UserRoleModal/UserRoleModalStore";
+import useOutcomeActArchiveModal from "../ArchiveModals/OutcomeActArchive/OutcomeActArchiveModalStore";
+import OutcomeActArchiveModal from "../ArchiveModals/OutcomeActArchive/OutcomeActArchiveModal";
 
 export const HeaderShopMenu = () => {
 
@@ -44,6 +46,8 @@ export const HeaderShopMenu = () => {
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false)
 
     const openSupplyInvoiceArchiveModal = useSupplyInvoiceArchiveModal(s => s.setOpenSupplyInvoiceArchiveModal)
+    const setOpenOutcome = useOutcomeActArchiveModal(s => s.setOpen)
+    const openOutcome = useOutcomeActArchiveModal(s => s.open)
     const openInventoryOfProductsArchiveModal = useInventoryOfProductsArchiveModal(s => s.setOpenInventoryOfProductsArchiveModal)
     const openCheckArchiveModal = useCheckArchiveModal(s => s.setOpenCheckArchiveModal)
     const openServiceArchiveModal = useServiceArchiveModal(s => s.setOpenServiceArchiveModal)
@@ -72,6 +76,13 @@ export const HeaderShopMenu = () => {
             title: 'Приходы товаров',
             func: () => {
                 openSupplyInvoiceArchiveModal(true)
+                setIsComponentVisible(false)
+            }
+        },
+        {
+            title: 'Списания',
+            func: () => {
+                setOpenOutcome(true)
                 setIsComponentVisible(false)
             }
         },
@@ -181,35 +192,11 @@ export const HeaderShopMenu = () => {
         },
     ])
 
-    const [menuItems4, setMenuItems4] = useState([
-        {
-            title: 'Статистика магазина',
-            func: () => {
-                //
-            }
-        },
-        {
-            title: 'Статистика сети',
-            func: () => {
-                //
-            }
-        },
-        {
-            title: 'Общие настройки',
-            func: () => {
-                //
-            }
-        },
-        {
-            title: 'Настройки',
-            func: () => {
-                //
-            }
-        },
-    ])
+    const [menuItems4, setMenuItems4] = useState([])
 
     return (
         <>
+            <OutcomeActArchiveModal/>
             <SupplyInvoiceArchiveModal/>
             <InventoryOfProductsArchiveModal/>
             <CheckArchiveModal/>
@@ -270,18 +257,6 @@ export const HeaderShopMenu = () => {
 
                             {
                                 menuItems3.map(item => (
-                                    <div className={s.menuList_item}
-                                         key={item.title}
-                                         onClick={item.func}
-                                    >
-                                        {item.title}
-                                    </div>
-                                ))
-                            }
-                            <hr/>
-
-                            {
-                                menuItems4.map(item => (
                                     <div className={s.menuList_item}
                                          key={item.title}
                                          onClick={item.func}

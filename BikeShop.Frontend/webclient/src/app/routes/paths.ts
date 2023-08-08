@@ -26,6 +26,7 @@ export const BikeShopPaths = {
         ORDERS: '/workspace/orders',
 
         ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
+        OUTCOME_ACT: '/workspace/outcome',
         INVENTARIZATION: '/workspace/inventarization',
         STORAGE_PRODUCTS_TRANSFER: '/workspace/storage-products-transfer',
 

@@ -27,6 +27,7 @@ import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
 import {MainPageCashbox} from "../../../widgets/workspace/MainPageCashbox/MainPageCashbox";
+import useOutcomeActPage from "../ProductsCount/OutcomeActPage/OutcomeActPageStore";
 
 type ShiftStatusTypes = 'Open' | 'Closed' | 'Pause'
 
@@ -41,6 +42,7 @@ export const MainPage = () => {
     const isLoading = useChooseClientModal(s => s.isLoading)
     const setIsLoading = useChooseClientModal(s => s.setIsLoading)
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
+    const clearOutcome = useOutcomeActPage(s => s.clear)
 
     const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
     const user = useMainPageStore(s => s.user)
@@ -218,7 +220,12 @@ export const MainPage = () => {
                                     Новая приходная накладная
                                 </Button>
                                 <Button onClick={() => {
-                                    clearCurrentSupplyInvoice()
+                                    clearOutcome()
+                                    navigate(BikeShopPaths.WORKSPACE.OUTCOME_ACT)
+                                }}>
+                                    Новое списание
+                                </Button>
+                                <Button onClick={() => {
                                     navigate(BikeShopPaths.WORKSPACE.CRM)
                                 }}>
                                     Балансы
