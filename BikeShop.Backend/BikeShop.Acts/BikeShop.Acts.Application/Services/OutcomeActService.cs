@@ -32,9 +32,9 @@ namespace BikeShop.Acts.Application.Services
 
         public async Task<OutcomeActWithProducts> Create(CreateOutcomeActDTO dto)
         {
-            //var user = await _identityClient.GetById(dto.OutcomeAct.UserId);
-            //var FIO = user.lastName + " " + user.firstName + " " + user.patronymic;
-            var FIO = "XUI";
+            var user = await _identityClient.GetById(dto.OutcomeAct.UserId);
+            var FIO = user.lastName + " " + user.firstName + " " + user.patronymic;
+            //var FIO = "XUI";
             var act = new OutcomeAct { Description = dto.OutcomeAct.Description, OutcomeActStatus = "Created", ShopId= dto.OutcomeAct.ShopId, UserCreatedId = dto.OutcomeAct.UserId, UserUpdatedId = dto.OutcomeAct.UserId, UserCreatedFIO = FIO, UserUpdatedFIO = FIO};
 
             var quantUnits = (await _productClient.GetAllQuantityUnits()).ToDictionary(n => n.Id, n => n.Name);
@@ -128,6 +128,9 @@ namespace BikeShop.Acts.Application.Services
             {
                 if(existProds.TryGetValue(n.Id, out var ent))
                 {
+                    ent.Quantity = n.Quantity;
+                    ent.Description = n.Description;
+                    ent.UpdatedAt = DateTime.Now;
                     existProds.Remove(ent.Id);
                     actualProds.Add(ent);
                 }

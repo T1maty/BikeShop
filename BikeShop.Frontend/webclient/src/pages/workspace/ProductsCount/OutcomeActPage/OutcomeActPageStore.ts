@@ -34,9 +34,12 @@ const useOutcomeActPage = create<p>()(persist(devtools(immer((set, get) => ({
 
     saveHandler: (s) => {
         let data = {...get().currentAct}
-        data.outcomeAct.shopId = parseFloat(LocalStorage.shopId()!)
-        // @ts-ignore
-        data.outcomeAct = {...data.outcomeAct, userId: LocalStorage.userId()}
+        data.outcomeAct = {
+            ...data.outcomeAct,
+            // @ts-ignore
+            userId: LocalStorage.userId(),
+            shopId: parseFloat(LocalStorage.shopId()!)
+        }
 
         set({isLoading: true})
         console.log(data)
