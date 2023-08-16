@@ -10,7 +10,8 @@ namespace BikeShop.Products.Application.Interfaces
 {
     public interface IPublicService
     {
-        public Task<List<ProductTag>> GetTags();
+        public Task<List<ProductCategory>> GetCategories();
+
         public Task<List<ProductCardDTO>> DefaultProducts(int Quantity);
         public Task<List<Product>> Serch(string querry);
         public Task<List<ProductCardDTO>> GetProducts(List<int> ids);

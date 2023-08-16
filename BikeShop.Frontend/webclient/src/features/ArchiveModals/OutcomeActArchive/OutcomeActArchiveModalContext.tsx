@@ -2,9 +2,7 @@ import React from 'react';
 import {ContextMenu} from "../../../widgets";
 
 import {useSnackbar} from "notistack";
-import useSupplyInvoice from "../../../pages/workspace/ProductsCount/SupplyInvoice/models/SupplyInvoiceStore";
-import useProductStickerManager from "../../ProductStickerManager/ProductStickerManagerStore";
-import {usePriceManager} from "../../PriceManagerModal/PricaManagerModalStore";
+import useOutcomeActArchiveModal from "./OutcomeActArchiveModalStore";
 
 interface p {
     open: { o: boolean, x: number, y: number },
@@ -13,11 +11,7 @@ interface p {
 
 export const OutcomeActArchiveModalContext = (props: p) => {
 
-    const setCurrentSupplyInvoice = useSupplyInvoice(s => s.setCurrentSupplyInvoice)
-    const setManagerOpen = useProductStickerManager(s => s.setOpen)
-    const setPriceManager = usePriceManager(s => s.setOpen)
-    const setProductsToPriceManager = usePriceManager(s => s.setProductsFromSupply)
-
+    const ex = useOutcomeActArchiveModal(s => s.executeHandler)
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -25,7 +19,12 @@ export const OutcomeActArchiveModalContext = (props: p) => {
         {
             name: 'Применить акт',
             click: () => {
-
+                ex(() => {
+                    enqueueSnackbar('Акт применен', {variant: 'success', autoHideDuration: 3000})
+                }, () => {
+                    //enqueueSnackbar('Ошибка', {variant: 'error', autoHideDuration: 3000})
+                })
+                props.setOpen({o: false, x: 0, y: 0});
             }
         }
     ]

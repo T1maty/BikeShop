@@ -98,7 +98,7 @@ export const MainPage = () => {
                         setIsLoading(true)
                         requestAPI(LocalStorage.userId()!).then(() => {
                             getUserShiftStatus()
-                            logout()
+                            //logout()
                             setIsLoading(false)
                         })
                     }}

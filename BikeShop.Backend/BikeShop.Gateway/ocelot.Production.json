@@ -354,11 +354,11 @@
     },
 
     {
-      "UpstreamPathTemplate": "/api/product/getbytags/{tagsIds}",
+      "UpstreamPathTemplate": "/api/product/getbycategory",
       "UpstreamHttpMethod": [
         "Get"
       ],
-      "DownstreamPathTemplate": "/product/getbytags/{tagsIds}",
+      "DownstreamPathTemplate": "/product/getbycategory",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -737,11 +737,11 @@
     },
 
     {
-      "UpstreamPathTemplate": "/api/public/gettags",
+      "UpstreamPathTemplate": "/api/public/getcategories",
       "UpstreamHttpMethod": [
         "Get"
       ],
-      "DownstreamPathTemplate": "/public/gettags",
+      "DownstreamPathTemplate": "/public/getcategories",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -800,11 +800,11 @@
     },
 
     {
-      "UpstreamPathTemplate": "/api/tag/getall",
+      "UpstreamPathTemplate": "/api/category/getall",
       "UpstreamHttpMethod": [
         "Get"
       ],
-      "DownstreamPathTemplate": "/tag/getall",
+      "DownstreamPathTemplate": "/category/getall",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -815,11 +815,26 @@
       "SwaggerKey": "products"
     },
     {
-      "UpstreamPathTemplate": "/api/tag/create",
+      "UpstreamPathTemplate": "/api/category/create",
       "UpstreamHttpMethod": [
         "Post"
       ],
-      "DownstreamPathTemplate": "/tag/create",
+      "DownstreamPathTemplate": "/category/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	{
+      "UpstreamPathTemplate": "/api/category/delete",
+      "UpstreamHttpMethod": [
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/category/delete",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -830,11 +845,11 @@
       "SwaggerKey": "products"
     },
     {
-      "UpstreamPathTemplate": "/api/tag/update",
+      "UpstreamPathTemplate": "/api/category/update",
       "UpstreamHttpMethod": [
         "Put"
       ],
-      "DownstreamPathTemplate": "/tag/update",
+      "DownstreamPathTemplate": "/category/update",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

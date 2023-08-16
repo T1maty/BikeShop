@@ -224,24 +224,6 @@ namespace BikeShop.Products.Application.Services
             var forRemoveSpecs = _context.ProductSpecifications.Where(n => n.ProductId == dto.Id).Where(n => !specIds.Contains(n.Id));
             _context.ProductSpecifications.RemoveRange(forRemoveSpecs);
 
-
-            var atbIDs = await _context.TagToProductBinds.Where(n => slaveIds.Contains(n.ProductId)).ToDictionaryAsync(n=>n.Id, n=>n);
-            var newTagBinds = new List<TagToProductBind>();
-            
-            foreach (var tagBinds in dto.productTags)
-            {
-                if (atbIDs.ContainsKey(tagBinds.Id))
-                {
-                    atbIDs.Remove(tagBinds.Id);
-                }
-                else
-                {
-                    newTagBinds.Add(new TagToProductBind { ProductId = tagBinds.ProductId, ProductTagId = tagBinds.ProductTag.Id });
-                }
-            }
-
-            _context.TagToProductBinds.RemoveRange(atbIDs.Values);
-            await _context.TagToProductBinds.AddRangeAsync(newTagBinds);
             await _context.SaveChangesAsync(new CancellationToken());
 
             return new ProductCardDTO();

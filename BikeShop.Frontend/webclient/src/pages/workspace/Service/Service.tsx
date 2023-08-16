@@ -8,7 +8,7 @@ import {useSnackbar} from 'notistack'
 import {useForm} from "react-hook-form"
 import {ServiceFormModel} from "../../../entities"
 import {PrintModal} from "../../../features";
-import {ActServiceWork, CheckForServiceWork} from "../../../widgets";
+import {ActServiceWork, CheckForServiceWork, ServiceIncomeInvoice} from "../../../widgets";
 import {ServiceSticker} from "../../../widgets/workspace/Invoices/Service/ServiceSticker";
 
 export const Service = () => {
@@ -86,11 +86,13 @@ export const Service = () => {
                 <PrintModal open={printModalIn} trigger={triggerIn} finaly={() => {
                     setTriggerIn(null)
                     setPrintModalIn(false)
-                    setPrintModalSticker(true)
-                    setTriggerSticker("agent")
+                    setTimeout(() => {
+                        setPrintModalSticker(true)
+                        setTriggerSticker("agent")
+                    }, 1000)
                 }}
                             setOpen={setPrintModalIn}
-                            children={<CheckForServiceWork children={currentService!}/>}
+                            children={<ServiceIncomeInvoice children={currentService!}/>}
                             printAgentName={"WorkshopIn"} copies={2}
                 />
                 <PrintModal open={printModalSticker} trigger={triggerSticker} finaly={() => {
@@ -104,8 +106,10 @@ export const Service = () => {
                 <PrintModal open={printModalOut} trigger={triggerOut} printAgentName={'WorkshopOut'} finaly={() => {
                     setPrintModalOut(false)
                     setTriggerOut(null)
-                    setPrintModalOutSmall(true)
-                    setTriggerOutSmall('agent')
+                    setTimeout(() => {
+                        setPrintModalOutSmall(true)
+                        setTriggerOutSmall('agent')
+                    }, 1000)
                 }}
                             setOpen={setPrintModalOut}
                             children={<CheckForServiceWork children={currentService!}/>}

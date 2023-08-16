@@ -209,7 +209,7 @@ namespace BikeShop.Products.Application.Services
             {
                 if (!existKeys.Contains(row[0].ToString()))
                 {
-                    var net = new Product { Barcode = row[4].ToString(), CatalogKey = row[0].ToString(), CheckStatus = "JustCreatedByScript", DealerPrice = 0, IncomePrice = decimal.Parse(row[2].ToString()) / ((decimal)37.5), RetailPrice = decimal.Parse(row[3].ToString()) / ((decimal)37.5), Name = row[1].ToString(), QuantityUnitId = 1, BrandId = 1, QuantityUnitName = prodQuantUnits[1], Category = row[6] == null ? "" : row[6].ToString() };
+                    var net = new Product { Barcode = row[4].ToString(), CatalogKey = row[0].ToString(), CheckStatus = "JustCreatedByScript", DealerPrice = 0, IncomePrice = decimal.Parse(row[2].ToString()) / ((decimal)37.5), RetailPrice = decimal.Parse(row[3].ToString()) / ((decimal)37.5), Name = row[1].ToString(), QuantityUnitId = 1, BrandId = 1, QuantityUnitName = prodQuantUnits[1], CategoryImport = row[6] == null ? "" : row[6].ToString() };
                     np.Add(net);
                     buf.Add(net, prodQuantOldDict[int.Parse(row[5].ToString())]);
                 }

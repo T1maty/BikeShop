@@ -22,17 +22,14 @@ namespace BikeShop.Products.WebApi.Controllers
     [Route("product")]
     public class ProductController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IProductService _productService;
 
-        public ProductController(IMapper mapper, IMediator mediator, IProductService productService)
+        public ProductController(IMediator mediator, IProductService productService)
         {
-            _mapper = mapper;
             _mediator = mediator;
             _productService = productService;
         }
-
 
         [HttpPost("create")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
@@ -76,26 +73,11 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productService.Update(dto);
         }
 
-        /// <summary>
-        /// Получение товаров по id тэгов
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Пример запроса:
-        /// GET /product/getbytags/1-4-16
-        /// </remarks>
-        /// 
-        /// <param name="tagsIds">ID тэгов, разделенные тире (1-4-8-9)</param>
-        /// <returns>Возвращает продукты по указанным тэгам</returns>
-        ///
-        /// <response code="200">Успех. Возвращает массив товаров по указанным тэгам</response>
-        /// <response code="400">Некорректно указанные тэги. Правильный формат: 1-3-8 (tags_invalid)</response>
-        [HttpGet("getbytags/{tagsIds}")]
-        [ProducesResponseType(typeof(ProductsListModel), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
-        public async Task<List<Product>> GetProductsByTags(string tagsIds, int Take)
+
+        [HttpGet("getbycategory")]
+        public async Task<List<Product>> GetProductsByCategory(int Id, int Take)
         {
-            return await _productService.GetProductsByTags(tagsIds, Take);
+            return await _productService.GetProductsByCategory(Id, Take);
         }
 
         [HttpPost("getbyids")]

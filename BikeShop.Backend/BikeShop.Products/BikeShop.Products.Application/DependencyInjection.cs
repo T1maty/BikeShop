@@ -21,6 +21,7 @@ public static class DependencyInjection
         services.AddScoped<IQuantityUnitService, QuantityUnitService>();
         services.AddScoped<IProductCardService, ProductCardService>();
         services.AddScoped<IInternalService, InternalService>();
+        services.AddScoped<IProductCategoryFilterService, ProductCategoryFilterService>();
         
         return services;
     }

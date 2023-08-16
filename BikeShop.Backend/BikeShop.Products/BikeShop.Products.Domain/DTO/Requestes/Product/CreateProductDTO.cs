@@ -19,6 +19,6 @@ namespace BikeShop.Products.Domain.DTO.Requestes.Product
         public decimal DealerPrice { get; set; }
         public decimal RetailPrice { get; set; }
         public Guid User { get; set; }
-        public int? TagId { get; set; } = 0;
+        public int? CategoryId { get; set; } = 0;
     }
 }

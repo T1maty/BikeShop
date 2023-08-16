@@ -6,7 +6,10 @@ public class Product : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
     public string CatalogKey { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
+    public string CategoryImport { get; set; } = string.Empty;
+    public int CategoryId { get; set; } = 0;
+    public string CategoryName { get; set; } = string.Empty;
+    public string CategoryWay { get; set; } = string.Empty;
     public string Barcode { get; set; } = string.Empty;
     public string ManufacturerBarcode { get; set; } = string.Empty;
     public int QuantityUnitId { get; set; } = 1;

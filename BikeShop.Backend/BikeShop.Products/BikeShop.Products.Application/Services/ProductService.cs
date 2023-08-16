@@ -37,60 +37,20 @@ namespace BikeShop.Products.Application.Services
             return await _context.Products.Where(n => Ids.Contains(n.Id)).ToListAsync();
         }
 
-        public List<int> Get(List<int> parents, List<ProductTag> data)
+        public List<int> Get(List<int> parents, List<ProductCategory> data)
         {
             var childs = data.Where(n => parents.Contains(n.ParentId)).Select(n => n.Id).ToList();
             if(childs.Count > 0)childs.AddRange(Get(childs, data));
             return childs;
         }
 
-        public async Task<List<Product>> GetProductsByTags(string tagsIds, int Take)
+        public async Task<List<Product>> GetProductsByCategory(int Id, int Take)
         {
-            var ids = ProductService.GetTagListFromString(tagsIds);
-            var tags = await _context.ProductTags.ToListAsync();
-            var tagsTree = new List<List<int>>();
-            var allIds = new List<int>();
+            var tags = await _context.ProductCategories.ToListAsync();
+            var allIds = Get(new List<int> { Id }, tags);
+            allIds.Add(Id);
 
-            foreach (var i in ids)
-            {
-                var res = new List<int> { i };
-                var range = Get(new List<int> { i }, tags);
-                res.AddRange(range);
-                allIds.AddRange(range);
-                tagsTree.Add(res);
-            }
-
-            allIds.AddRange(ids);
-
-            var prodIdsList = await _context.TagToProductBinds
-                .Where(n => allIds.Contains(n.ProductTagId))
-                .Select(n => n.ProductId)
-                .Distinct()
-                .ToListAsync();
-
-            var allBinds = await _context.TagToProductBinds
-                .Where(n => prodIdsList.Contains(n.ProductId))
-                .ToListAsync();
-
-            var prodsWhitelist = new List<int>();
-
-            foreach (var i in prodIdsList)
-            {
-                var binds = allBinds.Where(n => n.ProductId == i).Select(n => n.ProductTagId);
-                var bad = tagsTree.Any(j => !j.Any(k => binds.Contains(k)));
-
-                if (!bad)
-                {
-                    prodsWhitelist.Add(i);
-                }
-            }
-
-            var products = await _context.Products
-                .Where(product => prodsWhitelist.Contains(product.Id))
-                .Take(Take)
-                .ToListAsync();
-
-            return products;
+            return await _context.Products.Where(n=>allIds.Contains(n.CategoryId)).Take(Take).ToListAsync();
         }
 
         private static List<int> GetTagListFromString(string tagsArrayStr)
@@ -225,7 +185,7 @@ namespace BikeShop.Products.Application.Services
 
             ent.Name = dto.Name;
             ent.CatalogKey = dto.CatalogKey;
-            if(dto.Category != null) ent.Category = dto.Category;
+            if(dto.Category != null) ent.CategoryImport = dto.Category;
             if(dto.ManufacturerBarcode != null) ent.ManufacturerBarcode = dto.ManufacturerBarcode;
             ent.RetailVisibility = dto.RetailVisibility;
             ent.B2BVisibility = dto.B2BVisibility;
@@ -244,7 +204,7 @@ namespace BikeShop.Products.Application.Services
             prod.UserUpdated = dto.User;
 
             if(dto.ManufacturerBarcode != null)dto.ManufacturerBarcode = dto.ManufacturerBarcode;
-            if(dto.Category != null)dto.Category = dto.Category;
+            if(dto.Category != null)prod.CategoryImport = dto.Category;
 
             prod.CatalogKey = dto.CatalogKey;
             prod.B2BVisibility = dto.B2BVisibility;
@@ -254,6 +214,17 @@ namespace BikeShop.Products.Application.Services
             prod.IncomePrice= dto.IncomePrice;
             prod.Name = dto.Name;
             prod.QuantityUnitId = 1;
+
+            if(dto.CategoryId != null)
+            {
+                var cat = await _context.ProductCategories.FindAsync(dto.CategoryId);
+                if (cat != null)
+                {
+                    prod.CategoryId = (int)dto.CategoryId;
+                    prod.CategoryName = cat.Name;
+                    prod.CategoryWay = cat.Way;
+                }
+            }
 
             var unit = await _context.QuantityUnits.FindAsync(1);
             if (unit == null) throw new Exception();
@@ -269,11 +240,6 @@ namespace BikeShop.Products.Application.Services
             prod.Barcode = newBarcode;
 
             await _context.ProductsCards.AddAsync(new ProductCard { ProductId = prod.Id, Description = "", DescriptionShort = "" });
-
-            if(dto.TagId != 0 && dto.TagId != null)
-            {
-                await _context.TagToProductBinds.AddAsync(new TagToProductBind { ProductId = prod.Id, ProductTagId = (int)dto.TagId });
-            }
 
             await _context.SaveChangesAsync(new CancellationToken());
 
@@ -338,7 +304,7 @@ namespace BikeShop.Products.Application.Services
             {
                 var temp = dto.Where(n => n.catalog_key == i.CatalogKey).FirstOrDefault();
                 if (temp != null)
-                i.Category = temp.category;
+                i.CategoryImport = temp.category;
 
                 newImgs.Add(new ProductImg { ProductId = i.Id, Url = temp.photo});
             }

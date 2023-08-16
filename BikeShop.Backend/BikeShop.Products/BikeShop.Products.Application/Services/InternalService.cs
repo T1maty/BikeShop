@@ -45,7 +45,7 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<List<ResponseProductWithTags>> ProductsByCat(string Cat)
         {
-            var prods = _context.Products.Where(n=>n.Category == Cat);
+            var prods = _context.Products.Where(n=>n.CategoryImport == Cat);
             var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
         
 
@@ -98,7 +98,7 @@ namespace BikeShop.Products.Application.Services
 
         public async Task UpdateCategoriesList()
         {
-            var allCats =await  _context.Products.Select(n => n.Category).ToListAsync();
+            var allCats =await  _context.Products.Select(n => n.CategoryImport).ToListAsync();
 
             HashSet<string> uniqueStrings = new HashSet<string>(allCats);
 

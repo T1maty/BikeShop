@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BikeShop.Products.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
 
         public List<ProductSpecidicationDTO> productSpecifications { get; set; }
 
-        public List<UpdateProductTagBindDTO> productTags { get; set; }
+        public List<ProductFilterBind> productFilters { get; set; }
 
         public ProductCardMicroDTO productCard { get; set; }
         public List<UpdateBindProductDTO> bindedProducts { get; set; }

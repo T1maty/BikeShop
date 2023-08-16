@@ -17,10 +17,10 @@ namespace BikeShop.Products.WebApi.Controllers
             _publicService = publicService;
         }
 
-        [HttpGet("gettags")]
-        public async Task<List<ProductTag>> GetTags()
+        [HttpGet("getcategories")]
+        public async Task<List<ProductCategory>> GetCategories()
         {
-            return await _publicService.GetTags();
+            return await _publicService.GetCategories();
         }
 
         [HttpGet("defaultproducts")]

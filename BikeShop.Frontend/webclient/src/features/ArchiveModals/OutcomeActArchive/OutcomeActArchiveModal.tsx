@@ -9,6 +9,8 @@ import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
 import {OutcomeActWithProducts} from "../../../entities/entities/Acts/OutcomeAct/OutcomeActWithProducts";
 import {OutcomeActArchiveModalContext} from "./OutcomeActArchiveModalContext";
+import useOutcomeActPage from "../../../pages/workspace/ProductsCount/OutcomeActPage/OutcomeActPageStore";
+import {BikeShopPaths} from "../../../app/routes/paths";
 
 const OutcomeActArchiveModal = () => {
 
@@ -18,6 +20,10 @@ const OutcomeActArchiveModal = () => {
     const getArchive = useOutcomeActArchiveModal(s => s.getArchive)
     const errorStatus = useOutcomeActArchiveModal(s => s.errorStatus)
     const isLoading = useOutcomeActArchiveModal(s => s.isLoading)
+    const setSelectedOutcomeAct = useOutcomeActArchiveModal(s => s.setSelectedOutcomeAct)
+    const setIsCreating = useOutcomeActPage(s => s.setIsCreating)
+    const setCurrentAct = useOutcomeActPage(s => s.setCurrentAct)
+
 
     const {enqueueSnackbar} = useSnackbar()
     const navigate = useNavigate()
@@ -64,15 +70,15 @@ const OutcomeActArchiveModal = () => {
                                          onDoubleClick={() => {
                                              console.log(el)
                                              if (el.outcomeAct.outcomeActStatus === 'Created') {
-                                                 //setIsCreating(false)
-                                                 //setCurrentSupplyInvoice(el);
-                                                 //navigate(BikeShopPaths.WORKSPACE.ARRIVAL_OF_PRODUCTS)
+                                                 setIsCreating(false)
+                                                 setCurrentAct(el);
+                                                 navigate(BikeShopPaths.WORKSPACE.OUTCOME_ACT)
                                                  setOpen(false)
                                              }
                                          }}
                                          onContextMenu={(e) => {
                                              setNavContext({o: true, x: e.clientX, y: e.clientY})
-                                             //setSelectedSupplyInvoice(el)
+                                             setSelectedOutcomeAct(el)
                                          }}
                                     >
                                         <div className={

@@ -11,7 +11,7 @@ public interface IProductService
 {
 
     public Task<List<Product>> GetProductsByIdsArray(List<int> Ids);
-    public Task<List<Product>> GetProductsByTags(string tagsIds, int Take);
+    public Task<List<Product>> GetProductsByCategory(int Id, int Take);
 
     public Task<ProductImg> AddImageToProduct(int productId, IFormFile imageFile);
     public Task DeleteImage(int imageId);

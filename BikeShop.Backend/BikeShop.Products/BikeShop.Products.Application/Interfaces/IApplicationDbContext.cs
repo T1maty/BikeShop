@@ -32,6 +32,9 @@ public interface IApplicationDbContext
     DbSet<ProductOptionVariantBind> ProductOptionVariantBinds { get; set; }
 
     DbSet<TagToCategoryBind> TagToCategoryBinds { get; set; }
+     DbSet<ProductCategory> ProductCategories { get; set; }
+     DbSet<ProductFilter> ProductFilters { get; set; }
+     DbSet<ProductFilterBind> ProductFilterBinds { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс

@@ -20,7 +20,7 @@ export const useBarcode = create<p>()(persist(devtools(immer((set, get) => ({
             if (get().buf === '') {
                 setTimeout(() => {
                     set({buf: ''})
-                }, 300)
+                }, 1000)
             }
             set(state => {
                 state.buf += v

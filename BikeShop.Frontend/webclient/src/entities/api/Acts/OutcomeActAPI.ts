@@ -18,9 +18,9 @@ export const OutcomeActAPI = {
             $api.put<OutcomeActWithProducts>(`/outcome/update`, data)
         )
     },
-    execute(invoiceId: number, userId: string): Promise<AxiosResponse> {
+    execute(invoiceId: number, userId: string): Promise<AxiosResponse<OutcomeActWithProducts>> {
 
-        return $api.post<OutcomeActWithProducts>(`/outcome/execute?invoiceId=${invoiceId}&userId=${userId}`)
+        return $api.post<OutcomeActWithProducts>(`/outcome/execute?id=${invoiceId}&userId=${userId}`)
 
     },
 }
