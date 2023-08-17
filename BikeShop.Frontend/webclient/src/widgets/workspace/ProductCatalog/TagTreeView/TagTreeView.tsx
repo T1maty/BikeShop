@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import s from './TagTreeView.module.scss'
-import {ProductTag} from "../../../../entities"
 import {TagTreeViewContextMenu} from "./TagTreeViewContextMenu"
 import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
@@ -8,11 +7,12 @@ import {UniTreeView} from "../../../../shared/ui"
 import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore"
 import Enumerable from "linq"
 import {useSnackbar} from "notistack"
+import {ProductCategory} from "../../../../entities/entities/ProductCategory";
 
 interface TagTreeViewProps {
     onNodeDoubleClick?: (node: any) => void
-    tags?: ProductTag[]
-    setTags?: (value: ProductTag[]) => void
+    tags?: ProductCategory[]
+    setTags?: (value: ProductCategory[]) => void
 }
 
 export const TagTreeView = (props: TagTreeViewProps) => {
@@ -31,22 +31,20 @@ export const TagTreeView = (props: TagTreeViewProps) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
-    const setProductsToTableHandler = (node: ProductTag) => {
+    const setProductsToTableHandler = (node: ProductCategory) => {
         setSelect(node.id)
-        let tagsIds = Enumerable.from(props.tags ? props.tags : []).select(n => n.id).toArray()
-        tagsIds.push(node.id)
-        setProductsToTable(tagsIds)
+        setProductsToTable(node.id)
     }
 
     useEffect(() => {
-        fetchTags().then((r) => {
-            setTreeViewData(r.data.tags as ProductTag[])
-        })
+        fetchTags()
     }, [])
 
     return (
         <div className={s.tagTreeView_mainBox}
-             onContextMenu={(event) => {event.preventDefault()}}
+             onContextMenu={(event) => {
+                 event.preventDefault()
+             }}
         >
             <CreateTagModal onSuccess={addTag}/>
             <UpdateTagModal onSuccess={updateTag}/>

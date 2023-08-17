@@ -1,7 +1,7 @@
-import {ProductTag} from "../entities/ProductTag";
+import {ProductCategory} from "../entities/ProductCategory";
 
 export interface ProductTagWithChildrens {
-    tag: ProductTag
+    tag: ProductCategory
     childrens: ProductTagWithChildrens[]
-    childrenIds: string[]
+    childrenIds: number[]
 }

@@ -10,7 +10,7 @@ import useCatalog from './CatalogStore'
 import {DeleteButton, ShopLoader} from '../../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useShoppingCart from '../ShoppingCart/ShoppingCartStore'
-import {ProductFullData, ProductTag, useCurrency} from '../../../../entities'
+import {ProductCategory, ProductFullData, useCurrency} from '../../../../entities'
 import Enumerable from "linq"
 import {ShopCatalogTreeView} from "../ShopCatalogTreeView/ShopCatalogTreeView"
 
@@ -98,7 +98,7 @@ export const Catalog = () => {
         // setCurrentProduct(product) // оставить или нет?!
         navigate(`/shop/catalog/${product.product.id}`)
     }
-    const deleteUserCurrentTagHandler = (tag: ProductTag) => {
+    const deleteUserCurrentTagHandler = (tag: ProductCategory) => {
         deleteUserCurrentTag(userCurrentTags.filter(t => t.id !== tag.id))
     }
     const clearUserCurrentTagsArrayHandler = () => {
@@ -115,21 +115,6 @@ export const Catalog = () => {
         getTags()
     }, [])
 
-    useEffect(() => {
-        setActiveFilter1(true)
-
-        if (userCurrentTags.length === 0 && selectedTags.length === 0) {
-            getDefaultProducts()
-        } else {
-            let ids = Enumerable.from(userCurrentTags).select(n => n.id).toArray()
-            Enumerable.from(tagsWithChildrens.filter(n => ids.includes(n.tag.id))).select(n => n.childrenIds).forEach(n => {
-                ids = ids.concat(n)
-            })
-            ids = ids.concat(selectedTags)
-            console.log('Поиск по айдишникам', ids)
-            getProductsByTags(ids)
-        }
-    }, [userCurrentTags, selectedTags])
 
     if (isLoading) {
         return <ShopLoader/>

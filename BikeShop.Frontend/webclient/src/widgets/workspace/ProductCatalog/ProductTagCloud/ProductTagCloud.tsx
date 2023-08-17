@@ -1,11 +1,11 @@
 import React from 'react'
 import s from "./ProductTagCloud.module.scss"
 import {Button} from "../../../../shared/ui"
-import {ProductTag} from "../../../../entities"
+import {ProductCategory} from "../../../../entities";
 
 interface ProductTagCloudProps {
-    tags: ProductTag[]
-    setTags: (value: ProductTag[]) => void
+    tags: ProductCategory[]
+    setTags: (value: ProductCategory[]) => void
 }
 
 export const ProductTagCloud = (props: ProductTagCloudProps) => {
@@ -14,7 +14,9 @@ export const ProductTagCloud = (props: ProductTagCloudProps) => {
         <div className={s.productTagCloud}>
             <div className={s.productTagCloud_header}>
                 <div>Облако тегов</div>
-                <Button onClick={() => {props.setTags([])}}>
+                <Button onClick={() => {
+                    props.setTags([])
+                }}>
                     Очистить
                 </Button>
             </div>
@@ -23,7 +25,9 @@ export const ProductTagCloud = (props: ProductTagCloudProps) => {
                     props.tags.map((n) => {
                         return (
                             <div className={s.tagsList_item}
-                                 onDoubleClick={() => {props.setTags(props.tags.filter(n1 => n1.id != n.id))}}
+                                 onDoubleClick={() => {
+                                     props.setTags(props.tags.filter(n1 => n1.id != n.id))
+                                 }}
                             >
                                 {n.name}
                             </div>)

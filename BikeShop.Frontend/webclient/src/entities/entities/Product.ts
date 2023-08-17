@@ -5,7 +5,10 @@ export interface Product {
     enabled: boolean
     name: string
     catalogKey: string
-    category: string
+    categoryImport: string
+    categoryId: number
+    categoryWay: string
+    categoryName: string
     barcode: string
     manufacturerBarcode: string
     quantityUnitId: number

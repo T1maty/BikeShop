@@ -8,7 +8,7 @@ namespace BikeShop.Products.Domain.Entities
 {
     public class ProductFilterBind : BaseEntity
     {
-        public int ProdictId { get; set; }
+        public int ProductId { get; set; }
         public int FilterId { get; set; }
         public string Name { get; set; }
         public string GroupName { get; set; }

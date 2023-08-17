@@ -1,43 +1,44 @@
-import {ProductTag, UpdateTag} from "../../../entities"
+import {UpdateCategory} from "../../../entities"
 import {AxiosResponse} from "axios"
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
+import {ProductCategory} from "../../../entities/entities/ProductCategory";
 
 interface createTagModalStore {
     open: boolean
-    openTagModal: (tag: ProductTag) => void
+    openTagModal: (tag: ProductCategory) => void
     closeTagModal: () => void
 
-    targetTag: ProductTag
+    targetTag: ProductCategory | null
 
-    updateTag: (tag: UpdateTag) => Promise<AxiosResponse>
-    moveTag: (tag: ProductTag, parentId: string, onSuccess: (r: ProductTag) => void, onFail: () => void) => void
+    updateTag: (tag: UpdateCategory) => Promise<AxiosResponse>
+    moveTag: (tag: UpdateCategory, parentId: number, onSuccess: (r: ProductCategory) => void, onFail: () => void) => void
 }
 
 const useUpdateTagModal = create<createTagModalStore>()(persist(devtools(immer((set) => ({
     open: false,
-    targetTag: {} as ProductTag,
+    targetTag: null,
 
     moveTag: (tag, parentId, onSuccess, onFail) => {
-        let data: UpdateTag = {
+
+        let data: UpdateCategory = {
             id: tag.id,
             name: tag.name,
             parentId: parentId,
             isCollapsed: tag.isCollapsed,
             isRetailVisible: tag.isRetailVisible,
             isB2BVisible: tag.isB2BVisible,
-            isUniversal: tag.isUniversal,
             sortOrder: tag.sortOrder,
         }
-        $api.put('/tag/update', data).then((r) => {
-            let tag1 = tag
-            tag1.parentId = parentId
-            onSuccess(tag1)
+        $api.put('/category/update', data).then((r: AxiosResponse<ProductCategory>) => {
+            onSuccess(r.data)
         }).catch(() => {
             onFail()
         })
+
+
     },
     openTagModal: (tag) => {
         set({open: true})
@@ -46,11 +47,11 @@ const useUpdateTagModal = create<createTagModalStore>()(persist(devtools(immer((
 
     closeTagModal: () => {
         set({open: false})
-        set({targetTag: {} as ProductTag})
+        set({targetTag: null})
     },
 
     updateTag: (tag) => {
-        return $api.put('/tag/update', tag)
+        return $api.put('/category/update', tag)
     }
 }))), {
     name: "updateTagModalStore",

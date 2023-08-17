@@ -1,12 +1,12 @@
 import {$api} from "../../shared"
-import {ProductTag} from "../entities/ProductTag"
 import {AxiosResponse} from "axios"
 import {ProductFullData} from "../models/ProductFullData"
+import {ProductCategory} from "../entities/ProductCategory";
 
 export const ShopAPI = {
-    getTags(): Promise<AxiosResponse<ProductTag[]>> {
+    getTags(): Promise<AxiosResponse<ProductCategory[]>> {
         return (
-            $api.get<ProductTag[]>('/public/gettags')
+            $api.get<ProductCategory[]>('/public/getcategories')
         )
     },
     getDefaultProducts(): Promise<AxiosResponse<ProductFullData[]>> {

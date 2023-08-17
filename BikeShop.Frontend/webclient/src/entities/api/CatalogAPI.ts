@@ -6,12 +6,11 @@ import {
     Product,
     ProductExtended,
     ProductStorageQuantity,
-    ProductTag,
-    ProductTagResponse,
     UpdateProduct,
     UpdateProductPrices
 } from '../index'
 import {$api} from "../../shared";
+import {ProductCategory} from "../entities/ProductCategory";
 
 export const CatalogAPI = {
     searchProductByName(inputValue: string): Promise<AxiosResponse<Product[]>> {
@@ -19,9 +18,9 @@ export const CatalogAPI = {
             $api.get<Product[]>(`/product/search?querry=${inputValue}`)
         )
     },
-    getProductByTag(value: string, Take: number): Promise<AxiosResponse<Product[]>> {
+    getProductByCategory(Id: number, Take: number): Promise<AxiosResponse<Product[]>> {
         return (
-            $api.get<Product[]>(`/product/getbytags/${value}?Take=${Take}`)
+            $api.get<Product[]>(`/product/getbycategory?Id=${Id}&Take=${Take}`)
         )
     },
     createProduct(data: CreateProduct): Promise<AxiosResponse<Product[]>> {
@@ -45,14 +44,14 @@ export const CatalogAPI = {
         )
     },
 
-    fetchTags(): Promise<AxiosResponse<ProductTagResponse>> {
+    fetchTags(): Promise<AxiosResponse<ProductCategory[]>> {
         return (
-            $api.get<ProductTagResponse>('/tag/getall')
+            $api.get<ProductCategory[]>('/category/getall')
         )
     },
-    createProductTag(tag: CreateTag): any {
+    createProductTag(tag: CreateTag): Promise<AxiosResponse<ProductCategory>> {
         return (
-            $api.post<ProductTag>('/tag/create', tag)
+            $api.post<ProductCategory>('/category/create', tag)
         )
     },
     getStorageProductIds(storageId: string): Promise<AxiosResponse<ProductStorageQuantity[]>> {

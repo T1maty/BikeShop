@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {ProductTag} from "../../../../entities"
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
 import useCreateTagModal from '../../../../features/ProductCatalogFeatures/CreateTagModal/CreateTagModalStore'
 import useTagTreeView from './TagTreeViewStore'
@@ -8,6 +7,7 @@ import useCreateProductModal
 import useUpdateTagModal from '../../../../features/ProductCatalogFeatures/UpdateTagModal/UpdateTagModalStore'
 import {ChooseProductTagModal} from "../../../../features";
 import {useSnackbar} from "notistack";
+import {ProductCategory} from "../../../../entities";
 
 export const TagTreeViewContextMenu = () => {
 
@@ -30,7 +30,7 @@ export const TagTreeViewContextMenu = () => {
     const moveTag = useUpdateTagModal(s => s.moveTag)
 
     const [v, sV] = useState(false)
-    const [tag, setTag] = useState<ProductTag | null>(null)
+    const [tag, setTag] = useState<ProductCategory | null>(null)
     const {enqueueSnackbar} = useSnackbar()
 
 
@@ -55,14 +55,16 @@ export const TagTreeViewContextMenu = () => {
                 openUpdateTag(tag)
             }
         },
+
         {
             name: 'Создать в корне',
             click: () => {
                 setContextVisible(false, 0, 0)
-                setParentNode({} as ProductTag)
+                setParentNode(null)
                 setOpenCreateTagModal(true)
             }
         },
+
         {
             name: 'Создать потомка',
             click: () => {
@@ -74,6 +76,7 @@ export const TagTreeViewContextMenu = () => {
             }
         },
         {
+
             name: 'Переместить',
             click: () => {
                 setContextVisible(false, 0, 0)
@@ -81,6 +84,8 @@ export const TagTreeViewContextMenu = () => {
                 setTag(treeViewData.find(n => n.id === selectedTag)!)
             }
         },
+
+
     ]
 
     return (

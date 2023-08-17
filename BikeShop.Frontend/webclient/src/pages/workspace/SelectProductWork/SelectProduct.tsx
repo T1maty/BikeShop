@@ -4,7 +4,7 @@ import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
 import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
 import useSelectProduct from "./SelectProductStore"
 import {columns} from "./SlaveTableConfig"
-import {ProductTag, ServiceProduct} from "../../../entities"
+import {ProductCategory, ServiceProduct} from "../../../entities"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {Product} from "entities"
@@ -19,7 +19,7 @@ export const SelectProduct = (props: SelectProductProps) => {
 
     const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
     const conv = useSelectProduct(s => s.convert)
-    const [tags, setTags] = useState<ProductTag[]>([])
+    const [tags, setTags] = useState<ProductCategory[]>([])
 
     const addProductHandler = (product: Product) => {
         let prods = props.products

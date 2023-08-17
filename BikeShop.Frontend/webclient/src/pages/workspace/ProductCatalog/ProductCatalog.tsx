@@ -1,20 +1,19 @@
 import React, {useEffect, useState} from 'react'
-import {ProductCatalogTable, ProductTagCloud, TagTreeView} from "../../../widgets"
+import {ProductCatalogTable, TagTreeView} from "../../../widgets"
 import {AsyncSelectSearchProduct, Button} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
     from "../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore"
 import {EditProductCardModal} from "../../../features"
 import {useSnackbar} from "notistack"
-import {ProductCardAPI, ProductTag} from '../../../entities'
 import useProductCatalogTableStore
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableStore"
 import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageModal/CreateStorageModalStore'
 import Select from 'react-select'
 import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
 import {useProductCatalogStorage} from "./ProductCatalogStorage"
-import Enumerable from "linq";
 import DisplayModal from "../../../features/ProductCatalogFeatures/DisplayModal";
+import {ProductCategory} from "../../../entities";
 
 export const ProductCatalog = () => {
 
@@ -32,7 +31,7 @@ export const ProductCatalog = () => {
 
     const storageData = useProductCatalogStorage(s => s.storageData)
 
-    const [tags, setTags] = useState<ProductTag[]>([])
+    const [tags, setTags] = useState<ProductCategory[]>([])
     const [displayModal, setDisplayModal] = useState(false)
 
     useEffect(() => {
@@ -59,9 +58,6 @@ export const ProductCatalog = () => {
             <EditProductCardModal/>
             <DisplayModal open={displayModal} setOpen={setDisplayModal}/>
             <div className={s.productCatalogTable_leftSide}>
-                <div className={s.leftSide_header}>
-                    <ProductTagCloud tags={tags} setTags={setTags}/>
-                </div>
                 <div className={s.leftSide_tree}>
                     <TagTreeView tags={tags} setTags={setTags}/>
                 </div>
@@ -76,9 +72,7 @@ export const ProductCatalog = () => {
                     </Button>
                     <div className={s.searchRow_searchInput}>
                         <AsyncSelectSearchProduct onSelect={(p) => {
-                            ProductCardAPI.getProductCardById(p.id).then(n => {
-                                setProductsToTable(Enumerable.from(n.data.productTags).select(h => h.productTag.id).toArray())
-                            })
+                            setProductsToTable(p.categoryId)
                         }}/>
                     </div>
                     <div style={{color: 'black'}}>

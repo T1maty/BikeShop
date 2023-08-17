@@ -16,7 +16,7 @@ interface productCatalogTableStore {
     selectedRows: Product[]
     setSelectedRows: (value: Product[]) => void
 
-    getProducts: (tags: string[]) => void
+    getProducts: (CategoryId: number) => void
     addNewProduct: (product: Product) => void
     updateRow: (rowData: UpdateProduct) => void
 
@@ -68,16 +68,10 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
     setSelectedRows: (value) => set({selectedRows: value}
     ),
 
-    getProducts: (tags) => {
-        let value = ''
-        tags.forEach((n) => {
-            value = value.concat(n + '-')
-        })
-        value = value.slice(0, -1)
-
+    getProducts: (CategoryId) => {
         set({isLoading: true})
 
-        CatalogAPI.getProductByTag(value, 100).then((r) => {
+        CatalogAPI.getProductByCategory(CategoryId, 1000).then((r) => {
             set({rows: r.data})
             set({isLoading: false})
             get().sort()

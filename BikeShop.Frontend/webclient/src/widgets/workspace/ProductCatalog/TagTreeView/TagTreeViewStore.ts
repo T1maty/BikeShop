@@ -1,39 +1,37 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, ProductTag, ProductTagResponse, UpdateTag} from "../../../../entities"
+import {CatalogAPI} from "../../../../entities"
 import {AxiosResponse} from "axios"
 import {$api} from "../../../../shared"
+import {ProductCategory} from "../../../../entities/entities/ProductCategory";
 
 interface TagTreeViewStore {
     contextMenuVisible: boolean
     setContextMenuVisible: (value: boolean, X: number, Y: number) => void
     contextMenuXY: { X: number, Y: number }
 
-    treeViewTags: ProductTag[]
-    setTreeViewTags: (tags: ProductTag[]) => void
-    addTreeViewTag: (tag: ProductTag) => void
-    removeTreeViewTag: (tagId: string) => void
+    treeViewTags: ProductCategory[]
+    setTreeViewTags: (tags: ProductCategory[]) => void
+    addTreeViewTag: (tag: ProductCategory) => void
+    removeTreeViewTag: (tagId: number) => void
 
-    selectedTag: string
-    setSelectedTag: (id: string) => void
+    selectedTag: number
+    setSelectedTag: (id: number) => void
     expandedTags: string[]
     setExpandedTags: (id: string[]) => void
     handleExpand: (id: string) => void
 
-    fetchTags: () => Promise<AxiosResponse<ProductTagResponse>>
-    addNewTag: (tag: ProductTag) => void
+    fetchTags: () => void
+    addNewTag: (tag: ProductCategory) => void
     deleteTag: (tagId: string) => Promise<AxiosResponse>
-    updateTag: (tag: UpdateTag) => void
+    updateTag: (tag: ProductCategory) => void
 
-    getChildTags: (id: string) => string[]
+
 }
 
 const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, get) => ({
-    getChildTags: (id) => {
-        var tag = get().treeViewTags.find(n => n.id === id)
-        return []
-    },
+
     contextMenuVisible: false,
     setContextMenuVisible: (value, x, y) => set({
         contextMenuVisible: value,
@@ -54,7 +52,7 @@ const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, g
         })
     }),
 
-    selectedTag: '',
+    selectedTag: 0,
     setSelectedTag: (id) => set({
         selectedTag: id
     }),
@@ -77,7 +75,9 @@ const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, g
     },
 
     fetchTags: () => {
-        return CatalogAPI.fetchTags()
+        CatalogAPI.fetchTags().then((r) => {
+            get().setTreeViewTags(r.data)
+        })
     },
     addNewTag: (tag) => {
         set(state => {
@@ -88,18 +88,13 @@ const useTagTreeView = create<TagTreeViewStore>()(persist(devtools(immer((set, g
     deleteTag: (tagId) => {
         return $api.put('')
     },
-    updateTag: (tag) => set(state => {
-        let EditTag = state.treeViewTags.filter((n) => {
-            if (n.id == tag.id) return n
-        })[0]
-
-        EditTag.name = tag.name
-        EditTag.isB2BVisible = tag.isB2BVisible
-        EditTag.isRetailVisible = tag.isRetailVisible
-        EditTag.isUniversal = tag.isUniversal
-        EditTag.sortOrder = tag.sortOrder
-        EditTag.updatedAt = Date.toString()
-    }),
+    updateTag: (tag) => {
+        let data = get().treeViewTags.map((n) => {
+            if (n.id != tag.id) return n
+            return tag
+        })
+        set({treeViewTags: data})
+    },
 }))), {
     name: "tagTreeViewStore",
     version: 1

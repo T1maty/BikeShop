@@ -1,12 +1,12 @@
-export interface ProductTag {
-    id: string
+export interface ProductCategory {
+    id: number
     name: string
-    parentId: string
+    way: string
+    parentId: number
 
     isCollapsed: boolean
     isRetailVisible: boolean
     isB2BVisible: boolean
-    isUniversal: boolean
     sortOrder: number
 
     createdAt: string

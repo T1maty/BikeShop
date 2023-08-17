@@ -48,7 +48,9 @@ namespace BikeShop.Products.Application.Services
         public async Task transfer()
         {
             var cats = await _context.ProductTags.Where(n => n.IsUniversal == false).ToListAsync();
+            var filtrs = await _context.ProductTags.Where(n => n.IsUniversal == true).ToListAsync();
             var binds = await _context.TagToProductBinds.Where(n => cats.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
+            var filtrsBinds = await _context.TagToProductBinds.Where(n => filtrs.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
             var prods = _context.Products;
 
             foreach (var model in cats)
@@ -73,6 +75,41 @@ namespace BikeShop.Products.Application.Services
                     p.CategoryId = g.Id;
                     p.CategoryName = g.Name;
                     p.CategoryWay = g.Way;
+                }
+            }
+
+            foreach (var i in filtrs.Where(n=>n.ParentId != 0))
+            {
+                var g = new ProductFilter
+                {
+                    GroupName = filtrs.Where(n=>n.Id == i.ParentId).FirstOrDefault().Name,
+                    Name = i.Name,
+                    GroupSortOrder = 0,
+                    IsB2BVisible = i.IsB2BVisible,
+                    IsCollapsed = i.IsCollapsed,
+                    IsRetailVisible = i.IsRetailVisible,
+                    SortOrder = i.SortOrder
+                };
+
+                await _context.ProductFilters.AddAsync(g);
+                await _context.SaveChangesAsync(new CancellationToken());
+
+                foreach (var j in filtrsBinds.Where(n => n.ProductTagId == i.Id))
+                {
+                    var h = new ProductFilterBind
+                    {
+                        FilterId = g.Id,
+                        GroupName = g.GroupName,
+                        Name = g.Name,
+                        IsB2BVisible = i.IsB2BVisible,
+                        IsCollapsed = i.IsCollapsed,
+                        IsRetailVisible = i.IsRetailVisible,
+                        ProductId = j.ProductId,
+                        SortOrder = 0,
+                        GroupSortOrder = 0
+                    };
+
+                    await _context.ProductFilterBinds.AddAsync(h);
                 }
             }
 

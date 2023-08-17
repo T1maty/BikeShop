@@ -1,11 +1,11 @@
 import React from 'react'
 import useCatalog from "../Catalog/CatalogStore"
 import cls from './ShopCatalogTreeView.module.scss'
-import {ProductTag} from "../../../../entities"
 import Enumerable from "linq"
 import {useSnackbar} from "notistack"
 import ArrowDown from '../../../../shared/assets/shop/icons/arrow-square-down.svg'
 import ArrowRight from '../../../../shared/assets/shop/icons/arrow-square-right.svg'
+import {ProductCategory} from "../../../../entities";
 
 export const ShopCatalogTreeView = () => {
 
@@ -20,7 +20,7 @@ export const ShopCatalogTreeView = () => {
     const expandedItems = useCatalog(s => s.expandedTags)
     const setExpandedItems = useCatalog(s => s.setExpandedTags)
 
-    const addUserCurrentTagHandler = (tag: ProductTag) => {
+    const addUserCurrentTagHandler = (tag: ProductCategory) => {
         if (Enumerable.from(userCurrentTags).select(n => n.id).contains(tag.id)) {
             enqueueSnackbar('Этот тег уже выбран',
                 {
@@ -37,11 +37,11 @@ export const ShopCatalogTreeView = () => {
 
         const hasChildren = item.children && item.children.length > 0
 
-        const handleExpand = (id: string) => {
+        const handleExpand = (id: number) => {
             setExpandedItems([...expandedItems, id])
         }
 
-        const handleCollapse = (id: string) => {
+        const handleCollapse = (id: number) => {
             setExpandedItems(expandedItems.filter(item => item !== id))
         }
 
@@ -97,7 +97,7 @@ export const ShopCatalogTreeView = () => {
                              }}
                         >
                             {item.name}
-                            
+
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@ export const ShopCatalogTreeView = () => {
         )
     }
 
-    function buildTree(data: ProductTag[], parentId: number) {
+    function buildTree(data: ProductCategory[], parentId: number) {
         const tree: Array<object> = []
 
         data.forEach((item: any) => {

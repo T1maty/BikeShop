@@ -23,7 +23,7 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
             id: product.id,
             name: product.name,
             catalogKey: product.catalogKey,
-            category: product.category,
+            category: product.categoryImport,
             manufacturerBarcode: product.manufacturerBarcode,
             retailVisibility: product.retailVisibility,
             b2BVisibility: product.b2BVisibility
@@ -34,7 +34,7 @@ export const UpdateProductModal = (props: UpdateProductModalProps) => {
         formControl.setValue('id', product.id)
         formControl.setValue('name', product.name)
         formControl.setValue('catalogKey', product.catalogKey)
-        formControl.setValue('category', product.category)
+        formControl.setValue('category', product.categoryImport)
         formControl.setValue('manufacturerBarcode', product.manufacturerBarcode)
         formControl.setValue('retailVisibility', product.retailVisibility)
         formControl.setValue('b2BVisibility', product.b2BVisibility)

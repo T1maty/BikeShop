@@ -106,7 +106,9 @@ export const CatalogProductItem = () => {
                 <div className={s.container}>
 
                     <div className={s.cloudCategory}>
+
                         {
+                            /*
                             currentProduct.productTags.length === 0 ?
                                 <div className={s.cloudCategory_noTags}>У данного товара нет тегов</div> :
                                 currentProduct.productTags.map(tag => {
@@ -116,7 +118,10 @@ export const CatalogProductItem = () => {
                                         </div>
                                     )
                                 })
+
+                             */
                         }
+
                     </div>
 
                     <div className={s.product}>

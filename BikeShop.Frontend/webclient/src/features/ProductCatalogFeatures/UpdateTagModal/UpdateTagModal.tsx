@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react'
 import s from './UpdateTagModal.module.scss'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {UpdateTag} from '../../../entities'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import {useSnackbar} from 'notistack'
 import useUpdateTagModal from './UpdateTagModalStore'
+import {ProductCategory, UpdateCategory} from "../../../entities";
+import {AxiosResponse} from "axios";
 
 interface UpdateTagModalProps {
-    onSuccess?: (tag: UpdateTag) => void
+    onSuccess?: (tag: ProductCategory) => void
 }
 
 export const UpdateTagModal = (props: UpdateTagModalProps) => {
@@ -19,33 +20,33 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
     const tag = useUpdateTagModal(s => s.targetTag)
     const update = useUpdateTagModal(s => s.updateTag)
 
-    const control = useForm<UpdateTag>({
+    const control = useForm<UpdateCategory>({
         defaultValues: {
             name: '',
             sortOrder: 0,
             isRetailVisible: false,
             isB2BVisible: false,
-            isUniversal: false,
             isCollapsed: false,
-            id: '0'
+            id: 0
         }
     })
 
     useEffect(() => {
-        control.setValue('id', tag.id)
-        control.setValue('name', tag.name)
-        control.setValue('sortOrder', tag.sortOrder)
-        control.setValue('isRetailVisible', tag.isRetailVisible)
-        control.setValue('isB2BVisible', tag.isB2BVisible)
-        control.setValue('isUniversal', tag.isUniversal)
-        control.setValue('isCollapsed', tag.isCollapsed)
+        if (tag != null) {
+            control.setValue('id', tag.id)
+            control.setValue('name', tag.name)
+            control.setValue('sortOrder', tag.sortOrder)
+            control.setValue('isRetailVisible', tag.isRetailVisible)
+            control.setValue('isB2BVisible', tag.isB2BVisible)
+            control.setValue('isCollapsed', tag.isCollapsed)
+        }
     }, [tag])
 
-    const onSubmit: SubmitHandler<UpdateTag> = (data: UpdateTag) => {
-        data.parentId = tag.parentId
-        update(data).then((r) => {
+    const onSubmit: SubmitHandler<UpdateCategory> = (data: UpdateCategory) => {
+        data.parentId = tag!.parentId
+        update(data).then((r: AxiosResponse<ProductCategory>) => {
             setClose()
-            props.onSuccess ? props.onSuccess(data) : true
+            props.onSuccess ? props.onSuccess(r.data) : true
             enqueueSnackbar('Тег изменен', {variant: 'success', autoHideDuration: 10000})
         }).catch((r) => {
             enqueueSnackbar(r.response.data.errorDescription, {variant: 'error', autoHideDuration: 10000})
@@ -56,7 +57,6 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
         control.setValue('sortOrder', 0)
         control.setValue('isRetailVisible', false)
         control.setValue('isB2BVisible', false)
-        control.setValue('isUniversal', false)
         control.setValue('isCollapsed', false)
     }
 
@@ -74,7 +74,7 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
                 <form onSubmit={control.handleSubmit(onSubmit)}>
                     <div className={s.updateTagModal_inputs}>
                         <div>
-                            ID: {tag.id}
+                            ID: {tag?.id}
                         </div>
                         <ControlledCustomInput name={'name'}
                                                placeholder={'Название тега'}
@@ -95,10 +95,6 @@ export const UpdateTagModal = (props: UpdateTagModalProps) => {
                         />
                         <ControlledCustomCheckbox name={'isB2BVisible'}
                                                   label={'Видим в B2B'}
-                                                  control={control}
-                        />
-                        <ControlledCustomCheckbox name={'isUniversal'}
-                                                  label={'Универсальный тег'}
                                                   control={control}
                         />
                         <ControlledCustomCheckbox name={'isCollapsed'}

@@ -2,11 +2,12 @@ import React from 'react'
 import s from './CreateTagModal.module.scss'
 import useCreateTagModal from './CreateTagModalStore'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {CreateTag, ProductTag} from '../../../entities'
+import {CreateTag} from '../../../entities'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
+import {ProductCategory} from "../../../entities/entities/ProductCategory";
 
 interface CreateTagModalProps {
-    onSuccess?: (tag: ProductTag) => void
+    onSuccess?: (tag: ProductCategory) => void
 }
 
 export const CreateTagModal = (props: CreateTagModalProps) => {
@@ -22,12 +23,11 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
             sortOrder: 0,
             isRetailVisible: false,
             isB2BVisible: false,
-            isUniversal: false
         }
     })
 
     const onSubmit: SubmitHandler<CreateTag> = (data: CreateTag) => {
-        data.parentId = parentNode.id
+        data.parentId = parentNode != null ? parentNode.id : 0
         createTag(data).then(r => {
             setOpen(false)
             props.onSuccess ? props.onSuccess(r.data) : true
@@ -36,20 +36,23 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
             control.setValue('sortOrder', 0)
             control.setValue('isRetailVisible', false)
             control.setValue('isB2BVisible', false)
-            control.setValue('isUniversal', false)
         })
     };
 
     return (
         <CustomModal
             open={open}
-            onClose={() => {setOpen(false)}}
-            onContextMenu={(event) => {event.preventDefault()}}
+            onClose={() => {
+                setOpen(false)
+            }}
+            onContextMenu={(event) => {
+                event.preventDefault()
+            }}
         >
             <div className={s.createTagModal_mainBox}>
                 <form onSubmit={control.handleSubmit(onSubmit)} className={s.createTagModal_form}>
                     <div className={s.createTagModal_title}>
-                        Добавить в: {parentNode.id === undefined ? 'Корень дерева' : parentNode.name}
+                        Добавить в: {parentNode?.id === undefined ? 'Корень дерева' : parentNode.name}
                     </div>
                     <ControlledCustomInput name={'name'}
                                            placeholder={'Название тега'}
@@ -70,10 +73,6 @@ export const CreateTagModal = (props: CreateTagModalProps) => {
                     />
                     <ControlledCustomCheckbox name={'isB2BVisible'}
                                               label={'Видим в B2B'}
-                                              control={control}
-                    />
-                    <ControlledCustomCheckbox name={'isUniversal'}
-                                              label={'Универсальный тег'}
                                               control={control}
                     />
                     <Button type={'submit'}

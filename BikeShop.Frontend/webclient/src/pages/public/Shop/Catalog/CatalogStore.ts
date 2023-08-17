@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, Product, ProductCardAPI, ProductFullData, ProductTag, ShopAPI} from '../../../../entities'
+import {CatalogAPI, Product, ProductCardAPI, ProductCategory, ProductFullData, ShopAPI} from '../../../../entities'
 import {ErrorStatusTypes} from '../../../../entities/enumerables/ErrorStatusTypes'
 import Enumerable from "linq";
 import {ProductTagWithChildrens} from "../../../../entities/models/ProductTagWithChildrens";
@@ -11,14 +11,14 @@ interface UseCatalogStore {
     setIsLoading: (value: boolean) => void
     errorStatus: ErrorStatusTypes
 
-    tags: ProductTag[]
+    tags: ProductCategory[]
     tagsProc: ProductTagWithChildrens[]
     tagsWithChildrens: ProductTagWithChildrens[]
     getTags: () => void
-    userCurrentTags: ProductTag[]
+    userCurrentTags: ProductCategory[]
     setUserCurrentTagsArray: (array: any[]) => void
-    setUserCurrentTag: (tag: ProductTag) => void
-    deleteUserCurrentTag: (filteredTags: ProductTag[]) => void
+    setUserCurrentTag: (tag: ProductCategory) => void
+    deleteUserCurrentTag: (filteredTags: ProductCategory[]) => void
 
     defaultProducts: ProductFullData[]
     getDefaultProducts: () => void
@@ -31,11 +31,11 @@ interface UseCatalogStore {
     searchProductsResult: Product[]
     getSearchProducts: (inputValue: string) => void
 
-    selectedTags: string[]
-    setSelectedTags: (n: string) => void
+    selectedTags: number[]
+    setSelectedTags: (n: number) => void
 
-    expandedTags: string[]
-    setExpandedTags: (n: string[]) => void
+    expandedTags: number[]
+    setExpandedTags: (n: number[]) => void
 }
 
 const useCatalog = create<UseCatalogStore>()(persist(devtools(immer((set, get) => ({
@@ -64,7 +64,7 @@ const useCatalog = create<UseCatalogStore>()(persist(devtools(immer((set, get) =
                 console.log('все теги', state.tags)
             })
             let childrenData: ProductTagWithChildrens[] = []
-            const recurssion = (archive: ProductTag[], parent: string = '0') => {
+            const recurssion = (archive: ProductCategory[], parent: number = 0) => {
                 let dt: ProductTagWithChildrens[] = []
                 archive.forEach(n => {
                     if (n.parentId == parent) {
