@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, Product, UpdateProduct} from "../../../../entities"
+import {CatalogAPI, Product, ProductCardAPI, UpdateProduct} from "../../../../entities"
 import Enumerable from "linq";
 
 interface productCatalogTableStore {
@@ -25,9 +25,27 @@ interface productCatalogTableStore {
     sortMode: string
     setSortMode: (v: string) => void
     sort: () => void
+
+    moveProduct: (productId: number, categoryId: number, s: (r: Product) => void, f: () => void) => void
+    removeProducts: (productIds: number[]) => void
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
+    removeProducts: (productIds) => {
+        let data = get().rows.filter(n => !productIds.includes(n.id))
+        get().setRows(data)
+    },
+    moveProduct: (productId, categoryId, s, f) => {
+        set({isLoading: true})
+        ProductCardAPI.changeCategory(productId, categoryId).then((r) => {
+            get().removeProducts([r.data.id])
+            s(r.data)
+            get().addNewProduct(r.data)
+        }).catch(() => {
+            f()
+        }).finally(() => set({isLoading: false})
+        )
+    },
     sort: () => {
         if (get().sortMode == 'Сначала дешевые') {
             let sortedRows = Enumerable.from(get().rows).orderBy(n => n.retailPrice).toArray()

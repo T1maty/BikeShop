@@ -1,7 +1,5 @@
 using AutoMapper;
 using BikeShop.Products.Application.Common.Errors;
-using BikeShop.Products.Application.CQRS.Queries.Product.GetProductByBarcode;
-using BikeShop.Products.Application.CQRS.Queries.Product.GetProductsByTagsQuery;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes;
 using BikeShop.Products.Domain.DTO.Requestes.Product;
@@ -55,12 +53,9 @@ namespace BikeShop.Products.WebApi.Controllers
         [HttpGet("getbybarcode/{barcode}")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(IException),StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Product>> GetProductByBarcode(string barcode)
+        public async Task<Product> GetProductByBarcode(string barcode)
         {
-            var query = new GetProductByBarcodeQuery { Barcode = barcode };
-            var product = await _mediator.Send(query);
-
-            return Ok(product);
+            return await _productService.GetByBarcode(barcode);
         }
 
 
@@ -127,6 +122,12 @@ namespace BikeShop.Products.WebApi.Controllers
         public async Task AddArray(List<AddArrayProductDTO> dto)
         {
             await _productService.AddArray(dto);
+        }
+
+        [HttpPut("changecategory")]
+        public async Task<Product> ChangeCategory(int ProductId, int CategoryId)
+        {
+            return await _productService.ChangeCategory(ProductId, CategoryId);
         }
     }
 }

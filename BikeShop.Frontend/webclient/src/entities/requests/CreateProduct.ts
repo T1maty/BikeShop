@@ -8,7 +8,7 @@ export interface CreateProduct {
     retailPrice: number
     retailVisibility: boolean
     b2BVisibility: boolean
-    tagId: number | null
+    categoryId: number | null
     quantityUnitId: number,
     user: string,
 }

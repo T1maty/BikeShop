@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using BikeShop.Products.Application.Common.Mappings;
-using BikeShop.Products.Application.CQRS.Commands.Tag.UpdateTag;
 
 namespace BikeShop.Products.WebApi.Models.ProductTag
 {
-    public class UpdateProductTagModel : IMappable
+    public class UpdateProductTagModel
     {
         [Required] public int Id { get; set; }
         [Required] public string Name { get; set; } = string.Empty;
@@ -15,10 +14,5 @@ namespace BikeShop.Products.WebApi.Models.ProductTag
         [Required] public bool IsB2BVisible { get; set; }
         [Required] public bool IsUniversal { get; set; }
         [Required] public int SortOrder { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<UpdateProductTagModel, UpdateTagCommand>();
-        }
     }
 }

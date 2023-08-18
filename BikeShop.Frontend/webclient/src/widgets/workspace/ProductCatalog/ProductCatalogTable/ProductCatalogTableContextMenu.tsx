@@ -8,9 +8,10 @@ import useUpdateProductModal
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
 import useUpdateProductPriceModal
     from "../../../../features/ProductCatalogFeatures/UpdateProductPricesModal/UpdateProductPricesModalStore"
-import {PrintModal} from "../../../../features"
-import {useCurrency} from "../../../../entities"
+import {ChooseProductTagModal, PrintModal} from "../../../../features"
+import {ProductCategory, useCurrency} from "../../../../entities"
 import {ProductSticker} from "../../Invoices/ProductSticker/ProductSticker"
+import {useSnackbar} from "notistack";
 
 export const ProductCatalogTableContextMenu = () => {
 
@@ -22,13 +23,20 @@ export const ProductCatalogTableContextMenu = () => {
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
     const contextXY = useProductCatalogTableStore(s => s.contextMenuXY)
     const selected = useProductCatalogTableStore(s => s.selectedRows)
+    const moveProduct = useProductCatalogTableStore(s => s.moveProduct)
 
     const treeViewData = useTagTreeView(s => s.treeViewTags)
     const tagSelected = useTagTreeView(s => s.selectedTag)
 
+    const {enqueueSnackbar} = useSnackbar()
+
     const cur = useCurrency(s => s.selectedCurrency)
 
     const [o1, so1] = useState(false)
+    const [v, sV] = useState(false)
+    const [tag, setTag] = useState<ProductCategory | null>(null)
+    const selectedTag = useTagTreeView(s => s.selectedTag)
+
 
     const settings = [
         {
@@ -43,6 +51,14 @@ export const ProductCatalogTableContextMenu = () => {
             click: () => {
                 setOpenUpdateProductPricesModal(true, selected[0])
                 setContextVisible(false, 0, 0)
+            }
+        },
+        {
+            name: 'Переместить',
+            click: () => {
+                setContextVisible(false, 0, 0)
+                sV(true)
+                setTag(treeViewData.find(n => n.id === selectedTag)!)
             }
         },
 
@@ -66,6 +82,16 @@ export const ProductCatalogTableContextMenu = () => {
 
     return (
         <>
+            <ChooseProductTagModal open={v} setOpen={sV} onTagDoubleClick={(t) => {
+
+                moveProduct(selected[0].id, t.id, (prod) => {
+                    sV(false)
+                    enqueueSnackbar('Товар перемещен', {variant: 'success', autoHideDuration: 3000})
+                }, () => {
+                    sV(false)
+                    enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
+                })
+            }}/>
             <PrintModal open={o1}
                         setOpen={so1}
                         children={<ProductSticker product={selected[0]} cur={cur!}/>}

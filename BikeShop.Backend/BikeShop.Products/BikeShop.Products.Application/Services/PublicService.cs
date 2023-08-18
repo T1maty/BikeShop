@@ -35,16 +35,8 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<List<ProductCardDTO>> GetProducts(List<int> ids)
         {
-            var qeurry = _context.TagToProductBinds;
-
-            foreach (var i in ids)
-            {
-                qeurry.Where(n => n.ProductTagId == i);
-            }
-
-            var prods = await qeurry.Where(n=>n.Enabled == true).Include(n=>n.ProductTag).Where(n=>n.ProductTag.Enabled == true).Where(n => n.ProductTag.IsRetailVisible == true).Select(n=>n.ProductId).ToListAsync();
             var cards = new Dictionary<int,ProductCardDTO>();
-            foreach (var item in prods)
+            foreach (var item in ids)
             {
                 if (!cards.ContainsKey(item))
                 {
@@ -114,6 +106,7 @@ namespace BikeShop.Products.Application.Services
             result.productSpecifications = await _context.ProductSpecifications.Where(n => n.ProductId == masterId).ToListAsync();
             result.productImages = await _context.ProductImgs.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
             result.productCategory = await _context.ProductCategories.Where(n=>n.Id == result.product.CategoryId).FirstOrDefaultAsync();
+            result.productFilters = await _context.ProductFilterBinds.Where(n => n.ProductId == masterId).ToListAsync();
             if(bind != null) result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
             if(bind == null) result.bindedProducts = new List<Product> { result.product };
  

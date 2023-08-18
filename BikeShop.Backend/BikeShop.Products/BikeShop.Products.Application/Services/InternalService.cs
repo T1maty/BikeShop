@@ -28,17 +28,17 @@ namespace BikeShop.Products.Application.Services
         {
             var prodsIds = await _context.StorageProducts.Where(n=>n.Quantity > 0).Select(n => n.ProductId).ToListAsync();
             var prods = _context.Products.Where(n => prodsIds.Contains(n.Id));
-            var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
+            //var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
 
 
-            var tags = await _context.ProductTags.Where(n => r.Select(q => q.ProductTagId).Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n.Name);
+            //var tags = await _context.ProductTags.Where(n => r.Select(q => q.ProductTagId).Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n.Name);
 
             var answ = new List<ResponseProductWithTags>();
 
             foreach (var p in await prods.ToListAsync())
             {
-                var ent = new ResponseProductWithTags { product = p, tags = r.Where(n => n.ProductId == p.Id).ToDictionary(n => n.ProductTagId, n => tags[n.ProductTagId]) };
-                answ.Add(ent);
+                //var ent = new ResponseProductWithTags { product = p, tags = r.Where(n => n.ProductId == p.Id).ToDictionary(n => n.ProductTagId, n => tags[n.ProductTagId]) };
+                //answ.Add(ent);
             }
             return answ;
         }
@@ -46,22 +46,23 @@ namespace BikeShop.Products.Application.Services
         public async Task<List<ResponseProductWithTags>> ProductsByCat(string Cat)
         {
             var prods = _context.Products.Where(n=>n.CategoryImport == Cat);
-            var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
+            //var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
         
 
-            var tags = await _context.ProductTags.Where(n => r.Select(q => q.ProductTagId).Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n.Name);
+            //var tags = await _context.ProductTags.Where(n => r.Select(q => q.ProductTagId).Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n.Name);
 
             var answ = new List<ResponseProductWithTags>();
 
             foreach (var p in await prods.ToListAsync()) {
-                var ent = new ResponseProductWithTags { product = p, tags = r.Where(n=>n.ProductId == p.Id).ToDictionary(n=>n.ProductTagId, n => tags[n.ProductTagId]) };
-                answ.Add(ent);
+               // var ent = new ResponseProductWithTags { product = p, tags = r.Where(n=>n.ProductId == p.Id).ToDictionary(n=>n.ProductTagId, n => tags[n.ProductTagId]) };
+                //answ.Add(ent);
             }
             return answ;
         }
 
         public async Task SetProductTags(int prodId, List<int> tags)
         {
+            /*
             var ents = await _context.TagToProductBinds.Where(n => n.ProductId == prodId).ToDictionaryAsync(n=>n.ProductTagId, n=>n);
 
             var newTags = new List<TagToProductBind>();
@@ -82,6 +83,7 @@ namespace BikeShop.Products.Application.Services
             await _context.TagToProductBinds.AddRangeAsync(newTags);
 
             await _context.SaveChangesAsync(new CancellationToken());
+            */
         }
 
         public async Task<TagToCategoryBind> UpdateCatDep(int depId, int TagId, string TagName, string CatName)

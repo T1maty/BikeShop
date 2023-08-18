@@ -122,8 +122,7 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<List<ProductQuantityDTO>> GetUnsorted(int srorageId)
         {
-            var ids = _context.TagToProductBinds.Select(n => n.ProductId);
-            var products = await _context.Products.Where(product => !ids.Contains(product.Id))
+            var products = await _context.Products.Where(product => product.CategoryId < 1)
             .ToListAsync();
 
             var quantityUnits = await _context.QuantityUnits.ToDictionaryAsync(n => n.Id, n => n);
@@ -347,6 +346,21 @@ namespace BikeShop.Products.Application.Services
             await _context.ProductImgs.AddRangeAsync(newImgs);
             await _context.ProductsCards.AddRangeAsync(cards);
             await _context.SaveChangesAsync(new CancellationToken());
+        }
+
+        public async Task<Product> GetByBarcode(string barcode)
+        {
+            var res = await _context.Products.FirstAsync(n => n.Barcode == barcode);
+            if (res != null) return res;
+            else return await _context.Products.FirstAsync(n => n.ManufacturerBarcode == barcode);
+        }
+
+        public async Task<Product> ChangeCategory(int ProductId, int CategoryId)
+        {
+            var ent = await _context.Products.FindAsync(ProductId);
+            ent.CategoryId = CategoryId;
+            ent.UpdatedAt = DateTime.Now;
+            return ent;
         }
     }
 }

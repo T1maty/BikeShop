@@ -7,9 +7,7 @@ namespace BikeShop.Products.Persistence;
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public DbSet<Product> Products { get; set; }
-    public DbSet<ProductTag> ProductTags { get; set; }
     public DbSet<Brand> Brands { get; set; }
-    public DbSet<TagToProductBind> TagToProductBinds { get; set; }
     public DbSet<ProductBind> ProductBinds { get; set; }
     public DbSet<ProductImg> ProductImgs { get; set; }
     public DbSet<ProductCard> ProductsCards { get; set; }
@@ -46,15 +44,5 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         base.OnModelCreating(modelBuilder);
 
         //modelBuilder.Entity<TagToProductBind>().HasKey(bind => new { bind.ProductId, bind.ProductTagId });
-
-        modelBuilder.Entity<TagToProductBind>()
-            .HasOne<Product>(sc => sc.Product)
-            .WithMany(s => s.TagToProductBinds)
-            .HasForeignKey(sc => sc.ProductId);
-        
-        modelBuilder.Entity<TagToProductBind>()
-            .HasOne<ProductTag>(sc => sc.ProductTag)
-            .WithMany(s => s.TagToProductBinds)
-            .HasForeignKey(sc => sc.ProductTagId);
     }
 }

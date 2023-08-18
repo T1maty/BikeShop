@@ -22,4 +22,6 @@ public interface IProductService
     public Task<Product> Update(UpdateProductDTO dto);
     public Task<Product> Create(CreateProductDTO dto);
     public Task AddArray(List<AddArrayProductDTO> dto);
+    public Task<Product> ChangeCategory(int ProductId, int CategoryId);
+    public Task<Product> GetByBarcode(string barcode);
 }

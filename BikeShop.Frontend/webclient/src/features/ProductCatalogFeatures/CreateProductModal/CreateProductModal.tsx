@@ -39,7 +39,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
             retailPrice: 0,
             retailVisibility: false,
             b2BVisibility: false,
-            tagId: null,
+            categoryId: null,
             quantityUnitId: 1,
             user: LocalStorage.userId()!
         }
@@ -48,7 +48,7 @@ export const CreateProductModal = (props: CreateProductModalProps) => {
     const onSubmit: SubmitHandler<CreateProduct> = (data: CreateProduct) => {
 
 
-        data.tagId = tags!.id
+        data.categoryId = tags!.id
         data.dealerPrice = data.dealerPrice * fstb.c
         data.retailPrice = data.retailPrice * fstb.c
         data.incomePrice = data.incomePrice * fstb.c

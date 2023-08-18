@@ -28,6 +28,4 @@ public class Product : BaseEntity
 
     public Guid UserCreated { get; set; }
     public Guid UserUpdated { get; set; }
-
-    [JsonIgnore] public IList<TagToProductBind> TagToProductBinds { get; set; }
 }

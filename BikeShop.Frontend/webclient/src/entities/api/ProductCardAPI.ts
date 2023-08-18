@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios"
-import {ProductFullData} from '../index'
+import {Product, ProductFullData} from '../index'
 import {
     UpdateProductCardFormModel
 } from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardFormModel"
@@ -25,6 +25,11 @@ export const ProductCardAPI = {
     deleteImage(imageId: number): Promise<any> {
         return (
             $api.post<any>(`/product/deleteimage?imageId=${imageId}`)
+        )
+    },
+    changeCategory(productId: number, categoryId): Promise<AxiosResponse<Product>> {
+        return (
+            $api.put<Product>(`/product/changecategory?imageId=${imageId}`)
         )
     },
 }

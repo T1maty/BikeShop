@@ -8,9 +8,7 @@ namespace BikeShop.Products.Application.Interfaces;
 public interface IApplicationDbContext
 {
     DbSet<Product> Products { get; set; }
-    DbSet<ProductTag> ProductTags { get; set; }
     DbSet<Brand> Brands { get; set; }
-    DbSet<TagToProductBind> TagToProductBinds { get; set; }
     DbSet<ProductBind> ProductBinds { get; set; }
     DbSet<ProductImg> ProductImgs { get; set; }
     DbSet<ProductCard> ProductsCards { get; set; }

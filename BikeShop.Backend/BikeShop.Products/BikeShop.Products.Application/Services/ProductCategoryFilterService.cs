@@ -47,11 +47,12 @@ namespace BikeShop.Products.Application.Services
 
         public async Task transfer()
         {
-            var cats = await _context.ProductTags.Where(n => n.IsUniversal == false).ToListAsync();
-            var filtrs = await _context.ProductTags.Where(n => n.IsUniversal == true).ToListAsync();
-            var binds = await _context.TagToProductBinds.Where(n => cats.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
-            var filtrsBinds = await _context.TagToProductBinds.Where(n => filtrs.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
-            var prods = _context.Products;
+            /*
+            //var cats = await _context.ProductTags.Where(n => n.IsUniversal == false).ToListAsync();
+            //var filtrs = await _context.ProductTags.Where(n => n.IsUniversal == true).ToListAsync();
+            //var binds = await _context.TagToProductBinds.Where(n => cats.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
+            //var filtrsBinds = await _context.TagToProductBinds.Where(n => filtrs.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
+            //var prods = _context.Products;
 
             foreach (var model in cats)
             {
@@ -114,6 +115,7 @@ namespace BikeShop.Products.Application.Services
             }
 
             await _context.SaveChangesAsync(new CancellationToken());
+            */
 
         }
 
