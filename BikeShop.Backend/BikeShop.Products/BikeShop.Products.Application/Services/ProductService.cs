@@ -360,6 +360,8 @@ namespace BikeShop.Products.Application.Services
             var ent = await _context.Products.FindAsync(ProductId);
             ent.CategoryId = CategoryId;
             ent.UpdatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync(new CancellationToken());
             return ent;
         }
     }
