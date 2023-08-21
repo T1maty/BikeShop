@@ -61,7 +61,7 @@ namespace BikeShop.Acts.Application.Services
                 await _context.SaveChangesAsync(new CancellationToken());
 
                 var stream = imageFile.OpenReadStream();
-                var streamPart = new StreamPart(stream, imageFile.FileName, "image/jpeg");
+                var streamPart = new StreamPart(stream, imageFile.FileName, "image/png");
 
                 url = await _fileservice.AddActImage(img.Id, streamPart);
                 img.ImageURL = url;
