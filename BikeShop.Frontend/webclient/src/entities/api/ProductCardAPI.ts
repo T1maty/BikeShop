@@ -27,9 +27,9 @@ export const ProductCardAPI = {
             $api.post<any>(`/product/deleteimage?imageId=${imageId}`)
         )
     },
-    changeCategory(productId: number, categoryId): Promise<AxiosResponse<Product>> {
+    changeCategory(productId: number, categoryId: number): Promise<AxiosResponse<Product>> {
         return (
-            $api.put<Product>(`/product/changecategory?imageId=${imageId}`)
+            $api.put<Product>(`/product/changecategory?ProductId=${productId}&CategoryId=${categoryId}`)
         )
     },
 }

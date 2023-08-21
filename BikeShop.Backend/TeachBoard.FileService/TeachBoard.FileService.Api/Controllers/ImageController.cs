@@ -29,6 +29,7 @@ public class ImageController : ControllerBase
     public async Task<string> GetLink(string imgId)
     {
         var imagePublicId = "product_img_" + imgId;
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") imagePublicId += "_dev";
         var link = _imageFileService.GetImageLink(imagePublicId);
 
         return link;
@@ -39,6 +40,7 @@ public class ImageController : ControllerBase
         [FromForm] IFormFile imageFile)
     {
         var imagePublicName = "act_img_" + imgId;
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") imagePublicName += "_dev";
         var result = await _imageFileService.UploadImageAsync(imageFile, imagePublicName);
 
         return result;
@@ -48,6 +50,7 @@ public class ImageController : ControllerBase
     public async Task<string> GetLinkAct(int imgId)
     {
         var imagePublicId = "act_img_" + imgId;
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") imagePublicId += "_dev";
         var link = _imageFileService.GetImageLink(imagePublicId);
 
         return link;

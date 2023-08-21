@@ -40,7 +40,6 @@ const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(d
         ProductCardAPI.changeCategory(productId, categoryId).then((r) => {
             get().removeProducts([r.data.id])
             s(r.data)
-            get().addNewProduct(r.data)
         }).catch(() => {
             f()
         }).finally(() => set({isLoading: false})

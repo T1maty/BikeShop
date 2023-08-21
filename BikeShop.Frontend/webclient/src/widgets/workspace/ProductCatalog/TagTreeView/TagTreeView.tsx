@@ -5,7 +5,6 @@ import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
 import {UniTreeView} from "../../../../shared/ui"
 import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore"
-import Enumerable from "linq"
 import {useSnackbar} from "notistack"
 import {ProductCategory} from "../../../../entities/entities/ProductCategory";
 
@@ -13,6 +12,7 @@ interface TagTreeViewProps {
     onNodeDoubleClick?: (node: any) => void
     tags?: ProductCategory[]
     setTags?: (value: ProductCategory[]) => void
+    NOTchangeProducts?: boolean
 }
 
 export const TagTreeView = (props: TagTreeViewProps) => {
@@ -32,8 +32,10 @@ export const TagTreeView = (props: TagTreeViewProps) => {
     const {enqueueSnackbar} = useSnackbar()
 
     const setProductsToTableHandler = (node: ProductCategory) => {
-        setSelect(node.id)
-        setProductsToTable(node.id)
+        if (props.NOTchangeProducts === undefined || !props.NOTchangeProducts) {
+            setSelect(node.id)
+            setProductsToTable(node.id)
+        }
     }
 
     useEffect(() => {
@@ -62,18 +64,6 @@ export const TagTreeView = (props: TagTreeViewProps) => {
                          }}
                          onNodeDoubleClick={(node) => {
                              props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
-                             if (Enumerable.from(props.tags ? props.tags : [])
-                                 .select(n => n.id).contains(node.id)) {
-                                 enqueueSnackbar('Этот тег уже в облаке',
-                                     {
-                                         variant: 'info', autoHideDuration: 2000,
-                                         anchorOrigin: {vertical: 'top', horizontal: 'right'}
-                                     })
-                             } else {
-                                 if (props.setTags != undefined && props.tags != undefined) {
-                                     props.setTags([...props.tags, node])
-                                 }
-                             }
                          }}
             />
         </div>
