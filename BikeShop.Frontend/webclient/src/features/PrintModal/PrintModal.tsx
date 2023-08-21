@@ -121,7 +121,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
                 console.log(file)
                 //let settings: PrintSettings = {copies: 1, pageWight: 501, printerName: "Win2Image"}
                 let settings: string = ""
-                if (printAgentName === "ProductSticker") settings = `{"copies": ${copies != undefined ? copies : 1},"pageWight": 0,"printerName": ""}`
+                if (copies != undefined) settings = `{"copies": ${copies},"pageWight": 0,"printerName": ""}`
                 let formData = new FormData();
                 formData.append('imageFile', file)
                 PrintAPI.addQueue(formData,

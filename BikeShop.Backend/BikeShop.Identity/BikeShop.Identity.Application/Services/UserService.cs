@@ -227,7 +227,7 @@ namespace BikeShop.Identity.Application.Services
             string connectionString = "Server=zf452963.mysql.tools;Database=zf452963_db;Uid=zf452963_db;Pwd=Q9kUMTVr;";
             MySqlConnection dbConnection = new MySqlConnection(connectionString);
 
-            MySqlCommand command = new MySqlCommand("SELECT telephone, name, bike FROM clients", dbConnection);
+            MySqlCommand command = new MySqlCommand("SELECT telephone, name, bike, balance FROM clients", dbConnection);
 
             dbConnection.Open();
 
@@ -265,7 +265,15 @@ namespace BikeShop.Identity.Application.Services
                 {
                     fail++;
                 }
-                
+
+                var user = await _userManager.FindByLoginAsync("+38" + row[0].ToString(), "");
+                if(user != null)
+                {
+                    user.Bike = row[2].ToString();
+                    user.Balance = decimal.Parse(row[3].ToString())/(decimal)37.5;
+                    await _userManager.UpdateAsync(user);
+                }
+
             }
 
             return $"Success: {success}, Fail: {fail}, Total: {dt.Rows.Count}";

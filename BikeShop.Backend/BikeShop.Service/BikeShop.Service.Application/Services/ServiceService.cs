@@ -160,10 +160,11 @@ public class ServiceService : IServiceService
         return r;
     }
 
-    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid userId, DateTime Start, DateTime Finish)
+    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid? userId, DateTime Start, DateTime Finish)
     {
         var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Where(n=>n.UpdatedAt>Start).Where(n=>n.UpdatedAt<Finish).Select(n=>n.Id);
-        var prods = _context.ServiceProducts.Where(n => services.Contains(n.ServiceId)).Where(n=>n.UserId == userId).Where(n=>n.Enabled == true);
+        var prods = _context.ServiceProducts.Where(n => services.Contains(n.ServiceId)).Where(n=>n.Enabled == true);
+        if (userId != null) prods = prods.Where(n => n.UserId == userId);
         return await prods.ToListAsync();
     }
 
@@ -254,10 +255,12 @@ public class ServiceService : IServiceService
         return res;
     }
 
-    public async Task<List<ServiceWork>> GetWorksByMaster(Guid userId, DateTime Start, DateTime Finish)
+    public async Task<List<ServiceWork>> GetWorksByMaster(Guid? userId, DateTime Start, DateTime Finish)
     {
         var services = _context.Services.Where(n => n.Status == "Ended").Where(n => n.Enabled == true).Where(n => n.UpdatedAt > Start).Where(n => n.UpdatedAt < Finish).Select(n => n.Id);
-        var works = _context.ServiceWorks.Where(n => services.Contains(n.ServiceId)).Where(n => n.UserId == userId).Where(n => n.Enabled == true);
+        var works = _context.ServiceWorks.Where(n => services.Contains(n.ServiceId)).Where(n => n.Enabled == true);
+        if (userId != null) works = works.Where(n => n.UserId == userId);
+
         return await works.ToListAsync();
     }
 

@@ -12,6 +12,6 @@ namespace BikeShop.Shop.Application.ReficClients
     public interface IPaymentClient
     {
         [Get("/financialinteraction/getbillsbyuser")]
-        public Task<List<BillWithProducts>> GetBillsByUser(Guid UserId, DateTime Start, DateTime Finish);
+        public Task<List<BillWithProducts>> GetBillsByUser(Guid? UserId, DateTime Start, DateTime Finish);
     }
 }

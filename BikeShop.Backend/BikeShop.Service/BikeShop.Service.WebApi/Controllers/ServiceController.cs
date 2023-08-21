@@ -102,14 +102,14 @@ public class ServiceController : ControllerBase
     }
 
     [HttpGet("getworksbymaster")]
-    public async Task<List<ServiceWork>> GetWorksByMaster(Guid userId, DateTime Start, DateTime Finish)
+    public async Task<List<ServiceWork>> GetWorksByMaster(Guid? userId, DateTime Start, DateTime Finish)
     {
 
         return await _serviceService.GetWorksByMaster(userId, Start, Finish);
     }
 
     [HttpGet("getproductsbymaster")]
-    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid userId, DateTime Start, DateTime Finish)
+    public async Task<List<ServiceProduct>> GetProductsByMaster(Guid? userId, DateTime Start, DateTime Finish)
     {
 
         return await _serviceService.GetProductsByMaster(userId, Start, Finish);
