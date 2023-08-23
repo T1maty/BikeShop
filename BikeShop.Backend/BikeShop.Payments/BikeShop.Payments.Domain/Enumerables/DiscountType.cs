@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Payments.Domain.Enumerables
 {
-    public enum DeliveryType
+    public enum DiscountType
     {
-        Pickup,
-        Shipping,
-        BLCDelivery
+        Persent, Static
     }
 }

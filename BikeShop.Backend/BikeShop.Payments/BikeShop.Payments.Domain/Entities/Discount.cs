@@ -12,8 +12,11 @@ namespace BikeShop.Payments.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
+        public string Target { get; set; }
+        public int BindToTargetId { get; set; }
         public decimal Amount { get; set; }
         public decimal Limit { get; set; }
         public bool IsZeroLoss { get; set; } = true;
+        public bool IsPersonal { get; set; } = true;
     }
 }

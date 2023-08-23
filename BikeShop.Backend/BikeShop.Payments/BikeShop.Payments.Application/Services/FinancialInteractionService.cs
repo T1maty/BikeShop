@@ -52,7 +52,8 @@ namespace BikeShop.Payments.Application.Services
             var bills = _context.Bills.Where(n => n.Enabled == true).Where(n => n.CreatedAt > Start).Where(n => n.CreatedAt < Finish);
             if (UserId != null) bills = bills.Where(n => n.UserId == UserId);
             var prods = await _context.BillProducts.Where(n => n.Enabled == true).Where(n => bills.Select(m => m.Id).Contains(n.BillId)).ToListAsync();
-            return bills.Select(n => new BillWithProducts { bill = n, products = prods.Where(m => m.BillId == n.Id).ToList() }).ToList();
+            var buf = await bills.ToListAsync();
+            return buf.Select(n => new BillWithProducts { bill = n, products = prods.Where(m => m.BillId == n.Id).ToList() }).ToList();
         }
 
         public async Task<BillWithProducts> NewBill(NewBillDTO dto)

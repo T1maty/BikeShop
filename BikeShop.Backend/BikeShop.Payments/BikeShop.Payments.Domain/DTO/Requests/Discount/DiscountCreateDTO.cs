@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BikeShop.Payments.Domain.Enumerables
+namespace BikeShop.Payments.Domain.DTO.Requests.Discount
 {
-    public enum DeliveryType
+    public class DiscountCreateDTO
     {
-        Pickup,
-        Shipping,
-        BLCDelivery
     }
 }
