@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import s from './TableProductItem.module.scss'
-import {useCurrency} from "../../../entities"
+import {useCurrency, User} from "../../../entities"
+import SelectEmployeeModal from "../../SelectEmployeeModal/SelectEmployeeModal";
+import useService from "../../../pages/workspace/Service/ServiceStore";
 
 interface TableItemProps {
     name: string
+    userLastName?: string
     price: number
     cPrice?: number
     count: number
@@ -11,6 +14,7 @@ interface TableItemProps {
     onDoubleClick?: () => void
     discount?: number
     unitName?: string
+    setUser: (u: User) => void
     setQuantity: (q: number) => void
 }
 
@@ -21,17 +25,27 @@ export const TableProductItem: React.FC<TableItemProps> = ({
                                                                onPriceClick,
                                                                discount,
                                                                unitName,
-                                                               onDoubleClick, cPrice, setQuantity
+                                                               onDoubleClick, cPrice, setQuantity, userLastName, setUser
                                                            }) => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
+    const masters = useService(s => s.masters)
+
+    const [oSE, sOSE] = useState(false)
 
     return (
         <div className={s.tableItem_box} onDoubleClick={() => {
             onDoubleClick ? onDoubleClick() : true
         }}>
+            <SelectEmployeeModal open={oSE} setOpen={sOSE} Users={masters} OnSelect={(User) => {
+                setUser(User)
+                console.log(User)
+            }}/>
+            <div className={s.tableItem_employee} onClick={() => {
+                sOSE(true)
+            }}>{userLastName ? userLastName : "NotFound"}</div>
             <div className={s.tableItem_title}>{name}</div>
             <div className={s.tableItem_numbers}>
                 <div className={s.tableItem_price}

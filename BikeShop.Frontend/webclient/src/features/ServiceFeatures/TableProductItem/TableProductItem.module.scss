@@ -9,6 +9,23 @@
   margin: $defaultExtraSmallMargin;
   padding: 3px 5px;
 
+  .tableItem_employee {
+    background: #2a2a2a;
+    border-radius: 5px;
+    margin-right: 3px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    padding: 5px;
+    user-select: none;
+    cursor: pointer;
+
+    max-height: 100%;
+  }
+
+  .tableItem_employee:hover {
+    background: #4b4b4b;
+  }
+
   .tableItem_title {
     word-break: break-word;
     margin-right: $defaultSmallMargin;

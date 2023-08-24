@@ -33,7 +33,7 @@ interface p {
     errorStatus: ErrorStatusTypes
 
     saveHandler: (onSuccess: () => void, onFail: () => void) => void
-    openHandler: (v: ProductStorageMoveFullData) => void
+    openHandler: (v: ProductStorageMoveFullData | null) => void
 }
 
 export const useProsuctStorageTransfer = create<p>()(persist(devtools(immer((set, get) => ({
@@ -163,8 +163,26 @@ export const useProsuctStorageTransfer = create<p>()(persist(devtools(immer((set
     },
     openHandler: (v) => {
         get().getStorages()
+        if (v === null) {
+            set({isCreating: true})
+            v = {
+                products: [], productMove: {
+                    id: 0,
+                    createdAt: Date.UTC.toString(),
+                    updatedAt: Date.UTC.toString(),
+                    enabled: true,
+                    movingFromSkladId: 1,
+                    movingToSkladId: 1,
+                    description: "",
+                    status: "",
+                    userCreated: LocalStorage.userId(),
+                    userUpdated: LocalStorage.userId(),
+                } as ProductStorageMove
+            } as ProductStorageMoveFullData
+        } else {
+            set({isCreating: false})
+        }
         set({currentMove: v})
-        set({isCreating: false})
         get().setSelectedStorageForTransferTo(v.productMove.movingToSkladId)
         get().setSelectedStorageForTransferFrom(v.productMove.movingFromSkladId)
     }

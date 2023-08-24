@@ -55,7 +55,7 @@ const useInventoryOfProductsArchiveModal = create<InventoryOfProductsArchiveModa
     archive: [],
     getArchive: () => {
         set({isLoading: true})
-        InventarizationAPI.getByShop(1, 100).then((res: any) => {
+        InventarizationAPI.getByShop(parseFloat(LocalStorage.shopId()!), 100).then((res: any) => {
             set(state => {
                 state.archive = res.data
             })

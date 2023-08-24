@@ -1,14 +1,21 @@
 import React, {useEffect} from 'react'
 import s from './StorageProductsTransferArchiveModal.module.scss'
-import {CustomModal, LoaderScreen} from "../../../shared/ui"
+import {Button, CustomModal, LoaderScreen} from "../../../shared/ui"
 import {useSnackbar} from "notistack"
 import useStorageProductsTransferArchiveModalStore from './StorageProductsTransferArchiveModalStore'
 import {StorageProductsList} from './StorageProductsList'
 import {ProductStorageTransferArchiveContext} from "./ProductStorageTransferArchiveContext";
+import {useNavigate} from "react-router-dom";
+import {BikeShopPaths} from "../../../app/routes/paths";
+import {
+    useProsuctStorageTransfer
+} from "../../../pages/workspace/ProductsCount/StorageProductsTransfer/StorageProductTtransferStore";
 
 export const StorageProductsTransferArchiveModal = () => {
 
     const {enqueueSnackbar} = useSnackbar()
+    const navigate = useNavigate();
+    const load = useProsuctStorageTransfer(s => s.openHandler)
 
     const open = useStorageProductsTransferArchiveModalStore(s => s.openStorageProductsTransferArchiveModal)
     const setOpen = useStorageProductsTransferArchiveModalStore(s => s.setOpenStorageProductsTransferArchiveModal)
@@ -47,6 +54,11 @@ export const StorageProductsTransferArchiveModal = () => {
                     <div className={s.serviceFinalArchiveModal_title}>
                         Архив перемещений товара со склада
                     </div>
+                    <Button onClick={() => {
+                        load(null)
+                        navigate(BikeShopPaths.WORKSPACE.STORAGE_PRODUCTS_TRANSFER)
+                        setOpen(false)
+                    }}>Новое перемещение</Button>
 
                     <div className={s.archive_wrapper}>
                         <div>

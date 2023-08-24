@@ -305,7 +305,7 @@ public class ServiceService : IServiceService
                 ent.ProductId = prod.ProductId;
                 ent.QuantityUnitName = "";
                 ent.Total = ent.Price * ent.Quantity - ent.Discount;
-                ent.UserId = dto.UserId;
+                ent.UserId = prod.UserId;
 
                 existProds.Remove(prod.Id);
                 totalProducts.Add(ent);
@@ -326,7 +326,7 @@ public class ServiceService : IServiceService
                 ent.ProductId = prod.ProductId;
                 ent.QuantityUnitName = prod.QuantityUnitName;
                 ent.Total = ent.Price * ent.Quantity - ent.Discount;
-                ent.UserId = dto.UserId;
+                ent.UserId = prod.UserId;
 
                 newProds.Add(ent);
                 totalProducts.Add(ent);

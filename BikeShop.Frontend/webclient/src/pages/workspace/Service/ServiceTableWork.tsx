@@ -3,6 +3,7 @@ import {ServiceWork, useCurrency} from "../../../entities"
 import s from "./ServiceTable.module.scss"
 import {Button} from "../../../shared/ui"
 import {TableProductItem, TableProductItemAdditional} from "../../../features"
+import useService from "./ServiceStore";
 
 type ServiceTableProps = {
     data: ServiceWork[] | null
@@ -16,6 +17,7 @@ const ServiceTableWork = (props: ServiceTableProps) => {
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
+    const masters = useService(s => s.masters)
 
     const userClickHandler = () => {
         props.serviceTableCallback()
@@ -60,7 +62,16 @@ const ServiceTableWork = (props: ServiceTableProps) => {
                             props.data.map((item, index) => {
                                 return (
                                     <>
-                                        <TableProductItem key={index}
+                                        <TableProductItem key={index} setUser={(User) => {
+                                            let data = props.data?.map(n => {
+                                                if (n.workId === item.workId) return {
+                                                    ...n,
+                                                    userId: User.id
+                                                }
+                                                return n
+                                            })
+                                            props.setData(data!)
+                                        }} userLastName={masters.find(n => n.id === item.userId)?.lastName}
                                                           name={item.name}
                                                           price={item.price}
                                                           count={item.quantity}
