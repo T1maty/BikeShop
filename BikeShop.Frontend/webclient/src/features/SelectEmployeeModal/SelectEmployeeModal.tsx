@@ -19,7 +19,7 @@ const SelectEmployeeModal = (props: p) => {
             open={props.open}
             onClose={() => {
                 props.setOpen(false)
-            }}
+            }} className={s.wrapper}
         >
             <Select options={props.Users} className={s.select} onChange={(newValue) => {
                 setUser(user)

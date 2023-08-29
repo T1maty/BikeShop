@@ -42,7 +42,7 @@ export const EditProductCardModal = () => {
             },
             productOptions: [],
             productSpecifications: [],
-            productTags: [],
+            productFilters: [],
         }
     })
 
@@ -56,7 +56,7 @@ export const EditProductCardModal = () => {
         open && getAllSpecifications()
 
         formControl.setValue('id', currentProduct.product?.id)
-        formControl.setValue('productTags', currentProduct.productTags)
+        formControl.setValue('productFilters', currentProduct.productFilters)
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
         formControl.setValue('productSpecifications', currentProduct.productSpecifications)
         formControl.setValue('productCard', {
@@ -94,7 +94,9 @@ export const EditProductCardModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
                     <div className={s.editProductCardModal}>

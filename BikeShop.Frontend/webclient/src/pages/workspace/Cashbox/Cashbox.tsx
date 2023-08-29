@@ -44,6 +44,7 @@ export const Cashbox = () => {
     const currency = useCurrency(s => s.selectedCurrency)
 
     const [printTrigger, setPrintTrigger] = useState<null | 'agent'>(null)
+    const [openDiscount, setOpenDiscount] = useState<boolean>(false)
 
     const paymentResultHandler = (value: PaymentData, ip: boolean) => {
 
@@ -161,10 +162,11 @@ export const Cashbox = () => {
                                 </div>
                             </div>
                             <div className={s.discount_buttons}>
-                                <ChooseDiscountModal/>
+                                <ChooseDiscountModal open={openDiscount} setOpen={setOpenDiscount}/>
 
                                 <Button buttonDivWrapper={s.buttons_choose}
                                         onClick={() => {
+                                            setOpenDiscount(true)
                                         }}
                                 >
                                     Выбрать скидку для клиента

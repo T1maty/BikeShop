@@ -16,6 +16,7 @@ import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
 import useSelectProduct from "../SelectProductWork/SelectProductStore";
+import InstantServiceModal from "./InstantServiceModal";
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -39,8 +40,11 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
 
 
     const [openClientModal, setOpenClientModal] = useState(false)
+    const [isModal, setISModal] = useState(false)
     const [summProducts, setSummProducts] = useState(0)
     const [summWorks, setSummWorks] = useState(0)
+
+    const [bufData, setBufData] = useState<ServiceFormModel | null>(null)
 
     const [selectedUserId, setSelectedUserId] = useState('')
 
@@ -63,10 +67,8 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const onSubmit: SubmitHandler<ServiceFormModel> = (data: ServiceFormModel) => {
         // создание сервиса
         if (isCreating) {
-            console.log('create IF works, new data =', data)
-            addNewService(data, () => {
-                enqueueSnackbar('Ремонт создан', {variant: 'success', autoHideDuration: 3000})
-            })
+            setBufData(data)
+            setISModal(true)
         }
 
         // обновление сервиса
@@ -162,6 +164,12 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     return (
         <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
             <div className={s.service_rightSide}>
+                <InstantServiceModal open={isModal} setOpen={setISModal} onSuccess={(isInstant) => {
+                    console.log('create IF works, new data =', bufData)
+                    addNewService(bufData!, () => {
+                        enqueueSnackbar('Ремонт создан', {variant: 'success', autoHideDuration: 3000})
+                    }, isInstant)
+                }}/>
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
 
 
@@ -199,8 +207,8 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                                     field.onChange(value.id)
                                                 }}
                                                 noOptionsMessage={() => 'Мастер не найден'}
-                                                getOptionLabel={label => label!.firstName}
-                                                getOptionValue={value => value!.firstName}
+                                                getOptionLabel={label => label!.lastName}
+                                                getOptionValue={value => value!.lastName}
                                             />
                                             {formControl.formState.errors['userMasterId'] ?
                                                 <div
@@ -226,6 +234,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                                             formControl.reset()
                                                             setIsCreating(true)
                                                             setOpenClientModal(true)
+                                                            console.log(currentService?.service.userMasterId)
                                                         }}
                                                 >
                                                     Создать
@@ -264,7 +273,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                                          serviceTableCallback={() => {
                                                              setOpenSelectProductModal(true)
                                                          }}
-                                                         disabledButton={(currentService === null && !isCreating)}
+                                                         disabledButton={(currentService === null && !isCreating) || formControl.getValues('userMasterId') === ''}
                                                          summ={summProducts}
                                                          setData={checkForZero(field.onChange)}
                                     />
@@ -285,7 +294,7 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
                                                       serviceTableCallback={() => {
                                                           setOpenSelectWorkModal(true)
                                                       }}
-                                                      disabledButton={(currentService === null && !isCreating)}
+                                                      disabledButton={(currentService === null && !isCreating) || formControl.getValues('userMasterId') === ''}
                                                       summ={summWorks}
                                     />
                                     <SelectWorkModal works={field.value} setWorks={checkForZero(field.onChange)}

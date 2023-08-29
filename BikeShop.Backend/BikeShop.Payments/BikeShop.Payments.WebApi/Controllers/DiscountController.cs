@@ -35,8 +35,14 @@ namespace BikeShop.Payments.WebApi.Controllers
             return await _discountService.GetAll();
         }
 
+        [HttpGet("getbytarget")]
+        public async Task<List<Discount>> GetByTarget(string target, Guid user)
+        {
+            return await _discountService.GetByTarget(target, user);
+        }
+
         [HttpDelete("delete")]
-        public async Task RemovaDiscount(int discountId)
+        public async Task RemoveDiscount(int discountId)
         {
             await _discountService.RemovaDiscount(discountId);
         }

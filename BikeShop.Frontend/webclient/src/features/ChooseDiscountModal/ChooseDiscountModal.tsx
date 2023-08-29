@@ -1,19 +1,29 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './ChooseDiscountModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
-import useChooseDiscountModal from './ChooseDiscountModalStore'
 import Select from "react-select"
+import {DiscountTargetEnum} from "../../entities/enumerables/DiscountTargetEnum";
 
-export const ChooseDiscountModal = () => {
+interface p {
+    open: boolean
+    setOpen: (n: boolean) => void
 
-    const open = useChooseDiscountModal(s => s.openDiscountModal)
-    const setOpen = useChooseDiscountModal(s => s.setOpenDiscountModal)
+    target: DiscountTargetEnum
+}
+
+export const ChooseDiscountModal = (p: p) => {
 
     const discountList = [
         {value: 10, label: '10'},
         {value: 20, label: '20'},
         {value: 30, label: '30'},
     ]
+
+    useEffect(() => {
+        if (p.open) {
+
+        }
+    }, [p.open])
 
     const [selectedDiscount, setSelectedDiscount] = useState(null)
 
@@ -29,9 +39,9 @@ export const ChooseDiscountModal = () => {
 
     return (
         <CustomModal
-            open={open}
+            open={p.open}
             onClose={() => {
-                setOpen(false)
+                p.setOpen(false)
             }}
         >
             <div className={s.discountModal_mainBox}>
@@ -68,7 +78,7 @@ export const ChooseDiscountModal = () => {
                     <Button onClick={() => {
                     }}>Выбрать скидку</Button>
                     <Button onClick={() => {
-                        setOpen(false)
+                        p.setOpen(false)
                     }}>Отмена</Button>
                 </div>
             </div>

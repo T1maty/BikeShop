@@ -69,6 +69,7 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
 
     const updateServiceStatusHandlerEnded = (r: PaymentData) => {
         endService(currentService?.service.id || -1, r, () => {
+
         })
     }
 

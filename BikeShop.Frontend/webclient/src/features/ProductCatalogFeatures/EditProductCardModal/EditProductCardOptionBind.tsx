@@ -10,13 +10,12 @@ import {
     ProductOptionVariantBind
 } from '../../../entities'
 import {Controller, UseFormReturn} from 'react-hook-form'
-import {Button, LoaderScreen} from '../../../shared/ui'
+import {AsyncSelectSearchProduct, Button, LoaderScreen} from '../../../shared/ui'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
 import Select from 'react-select'
 import useEditProductCardModal from './EditProductCardModalStore'
 import Enumerable from 'linq'
 import {ChooseProductModal} from '../ChooseProductModal/ChooseProductModal'
-import {ChooseProductTagModal} from '../ChooseProductTagModal/ChooseProductTagModal'
 import {useSnackbar} from 'notistack'
 
 interface ProductCardOptionBindProps {
@@ -260,20 +259,10 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                         <div className={s.optionBind_header}>
                             <div>Группа товаров</div>
 
-                            {/*надо исправить*/}
-                            <Select
-                                className={s.headerOptions_search}
-                                // options={availableOptions(props.control, bindedProduct)}
-                                placeholder={'Товары'}
-                                isSearchable={true}
-                                value={selectedOption}
-                                onChange={(value: any) => {
-                                    setSelectedOption(value)
-                                }}
-                                getOptionLabel={label => label!.name}
-                                getOptionValue={value => value!.name}
-                                noOptionsMessage={() => 'Товар не найден'}
-                            />
+                            <div className={s.search_wrapper}>
+                                <AsyncSelectSearchProduct onSelect={(p) => {
+                                }}/>
+                            </div>
 
                             <Button buttonDivWrapper={s.addBindButton} onClick={() => {
                                 sV(true)
@@ -461,62 +450,15 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                     <div className={s.content_tags}>
                                                         <fieldset className={s.tags_wrapperBox}>
-                                                            <legend>Теги</legend>
-
-                                                            <Button buttonDivWrapper={s.tags_addButton}
-                                                                    onClick={() => {
-                                                                        sV2([...v2.filter(n => n.id != bindedProduct.id),
-                                                                            {id: bindedProduct.id, state: true}])
-                                                                    }}
-                                                            >
-                                                                Добавить теги
-                                                            </Button>
+                                                            <legend>Фильтры</legend>
 
                                                             <Controller
 
-                                                                name={'productTags'}
+                                                                name={'productFilters'}
                                                                 control={props.control.control}
                                                                 render={({field}: any) =>
                                                                     <div className={s.tags_scrollContainer}>
 
-                                                                        <div className={s.tags_list}>
-                                                                            <ChooseProductTagModal
-
-                                                                                open={v2.find((n) => n.id == bindedProduct.id)?.state as boolean}
-                                                                                setOpen={(value) => {
-                                                                                    setOpenProductTagModalHandler(bindedProduct, value)
-                                                                                }}
-                                                                                onTagDoubleClick={(tag) => {
-                                                                                    //onTagDoubleClickHandler(field, bindedProduct, tag)
-                                                                                }}
-                                                                            />
-
-                                                                            {
-                                                                                /*
-                                                                                field.value?.filter((n: ProductTagBindDTO) => n.productId == bindedProduct.id)
-                                                                                    .map((n: ProductTagBindDTO, index: number) => {
-                                                                                        return (
-                                                                                            <div
-                                                                                                className={s.tags_listItem}
-
-                                                                                            >
-                                                                                                <div
-                                                                                                    className={s.item_name}>
-                                                                                                    {n.productTag.name}
-                                                                                                </div>
-                                                                                                <DeleteButton size={20}
-                                                                                                              onClick={() => {
-                                                                                                                  field.onChange(field.value.filter((m: ProductTagBindDTO) => m.productTag.id != n.productTag.id))
-                                                                                                              }}
-                                                                                                />
-                                                                                            </div>
-                                                                                        )
-                                                                                    })
-
-                                                                                 */
-                                                                            }
-
-                                                                        </div>
 
                                                                     </div>
                                                                 }

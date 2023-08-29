@@ -13,6 +13,7 @@ namespace BikeShop.Payments.Application.Interfaces
         public Task<Discount> CreateDiscount(DiscountCreateDTO dto);
         public Task<Discount> UpdateDiscount(DiscountUpdateDTO dto);
         public Task<List<Discount>> GetAll();
+        public Task<List<Discount>> GetByTarget(string target, Guid user);
         public Task RemovaDiscount(int discountId);
         public Task<Discount> GetById(int discountId);
         public Task<decimal> Calculate(int discountId, string target, decimal startPrice);

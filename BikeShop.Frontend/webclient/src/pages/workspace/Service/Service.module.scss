@@ -193,3 +193,20 @@
     }
   }
 }
+
+.InstantWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .InstantYes {
+    width: 500px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+
+  .InstantNo {
+    width: 500px;
+    height: 50px;
+  }
+}

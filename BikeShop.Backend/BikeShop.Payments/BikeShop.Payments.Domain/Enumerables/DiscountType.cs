@@ -8,6 +8,6 @@ namespace BikeShop.Payments.Domain.Enumerables
 {
     public enum DiscountType
     {
-        Persent, Static
+        Percent, Static
     }
 }

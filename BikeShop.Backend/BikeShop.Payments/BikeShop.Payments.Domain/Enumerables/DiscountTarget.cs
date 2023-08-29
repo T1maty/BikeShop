@@ -11,7 +11,7 @@ namespace BikeShop.Payments.Domain.Enumerables
         ShopBillTotal, 
         ShopSingleProduct,
 
-        WorkshopSigleProduct,
+        WorkshopSingleProduct,
         WorkshopProductsTotal,
         WorkshopSingleWork,
         WorkshopWorkTotal,

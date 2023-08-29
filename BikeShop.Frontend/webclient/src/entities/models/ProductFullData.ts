@@ -3,6 +3,8 @@ import {ProductCard} from "../entities/ProductCard"
 import {ProductSpecificationBind} from "../entities/ProductSpecificationBind"
 import {ProductOptionVariantBind} from "./Product/ProductOptionVariantBind"
 import {ProductImage} from "../entities/ProductImage"
+import {ProductCategory} from "../entities/ProductCategory";
+import {ProductFilter} from "../entities/ProductFilter";
 
 export interface ProductFullData {
     product: Product
@@ -10,6 +12,7 @@ export interface ProductFullData {
     productSpecifications: ProductSpecificationBind[]
     productOptions: ProductOptionVariantBind[]
     productImages: ProductImage[]
-    productTags: []
+    productCategory: ProductCategory
+    productFilters: ProductFilter[]
     bindedProducts: Product[]
 }

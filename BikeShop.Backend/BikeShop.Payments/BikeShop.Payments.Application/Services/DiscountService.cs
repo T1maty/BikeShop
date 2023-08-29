@@ -53,40 +53,21 @@ namespace BikeShop.Payments.Application.Services
             var type = Enum.Parse<DiscountTarget>(discount.Target);
             if (!targets.Contains(type)) throw DiscountError.WrongDiscountTarget;
 
-            switch (Enum.Parse<DiscountTarget>(discount.Type))
+            decimal res = 0;
+
+            if(discount.Type == DiscountType.Percent.ToString())
             {
-                case DiscountTarget.ShopBillTotal:
-
-                    break;
-
-                case DiscountTarget.ShopSingleProduct:
-
-                    break;
-
-                /////////////////////
-
-                case DiscountTarget.WorkshopSigleProduct:
-
-                    break;
-
-                case DiscountTarget.WorkshopProductsTotal:
-
-                    break;
-
-                case DiscountTarget.WorkshopSingleWork:
-
-                    break;
-
-                case DiscountTarget.WorkshopWorkTotal:
-
-                    break;
-
-                case DiscountTarget.WorkshopTotal:
-
-                    break;
+                res = startPrice / 100 * discount.Amount;
             }
 
-            return 0;
+            if (discount.Type == DiscountType.Static.ToString())
+            {
+                res = startPrice / 100 * discount.Amount;
+            }
+
+            if (res > discount.Limit) res = discount.Limit;
+
+            return res;
         }
 
         public async Task<decimal> Calculate(int discountId, string target, decimal startPrice)
@@ -99,6 +80,14 @@ namespace BikeShop.Payments.Application.Services
                 throw DiscountError.DiscountTargetNotFount;
 
             return await CalculateDiscount(discount, new List<DiscountTarget> { Enum.Parse<DiscountTarget>(target) }, startPrice);
+        }
+
+        public async Task<List<Discount>> GetByTarget(string target, Guid user)
+        {
+            if (!Enum.IsDefined(typeof(DiscountTarget), target))
+                throw DiscountError.DiscountTargetNotFount;
+
+            return await _context.Discounts.Where(n => n.Target == target).Where(n=>n.Enabled == true).ToListAsync();
         }
     }
 }

@@ -36,7 +36,7 @@ interface ServiceStore {
     filter: () => void
 
     getAllServicesInfo: () => any
-    addNewService: (data: ServiceFormModel, onSuccess: () => void) => any
+    addNewService: (data: ServiceFormModel, onSuccess: () => void, isInstant: boolean) => any
     updateService: (updateData: ServiceFormModel, onSuccess: () => void) => any
     updateServiceStatus: (data: UpdateServiceStatus, onSuccess: () => void) => void
 
@@ -128,6 +128,8 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             }
 
             s()
+            //get().setCurrentService(null)
+            //get().setIsCreating(false)
         }).catch(() => {
             set({errorStatus: 'error'})
         }).finally(() => {
@@ -212,7 +214,7 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             set({isLoading: false})
         })
     },
-    addNewService: (data, onSuccess) => {
+    addNewService: (data, onSuccess, isInstant) => {
         set({isLoading: true})
         data.userId = LocalStorage.userId()!
         data.shopId = parseInt(LocalStorage.shopId()!)
@@ -227,7 +229,7 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             set(state => {
                 state.currentService = state.services[state.services.length - 1]
             })
-            if (get().isPrinting) {
+            if (!isInstant) {
                 get().setPrintModalIn(true)
                 get().setTriggerIn('agent')
             }

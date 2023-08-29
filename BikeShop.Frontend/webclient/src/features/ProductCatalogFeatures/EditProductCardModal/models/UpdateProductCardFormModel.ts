@@ -1,4 +1,5 @@
 import {Product, ProductOptionVariantBind, ProductSpecificationBind} from "entities"
+import {ProductFilter} from "../../../../entities/entities/ProductFilter";
 
 export interface UpdateProductCardFormModel {
     id: number
@@ -6,6 +7,6 @@ export interface UpdateProductCardFormModel {
     productCard: { description: string, shortDescription: string }
     productOptions: ProductOptionVariantBind[]
     productSpecifications: ProductSpecificationBind[]
-    productTags: []
+    productFilters: ProductFilter[]
     bindedProducts: Product[]
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import {ServiceProduct, useCurrency} from "../../../entities"
 import s from "./ServiceTable.module.scss"
 import {Button} from "../../../shared/ui"
@@ -13,7 +13,7 @@ type ServiceTableProps = {
     summ: number
 }
 
-const ServiceTableProduct = (props: ServiceTableProps) => {
+const ServiceTableProduct = memo((props: ServiceTableProps) => {
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const fstb = useCurrency(s => s.fromSelectedToBase)
@@ -95,6 +95,6 @@ const ServiceTableProduct = (props: ServiceTableProps) => {
             </div>
         </div>
     );
-};
+});
 
 export default ServiceTableProduct;
