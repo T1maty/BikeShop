@@ -1,14 +1,17 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes;
+using BikeShop.Products.Domain.DTO.Requestes.Filters;
 using BikeShop.Products.Domain.DTO.Requestes.Option;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.DTO.Responses.Option;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Tls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +28,14 @@ namespace BikeShop.Products.Application.Services
             _context = context;
             _publicService = publicService;
             _productService = productService;
+        }
+
+        public async Task<ProductFilter> CreateFilter(CreateFilterDTO dto)
+        {
+            var ent = new ProductFilter { GroupName = dto.GroupName, GroupSortOrder = dto.GroupSortOrder, IsB2BVisible = dto.IsB2BVisible, IsCollapsed = dto.IsCollapsed, IsRetailVisible = dto.IsRetailVisible, Name = dto.Name, SortOrder = dto.SortOrder };
+            await _context.ProductFilters.AddAsync(ent);
+            await _context.SaveChangesAsync(new CancellationToken());
+            return ent;
         }
 
         public async Task<OptionDTO> CreateOption(CreateOptionDTO dto)
@@ -54,6 +65,11 @@ namespace BikeShop.Products.Application.Services
             return ent;
         }
 
+        public async Task<List<ProductFilter>> GetAllFilters()
+        {
+            return await _context.ProductFilters.ToListAsync();
+        }
+
         public async Task<List<OptionDTO>> GetAllOptions()
         {
             var dto = new List<OptionDTO>();
@@ -76,6 +92,21 @@ namespace BikeShop.Products.Application.Services
         public async Task<ProductCardDTO> GetProductCard(int productId)
         {
             return await _publicService.getProductCard(productId);
+        }
+
+        public async Task<ProductFilter> UpdateFilter(UpdateFilterDTO dto)
+        {
+            var ent = await _context.ProductFilters.FindAsync(dto.Id);
+            ent.SortOrder = dto.SortOrder;
+            ent.GroupSortOrder = dto.GroupSortOrder;
+            ent.IsCollapsed = dto.IsCollapsed;
+            ent.IsRetailVisible = dto.IsRetailVisible;
+            ent.GroupName = dto.GroupName;
+            ent.Name = dto.Name;
+            ent.IsB2BVisible = dto.IsRetailVisible;
+            ent.UpdatedAt = DateTime.Now;
+            await _context.SaveChangesAsync(new CancellationToken());
+            return ent;
         }
 
         public async Task<OptionDTO> UpdateOption(UpdateOptionDTO dto)
@@ -224,9 +255,37 @@ namespace BikeShop.Products.Application.Services
             var forRemoveSpecs = _context.ProductSpecifications.Where(n => n.ProductId == dto.Id).Where(n => !specIds.Contains(n.Id));
             _context.ProductSpecifications.RemoveRange(forRemoveSpecs);
 
+
+            //Работаем с фильтрами
+            //Получаем все нужные фильтры
+            var filters = await _context.ProductFilters.Where(n => dto.productFilters.Select(m=>m.FilterId).Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
+            var existFilterBinds = await _context.ProductFilterBinds.Where(n => n.ProductId == dto.Id).ToListAsync();
+            var newFilterBinds = new List<ProductFilterBind>();
+
+            foreach (var i in dto.productFilters)
+            {
+                var f = filters[i.FilterId];
+
+                if (i.Id == 0)
+                {
+                    var ent = new ProductFilterBind { FilterId = f.Id, GroupName = f.GroupName, GroupSortOrder = f.GroupSortOrder, IsB2BVisible = f.IsB2BVisible, IsCollapsed = f.IsCollapsed, IsRetailVisible = f.IsRetailVisible, Name = f.Name, ProductId = dto.Id, SortOrder = f.SortOrder};
+                    newFilterBinds.Add(ent);
+                }
+                else
+                {
+                    var ent = existFilterBinds.Find(n=>n.Id == i.Id);
+                    existFilterBinds.Remove(ent);
+                }
+            }
+
+            //Добавляем новые бинды фильтров
+            await _context.ProductFilterBinds.AddRangeAsync(newFilterBinds);
+            //Удаляем лишние бинды фильтров
+            _context.ProductFilterBinds.RemoveRange(existFilterBinds);
+
             await _context.SaveChangesAsync(new CancellationToken());
 
-            return new ProductCardDTO();
+            return await GetProductCard(dto.Id);
         }
 
         public async Task<Specification> UpdateSpecification(UpdateSpecificationDTO dto)

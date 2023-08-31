@@ -129,4 +129,6 @@ export const EntitiesAPI = {
             )
         },
     },
+
+    Filters: {}
 }

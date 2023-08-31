@@ -5,6 +5,7 @@ import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification} from
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
+import {ProductFilter} from "../../../entities/entities/ProductFilter";
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -24,9 +25,27 @@ interface EditProductCardModalStore {
 
     allSpecifications: ProductSpecification[]
     getAllSpecifications: () => void
+
+    allFilters: ProductFilter[],
+    getAllFilters: () => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
+    allFilters: [],
+    getAllFilters: () => {
+        set({isLoading: true})
+        EntitiesAPI.Option.getOptions().then(res => {
+            set(state => {
+                state.allOptions = res.data
+            })
+            set({isLoading: false})
+        }).catch((error: any) => {
+            set({errorStatus: 'error'})
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
     openEditProductCardModal: false,
     setOpenEditProductCardModal: (value) => set({openEditProductCardModal: value}),
     isLoading: false,

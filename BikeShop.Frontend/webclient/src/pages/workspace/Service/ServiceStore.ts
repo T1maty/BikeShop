@@ -68,6 +68,8 @@ interface ServiceStore {
 
     isPrinting: boolean
     setIsPrinting: (v: boolean) => void
+
+    
 }
 
 const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => ({

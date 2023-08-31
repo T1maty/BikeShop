@@ -5,7 +5,7 @@ import {Discount} from "../entities/Discount";
 export const DiscountAPI = {
     getDiscountsByTarget(target: string, user: string): Promise<AxiosResponse<Discount[]>> {
         return (
-            $api.get<Discount[]>(`/getbytarget?target=${target}&user=${user}`)
+            $api.get<Discount[]>(`/discount/getbytarget?target=${target}&user=${user}`)
         )
     },
     calculateDiscount(discountId: number, target: string, startPrice: number): Promise<AxiosResponse<number>> {

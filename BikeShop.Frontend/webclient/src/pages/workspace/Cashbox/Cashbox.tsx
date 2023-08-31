@@ -13,6 +13,7 @@ import {
     BarcodeScannerListenerProvider
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider"
 import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
+import {DiscountTargetEnum} from "../../../entities/enumerables/DiscountTargetEnum";
 
 export const Cashbox = () => {
 
@@ -162,7 +163,9 @@ export const Cashbox = () => {
                                 </div>
                             </div>
                             <div className={s.discount_buttons}>
-                                <ChooseDiscountModal open={openDiscount} setOpen={setOpenDiscount}/>
+                                <ChooseDiscountModal open={openDiscount} setOpen={setOpenDiscount}
+                                                     target={DiscountTargetEnum.ShopBillTotal} onChange={() => {
+                                }}/>
 
                                 <Button buttonDivWrapper={s.buttons_choose}
                                         onClick={() => {

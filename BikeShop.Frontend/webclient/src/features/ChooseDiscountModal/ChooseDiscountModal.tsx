@@ -1,31 +1,33 @@
 import React, {useEffect, useState} from 'react'
 import s from './ChooseDiscountModal.module.scss'
-import {Button, CustomModal} from '../../shared/ui'
+import {Button, CustomModal, LoaderScreen} from '../../shared/ui'
 import Select from "react-select"
-import {DiscountTargetEnum} from "../../entities/enumerables/DiscountTargetEnum";
+import useChooseDiscountModal from "./ChooseDiscountModalStore";
+import {Discount} from "../../entities/entities/Discount";
 
 interface p {
     open: boolean
     setOpen: (n: boolean) => void
 
-    target: DiscountTargetEnum
+    target: string
+    onChange: (d: Discount) => void
+
 }
 
 export const ChooseDiscountModal = (p: p) => {
 
-    const discountList = [
-        {value: 10, label: '10'},
-        {value: 20, label: '20'},
-        {value: 30, label: '30'},
-    ]
+    const isLoading = useChooseDiscountModal(s => s.isLoading)
+    const discountList = useChooseDiscountModal(s => s.discountsList)
+    const getDiscountsByTarget = useChooseDiscountModal(s => s.getDiscountsByTarget)
 
     useEffect(() => {
         if (p.open) {
-
+            setSelectedDiscount(null)
+            getDiscountsByTarget(p.target)
         }
     }, [p.open])
 
-    const [selectedDiscount, setSelectedDiscount] = useState(null)
+    const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>(null)
 
     // const formControl = useForm<any>({
     //     defaultValues: {
@@ -44,44 +46,31 @@ export const ChooseDiscountModal = (p: p) => {
                 p.setOpen(false)
             }}
         >
-            <div className={s.discountModal_mainBox}>
-                <div className={s.discountModal_selectBlock}>
-                    <Select
-                        className={s.select_box}
-                        options={discountList}
-                        placeholder={'Скидка'}
-                        isSearchable={false}
-                        value={selectedDiscount}
-                        onChange={(value: any) => {
-                            setSelectedDiscount(value)
-                        }}
-                    />
+            {isLoading ? <LoaderScreen variant={'ellipsis'}/> :
+                <div className={s.discountModal_mainBox}>
+                    <div className={s.discountModal_selectBlock}>
+                        <Select
+                            className={s.select_box}
+                            options={discountList}
+                            placeholder={'Скидка'}
+                            isSearchable={false}
+                            value={selectedDiscount}
+                            getOptionLabel={label => label!.name}
+                            onChange={(value: any) => {
+                                setSelectedDiscount(value)
+                            }}
+                        />
 
-                    {/*<ControlledReactSelect control={formControl}*/}
-                    {/*                       name={'discount'}*/}
-                    {/*                       className={s.select_box}*/}
-                    {/*                       placeholder={'Скидка'}*/}
-                    {/*                       // isSearchable*/}
-                    {/*                       value={selectedDiscount}*/}
-                    {/*                       onChangeSelect={(value: any) => {setSelectedDiscount(value)}}*/}
-                    {/*                       data={discountList.map((el: any) => {*/}
-                    {/*                           return {*/}
-                    {/*                               // id: el.id,*/}
-                    {/*                               value: el.value,*/}
-                    {/*                               label: el.label,*/}
-                    {/*                           }*/}
-                    {/*                       })}*/}
-                    {/*/>*/}
-                </div>
 
-                <div className={s.discountModal_buttonsBlock}>
-                    <Button onClick={() => {
-                    }}>Выбрать скидку</Button>
-                    <Button onClick={() => {
-                        p.setOpen(false)
-                    }}>Отмена</Button>
+                    </div>
+
+                    <div className={s.discountModal_buttonsBlock}>
+                        <Button onClick={() => {
+                            p.onChange(selectedDiscount!)
+                        }} disabled={selectedDiscount === null}>Применить</Button>
+                    </div>
                 </div>
-            </div>
+            }
         </CustomModal>
     );
 };

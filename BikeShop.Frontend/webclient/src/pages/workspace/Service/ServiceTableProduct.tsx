@@ -1,9 +1,10 @@
-import React, {memo} from 'react'
+import React, {memo, useState} from 'react'
 import {ServiceProduct, useCurrency} from "../../../entities"
 import s from "./ServiceTable.module.scss"
 import {Button} from "../../../shared/ui"
-import {TableProductItem} from "../../../features"
+import {ChooseDiscountModal, TableProductItem} from "../../../features"
 import useService from "./ServiceStore";
+import {DiscountTargetEnum} from "../../../entities/enumerables/DiscountTargetEnum";
 
 type ServiceTableProps = {
     data: ServiceProduct[] | null
@@ -20,6 +21,7 @@ const ServiceTableProduct = memo((props: ServiceTableProps) => {
     const r = useCurrency(s => s.roundUp)
     const masters = useService(s => s.masters)
 
+    const [openDiscount, setOpenDiscount] = useState(false)
     const userClickHandler = () => {
         props.serviceTableCallback()
     }
@@ -38,13 +40,19 @@ const ServiceTableProduct = memo((props: ServiceTableProps) => {
 
     return (
         <div className={s.tableBox}>
+            <ChooseDiscountModal open={openDiscount} setOpen={setOpenDiscount} onChange={(d) => {
+
+            }}
+                                 target={DiscountTargetEnum.WorkshopProductsTotal}/>
             <div className={s.tableBox_buttons}>
                 <div className={s.buttons_editBtn}>
                     <Button onClick={userClickHandler} disabled={props.disabledButton}>
                         Редактор товаров
                     </Button>
                 </div>
-                <div className={s.buttons_discountField}>
+                <div className={s.buttons_discountField} onClick={() => {
+                    setOpenDiscount(true)
+                }}>
                     <div className={s.discountField_title}>
                         Скидка
                     </div>

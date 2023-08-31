@@ -4,7 +4,7 @@ import {ProductSpecificationBind} from "../entities/ProductSpecificationBind"
 import {ProductOptionVariantBind} from "./Product/ProductOptionVariantBind"
 import {ProductImage} from "../entities/ProductImage"
 import {ProductCategory} from "../entities/ProductCategory";
-import {ProductFilter} from "../entities/ProductFilter";
+import {ProductFilterBind} from "../entities/ProductFilterBind";
 
 export interface ProductFullData {
     product: Product
@@ -13,6 +13,6 @@ export interface ProductFullData {
     productOptions: ProductOptionVariantBind[]
     productImages: ProductImage[]
     productCategory: ProductCategory
-    productFilters: ProductFilter[]
+    productFilters: ProductFilterBind[]
     bindedProducts: Product[]
 }

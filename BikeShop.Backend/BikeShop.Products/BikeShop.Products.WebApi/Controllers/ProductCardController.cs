@@ -1,5 +1,6 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes;
+using BikeShop.Products.Domain.DTO.Requestes.Filters;
 using BikeShop.Products.Domain.DTO.Requestes.Option;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
@@ -72,6 +73,26 @@ namespace BikeShop.Products.WebApi.Controllers
         public async Task<Specification> UpdateSpecification(UpdateSpecificationDTO dto)
         {
             return await _productCardService.UpdateSpecification(dto);
+        }
+
+        //Filters
+
+        [HttpGet("getallfilters")]
+        public async Task<List<ProductFilter>> GetAllFilters()
+        {
+            return await _productCardService.GetAllFilters();
+        }
+
+        [HttpPost("createfilter")]
+        public async Task<ProductFilter> CreateFilter(CreateFilterDTO dto)
+        {
+            return await _productCardService.CreateFilter(dto);
+        }
+
+        [HttpPut("updatefilter")]
+        public async Task<ProductFilter> UpdateFilter(UpdateFilterDTO dto)
+        {
+            return await _productCardService.UpdateFilter(dto);
         }
     }
 }

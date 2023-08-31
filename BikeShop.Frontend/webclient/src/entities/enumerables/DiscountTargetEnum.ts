@@ -1,9 +1,11 @@
-export type DiscountTargetEnum =
-    'ShopBillTotal'
-    | 'ShopSingleProduct'
+export const DiscountTargetEnum = {
+    ShopBillTotal: 'ShopBillTotal',
+    ShopSingleProduct: 'ShopSingleProduct',
 
-    | 'WorkshopSingleProduct'
-    | 'WorkshopProductsTotal'
-    | 'WorkshopSingleWork'
-    | 'WorkshopWorkTotal'
-    | 'WorkshopTotal'
+    WorkshopSingleProduct: 'WorkshopSingleProduct',
+    WorkshopProductsTotal: 'WorkshopProductsTotal',
+    WorkshopSingleWork: 'WorkshopSingleWork',
+    WorkshopWorkTotal: 'WorkshopWorkTotal',
+    WorkshopTotal: 'WorkshopTotal'
+}
+
