@@ -712,6 +712,21 @@
       "SwaggerKey": "products"
     },
 	{
+      "UpstreamPathTemplate": "/api/productcard/addoptionvariant",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "DownstreamPathTemplate": "/productcard/addoptionvariant",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	{
       "UpstreamPathTemplate": "/api/productcard/getallspecifications",
       "UpstreamHttpMethod": [
         "Get"
