@@ -56,14 +56,19 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         return options.filter(n => enumr.where(m => m.optionId == n.id).toArray().length < n.optionVariants.length)
     }
 
-    const addVariantHandler = (control: any, product: Product, selectedOption: ProductOptionsWithVariants) => {
+    const addVariantHandler = (control: any, product: Product, selectedOption: ProductOptionsWithVariants, justCreatedName?: string) => {
         let value = control.getValues('productOptions')
+        let r: ProductOptionVariant
+        if (justCreatedName != undefined) {
+            r = selectedOption.optionVariants.find(n => n.name === justCreatedName)!
+        } else {
+            r = selectedOption.optionVariants
+                .filter((n: ProductOptionVariant) => !Enumerable
+                    .from(control.getValues('productOptions') as ProductOptionVariantBind[])
+                    .select(m => m.optionVariantId)
+                    .contains(n.id))[0]
+        }
 
-        let r = selectedOption.optionVariants
-            .filter((n: ProductOptionVariant) => !Enumerable
-                .from(control.getValues('productOptions') as ProductOptionVariantBind[])
-                .select(m => m.optionVariantId)
-                .contains(n.id))[0]
 
         let variant: ProductOptionVariantBind
 
@@ -389,9 +394,12 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                 <CreateOptionVariantModal
                                                                                     open={openCreateVariant}
                                                                                     setOpen={setOpenCreateVariant}
-                                                                                    name={createVariantSelectedOption ? createVariantSelectedOption.name : ""}
+                                                                                    name={createVariantSelectedOption ? createVariantSelectedOption.optionName : ""}
                                                                                     onConfirm={(name) => {
-                                                                                        addOptionVariant(createVariantSelectedOption!, name, (v) => {
+                                                                                        addOptionVariant(createVariantSelectedOption!, name, (value) => {
+                                                                                            let data = (props.control.getValues('productOptions') as ProductOptionVariantBind[]).filter(n => n.id != createVariantSelectedOption?.id)
+                                                                                            props.control.setValue('productOptions', data);
+                                                                                            addVariantHandler(props.control, bindedProduct, value, name)
                                                                                         })
                                                                                     }}/>
 

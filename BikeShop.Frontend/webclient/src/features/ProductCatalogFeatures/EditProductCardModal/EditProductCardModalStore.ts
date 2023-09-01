@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification, UpdateOption} from '../../../entities'
+import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
@@ -34,25 +34,15 @@ interface EditProductCardModalStore {
     addOptionVariant: (option: ProductOptionVariantBind, variant: string, s: (v: ProductOptionsWithVariants) => void) => void
 }
 
-const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
+const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
     addOptionVariant: (option, variant, s) => {
         set({isLoading: true})
-        let data:UpdateOption = {
-            id: option.optionId,
-            name: option.name,
-            optionVariants: [
-                {
-                    id: number
-                    name: string
-                    enabled: boolean
-                }
-            ],
-            enabled: true
-        }
-        EntitiesAPI.Option.updateOption({name: option, optionVariants: [variant]}).then(res => {
-            set(state => {
-                state.allOptions.push(res.data)
+        EntitiesAPI.Option.addOptionVariant(option.optionId, variant).then(res => {
+            let data = get().allOptions.map(n => {
+                if (n.id === res.data.id) return res.data
+                return n
             })
+            set({allOptions: data})
             set({isLoading: false})
             s(res.data)
         }).catch(() => {

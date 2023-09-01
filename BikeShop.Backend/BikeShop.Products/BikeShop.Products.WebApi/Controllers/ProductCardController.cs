@@ -55,6 +55,12 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productCardService.UpdateOption(dto);
         }
 
+        [HttpPut("addoptionvariant")]
+        public async Task<OptionDTO> AddOptionVariant(int optionId, string name)
+        {
+            return await _productCardService.AddOptionVariant(optionId, name);
+        }
+
         //Specifications
 
         [HttpGet("getallspecifications")]

@@ -130,6 +130,11 @@ export const EntitiesAPI = {
                 $api.put<ProductOptionsWithVariants>('/productcard/updateoption', updateData)
             )
         },
+        addOptionVariant(optionId: number, name: string): Promise<AxiosResponse<ProductOptionsWithVariants>> {
+            return (
+                $api.put<ProductOptionsWithVariants>(`/productcard/addoptionvariant?optionId=${optionId}&name=${name}`)
+            )
+        },
     },
 
     Filters: {
