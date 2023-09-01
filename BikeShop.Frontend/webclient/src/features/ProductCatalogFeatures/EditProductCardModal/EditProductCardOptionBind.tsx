@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import s from './EditProductCardOptionBind.module.scss'
 import {
     Product,
@@ -12,11 +12,15 @@ import {
 import {Controller, UseFormReturn} from 'react-hook-form'
 import {AsyncSelectSearchProduct, Button, LoaderScreen} from '../../../shared/ui'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
-import Select from 'react-select'
+import Select, {SingleValue} from 'react-select'
 import useEditProductCardModal from './EditProductCardModalStore'
 import Enumerable from 'linq'
 import {ChooseProductModal} from '../ChooseProductModal/ChooseProductModal'
 import {useSnackbar} from 'notistack'
+import {ProductFilterBind} from 'entities/entities/ProductFilterBind'
+import {ProductFilter} from "../../../entities/entities/ProductFilter";
+import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
+import CreateOptionVariantModal from "./CreateOptionVariantModal";
 
 interface ProductCardOptionBindProps {
     product: ProductFullData
@@ -30,14 +34,21 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
     const {enqueueSnackbar} = useSnackbar()
 
     const allOptions = useEditProductCardModal(s => s.allOptions)
+    const allFilters = useEditProductCardModal(s => s.allFilters)
     const isLoading = useEditProductCardModal(s => s.isLoading)
     const setIsLoading = useEditProductCardModal(s => s.setIsLoading)
-
-    const [selectedOption, setSelectedOption] = useState<any>(null)
+    const createOption = useEditProductCardModal(s => s.createOption)
+    const addOptionVariant = useEditProductCardModal(s => s.addOptionVariant)
 
     const [v, sV] = useState(false)
     const [v2, sV2] = useState<{ id: number, state: boolean }[]>([])
-
+    const [selectInput, setSelectInput] = useState('')
+    const [openCreateOption, setOpenCreateOption] = useState(false)
+    const [openCreateVariant, setOpenCreateVariant] = useState(false)
+    const [createVariantSelectedOption, setCreateVariantSelectedOption] = useState<ProductOptionVariantBind | null>(null)
+    useEffect(() => {
+        !openCreateOption ? setSelectInput('') : null
+    }, [openCreateOption])
     const availableOptions = (control: any, product: Product) => {
         let enumr = Enumerable.from(control.getValues('productOptions') as ProductOptionVariantBind[])
         let options = allOptions.filter((n: ProductOption) => !(enumr.where(m => m.productId == product.id)
@@ -45,7 +56,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         return options.filter(n => enumr.where(m => m.optionId == n.id).toArray().length < n.optionVariants.length)
     }
 
-    const addVariantHandler = (control: any, product: Product) => {
+    const addVariantHandler = (control: any, product: Product, selectedOption: ProductOptionsWithVariants) => {
         let value = control.getValues('productOptions')
 
         let r = selectedOption.optionVariants
@@ -70,7 +81,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         }
 
         control.setValue('productOptions', [...value, variant])
-        setSelectedOption(null)
     }
 
     const onChangeOptionsVariants = (field: any, bindedProduct: Product, newValue: any) => {
@@ -116,12 +126,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
             if (productCard.product.id == product.id && productCard.bindedProducts.length === 1) {
                 let optionsIds = Enumerable.from(props.control.getValues('productOptions') as ProductOptionVariantBind[])
                     .select(n => n.optionVariantId).toArray()
-                /*
-                let tagIds = Enumerable.from(props.control.getValues('productTags') as ProductTagBindDTO[])
-                    .select(n => n.productTag.id).toArray()
 
-
-                 */
                 productCard.productOptions.forEach(n => {
                     if (!optionsIds.includes(n.optionVariantId)) {
                         optionsIds.push(n.optionVariantId)
@@ -129,17 +134,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                         console.log('слияние опции', n)
                     }
                 })
-                /*
-                                productCard.productTags.forEach((n) => {
-                                    if (!tagIds.includes(n.productTag.id)) {
-                                        tagIds.push(n.productTag.id)
-                                        props.control.setValue('productTags', [...props.control.getValues('productTags'), n])
-                                        console.log('слияние тега', n)
-                                    }
-                                })
 
-
-                 */
                 productCard.productImages.forEach((n) => {
                     props.setImages([...props.images, n])
                     console.log('слияние image', n)
@@ -161,18 +156,28 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
             }
         })
     }
-    /*
-        const deleteBindedProductHandler = (field: any, bindedProduct: Product) => {
-            field.onChange(field.value.filter((n: Product) => n.id != bindedProduct.id))
-            props.control.setValue('productOptions', props.control.getValues('productOptions')
-                .filter((n: ProductOptionVariantBind) => n.productId != bindedProduct.id))
-            props.control.setValue('productTags', props.control.getValues('productTags')
-                .filter((n: ProductTagBindDTO) => n.productId != bindedProduct.id))
-            props.setImages(props.images.filter(n => n.productId != bindedProduct.id))
-        }
 
+    const addFilter = (filter: ProductFilter) => {
+        let data = props.control.getValues('productFilters') as ProductFilterBind[]
 
-     */
+        let filterr = {
+            id: 0,
+            createdAt: "",
+            updatedAt: "",
+            enabled: true,
+            productId: props.product.product.id,
+            filterId: filter.id,
+            name: filter.name,
+            groupName: filter.groupName,
+            isCollapsed: filter.isCollapsed,
+            isRetailVisible: filter.isRetailVisible,
+            isB2BVisible: filter.isB2BVisible,
+            sortOrder: filter.sortOrder,
+            groupSortOrder: filter.groupSortOrder,
+        } as ProductFilterBind
+
+        props.control.setValue('productFilters', [filterr, ...data])
+    }
     const uploadBindedPhotoHandler = (e: ChangeEvent<HTMLInputElement>, bindedProduct: Product) => {
         let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
 
@@ -209,35 +214,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         })
     }
 
-    const setOpenProductTagModalHandler = (bindedProduct: Product, value: boolean) => {
-        sV2([...v2.filter(n => n.id != bindedProduct.id),
-            {id: bindedProduct.id, state: value}])
-    }
-    /*
-        const onTagDoubleClickHandler = (field: any, bindedProduct: Product, tag: any) => {
-            sV2([...v2.filter(n => n.id != bindedProduct.id),
-                {
-                    id: bindedProduct.id,
-                    state: false
-                }])
-            if (!Enumerable.from(field.value as ProductTagBindDTO[])
-                .select(n => n.productTag.id)
-                .contains(tag.id)) {
-                field.onChange([...field.value,
-                    {
-                        productTag: tag,
-                        productId: bindedProduct.id
-                    } as ProductTagBindDTO])
-            } else {
-                enqueueSnackbar('Такой тег уже есть у товара', {
-                    variant: 'warning',
-                    autoHideDuration: 3000
-                })
-            }
-        }
-
-
-     */
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
     } else {
@@ -250,12 +226,13 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                     <div className={s.optionBind}>
 
-                        <ChooseProductModal open={v} setOpen={sV}
+
+                        <ChooseProductModal open={v}
+                                            setOpen={sV}
                                             addData={(product) => {
                                                 addProductBind(product, field)
                                             }}
                         />
-
                         <div className={s.optionBind_header}>
                             <div>Группа товаров</div>
 
@@ -366,14 +343,28 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                         <div className={s.options_selectRow}>
 
                                                                             <div className={s.options_select}>
+                                                                                <CreateOptionVariantModal
+                                                                                    open={openCreateOption}
+                                                                                    setOpen={setOpenCreateOption}
+                                                                                    name={selectInput}
+                                                                                    onConfirm={(name) => {
+                                                                                        createOption(selectInput, name, (opt) => {
+                                                                                            addVariantHandler(props.control, bindedProduct, opt)
+                                                                                        })
+                                                                                    }}/>
+
+
                                                                                 <Select
                                                                                     className={s.options_search}
                                                                                     options={availableOptions(props.control, bindedProduct)}
                                                                                     placeholder={'Опции'}
                                                                                     isSearchable={true}
-                                                                                    value={selectedOption}
-                                                                                    onChange={(value: any) => {
-                                                                                        setSelectedOption(value)
+                                                                                    value={null}
+                                                                                    onInputChange={(v) => {
+                                                                                        if (v != '') setSelectInput(v)
+                                                                                    }}
+                                                                                    onChange={(value) => {
+                                                                                        addVariantHandler(props.control, bindedProduct, value as ProductOptionsWithVariants)
                                                                                     }}
                                                                                     getOptionLabel={label => label!.name}
                                                                                     getOptionValue={value => value!.name}
@@ -383,18 +374,27 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                             <Button
                                                                                 buttonDivWrapper={s.options_addButton}
                                                                                 onClick={() => {
-                                                                                    addVariantHandler(props.control, bindedProduct)
+                                                                                    setOpenCreateOption(true)
                                                                                 }}
-                                                                                disabled={selectedOption === null || props.control.getValues('productOptions')
-                                                                                    .filter((n: ProductOptionVariantBind) => n.productId == bindedProduct.id)
-                                                                                    .find((n: ProductOptionVariantBind) => n.optionId == selectedOption.id) != undefined}
+
+                                                                                disabled={selectInput === `` || selectInput === ` `}
                                                                             >
-                                                                                +
+                                                                                Створити
                                                                             </Button>
                                                                         </div>
 
                                                                         <div className={s.options_scrollContainer}>
                                                                             <div className={s.options_list}>
+
+                                                                                <CreateOptionVariantModal
+                                                                                    open={openCreateVariant}
+                                                                                    setOpen={setOpenCreateVariant}
+                                                                                    name={createVariantSelectedOption ? createVariantSelectedOption.name : ""}
+                                                                                    onConfirm={(name) => {
+                                                                                        addOptionVariant(createVariantSelectedOption!, name, (v) => {
+                                                                                        })
+                                                                                    }}/>
+
                                                                                 {
                                                                                     props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
                                                                                         .map((variant: ProductOptionVariantBind) => {
@@ -409,6 +409,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                                                                     <div
                                                                                                         className={s.listItem_selectWithButton}>
+
+
                                                                                                         <Select
                                                                                                             className={s.options_search}
                                                                                                             // classNamePrefix={'react-select'}
@@ -426,7 +428,12 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                             getOptionValue={value => value!.name}
                                                                                                             noOptionsMessage={() => 'Доступных вариантов нету'}
                                                                                                         />
-
+                                                                                                        <Button
+                                                                                                            className={s.add_variant_button}
+                                                                                                            onClick={() => {
+                                                                                                                setCreateVariantSelectedOption(variant)
+                                                                                                                setOpenCreateVariant(true)
+                                                                                                            }}>+</Button>
                                                                                                         <Button
                                                                                                             onClick={() => {
                                                                                                                 field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
@@ -458,7 +465,30 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                 control={props.control.control}
                                                                 render={({field}: any) =>
                                                                     <div className={s.tags_scrollContainer}>
+                                                                        <Select
+                                                                            className={s.options_search}
+                                                                            // classNamePrefix={'react-select'}
+                                                                            placeholder={'Фильтры'}
+                                                                            options={allFilters.filter(n => !Enumerable.from(props.control.getValues('productFilters') as ProductFilterBind[]).select(i => i.filterId).contains(n.id))}
+                                                                            onChange={(newValue: SingleValue<ProductFilter>) => {
+                                                                                //onChangeOptionsVariants(field, bindedProduct, newValue)
+                                                                                addFilter(newValue as ProductFilter)
+                                                                            }}
+                                                                            isSearchable={true}
+                                                                            getOptionLabel={label => label!.name}
 
+                                                                            noOptionsMessage={() => 'Доступных вариантов нету'}
+                                                                        />
+
+                                                                        {
+                                                                            props.control.getValues('productFilters').map((n: ProductFilterBind) => {
+                                                                                return (
+                                                                                    <div>
+                                                                                        {n.name}
+                                                                                    </div>
+                                                                                )
+                                                                            })
+                                                                        }
 
                                                                     </div>
                                                                 }

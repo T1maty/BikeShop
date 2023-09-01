@@ -1,11 +1,12 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
+import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification, UpdateOption} from '../../../entities'
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 import {ProductFilter} from "../../../entities/entities/ProductFilter";
+import {ProductOptionVariantBind} from "entities";
 
 interface EditProductCardModalStore {
     openEditProductCardModal: boolean
@@ -27,16 +28,63 @@ interface EditProductCardModalStore {
     getAllSpecifications: () => void
 
     allFilters: ProductFilter[],
-    getAllFilters: () => void
+    getAllFilters: () => void,
+
+    createOption: (option: string, variant: string, s: (v: ProductOptionsWithVariants) => void) => void
+    addOptionVariant: (option: ProductOptionVariantBind, variant: string, s: (v: ProductOptionsWithVariants) => void) => void
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set) => ({
+    addOptionVariant: (option, variant, s) => {
+        set({isLoading: true})
+        let data:UpdateOption = {
+            id: option.optionId,
+            name: option.name,
+            optionVariants: [
+                {
+                    id: number
+                    name: string
+                    enabled: boolean
+                }
+            ],
+            enabled: true
+        }
+        EntitiesAPI.Option.updateOption({name: option, optionVariants: [variant]}).then(res => {
+            set(state => {
+                state.allOptions.push(res.data)
+            })
+            set({isLoading: false})
+            s(res.data)
+        }).catch(() => {
+            set({errorStatus: 'error'})
+
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
+    createOption: (option, variant, s) => {
+        set({isLoading: true})
+        EntitiesAPI.Option.addNewOption({name: option, optionVariants: [variant]}).then(res => {
+            set(state => {
+                state.allOptions.push(res.data)
+            })
+            set({isLoading: false})
+            s(res.data)
+        }).catch(() => {
+            set({errorStatus: 'error'})
+
+        }).finally(() => {
+            set({errorStatus: 'default'})
+            set({isLoading: false})
+        })
+    },
     allFilters: [],
     getAllFilters: () => {
         set({isLoading: true})
-        EntitiesAPI.Option.getOptions().then(res => {
+        EntitiesAPI.Filters.getFilters().then(res => {
             set(state => {
-                state.allOptions = res.data
+                state.allFilters = res.data
             })
             set({isLoading: false})
         }).catch((error: any) => {

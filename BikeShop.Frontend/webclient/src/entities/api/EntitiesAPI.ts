@@ -15,6 +15,8 @@ import {Currency} from "../models/Others/Currency";
 import {CreateOption} from "../requests/CreateOption";
 import {UpdateOption} from "../requests/UpdateOption";
 import {$api} from "../../shared";
+import {ProductFilter} from "../entities/ProductFilter";
+import {CreateFilter} from "../requests/CreateFilter";
 
 export const EntitiesAPI = {
     Shop: {
@@ -118,17 +120,33 @@ export const EntitiesAPI = {
                 $api.get<ProductOptionsWithVariants[]>('/productcard/getalloptions')
             )
         },
-        addNewOption(data: CreateOption): Promise<AxiosResponse<ProductOptionsWithVariants[], any>> {
+        addNewOption(data: CreateOption): Promise<AxiosResponse<ProductOptionsWithVariants>> {
             return (
-                $api.post<CreateOption, any>('/productcard/createoption', data)
+                $api.post<ProductOptionsWithVariants>('/productcard/createoption', data)
             )
         },
-        updateOption(updateData: UpdateOption): Promise<AxiosResponse<ProductOptionsWithVariants[], any>> {
+        updateOption(updateData: UpdateOption): Promise<AxiosResponse<ProductOptionsWithVariants>> {
             return (
-                $api.put<UpdateOption, any>('/productcard/updateoption', updateData)
+                $api.put<ProductOptionsWithVariants>('/productcard/updateoption', updateData)
             )
         },
     },
 
-    Filters: {}
+    Filters: {
+        getFilters(): Promise<AxiosResponse<ProductFilter[]>> {
+            return (
+                $api.get<ProductFilter[]>('/productcard/getallfilters')
+            )
+        },
+        createFilter(data: CreateFilter): Promise<AxiosResponse<ProductFilter>> {
+            return (
+                $api.post<ProductFilter>('/productcard/createfilter', data)
+            )
+        },
+        updateFilter(updateData: CreateFilter): Promise<AxiosResponse<ProductFilter>> {
+            return (
+                $api.put<ProductFilter>('/productcard/updatefilter', updateData)
+            )
+        },
+    }
 }

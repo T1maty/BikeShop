@@ -1,5 +1,5 @@
 export interface CreateOption {
     // id: number
     name: string
-    variantNames: string[] // optionVariants: ProductOptionVariant[]
+    optionVariants: string[] // optionVariants: ProductOptionVariant[]
 }

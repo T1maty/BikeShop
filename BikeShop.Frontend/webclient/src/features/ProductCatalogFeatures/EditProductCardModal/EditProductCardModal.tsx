@@ -31,6 +31,7 @@ export const EditProductCardModal = () => {
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const getAllOptions = useEditProductCardModal(s => s.getAllOptions)
     const getAllSpecifications = useEditProductCardModal(s => s.getAllSpecifications)
+    const getAllFilters = useEditProductCardModal(s => s.getAllFilters)
     const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
     const formControl = useForm<UpdateProductCardFormModel>({
@@ -54,6 +55,7 @@ export const EditProductCardModal = () => {
     useEffect(() => {
         open ? getAllOptions() : null
         open ? getAllSpecifications() : null
+        open ? getAllFilters() : null
 
         formControl.setValue('id', currentProduct.product?.id)
         formControl.setValue('productFilters', currentProduct.productFilters)

@@ -30,6 +30,17 @@ namespace BikeShop.Products.Application.Services
             _productService = productService;
         }
 
+        public async Task<OptionDTO> AddOptionVariant(int optionId, string name)
+        {
+            var option = await _context.Options.FindAsync(optionId);
+            var variant = new OptionVariant { Name = name, OptionId = optionId, OptionName = option.Name };
+            await _context.OptionVariants.AddAsync(variant);
+            await _context.SaveChangesAsync(new CancellationToken());
+            var variants = await _context.OptionVariants.Where(n => n.OptionId == optionId).ToListAsync();
+            return new OptionDTO { Name = option.Name, Id = option.Id, CreatedAt = option.CreatedAt, Enabled = option.Enabled, UpdatedAt = option.UpdatedAt, optionVariants = variants };
+
+        }
+
         public async Task<ProductFilter> CreateFilter(CreateFilterDTO dto)
         {
             var ent = new ProductFilter { GroupName = dto.GroupName, GroupSortOrder = dto.GroupSortOrder, IsB2BVisible = dto.IsB2BVisible, IsCollapsed = dto.IsCollapsed, IsRetailVisible = dto.IsRetailVisible, Name = dto.Name, SortOrder = dto.SortOrder };
