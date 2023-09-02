@@ -100,6 +100,15 @@ namespace BikeShop.Products.Application.Services
             return await _context.Specifications.Where(n => n.Enabled == true).ToListAsync();
         }
 
+        public async Task<List<ProductFilterDTO>> GetFiltersByProducts(List<int> ids)
+        {
+            var productVariants = await _context.ProductOptionVariantBinds.Where(n => ids.Contains(n.ProductId)).ToListAsync();
+            var unicFilterNames = productVariants.Select(n => n.OptionName).Distinct();
+            var unicVariantNames = productVariants.Select(n => n.Name).Distinct();
+            var variantDict = unicVariantNames.ToDictionary(n => n, n => productVariants.Where(g => g.Name == n).Select(g=>g.ProductId).ToList());
+            return unicFilterNames.Select(n=> new ProductFilterDTO { Name = n, Variants = productVariants.Where(g => g.OptionName == n).Select(g=>new ProductFilterVatiantDTO { VariantName = g.Name, ProductIds = variantDict[g.Name] }).ToList() }).ToList();
+        }
+
         public async Task<ProductCardDTO> GetProductCard(int productId)
         {
             return await _publicService.getProductCard(productId);

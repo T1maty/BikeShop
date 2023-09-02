@@ -184,8 +184,18 @@
                         background-color: #2aa25a;
                       }
 
+                      .add_variant_button_disabled {
+                        background-color: #37423b;
+                      }
+
                       .add_variant_button:hover {
                         background-color: #28e373;
+                      }
+
+                      .add_variant_button:disabled {
+                        background-color: #485d4d;
+                        color: #726565;
+
                       }
 
                       .options_search {

@@ -100,5 +100,11 @@ namespace BikeShop.Products.WebApi.Controllers
         {
             return await _productCardService.UpdateFilter(dto);
         }
+
+        [HttpPost("getfiltersofproducts")]
+        public async Task<List<ProductFilterDTO>> GetFiltersByProducts(List<int> ids)
+        {
+            return await _productCardService.GetFiltersByProducts(ids);
+        }
     }
 }

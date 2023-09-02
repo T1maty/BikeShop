@@ -7,9 +7,9 @@ export const ServiceSticker = (props: { children: ServiceWithData }) => {
     return (
         <div className={s.wrapper}>
 
-            <div>№ {props.children.service.id}</div>
-            <div>{props.children.service.clientFIO}</div>
-            <div>{props.children.service.clientPhone}</div>
+            <div>№ {props.children?.service?.id}</div>
+            <div>{props.children?.service?.clientFIO}</div>
+            <div>{props.children?.service?.clientPhone}</div>
 
         </div>
     )

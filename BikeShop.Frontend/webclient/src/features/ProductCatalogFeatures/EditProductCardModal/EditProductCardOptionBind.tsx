@@ -41,11 +41,10 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
     const addOptionVariant = useEditProductCardModal(s => s.addOptionVariant)
 
     const [v, sV] = useState(false)
-    const [v2, sV2] = useState<{ id: number, state: boolean }[]>([])
     const [selectInput, setSelectInput] = useState('')
     const [openCreateOption, setOpenCreateOption] = useState(false)
-    const [openCreateVariant, setOpenCreateVariant] = useState(false)
-    const [createVariantSelectedOption, setCreateVariantSelectedOption] = useState<ProductOptionVariantBind | null>(null)
+    const [enBut, setEnBut] = useState<{ id: number, name: string }[]>([])
+
     useEffect(() => {
         !openCreateOption ? setSelectInput('') : null
     }, [openCreateOption])
@@ -391,21 +390,13 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                         <div className={s.options_scrollContainer}>
                                                                             <div className={s.options_list}>
 
-                                                                                <CreateOptionVariantModal
-                                                                                    open={openCreateVariant}
-                                                                                    setOpen={setOpenCreateVariant}
-                                                                                    name={createVariantSelectedOption ? createVariantSelectedOption.optionName : ""}
-                                                                                    onConfirm={(name) => {
-                                                                                        addOptionVariant(createVariantSelectedOption!, name, (value) => {
-                                                                                            let data = (props.control.getValues('productOptions') as ProductOptionVariantBind[]).filter(n => n.id != createVariantSelectedOption?.id)
-                                                                                            props.control.setValue('productOptions', data);
-                                                                                            addVariantHandler(props.control, bindedProduct, value, name)
-                                                                                        })
-                                                                                    }}/>
-
                                                                                 {
                                                                                     props.control.getValues('productOptions')?.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
-                                                                                        .map((variant: ProductOptionVariantBind) => {
+                                                                                        .map((variant: ProductOptionVariantBind, index: number) => {
+                                                                                            let options = (allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
+                                                                                                .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])
+                                                                                                    .select(m => m.optionVariantId)
+                                                                                                    .contains(n.id)) as ProductOptionVariantBind[])
                                                                                             return (
                                                                                                 <div
                                                                                                     className={s.options_listItem}
@@ -423,12 +414,18 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                             className={s.options_search}
                                                                                                             // classNamePrefix={'react-select'}
                                                                                                             placeholder={'Варианты'}
-                                                                                                            options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
-                                                                                                                .filter(n => !Enumerable.from(field.value as ProductOptionVariantBind[])
-                                                                                                                    .select(m => m.optionVariantId)
-                                                                                                                    .contains(n.id)) as ProductOptionVariantBind[])}
+                                                                                                            options={options}
                                                                                                             onChange={(newValue) => {
                                                                                                                 onChangeOptionsVariants(field, bindedProduct, newValue)
+                                                                                                                setEnBut(enBut.filter(n => n.id != variant.id))
+                                                                                                            }}
+                                                                                                            onInputChange={(v) => {
+                                                                                                                if (v != "" && v != " ") {
+                                                                                                                    setEnBut([...enBut, {
+                                                                                                                        id: variant.id,
+                                                                                                                        name: v
+                                                                                                                    }])
+                                                                                                                }
                                                                                                             }}
                                                                                                             isSearchable={true}
                                                                                                             defaultValue={variant}
@@ -439,9 +436,13 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                         <Button
                                                                                                             className={s.add_variant_button}
                                                                                                             onClick={() => {
-                                                                                                                setCreateVariantSelectedOption(variant)
-                                                                                                                setOpenCreateVariant(true)
-                                                                                                            }}>+</Button>
+                                                                                                                addOptionVariant(variant, enBut.filter(n => n.id === variant.id).slice(-1)[0].name, (value) => {
+                                                                                                                    let data = (props.control.getValues('productOptions') as ProductOptionVariantBind[]).filter(n => n.optionId != variant.optionId)
+                                                                                                                    props.control.setValue('productOptions', data);
+                                                                                                                    addVariantHandler(props.control, bindedProduct, value, enBut.filter(n => n.id === variant.id).slice(-1)[0].name)
+                                                                                                                })
+                                                                                                            }}
+                                                                                                            disabled={enBut.find(n => n.id === variant.id) === undefined}>+</Button>
                                                                                                         <Button
                                                                                                             onClick={() => {
                                                                                                                 field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
