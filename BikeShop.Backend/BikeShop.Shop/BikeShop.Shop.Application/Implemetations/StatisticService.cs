@@ -24,7 +24,7 @@ namespace BikeShop.Shop.Application.Implemetations
 
         public async Task<BaseStatisticDTO> Basic(DateTime Start, DateTime Finish)
         {
-
+             
             var works = await _serviceClient.GetWorksByMaster(null, Start, Finish);
             var prods = await _serviceClient.GetProductsByMaster(null, Start, Finish);
 
@@ -35,7 +35,7 @@ namespace BikeShop.Shop.Application.Implemetations
             var totalWS = salesService + workService;
             var totalShop = bills.Select(n => n.bill.Total).Sum();
 
-            var res = new BaseStatisticDTO { SalesService = salesService, WorksService = workService, TotalWorkshop = totalWS, TotalShop = totalShop, Total = totalShop + totalWS };
+            var res = new BaseStatisticDTO { AllBills = bills, AllWorks = works, AllWSProducts=prods, SalesService = salesService, WorksService = workService, TotalWorkshop = totalWS, TotalShop = totalShop, Total = totalShop + totalWS };
 
             return res;
         }

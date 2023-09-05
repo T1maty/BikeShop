@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Products.Domain.DTO.Requestes.Product
 {
-    public class ResponseProductWithTags
+    public class ResponseProductWithCategory
     {
         public Entities.Product product { get; set; }
         public Dictionary<int, string> tags { get; set; } = new Dictionary<int, string>();

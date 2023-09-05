@@ -70,7 +70,7 @@ namespace BikeShop.Products.Application.Services
             var unicFilterNames = productVariants.Select(n => n.OptionName).Distinct();
             var unicVariantNames = productVariants.Select(n => n.Name).Distinct();
             var variantDict = unicVariantNames.ToDictionary(n => n, n => productVariants.Where(g => g.Name == n).Select(g=>g.ProductId).ToList());
-            return unicFilterNames.Select(n=> new ProductFilterDTO { Name = n, Variants = productVariants.Where(g => g.OptionName == n).Select(g=>new ProductFilterVatiantDTO { VariantName = g.Name, ProductIds = variantDict[g.Name] }).ToList() }).ToList();
+            return unicFilterNames.Select(n=> new ProductFilterDTO { Name = n, Variants = productVariants.Where(g => g.OptionName == n).DistinctBy(h=>h.Name).Select(g=>new ProductFilterVatiantDTO { VariantName = g.Name, ProductIds = variantDict[g.Name] }).ToList() }).ToList();
         }
 
         public async Task<ProductCardDTO> GetProductCard(int productId)
