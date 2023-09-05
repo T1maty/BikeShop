@@ -47,7 +47,16 @@ namespace BikeShop.Products.Application.Services
 
         public async Task transfer()
         {
-            
+            var optionVariants = await _context.ProductOptionVariantBinds.ToListAsync();
+            var options = await _context.Options.ToListAsync();
+
+            foreach (var item in optionVariants)
+            {
+                var id = options.Where(n => n.Name == item.OptionName).First().Id;
+                item.OptionId = id;
+            }
+
+            await _context.SaveChangesAsync(new CancellationToken());
         }
 
         public async Task<ProductCategory> UpdateCategory(UpdateCategoryDTO model)

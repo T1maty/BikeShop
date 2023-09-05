@@ -32,7 +32,7 @@ namespace BikeShop.Products.Application.Services
         {
             var prodsIds = await _context.StorageProducts.Where(n=>n.Quantity > 0).Select(n => n.ProductId).ToListAsync();
             var prods = await _context.Products.Where(n => prodsIds.Contains(n.Id)).ToListAsync();
-            var cat = await _context.ProductCategories.Where(n => prodsIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
+            var cat = await _context.ProductCategories.ToDictionaryAsync(n=>n.Id, n=>n);
             var filters = await _context.ProductOptionVariantBinds.Where(n => prodsIds.Contains(n.ProductId)).ToListAsync();
             return prods.Select(n => new ProductWithCataAndFilters { Product = n, category= cat.TryGetValue(n.CategoryId, out var c)?c:null, filters = filters.Where(f=>f.ProductId == n.Id).ToList()}).ToList();
         }
