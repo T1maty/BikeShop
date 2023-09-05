@@ -14,7 +14,7 @@
 
 @mixin wrapperMainBlock() {
   min-height: calc(100vh - var(--navbar-height));
-  padding: $defaultLargeMargin;
+  padding: $defaultSmallMargin;
 }
 
 // flex mixins

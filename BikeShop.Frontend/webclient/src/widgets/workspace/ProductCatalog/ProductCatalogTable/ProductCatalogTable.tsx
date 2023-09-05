@@ -1,15 +1,17 @@
-import React from 'react'
-import {CreateProductModal, UpdateProductModal, UpdateProductPricesModal} from '../../../../features'
-import {ProductCatalogTableContextMenu} from './ProductCatalogTableContextMenu'
+import React, {useEffect, useRef} from 'react'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
-import {Product} from "../../../../entities"
-import {UniTable} from "../../../../shared/ui"
-import {columns} from "./ProductCatalogTableConfig"
 import {useProductCatalogStorage} from "../../../../pages/workspace/ProductCatalog/ProductCatalogStorage"
+import useProductCatalogFiltersStore from "../ProductCatalogFilters/ProductCatalogFiltersStore";
+import {ProductCatalogTableContextMenu} from "./ProductCatalogTableContextMenu";
+import {CreateProductModal, UpdateProductModal, UpdateProductPricesModal} from "../../../../features";
+import {UniTable} from "../../../../shared/ui";
+import {columns} from "./ProductCatalogTableConfig";
+import {Product} from "../../../../entities";
 
 interface CatalogTableProps {
     onRowDoubleClick?: (product: any) => void
 }
+
 
 export const ProductCatalogTable = (props: CatalogTableProps) => {
 
@@ -18,16 +20,27 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
     const updateRow = useProductCatalogTableStore(s => s.updateRow)
     const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
+    const displayedRows = useProductCatalogTableStore(s => s.displayedRows)
+    const reloadDisplayedRows = useProductCatalogTableStore(s => s.reloadDisplayedRows)
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
     const storageData = useProductCatalogStorage(s => s.storageData)
+    const selectedFilters = useProductCatalogFiltersStore(s => s.selectedFilters)
+
+    useEffect(() => {
+        reloadDisplayedRows(selectedFilters)
+    }, [rows, selectedFilters])
 
 
-    const createProductSuccessHandler = (product: Product) => {
-        addNewProduct(product)
-    }
+    const divRef = useRef<HTMLDivElement | null>(null);
 
-    let data = rows.map((item) => {
+    useEffect(() => {
+        if (divRef.current) {
+            console.log('Ширина таблиці: ', divRef.current.offsetWidth)
+        }
+    }, [divRef]);
+
+    let data = displayedRows.map((item) => {
         let sd = storageData.find(n => n.productId == item.id)
         var color = ""
         if (sd != undefined && sd.available > 0) color = "#599B59"
@@ -43,27 +56,33 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
         else return 0
     })
 
+
     return (
         <>
             <ProductCatalogTableContextMenu/>
             <UpdateProductPricesModal/>
-            <CreateProductModal onSuccess={createProductSuccessHandler}/>
+            <CreateProductModal onSuccess={addNewProduct}/>
             <UpdateProductModal onSuccess={updateRow}/>
 
-            <UniTable rows={data}
-                      columns={columns}
-                      isLoading={isLoading}
-                      rowOnDoubleClick={(row) => {
-                          props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
-                      }}
-                      rowOnContext={(row, event) => {
-                          setContextVisible(true, event.clientX, event.clientY)
-                          setSelected([row as Product])
-                      }}
-                      rowOnClick={(row) => {
-                          setSelected([row as Product])
-                      }}
-            />
+
+            {
+                <UniTable rows={data}
+                          columns={columns}
+                          isLoading={isLoading}
+                          rowOnDoubleClick={(row) => {
+                              props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
+                          }}
+                          rowOnContext={(row, event) => {
+                              setContextVisible(true, event.clientX, event.clientY)
+                              setSelected([row as Product])
+                          }}
+                          rowOnClick={(row) => {
+                              setSelected([row as Product])
+                          }}
+                />
+            }
+
         </>
     )
+
 }

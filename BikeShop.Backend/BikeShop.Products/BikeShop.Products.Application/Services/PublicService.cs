@@ -103,10 +103,8 @@ namespace BikeShop.Products.Application.Services
             result.product = await _context.Products.FindAsync(masterId);
             result.productCard = await _context.ProductsCards.Where(n=>n.ProductId == masterId).FirstOrDefaultAsync();
             result.productOptions = await _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
-            result.productSpecifications = await _context.ProductSpecifications.Where(n => n.ProductId == masterId).ToListAsync();
             result.productImages = await _context.ProductImgs.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
             result.productCategory = await _context.ProductCategories.Where(n=>n.Id == result.product.CategoryId).FirstOrDefaultAsync();
-            result.productFilters = await _context.ProductFilterBinds.Where(n => n.ProductId == masterId).ToListAsync();
             if(bind != null) result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
             if(bind == null) result.bindedProducts = new List<Product> { result.product };
  

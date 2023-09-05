@@ -20,6 +20,22 @@ interface TableProps {
     setSelected?: (value: any[]) => void
 }
 
+function darkenColor(hexColor: string, percent: number): string {
+    // Ensure the percent is between 0 and 1
+    const ratio = 1 - Math.min(Math.max(percent, 0), 1);
+
+    // Convert hex to RGB
+    const r = parseInt(hexColor.substring(1, 3), 16);
+    const g = parseInt(hexColor.substring(3, 5), 16);
+    const b = parseInt(hexColor.substring(5, 7), 16);
+
+    // Calculate the adjustment value for each color component
+    const adjust = (color: number) => Math.round(color * ratio);
+
+    // Return the darkened color in hex format
+    return `#${adjust(r).toString(16).padStart(2, '0')}${adjust(g).toString(16).padStart(2, '0')}${adjust(b).toString(16).padStart(2, '0')}`;
+}
+
 interface TableRowProps {
     row?: any
     setRow: (row: any) => void
@@ -29,11 +45,16 @@ interface TableRowProps {
 
     selected: any[]
     setSelected: (row: any[]) => void
+
+    onMouseEnter: () => void
+    onMouseLeave: () => void
+    color?: string
 }
 
 export const UniTable = (props: TableProps) => {
 
     const [selected, setSelected] = useState<any[]>([])
+    const [hover, setHover] = useState<number | null>(null)
 
     const getSelect = () => {
         if (props.selected != null) return props.selected
@@ -70,6 +91,14 @@ export const UniTable = (props: TableProps) => {
                                              rowOnContext={props.rowOnContext}
                                              selected={getSelect()}
                                              setSelected={getSetSelect()}
+                                             onMouseEnter={() => {
+                                                 setHover(index)
+                                             }}
+                                             onMouseLeave={() => {
+                                                 setHover(null)
+                                             }}
+                                             color={(index === hover && item.color != undefined) ? darkenColor(item.color, 0.2) : item.color}
+
                             />
                         })
                         : <tr style={{height: 250, display: 'flex', justifyContent: 'center'}}>
@@ -154,9 +183,9 @@ const TableRow = memo((props: TableRowProps) => {
 
     return (
         <>
-            <tr ref={ref}
+            <tr ref={ref} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}
                 className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
-                style={{backgroundColor: `${props.row.color != undefined ? props.row.color : ''}`}}
+                style={{backgroundColor: `${props.color != undefined ? props.color : ''}`}}
                 onDoubleClick={(event) => {
                     props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
                 }}

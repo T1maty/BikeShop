@@ -19,37 +19,29 @@ export const columns: UniTableColumn[] = [
         label: 'Доступно',
         width: 5,
         minWidth: 35,
-        align: 'center',
+        align: 'right',
     },
     {
         id: 'quantityUnitName',
         label: 'Ед.изм',
         width: 5,
         minWidth: 20,
-        align: 'center',
+        align: 'left',
     },
     {
         id: 'reserved',
         label: 'Бронь',
         width: 5,
         minWidth: 35,
-        align: 'center',
+        align: 'right',
     },
     {
         id: 'quantityUnitName',
         label: 'Ед.изм',
         width: 5,
         minWidth: 20,
-        align: 'center',
+        align: 'left',
     },
-    /*
-    {
-        id: 'unit',
-        label: 'Ед.изм.',
-        width: 50,
-        minWidth: 70,
-        align: 'center',
-    },*/
     {
         id: 'incomePrice',
         label: 'Закупочная',
@@ -77,13 +69,6 @@ export const columns: UniTableColumn[] = [
     {
         id: 'catalogKey',
         label: 'Каталожный номер',
-        width: 10,
-        minWidth: 70,
-        align: 'center',
-    },
-    {
-        id: 'checkStatus',
-        label: 'Статус заполения',
         width: 10,
         minWidth: 70,
         align: 'center',

@@ -3,6 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CatalogAPI, Product, ProductCardAPI, UpdateProduct} from "../../../../entities"
 import Enumerable from "linq";
+import {ProductFilterVariantDTO} from "../../../../entities/responses/ProductFilterVariantDTO";
 
 interface productCatalogTableStore {
     isLoading: boolean
@@ -11,6 +12,9 @@ interface productCatalogTableStore {
     contextMenuXY: { X: number, Y: number }
 
     rows: Product[]
+
+    displayedRows: Product[]
+    reloadDisplayedRows: (filters: ProductFilterVariantDTO[]) => void
     setRows: (data: Product[]) => void
     isRowSelected: (id: number) => boolean
     selectedRows: Product[]
@@ -28,9 +32,39 @@ interface productCatalogTableStore {
 
     moveProduct: (productId: number, categoryId: number, s: (r: Product) => void, f: () => void) => void
     removeProducts: (productIds: number[]) => void
+
+    getCells: () => string[]
+
+    columnsProps: string[]
+    setColumnWight: (index: number, wight: string) => void
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
+    columnsProps: ["140px", "150px", "100px", "100px", "100px", "100px", "100px", "100px"],
+    setColumnWight: (index, wight) => {
+        let data = get().columnsProps.map((n, indexMap) => {
+            if (indexMap === index) return wight
+            return n
+        })
+        set({columnsProps: data})
+    },
+    getCells: () => {
+        return ['Арт', 'Назва', 'Доступно', 'Резерв', 'Закуп', 'Опт', 'Роздріб', 'Каталожний номер']
+    },
+    displayedRows: [],
+    reloadDisplayedRows: (filters) => {
+        if (filters.length === 0) {
+            set({displayedRows: get().rows})
+            return
+        }
+        let idWhitelist: number[] = []
+        filters.forEach(n => {
+            console.log(n)
+            idWhitelist = idWhitelist.concat(n.productIds)
+        })
+
+        set({displayedRows: get().rows.filter(n => idWhitelist.includes(n.id))})
+    },
     removeProducts: (productIds) => {
         let data = get().rows.filter(n => !productIds.includes(n.id))
         get().setRows(data)

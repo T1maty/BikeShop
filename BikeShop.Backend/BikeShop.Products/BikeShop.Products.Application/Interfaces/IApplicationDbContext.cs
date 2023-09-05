@@ -22,8 +22,6 @@ public interface IApplicationDbContext
     DbSet<QuantityUnitGroup> QuantityUnitGroups { get; set; }
     DbSet<PriceHistory> PriceHistories { get; set; }
 
-    DbSet<ProductSpecification> ProductSpecifications { get; set; }
-    DbSet<Specification> Specifications { get; set; }
 
     DbSet<Option> Options { get; set; }
     DbSet<OptionVariant> OptionVariants { get; set; }
@@ -31,8 +29,6 @@ public interface IApplicationDbContext
 
     DbSet<TagToCategoryBind> TagToCategoryBinds { get; set; }
      DbSet<ProductCategory> ProductCategories { get; set; }
-     DbSet<ProductFilter> ProductFilters { get; set; }
-     DbSet<ProductFilterBind> ProductFilterBinds { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс

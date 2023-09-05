@@ -47,76 +47,7 @@ namespace BikeShop.Products.Application.Services
 
         public async Task transfer()
         {
-            /*
-            //var cats = await _context.ProductTags.Where(n => n.IsUniversal == false).ToListAsync();
-            //var filtrs = await _context.ProductTags.Where(n => n.IsUniversal == true).ToListAsync();
-            //var binds = await _context.TagToProductBinds.Where(n => cats.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
-            //var filtrsBinds = await _context.TagToProductBinds.Where(n => filtrs.Select(m => m.Id).Contains(n.ProductTagId)).ToListAsync();
-            //var prods = _context.Products;
-
-            foreach (var model in cats)
-            {
-                var g = new ProductCategory
-                {
-                    IsB2BVisible = model.IsB2BVisible,
-                    IsCollapsed = model.IsCollapsed,
-                    IsRetailVisible = model.IsRetailVisible,
-                    Name = model.Name,
-                    ParentId = model.ParentId,
-                    SortOrder = model.SortOrder
-                };
-                await SetWay(g);
-                await _context.ProductCategories.AddAsync(g);
-                await _context.SaveChangesAsync(new CancellationToken());
-
-                var prodBinds = binds.Where(n=>n.ProductTagId == model.Id).Select(n=>n.ProductId).Distinct().ToList();
-                foreach (var i in prodBinds)
-                {
-                    var p = await prods.FindAsync(i);
-                    p.CategoryId = g.Id;
-                    p.CategoryName = g.Name;
-                    p.CategoryWay = g.Way;
-                }
-            }
-
-            foreach (var i in filtrs.Where(n=>n.ParentId != 0))
-            {
-                var g = new ProductFilter
-                {
-                    GroupName = filtrs.Where(n=>n.Id == i.ParentId).FirstOrDefault().Name,
-                    Name = i.Name,
-                    GroupSortOrder = 0,
-                    IsB2BVisible = i.IsB2BVisible,
-                    IsCollapsed = i.IsCollapsed,
-                    IsRetailVisible = i.IsRetailVisible,
-                    SortOrder = i.SortOrder
-                };
-
-                await _context.ProductFilters.AddAsync(g);
-                await _context.SaveChangesAsync(new CancellationToken());
-
-                foreach (var j in filtrsBinds.Where(n => n.ProductTagId == i.Id))
-                {
-                    var h = new ProductFilterBind
-                    {
-                        FilterId = g.Id,
-                        GroupName = g.GroupName,
-                        Name = g.Name,
-                        IsB2BVisible = i.IsB2BVisible,
-                        IsCollapsed = i.IsCollapsed,
-                        IsRetailVisible = i.IsRetailVisible,
-                        ProductId = j.ProductId,
-                        SortOrder = 0,
-                        GroupSortOrder = 0
-                    };
-
-                    await _context.ProductFilterBinds.AddAsync(h);
-                }
-            }
-
-            await _context.SaveChangesAsync(new CancellationToken());
-            */
-
+            
         }
 
         public async Task<ProductCategory> UpdateCategory(UpdateCategoryDTO model)

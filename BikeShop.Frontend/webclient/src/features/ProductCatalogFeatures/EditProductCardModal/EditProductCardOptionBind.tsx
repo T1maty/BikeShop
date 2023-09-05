@@ -12,7 +12,7 @@ import {
 import {Controller, UseFormReturn} from 'react-hook-form'
 import {AsyncSelectSearchProduct, Button, LoaderScreen} from '../../../shared/ui'
 import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
-import Select, {SingleValue} from 'react-select'
+import Select from 'react-select'
 import useEditProductCardModal from './EditProductCardModalStore'
 import Enumerable from 'linq'
 import {ChooseProductModal} from '../ChooseProductModal/ChooseProductModal'
@@ -43,7 +43,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
     const [v, sV] = useState(false)
     const [selectInput, setSelectInput] = useState('')
     const [openCreateOption, setOpenCreateOption] = useState(false)
-    const [enBut, setEnBut] = useState<{ id: number, name: string }[]>([])
+    const [enBut, setEnBut] = useState<{ id: number, name: string } | null>(null)
 
     useEffect(() => {
         !openCreateOption ? setSelectInput('') : null
@@ -417,14 +417,18 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                             options={options}
                                                                                                             onChange={(newValue) => {
                                                                                                                 onChangeOptionsVariants(field, bindedProduct, newValue)
-                                                                                                                setEnBut(enBut.filter(n => n.id != variant.id))
+                                                                                                                //setEnBut(enBut.filter(n => n.id != variant.id))
                                                                                                             }}
                                                                                                             onInputChange={(v) => {
                                                                                                                 if (v != "" && v != " ") {
-                                                                                                                    setEnBut([...enBut, {
-                                                                                                                        id: variant.id,
+                                                                                                                    setEnBut({
+                                                                                                                        id: variant.optionId,
                                                                                                                         name: v
-                                                                                                                    }])
+                                                                                                                    })
+                                                                                                                } else {
+                                                                                                                    setTimeout(() => {
+                                                                                                                        setEnBut(null)
+                                                                                                                    }, 100)
                                                                                                                 }
                                                                                                             }}
                                                                                                             isSearchable={true}
@@ -436,13 +440,13 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                         <Button
                                                                                                             className={s.add_variant_button}
                                                                                                             onClick={() => {
-                                                                                                                addOptionVariant(variant, enBut.filter(n => n.id === variant.id).slice(-1)[0].name, (value) => {
+                                                                                                                addOptionVariant(variant, enBut!.name, (value) => {
                                                                                                                     let data = (props.control.getValues('productOptions') as ProductOptionVariantBind[]).filter(n => n.optionId != variant.optionId)
                                                                                                                     props.control.setValue('productOptions', data);
-                                                                                                                    addVariantHandler(props.control, bindedProduct, value, enBut.filter(n => n.id === variant.id).slice(-1)[0].name)
+                                                                                                                    addVariantHandler(props.control, bindedProduct, value, enBut!.name)
                                                                                                                 })
                                                                                                             }}
-                                                                                                            disabled={enBut.find(n => n.id === variant.id) === undefined}>+</Button>
+                                                                                                            disabled={enBut === null || enBut.id != variant.optionId}>+</Button>
                                                                                                         <Button
                                                                                                             onClick={() => {
                                                                                                                 field.onChange(field.value.filter((n: ProductOptionVariantBind) =>
@@ -459,47 +463,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                             </div>
                                                                         </div>
                                                                     </>
-                                                                }
-                                                            />
-                                                        </fieldset>
-                                                    </div>
-
-                                                    <div className={s.content_tags}>
-                                                        <fieldset className={s.tags_wrapperBox}>
-                                                            <legend>Фильтры</legend>
-
-                                                            <Controller
-
-                                                                name={'productFilters'}
-                                                                control={props.control.control}
-                                                                render={({field}: any) =>
-                                                                    <div className={s.tags_scrollContainer}>
-                                                                        <Select
-                                                                            className={s.options_search}
-                                                                            // classNamePrefix={'react-select'}
-                                                                            placeholder={'Фильтры'}
-                                                                            options={allFilters.filter(n => !Enumerable.from(props.control.getValues('productFilters') as ProductFilterBind[]).select(i => i.filterId).contains(n.id))}
-                                                                            onChange={(newValue: SingleValue<ProductFilter>) => {
-                                                                                //onChangeOptionsVariants(field, bindedProduct, newValue)
-                                                                                addFilter(newValue as ProductFilter)
-                                                                            }}
-                                                                            isSearchable={true}
-                                                                            getOptionLabel={label => label!.name}
-
-                                                                            noOptionsMessage={() => 'Доступных вариантов нету'}
-                                                                        />
-
-                                                                        {
-                                                                            props.control.getValues('productFilters').map((n: ProductFilterBind) => {
-                                                                                return (
-                                                                                    <div>
-                                                                                        {n.name}
-                                                                                    </div>
-                                                                                )
-                                                                            })
-                                                                        }
-
-                                                                    </div>
                                                                 }
                                                             />
                                                         </fieldset>

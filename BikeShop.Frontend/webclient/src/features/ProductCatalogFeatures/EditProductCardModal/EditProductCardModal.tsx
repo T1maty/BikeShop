@@ -6,7 +6,6 @@ import {useSnackbar} from 'notistack'
 import htmlToDraft from 'html-to-draftjs'
 import {ContentState, EditorState} from 'draft-js'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
-import {EditProductCardSpecifications} from './EditProductCardSpecifications'
 import {EditProductCardGallery} from './EditProductCardGallery'
 import {EditProductCardStatus} from './EditProductCardStatus'
 import {UpdateProductCardFormModel} from './models/UpdateProductCardFormModel'
@@ -42,8 +41,6 @@ export const EditProductCardModal = () => {
                 description: '',
             },
             productOptions: [],
-            productSpecifications: [],
-            productFilters: [],
         }
     })
 
@@ -58,9 +55,7 @@ export const EditProductCardModal = () => {
         open ? getAllFilters() : null
 
         formControl.setValue('id', currentProduct.product?.id)
-        formControl.setValue('productFilters', currentProduct.productFilters)
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
-        formControl.setValue('productSpecifications', currentProduct.productSpecifications)
         formControl.setValue('productCard', {
             description: currentProduct.productCard !== undefined ? currentProduct.productCard.description : '',
             shortDescription: currentProduct.productCard !== undefined ? currentProduct.productCard.descriptionShort : ''
@@ -131,9 +126,6 @@ export const EditProductCardModal = () => {
                                 <div className={s.specs_wrapper}>
                                     <EditProductCardDescriptionShort name={'productCard'}
                                                                      control={formControl}
-                                    />
-                                    <EditProductCardSpecifications control={formControl}
-                                                                   name={'productSpecifications'}
                                     />
                                 </div>
                             </div>

@@ -1,0 +1,33 @@
+.wrapper {
+  border-radius: 20px;
+  height: 100%;
+
+  .main_label {
+    font-weight: bold;
+    padding-left: 15px;
+  }
+
+  .filter {
+    padding: 15px 15px 1px 15px;
+
+
+    .label {
+      font-weight: bolder;
+      padding-bottom: 10px;
+    }
+
+    .variant {
+      padding-left: 15px;
+      padding-bottom: 5px;
+    }
+
+    .variant:hover {
+      cursor: pointer;
+      color: #ce7474;
+    }
+
+    .variant:disabled {
+      color: black;
+    }
+  }
+}

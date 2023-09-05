@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import s from './CatalogProductItem.module.scss'
-import parse from 'html-react-parser'
 import {useParams} from 'react-router-dom'
 import {Button, ShopLoader} from '../../../../shared/ui'
 import ImageGallery from 'react-image-gallery'
@@ -221,34 +220,6 @@ export const CatalogProductItem = () => {
                             {/*>*/}
                             {/*    Доставка*/}
                             {/*</div>*/}
-                        </div>
-                        <div className={s.description_content}>
-                            {
-                                isCharacteristic && currentProduct.productSpecifications ?
-                                    <div>
-                                        {
-                                            currentProduct.productSpecifications.map(spec => {
-                                                return (
-                                                    <div key={spec.id}>
-                                                        <div style={{fontWeight: 'bold'}}>{spec.name}:</div>
-                                                        <div>{spec.description}</div>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                    : ''
-                            }
-
-                            {
-                                isDetails && currentProduct.productCard.description.length !== 0
-                                    ? <div>{parse(currentProduct.productCard.description)}</div> : ''
-                                // ? <div dangerouslySetInnerHTML={{ __html: currentProduct.productCard.description }}/> : ''
-                            }
-
-                            {/*{*/}
-                            {/*    isDelivery ? <div>Доставка</div> : ''*/}
-                            {/*}*/}
                         </div>
                     </div>
 

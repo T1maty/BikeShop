@@ -2,57 +2,58 @@
 @import '../../../app/styles/variables/variables';
 
 .productCatalogTable_mainBlock {
-    @include wrapperMainBlock;
-    @include flexOnlyBetween;
-    gap: $defaultLargeMargin;
+  @include wrapperMainBlock;
+  @include flexOnlyBetween;
+  gap: $defaultSmallMargin;
 
-    .productCatalogTable_leftSide {
-        width: 20%;
-        @include flexColumn;
+  .productCatalogTable_leftSide {
+    width: 20%;
+    @include flexColumn;
 
-        .leftSide_header {
-            background-color: $themeColorDark;
-            border-radius: $largeBorderRadius;
-            margin-bottom: $defaultLargeMargin;
-            padding: $defaultLargeMargin;
-            width: 100%;
-            height: 25%;
-        }
-
-        .leftSide_tree {
-            background-color: $themeColorDark;
-            border-radius: $largeBorderRadius;
-            width: 100%;
-            height: 75%;
-            overflow: auto;
-        }
+    .leftSide_header {
+      background-color: $themeColorDark;
+      border-radius: $largeBorderRadius;
+      margin-bottom: $defaultLargeMargin;
+      padding: $defaultLargeMargin;
+      width: 100%;
+      height: 25%;
     }
 
-    .productCatalogTable_rightSide {
-        width: 80%;
-        @include flexColumn;
-        padding: $defaultLargeMargin;
-        background-color: $themeColorDark;
-        border-radius: $largeBorderRadius;
-
-        .rightSide_searchRow {
-            @include flexOnlyBetween;
-            margin-bottom: $defaultLargeMargin;
-            width: 100%;
-
-            button {
-                width: 100%;
-            }
-
-            .searchRow_searchInput {
-                width: 50%;
-            }
-        }
-
-        .rightSide_table {
-            height: 100%;
-        }
+    .leftSide_tree {
+      background-color: $themeColorDark;
+      border-radius: $largeBorderRadius;
+      width: 100%;
+      height: 75%;
+      overflow: auto;
     }
+  }
+
+  .productCatalogTable_rightSide {
+    width: 80%;
+    @include flexColumn;
+    padding: $defaultLargeMargin;
+    background-color: $themeColorDark;
+    border-radius: $largeBorderRadius;
+
+    .rightSide_searchRow {
+      @include flexOnlyBetween;
+      margin-bottom: $defaultLargeMargin;
+      width: 100%;
+
+      button {
+        width: 100%;
+      }
+
+      .searchRow_searchInput {
+        width: 50%;
+      }
+    }
+
+    .rightSide_table {
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 
 //.productCatalogTable_mainBlock::-webkit-scrollbar {

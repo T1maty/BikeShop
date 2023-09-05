@@ -1,5 +1,4 @@
 ﻿using BikeShop.Products.Domain.DTO.Requestes;
-using BikeShop.Products.Domain.DTO.Requestes.Filters;
 using BikeShop.Products.Domain.DTO.Requestes.Option;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
@@ -21,13 +20,6 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<List<OptionDTO>> GetAllOptions();
         public Task<OptionDTO> CreateOption(CreateOptionDTO dto);
         public Task<OptionDTO> UpdateOption(UpdateOptionDTO dto);
-
-        public Task<List<Specification>> GetAllSpecifications();
-        public Task<Specification> CreateSpecification(string name);
-        public Task<Specification> UpdateSpecification(UpdateSpecificationDTO dto);
-        public Task<List<ProductFilter>> GetAllFilters();
-        public Task<ProductFilter> CreateFilter(CreateFilterDTO dto);
-        public Task<ProductFilter> UpdateFilter(UpdateFilterDTO dto);
         public Task<OptionDTO> AddOptionVariant(int optionId, string name);
         public Task<List<ProductFilterDTO>> GetFiltersByProducts(List<int> ids);
 

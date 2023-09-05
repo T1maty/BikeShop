@@ -17,6 +17,7 @@ import {UpdateOption} from "../requests/UpdateOption";
 import {$api} from "../../shared";
 import {ProductFilter} from "../entities/ProductFilter";
 import {CreateFilter} from "../requests/CreateFilter";
+import {ProductFiltersDTO} from "../responses/ProductFiltersDTO";
 
 export const EntitiesAPI = {
     Shop: {
@@ -151,6 +152,11 @@ export const EntitiesAPI = {
         updateFilter(updateData: CreateFilter): Promise<AxiosResponse<ProductFilter>> {
             return (
                 $api.put<ProductFilter>('/productcard/updatefilter', updateData)
+            )
+        },
+        getFiltersByProducts(productIds: number[]): Promise<AxiosResponse<ProductFiltersDTO[]>> {
+            return (
+                $api.post<ProductFiltersDTO[]>('productcard/getfiltersofproducts', productIds)
             )
         },
     }

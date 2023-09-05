@@ -14,6 +14,8 @@ import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles
 import {useProductCatalogStorage} from "./ProductCatalogStorage"
 import DisplayModal from "../../../features/ProductCatalogFeatures/DisplayModal";
 import {ProductCategory} from "../../../entities";
+import ProductCatalogFilters
+    from "../../../widgets/workspace/ProductCatalog/ProductCatalogFilters/ProductCatalogFilters";
 
 export const ProductCatalog = () => {
 
@@ -59,9 +61,15 @@ export const ProductCatalog = () => {
             <DisplayModal open={displayModal} setOpen={setDisplayModal}/>
             <div className={s.productCatalogTable_leftSide}>
                 <div className={s.leftSide_tree}>
+                    <ProductCatalogFilters/>
+                </div>
+            </div>
+            <div className={s.productCatalogTable_leftSide}>
+                <div className={s.leftSide_tree}>
                     <TagTreeView tags={tags} setTags={setTags}/>
                 </div>
             </div>
+
 
             <div className={s.productCatalogTable_rightSide}>
                 <div className={s.rightSide_searchRow}>

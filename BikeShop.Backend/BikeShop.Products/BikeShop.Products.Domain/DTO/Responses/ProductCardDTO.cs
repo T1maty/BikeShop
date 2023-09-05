@@ -12,11 +12,9 @@ namespace BikeShop.Products.Domain.DTO.Responses
     {
         public Product product { get; set; }
         public ProductCard? productCard { get; set; }
-        public List<ProductSpecification> productSpecifications { get; set; }
         public List<ProductOptionVariantBind> productOptions { get; set; }
         public List<ProductImg> productImages { get; set; }
         public ProductCategory? productCategory { get; set; }
-        public List<ProductFilterBind> productFilters { get; set; }
         public List<Product> bindedProducts { get; set; }
     }
 }
