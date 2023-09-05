@@ -13,8 +13,8 @@ namespace BikeShop.Products.Application.Interfaces
         public Task UpdateCategoriesList();
         public Task<List<TagToCategoryBind>> GetCatDepList();
         public Task<TagToCategoryBind> UpdateCatDep(int depId, int TagId, string TagName, string CatName);
-        public Task<List<ResponseProductWithTags>> ProductsByCat(string Cat);
+        public Task ProductsByCat(string Cat);
         public Task SetProductTags(int prodId, List<int> tags);
-        public Task<List<ResponseProductWithTags>> productsAvailable();
+        public Task productsAvailable();
     }
 }

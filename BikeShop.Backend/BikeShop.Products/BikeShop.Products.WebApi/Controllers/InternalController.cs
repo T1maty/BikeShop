@@ -36,9 +36,9 @@ namespace BikeShop.Products.WebApi.Controllers
         }
 
         [HttpGet("productsByCategory")]
-        public async Task<List<ResponseProductWithTags>> ProductsByCat(string Cat)
+        public async Task ProductsByCat(string Cat)
         {
-            return await _internalService.ProductsByCat(Cat);
+            //return await _internalService.ProductsByCat(Cat);
         }
 
         [HttpPost("setProductTags")]
@@ -48,9 +48,9 @@ namespace BikeShop.Products.WebApi.Controllers
         }
 
         [HttpGet("productsAvailable")]
-        public async Task<List<ResponseProductWithTags>> productsAvailable()
+        public async Task productsAvailable()
         {
-            return await _internalService.productsAvailable();
+           // return await _internalService.productsAvailable();
         }
     }
 }
