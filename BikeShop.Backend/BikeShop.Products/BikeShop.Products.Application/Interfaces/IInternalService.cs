@@ -1,4 +1,5 @@
-﻿using BikeShop.Products.Domain.DTO.Requestes.Product;
+﻿using BikeShop.Products.Domain.DTO.Requestes.Internal;
+using BikeShop.Products.Domain.DTO.Requestes.Product;
 using BikeShop.Products.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<List<TagToCategoryBind>> GetCatDepList();
         public Task<TagToCategoryBind> UpdateCatDep(int depId, int TagId, string TagName, string CatName);
         public Task ProductsByCat(string Cat);
-        public Task SetProductTags(int prodId, List<int> tags);
-        public Task productsAvailable();
+        public Task<ProductWithCataAndFilters> SetProductTags(int prodId, int catId, List<int> VariantIds);
+        public Task<List<ProductWithCataAndFilters>> productsAvailable();
     }
 }

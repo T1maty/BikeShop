@@ -1,7 +1,9 @@
 ﻿using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Requestes.Internal;
 using BikeShop.Products.Domain.DTO.Requestes.Product;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Tls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +15,12 @@ namespace BikeShop.Products.Application.Services
     public class InternalService : IInternalService
     {
         private readonly IApplicationDbContext _context;
+        private readonly IProductService _productService;
 
-        public InternalService(IApplicationDbContext context)
+        public InternalService(IApplicationDbContext context, IProductService productService)
         {
             _context = context;
+            _productService = productService;
         }
 
         public async Task<List<TagToCategoryBind>> GetCatDepList()
@@ -24,66 +28,48 @@ namespace BikeShop.Products.Application.Services
             return await _context.TagToCategoryBinds.ToListAsync(); 
         }
 
-        public async Task productsAvailable()
+        public async Task<List<ProductWithCataAndFilters>> productsAvailable()
         {
             var prodsIds = await _context.StorageProducts.Where(n=>n.Quantity > 0).Select(n => n.ProductId).ToListAsync();
-            var prods = _context.Products.Where(n => prodsIds.Contains(n.Id));
-            //var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
-
-
-            //var tags = await _context.ProductTags.Where(n => r.Select(q => q.ProductTagId).Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n.Name);
-
-            
-
-            foreach (var p in await prods.ToListAsync())
-            {
-                //var ent = new ResponseProductWithTags { product = p, tags = r.Where(n => n.ProductId == p.Id).ToDictionary(n => n.ProductTagId, n => tags[n.ProductTagId]) };
-                //answ.Add(ent);
-            }
-            //return answ;
+            var prods = await _context.Products.Where(n => prodsIds.Contains(n.Id)).ToListAsync();
+            var cat = await _context.ProductCategories.Where(n => prodsIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
+            var filters = await _context.ProductOptionVariantBinds.Where(n => prodsIds.Contains(n.ProductId)).ToListAsync();
+            return prods.Select(n => new ProductWithCataAndFilters { Product = n, category= cat.TryGetValue(n.CategoryId, out var c)?c:null, filters = filters.Where(f=>f.ProductId == n.Id).ToList()}).ToList();
         }
 
         public async Task ProductsByCat(string Cat)
         {
             var prods = _context.Products.Where(n=>n.CategoryImport == Cat);
-            //var r = await _context.TagToProductBinds.Where(n => prods.Select(q => q.Id).Contains(n.ProductId)).ToListAsync();
-        
-
-            //var tags = await _context.ProductTags.Where(n => r.Select(q => q.ProductTagId).Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n.Name);
-
-           
-
-            foreach (var p in await prods.ToListAsync()) {
-               // var ent = new ResponseProductWithTags { product = p, tags = r.Where(n=>n.ProductId == p.Id).ToDictionary(n=>n.ProductTagId, n => tags[n.ProductTagId]) };
-                //answ.Add(ent);
-            }
+            
             
         }
 
-        public async Task SetProductTags(int prodId, List<int> tags)
+        public async Task<ProductWithCataAndFilters> SetProductTags(int prodId, int catId, List<int> VariantIds)
         {
-            /*
-            var ents = await _context.TagToProductBinds.Where(n => n.ProductId == prodId).ToDictionaryAsync(n=>n.ProductTagId, n=>n);
+            await _productService.ChangeCategory(prodId, catId);
 
-            var newTags = new List<TagToProductBind>();
+            var variants = await _context.ProductOptionVariantBinds.Where(n => n.ProductId == prodId).Select(n=>n.OptionVariantId).ToListAsync();
+            var newVariants = new List<ProductOptionVariantBind>();
+            var vEnts = await _context.OptionVariants.Where(n => VariantIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
 
-            foreach (var t in tags)
+            foreach (var i in VariantIds)
             {
-                if(!ents.ContainsKey(t))
+                if (!variants.Contains(i))
                 {
-                    newTags.Add(new TagToProductBind { ProductId = prodId, ProductTagId = t });
+                    var ent = vEnts[i];
+                    newVariants.Add(new ProductOptionVariantBind { Name = ent.Name, OptionId = ent.OptionId, OptionName = ent.OptionName, OptionVariantId = ent.Id, ProductId = prodId, SortOrder = 0  });
                 }
                 else
                 {
-                    ents.Remove(t);
+                    variants.Remove(i);
                 }
             }
 
-            _context.TagToProductBinds.RemoveRange(ents.Values);
-            await _context.TagToProductBinds.AddRangeAsync(newTags);
+            await _context.ProductOptionVariantBinds.AddRangeAsync(newVariants);
+            _context.ProductOptionVariantBinds.RemoveRange(_context.ProductOptionVariantBinds.Where(n=>variants.Contains(n.OptionVariantId)).Where(n=>n.ProductId == prodId));
 
             await _context.SaveChangesAsync(new CancellationToken());
-            */
+            return new ProductWithCataAndFilters { category = await _context.ProductCategories.FindAsync(catId), filters = await _context.ProductOptionVariantBinds.Where(n => n.ProductId == prodId).ToListAsync(), Product = await _context.Products.FindAsync(prodId) };
         }
 
         public async Task<TagToCategoryBind> UpdateCatDep(int depId, int TagId, string TagName, string CatName)

@@ -43,18 +43,15 @@ interface TableRowProps {
     rowOnContext?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
     onRowDoubleClick?: (row: object, event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => void
 
+    index: number
     selected: any[]
     setSelected: (row: any[]) => void
-
-    onMouseEnter: () => void
-    onMouseLeave: () => void
     color?: string
 }
 
 export const UniTable = (props: TableProps) => {
 
     const [selected, setSelected] = useState<any[]>([])
-    const [hover, setHover] = useState<number | null>(null)
 
     const getSelect = () => {
         if (props.selected != null) return props.selected
@@ -79,6 +76,7 @@ export const UniTable = (props: TableProps) => {
 
                             return <TableRow key={index}
                                              row={item}
+                                             index={index}
                                              setRow={(newRow: any) => {
                                                  let newData: any[] = []
                                                  Object.assign(newData, props.rows)
@@ -91,13 +89,7 @@ export const UniTable = (props: TableProps) => {
                                              rowOnContext={props.rowOnContext}
                                              selected={getSelect()}
                                              setSelected={getSetSelect()}
-                                             onMouseEnter={() => {
-                                                 setHover(index)
-                                             }}
-                                             onMouseLeave={() => {
-                                                 setHover(null)
-                                             }}
-                                             color={(index === hover && item.color != undefined) ? darkenColor(item.color, 0.2) : item.color}
+                                             color={item.color}
 
                             />
                         })
@@ -181,11 +173,18 @@ const TableRow = memo((props: TableRowProps) => {
         if (props.selected?.includes(props.row)) scrollToRef()
     }, [props.selected])
 
+    const [hover, setHover] = useState<boolean>(false)
+
+
     return (
         <>
-            <tr ref={ref} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}
+            <tr ref={ref} onMouseEnter={() => {
+                setHover(true)
+            }} onMouseLeave={() => {
+                setHover(false)
+            }}
                 className={`${props.selected?.includes(props.row) ? cls.rowSelectedBackground : ''} ${cls.body_items}`}
-                style={{backgroundColor: `${props.color != undefined ? props.color : ''}`}}
+                style={{backgroundColor: `${props.color != undefined ? (hover ? darkenColor(props.color, 0.2) : props.color) : ''}`}}
                 onDoubleClick={(event) => {
                     props.onRowDoubleClick ? props.onRowDoubleClick(props.row, event) : true
                 }}

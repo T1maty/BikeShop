@@ -1,4 +1,5 @@
 ﻿using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Requestes.Internal;
 using BikeShop.Products.Domain.DTO.Requestes.Product;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -42,15 +43,16 @@ namespace BikeShop.Products.WebApi.Controllers
         }
 
         [HttpPost("setProductTags")]
-        public async Task SetProductTags(int prodId, List<int>tags)
+        public async Task<ProductWithCataAndFilters> SetProductTags(int prodId, int catId, List<int> VariantIds)
+
         {
-            await _internalService.SetProductTags(prodId, tags);
+           return  await _internalService.SetProductTags(prodId, catId, VariantIds);
         }
 
         [HttpGet("productsAvailable")]
-        public async Task productsAvailable()
+        public async Task<List<ProductWithCataAndFilters>> productsAvailable()
         {
-           // return await _internalService.productsAvailable();
+           return await _internalService.productsAvailable();
         }
     }
 }
