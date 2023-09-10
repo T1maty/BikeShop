@@ -2,7 +2,7 @@ import React from 'react';
 import s from './FiltersSelected.module.scss'
 import {DeleteButton} from "../../../../../shared/ui";
 import useProductCatalogFiltersStore from "../ProductCatalogFiltersStore";
-import {ProductFilterVariantDTO} from "../../../../../entities/responses/ProductFilterVariantDTO";
+import {ProductFilterVariantDTO} from "../../../../../entities/DataTransferObjects/responses/ProductFilterVariantDTO";
 
 const SelectedFilterItem = (p: { children: ProductFilterVariantDTO }) => {
     const removeSelectedFilter = useProductCatalogFiltersStore(s => s.removeSelectedFilter)

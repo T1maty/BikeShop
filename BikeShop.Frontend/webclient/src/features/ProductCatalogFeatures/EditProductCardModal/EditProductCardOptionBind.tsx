@@ -10,17 +10,14 @@ import {
     ProductOptionVariantBind
 } from '../../../entities'
 import {Controller, UseFormReturn} from 'react-hook-form'
-import {AsyncSelectSearchProduct, Button, LoaderScreen} from '../../../shared/ui'
-import RemoveIcon from '../../../shared/assets/workspace/remove-icon.svg'
+import {AsyncSelectSearchProduct, Button, DeleteButton, LoaderScreen} from '../../../shared/ui'
 import Select from 'react-select'
 import useEditProductCardModal from './EditProductCardModalStore'
 import Enumerable from 'linq'
-import {ChooseProductModal} from '../ChooseProductModal/ChooseProductModal'
 import {useSnackbar} from 'notistack'
-import {ProductFilterBind} from 'entities/entities/ProductFilterBind'
-import {ProductFilter} from "../../../entities/entities/ProductFilter";
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants";
 import CreateOptionVariantModal from "./CreateOptionVariantModal";
+import {ChooseProductModal} from "../../../widgets/workspace/ProductCatalog/ChooseProductModal/ChooseProductModal";
 
 interface ProductCardOptionBindProps {
     product: ProductFullData
@@ -34,16 +31,17 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
     const {enqueueSnackbar} = useSnackbar()
 
     const allOptions = useEditProductCardModal(s => s.allOptions)
-    const allFilters = useEditProductCardModal(s => s.allFilters)
     const isLoading = useEditProductCardModal(s => s.isLoading)
     const setIsLoading = useEditProductCardModal(s => s.setIsLoading)
     const createOption = useEditProductCardModal(s => s.createOption)
     const addOptionVariant = useEditProductCardModal(s => s.addOptionVariant)
+    const selectedBindedProductId = useEditProductCardModal(s => s.selectedBindedProductId)
+    const setSelectedBindedProductId = useEditProductCardModal(s => s.setSelectedBindedProductId)
 
     const [v, sV] = useState(false)
     const [selectInput, setSelectInput] = useState('')
     const [openCreateOption, setOpenCreateOption] = useState(false)
-    const [enBut, setEnBut] = useState<{ id: number, name: string } | null>(null)
+    const [enBut, setEnBut] = useState<{ id: number, name: string, bindId: number } | null>(null)
 
     useEffect(() => {
         !openCreateOption ? setSelectInput('') : null
@@ -161,27 +159,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
         })
     }
 
-    const addFilter = (filter: ProductFilter) => {
-        let data = props.control.getValues('productFilters') as ProductFilterBind[]
-
-        let filterr = {
-            id: 0,
-            createdAt: "",
-            updatedAt: "",
-            enabled: true,
-            productId: props.product.product.id,
-            filterId: filter.id,
-            name: filter.name,
-            groupName: filter.groupName,
-            isCollapsed: filter.isCollapsed,
-            isRetailVisible: filter.isRetailVisible,
-            isB2BVisible: filter.isB2BVisible,
-            sortOrder: filter.sortOrder,
-            groupSortOrder: filter.groupSortOrder,
-        } as ProductFilterBind
-
-        props.control.setValue('productFilters', [filterr, ...data])
-    }
     const uploadBindedPhotoHandler = (e: ChangeEvent<HTMLInputElement>, bindedProduct: Product) => {
         let id = props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.id
 
@@ -238,10 +215,9 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                             }}
                         />
                         <div className={s.optionBind_header}>
-                            <div>Группа товаров</div>
-
                             <div className={s.search_wrapper}>
                                 <AsyncSelectSearchProduct onSelect={(p) => {
+                                    addProductBind(p, field)
                                 }}/>
                             </div>
 
@@ -255,85 +231,38 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                         {
                             field.value?.map((bindedProduct: Product, index: number) => {
                                 return (
-                                    <div className={s.optionBind_productBlock}>
+                                    <div className={s.optionBind_productBlock} onClick={() => {
+                                        setSelectedBindedProductId(bindedProduct.id)
+                                    }}
+                                    >
 
-                                        <div className={s.productBlock_productContent}>
-                                            <div className={s.productContent_info}>
-                                                ID: {bindedProduct.id} {'|'} {''}
-                                                {bindedProduct.name} {'|'} {''}
-                                                Catalog Key: {bindedProduct.catalogKey}
-                                            </div>
+                                        <div className={s.productBlock_productContent}
+                                             style={{border: selectedBindedProductId === bindedProduct.id ? "5px solid black" : ""}}>
+                                            <div className={s.productContent_info}
+                                                 style={{color: index === 0 ? "gold" : ''}}>
+                                                <div className={s.pci_name}>
+                                                    <div className={s.pci_number}>
+                                                        №{index + 1}
+                                                    </div>
+                                                    Арт.: {bindedProduct.id} {'|'} {''}
+                                                    <div
+                                                        className={s.pci_name_name}>{bindedProduct.name}</div>
+                                                    {'|'} {''}
+                                                    Кат.:{bindedProduct.catalogKey}
+                                                </div>
 
-                                            <div className={s.productContent_contentBlock}>
+
                                                 {
                                                     index > 0 ?
                                                         <div className={s.productBlock_deleteBindProduct}>
-                                                            <img src={RemoveIcon}
-                                                                 alt="remove-icon"
-                                                                 onClick={() => {
-                                                                     //deleteBindedProductHandler(field, bindedProduct)
-                                                                 }}
-                                                            />
+                                                            <DeleteButton size={25} onClick={() => {
+                                                            }}/>
                                                         </div> : ''
                                                 }
-                                                <div className={s.productBlock_imageBlock}>
 
-                                                    <div className={s.productImage}>
-                                                        {
-                                                            <div className={s.productImage_mainImage}>
+                                            </div>
 
-                                                                {/*props.images.length === 0 ?*/}
-                                                                {/*      <div className={s.item_noImage}>*/}
-                                                                {/*          <div className={s.item_noImage_title}>*/}
-                                                                {/*             Sorry, no photo!*/}
-                                                                {/*          </div>*/}
-                                                                {/*         <div className={s.item_noImage_icon}>*/}
-                                                                {/*             <img src={NoProductImage} alt="no-product-image"/>*/}
-                                                                {/*         </div>*/}
-                                                                {/*     </div> :*/}
-
-                                                                <img
-                                                                    src={props.images?.filter((n) => n.productId == bindedProduct.id)[0]?.url}
-                                                                    alt="product-image"
-                                                                />
-                                                            </div>
-                                                        }
-
-                                                        {
-                                                            index > 0 ?
-                                                                <div className={s.addBindedImage_box}>
-                                                                    {/*<img src={RemoveIcon} alt="remove-icon"*/}
-                                                                    {/*     className={s.addBindedImage_deleteItem}*/}
-                                                                    {/*     onClick={() => {deleteBindedPhotoHandler(bindedProduct)}}*/}
-                                                                    {/*/>*/}
-
-                                                                    <Button buttonDivWrapper={s.deleteBindedPhoto}
-                                                                            onClick={() => {
-                                                                                deleteBindedPhotoHandler(bindedProduct)
-                                                                            }}
-                                                                    >
-                                                                        Удалить фото
-                                                                    </Button>
-
-                                                                    <div className={s.addBindedImage}>
-                                                                        <input type="file" id="bindFile"
-                                                                               accept="image/png, image/jpeg"
-                                                                               className={s.inputFile}
-                                                                               onChange={(e) => {
-                                                                                   uploadBindedPhotoHandler(e, bindedProduct)
-                                                                               }}
-                                                                               style={{display: 'none'}}
-                                                                        />
-                                                                        <label htmlFor="bindFile"
-                                                                               className={s.inputButton}>
-                                                                            Выбрать файл
-                                                                        </label>
-                                                                    </div>
-                                                                </div> : ''
-                                                        }
-                                                    </div>
-                                                </div>
-
+                                            <div className={s.productContent_contentBlock}>
                                                 <div className={s.contentBlock_content}>
                                                     <div className={s.content_options}>
                                                         <fieldset className={s.options_wrapperBox}>
@@ -423,7 +352,8 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                                 if (v != "" && v != " ") {
                                                                                                                     setEnBut({
                                                                                                                         id: variant.optionId,
-                                                                                                                        name: v
+                                                                                                                        name: v,
+                                                                                                                        bindId: bindedProduct.id
                                                                                                                     })
                                                                                                                 } else {
                                                                                                                     setTimeout(() => {
@@ -446,7 +376,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                                     addVariantHandler(props.control, bindedProduct, value, enBut!.name)
                                                                                                                 })
                                                                                                             }}
-                                                                                                            disabled={enBut === null || enBut.id != variant.optionId}>+</Button>
+                                                                                                            disabled={enBut === null || enBut.id != variant.optionId || enBut.bindId != bindedProduct.id}>+</Button>
                                                                                                         <Button
                                                                                                             onClick={() => {
                                                                                                                 field.onChange(field.value.filter((n: ProductOptionVariantBind) =>

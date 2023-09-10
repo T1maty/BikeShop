@@ -3,11 +3,15 @@ export {HeaderShopMenu} from './HeaderShopMenu/HeaderShopMenu'
 
 export {ServiceArchiveModal} from './ArchiveModals/ServiceArchiveModal/ServiceArchiveModal'
 export {ServiceFinalArchiveModal} from './ArchiveModals/ServiceFinalArchiveModal/ServiceFinalArchiveModal'
-export {InventoryOfProductsArchiveModal} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
+export {
+    InventoryOfProductsArchiveModal
+} from './ArchiveModals/InventoryOfProductsArchiveModal/InventoryOfProductsArchiveModal'
 export {SupplyInvoiceArchiveModal} from './ArchiveModals/SupplyInvoiceArchiveModal/SupplyInvoiceArchiveModal'
 export {EncashmentArchiveModal} from './ArchiveModals/EncashmentArchiveModal/EncashmentArchiveModal'
 export {CheckArchiveModal} from './ArchiveModals/CheckArchiveModal/CheckArchiveModal'
-export {StorageProductsTransferArchiveModal} from './ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
+export {
+    StorageProductsTransferArchiveModal
+} from './ArchiveModals/StorageProductsTransferArchiveModal/StorageProductsTransferArchiveModal'
 
 export {ConfirmModal} from './ConfirmModal/ConfirmModal'
 export {PrintModal} from './PrintModal/PrintModal'
@@ -26,11 +30,7 @@ export {GetPutMoneyModal} from './CashboxModals/GetPutMoneyModal/GetPutMoneyModa
 
 export {EditProductCardModal} from './ProductCatalogFeatures/EditProductCardModal/EditProductCardModal'
 export {UpdateProductPricesModal} from './ProductCatalogFeatures/UpdateProductPricesModal/UpdateProductPricesModal'
-export {CreateProductModal} from './ProductCatalogFeatures/CreateProductModal/CreateProductModal'
-export {ChooseProductModal} from './ProductCatalogFeatures/ChooseProductModal/ChooseProductModal'
 export {UpdateProductModal} from './ProductCatalogFeatures/UpdateProductModal/UpdateProductModal'
-export {CreateTagModal} from './ProductCatalogFeatures/CreateTagModal/CreateTagModal'
-export {ChooseProductTagModal} from './ProductCatalogFeatures/ChooseProductTagModal/ChooseProductTagModal'
 export {UpdateTagModal} from './ProductCatalogFeatures/UpdateTagModal/UpdateTagModal'
 
 export {SelectProductModal} from './ServiceFeatures/SelectProductWorkModals/SelectProductModal'

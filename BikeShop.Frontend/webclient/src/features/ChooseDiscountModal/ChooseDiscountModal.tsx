@@ -3,7 +3,7 @@ import s from './ChooseDiscountModal.module.scss'
 import {Button, CustomModal, LoaderScreen} from '../../shared/ui'
 import Select from "react-select"
 import useChooseDiscountModal from "./ChooseDiscountModalStore";
-import {Discount} from "../../entities/entities/Discount";
+import {Discount} from "../../entities/DataTransferObjects/Discount";
 
 interface p {
     open: boolean

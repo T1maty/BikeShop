@@ -10,7 +10,7 @@ import {
     UpdateProductPrices
 } from '../index'
 import {$api} from "../../shared";
-import {ProductCategory} from "../entities/ProductCategory";
+import {ProductCategory} from "../DataTransferObjects/ProductCategory";
 
 export const CatalogAPI = {
     searchProductByName(inputValue: string): Promise<AxiosResponse<Product[]>> {

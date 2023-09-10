@@ -116,6 +116,7 @@ namespace BikeShop.Products.Application.Services
             var ent = await _context.ProductImgs.FindAsync(dto.Id);
             ent.SortOrder = dto.SortOrder;
             ent.UpdatedAt = DateTime.Now;
+            ent.ProductId = dto.ProductId;
             await _context.SaveChangesAsync(new CancellationToken());
             return ent;
         }

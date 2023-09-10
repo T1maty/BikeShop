@@ -2,11 +2,11 @@ import React from 'react'
 import s from './CreateProductModal.module.scss'
 import useCreateProductModal from './CreateProductModalStore'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {CreateProduct, LocalStorage, Product, useCurrency} from '../../../entities'
 import {useSnackbar} from 'notistack'
 import {useTranslation} from 'react-i18next'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
-import {Loader} from "../../../shared/ui/Loader/Loader";
+import {CreateProduct, LocalStorage, Product, useCurrency} from "../../../../entities";
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from "../../../../shared/ui";
+import {Loader} from "../../../../shared/ui/Loader/Loader";
 
 interface CreateProductModalProps {
     onSuccess?: (data: Product) => void

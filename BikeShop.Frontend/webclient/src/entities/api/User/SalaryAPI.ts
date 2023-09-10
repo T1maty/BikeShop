@@ -1,9 +1,9 @@
 import {$api} from "../../../shared"
-import {SalaryResponse} from '../../responses/SalaryResponse'
+import {SalaryResponse} from '../../DataTransferObjects/responses/SalaryResponse'
 import {AxiosResponse} from 'axios'
-import {UpdateSalaryParams} from "../../requests/UpdateSalaryParams"
+import {UpdateSalaryParams} from "../../DataTransferObjects/requests/UpdateSalaryParams"
 import {CalculatedSalary} from "../../models/CalculatedSalary";
-import {SalaryPaymentHistory} from "../../entities/SalaryPaymentHistory";
+import {SalaryPaymentHistory} from "../../DataTransferObjects/SalaryPaymentHistory";
 
 export const SalaryAPI = {
     getEmployeeSalaryById(userId: string): Promise<AxiosResponse<SalaryResponse>> {

@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import s from './ChooseProductModal.module.scss'
-import {ProductCatalogTable, TagTreeView} from "../../../widgets"
-import {Product} from "../../../entities"
-import {CustomModal, UniTable} from "../../../shared/ui"
+import {ProductCatalogTable} from "../ProductCatalogTable/ProductCatalogTable";
+import {TagTreeView} from "../TagTreeView/TagTreeView";
+import {CustomModal, UniTable} from "../../../../shared/ui";
+import {Product} from "../../../../entities";
 
 interface props {
     open?: boolean,

@@ -2,10 +2,10 @@ import {$api} from "../../../shared"
 import {Role} from "../../models/Role"
 import {AxiosResponse} from "axios"
 import {RoleGroup} from "../../models/RoleGroup"
-import {CreateRole} from "../../requests/CreateRole"
-import {SetRoleToGroupRequestParams} from "../../requests/SetRoleToGroupRequestParams"
-import {CreateRoleGroup} from "../../requests/CreateRoleGroup"
-import {RoleGroupResponse} from "../../responses/RoleGroupResponse";
+import {CreateRole} from "../../DataTransferObjects/requests/CreateRole"
+import {SetRoleToGroupRequestParams} from "../../DataTransferObjects/requests/SetRoleToGroupRequestParams"
+import {CreateRoleGroup} from "../../DataTransferObjects/requests/CreateRoleGroup"
+import {RoleGroupResponse} from "../../DataTransferObjects/responses/RoleGroupResponse";
 import {UserWithRoles} from "../../models/Auth/UserWithRoles";
 
 export const RoleAPI = {

@@ -1,10 +1,8 @@
 import React, {useState} from 'react'
 import {CreateWorkModal, UpdateWorkModal} from "../../../features"
 import {ContextMenu} from "../ContextMenu/ContextMenu"
-import {
-    ChooseProductTagModal
-} from "../../../features/ProductCatalogFeatures/ChooseProductTagModal/ChooseProductTagModal";
 import {useWorkCatalog} from "./TableCatalogStore";
+import {ChooseProductTagModal} from "../ProductCatalog/ChooseProductTagModal/ChooseProductTagModal";
 
 export const WorkCatalogTableContextMenu = (props: {
     x: number, y: number,

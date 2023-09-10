@@ -5,7 +5,7 @@ import s from './CreateStorageModal.module.scss'
 import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal, LoaderScreen} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateStorageModal from './CreateStorageModalStore'
-import {UpdateStorage} from '../../../entities/requests/CreateStorage'
+import {UpdateStorage} from '../../../entities/DataTransferObjects/requests/CreateStorage'
 
 export const CreateStorageModal = () => {
 

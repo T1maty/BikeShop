@@ -5,7 +5,7 @@ import {ControlledCustomInput} from 'shared/ui/Controlled/ControlledCustomInput'
 import {LoaderScreen} from "shared/ui/LoaderScreen/LoaderScreen"
 import {Button} from 'shared/ui/Button/Button'
 import {useAddNewUser} from './ClientSearchModalStore'
-import {CreateUser} from 'entities/requests/CreateUser'
+import {CreateUser} from 'entities/DataTransferObjects/requests/CreateUser'
 import {User as UserResType} from "../../entities/models/Auth/User"
 import {CustomModal} from "../../shared/ui";
 import {AsyncSelectSearchUser} from "../../shared/ui/AsyncSelectSearch/AsyncSelectSearchUser";

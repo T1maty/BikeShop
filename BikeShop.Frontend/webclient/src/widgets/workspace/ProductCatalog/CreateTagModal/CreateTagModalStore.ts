@@ -1,8 +1,8 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, CreateTag, ProductCategory} from "../../../entities"
 import {AxiosResponse} from 'axios'
+import {CatalogAPI, CreateTag, ProductCategory} from "../../../../entities";
 
 interface createTagModalStore {
     openCreateTagModal: boolean

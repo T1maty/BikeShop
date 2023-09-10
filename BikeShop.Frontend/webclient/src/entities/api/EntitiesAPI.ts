@@ -1,23 +1,23 @@
 import {AxiosResponse} from "axios"
-import {CreateShopResponse} from "../responses/ShopResponse"
-import {CreateShop, UpdateShop} from "../requests/CreateShop"
-import {GetQuantityUnitResponse} from "../responses/QuantityUnitResponse"
-import {CreateQuantityUnit, UpdateQuantityUnit} from "../requests/CreateQuantityUnit"
-import {CreateStorageResponse} from "../responses/StorageResponse"
-import {CreateStorage, UpdateStorage} from "../requests/CreateStorage"
-import {UpdateSpecification} from '../requests/UpdateSpecification'
-import {ProductSpecification} from "../entities/ProductSpecification"
+import {CreateShopResponse} from "../DataTransferObjects/responses/ShopResponse"
+import {CreateShop, UpdateShop} from "../DataTransferObjects/requests/CreateShop"
+import {GetQuantityUnitResponse} from "../DataTransferObjects/responses/QuantityUnitResponse"
+import {CreateQuantityUnit, UpdateQuantityUnit} from "../DataTransferObjects/requests/CreateQuantityUnit"
+import {CreateStorageResponse} from "../DataTransferObjects/responses/StorageResponse"
+import {CreateStorage, UpdateStorage} from "../DataTransferObjects/requests/CreateStorage"
+import {UpdateSpecification} from '../DataTransferObjects/requests/UpdateSpecification'
+import {ProductSpecification} from "../DataTransferObjects/ProductSpecification"
 
 import {
     ProductOptionsWithVariants
 } from "../../features/ProductCatalogFeatures/EditProductCardModal/models/ProductOptionsWithVariants"
 import {Currency} from "../models/Others/Currency";
-import {CreateOption} from "../requests/CreateOption";
-import {UpdateOption} from "../requests/UpdateOption";
+import {CreateOption} from "../DataTransferObjects/requests/CreateOption";
+import {UpdateOption} from "../DataTransferObjects/requests/UpdateOption";
 import {$api} from "../../shared";
-import {ProductFilter} from "../entities/ProductFilter";
-import {CreateFilter} from "../requests/CreateFilter";
-import {ProductFiltersDTO} from "../responses/ProductFiltersDTO";
+import {ProductFilter} from "../DataTransferObjects/ProductFilter";
+import {CreateFilter} from "../DataTransferObjects/requests/CreateFilter";
+import {ProductFiltersDTO} from "../DataTransferObjects/responses/ProductFiltersDTO";
 
 export const EntitiesAPI = {
     Shop: {

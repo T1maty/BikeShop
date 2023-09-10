@@ -3,10 +3,11 @@ import useProductCatalogTableStore from './ProductCatalogTableStore'
 import {useProductCatalogStorage} from "../../../../pages/workspace/ProductCatalog/ProductCatalogStorage"
 import useProductCatalogFiltersStore from "../ProductCatalogFilters/ProductCatalogFiltersStore";
 import {ProductCatalogTableContextMenu} from "./ProductCatalogTableContextMenu";
-import {CreateProductModal, UpdateProductModal, UpdateProductPricesModal} from "../../../../features";
 import {UniTable} from "../../../../shared/ui";
 import {columns} from "./ProductCatalogTableConfig";
 import {Product} from "../../../../entities";
+import {UpdateProductModal, UpdateProductPricesModal} from "../../../../features";
+import {CreateProductModal} from "../CreateProductModal/CreateProductModal";
 
 interface CatalogTableProps {
     onRowDoubleClick?: (product: any) => void

@@ -1,6 +1,6 @@
 import {AxiosResponse} from "axios";
 import {$api} from "../../../shared";
-import {PrintQueue} from "../../entities/PrintQueue";
+import {PrintQueue} from "../../DataTransferObjects/PrintQueue";
 
 export const PrintAPI = {
     addQueue(formData: FormData, actId: number, dataName: string, printSetings: string, priority: number, agentId: number): Promise<AxiosResponse<PrintQueue>> {

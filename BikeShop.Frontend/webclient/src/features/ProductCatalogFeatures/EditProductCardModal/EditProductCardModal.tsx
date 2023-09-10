@@ -11,7 +11,6 @@ import {EditProductCardStatus} from './EditProductCardStatus'
 import {UpdateProductCardFormModel} from './models/UpdateProductCardFormModel'
 import {ProductImage} from '../../../entities'
 import {EditProductCardDescriptionFull} from './EditProductCardDescriptionFull'
-import {EditProductCardDescriptionShort} from './EditProductCardDescriptionShort'
 import {EditProductCardOptionBind} from './EditProductCardOptionBind'
 import {EditProductCardMainButtons} from './EditProductCardMainButtons'
 
@@ -29,8 +28,6 @@ export const EditProductCardModal = () => {
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
     const getAllOptions = useEditProductCardModal(s => s.getAllOptions)
-    const getAllSpecifications = useEditProductCardModal(s => s.getAllSpecifications)
-    const getAllFilters = useEditProductCardModal(s => s.getAllFilters)
     const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
     const formControl = useForm<UpdateProductCardFormModel>({
@@ -51,8 +48,6 @@ export const EditProductCardModal = () => {
 
     useEffect(() => {
         open ? getAllOptions() : null
-        open ? getAllSpecifications() : null
-        open ? getAllFilters() : null
 
         formControl.setValue('id', currentProduct.product?.id)
         formControl.setValue('checkStatus', currentProduct.product?.checkStatus)
@@ -102,8 +97,6 @@ export const EditProductCardModal = () => {
                             <div className={s.editProductCardModal_header}>
                                 <div className={s.productInfo}>
                                     Product Info
-                                    {/*{currentProduct.product.name} {'|'} {''}*/}
-                                    {/*Catalog Key: {currentProduct.product.catalogKey}*/}
                                 </div>
                                 <EditProductCardStatus control={formControl} name={'checkStatus'}/>
                                 <EditProductCardMainButtons setOpen={setOpen}/>
@@ -117,20 +110,19 @@ export const EditProductCardModal = () => {
                                                                setImages={setImages}
                                     />
                                 </div>
-                                <EditProductCardGallery images={images} setImages={setImages}/>
-                                <EditProductCardDescriptionFull name={'productCard'}
-                                                                control={formControl}
-                                                                editorState={editorState}
-                                                                setEditorState={setEditorState}
-                                />
-                                <div className={s.specs_wrapper}>
-                                    <EditProductCardDescriptionShort name={'productCard'}
-                                                                     control={formControl}
+                                <div className={s.imageGallery}>
+                                    <EditProductCardGallery images={images} setImages={setImages}/>
+                                </div>
+                                <div className={s.fullEditor}>
+                                    <EditProductCardDescriptionFull name={'productCard'}
+                                                                    control={formControl}
+                                                                    editorState={editorState}
+                                                                    setEditorState={setEditorState}
                                     />
                                 </div>
+
                             </div>
                         </div>
-
                     </div>
                 </form>
             </CustomModal>

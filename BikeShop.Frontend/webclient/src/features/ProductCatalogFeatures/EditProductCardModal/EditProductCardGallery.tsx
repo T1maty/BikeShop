@@ -1,11 +1,12 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from "./EditProductCardGallery.module.scss"
 import RemoveIcon from "../../../shared/assets/workspace/remove-icon.svg"
-import {Button, LoaderScreen} from '../../../shared/ui'
+import {Button} from '../../../shared/ui'
 import useEditProductCardModal from "./EditProductCardModalStore"
 import {ProductCardAPI, ProductImage} from '../../../entities'
 import {ConfirmModal} from '../../ConfirmModal/ConfirmModal'
 import {useSnackbar} from "notistack"
+import {Loader} from "../../../shared/ui/Loader/Loader";
 
 interface ProductCardGalleryProps {
     images: ProductImage[]
@@ -17,11 +18,12 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
     const {enqueueSnackbar} = useSnackbar()
 
     const currentProduct = useEditProductCardModal(s => s.currentProduct)
-    const isLoading = useEditProductCardModal(s => s.isLoading)
-    const setIsLoading = useEditProductCardModal(s => s.setIsLoading)
+    const getProductBindIndex = useEditProductCardModal(s => s.getProductBindIndex)
+    const selectedBindedProductId = useEditProductCardModal(s => s.selectedBindedProductId)
 
     const [currentImageKey, setCurrentImageKey] = useState<any>(null)
     const [confirm, setConfirm] = useState(false);
+    const [isLoadingMini, setIsLoadingMini] = useState(false)
 
     // загрузка изображения
     const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,23 +35,35 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                 console.log(file)
                 formData.append('imageFile', file)
 
-                setIsLoading(true)
+                setIsLoadingMini(true)
                 ProductCardAPI.uploadNewImage(formData, currentProduct.product.id).then((res) => {
                     props.setImages([...props.images, res.data])
-                    setIsLoading(false)
+                    setIsLoadingMini(false)
                     enqueueSnackbar('Фотография загружена', {variant: 'success', autoHideDuration: 3000})
                 }).catch((error) => {
-                    setIsLoading(false)
+                    setIsLoadingMini(false)
                     enqueueSnackbar('Ошибка загрузки', {variant: 'error', autoHideDuration: 3000})
                 }).finally(() => {
-                    setIsLoading(false)
+                    setIsLoadingMini(false)
                 })
             } else {
                 console.error('Error: ', 'Файл слишком большого размера')
-                setIsLoading(false)
+                setIsLoadingMini(false)
                 enqueueSnackbar('Файл слишком большого размера', {variant: 'error', autoHideDuration: 3000})
             }
         }
+    }
+
+    const updateImage = (id: number, sortOrder: number, productId: number) => {
+        setIsLoadingMini(true)
+        ProductCardAPI.updateImage({id: id, productId: productId, sortOrder: sortOrder}).then((res) => {
+            props.setImages([...props.images, res.data])
+            enqueueSnackbar('Фотография присвоена товару', {variant: 'success', autoHideDuration: 3000})
+        }).catch((error) => {
+            enqueueSnackbar('Ошибка', {variant: 'error', autoHideDuration: 3000})
+        }).finally(() => {
+            setIsLoadingMini(false)
+        })
     }
 
     // функции для работы с текущими изображениями
@@ -58,18 +72,15 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
     }
 
     const deleteImageHandler = (imgId: number) => {
-        setIsLoading(true)
+        setIsLoadingMini(true)
         ProductCardAPI.deleteImage(imgId).then((res) => {
             console.log('id from function', imgId, res)
             props.setImages(props.images.filter((img: ProductImage) => img.id !== imgId))
-            // setCurrentImageKey(null)
-            setIsLoading(false)
             enqueueSnackbar('Фотография удалена', {variant: 'success', autoHideDuration: 3000})
         }).catch((error) => {
-            setIsLoading(false)
             enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
         }).finally(() => {
-            setIsLoading(false)
+            setIsLoadingMini(false)
         })
     }
 
@@ -97,8 +108,8 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
 
     console.log(props.images)
 
-    if (isLoading) {
-        return <LoaderScreen variant={'ellipsis'}/>
+    if (isLoadingMini) {
+        return <Loader variant={'ellipsis'}/>
     } else {
 
         return (
@@ -107,7 +118,9 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                     {
                         props.images?.length === 0 ? <div className={s.emptyList}>Фотографий нет</div> :
 
+
                             props.images?.map((img: ProductImage, key: number) => {
+                                let prodIndex = getProductBindIndex(img.productId)
                                 return (
                                     <div key={img.id}
                                          className={s.imageList_item}
@@ -119,8 +132,12 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                              src={img.url} alt="img-thumbnail"
                                         />
 
-                                        <div className={s.imageList_imageCount}>
-                                            {key + 1}/{props.images.length}
+                                        <div className={s.imageList_imageCount}
+                                             style={{color: prodIndex === 0 ? "gold" : ''}} onDoubleClick={() => {
+                                            updateImage(img.id, img.sortOrder, selectedBindedProductId)
+                                            getProductBindIndex(selectedBindedProductId)
+                                        }}>
+                                            №{prodIndex + 1}
                                         </div>
 
                                         <img src={RemoveIcon} alt="remove-icon"

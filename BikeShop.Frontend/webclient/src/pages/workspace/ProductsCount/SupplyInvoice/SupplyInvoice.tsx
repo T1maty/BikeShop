@@ -2,12 +2,12 @@ import React, {ChangeEvent, useEffect, useState} from 'react'
 import s from '../ProductsCountStyles.module.scss'
 import {AsyncSelectSearchProduct, Button, CustomInput, EditableSpan, UniTable} from '../../../../shared/ui'
 import {columns} from './SupplyInvoiceTableConfig'
-import {ChooseProductModal} from '../../../../features'
 import useSupplyInvoice from './models/SupplyInvoiceStore'
 import Enumerable from 'linq'
 import {Product, SupplyInvoiceAPI, useCurrency} from '../../../../entities'
 import {SupplyInvoiceProduct} from '../../../../entities/entities/Acts/SupplyInvoice/SupplyInvoiceProduct'
 import {useSnackbar} from "notistack"
+import {ChooseProductModal} from "../../../../widgets/workspace/ProductCatalog/ChooseProductModal/ChooseProductModal";
 
 export const SupplyInvoice = () => {
 

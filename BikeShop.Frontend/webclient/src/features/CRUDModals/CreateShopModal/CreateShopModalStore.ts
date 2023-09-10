@@ -2,7 +2,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CreateShop, EntitiesAPI, UpdateShop} from '../../../entities'
-import {CreateShopResponse} from "../../../entities/responses/ShopResponse"
+import {CreateShopResponse} from "../../../entities/DataTransferObjects/responses/ShopResponse"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface CreateShopModalStore {

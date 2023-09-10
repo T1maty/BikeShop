@@ -1,7 +1,7 @@
 import {$api} from "../../../shared"
 import {Encashment} from '../../entities/Acts/Cashbox/Encashment'
 import {AxiosResponse} from 'axios'
-import {CreateEncashment} from "../../requests/CreateEncashment";
+import {CreateEncashment} from "../../DataTransferObjects/requests/CreateEncashment";
 
 export const EncashmentAPI = {
     getByShop(shopId: string, take: number): Promise<AxiosResponse<Encashment[]>> {

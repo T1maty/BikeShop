@@ -4,7 +4,7 @@ import {immer} from "zustand/middleware/immer"
 import {CatalogAPI} from "../../../../entities"
 import {AxiosResponse} from "axios"
 import {$api} from "../../../../shared"
-import {ProductCategory} from "../../../../entities/entities/ProductCategory";
+import {ProductCategory} from "../../../../entities/DataTransferObjects/ProductCategory";
 
 interface TagTreeViewStore {
     contextMenuVisible: boolean

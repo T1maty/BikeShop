@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from '../ProductsCountStyles.module.scss'
 import {AsyncSelectSearchProduct, Button, CustomInput, UniTable} from '../../../../shared/ui'
-import {ChooseProductModal} from '../../../../features'
 import Select from 'react-select'
 import Enumerable from 'linq'
 import {columns} from "./StorageProductTransferTableConfig"
@@ -12,6 +11,7 @@ import {
     BarcodeScannerListenerProvider
 } from "../../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
 import {CatalogAPI} from "../../../../entities";
+import {ChooseProductModal} from "../../../../widgets/workspace/ProductCatalog/ChooseProductModal/ChooseProductModal";
 
 export const StorageProductsTransfer = () => {
 

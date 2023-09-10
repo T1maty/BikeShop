@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {Discount} from "../../entities/entities/Discount";
+import {Discount} from "../../entities/DataTransferObjects/Discount";
 import {DiscountAPI} from "../../entities/api/DiscountAPI";
 import {LocalStorage} from "../../entities";
 

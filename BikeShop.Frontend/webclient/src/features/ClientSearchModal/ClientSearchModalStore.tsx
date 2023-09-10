@@ -5,7 +5,7 @@ import {immer} from "zustand/middleware/immer"
 import {UserInfoType} from "./ClientSearchModal";
 import {AuthAPI} from "../../entities/api/AuthAPI";
 import {SearchClient} from "entities/models/Auth/SearchClient";
-import {CreateUser} from "entities/requests/CreateUser";
+import {CreateUser} from "entities/DataTransferObjects/requests/CreateUser";
 import {User} from "../../entities";
 
 interface AddNewUserStore {

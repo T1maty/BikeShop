@@ -1,9 +1,9 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {ProductFiltersDTO} from "../../../../entities/responses/ProductFiltersDTO";
+import {ProductFiltersDTO} from "../../../../entities/DataTransferObjects/responses/ProductFiltersDTO";
 import {EntitiesAPI} from "../../../../entities";
-import {ProductFilterVariantDTO} from "../../../../entities/responses/ProductFilterVariantDTO";
+import {ProductFilterVariantDTO} from "../../../../entities/DataTransferObjects/responses/ProductFilterVariantDTO";
 
 interface p {
     isLoading: boolean

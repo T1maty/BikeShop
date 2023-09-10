@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ContextMenu} from "../../../widgets";
 import {LocalStorage, SupplyInvoiceAPI} from "../../../entities";
 import useSupplyInvoiceArchiveModal from "./SupplyInvoiceArchiveModalStore";
@@ -9,6 +9,8 @@ import ProductStickerManager from "../../ProductStickerManager/ProductStickerMan
 import useProductStickerManager from "../../ProductStickerManager/ProductStickerManagerStore";
 import {usePriceManager} from "../../PriceManagerModal/PricaManagerModalStore";
 import PriceManagerModal from "../../PriceManagerModal/PriceManagerModal";
+import WatchArchiveDataModal from "../../WatchArchiveDataModal/WatchArchiveDataModal";
+import {columns} from './../../../pages/workspace/ProductsCount/SupplyInvoice/SupplyInvoiceTableConfig'
 
 interface p {
     open: { o: boolean, x: number, y: number },
@@ -25,10 +27,16 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
     const setPriceManager = usePriceManager(s => s.setOpen)
     const setProductsToPriceManager = usePriceManager(s => s.setProductsFromSupply)
 
-
+    const [watch, setWatch] = useState(false)
     const {enqueueSnackbar} = useSnackbar()
 
     const settings = [
+        {
+            name: 'Просмотр',
+            click: () => {
+                setWatch(true)
+            }
+        },
         {
             name: 'Применить акт прихода',
             click: () => {
@@ -78,6 +86,9 @@ export const SupplyInvoiceArchiveModalContext = (props: p) => {
     ]
     return (
         <>
+            <WatchArchiveDataModal open={watch} setOpen={setWatch}
+                                   rows={selectedSupplyInvoice ? selectedSupplyInvoice.supplyInvoiceProducts : []}
+                                   columns={columns}/>
             <PriceManagerModal/>
             <ProductStickerManager items={selectedSupplyInvoice ? selectedSupplyInvoice.supplyInvoiceProducts : []}/>
             <ContextMenu

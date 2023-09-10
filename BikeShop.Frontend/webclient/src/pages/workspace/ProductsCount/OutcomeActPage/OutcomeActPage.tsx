@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import s from "../ProductsCountStyles.module.scss";
 import {AsyncSelectSearchProduct, Button, CustomInput, UniTable} from "../../../../shared/ui";
 import Enumerable from "linq";
-import {ChooseProductModal} from "../../../../features";
 import {columns} from "./Columns";
 import useOutcomeActPage from "./OutcomeActPageStore";
 import {useCurrency} from "../../../../entities";
 import {useSnackbar} from "notistack";
+import {ChooseProductModal} from "../../../../widgets/workspace/ProductCatalog/ChooseProductModal/ChooseProductModal";
 
 const OutcomeActPage = () => {
     const {enqueueSnackbar} = useSnackbar()

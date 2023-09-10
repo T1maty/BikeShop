@@ -1,4 +1,4 @@
-import {User} from "../models/Auth/User"
+import {User} from "../../models/Auth/User"
 
 export interface GetUsersResponse {
     users: [

@@ -1,17 +1,17 @@
 import React, {useState} from 'react'
 import useProductCatalogTableStore from './ProductCatalogTableStore'
-import useCreateProductModal
-    from '../../../../features/ProductCatalogFeatures/CreateProductModal/CreateProductModalStore'
 import useTagTreeView from '../TagTreeView/TagTreeViewStore'
 import useUpdateProductModal
     from '../../../../features/ProductCatalogFeatures/UpdateProductModal/UpdateProductModalStore'
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
 import useUpdateProductPriceModal
     from "../../../../features/ProductCatalogFeatures/UpdateProductPricesModal/UpdateProductPricesModalStore"
-import {ChooseProductTagModal, PrintModal} from "../../../../features"
 import {ProductCategory, useCurrency} from "../../../../entities"
 import {ProductSticker} from "../../Invoices/ProductSticker/ProductSticker"
 import {useSnackbar} from "notistack";
+import useCreateProductModal from "../CreateProductModal/CreateProductModalStore";
+import {PrintModal} from "../../../../features";
+import {ChooseProductTagModal} from "../ChooseProductTagModal/ChooseProductTagModal";
 
 export const ProductCatalogTableContextMenu = () => {
 

@@ -1,5 +1,5 @@
-import {Bill} from "../entities/Bill"
-import {BillProduct} from "../entities/BillProduct"
+import {Bill} from "../DataTransferObjects/Bill"
+import {BillProduct} from "../DataTransferObjects/BillProduct"
 
 export interface BillWithProducts {
     bill: Bill

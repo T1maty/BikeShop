@@ -2,60 +2,55 @@
 @import '../../../app/styles/variables/variables';
 
 .editProductCardModal {
-    @include defaultModalStyle;
-    min-width: 1400px;
+  @include defaultModalStyle;
+  min-width: 1400px;
 
-    .editProductCardModal_mainBlock {
-        @include flexColumnOnly;
+  .editProductCardModal_mainBlock {
+    @include flexColumnOnly;
 
-        .editProductCardModal_header {
-            @include flexBetween;
-            margin-bottom: $defaultLargeMargin;
-            max-height: 50px;
+    .editProductCardModal_header {
+      @include flexBetween;
+      margin-bottom: $defaultLargeMargin;
+      max-height: 50px;
 
-            .productInfo {
-                @include flexCenter;
-                width: 400px;
-                height: 60px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
+      .productInfo {
+        @include flexCenter;
+        width: 400px;
+        height: 60px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
-                border: 2px solid $themeColorMilk;
-                border-radius: $smallBorderRadius;
-                padding: $defaultSmallMargin;
-            }
-        }
-
-        //контейнер для скролла
-        .editProductCardModal_scrollContainer {
-            overflow-y: scroll;
-            height: 77vh;
-            padding-right: 5px;
-
-            display: grid;
-            gap: $defaultLargeMargin;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: auto auto;
-            grid-template-areas:
-                    'optionBind optionBind optionBind'
-                    'gallery fullEditor specs';
-
-            .optionBind_wrapper {
-                grid-area: optionBind;
-            }
-
-            .imageGallery {
-                grid-area: gallery;
-            }
-
-            .fullEditor {
-                grid-area: fullEditor;
-            }
-
-            .specs_wrapper {
-                grid-area: specs;
-            }
-        }
+        border: 2px solid $themeColorMilk;
+        border-radius: $smallBorderRadius;
+        padding: $defaultSmallMargin;
+      }
     }
+
+    //контейнер для скролла
+    .editProductCardModal_scrollContainer {
+      overflow-y: scroll;
+      height: 90vh;
+      padding-right: 5px;
+
+      display: grid;
+      gap: $defaultLargeMargin;
+      grid-template-columns: 40% 60%;
+      grid-template-areas:
+                    'gallery optionBind'
+                    'fullEditor optionBind';
+
+      .optionBind_wrapper {
+        grid-area: optionBind;
+      }
+
+      .imageGallery {
+        grid-area: gallery;
+      }
+
+      .fullEditor {
+        grid-area: fullEditor;
+      }
+    }
+  }
 }

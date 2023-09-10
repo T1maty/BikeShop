@@ -1,7 +1,7 @@
 import {$api} from "../../shared"
 import {AxiosResponse} from "axios"
 import {ProductFullData} from "../models/ProductFullData"
-import {ProductCategory} from "../entities/ProductCategory";
+import {ProductCategory} from "../DataTransferObjects/ProductCategory";
 
 export const ShopAPI = {
     getTags(): Promise<AxiosResponse<ProductCategory[]>> {

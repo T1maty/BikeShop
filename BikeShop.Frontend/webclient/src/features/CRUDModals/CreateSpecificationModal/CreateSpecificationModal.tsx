@@ -2,11 +2,13 @@ import React, {useEffect} from 'react'
 import {useSnackbar} from 'notistack'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import s from './CreateSpecificationModal.module.scss'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput,
-    CustomModal, LoaderScreen} from '../../../shared/ui'
+import {
+    Button, ControlledCustomCheckbox, ControlledCustomInput,
+    CustomModal, LoaderScreen
+} from '../../../shared/ui'
 import {Errors} from '../../../entities/errors/workspaceErrors'
 import useCreateSpecificationModal from './CreateSpecificationModalStore'
-import {UpdateSpecification} from '../../../entities/requests/UpdateSpecification'
+import {UpdateSpecification} from '../../../entities/DataTransferObjects/requests/UpdateSpecification'
 
 export const CreateSpecificationModal = () => {
 
@@ -69,7 +71,9 @@ export const CreateSpecificationModal = () => {
         return (
             <CustomModal
                 open={open}
-                onClose={() => {setOpen(false)}}
+                onClose={() => {
+                    setOpen(false)
+                }}
             >
                 <div className={s.createSpecificationModal_mainBlock}>
 
@@ -79,8 +83,10 @@ export const CreateSpecificationModal = () => {
                             {
                                 specifications.map(spec => (
                                     <div key={spec.id}
-                                        className={spec.id === currentSpecification?.id ? s.shop_item_active : s.shop_item}
-                                        onClick={() => {setCurrentSpecification(spec)}}
+                                         className={spec.id === currentSpecification?.id ? s.shop_item_active : s.shop_item}
+                                         onClick={() => {
+                                             setCurrentSpecification(spec)
+                                         }}
                                     >
                                         <div><span>ID:</span> {spec.id}</div>
                                         <div><span>Название:</span> {spec.name}</div>
@@ -107,7 +113,9 @@ export const CreateSpecificationModal = () => {
                                 />
                                 <Button buttonDivWrapper={s.infoBlock_cancelBtn}
                                         disabled={currentSpecification === null}
-                                        onClick={() => {setCurrentSpecification(null)}}
+                                        onClick={() => {
+                                            setCurrentSpecification(null)
+                                        }}
                                 >
                                     Отмена
                                 </Button>

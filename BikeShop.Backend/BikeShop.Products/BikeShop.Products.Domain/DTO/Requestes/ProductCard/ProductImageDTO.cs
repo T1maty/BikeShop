@@ -10,5 +10,6 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
     {
         public int Id { get; set; }
         public int SortOrder { get; set; }
+        public int ProductId { get; set; }
     }
 }

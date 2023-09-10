@@ -1,0 +1,15 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.createTagModal_mainBox {
+  @include defaultModalStyle;
+
+  .createTagModal_form {
+    @include divSmallMarginBottom;
+
+    button {
+      height: 40px;
+      width: 100%;
+    }
+  }
+}

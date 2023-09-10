@@ -2,9 +2,9 @@ import React from 'react'
 import s from './CreateTagModal.module.scss'
 import useCreateTagModal from './CreateTagModalStore'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {CreateTag} from '../../../entities'
-import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from '../../../shared/ui'
-import {ProductCategory} from "../../../entities/entities/ProductCategory";
+import {CreateTag, ProductCategory} from "../../../../entities";
+import {Button, ControlledCustomCheckbox, ControlledCustomInput, CustomModal} from "../../../../shared/ui";
+
 
 interface CreateTagModalProps {
     onSuccess?: (tag: ProductCategory) => void

@@ -1,4 +1,4 @@
-import {Product} from "../index"
+import {Product} from "../../index"
 
 export interface ProductResponse {
     products: Product[]

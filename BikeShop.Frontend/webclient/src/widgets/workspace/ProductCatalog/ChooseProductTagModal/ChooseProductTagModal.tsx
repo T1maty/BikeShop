@@ -1,8 +1,8 @@
 import React from 'react'
 import s from './ChooseProductTagModal.module.scss'
-import {TagTreeView} from "../../../widgets"
-import {CustomModal} from "../../../shared/ui"
-import {ProductCategory} from "../../../entities/entities/ProductCategory";
+import {ProductCategory} from "../../../../entities";
+import {CustomModal} from "../../../../shared/ui";
+import {TagTreeView} from "../TagTreeView/TagTreeView";
 
 interface ChooseProductTagModalProps {
     open: boolean

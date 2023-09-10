@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import s from './TagTreeView.module.scss'
 import {TagTreeViewContextMenu} from "./TagTreeViewContextMenu"
-import {CreateTagModal, UpdateTagModal} from "../../../../features"
 import useTagTreeView from './TagTreeViewStore'
 import {UniTreeView} from "../../../../shared/ui"
 import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore"
 import {useSnackbar} from "notistack"
-import {ProductCategory} from "../../../../entities/entities/ProductCategory";
+import {ProductCategory} from "../../../../entities/DataTransferObjects/ProductCategory";
+import {CreateTagModal} from "../CreateTagModal/CreateTagModal";
+import {UpdateTagModal} from "../../../../features";
 
 interface TagTreeViewProps {
     onNodeDoubleClick?: (node: any) => void

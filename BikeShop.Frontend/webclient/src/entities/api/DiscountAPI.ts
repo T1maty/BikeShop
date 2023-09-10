@@ -1,6 +1,6 @@
 import {$api} from "../../shared";
 import {AxiosResponse} from "axios";
-import {Discount} from "../entities/Discount";
+import {Discount} from "../DataTransferObjects/Discount";
 
 export const DiscountAPI = {
     getDiscountsByTarget(target: string, user: string): Promise<AxiosResponse<Discount[]>> {

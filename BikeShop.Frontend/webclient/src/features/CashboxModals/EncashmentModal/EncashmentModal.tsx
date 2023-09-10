@@ -4,7 +4,7 @@ import {Button, ControlledCustomInput, CustomModal} from '../../../shared/ui'
 import useEncashmentModal from "./EncashmentModalStore"
 import {Controller, SubmitHandler, useForm} from 'react-hook-form'
 import {Encashment, EncashmentAPI, LocalStorage, useAuth, useCurrency} from "../../../entities";
-import {CreateEncashment} from "../../../entities/requests/CreateEncashment";
+import {CreateEncashment} from "../../../entities/DataTransferObjects/requests/CreateEncashment";
 import {useSnackbar} from "notistack";
 import {PrintModal} from "../../PrintModal/PrintModal";
 import {EncashmentPaper} from "../../../widgets/workspace/Invoices/Encashment/EncashmentPaper";

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
-import {Button, CustomModal, CustomRadioButton} from "../../shared/ui";
-import useProductCatalogTableStore
-    from "../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableStore";
+import {Button, CustomModal, CustomRadioButton} from "../../../shared/ui";
+import useProductCatalogTableStore from "./ProductCatalogTable/ProductCatalogTableStore";
 
 const DisplayModal = (props: { open: boolean, setOpen: (n: boolean) => void }) => {
     const setNotSortedToTable = useProductCatalogTableStore(s => s.setNotSortedToTable)

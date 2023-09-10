@@ -6,7 +6,7 @@ import {
 } from "../../../../entities/models/Acts/ProductStorageMove/ProductStorageMoveFullData";
 import {ProductStorageMove} from "../../../../entities/models/Acts/ProductStorageMove/ProductStorageMove";
 import {ProductStorageMoveProduct} from "../../../../entities/models/Acts/ProductStorageMove/ProductStorageMoveProduct";
-import {CreateStorageResponse} from "../../../../entities/responses/StorageResponse";
+import {CreateStorageResponse} from "../../../../entities/DataTransferObjects/responses/StorageResponse";
 import {EntitiesAPI, LocalStorage, Product} from "../../../../entities";
 import {ErrorStatusTypes} from "../../../../entities/enumerables/ErrorStatusTypes";
 import {ProductStorageMoveAPI} from "../../../../entities/api/Acts/ProductStorageMoveAPI";

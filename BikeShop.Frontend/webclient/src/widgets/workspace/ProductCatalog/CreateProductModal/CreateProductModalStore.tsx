@@ -1,9 +1,8 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, CreateProduct, Product} from "../../../entities"
 import {AxiosResponse} from "axios"
-import {ProductCategory} from "../../../entities/entities/ProductCategory";
+import {CatalogAPI, CreateProduct, Product, ProductCategory} from "../../../../entities";
 
 interface createProductModalStore {
     isLoading: boolean

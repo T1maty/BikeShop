@@ -1,0 +1,36 @@
+@import '../../../../app/styles/variables/mixins';
+@import '../../../../app/styles/variables/variables';
+
+.chooseProductModal_mainBox {
+  @include defaultModalStyle;
+  width: 1360px;
+  background-color: $themeColorDark;
+  padding: 0;
+
+  .chooseProductModal_wrapper {
+    @include flexOnlyBetween;
+    padding: $defaultLargeMargin;
+    gap: 20px;
+    height: 80vh;
+
+    .chooseProductModal_tagTreeView {
+      background-color: $themeColorGray;
+      border-radius: $smallBorderRadius;
+      width: 20%;
+    }
+
+    .chooseProductModal_catalogTable {
+      width: 80%;
+      @include flexColumn;
+      gap: 10px;
+
+      .table_availableProducts {
+        height: 50%;
+      }
+
+      .table_chosenProducts {
+        height: 50%;
+      }
+    }
+  }
+}

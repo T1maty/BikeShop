@@ -1,13 +1,12 @@
 import React, {useState} from 'react'
 import {ContextMenu} from "../../ContextMenu/ContextMenu"
-import useCreateTagModal from '../../../../features/ProductCatalogFeatures/CreateTagModal/CreateTagModalStore'
 import useTagTreeView from './TagTreeViewStore'
-import useCreateProductModal
-    from "../../../../features/ProductCatalogFeatures/CreateProductModal/CreateProductModalStore"
 import useUpdateTagModal from '../../../../features/ProductCatalogFeatures/UpdateTagModal/UpdateTagModalStore'
-import {ChooseProductTagModal} from "../../../../features";
 import {useSnackbar} from "notistack";
 import {ProductCategory} from "../../../../entities";
+import useCreateProductModal from "../CreateProductModal/CreateProductModalStore";
+import useCreateTagModal from "../CreateTagModal/CreateTagModalStore";
+import {ChooseProductTagModal} from "../ChooseProductTagModal/ChooseProductTagModal";
 
 export const TagTreeViewContextMenu = () => {
 

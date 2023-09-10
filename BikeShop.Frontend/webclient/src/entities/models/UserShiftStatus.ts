@@ -1,4 +1,4 @@
-import {ShiftAction} from "../entities/ShiftAction"
+import {ShiftAction} from "../DataTransferObjects/ShiftAction"
 
 export interface UserShiftStatus {
     lastAction: ShiftAction

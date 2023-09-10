@@ -1,7 +1,7 @@
 import {$api} from "../../../shared"
 import {CashboxAction} from '../../entities/Acts/Cashbox/CashboxAction'
 import {AxiosResponse} from 'axios'
-import {CashboxActionRequest} from '../../requests/CashboxActionRequest'
+import {CashboxActionRequest} from '../../DataTransferObjects/requests/CashboxActionRequest'
 
 export const CashboxAPI = {
     getByShop(shopId: number, take: number): Promise<AxiosResponse<CashboxAction[]>> {

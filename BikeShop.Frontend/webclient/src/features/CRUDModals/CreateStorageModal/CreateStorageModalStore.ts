@@ -1,8 +1,8 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CreateStorageResponse} from '../../../entities/responses/StorageResponse'
-import {CreateStorage, UpdateStorage} from '../../../entities/requests/CreateStorage'
+import {CreateStorageResponse} from '../../../entities/DataTransferObjects/responses/StorageResponse'
+import {CreateStorage, UpdateStorage} from '../../../entities/DataTransferObjects/requests/CreateStorage'
 import {EntitiesAPI, useAuth} from '../../../entities'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 

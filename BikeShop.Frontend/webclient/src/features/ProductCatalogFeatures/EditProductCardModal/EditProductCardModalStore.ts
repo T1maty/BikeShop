@@ -1,11 +1,10 @@
 import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {EntitiesAPI, ProductCardAPI, ProductFullData, ProductSpecification} from '../../../entities'
+import {EntitiesAPI, ProductCardAPI, ProductFullData} from '../../../entities'
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
 import {UpdateProductCardFormModel} from "./models/UpdateProductCardFormModel"
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
-import {ProductFilter} from "../../../entities/entities/ProductFilter";
 import {ProductOptionVariantBind} from "entities";
 
 interface EditProductCardModalStore {
@@ -24,17 +23,21 @@ interface EditProductCardModalStore {
     allOptions: ProductOptionsWithVariants[]
     getAllOptions: () => void
 
-    allSpecifications: ProductSpecification[]
-    getAllSpecifications: () => void
-
-    allFilters: ProductFilter[],
-    getAllFilters: () => void,
-
     createOption: (option: string, variant: string, s: (v: ProductOptionsWithVariants) => void) => void
     addOptionVariant: (option: ProductOptionVariantBind, variant: string, s: (v: ProductOptionsWithVariants) => void) => void
+
+    getProductBindIndex: (id: number) => number
+    selectedBindedProductId: number
+    setSelectedBindedProductId: (v: number) => void
+    
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+    setSelectedBindedProductId: (v) => set({selectedBindedProductId: v}),
+    selectedBindedProductId: 0,
+    getProductBindIndex: (id) => {
+        return get().currentProduct.bindedProducts.findIndex(n => n.id === id)
+    },
     addOptionVariant: (option, variant, s) => {
         set({isLoading: true})
         EntitiesAPI.Option.addOptionVariant(option.optionId, variant).then(res => {
@@ -64,21 +67,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         }).catch(() => {
             set({errorStatus: 'error'})
 
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
-        })
-    },
-    allFilters: [],
-    getAllFilters: () => {
-        set({isLoading: true})
-        EntitiesAPI.Filters.getFilters().then(res => {
-            set(state => {
-                state.allFilters = res.data
-            })
-            set({isLoading: false})
-        }).catch((error: any) => {
-            set({errorStatus: 'error'})
         }).finally(() => {
             set({errorStatus: 'default'})
             set({isLoading: false})
@@ -128,22 +116,6 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
         EntitiesAPI.Option.getOptions().then(res => {
             set(state => {
                 state.allOptions = res.data
-            })
-            set({isLoading: false})
-        }).catch((error: any) => {
-            set({errorStatus: 'error'})
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
-        })
-    },
-
-    allSpecifications: [],
-    getAllSpecifications: () => {
-        set({isLoading: true})
-        EntitiesAPI.Specification.getSpecifications().then(res => {
-            set(state => {
-                state.allSpecifications = res.data
             })
             set({isLoading: false})
         }).catch((error: any) => {

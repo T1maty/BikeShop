@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {CatalogAPI, Product, ProductCardAPI, ProductStorageQuantity, UpdateProduct} from "../../../../entities"
 import Enumerable from "linq";
-import {ProductFilterVariantDTO} from "../../../../entities/responses/ProductFilterVariantDTO";
+import {ProductFilterVariantDTO} from "../../../../entities/DataTransferObjects/responses/ProductFilterVariantDTO";
 
 interface productCatalogTableStore {
     isLoading: boolean

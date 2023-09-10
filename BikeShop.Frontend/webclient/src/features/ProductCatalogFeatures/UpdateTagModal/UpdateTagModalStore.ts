@@ -4,7 +4,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {$api} from "../../../shared"
-import {ProductCategory} from "../../../entities/entities/ProductCategory";
+import {ProductCategory} from "../../../entities/DataTransferObjects/ProductCategory";
 
 interface createTagModalStore {
     open: boolean

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import s from './Cashbox.module.scss'
-import {ChooseDiscountModal, ChooseProductModal, PayModal, PrintModal} from '../../../features'
 import {AsyncSelectSearchProduct, Button, LoaderScreen, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
@@ -14,6 +13,8 @@ import {
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider"
 import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
 import {DiscountTargetEnum} from "../../../entities/enumerables/DiscountTargetEnum";
+import {ChooseDiscountModal, PayModal, PrintModal} from "../../../features";
+import {ChooseProductModal} from "../../../widgets/workspace/ProductCatalog/ChooseProductModal/ChooseProductModal";
 
 export const Cashbox = () => {
 

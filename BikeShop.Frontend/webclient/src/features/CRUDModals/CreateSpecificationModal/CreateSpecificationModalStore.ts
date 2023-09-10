@@ -2,7 +2,7 @@ import {create} from "zustand"
 import {devtools} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {EntitiesAPI, Specification} from '../../../entities'
-import {UpdateSpecification} from '../../../entities/requests/UpdateSpecification'
+import {UpdateSpecification} from '../../../entities/DataTransferObjects/requests/UpdateSpecification'
 import {ErrorStatusTypes} from "../../../entities/enumerables/ErrorStatusTypes"
 
 interface CreateSpecificationModalStore {

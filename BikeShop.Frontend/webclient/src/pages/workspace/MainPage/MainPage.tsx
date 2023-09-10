@@ -4,14 +4,7 @@ import {BikeShopPaths} from "../../../app/routes/paths"
 import {CatalogAPI, LocalStorage, ShiftAPI, useAuth, useCurrency} from "../../../entities"
 import {useNavigate} from "react-router-dom"
 import {Button, LoaderScreen} from '../../../shared/ui'
-import {
-    CreateProductModal,
-    EditProductCardModal,
-    EmployeeSalaryModal,
-    EncashmentModal,
-    EndWorkDayModal,
-    GetPutMoneyModal
-} from '../../../features'
+
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
 import useMainPageStore from "./MainPageStore"
 import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
@@ -28,6 +21,14 @@ import {
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
 import {MainPageCashbox} from "../../../widgets/workspace/MainPageCashbox/MainPageCashbox";
 import useOutcomeActPage from "../ProductsCount/OutcomeActPage/OutcomeActPageStore";
+import {CreateProductModal} from "../../../widgets/workspace/ProductCatalog/CreateProductModal/CreateProductModal";
+import {
+    EditProductCardModal,
+    EmployeeSalaryModal,
+    EncashmentModal,
+    EndWorkDayModal,
+    GetPutMoneyModal
+} from "../../../features";
 
 type ShiftStatusTypes = 'Open' | 'Closed' | 'Pause'
 

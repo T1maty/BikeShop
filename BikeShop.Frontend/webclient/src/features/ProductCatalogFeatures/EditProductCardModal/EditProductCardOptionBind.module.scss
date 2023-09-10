@@ -5,6 +5,7 @@
   background-color: $themeColorMilk;
   padding: $defaultLargeMargin;
   border-radius: $smallBorderRadius;
+  width: 100%;
 
   .optionBind_header {
     @include flexBetween;
@@ -12,7 +13,7 @@
     color: black;
 
     .search_wrapper {
-      width: 60%;
+      width: 100%;
     }
 
     .headerOptions_search {
@@ -32,18 +33,38 @@
     margin-top: $defaultSmallMargin;
 
     .productBlock_productContent {
-      background-color: $themeColorGray;
+      background-color: $themeColorDark;
       border-radius: $smallBorderRadius;
       padding: $defaultSmallMargin;
       width: 100%;
 
       .productContent_info {
+        .pci_name {
+          display: flex;
+
+          .pci_number {
+            padding-right: 20px;
+            font-weight: bold;
+            font-size: larger;
+          }
+
+          .pci_name_name {
+            font-weight: bold;
+            font-size: larger;
+            padding-right: 10px;
+            padding-left: 10px;
+          }
+        }
+
+        display: flex;
+        justify-content: space-between;
         margin-bottom: $defaultSmallMargin;
         text-align: center;
       }
 
       .productContent_contentBlock {
         @include flexOnlyBetween;
+        width: 100%;
         gap: 10px;
 
         .productBlock_deleteBindProduct {
@@ -133,7 +154,7 @@
 
           // опции
           .content_options {
-            width: 60%; // ширина блока
+            width: 100%; // ширина блока
 
             .options_wrapperBox {
               border-radius: $smallBorderRadius;

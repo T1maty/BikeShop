@@ -1,4 +1,4 @@
-import {ProductCategory} from "../entities/ProductCategory";
+import {ProductCategory} from "../DataTransferObjects/ProductCategory";
 
 export interface ProductTagWithChildrens {
     tag: ProductCategory

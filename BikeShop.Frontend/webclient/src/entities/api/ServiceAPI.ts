@@ -1,9 +1,9 @@
 import {AxiosResponse} from 'axios'
-import {GetUsersResponse} from '../responses/GetUsersResponse'
+import {GetUsersResponse} from '../DataTransferObjects/responses/GetUsersResponse'
 import {ServiceWithData} from "../models/ServiceWithData"
 import {LocalStorage} from "../globalStore/LocalStorage"
 import {Work} from "../models/Service/Work"
-import {UpdateServiceStatus} from "../requests/UpdateServiceStatus"
+import {UpdateServiceStatus} from "../DataTransferObjects/requests/UpdateServiceStatus"
 import {$api} from "../../shared";
 
 export const ServiceAPI = {

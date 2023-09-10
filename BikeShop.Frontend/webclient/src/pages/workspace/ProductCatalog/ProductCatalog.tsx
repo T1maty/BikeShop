@@ -12,7 +12,7 @@ import useCreateStorageModal from '../../../features/CRUDModals/CreateStorageMod
 import Select from 'react-select'
 import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
 import {useProductCatalogStorage} from "./ProductCatalogStorage"
-import DisplayModal from "../../../features/ProductCatalogFeatures/DisplayModal";
+import DisplayModal from "../../../widgets/workspace/ProductCatalog/DisplayModal";
 import {ProductCategory} from "../../../entities";
 import ProductCatalogFilters
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogFilters/ProductCatalogFilters";
