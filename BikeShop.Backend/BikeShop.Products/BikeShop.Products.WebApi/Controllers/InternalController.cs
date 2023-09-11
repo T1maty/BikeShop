@@ -54,5 +54,11 @@ namespace BikeShop.Products.WebApi.Controllers
         {
            return await _internalService.productsAvailable();
         }
+
+        [HttpGet("productbycatalogkey")]
+        public async Task<Product> productByCatalogKey(string catKey)
+        {
+            return await _internalService.productByCatalogKey(catKey);
+        }
     }
 }

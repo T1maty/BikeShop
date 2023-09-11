@@ -57,7 +57,10 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
     const updateImage = (id: number, sortOrder: number, productId: number) => {
         setIsLoadingMini(true)
         ProductCardAPI.updateImage({id: id, productId: productId, sortOrder: sortOrder}).then((res) => {
-            props.setImages([...props.images, res.data])
+            props.setImages([...props.images.map(n => {
+                if (n.id === res.data.id) return res.data
+                return n
+            })])
             enqueueSnackbar('Фотография присвоена товару', {variant: 'success', autoHideDuration: 3000})
         }).catch((error) => {
             enqueueSnackbar('Ошибка', {variant: 'error', autoHideDuration: 3000})
@@ -135,7 +138,6 @@ export const EditProductCardGallery = (props: ProductCardGalleryProps) => {
                                         <div className={s.imageList_imageCount}
                                              style={{color: prodIndex === 0 ? "gold" : ''}} onDoubleClick={() => {
                                             updateImage(img.id, img.sortOrder, selectedBindedProductId)
-                                            getProductBindIndex(selectedBindedProductId)
                                         }}>
                                             №{prodIndex + 1}
                                         </div>

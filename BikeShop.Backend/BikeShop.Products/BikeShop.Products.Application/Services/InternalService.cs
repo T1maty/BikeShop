@@ -28,6 +28,11 @@ namespace BikeShop.Products.Application.Services
             return await _context.TagToCategoryBinds.ToListAsync(); 
         }
 
+        public async Task<Product> productByCatalogKey(string catKey)
+        {
+            return await _context.Products.Where(n => n.CatalogKey == catKey).FirstOrDefaultAsync();
+        }
+
         public async Task<List<ProductWithCataAndFilters>> productsAvailable()
         {
             var prodsIds = await _context.StorageProducts.Where(n=>n.Quantity > 0).Select(n => n.ProductId).ToListAsync();

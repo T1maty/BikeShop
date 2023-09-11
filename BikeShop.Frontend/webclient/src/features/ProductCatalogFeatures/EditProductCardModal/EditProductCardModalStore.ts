@@ -1,5 +1,5 @@
 import {create} from "zustand"
-import {devtools} from "zustand/middleware"
+import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {EntitiesAPI, ProductCardAPI, ProductFullData} from '../../../entities'
 import {ProductOptionsWithVariants} from "./models/ProductOptionsWithVariants"
@@ -17,8 +17,13 @@ interface EditProductCardModalStore {
     errorStatus: ErrorStatusTypes
 
     currentProduct: ProductFullData
+    setOptions: (v: ProductOptionVariantBind[]) => void
+    setStatus: (v: string) => void
+    setDescription: (v: string) => void
+    removeProductBind: (id: number) => void
+    addProductBind: (p: ProductFullData) => void
     getProductCard: (productId: number) => void
-    updateProductCard: (data: UpdateProductCardFormModel) => void
+    updateProductCard: () => void
 
     allOptions: ProductOptionsWithVariants[]
     getAllOptions: () => void
@@ -29,10 +34,51 @@ interface EditProductCardModalStore {
     getProductBindIndex: (id: number) => number
     selectedBindedProductId: number
     setSelectedBindedProductId: (v: number) => void
-    
+
 }
 
-const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/devtools(immer((set, get) => ({
+const useEditProductCardModal = create<EditProductCardModalStore>()(persist(devtools(immer((set, get) => ({
+    setOptions: (v) => {
+        set(state => {
+            state.currentProduct.productOptions = v
+        })
+    },
+    removeProductBind: (v) => {
+        set(state => {
+            state.currentProduct.bindedProducts = state.currentProduct.bindedProducts.filter(n => n.id != v)
+        })
+        set(state => {
+            state.currentProduct.productImages = state.currentProduct.productImages.filter(n => n.productId != v)
+        })
+        set(state => {
+            state.currentProduct.productOptions = state.currentProduct.productOptions.filter(n => n.productId != v)
+        })
+    },
+    setDescription: (v) => {
+        set(state => {
+            state.currentProduct.productCard.description = v
+        })
+    },
+    setStatus: (v) => {
+        set(state => {
+            state.currentProduct.product.checkStatus = v
+        })
+    },
+    addProductBind: (p) => {
+        set({
+            currentProduct: {
+                ...get().currentProduct,
+                bindedProducts: [...get().currentProduct.bindedProducts, p.product]
+            }
+        })
+        set(state => {
+            state.currentProduct.productOptions.push(...p.productOptions)
+        })
+        set(state => {
+            state.currentProduct.productImages.push(...p.productImages)
+        })
+
+    },
     setSelectedBindedProductId: (v) => set({selectedBindedProductId: v}),
     selectedBindedProductId: 0,
     getProductBindIndex: (id) => {
@@ -97,7 +143,15 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             set({errorStatus: 'default'})
         })
     },
-    updateProductCard: (data) => {
+    updateProductCard: () => {
+        let buf = get().currentProduct
+        let data: UpdateProductCardFormModel = {
+            id: buf.product.id,
+            checkStatus: buf.product.checkStatus,
+            productCard: {description: buf.productCard.description, shortDescription: buf.productCard.descriptionShort},
+            productOptions: buf.productOptions,
+            bindedProducts: buf.bindedProducts
+        }
         set({isLoading: true})
         ProductCardAPI.updateProductCard(data).then((res: any) => {
             set({isLoading: false})
@@ -125,9 +179,9 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(/*persist(*/
             set({isLoading: false})
         })
     },
-})))/*, {
+}))), {
     name: "editProductCardModal",
     version: 1
-})*/);
+}));
 
 export default useEditProductCardModal;

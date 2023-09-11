@@ -1,56 +1,59 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import s from "./EditProductCardDescriptionFull.module.scss"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import draftToHtml from 'draftjs-to-html'
 import {Editor} from "react-draft-wysiwyg"
-import {convertToRaw, EditorState} from "draft-js"
-import {Controller, UseFormReturn} from "react-hook-form"
+import useEditProductCardModal from "./EditProductCardModalStore";
+import htmlToDraft from "html-to-draftjs";
+import draftToHtml from "draftjs-to-html";
+import {ContentState, convertToRaw, EditorState} from "draft-js"
 
-interface ControlledProps {
-    name: string
-    control: UseFormReturn<any>
-    editorState: EditorState
-    setEditorState: (value: EditorState) => void
-}
 
-export const EditProductCardDescriptionFull = (props: ControlledProps) => {
+export const EditProductCardDescriptionFull = () => {
 
-    const {editorState, setEditorState} = props
+    const setDescription = useEditProductCardModal(s => s.setDescription)
+    const currentProduct = useEditProductCardModal(s => s.currentProduct)
+    const open = useEditProductCardModal(s => s.openEditProductCardModal)
 
-    const onChangeEditorHandler = (editorState: any, field: any) => {
-        setEditorState(editorState)
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    const [l, sl] = useState(true)
+
+
+    useEffect(() => {
+        if (l) return
         const result = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        field.onChange({...field.value, description: result});
-    }
+        setDescription(result);
+    }, [editorState])
+
+    useEffect(() => {
+        if (open && currentProduct.productCard !== undefined) {
+            let contentBlock = htmlToDraft(currentProduct.productCard.description)
+            if (contentBlock) {
+                const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                const editorState = EditorState.createWithContent(contentState);
+                setEditorState(editorState)
+            }
+            sl(false)
+        }
+    }, [open])
 
     return (
-        <Controller
-            name={props.name}
-            control={props.control.control}
-            render={({field}: any) =>
-
-                <div className={s.fullEditor}>
-                    <div className={s.descriptionEditor_title}>
-                        Детальное описание товара:
-                    </div>
-                    <div className={s.descriptionEditor_editorTextarea}>
-                        <Editor
-                            editorState={editorState}
-                            onEditorStateChange={(editorState) => {
-                                onChangeEditorHandler(editorState, field)
-                            }}
-                            placeholder={'Введите текст...'}
-                            // wrapperClassName={s.wrapperClassName}
-                            wrapperClassName="wrapperClassName"
-                            // toolbarClassName="toolbarClassName"
-                            toolbarClassName={s.editor_toolbar}
-                            // editorClassName="editorClassName"
-                            editorClassName={s.editorClassName}
-                        />
-                    </div>
-                </div>
-
-            }
-        />
+        <div className={s.fullEditor}>
+            <div className={s.descriptionEditor_title}>
+                Детальное описание товара:
+            </div>
+            <div className={s.descriptionEditor_editorTextarea}>
+                <Editor
+                    editorState={editorState}
+                    onEditorStateChange={setEditorState}
+                    placeholder={'Введите текст...'}
+                    // wrapperClassName={s.wrapperClassName}
+                    wrapperClassName="wrapperClassName"
+                    // toolbarClassName="toolbarClassName"
+                    toolbarClassName={s.editor_toolbar}
+                    // editorClassName="editorClassName"
+                    editorClassName={s.editorClassName}
+                />
+            </div>
+        </div>
     )
 }

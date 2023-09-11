@@ -17,5 +17,7 @@ namespace BikeShop.Products.Application.Interfaces
         public Task ProductsByCat(string Cat);
         public Task<ProductWithCataAndFilters> SetProductTags(int prodId, int catId, List<int> VariantIds);
         public Task<List<ProductWithCataAndFilters>> productsAvailable();
+        public Task<Product> productByCatalogKey(string catKey);
+
     }
 }
