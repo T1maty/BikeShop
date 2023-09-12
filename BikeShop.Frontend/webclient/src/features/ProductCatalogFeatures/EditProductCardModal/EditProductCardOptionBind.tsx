@@ -85,32 +85,26 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
         setOptions([...value, variant])
     }
-    const onChangeOptionsVariants = (bindedProduct: Product, newValue: any) => {
-        let r = newValue as ProductOptionVariant
-        let base = currentProduct.productOptions
+    const onChangeOptionsVariants = (bindedProduct: Product, r: ProductOptionVariant) => {
+        let variant: ProductOptionVariantBind =
+            {
+                productId: bindedProduct.id,
+                id: 0,
+                name: r.name,
+                optionId: r.optionId,
+                optionVariantId: r.id,
+                optionName: r.optionName,
+                sortOrder: 0,
+                enabled: true,
+                createdAt: Date.now().toString(),
+                updatedAt: Date.now().toString(),
+            }
 
-        let variant: ProductOptionVariantBind
+        setOptions(currentProduct.productOptions.map(n => {
+            if (n.productId === bindedProduct.id && n.productId === r.optionId) return variant
+            return n
+        }))
 
-        variant = {
-            productId: bindedProduct.id,
-            id: 0,
-            name: r.name,
-            optionId: r.optionId,
-            optionVariantId: r.id,
-            optionName: r.optionName,
-            sortOrder: 0,
-            enabled: true,
-            createdAt: Date.now().toString(),
-            updatedAt: Date.now().toString(),
-        }
-
-        let target = base.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
-            .filter((n: ProductOptionVariantBind) => n.optionId === newValue?.optionId)[0]
-
-        let ind = base.indexOf(target)
-        base[ind] = variant
-        setOptions(base)
-        console.log(variant)
     }
     const addProductBind = (product: Product) => {
         if (Enumerable.from(currentProduct.bindedProducts).select(n => n.id).contains(product.id)) {
@@ -258,10 +252,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                 {
                                                                     currentProduct.productOptions.filter((n: ProductOptionVariantBind) => n.productId === bindedProduct.id)
                                                                         .map((variant: ProductOptionVariantBind, index: number) => {
-                                                                            let options = (allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
-                                                                                .filter(n => !Enumerable.from(currentProduct.productOptions)
-                                                                                    .select(m => m.optionVariantId)
-                                                                                    .contains(n.id)) as ProductOptionVariantBind[])
                                                                             return (
                                                                                 <div
                                                                                     className={s.options_listItem}
@@ -279,9 +269,12 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                             className={s.options_search}
                                                                                             // classNamePrefix={'react-select'}
                                                                                             placeholder={'Варианты'}
-                                                                                            options={options}
+                                                                                            options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
+                                                                                                .filter(n => !Enumerable.from(currentProduct.productOptions)
+                                                                                                    .select(m => m.optionVariantId)
+                                                                                                    .contains(n.id)) as ProductOptionVariantBind[])}
                                                                                             onChange={(newValue) => {
-                                                                                                onChangeOptionsVariants(bindedProduct, newValue)
+                                                                                                onChangeOptionsVariants(bindedProduct, newValue as ProductOptionVariantBind)
                                                                                                 //setEnBut(enBut.filter(n => n.id != variant.id))
                                                                                             }}
                                                                                             onInputChange={(v) => {

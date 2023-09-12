@@ -39,8 +39,8 @@ interface EditProductCardModalStore {
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(persist(devtools(immer((set, get) => ({
     setOptions: (v) => {
-        set(state => {
-            state.currentProduct.productOptions = v
+        set({
+            currentProduct: {...get().currentProduct, productOptions: v}
         })
     },
     removeProductBind: (v) => {
