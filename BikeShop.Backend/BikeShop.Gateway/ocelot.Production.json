@@ -1875,6 +1875,69 @@
       ],
       "SwaggerKey": "shop"
     },
+	
+	{
+      "UpstreamPathTemplate": "/api/schedule/getbyshop",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/schedule/getbyshop",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+	{
+      "UpstreamPathTemplate": "/api/schedule/addshift",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/schedule/addshift",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+	{
+      "UpstreamPathTemplate": "/api/schedule/addholyday",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/schedule/addholyday",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+	{
+      "UpstreamPathTemplate": "/api/schedule/removeitem",
+      "UpstreamHttpMethod": [
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/schedule/removeitem",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.shop",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "shop"
+    },
+	
+	
     {
       "UpstreamPathTemplate": "/api/shop/create",
       "UpstreamHttpMethod": [
