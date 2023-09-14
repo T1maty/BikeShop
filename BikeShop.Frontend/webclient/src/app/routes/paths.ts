@@ -24,6 +24,7 @@ export const BikeShopPaths = {
         ADMIN: '/workspace/admin',
         CRM: '/workspace/crm',
         ORDERS: '/workspace/orders',
+        SCHEDULE: '/workspace/schedule',
 
         ARRIVAL_OF_PRODUCTS: '/workspace/arrival-of-products',
         OUTCOME_ACT: '/workspace/outcome',

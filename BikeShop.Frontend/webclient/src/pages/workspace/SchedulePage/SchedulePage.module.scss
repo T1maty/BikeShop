@@ -1,0 +1,61 @@
+@import '../../../app/styles/variables/mixins';
+@import '../../../app/styles/variables/variables';
+
+.wrapper {
+  @include wrapperMainBlock;
+  height: 100%;
+  overflow: hidden;
+
+  .select {
+    color: black;
+    padding: 5px;
+  }
+
+  .calendar {
+    display: flex;
+    flex-direction: row;
+    border: 1px white solid;
+    border-radius: 5px;
+    padding: 5px;
+    overflow: hidden;
+
+    .main_column {
+      padding: 5px;
+      border: 1px white solid;
+      border-radius: 5px;
+      padding-top: 40px;
+      display: flex;
+      flex-direction: column;
+
+      .user {
+        padding: 5px;
+        border: 1px white solid;
+        border-radius: 5px;
+        margin-bottom: 25px;
+      }
+    }
+
+    .columns {
+      display: flex;
+      flex-direction: row;
+      overflow: auto;
+
+      .column {
+        margin: 5px;
+        padding: 5px;
+        border: 1px white solid;
+        border-radius: 5px;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+
+        .cell {
+          margin: 5px;
+          padding: 5px;
+          border: 1px white solid;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}

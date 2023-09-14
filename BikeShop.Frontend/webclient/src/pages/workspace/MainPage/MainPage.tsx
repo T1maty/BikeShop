@@ -6,15 +6,12 @@ import {useNavigate} from "react-router-dom"
 import {Button, LoaderScreen} from '../../../shared/ui'
 
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore"
-import useMainPageStore from "./MainPageStore"
-import useEndWorkDayModal from "../../../features/EndWorkDayModal/EndWorkDayModalStore"
 import useEncashmentModal from "../../../features/CashboxModals/EncashmentModal/EncashmentModalStore"
 import useGetPutMoneyModal from "../../../features/CashboxModals/GetPutMoneyModal/GetPutMoneyModalStore"
 import {useEmployee} from "../../../entities/globalStore/EmployeeStore"
 import ShiftTime from "./ShiftTime"
 import useCashboxStore from "../Cashbox/CashboxStore"
 import {useSnackbar} from "notistack"
-import useEmployeeSalaryModal from '../../../features/EmployeeSalaryModal/EmployeeSalaryModalStore'
 import useSupplyInvoice from "../ProductsCount/SupplyInvoice/models/SupplyInvoiceStore";
 import {
     BarcodeScannerListenerProvider
@@ -29,8 +26,7 @@ import {
     EndWorkDayModal,
     GetPutMoneyModal
 } from "../../../features";
-
-type ShiftStatusTypes = 'Open' | 'Closed' | 'Pause'
+import SchedulePage from "../SchedulePage/SchedulePage";
 
 export const MainPage = () => {
 
@@ -42,17 +38,10 @@ export const MainPage = () => {
 
     const isLoading = useChooseClientModal(s => s.isLoading)
     const setIsLoading = useChooseClientModal(s => s.setIsLoading)
-    const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const clearOutcome = useOutcomeActPage(s => s.clear)
-
-    const setIsClientChosen = useMainPageStore(s => s.setIsClientChosen)
-    const user = useMainPageStore(s => s.user)
-    const setUser = useMainPageStore(s => s.setUser)
 
     const setOpenEncashmentModal = useEncashmentModal(s => s.setOpenEncashmentModal)
     const setOpenGetPutMoneyModal = useGetPutMoneyModal(s => s.setOpenGetPutMoneyModal)
-    const setOpenEndWorkDayModal = useEndWorkDayModal(s => s.setOpenEndWorkDayModal)
-    const setOpenEmployeeSalaryModal = useEmployeeSalaryModal(s => s.setOpenEmployeeSalaryModal)
 
     const userShiftStatus = useEmployee(s => s.shiftStatus)
     const getUserShiftStatus = useEmployee(s => s.getUserShiftStatus)
@@ -60,18 +49,11 @@ export const MainPage = () => {
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
 
-    const sum = useCashboxStore(s => s.sum)
     const setSum = useCashboxStore(s => s.setSum)
     const bill = useCashboxStore(s => s.bill)
-    const setData = useCashboxStore(s => s.setProducts)
     const addProduct = useCashboxStore(s => s.addProduct)
-    const paymentHandler = useCashboxStore(s => s.paymentHandler)
-
-    const isLoadingCashbox = useCashboxStore(s => s.isLoading)
-
 
     const clearCurrentSupplyInvoice = useSupplyInvoice(s => s.clearCurrent)
-
 
     const [tasks, setTasks] = useState([
         {id: 1, task: 'task 01'},
@@ -168,7 +150,7 @@ export const MainPage = () => {
 
                     <CreateProductModal/>
                     <EditProductCardModal/>
-
+                    <SchedulePage/>
                     <EncashmentModal/>
                     <GetPutMoneyModal/>
                     <EndWorkDayModal/>
@@ -188,11 +170,6 @@ export const MainPage = () => {
                                 }}>
                                     Касса
                                 </Button>
-                                {/*<Button onClick={() => {*/}
-                                {/*    setOpenEmployeeSalaryModal(true)*/}
-                                {/*}}>*/}
-                                {/*    Новый заказ*/}
-                                {/*</Button>*/}
                                 <Button onClick={() => {
                                     setOpenGetPutMoneyModal(true)
                                 }}>
@@ -202,6 +179,11 @@ export const MainPage = () => {
                                     setOpenEncashmentModal(true)
                                 }}>
                                     Инкассация
+                                </Button>
+                                <Button onClick={() => {
+                                    navigate(BikeShopPaths.WORKSPACE.SCHEDULE)
+                                }}>
+                                    Расписание
                                 </Button>
                             </div>
 

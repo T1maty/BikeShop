@@ -2,6 +2,7 @@ import {$api} from "../../shared"
 import {AxiosResponse} from "axios"
 import {ProductFullData} from "../models/ProductFullData"
 import {ProductCategory} from "../DataTransferObjects/ProductCategory";
+import {Shop} from "../models/Auth/Shop";
 
 export const ShopAPI = {
     getTags(): Promise<AxiosResponse<ProductCategory[]>> {
@@ -22,6 +23,11 @@ export const ShopAPI = {
     getCatalogProductsByTag(tags: string[]): Promise<AxiosResponse<ProductFullData[]>> {
         return (
             $api.post<ProductFullData[]>(`/public/getproducts`, tags)
+        )
+    },
+    getAll(): Promise<AxiosResponse<Shop[]>> {
+        return (
+            $api.get<Shop[]>(`/shop/getall`)
         )
     },
 }

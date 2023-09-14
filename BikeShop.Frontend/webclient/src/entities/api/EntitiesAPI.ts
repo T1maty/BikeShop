@@ -5,8 +5,6 @@ import {GetQuantityUnitResponse} from "../DataTransferObjects/responses/Quantity
 import {CreateQuantityUnit, UpdateQuantityUnit} from "../DataTransferObjects/requests/CreateQuantityUnit"
 import {CreateStorageResponse} from "../DataTransferObjects/responses/StorageResponse"
 import {CreateStorage, UpdateStorage} from "../DataTransferObjects/requests/CreateStorage"
-import {UpdateSpecification} from '../DataTransferObjects/requests/UpdateSpecification'
-import {ProductSpecification} from "../DataTransferObjects/ProductSpecification"
 
 import {
     ProductOptionsWithVariants
@@ -93,24 +91,6 @@ export const EntitiesAPI = {
         getCurrencyHistory(currencyID: number): any {
             return (
                 $api.get<Currency>(`/currency/gethistory?currencyID=${currencyID}`)
-            )
-        },
-    },
-
-    Specification: {
-        getSpecifications(): Promise<AxiosResponse<ProductSpecification[]>> {
-            return (
-                $api.get<ProductSpecification[]>('/productcard/getallspecifications')
-            )
-        },
-        addNewSpecification(name: string): Promise<AxiosResponse<ProductSpecification, any>> {
-            return (
-                $api.post<{ name: string }, any>(`/productcard/createspecification?name=${name}`)
-            )
-        },
-        updateSpecification(updateData: UpdateSpecification): any {
-            return (
-                $api.put<UpdateSpecification>('/productcard/updatespecification', updateData)
             )
         },
     },

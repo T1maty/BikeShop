@@ -54,5 +54,10 @@ export const RoleAPI = {
             $api.put<UserWithRoles>(`/role/setroletouser?Role=${role}&UserId=${userId}`)
         )
     },
+    getEmpoyeelByShop(shopId: number): Promise<AxiosResponse<UserWithRoles[]>> {
+        return (
+            $api.get<UserWithRoles[]>(`/user/getemployees?shopid=${shopId}`)
+        )
+    },
 }
 

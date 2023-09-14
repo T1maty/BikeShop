@@ -46,7 +46,6 @@ export {CreateShopModal} from './CRUDModals/CreateShopModal/CreateShopModal'
 export {CreateStorageModal} from './CRUDModals/CreateStorageModal/CreateStorageModal'
 export {CreateCurrencyModal} from './CRUDModals/CreateCurrencyModal/CreateCurrencyModal'
 export {CreateQuantityUnitModal} from './CRUDModals/CreateQuantityUnitModal/CreateQuantityUnitModal'
-export {CreateSpecificationModal} from './CRUDModals/CreateSpecificationModal/CreateSpecificationModal'
 export {CreateOptionModal} from './CRUDModals/CreateOptionModal/CreateOptionModal'
 
 

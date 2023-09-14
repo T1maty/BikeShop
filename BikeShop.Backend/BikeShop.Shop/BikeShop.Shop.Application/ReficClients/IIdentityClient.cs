@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using BikeShop.Shop.Domain.DTO.RefitModels;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace BikeShop.Shop.Application.ReficClients
     {
         [Post("/user/changeshop")]
         public Task ChangeShop(Guid userId, int shopId);
+
+        [Get("/user/getById")]
+        public Task<User> GetById(Guid id);
     }
 }
