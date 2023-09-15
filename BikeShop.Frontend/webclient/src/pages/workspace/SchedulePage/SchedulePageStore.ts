@@ -14,9 +14,23 @@ interface p {
     getUsers: (shopId: number) => void
     users: User[]
     getShops: () => void
+
+    hoveredItem: ScheduleItem | null
+    setHoveredItem: (v: ScheduleItem | null) => void
+    deleteItem: (itemId: number) => void
 }
 
 const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
+    setHoveredItem: (v) => set({hoveredItem: v}),
+    hoveredItem: null,
+    deleteItem: (itemId) => {
+        ScheduleAPI.removeItem(LocalStorage.userId()!, itemId).then(r => {
+            set(state => {
+                state.scheduleItems = state.scheduleItems.filter(n => n.id != itemId)
+            })
+        })
+    },
+
     scheduleItems: [],
     getScheduleItems: () => {
         ScheduleAPI.getByShop(LocalStorage.shopId()!).then(r => {

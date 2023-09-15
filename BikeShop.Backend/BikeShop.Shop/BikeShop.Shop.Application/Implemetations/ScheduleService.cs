@@ -96,7 +96,7 @@ namespace BikeShop.Shop.Application.Implemetations
         {
             var item = await _context.ScheduleItems.FindAsync(ItemId);
             if (item == null) throw ScheduleErrors.ScheduleItemNotFount;
-            if (item.TimeStart > DateTime.Now) throw ScheduleErrors.RemovingOfStartedShift;
+            if (item.TimeStart < DateTime.Now) throw ScheduleErrors.RemovingOfStartedShift;
             
             var targerUser = item.TargetUser;
             var userFIO = FIOFromUser(await _identityClient.GetById(User));
