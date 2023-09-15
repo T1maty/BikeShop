@@ -8,6 +8,7 @@ namespace BikeShop.Shop.Domain.DTO.Schedule
 {
     public class CreateHolydayItemDTO
     {
+        public int ShopId { get; set; }
         public Guid User { get; set; }
         public Guid TargetUser { get; set; }
         public DateTime Date { get; set; }

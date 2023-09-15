@@ -23,5 +23,6 @@ namespace BikeShop.Shop.Domain.Entities
         public DateTime TimeFinishActual { get; set; } = new DateTime();
 
         public int ItemId { get; set; }
+        public int ShopId { get; set; }
     }
 }

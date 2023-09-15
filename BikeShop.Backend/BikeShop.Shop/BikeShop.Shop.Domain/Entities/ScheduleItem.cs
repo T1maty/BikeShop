@@ -18,6 +18,7 @@ namespace BikeShop.Shop.Domain.Entities
         public string CreatedUserFIO { get; set; }
         public Guid UpdatedUser { get; set; }
         public string UpdatedUserFIO { get; set; }
+        public int ShopId { get; set; }
 
     }
 }

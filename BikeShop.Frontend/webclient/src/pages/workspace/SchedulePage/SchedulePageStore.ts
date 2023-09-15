@@ -1,9 +1,13 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {RoleAPI, Shop, ShopAPI, User} from "../../../entities";
+import {LocalStorage, RoleAPI, Shop, ShopAPI, User} from "../../../entities";
+import {ScheduleItem} from "../../../entities/entities/Schedule/ScheduleItem";
+import {ScheduleAPI} from "../../../entities/api/Schedule/ScheduleAPI";
 
 interface p {
+    scheduleItems: ScheduleItem[]
+    getScheduleItems: () => void
     shops: Shop[]
     selectedShop: Shop | null
     setSelectedShop: (v: Shop) => void
@@ -13,6 +17,13 @@ interface p {
 }
 
 const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
+    scheduleItems: [],
+    getScheduleItems: () => {
+        ScheduleAPI.getByShop(LocalStorage.shopId()!).then(r => {
+            console.log(r.data.scheduleItems)
+            set({scheduleItems: r.data.scheduleItems})
+        })
+    },
     getUsers: (v) => {
         RoleAPI.getEmpoyeelByShop(v).then(r => {
             set({users: r.data.map(g => g.user)})

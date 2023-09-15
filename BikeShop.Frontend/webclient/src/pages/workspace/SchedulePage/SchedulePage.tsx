@@ -10,9 +10,12 @@ const SchedulePage = () => {
     const shops = useSchedule(s => s.shops)
     const setSelectedShop = useSchedule(s => s.setSelectedShop)
     const users = useSchedule(s => s.users)
+    const getScheduleItems = useSchedule(s => s.getScheduleItems)
+    const scheduleItems = useSchedule(s => s.scheduleItems)
 
     useEffect(() => {
         getShops()
+        getScheduleItems()
     }, [])
 
     // Получение текущей даты
@@ -20,7 +23,7 @@ const SchedulePage = () => {
 
     // Вычисление начальной даты (текущая дата минус 15 дней)
     const startDate = new Date(currentDate);
-    startDate.setDate(currentDate.getDate() - 15);
+    startDate.setDate(currentDate.getDate() - 3);
 
     // Создание массива из 30 дней, начиная с startDate
     const days = Array.from({length: 30}).map((_, i) => {
@@ -49,10 +52,13 @@ const SchedulePage = () => {
                 <div className={s.columns}>
                     {days.map((day, index) => (
                         <div
-                            key={index} className={s.column} style={{backgroundColor: index === 15 ? "#0a66b7" : ""}}
+                            key={index} className={s.column} style={{backgroundColor: index === 3 ? "#0a66b7" : ""}}
                         >
                             {day.toLocaleDateString()}
-                            {users.map(g => (<div className={s.cell}>10:00 - 18:00</div>))}
+                            {users.map(g => {
+                                let data = scheduleItems.find(n => n.timeStart > day)
+                                return (<div className={s.cell}></div>)
+                            })}
                         </div>
                     ))}
                 </div>

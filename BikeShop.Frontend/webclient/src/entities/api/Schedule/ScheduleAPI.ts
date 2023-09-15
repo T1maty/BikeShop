@@ -7,9 +7,9 @@ import {CreateHolydayItem} from "../../models/Schedule/CreateHolydayItem";
 import {ScheduleHistory} from "../../entities/Schedule/ScheduleHistory";
 
 export const ScheduleAPI = {
-    getByShop(shopId: number, start?: string, finish?: string): Promise<AxiosResponse<ScheduleDataResponse>> {
+    getByShop(shopId: string, start?: string, finish?: string): Promise<AxiosResponse<ScheduleDataResponse>> {
         return (
-            $api.get<ScheduleDataResponse>(`/schedule/getbyshop?shopId=${shopId}&Start=${start}&Finish=${finish}`)
+            $api.get<ScheduleDataResponse>(`/schedule/getbyshop?shopId=${shopId}&Start=${start ? start : ""}&Finish=${finish ? finish : ""}`)
         )
     },
     addShift(data: CreateScheduleItem): Promise<AxiosResponse<ItemAndHistoryResponse>> {

@@ -1,13 +1,13 @@
 export interface ScheduleItem {
     id: number
-    createdAt: string
-    updatedAt: string
+    createdAt: Date
+    updatedAt: Date
     enabled: boolean
 
     role: string;
     isHolyday: boolean;
-    timeStart: string;
-    timeFinish: string;
+    timeStart: Date;
+    timeFinish: Date;
     targetUser: string;
     targetUserFIO: string;
     createdUser: string;
