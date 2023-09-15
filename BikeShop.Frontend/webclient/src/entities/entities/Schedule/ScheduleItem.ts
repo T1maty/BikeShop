@@ -14,4 +14,5 @@ export interface ScheduleItem {
     createdUserFIO: string;
     updatedUser: string;
     updatedUserFIO: string;
+    shopId: number
 }

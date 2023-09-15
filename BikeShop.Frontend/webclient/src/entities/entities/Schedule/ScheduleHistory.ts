@@ -16,4 +16,5 @@ export interface ScheduleHistory {
     timeStartActual: string;
     timeFinishActual: string;
     itemId: number;
+    shopId: number
 }
