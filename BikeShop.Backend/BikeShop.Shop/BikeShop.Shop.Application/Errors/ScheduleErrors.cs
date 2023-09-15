@@ -47,5 +47,18 @@ namespace BikeShop.Shop.Application.Errors
                 };
             }
         }
+
+        public static BaseError ShiftAlreadyExist
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "timeStart",
+                    Error = "ShiftAlreadyExist",
+                    ErrorDescription = "On this date and shop shift already exist."
+                };
+            }
+        }
     }
 }

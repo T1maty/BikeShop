@@ -53,43 +53,6 @@ namespace BikeShop.Products.Application.Services
             return await _context.Products.Where(n=>allIds.Contains(n.CategoryId)).Take(Take).ToListAsync();
         }
 
-        private static List<int> GetTagListFromString(string tagsArrayStr)
-        {
-            // Список всех айди тэгов в виде чисел
-            var tagList = new List<int>();
-            // для перебора
-
-            // Тэги будут переданы через запятую, сплитю по запятой
-            foreach (var tagStr in tagsArrayStr.Split("-"))
-            {
-                // Пытаюсь спарсить строку тэга в число
-                var isNumber = int.TryParse(tagStr, out var currentTag);
-                // Если не число - 400
-                if (!isNumber)
-                    throw new InvalidFormatException($"Get products by tags error. Given invalid tags ({tagsArrayStr})")
-                    {
-                        Error = "tags_invalid",
-                        ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5",
-                        ReasonField = "tagsIds"
-                    };
-
-                // Если один из тэгов число - добавляю его в результативный лист
-                tagList.Add(currentTag);
-            }
-
-            // Если 0 тэгов перенесено - ошибка
-            if (tagList.Count == 0)
-                throw new InvalidFormatException($"Get products by tags error. Given invalid tags ({tagsArrayStr})")
-                {
-                    Error = "tags_invalid",
-                    ErrorDescription = "Invalid tags format. Correct example: getbytags/1-2-3-4-5",
-                    ReasonField = "tagsIds"
-                };
-
-            // Если все ок - возвращаю лист
-            return tagList;
-        }
-
         public async Task<ProductImg> AddImageToProduct(int productId, IFormFile imageFile)
         {
             var img = new ProductImg() { ProductId = productId, SortOrder = 0 };

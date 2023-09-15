@@ -27,6 +27,8 @@ namespace BikeShop.Shop.Application.Implemetations
 
         public async Task<ResponseScheduleWithHistory> CreateHolydayItem(CreateHolydayItemDTO dto)
         {
+            if ((await _context.ScheduleItems.Where(n => n.ShopId == dto.ShopId).Where(n => n.TimeStart > dto.Date).Where(n => n.TimeFinish < dto.Date.AddDays(1)).ToListAsync()).Count > 0) throw ScheduleErrors.ShiftAlreadyExist;
+
             var date = dto.Date.Date;
             
             var userFIO = FIOFromUser(await _identityClient.GetById(dto.User));
@@ -47,6 +49,8 @@ namespace BikeShop.Shop.Application.Implemetations
 
         public async Task<ResponseScheduleWithHistory> CreateScheduleItem(CreateScheduleItemDTO dto)
         {
+            if ((await _context.ScheduleItems.Where(n => n.ShopId == dto.ShopId).Where(n => n.TimeStart > dto.Start.Date).Where(n => n.TimeFinish < dto.Finish.Date.AddDays(1)).ToListAsync()).Count > 0) throw ScheduleErrors.ShiftAlreadyExist;
+
             var userFIO = FIOFromUser(await _identityClient.GetById(dto.User));
             var userTargetFIO = FIOFromUser(await _identityClient.GetById(dto.User));
             var ent = new ScheduleItem

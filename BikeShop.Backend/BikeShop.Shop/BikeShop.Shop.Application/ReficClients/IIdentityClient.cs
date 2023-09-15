@@ -13,7 +13,7 @@ namespace BikeShop.Shop.Application.ReficClients
         [Post("/user/changeshop")]
         public Task ChangeShop(Guid userId, int shopId);
 
-        [Get("/user/getById")]
+        [Get("/user/getbyid")]
         public Task<User> GetById(Guid id);
     }
 }

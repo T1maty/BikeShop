@@ -57,7 +57,7 @@ const SchedulePage = () => {
                             {day.toLocaleDateString()}
                             {users.map(g => {
                                 let data = scheduleItems.find(n => n.timeStart > day)
-                                return (<div className={s.cell}></div>)
+                                return (<div className={s.cell}>{data?.timeStart.toLocaleDateString()}</div>)
                             })}
                         </div>
                     ))}
