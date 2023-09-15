@@ -146,10 +146,10 @@ namespace Bikeshop.Shop.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("TargerUser")
+                    b.Property<Guid>("TargetUser")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("TargerUserFIO")
+                    b.Property<string>("TargetUserFIO")
                         .IsRequired()
                         .HasColumnType("longtext");
 

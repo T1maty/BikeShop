@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bikeshop.Shop.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230914134548_Schedule")]
+    [Migration("20230915070358_Schedule")]
     partial class Schedule
     {
         /// <inheritdoc />
@@ -149,10 +149,10 @@ namespace Bikeshop.Shop.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("TargerUser")
+                    b.Property<Guid>("TargetUser")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("TargerUserFIO")
+                    b.Property<string>("TargetUserFIO")
                         .IsRequired()
                         .HasColumnType("longtext");
 

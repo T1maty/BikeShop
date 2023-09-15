@@ -12,8 +12,8 @@ namespace BikeShop.Shop.Domain.Entities
         public bool IsHolyday { get; set; }
         public DateTime TimeStart { get; set; }
         public DateTime TimeFinish { get; set; }
-        public Guid TargerUser { get; set; }
-        public string TargerUserFIO { get; set; }
+        public Guid TargetUser { get; set; }
+        public string TargetUserFIO { get; set; }
         public Guid CreatedUser { get; set; }
         public string CreatedUserFIO { get; set; }
         public Guid UpdatedUser { get; set; }

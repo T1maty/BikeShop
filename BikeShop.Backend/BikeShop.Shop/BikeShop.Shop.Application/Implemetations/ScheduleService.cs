@@ -31,7 +31,7 @@ namespace BikeShop.Shop.Application.Implemetations
             
             var userFIO = FIOFromUser(await _identityClient.GetById(dto.User));
             var userTargetFIO = FIOFromUser(await _identityClient.GetById(dto.User));
-            var ent = new ScheduleItem { IsHolyday = true, CreatedUser = dto.User, CreatedUserFIO = userFIO, Role = "", TargerUser = dto.TargetUser, TargerUserFIO = userTargetFIO, 
+            var ent = new ScheduleItem { IsHolyday = true, CreatedUser = dto.User, CreatedUserFIO = userFIO, Role = "", TargetUser = dto.TargetUser, TargetUserFIO = userTargetFIO, 
                 TimeStart = date, TimeFinish = date, UpdatedUser = dto.User, UpdatedUserFIO = userFIO
             };
 
@@ -42,7 +42,7 @@ namespace BikeShop.Shop.Application.Implemetations
             await _context.ScheduleHistories.AddAsync(hist);
             await _context.SaveChangesAsync(new CancellationToken());
             
-            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleIdem = ent};
+            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleItem = ent};
         }
 
         public async Task<ResponseScheduleWithHistory> CreateScheduleItem(CreateScheduleItemDTO dto)
@@ -55,8 +55,8 @@ namespace BikeShop.Shop.Application.Implemetations
                 CreatedUser = dto.User,
                 CreatedUserFIO = userFIO,
                 Role = dto.Role,
-                TargerUser = dto.TargetUser,
-                TargerUserFIO = userTargetFIO,
+                TargetUser = dto.TargetUser,
+                TargetUserFIO = userTargetFIO,
                 TimeStart = dto.Start,
                 TimeFinish = dto.Finish,
                 UpdatedUser = dto.User,
@@ -70,7 +70,7 @@ namespace BikeShop.Shop.Application.Implemetations
             await _context.ScheduleHistories.AddAsync(hist);
             await _context.SaveChangesAsync(new CancellationToken());
 
-            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleIdem = ent };
+            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleItem = ent };
         }
 
         public async Task<ScheduleDTO> GetByShop(int shopId, DateTime? Start, DateTime? Finish)
@@ -93,13 +93,13 @@ namespace BikeShop.Shop.Application.Implemetations
             if (item == null) throw ScheduleErrors.ScheduleItemNotFount;
             if (item.TimeStart > DateTime.Now) throw ScheduleErrors.RemovingOfStartedShift;
             
-            var targerUser = item.TargerUser;
+            var targerUser = item.TargetUser;
             var userFIO = FIOFromUser(await _identityClient.GetById(User));
             var userTargetFIO = FIOFromUser(await _identityClient.GetById(targerUser));
 
             _context.ScheduleItems.Remove(item);
 
-            var hist = new ScheduleHistory { Action = item.IsHolyday ? ScheduleHistoryAction.RemoveHolyday.ToString() : ScheduleHistoryAction.RemoveShift.ToString(), ActionTargetUser = item.TargerUser, ActionTargetUserFIO = userTargetFIO, ActionUser = User, ActionUserFIO = userFIO, IsHolydayActual = item.IsHolyday, IsHolydayPrev = false, ItemId = item.Id, TimeStartPrev = item.TimeStart, TimeFinishPrev = item.TimeFinish };
+            var hist = new ScheduleHistory { Action = item.IsHolyday ? ScheduleHistoryAction.RemoveHolyday.ToString() : ScheduleHistoryAction.RemoveShift.ToString(), ActionTargetUser = item.TargetUser, ActionTargetUserFIO = userTargetFIO, ActionUser = User, ActionUserFIO = userFIO, IsHolydayActual = item.IsHolyday, IsHolydayPrev = false, ItemId = item.Id, TimeStartPrev = item.TimeStart, TimeFinishPrev = item.TimeFinish };
             await _context.ScheduleHistories.AddAsync(hist);
             await _context.SaveChangesAsync(new CancellationToken());
 

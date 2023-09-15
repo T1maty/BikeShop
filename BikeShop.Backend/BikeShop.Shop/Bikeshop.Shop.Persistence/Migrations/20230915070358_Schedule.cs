@@ -54,8 +54,8 @@ namespace Bikeshop.Shop.Persistence.Migrations
                     IsHolyday = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     TimeStart = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     TimeFinish = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    TargerUser = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TargerUserFIO = table.Column<string>(type: "longtext", nullable: false)
+                    TargetUser = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TargetUserFIO = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedUser = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedUserFIO = table.Column<string>(type: "longtext", nullable: false)

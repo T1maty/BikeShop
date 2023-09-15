@@ -9,7 +9,7 @@ namespace BikeShop.Shop.Domain.DTO.Schedule
 {
     public class ResponseScheduleWithHistory
     {
-        public ScheduleItem ScheduleIdem { get; set; }
+        public ScheduleItem ScheduleItem { get; set; }
         public ScheduleHistory ScheduleHistory { get; set; }
     }
 }
