@@ -6,10 +6,31 @@
   height: 100%;
   overflow: hidden;
 
-  .select {
-    color: black;
-    padding: 5px;
+  .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+
+    .select {
+      width: 100%;
+      color: black;
+      padding: 5px;
+    }
+
+    .clock {
+      color: white;
+      font-weight: 600;
+      border-radius: 5px;
+      border: 1px white solid;
+
+      .clc {
+        display: inline;
+      }
+    }
   }
+
 
   .calendar {
     background-color: #33373B;

@@ -2,6 +2,6 @@ import {ScheduleItem} from "../../entities/Schedule/ScheduleItem";
 import {ScheduleHistory} from "../../entities/Schedule/ScheduleHistory";
 
 export interface ItemAndHistoryResponse {
-    ScheduleItem: ScheduleItem
-    ScheduleHistory: ScheduleHistory
+    scheduleItem: ScheduleItem
+    scheduleHistory: ScheduleHistory
 }

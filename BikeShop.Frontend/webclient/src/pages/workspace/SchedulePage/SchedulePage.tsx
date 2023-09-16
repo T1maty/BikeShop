@@ -5,6 +5,8 @@ import useSchedule from "./SchedulePageStore";
 import {Shop} from "../../../entities";
 import ScheduleContextItem from "../../../entities/models/Schedule/ScheduleContextItem";
 import ScheduleContextEmptyItem from "../../../entities/models/Schedule/ScheduleContextEmptyItem";
+import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
+import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css';
 
 const SchedulePage = () => {
     const selectedShop = useSchedule(s => s.selectedShop)
@@ -15,6 +17,11 @@ const SchedulePage = () => {
     const getScheduleItems = useSchedule(s => s.getScheduleItems)
     const scheduleItems = useSchedule(s => s.scheduleItems)
     const setHoveredItem = useSchedule(s => s.setHoveredItem)
+    const setSelectedDay = useSchedule(s => s.setSelectedDay)
+    const setSelectedItem = useSchedule(s => s.setSelectedItem)
+    const timePickerValue = useSchedule(s => s.timePickerValue)
+    const setTimePickerValue = useSchedule(s => s.setTimePickerValue)
+    const setSelectedUser = useSchedule(s => s.setSelectedUser)
 
     const [itemContext, setItemContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
     const [itemContextE, setItemContextE] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
@@ -23,6 +30,10 @@ const SchedulePage = () => {
         getShops()
         getScheduleItems()
     }, [])
+
+    useEffect(() => {
+        console.log(timePickerValue)
+    }, [timePickerValue])
 
     // Получение текущей даты
     const currentDate = new Date();
@@ -42,12 +53,23 @@ const SchedulePage = () => {
         <div className={s.wrapper} onContextMenu={e => e.preventDefault()}>
             <ScheduleContextItem open={itemContext} setOpen={setItemContext}/>
             <ScheduleContextEmptyItem open={itemContextE} setOpen={setItemContextE}/>
-            <div className={s.select}>
-                <Select options={shops} value={selectedShop} onChange={(v) => {
-                    setSelectedShop(v as Shop)
-                }} getOptionLabel={label => label!.id + ' | ' + label!.name}
-                        getOptionValue={value => value!.id.toString()}
-                />
+            <div className={s.head}>
+                <div className={s.clock}>
+                    <TimeRangePicker className={s.clc} onChange={setTimePickerValue} value={timePickerValue}
+                                     clockIcon={null}
+                                     shouldOpenClock={() => {
+                                         return false
+                                     }} clearIcon={null}/>
+                </div>
+                <div className={s.select}>
+                    <Select options={shops} value={selectedShop} onChange={(v) => {
+                        setSelectedShop(v as Shop)
+                    }} getOptionLabel={label => label!.id + ' | ' + label!.name}
+                            getOptionValue={value => value!.id.toString()}
+                    />
+
+                </div>
+
             </div>
             <div className={s.calendar}>
                 <div className={s.main_column}>
@@ -76,6 +98,9 @@ const SchedulePage = () => {
                                         return (
                                             <div className={s.cell}
                                                  onContextMenu={(e) => {
+                                                     setSelectedUser(g)
+                                                     setSelectedDay(day)
+                                                     setSelectedItem(data!)
                                                      new Date(data!.timeStart) > currentDate ? setItemContext({
                                                          o: true,
                                                          x: e.clientX,
@@ -95,6 +120,9 @@ const SchedulePage = () => {
                                     let timeString = `${new Date(data.timeStart).getHours()}:${new Date(data.timeStart).getMinutes()} - ${new Date(data.timeFinish).getHours()}:${new Date(data.timeFinish).getMinutes()}`;
                                     return (
                                         <div className={s.cell} onContextMenu={(e) => {
+                                            setSelectedUser(g)
+                                            setSelectedDay(day)
+                                            setSelectedItem(data!)
                                             new Date(data!.timeStart) > currentDate ? setItemContext({
                                                 o: true,
                                                 x: e.clientX,
@@ -116,6 +144,9 @@ const SchedulePage = () => {
                                 }
                                 return (
                                     <div className={s.cell} style={{backgroundColor: "#EAEAEA"}} onContextMenu={(e) => {
+                                        setSelectedUser(g)
+                                        setSelectedDay(day)
+                                        setSelectedItem(null)
                                         day.getDate() >= currentDate.getDate() ? setItemContextE({
                                             o: true,
                                             x: e.clientX,

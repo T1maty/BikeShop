@@ -25,7 +25,7 @@ namespace BikeShop.Acts.Application.Services
 
         public async Task<CashboxAction> Create(CreateCashboxActionDTO dto)
         {
-            var ent = new CashboxAction{ Cash = dto.Cash, ShopId = dto.ShopId, UserCreated = dto.UserId, UserUpdated = dto.UserId };
+            var ent = new CashboxAction{ Cash = dto.Cash, ShopId = dto.ShopId, UserCreated = dto.UserId, UserUpdated = dto.UserId, Description = dto.Description };
             await _context.CashboxActions.AddAsync(ent);
             await _context.SaveChangesAsync(new CancellationToken());
 
