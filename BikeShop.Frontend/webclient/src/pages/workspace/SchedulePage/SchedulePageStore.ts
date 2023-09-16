@@ -52,20 +52,12 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
     isLoading: false,
     setIsLoading: (v) => set({isLoading: v}),
     createHoliday: () => {
-        let date = get().selectedDay
-        const year = date!.getFullYear();
-        const month = date!.getMonth();
-        const day = date!.getDate();
-
-        let g = get().timePickerValue as [string, string]
-        let w = new Date(year, month, day)
-        w.setHours(parseFloat(g[0].split(":")[0]), parseFloat(g[0].split(":")[1]))
-        console.log(w.toISOString())
+        console.log(get().selectedDay!.toLocaleDateString())
         let data: CreateHolydayItem = {
             shopId: get().selectedShop?.id!,
             user: LocalStorage.userId()!,
             targetUser: get().selectedUser?.id!,
-            date: w.toISOString()
+            date: get().selectedDay!.toISOString()
         }
         set({isLoading: true})
         ScheduleAPI.addHoliday(data).then(r => {
@@ -77,6 +69,15 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
     },
     createShift: () => {
         let s = get().selectedShop
+
+        let date = get().selectedDay
+        const year = date!.getFullYear();
+        const month = date!.getMonth();
+        const day = date!.getDate();
+
+        let g = get().timePickerValue as [string, string]
+        let w = new Date(year, month, day)
+        w.setHours(parseFloat(g[0].split(":")[0]), parseFloat(g[0].split(":")[1]))
 
         let data: CreateScheduleItem = {
             shopId: s?.id!,
