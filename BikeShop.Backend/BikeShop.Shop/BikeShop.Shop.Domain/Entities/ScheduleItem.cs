@@ -20,5 +20,6 @@ namespace BikeShop.Shop.Domain.Entities
         public string UpdatedUserFIO { get; set; }
         public int ShopId { get; set; }
 
+
     }
 }

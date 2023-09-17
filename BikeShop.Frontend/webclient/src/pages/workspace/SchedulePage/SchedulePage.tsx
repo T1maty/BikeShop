@@ -36,7 +36,7 @@ const SchedulePage = () => {
     }, [timePickerValue])
 
     // Получение текущей даты
-    const currentDate = new Date();
+    const currentDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
 
     // Вычисление начальной даты (текущая дата минус 15 дней)
     const startDate = new Date(currentDate);

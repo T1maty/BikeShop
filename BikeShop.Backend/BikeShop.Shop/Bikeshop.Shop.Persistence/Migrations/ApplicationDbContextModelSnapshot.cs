@@ -58,7 +58,7 @@ namespace Bikeshop.Shop.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CashboxHistories");
+                    b.ToTable("CashboxHistories", (string)null);
                 });
 
             modelBuilder.Entity("BikeShop.Shop.Domain.Entities.ScheduleHistory", b =>
@@ -120,7 +120,7 @@ namespace Bikeshop.Shop.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ScheduleHistories");
+                    b.ToTable("ScheduleHistories", (string)null);
                 });
 
             modelBuilder.Entity("BikeShop.Shop.Domain.Entities.ScheduleItem", b =>
@@ -177,7 +177,7 @@ namespace Bikeshop.Shop.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ScheduleItems");
+                    b.ToTable("ScheduleItems", (string)null);
                 });
 
             modelBuilder.Entity("BikeShop.Shop.Domain.Entities.Shop", b =>
@@ -225,7 +225,7 @@ namespace Bikeshop.Shop.Persistence.Migrations
                     b.HasIndex("StorageId")
                         .IsUnique();
 
-                    b.ToTable("Shops");
+                    b.ToTable("Shops", (string)null);
                 });
 
             modelBuilder.Entity("BikeShop.Shop.Domain.Entities.ShopScheduleItem", b =>
@@ -273,7 +273,7 @@ namespace Bikeshop.Shop.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShopScheduleItems");
+                    b.ToTable("ShopScheduleItems", (string)null);
                 });
 
             modelBuilder.Entity("BikeShop.Shop.Domain.Entities.UserSalary", b =>
@@ -308,7 +308,7 @@ namespace Bikeshop.Shop.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserSalaries");
+                    b.ToTable("UserSalaries", (string)null);
                 });
 
             modelBuilder.Entity("BikeShop.Shop.Domain.Entities.UserShiftItem", b =>
@@ -338,7 +338,7 @@ namespace Bikeshop.Shop.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserShiftItems");
+                    b.ToTable("UserShiftItems", (string)null);
                 });
 #pragma warning restore 612, 618
         }

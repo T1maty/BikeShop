@@ -9,11 +9,13 @@ interface p {
 
 const ScheduleContextEmptyItem = (props: p) => {
     const createHoliday = useSchedule(s => s.createHoliday)
+    const createShift = useSchedule(s => s.createShift)
 
     const settings = [
         {
             name: 'Зміна',
             click: () => {
+                createShift()
             }
         },
         {

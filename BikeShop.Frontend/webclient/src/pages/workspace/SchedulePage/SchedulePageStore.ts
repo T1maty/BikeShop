@@ -57,7 +57,7 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
             shopId: get().selectedShop?.id!,
             user: LocalStorage.userId()!,
             targetUser: get().selectedUser?.id!,
-            date: get().selectedDay!.toISOString()
+            date: get().selectedDay!.toISOString().replace('Z', "-03:00")
         }
         set({isLoading: true})
         ScheduleAPI.addHoliday(data).then(r => {
@@ -76,15 +76,17 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
         const day = date!.getDate();
 
         let g = get().timePickerValue as [string, string]
-        let w = new Date(year, month, day)
-        w.setHours(parseFloat(g[0].split(":")[0]), parseFloat(g[0].split(":")[1]))
+        let w1 = new Date(year, month, day)
+        let w2 = new Date(year, month, day)
+        w1.setHours(parseFloat(g[0].split(":")[0]), parseFloat(g[0].split(":")[1]))
+        w2.setHours(parseFloat(g[1].split(":")[0]), parseFloat(g[1].split(":")[1]))
 
         let data: CreateScheduleItem = {
             shopId: s?.id!,
             user: LocalStorage.userId()!,
             targetUser: get().selectedUser?.id!,
-            start: "string",
-            finish: "string",
+            start: w1.toISOString(),
+            finish: w2.toISOString(),
             role: ""
         }
         set({isLoading: false})
