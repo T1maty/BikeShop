@@ -1,7 +1,14 @@
 import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
-import {CatalogAPI, Product, ProductCardAPI, ProductStorageQuantity, UpdateProduct} from "../../../../entities"
+import {
+    CatalogAPI,
+    Product,
+    ProductCardAPI,
+    ProductFullData,
+    ProductStorageQuantity,
+    UpdateProduct
+} from "../../../../entities"
 import Enumerable from "linq";
 import {ProductFilterVariantDTO} from "../../../../entities/DataTransferObjects/responses/ProductFilterVariantDTO";
 
@@ -37,9 +44,16 @@ interface productCatalogTableStore {
 
     columnsProps: string[]
     setColumnWight: (index: number, wight: string) => void
+
+    productCards: ProductFullData[]
+    getProductCards: () => void
 }
 
 const useProductCatalogTableStore = create<productCatalogTableStore>()(persist(devtools(immer((set, get) => ({
+    getProductCards: () => {
+        ProductCardAPI.getProductCardById(1).then(r => set({productCards: [r.data]}))
+    },
+    productCards: [],
     columnsProps: ["140px", "150px", "100px", "100px", "100px", "100px", "100px", "100px"],
     setColumnWight: (index, wight) => {
         let data = get().columnsProps.map((n, indexMap) => {

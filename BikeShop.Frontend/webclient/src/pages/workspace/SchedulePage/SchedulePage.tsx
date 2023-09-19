@@ -117,13 +117,19 @@ const SchedulePage = () => {
                                             </div>)
                                     }
 
-                                    let timeString = `${new Date(data.timeStart).getHours()}:${new Date(data.timeStart).getMinutes()} - ${new Date(data.timeFinish).getHours()}:${new Date(data.timeFinish).getMinutes()}`;
+                                    let timeString = new Date(data.timeStart).toLocaleTimeString(undefined, {
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    }) + ` - ` + new Date(data.timeFinish).toLocaleTimeString(undefined, {
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })
                                     return (
                                         <div className={s.cell} onContextMenu={(e) => {
                                             setSelectedUser(g)
                                             setSelectedDay(day)
                                             setSelectedItem(data!)
-                                            new Date(data!.timeStart) > currentDate ? setItemContext({
+                                            new Date(data!.timeStart) >= currentDate ? setItemContext({
                                                 o: true,
                                                 x: e.clientX,
                                                 y: e.clientY

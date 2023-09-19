@@ -27,6 +27,12 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productCardService.GetProductCard(productId);
         }
 
+        [HttpPost("bycategory")]
+        public async Task<ProductCatalogPageDTO> GetProductCardByCategory(ProductCardCatalogRequestDTO dto)
+        {
+            return await _productCardService.GetProductCardByCategory(dto);
+        }
+
 
         [HttpPut("updateproductcard")]
         public async Task<ProductCardDTO> UpdateProductCard(UpdateProductCardDTO dto)

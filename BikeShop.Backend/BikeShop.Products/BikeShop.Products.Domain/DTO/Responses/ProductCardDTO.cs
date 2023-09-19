@@ -16,5 +16,7 @@ namespace BikeShop.Products.Domain.DTO.Responses
         public List<ProductImg> productImages { get; set; }
         public ProductCategory? productCategory { get; set; }
         public List<Product> bindedProducts { get; set; }
+        public Dictionary<int, Dictionary<int, decimal>> ProductStorageQuantity { get; set; }
+        public Dictionary<int, Dictionary<int, decimal>> ProductStorageReserved { get; set; }
     }
 }

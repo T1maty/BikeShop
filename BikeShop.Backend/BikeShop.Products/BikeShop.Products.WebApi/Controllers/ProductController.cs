@@ -113,9 +113,9 @@ namespace BikeShop.Products.WebApi.Controllers
 
         //[Authorize(Roles = "")]
         [HttpGet("search")]
-        public async Task<List<Product>> Search(string querry)
+        public async Task<List<Product>> Search(string querry, int take = 100)
         {
-            return await _productService.Search(querry);
+            return await _productService.Search(querry, take);
         }
 
         [HttpPut("addArray")]

@@ -26,7 +26,6 @@ import {
     EndWorkDayModal,
     GetPutMoneyModal
 } from "../../../features";
-import SchedulePage from "../SchedulePage/SchedulePage";
 
 export const MainPage = () => {
 
@@ -150,7 +149,6 @@ export const MainPage = () => {
 
                     <CreateProductModal/>
                     <EditProductCardModal/>
-                    <SchedulePage/>
                     <EncashmentModal/>
                     <GetPutMoneyModal/>
                     <EndWorkDayModal/>

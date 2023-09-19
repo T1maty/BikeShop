@@ -8,6 +8,8 @@ import {columns} from "./ProductCatalogTableConfig";
 import {Product} from "../../../../entities";
 import {UpdateProductModal, UpdateProductPricesModal} from "../../../../features";
 import {CreateProductModal} from "../CreateProductModal/CreateProductModal";
+import s from './ProductCatalogTable.module.scss'
+import ProductCatalogTableRow from "./ProductCatalogTableRow";
 
 interface CatalogTableProps {
     onRowDoubleClick?: (product: any) => void
@@ -23,36 +25,50 @@ export const ProductCatalogTable = (props: CatalogTableProps) => {
     const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
     const displayedRows = useProductCatalogTableStore(s => s.displayedRows)
     const reloadDisplayedRows = useProductCatalogTableStore(s => s.reloadDisplayedRows)
+    const productCards = useProductCatalogTableStore(s => s.productCards)
+    const getProductCards = useProductCatalogTableStore(s => s.getProductCards)
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
     const storageData = useProductCatalogStorage(s => s.storageData)
     const selectedFilters = useProductCatalogFiltersStore(s => s.selectedFilters)
 
     useEffect(() => {
+        getProductCards()
+    }, [])
+    useEffect(() => {
         reloadDisplayedRows(selectedFilters, storageData)
     }, [selectedFilters, rows])
 
+    if (false) {
+        return (
+            <>
+                <ProductCatalogTableContextMenu/>
+                <UpdateProductPricesModal/>
+                <CreateProductModal onSuccess={addNewProduct}/>
+                <UpdateProductModal onSuccess={updateRow}/>
+                <UniTable rows={displayedRows}
+                          columns={columns}
+                          isLoading={isLoading}
+                          rowOnDoubleClick={(row) => {
+                              props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
+                          }}
+                          rowOnContext={(row, event) => {
+                              setContextVisible(true, event.clientX, event.clientY)
+                              setSelected([row as Product])
+                          }}
+                          rowOnClick={(row) => {
+                              setSelected([row as Product])
+                          }}
+                />
+            </>
+        )
+    }
+
     return (
-        <>
-            <ProductCatalogTableContextMenu/>
-            <UpdateProductPricesModal/>
-            <CreateProductModal onSuccess={addNewProduct}/>
-            <UpdateProductModal onSuccess={updateRow}/>
-            <UniTable rows={displayedRows}
-                      columns={columns}
-                      isLoading={isLoading}
-                      rowOnDoubleClick={(row) => {
-                          props.onRowDoubleClick ? props.onRowDoubleClick(row) : true
-                      }}
-                      rowOnContext={(row, event) => {
-                          setContextVisible(true, event.clientX, event.clientY)
-                          setSelected([row as Product])
-                      }}
-                      rowOnClick={(row) => {
-                          setSelected([row as Product])
-                      }}
-            />
-        </>
+        <div className={s.wrapper}>
+            {productCards.map(product => <ProductCatalogTableRow product={product}/>)}
+
+        </div>
     )
 
 }

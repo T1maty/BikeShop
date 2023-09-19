@@ -4,6 +4,7 @@ using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Responses;
 using BikeShop.Products.Domain.DTO.Responses.Option;
 using BikeShop.Products.Domain.Entities;
+using BikeShop.Products.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Products.Application.Services
@@ -76,6 +77,124 @@ namespace BikeShop.Products.Application.Services
         public async Task<ProductCardDTO> GetProductCard(int productId)
         {
             return await _publicService.getProductCard(productId);
+        }
+
+        private static List<int> FindCommonElements(Dictionary<int, List<int>> data)
+        {
+            if (data == null || !data.Any())
+            {
+                return new List<int>();
+            }
+
+            // Start with the first list
+            IEnumerable<int> common = data.First().Value;
+
+            // Intersect with every other list
+            foreach (var list in data.Skip(1))
+            {
+                common = common.Intersect(list.Value);
+            }
+
+            return common.ToList();
+        }
+
+        public async Task<ProductCatalogPageDTO> GetProductCardByCategory(ProductCardCatalogRequestDTO dto)
+        {
+            var category = await _context.ProductCategories.FindAsync(dto.CategoryId);
+
+            var FilterVariants = await _context.ProductOptionVariantBinds.Where(n => dto.FiltersVariantIds.Contains(n.OptionVariantId)).ToListAsync();
+            var OptinIds = FilterVariants.Select(n=>n.OptionVariantId).Distinct();
+            var FilterArrays = OptinIds.ToDictionary(n => n, n => FilterVariants.Where(j => j.OptionVariantId == n).Select(j=>j.ProductId).ToList());
+            var FiltersWhitelist = FindCommonElements(FilterArrays);
+            
+            //Получили все товары, которае подходят под категорию и ее потомков.
+            var ProductsQuerry = _context.Products.Where(n => category.ChildrenIdsList.Contains(n.CategoryId)).Where(n=>n.IsMaster == true);
+            //Если были указаны фильтры, фильтруем. 
+            if (FiltersWhitelist.Count > 0) ProductsQuerry = ProductsQuerry.Where(n => FiltersWhitelist.Contains(n.Id));
+
+            var ProductIds = await ProductsQuerry.Select(n => n.Id).ToListAsync();
+            
+            var StorageIds = await _context.Storages.Select(n => n.Id).ToListAsync();
+
+            var StorageData = await _context.StorageProducts.Where(n => ProductIds.Contains(n.ProductId)).ToListAsync();
+            var Product_StorageQuantity = ProductIds.ToDictionary(n => n, n => StorageIds.ToDictionary(g => g, g => StorageData.Where(j => j.ProductId == n).Where(j => j.StorageId == g).Select(k=>k.Quantity).Sum()));
+
+            var ReservedData = await _context.ProductReservations.Where(n => ProductIds.Contains(n.ProductId)).ToListAsync();
+            var Product_StorageReserved = ProductIds.ToDictionary(n => n, n => StorageIds.ToDictionary(g => g, g => ReservedData.Where(j => j.ProductId == n).Where(j => j.StorageId == g).Select(k => k.Quantity).Sum()));
+
+            var Result = new ProductCatalogPageDTO();
+            foreach (var i in dto.SortingSettings)
+            {
+                switch (Enum.Parse(typeof(ProductSortAction), i))
+                {
+                    case ProductSortAction.SortByStorageDescend:
+                        ProductsQuerry = ProductsQuerry.OrderByDescending(n=>Product_StorageQuantity[n.Id][dto.StorageId]);
+                        Result.SortingSettings.Add(ProductSortAction.SortByStorageDescend.ToString());
+                        break;
+                    case ProductSortAction.SortByStorageAscend:
+                        ProductsQuerry = ProductsQuerry.OrderBy(n => Product_StorageQuantity[n.Id][dto.StorageId]);
+                        Result.SortingSettings.Add(ProductSortAction.SortByStorageAscend.ToString());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            if (dto.Page != null) Result.Page = (int)dto.Page;
+            if (dto.PageSize != null) Result.PageSize = (int)dto.PageSize;
+            var Skip = Result.Page * Result.PageSize;
+
+            var Products = ProductsQuerry.Skip(Skip).Take(Result.PageSize);
+            var ProdsFinishIds = Products.Select(n => n.Id);
+            var div = (decimal)(await ProductsQuerry.CountAsync()) / (decimal)Result.PageSize;
+            Result.TotalPages = (int)Math.Ceiling(div);
+            Result.StorageId = dto.StorageId;
+            
+            
+
+            var cards = new List<ProductCardDTO>();
+
+            var SlaveBinds = await _context.ProductBinds.Where(n => ProdsFinishIds.Contains(n.ProductId)).ToListAsync();
+            var SlaveIds = SlaveBinds.Select(n1 => n1.ChildrenId);
+            var SlaveProducts = await _context.Products.Where(n => SlaveIds.Contains(n.Id)).ToListAsync();
+
+            var Cards = await _context.ProductsCards.Where(n => ProdsFinishIds.Contains(n.ProductId)).ToListAsync();
+            
+            var IdsAllProducts = new List<int>();
+            IdsAllProducts.AddRange(ProdsFinishIds);
+            IdsAllProducts.AddRange(SlaveIds);
+            var AllOptionBinds = await _context.ProductOptionVariantBinds.Where(n => IdsAllProducts.Contains(n.ProductId)).ToListAsync();
+            var AllImages = await _context.ProductImgs.Where(n => IdsAllProducts.Contains(n.ProductId)).ToListAsync();
+
+            Result.Options = AllOptionBinds.DistinctBy(n=>n.OptionVariantId).ToList();
+
+            var ProdResponse = await Products.ToListAsync();
+
+            var prd = new List<ProductCardDTO>();
+            foreach (var p in ProdResponse)
+            {
+                var card = new ProductCardDTO();
+                card.product = p;
+
+                var slaveIds = SlaveBinds.Where(n => n.ProductId == p.Id).Select(n => n.ChildrenId);
+                var slaveProds = new List<Product> { p };
+                slaveProds.AddRange(SlaveProducts.Where(n => slaveIds.Contains(n.Id)).ToList());
+                card.bindedProducts = slaveProds;
+
+                card.productCard = Cards.Find(n => n.ProductId == p.Id);
+                card.productOptions = AllOptionBinds.Where(n=>n.ProductId == p.Id).ToList();
+                card.ProductStorageReserved = Product_StorageReserved.Where(n => slaveIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
+                card.ProductStorageQuantity = Product_StorageQuantity.Where(n => slaveIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
+                card.productCategory = category;
+                card.productImages = AllImages.Where(n => slaveIds.Contains(n.ProductId)).ToList();
+
+                prd.Add(card);
+            }
+
+            Result.Products = prd;
+
+            return Result;
         }
 
         public async Task<OptionDTO> UpdateOption(UpdateOptionDTO dto)
@@ -186,6 +305,11 @@ namespace BikeShop.Products.Application.Services
                         existProdBinds.Remove(prod.Id);
                     }
                 }
+                List<int> onUpd = new List<int>();
+                onUpd.AddRange(existProdBinds.Values.Select(n=>n.ChildrenId).ToList());
+                onUpd.AddRange(newProdBinds.Select(n=>n.ChildrenId));
+                onUpd.Add(product.Id);
+                await UpdateIsMaster(onUpd);
                 _context.ProductBinds.RemoveRange(existProdBinds.Values.ToList());
                 await _context.ProductBinds.AddRangeAsync(newProdBinds);
             }
@@ -194,6 +318,23 @@ namespace BikeShop.Products.Application.Services
             await _context.SaveChangesAsync(new CancellationToken());
 
             return await GetProductCard(dto.Id);
+        }
+
+        private async Task UpdateIsMaster(List<int> ids)
+        {
+            ids = ids.Distinct().ToList();
+            var prods = await _context.Products.Where(n => ids.Contains(n.Id)).ToListAsync();
+            var binds = await _context.ProductBinds.Where(n=>ids.Contains(n.ProductId) || ids.Contains(n.ChildrenId)).ToListAsync();
+
+            var masters = binds.Select(n => n.ProductId);
+            var slaves = binds.Select(n => n.ChildrenId);
+            foreach (var p in prods)
+            {
+                if(masters.Contains(p.Id)) p.IsMaster = true;
+                if(slaves.Contains(p.Id)) p.IsMaster = false;
+            }
+
+            await _context.SaveChangesAsync(new CancellationToken());
         }
     }
 }

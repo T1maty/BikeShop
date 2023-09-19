@@ -26,7 +26,20 @@ namespace BikeShop.Products.Application.Services
             await SetWay(category);
             await _context.ProductCategories.AddAsync(category);
             await _context.SaveChangesAsync(new CancellationToken());
+            await UpdateChildIds(model.ParentId);
             return category;
+        }
+
+        private async Task<ProductCategory> UpdateChildIds(int catId)
+        {
+            var allCategories = await _context.ProductCategories.ToListAsync();
+            var ent = allCategories.Find(n => n.Id == catId);
+            var allIds = Get(new List<int> { catId }, allCategories);
+            ent.ChildrenIdsList = allIds;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return ent;
         }
 
         public async Task DeleteCategory(int Id)
@@ -36,6 +49,7 @@ namespace BikeShop.Products.Application.Services
             {
                 _context.ProductCategories.Remove(ent);
                 await _context.SaveChangesAsync(new CancellationToken());
+                await UpdateChildIds(ent.ParentId);
             }
             else throw new Exception();
         }
@@ -45,17 +59,21 @@ namespace BikeShop.Products.Application.Services
             return await _context.ProductCategories.ToListAsync();
         }
 
+        private List<int> Get(List<int> parents, List<ProductCategory> data)
+        {
+            var childs = data.Where(n => parents.Contains(n.ParentId)).Select(n => n.Id).ToList();
+            if (childs.Count > 0) childs.AddRange(Get(childs, data));
+            return childs;
+        }
         public async Task transfer()
         {
-            var optionVariants = await _context.ProductOptionVariantBinds.ToListAsync();
-            var options = await _context.Options.ToListAsync();
+            var ap = await _context.Products.ToListAsync();
+            ap.ForEach(n => n.IsMaster = true);
+            await _context.SaveChangesAsync(new CancellationToken());
 
-            foreach (var item in optionVariants)
-            {
-                var id = options.Where(n => n.Name == item.OptionName).First().Id;
-                item.OptionId = id;
-            }
-
+            var childrens = await _context.ProductBinds.Select(n => n.ChildrenId).Distinct().ToListAsync();
+            var prods = await _context.Products.Where(n => childrens.Contains(n.Id)).ToListAsync();
+            prods.ForEach(n => n.IsMaster = false);
             await _context.SaveChangesAsync(new CancellationToken());
         }
 
@@ -73,6 +91,7 @@ namespace BikeShop.Products.Application.Services
             ent.Name = model.Name;
             await SetWay(ent);
             await _context.SaveChangesAsync(new CancellationToken());
+            await UpdateChildIds(model.ParentId);
             return ent;
         }
 

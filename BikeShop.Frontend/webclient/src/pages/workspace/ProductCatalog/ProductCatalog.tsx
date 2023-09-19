@@ -30,6 +30,8 @@ export const ProductCatalog = () => {
 
     const loadStorageData = useProductCatalogStorage(s => s.loadStorageData)
     const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
+    const setRows = useProductCatalogTableStore(s => s.setRows)
+    const productCards = useProductCatalogTableStore(s => s.productCards)
 
     const storageData = useProductCatalogStorage(s => s.storageData)
 
@@ -79,8 +81,8 @@ export const ProductCatalog = () => {
                         Отображение
                     </Button>
                     <div className={s.searchRow_searchInput}>
-                        <AsyncSelectSearchProduct onSelect={(p) => {
-                            setProductsToTable(p.categoryId)
+                        <AsyncSelectSearchProduct onSelect={(p, searchResult) => {
+                            setRows(searchResult)
                         }}/>
                     </div>
                     <div style={{color: 'black'}}>

@@ -22,6 +22,7 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<OptionDTO> UpdateOption(UpdateOptionDTO dto);
         public Task<OptionDTO> AddOptionVariant(int optionId, string name);
         public Task<List<ProductFilterDTO>> GetFiltersByProducts(List<int> ids);
+        public Task<ProductCatalogPageDTO> GetProductCardByCategory(ProductCardCatalogRequestDTO dto);
 
 
     }

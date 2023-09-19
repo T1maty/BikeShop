@@ -1,35 +1,303 @@
 .wrapper {
+  height: 100%;
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  .row {
+    border: 2px white solid;
+    border-radius: 20px;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
-  td {
-    //overflow: hidden;
-    //text-overflow: ellipsis;
-    //white-space: nowrap;
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
+    .main_product {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
 
-  .header {
+      .m_img {
+        height: 80px;
+        width: 80px;
+        border-radius: 15px;
+      }
 
-    .header_cell {
-      border-style: solid;
-    }
-  }
+      .m_data {
+        display: flex;
+        flex-direction: column;
+        max-height: 80px;
 
-  .body {
-    .row {
-      border-style: solid;
+        .m_data_name {
+          word-break: break-word;
+          padding: 5px;
+          max-height: 50%;
+        }
+
+        .m_data_numbs {
+          max-height: 50%;
+          display: flex;
+
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 15px;
+
+          .m_data_numbs_retail {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+
+            .m_data_numbs_retail_label {
+              font-size: 10px;
+              font-weight: 300;
+            }
+
+            .m_data_numbs_retail_value {
+              font-size: 20px;
+              font-weight: 600;
+            }
+          }
+
+          .m_data_numbs_prices {
+            .m_data_numbs_prices_label {
+              font-size: 8px;
+              font-weight: 300;
+            }
+
+            .m_data_numbs_prices_value {
+              font-size: 12px;
+            }
+          }
+
+          .m_data_numbs_storage {
+            .m_data_numbs_storage_label {
+              font-size: 8px;
+              font-weight: 300;
+
+            }
+
+            .m_data_numbs_storage_value {
+              font-size: 12px;
+
+            }
+          }
+
+          .m_data_numbs_options {
+            width: 100%;
+            border: 1px #000000 solid;
+            border-radius: 10px;
+            overflow: auto;
+            padding: 3px;
+
+            .m_data_numbs_options_option {
+              font-size: 14px;
+              font-weight: 500;
+              display: flex;
+              justify-content: space-between;
+
+              .m_data_numbs_options_option_label {
 
 
-      .cell {
-        border-style: solid;
+              }
+
+              .m_data_numbs_options_option_value {
+
+
+              }
+            }
+          }
+
+          .m_data_numbs_options::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+
+      .m_desc {
+        word-break: break-word;
+        width: 20%;
+        border-right: 3px white solid;
+        border-left: 3px white solid;
+        padding: 5px;
+
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .m_ind {
+        width: 20%;
+        padding: 5px;
+        max-height: 80px;
+
+        .m_ind_art {
+
+          .m_ind_art_label {
+            font-size: 10px;
+            font-weight: 300;
+          }
+
+          .m_ind_art_value {
+
+          }
+        }
+
+        .m_ind_catalogkey {
+          .m_ind_catalogkey_label {
+            font-size: 10px;
+            font-weight: 300;
+          }
+
+          .m_ind_catalogkey_value {
+
+          }
+        }
+
+        .m_ind_status {
+          margin: 5px;
+          text-align: center;
+        }
 
       }
     }
+
+    .binded_products {
+      padding: 3px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 5px;
+
+      .binded_product {
+        border: 1px #fffcae solid;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        max-height: 53px;
+
+        .binded_product_img {
+          margin: 5px;
+          height: 40px;
+          width: 40px;
+          border-radius: 5px;
+        }
+
+        .binded_product_name {
+          margin: 1px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          overflow: hidden;
+        }
+
+        .binded_product_options {
+          margin: 3px;
+          min-width: 50px;
+          border-radius: 10px;
+          border: 1px #000000 solid;
+          overflow: auto;
+
+          .binded_product_options_option {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px;
+            font-size: 14px;
+            font-weight: 500;
+
+            .binded_product_options_option_label {
+
+            }
+
+            .binded_product_options_option_value {
+
+            }
+          }
+
+        }
+
+        .binded_product_options::-webkit-scrollbar {
+          display: none;
+        }
+
+        .binded_product_prices {
+          margin-top: 3px;
+          margin-bottom: 3px;
+          display: flex;
+          flex-direction: column;
+
+          .binded_product_prices_retail {
+
+          }
+
+          .binded_product_prices_opt {
+            font-size: 14px;
+          }
+
+          .binded_product_prices_income {
+            font-size: 10px;
+          }
+        }
+
+        .binded_product_storage {
+          margin: 3px;
+          border-right: 2px white solid;
+          padding-right: 5px;
+          padding-left: 5px;
+          border-left: 2px white solid;
+
+          .binded_product_storage_available {
+            .binded_product_storage_available_label {
+              font-size: 8px;
+              font-weight: 300;
+            }
+
+            .binded_product_storage_available_value {
+              font-size: 12px;
+
+            }
+          }
+
+          .binded_product_storage_reserved {
+            .binded_product_storage_reserved_label {
+              font-size: 8px;
+              font-weight: 300;
+            }
+
+            .binded_product_storage_reserved_value {
+              font-size: 12px;
+            }
+          }
+        }
+
+        .binded_product_int {
+          margin: 3px;
+          white-space: nowrap;
+
+          .binded_product_int_art {
+            .binded_product_int_art_label {
+              font-size: 8px;
+              font-weight: 300;
+            }
+
+            .binded_product_int_art_value {
+              font-size: 12px;
+
+            }
+          }
+
+          .binded_product_int_catalogkey {
+            .binded_product_int_catalogkey_label {
+              font-size: 8px;
+              font-weight: 300;
+            }
+
+            .binded_product_int_catalogkey_value {
+              font-size: 12px;
+
+            }
+          }
+        }
+      }
+    }
+
   }
 }
 

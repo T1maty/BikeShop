@@ -19,6 +19,8 @@ public class Product : BaseEntity
     public decimal DealerPrice { get; set; }
     public decimal RetailPrice { get; set; }
 
+    public bool IsMaster { get; set; } = true;
+
     public int BrandId { get; set; } = 1;
     [JsonIgnore] public Brand Brand { get; set; }
 

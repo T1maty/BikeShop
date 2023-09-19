@@ -652,6 +652,21 @@
       "SwaggerKey": "products"
     },
 	{
+      "UpstreamPathTemplate": "/api/productcard/bycategory",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/productcard/bycategory",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	{
       "UpstreamPathTemplate": "/api/productcard/updateproductcard",
       "UpstreamHttpMethod": [
         "Put"

@@ -78,15 +78,15 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
         let g = get().timePickerValue as [string, string]
         let w1 = new Date(year, month, day)
         let w2 = new Date(year, month, day)
-        w1.setHours(parseFloat(g[0].split(":")[0]), parseFloat(g[0].split(":")[1]))
-        w2.setHours(parseFloat(g[1].split(":")[0]), parseFloat(g[1].split(":")[1]))
+        w1.setHours(parseFloat(g[0].split(":")[0]) + 3, parseFloat(g[0].split(":")[1]))
+        w2.setHours(parseFloat(g[1].split(":")[0]) + 3, parseFloat(g[1].split(":")[1]))
 
         let data: CreateScheduleItem = {
             shopId: s?.id!,
             user: LocalStorage.userId()!,
             targetUser: get().selectedUser?.id!,
-            start: w1.toISOString(),
-            finish: w2.toISOString(),
+            start: w1.toISOString().replace('Z', "+03:00"),
+            finish: w2.toISOString().replace('Z', "+03:00"),
             role: ""
         }
         set({isLoading: false})

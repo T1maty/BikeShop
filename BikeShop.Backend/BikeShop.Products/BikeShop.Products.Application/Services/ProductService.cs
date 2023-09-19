@@ -125,7 +125,7 @@ namespace BikeShop.Products.Application.Services
             return product;
         }
 
-        public async Task<List<Product>> Search(string querry)
+        public async Task<List<Product>> Search(string querry, int take)
         {
             var res = querry.ToLower().Split(" ");
             var contQR = _context.Products.Where(n=>n.Enabled == true);
@@ -138,7 +138,7 @@ namespace BikeShop.Products.Application.Services
                                         || n.ManufacturerBarcode.ToLower().Contains(item));
             }
 
-            return await contQR.Take(10).ToListAsync();
+            return await contQR.Take(take).ToListAsync();
         }
 
         public async Task<Product> Update(UpdateProductDTO dto)
