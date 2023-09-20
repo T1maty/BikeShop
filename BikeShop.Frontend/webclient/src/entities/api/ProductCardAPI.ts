@@ -4,11 +4,18 @@ import {
     UpdateProductCardFormModel
 } from "../../features/ProductCatalogFeatures/EditProductCardModal/models/UpdateProductCardFormModel"
 import {$api} from "../../shared";
+import {ProductCatalogResponse} from "../models/ProductCatalogResponse";
+import {GetCatalogDataRequest} from "../models/GetCatalogDataRequest";
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {
         return (
             $api.get<ProductFullData>(`/productcard/getproductcard?productId=${productId}`)
+        )
+    },
+    getByCategory(data: GetCatalogDataRequest): Promise<AxiosResponse<ProductCatalogResponse>> {
+        return (
+            $api.post<ProductCatalogResponse>(`/productcard/bycategory`, data)
         )
     },
     updateProductCard(data: UpdateProductCardFormModel): Promise<any> {

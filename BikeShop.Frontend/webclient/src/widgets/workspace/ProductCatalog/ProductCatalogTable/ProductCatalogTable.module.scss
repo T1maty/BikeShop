@@ -1,5 +1,7 @@
 .wrapper {
   height: 100%;
+  overflow: auto;
+  padding: 5px;
 
   .row {
     border: 2px white solid;
@@ -8,10 +10,12 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    margin-bottom: 10px;
 
     .main_product {
+
       display: flex;
-      justify-content: space-between;
+      justify-content: start;
       gap: 5px;
 
       .m_img {
@@ -114,13 +118,16 @@
 
       .m_desc {
         word-break: break-word;
-        width: 20%;
+        max-width: 100%;
+        width: 80%;
         border-right: 3px white solid;
         border-left: 3px white solid;
         padding: 5px;
 
         font-size: 12px;
         font-weight: 500;
+
+        overflow: auto;
       }
 
       .m_ind {
@@ -298,6 +305,10 @@
       }
     }
 
+  }
+
+  .row:hover {
+    background-color: #535a60;
   }
 }
 

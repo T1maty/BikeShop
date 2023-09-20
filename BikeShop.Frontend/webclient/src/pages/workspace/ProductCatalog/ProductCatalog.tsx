@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {ProductCatalogTable, TagTreeView} from "../../../widgets"
+import {TagTreeView} from "../../../widgets"
 import {AsyncSelectSearchProduct, Button} from '../../../shared/ui'
 import s from './ProductCatalog.module.scss'
 import useEditProductCardModal
@@ -16,6 +16,7 @@ import DisplayModal from "../../../widgets/workspace/ProductCatalog/DisplayModal
 import {ProductCategory} from "../../../entities";
 import ProductCatalogFilters
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogFilters/ProductCatalogFilters";
+import CatTable from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/CatTable";
 
 export const ProductCatalog = () => {
 
@@ -34,6 +35,17 @@ export const ProductCatalog = () => {
     const productCards = useProductCatalogTableStore(s => s.productCards)
 
     const storageData = useProductCatalogStorage(s => s.storageData)
+
+    const isLoading = useProductCatalogTableStore(s => s.isLoading)
+    const rows = useProductCatalogTableStore(s => s.rows)
+    const updateRow = useProductCatalogTableStore(s => s.updateRow)
+    const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
+    const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
+    const displayedRows = useProductCatalogTableStore(s => s.displayedRows)
+    const reloadDisplayedRows = useProductCatalogTableStore(s => s.reloadDisplayedRows)
+    const getProductCards = useProductCatalogTableStore(s => s.getProductCards)
+
+    const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
 
     const [tags, setTags] = useState<ProductCategory[]>([])
     const [displayModal, setDisplayModal] = useState(false)
@@ -107,9 +119,11 @@ export const ProductCatalog = () => {
                          event.preventDefault()
                      }}
                 >
-                    <ProductCatalogTable onRowDoubleClick={(row: any) => {
+                    <CatTable onRowDoubleClick={(row) => {
+                        // @ts-ignore
                         getProductCard(row.id)
                     }}/>
+
                 </div>
             </div>
         </div>

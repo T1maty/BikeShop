@@ -893,6 +893,12 @@
   }
 }
 
+@mixin cardCatalogStl() {
+  @include wrapperMainBlock;
+  display: flex;
+  gap: $defaultLargeMargin;
+}
+
 @mixin profileAdminSalaryFormStyles($resultMarginBottom) {
   width: 50%;
 

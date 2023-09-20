@@ -29,6 +29,7 @@ import CRMPage from "../../pages/workspace/CRM/CRMPage";
 import OrderManager from "../../features/OrderManager/OrderManager";
 import OutcomeActPage from "../../pages/workspace/ProductsCount/OutcomeActPage/OutcomeActPage";
 import SchedulePage from "../../pages/workspace/SchedulePage/SchedulePage";
+import CardCatalog from "../../pages/workspace/CardCatalog/CardCatalog";
 
 // @ts-ignore
 export const routes = createBrowserRouter([
@@ -224,6 +225,14 @@ export const routes = createBrowserRouter([
         element: <CheckAuthEmployee>
             <WorkspaceHeaderProvider>
                 <SchedulePage/>
+            </WorkspaceHeaderProvider>
+        </CheckAuthEmployee>
+    },
+    {
+        path: BikeShopPaths.WORKSPACE.CARD_CATALOG,
+        element: <CheckAuthEmployee>
+            <WorkspaceHeaderProvider>
+                <CardCatalog/>
             </WorkspaceHeaderProvider>
         </CheckAuthEmployee>
     },

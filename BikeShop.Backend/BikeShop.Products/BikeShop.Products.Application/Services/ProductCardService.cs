@@ -194,7 +194,7 @@ namespace BikeShop.Products.Application.Services
                 card.ProductStorageReserved = Product_StorageReserved.Where(n => allIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
                 card.ProductStorageQuantity = Product_StorageQuantity.Where(n => allIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
                 card.productCategory = category;
-                card.productImages = AllImages.Where(n => slaveIds.Contains(n.ProductId)).ToList();
+                card.productImages = AllImages.Where(n => allIds.Contains(n.ProductId)).ToList();
 
                 prd.Add(card);
             }

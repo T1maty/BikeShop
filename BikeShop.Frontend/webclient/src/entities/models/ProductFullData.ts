@@ -11,4 +11,6 @@ export interface ProductFullData {
     productImages: ProductImage[]
     productCategory: ProductCategory
     bindedProducts: Product[]
+    productStorageQuantity: { [key: number]: { [subKey: number]: number } };
+    productStorageReserved: { [key: number]: { [subKey: number]: number } };
 }

@@ -16,7 +16,7 @@ export const WorkspaceHeaderProvider: React.FC<WorkspaceHeaderProviderProps> = (
     return (
         <>
             <Header/>
-            <div className='content'>
+            <div>
                 {children}
             </div>
         </>

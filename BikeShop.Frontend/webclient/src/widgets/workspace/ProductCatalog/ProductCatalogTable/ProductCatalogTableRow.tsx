@@ -1,21 +1,31 @@
 import React from 'react';
 import {ProductFullData, useCurrency} from "../../../../entities";
 import s from './ProductCatalogTable.module.scss'
-import {useProductCatalogStorage} from "../../../../pages/workspace/ProductCatalog/ProductCatalogStorage";
-import useProductCatalogTableStore from "./ProductCatalogTableStore";
 import noImg from '../../../../shared/assets/workspace/no-image-svgrepo-com.svg'
 
 const ProductCatalogTableRow = (p: { product: ProductFullData }) => {
-    const storageData = useProductCatalogStorage(s => s.storageData)
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
-    const colP = useProductCatalogTableStore(s => s.columnsProps)
 
     //let st = storageData.find(n => n.productId === p.product.id)
     let mainImg = p.product.productImages.filter(n => n.productId === p.product.product.id)
     let mainOptions = p.product.productOptions.filter(n => n.productId === p.product.product.id)
+
+    let available = p.product.productStorageQuantity[p.product.product.id][1] - p.product.productStorageReserved[p.product.product.id][1]
+    let reserved = p.product.productStorageReserved[p.product.product.id][1]
+    let rowStyle = {}
+    let availableStyle = {}
+    if (available > 0) {
+        rowStyle = {borderColor: "#95ff78"};
+        availableStyle = {color: "#95ff78"}
+    }
+    if (available < 0) {
+        rowStyle = {borderColor: "#ff5c5c"};
+        availableStyle = {color: "#ff5c5c"}
+    }
+
     return (
-        <div className={s.row}>
+        <div className={s.row} style={rowStyle}>
             <div className={s.main_product}>
                 <img className={s.m_img} src={mainImg.length > 0 ? mainImg[0].url : noImg} alt={"NoPhoto"}/>
                 <div className={s.m_data}>
@@ -36,20 +46,22 @@ const ProductCatalogTableRow = (p: { product: ProductFullData }) => {
 
                         </div>
                         <div className={s.m_data_numbs_storage}>
-                            <div className={s.m_data_numbs_storage_label}>Доступно</div>
-                            <div className={s.m_data_numbs_storage_value}>15шт</div>
+                            <div className={s.m_data_numbs_storage_label} style={availableStyle}>Доступно</div>
+                            <div className={s.m_data_numbs_storage_value}
+                                 style={availableStyle}>{available + p.product.product.quantityUnitName}</div>
                             <div className={s.m_data_numbs_storage_label}>Бронь</div>
-                            <div className={s.m_data_numbs_storage_value}>3шт</div>
+                            <div
+                                className={s.m_data_numbs_storage_value}>{reserved + p.product.product.quantityUnitName}</div>
                         </div>
-                        <div className={s.m_data_numbs_options}>{mainOptions.map(opt => <div
-                            className={s.m_data_numbs_options_option}>
+                        <div className={s.m_data_numbs_options}>{mainOptions.map((opt, index) => <div
+                            className={s.m_data_numbs_options_option} key={index}>
                             <div className={s.m_data_numbs_options_option_label}>{opt.optionName + ': '}</div>
                             <div className={s.m_data_numbs_options_option_value}>{opt.name}</div>
                         </div>)}</div>
                     </div>
                 </div>
                 <div className={s.m_desc}>
-                    {p.product.productCard.description}
+                    {p.product.productCard.description === "" ? "Опису немає =(" : p.product.productCard.description}
                 </div>
                 <div className={s.m_ind}>
                     <div className={s.m_ind_art}>
@@ -69,10 +81,10 @@ const ProductCatalogTableRow = (p: { product: ProductFullData }) => {
             </div>
             <div className={s.binded_products}>
                 {
-                    p.product.bindedProducts.slice(1).map(prod => {
+                    p.product.bindedProducts.slice(1).map((prod, index) => {
                         let photo = p.product.productImages.filter(n => n.productId === prod.id)
                         let options = p.product.productOptions.filter(n => n.productId === prod.id)
-                        return (<div className={s.binded_product}>
+                        return (<div className={s.binded_product} key={index}>
                             <img className={s.binded_product_img} src={photo.length > 0 ? photo[0].url : noImg}
                                  alt={"NoPhoto"}></img>
                             <div className={s.binded_product_name}>{prod.name}</div>

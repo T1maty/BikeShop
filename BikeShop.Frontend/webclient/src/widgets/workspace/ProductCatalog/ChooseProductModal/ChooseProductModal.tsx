@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import s from './ChooseProductModal.module.scss'
-import {ProductCatalogTable} from "../ProductCatalogTable/ProductCatalogTable";
 import {TagTreeView} from "../TagTreeView/TagTreeView";
 import {CustomModal, UniTable} from "../../../../shared/ui";
 import {Product} from "../../../../entities";
+import CatTable from "../ProductCatalogTable/CatTable";
 
 interface props {
     open?: boolean,
@@ -53,7 +53,7 @@ export const ChooseProductModal = (props: props) => {
 
                     <div className={s.chooseProductModal_catalogTable}>
                         <div className={s.table_availableProducts}>
-                            <ProductCatalogTable onRowDoubleClick={(row) => {
+                            <CatTable onRowDoubleClick={(row) => {
                                 props.addData ? props.addData(row) : false
                                 props.setData ? setDataHandler(row) : false
                             }}
@@ -70,7 +70,6 @@ export const ChooseProductModal = (props: props) => {
                             }
                         </div>
                     </div>
-
                 </div>
             </div>
         </CustomModal>
