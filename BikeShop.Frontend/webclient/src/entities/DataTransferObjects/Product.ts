@@ -20,4 +20,5 @@ export interface Product {
     checkStatus: string
     retailVisibility: boolean
     b2BVisibility: boolean
+    isMaster: boolean
 }

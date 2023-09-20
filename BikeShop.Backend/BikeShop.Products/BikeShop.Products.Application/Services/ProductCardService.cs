@@ -170,7 +170,8 @@ namespace BikeShop.Products.Application.Services
             var AllOptionBinds = await _context.ProductOptionVariantBinds.Where(n => IdsAllProducts.Contains(n.ProductId)).ToListAsync();
             var AllImages = await _context.ProductImgs.Where(n => IdsAllProducts.Contains(n.ProductId)).ToListAsync();
 
-            Result.Options = AllOptionBinds.DistinctBy(n=>n.OptionVariantId).ToList();
+            var variantIds = AllOptionBinds.Select(n => n.OptionVariantId).Distinct();
+            Result.Options = await _context.OptionVariants.Where(n=>variantIds.Contains(n.Id)).ToListAsync();
 
             var prd = new List<ProductCardDTO>();
             foreach (var p in Products)
