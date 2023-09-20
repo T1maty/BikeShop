@@ -112,7 +112,7 @@ namespace BikeShop.Products.Application.Services
             //Если были указаны фильтры, фильтруем. 
             if (FiltersWhitelist.Count > 0) ProductsQuerry = ProductsQuerry.Where(n => FiltersWhitelist.Contains(n.Id));
 
-            var ProductIds = await ProductsQuerry.Select(n => n.Id).ToListAsync();
+            var ProductIds = ProductsQuerry.Select(n => n.Id);
             
             var StorageIds = await _context.Storages.Select(n => n.Id).ToListAsync();
 
@@ -128,11 +128,12 @@ namespace BikeShop.Products.Application.Services
                 switch (Enum.Parse(typeof(ProductSortAction), i))
                 {
                     case ProductSortAction.SortByStorageDescend:
-                        ProductsQuerry = ProductsQuerry.OrderByDescending(n=>Product_StorageQuantity[n.Id][dto.StorageId]);
+                        
+                        ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n=>n.StorageId == dto.StorageId), n=>n.Id, n1=>n1.ProductId, (n,n1)=>new { prod = n, quant = n1.Quantity }).OrderByDescending(n=>n.quant).Select(n=>n.prod);
                         Result.SortingSettings.Add(ProductSortAction.SortByStorageDescend.ToString());
                         break;
                     case ProductSortAction.SortByStorageAscend:
-                        ProductsQuerry = ProductsQuerry.OrderBy(n => Product_StorageQuantity[n.Id][dto.StorageId]);
+                        ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n => n.StorageId == dto.StorageId), n => n.Id, n1 => n1.ProductId, (n, n1) => new { prod = n, quant = n1.Quantity }).OrderBy(n => n.quant).Select(n => n.prod);
                         Result.SortingSettings.Add(ProductSortAction.SortByStorageAscend.ToString());
                         break;
                     default:
@@ -143,13 +144,15 @@ namespace BikeShop.Products.Application.Services
 
             if (dto.Page != null) Result.Page = (int)dto.Page;
             if (dto.PageSize != null) Result.PageSize = (int)dto.PageSize;
-            var Skip = Result.Page * Result.PageSize;
+            var Skip = (Result.Page - 1) * Result.PageSize;
 
-            var Products = ProductsQuerry.Skip(Skip).Take(Result.PageSize);
+            var Products = await ProductsQuerry.Skip(Skip).Take(Result.PageSize).ToListAsync();
             var ProdsFinishIds = Products.Select(n => n.Id);
-            var div = (decimal)(await ProductsQuerry.CountAsync()) / (decimal)Result.PageSize;
+            var TotalProducts = (decimal)(Products.Count);
+            var div = TotalProducts / (decimal)Result.PageSize;
             Result.TotalPages = (int)Math.Ceiling(div);
             Result.StorageId = dto.StorageId;
+            Result.TotalProducts = (int)TotalProducts;
             
             
 
@@ -169,10 +172,8 @@ namespace BikeShop.Products.Application.Services
 
             Result.Options = AllOptionBinds.DistinctBy(n=>n.OptionVariantId).ToList();
 
-            var ProdResponse = await Products.ToListAsync();
-
             var prd = new List<ProductCardDTO>();
-            foreach (var p in ProdResponse)
+            foreach (var p in Products)
             {
                 var card = new ProductCardDTO();
                 card.product = p;
@@ -182,10 +183,14 @@ namespace BikeShop.Products.Application.Services
                 slaveProds.AddRange(SlaveProducts.Where(n => slaveIds.Contains(n.Id)).ToList());
                 card.bindedProducts = slaveProds;
 
+                var allIds = new List<int> ();
+                allIds.AddRange(slaveIds);
+                allIds.Add(p.Id);
+
                 card.productCard = Cards.Find(n => n.ProductId == p.Id);
                 card.productOptions = AllOptionBinds.Where(n=>n.ProductId == p.Id).ToList();
-                card.ProductStorageReserved = Product_StorageReserved.Where(n => slaveIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
-                card.ProductStorageQuantity = Product_StorageQuantity.Where(n => slaveIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
+                card.ProductStorageReserved = Product_StorageReserved.Where(n => allIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
+                card.ProductStorageQuantity = Product_StorageQuantity.Where(n => allIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
                 card.productCategory = category;
                 card.productImages = AllImages.Where(n => slaveIds.Contains(n.ProductId)).ToList();
 

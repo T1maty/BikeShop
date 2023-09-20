@@ -10,13 +10,14 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
 {
     public class ProductCatalogPageDTO
     {
-        public List<ProductCardDTO> Products { get; set; }
+        public List<ProductCardDTO> Products { get; set; } = new List<ProductCardDTO>();
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 20;
         public int TotalPages { get; set; }
+        public int TotalProducts { get; set; }
         public int StorageId { get; set; }
 
-        public List<ProductOptionVariantBind> Options { get; set; } 
-        public List<string> SortingSettings { get; set; }
+        public List<ProductOptionVariantBind> Options { get; set; } = new List<ProductOptionVariantBind> ();
+        public List<string> SortingSettings { get; set; } = new List<string>();
     }
 }
