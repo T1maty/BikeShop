@@ -13,7 +13,10 @@ namespace BikeShop.Products.Domain.Entities
         public string Way { get; set; }
         public string ChildrenIds { get; set; }
         [NotMapped]
-        public List<int> ChildrenIdsList { get { return ChildrenIds.Split(';').Select(n=>int.Parse(n)).ToList(); } set {
+        public List<int> ChildrenIdsList { get {
+                if (!string.IsNullOrWhiteSpace(ChildrenIds)) return ChildrenIds.Split(';').Select(n=>int.Parse(n)).ToList();
+                else return new List<int>();
+            } set {
                 var str = "";
                 value.ForEach(n => str += n.ToString()+";");
                 str = str.TrimEnd(';');

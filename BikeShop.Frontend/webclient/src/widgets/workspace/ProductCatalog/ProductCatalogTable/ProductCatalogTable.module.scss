@@ -1,19 +1,21 @@
 .wrapper {
   height: 100%;
   overflow: auto;
-  padding: 5px;
+  padding: 10px;
+  border: 2px black solid;
+  border-radius: 25px;
 
   .row {
     border: 2px white solid;
     border-radius: 20px;
-    padding: 3px;
+    padding: 3px 3px 0px 3px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    //gap: 5px;
     margin-bottom: 10px;
 
     .main_product {
-
+      width: 100%;
       display: flex;
       justify-content: start;
       gap: 5px;
@@ -30,46 +32,64 @@
         max-height: 80px;
 
         .m_data_name {
-          word-break: break-word;
+          font-size: 15px;
           padding: 5px;
-          max-height: 50%;
+          overflow: auto;
+          height: 100%;
+        }
+
+        .m_data_name::-webkit-scrollbar {
+          display: none;
         }
 
         .m_data_numbs {
-          max-height: 50%;
           display: flex;
-
+          height: 44px;
           flex-direction: row;
           justify-content: space-between;
           gap: 15px;
 
-          .m_data_numbs_retail {
+          .m_data_numbs_all_prices {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            justify-items: center;
-            align-items: center;
+            gap: 15px;
+            border-radius: 5px;
+            padding: 2px;
+            height: 100%;
 
-            .m_data_numbs_retail_label {
-              font-size: 10px;
-              font-weight: 300;
+            .m_data_numbs_retail {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              justify-items: center;
+              align-items: center;
+
+              .m_data_numbs_retail_label {
+                font-size: 10px;
+                font-weight: 300;
+              }
+
+              .m_data_numbs_retail_value {
+                font-size: 20px;
+                font-weight: 600;
+              }
             }
 
-            .m_data_numbs_retail_value {
-              font-size: 20px;
-              font-weight: 600;
+            .m_data_numbs_prices {
+              .m_data_numbs_prices_label {
+                font-size: 8px;
+                font-weight: 300;
+              }
+
+              .m_data_numbs_prices_value {
+                font-size: 12px;
+              }
             }
           }
 
-          .m_data_numbs_prices {
-            .m_data_numbs_prices_label {
-              font-size: 8px;
-              font-weight: 300;
-            }
-
-            .m_data_numbs_prices_value {
-              font-size: 12px;
-            }
+          .m_data_numbs_all_prices:hover {
+            background-color: #4c5257;
+            border: 1px black solid;
+            padding: 1px;
           }
 
           .m_data_numbs_storage {
@@ -119,7 +139,7 @@
       .m_desc {
         word-break: break-word;
         max-width: 100%;
-        width: 80%;
+        //width: 80%;
         border-right: 3px white solid;
         border-left: 3px white solid;
         padding: 5px;
@@ -131,7 +151,7 @@
       }
 
       .m_ind {
-        width: 20%;
+        max-width: 20%;
         padding: 5px;
         max-height: 80px;
 
@@ -161,6 +181,7 @@
         .m_ind_status {
           margin: 5px;
           text-align: center;
+          font-size: 16px;
         }
 
       }
@@ -174,6 +195,7 @@
       gap: 5px;
 
       .binded_product {
+        margin-top: 5px;
         border: 1px #fffcae solid;
         border-radius: 10px;
         display: flex;
@@ -308,7 +330,7 @@
   }
 
   .row:hover {
-    background-color: #535a60;
+    background-color: #3b4044;
   }
 }
 

@@ -17,6 +17,7 @@ interface EditProductCardModalStore {
     errorStatus: ErrorStatusTypes
 
     currentProduct: ProductFullData
+    setCurrentProduct: (v: ProductFullData) => void
     setOptions: (v: ProductOptionVariantBind[]) => void
     setStatus: (v: string) => void
     setDescription: (v: string) => void
@@ -38,6 +39,7 @@ interface EditProductCardModalStore {
 }
 
 const useEditProductCardModal = create<EditProductCardModalStore>()(persist(devtools(immer((set, get) => ({
+    setCurrentProduct: (v) => set({currentProduct: v}),
     setOptions: (v) => {
         set({
             currentProduct: {...get().currentProduct, productOptions: v}

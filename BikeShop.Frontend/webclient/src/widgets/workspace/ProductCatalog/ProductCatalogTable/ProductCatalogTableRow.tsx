@@ -2,17 +2,28 @@ import React from 'react';
 import {ProductFullData, useCurrency} from "../../../../entities";
 import s from './ProductCatalogTable.module.scss'
 import noImg from '../../../../shared/assets/workspace/no-image-svgrepo-com.svg'
+import useCardCatalogStore from "../../../../pages/workspace/CardCatalog/CardCatalogStore";
+import useEditProductCardModal
+    from "../../../../features/ProductCatalogFeatures/EditProductCardModal/EditProductCardModalStore";
 
 const ProductCatalogTableRow = (p: { product: ProductFullData }) => {
+    const selectedStorage = useCardCatalogStore(s => s.selectedStorage)
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
+    const setOpenEPCM = useEditProductCardModal(s => s.setOpenEditProductCardModal)
+    const setCurrentProduct = useEditProductCardModal(s => s.setCurrentProduct)
 
     //let st = storageData.find(n => n.productId === p.product.id)
     let mainImg = p.product.productImages.filter(n => n.productId === p.product.product.id)
     let mainOptions = p.product.productOptions.filter(n => n.productId === p.product.product.id)
 
-    let available = p.product.productStorageQuantity[p.product.product.id][1] - p.product.productStorageReserved[p.product.product.id][1]
-    let reserved = p.product.productStorageReserved[p.product.product.id][1]
+    let available = 0
+    let reserved = 0
+
+    if (selectedStorage != null) {
+        available = p.product.productStorageQuantity[p.product.product.id][selectedStorage.id] - p.product.productStorageReserved[p.product.product.id][selectedStorage.id]
+        reserved = p.product.productStorageReserved[p.product.product.id][selectedStorage.id]
+    }
     let rowStyle = {}
     let availableStyle = {}
     if (available > 0) {
@@ -25,25 +36,30 @@ const ProductCatalogTableRow = (p: { product: ProductFullData }) => {
     }
 
     return (
-        <div className={s.row} style={rowStyle}>
+        <div className={s.row} style={rowStyle} onDoubleClick={() => {
+            setCurrentProduct(p.product)
+            setOpenEPCM(true)
+        }}>
             <div className={s.main_product}>
                 <img className={s.m_img} src={mainImg.length > 0 ? mainImg[0].url : noImg} alt={"NoPhoto"}/>
                 <div className={s.m_data}>
                     <div className={s.m_data_name}>{p.product.product.name}</div>
                     <div className={s.m_data_numbs}>
-                        <div className={s.m_data_numbs_retail}>
-                            <div className={s.m_data_numbs_retail_label}>Роздріб:</div>
-                            <div
-                                className={s.m_data_numbs_retail_value}>{r(p.product.product.retailPrice * fbts.c) + fbts.s}</div>
-                        </div>
-                        <div className={s.m_data_numbs_prices}>
-                            <div className={s.m_data_numbs_prices_label}>Опт.</div>
-                            <div
-                                className={s.m_data_numbs_prices_value}>{r(p.product.product.dealerPrice * fbts.c) + fbts.s}</div>
-                            <div className={s.m_data_numbs_prices_label}>Закуп.</div>
-                            <div
-                                className={s.m_data_numbs_prices_value}>{r(p.product.product.incomePrice * fbts.c) + fbts.s}</div>
+                        <div className={s.m_data_numbs_all_prices}>
+                            <div className={s.m_data_numbs_retail}>
+                                <div className={s.m_data_numbs_retail_label}>Роздріб:</div>
+                                <div
+                                    className={s.m_data_numbs_retail_value}>{r(p.product.product.retailPrice * fbts.c) + fbts.s}</div>
+                            </div>
+                            <div className={s.m_data_numbs_prices}>
+                                <div className={s.m_data_numbs_prices_label}>Опт.</div>
+                                <div
+                                    className={s.m_data_numbs_prices_value}>{r(p.product.product.dealerPrice * fbts.c) + fbts.s}</div>
+                                <div className={s.m_data_numbs_prices_label}>Закуп.</div>
+                                <div
+                                    className={s.m_data_numbs_prices_value}>{r(p.product.product.incomePrice * fbts.c) + fbts.s}</div>
 
+                            </div>
                         </div>
                         <div className={s.m_data_numbs_storage}>
                             <div className={s.m_data_numbs_storage_label} style={availableStyle}>Доступно</div>

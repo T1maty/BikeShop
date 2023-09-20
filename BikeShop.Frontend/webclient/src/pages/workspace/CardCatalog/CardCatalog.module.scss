@@ -18,5 +18,28 @@
     background-color: $themeColorDark;
     padding: 15px;
     border-radius: 30px;
+
+
+    .table_header {
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+      .table_header_search {
+        width: 70%;
+      }
+
+      .table_header_storage {
+        width: 25%;
+      }
+    }
+
+    .table_data {
+      height: 93%;
+      border-radius: 25px;
+
+      overflow: hidden;
+    }
   }
 }

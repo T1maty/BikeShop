@@ -76,7 +76,29 @@ namespace BikeShop.Products.Application.Services
 
         public async Task<ProductCardDTO> GetProductCard(int productId)
         {
-            return await _publicService.getProductCard(productId);
+            var binds = await _context.ProductBinds.Where(n => n.ProductId == productId).ToListAsync();
+            var ids = new List<int> { productId };
+            ids.AddRange(binds.Select(n=>n.ChildrenId));
+            var productBinds = await _context.Products.Where(n => ids.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
+            var card = await _context.ProductsCards.Where(n => n.ProductId == productId).FirstOrDefaultAsync();
+            var options = await _context.ProductOptionVariantBinds.Where(n=>ids.Contains(n.ProductId)).ToListAsync();
+            var images = await _context.ProductImgs.Where(n => ids.Contains(n.ProductId)).ToListAsync();
+            var category = await _context.ProductCategories.FindAsync(productBinds[productId].CategoryId);
+            var quantity = await _context.Products.Where(n=>ids.Contains(n.Id)).Join(_context.StorageProducts, n => n.Id, n1 => n1.ProductId, (n, n1) => new { productId = n.Id, storageId = n1.StorageId, quantity = n1.Quantity }).ToListAsync();
+            var reserved = await _context.Products.Where(n=>ids.Contains(n.Id)).Join(_context.ProductReservations, n => n.Id, n1 => n1.ProductId, (n, n1) => new { productId = n.Id, storageId = n1.StorageId, reserved = n1.Quantity }).ToListAsync();
+            var quantList = ids.ToDictionary(n=>n, n=> quantity.Where(n1=>n1.productId == n).DistinctBy(n1=>n1.storageId).ToDictionary(n1=>n1.storageId, n1=>n1.quantity));
+            var reservList = ids.ToDictionary(n=>n, n=> reserved.Where(n1=>n1.productId == n).DistinctBy(n1=>n1.storageId).ToDictionary(n1=>n1.storageId, n1=>n1.reserved));
+            var Result = new ProductCardDTO();
+            Result.product = productBinds[productId];
+            Result.bindedProducts = productBinds.Values.ToList();
+            Result.productCard = card;
+            Result.productOptions = options;
+            Result.productImages = images;
+            Result.productCategory = category;
+            Result.ProductStorageQuantity = quantList;
+            Result.ProductStorageReserved = reservList;
+
+            return Result;
         }
 
         private static List<int> FindCommonElements(Dictionary<int, List<int>> data)
