@@ -153,8 +153,9 @@ namespace BikeShop.Products.Application.Services
             Result.TotalPages = (int)Math.Ceiling(div);
             Result.StorageId = dto.StorageId;
             Result.TotalProducts = (int)TotalProducts;
-            
-            
+            Result.FilterSettings = OptinIds.ToList();
+
+
 
             var cards = new List<ProductCardDTO>();
 

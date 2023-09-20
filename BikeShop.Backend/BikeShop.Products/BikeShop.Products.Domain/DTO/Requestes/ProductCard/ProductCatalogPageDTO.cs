@@ -17,7 +17,8 @@ namespace BikeShop.Products.Domain.DTO.Requestes.ProductCard
         public int TotalProducts { get; set; }
         public int StorageId { get; set; }
 
-        public List<ProductOptionVariantBind> Options { get; set; } = new List<ProductOptionVariantBind> ();
+        public List<OptionVariant> Options { get; set; } = new List<OptionVariant> ();
         public List<string> SortingSettings { get; set; } = new List<string>();
+        public List<int> FilterSettings { get; set; } = new List<int> ();
     }
 }

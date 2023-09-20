@@ -1,5 +1,5 @@
 import {ProductFullData} from "./ProductFullData";
-import {ProductOptionVariantBind} from "entities";
+import {ProductOptionVariant} from "../DataTransferObjects/ProductOptionVariant";
 
 export interface ProductCatalogResponse {
     products: ProductFullData
@@ -8,6 +8,6 @@ export interface ProductCatalogResponse {
     totalPages: number
     totalProducts: number
     storageId: number
-    options: ProductOptionVariantBind[]
-    
+    options: ProductOptionVariant[]
+
 }
