@@ -6,6 +6,7 @@ using BikeShop.Products.Domain.DTO.Responses.Option;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Transactions;
 
 namespace BikeShop.Products.Application.Services
 {
@@ -86,8 +87,8 @@ namespace BikeShop.Products.Application.Services
             var category = await _context.ProductCategories.FindAsync(productBinds[productId].CategoryId);
             var quantity = await _context.Products.Where(n=>ids.Contains(n.Id)).Join(_context.StorageProducts, n => n.Id, n1 => n1.ProductId, (n, n1) => new { productId = n.Id, storageId = n1.StorageId, quantity = n1.Quantity }).ToListAsync();
             var reserved = await _context.Products.Where(n=>ids.Contains(n.Id)).Join(_context.ProductReservations, n => n.Id, n1 => n1.ProductId, (n, n1) => new { productId = n.Id, storageId = n1.StorageId, reserved = n1.Quantity }).ToListAsync();
-            var quantList = ids.ToDictionary(n=>n, n=> quantity.Where(n1=>n1.productId == n).DistinctBy(n1=>n1.storageId).ToDictionary(n1=>n1.storageId, n1=>n1.quantity));
-            var reservList = ids.ToDictionary(n=>n, n=> reserved.Where(n1=>n1.productId == n).DistinctBy(n1=>n1.storageId).ToDictionary(n1=>n1.storageId, n1=>n1.reserved));
+            var quantList = ids.ToDictionary(n=>n, n=> quantity.Where(n1=>n1.productId == n).GroupBy(n1=>n1.storageId).Select(n1=> new { storageId = n1.Key, quantity = n1.Select(n1=>n1.quantity).Sum()}).ToDictionary(n1=>n1.storageId, n1=>n1.quantity));
+            var reservList = ids.ToDictionary(n=>n, n=> reserved.Where(n1=>n1.productId == n).GroupBy(n1 => n1.storageId).Select(n1 => new { storageId = n1.Key, quantity = n1.Select(n1 => n1.reserved).Sum() }).ToDictionary(n1 => n1.storageId, n1 => n1.quantity));
             var Result = new ProductCardDTO();
             Result.product = productBinds[productId];
             Result.bindedProducts = productBinds.Values.ToList();
@@ -321,10 +322,10 @@ namespace BikeShop.Products.Application.Services
             }
             else
             {
+                dto.bindedProducts.Remove(dto.bindedProducts.Find(n=>n.Id == dto.Id));
                 var existProdBinds = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n => n.ChildrenId, n => n);
                 List<ProductBind> newProdBinds = new List<ProductBind>();
                 onUpd.AddRange(existProdBinds.Values.Select(n => n.ChildrenId).ToList());
-
                 foreach (var prod in dto.bindedProducts)
                 {
                     if (!existProdBinds.ContainsKey(prod.Id))
