@@ -24,7 +24,7 @@ interface EditProductCardModalStore {
     removeProductBind: (id: number) => void
     addProductBind: (p: ProductFullData) => void
     getProductCard: (productId: number) => void
-    updateProductCard: () => void
+    updateProductCard: (s: (p: ProductFullData) => void) => void
 
     allOptions: ProductOptionsWithVariants[]
     getAllOptions: () => void
@@ -145,7 +145,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(persist(devt
             set({errorStatus: 'default'})
         })
     },
-    updateProductCard: () => {
+    updateProductCard: (s) => {
         let buf = get().currentProduct
         let data: UpdateProductCardFormModel = {
             id: buf.product.id,
@@ -155,8 +155,9 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(persist(devt
             bindedProducts: buf.bindedProducts
         }
         set({isLoading: true})
-        ProductCardAPI.updateProductCard(data).then((res: any) => {
-            set({isLoading: false})
+        ProductCardAPI.updateProductCard(data).then((res) => {
+            set({currentProduct: res.data})
+            s(res.data)
             set({errorStatus: 'success'})
         }).catch((error: any) => {
             set({errorStatus: 'error'})

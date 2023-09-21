@@ -21,8 +21,8 @@ const ProductCatalogTableRow = (p: { product: ProductFullData }) => {
     let reserved = 0
 
     if (selectedStorage != null) {
-        available = p.product.productStorageQuantity[p.product.product.id][selectedStorage.id] - p.product.productStorageReserved[p.product.product.id][selectedStorage.id]
-        reserved = p.product.productStorageReserved[p.product.product.id][selectedStorage.id]
+        //available = p.product.productStorageQuantity[p.product.product.id][selectedStorage.id] - p.product.productStorageReserved[p.product.product.id][selectedStorage.id]
+        //reserved = p.product.productStorageReserved[p.product.product.id][selectedStorage.id]
     }
     let rowStyle = {}
     let availableStyle = {}

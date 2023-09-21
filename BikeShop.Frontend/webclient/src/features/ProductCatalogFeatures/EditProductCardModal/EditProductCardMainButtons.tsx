@@ -2,12 +2,14 @@ import React from 'react'
 import s from './EditProductCardMainButtons.module.scss'
 import {Button} from '../../../shared/ui'
 import useEditProductCardModal from "./EditProductCardModalStore";
+import {ProductFullData} from "../../../entities";
 
 interface MainButtonsProps {
     setOpen: (value: boolean) => void
+    onUpd: (p: ProductFullData) => void
 }
 
-export const EditProductCardMainButtons: React.FC<MainButtonsProps> = ({setOpen}) => {
+export const EditProductCardMainButtons: React.FC<MainButtonsProps> = ({setOpen, onUpd}) => {
     const updateProductCard = useEditProductCardModal(s => s.updateProductCard)
 
     return (
@@ -17,7 +19,9 @@ export const EditProductCardMainButtons: React.FC<MainButtonsProps> = ({setOpen}
             }}>
                 Закрыть
             </Button>
-            <Button onClick={updateProductCard}>
+            <Button onClick={() => {
+                updateProductCard(onUpd)
+            }}>
                 Сохранить
             </Button>
         </div>

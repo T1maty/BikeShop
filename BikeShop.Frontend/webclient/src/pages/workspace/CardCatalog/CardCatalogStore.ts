@@ -3,7 +3,7 @@ import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import {ProductCatalogResponse} from "../../../entities/models/ProductCatalogResponse";
 import {GetCatalogDataRequest} from "../../../entities/models/GetCatalogDataRequest";
-import {EntitiesAPI, ProductCardAPI, useAuth} from "../../../entities";
+import {EntitiesAPI, ProductCardAPI, ProductFullData, useAuth} from "../../../entities";
 import {CreateStorageResponse} from "../../../entities/DataTransferObjects/responses/StorageResponse";
 
 interface p {
@@ -15,9 +15,19 @@ interface p {
     getStorages: () => void
     selectedStorage: CreateStorageResponse | null
     setSelectedStorage: (storageId: number) => void
+    updateItem: (p: ProductFullData) => void
 }
 
 const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
+    updateItem: (p) => {
+        let nd = get().catalogState?.products.map(n => {
+            if (n.product.id == p.product.id) return p
+            return n
+        })
+        let fids = p.bindedProducts.map(n => n.id).filter(n => n != p.product.id)
+        nd = nd!.filter(n => !fids.includes(n.product.id))
+        set({catalogState: {...get().catalogState!, products: nd!}})
+    },
     catalogState: null,
     isLoading: false,
     getCatalogState: () => {

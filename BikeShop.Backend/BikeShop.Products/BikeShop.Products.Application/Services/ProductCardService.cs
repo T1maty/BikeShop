@@ -313,6 +313,8 @@ namespace BikeShop.Products.Application.Services
             var forRemove = _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).Where(n => !vIds.Contains(n.Id));
             _context.ProductOptionVariantBinds.RemoveRange(forRemove);
 
+            List<int> onUpd = new List<int> {product.Id };
+
             if (dto.bindedProducts.Count == 1)
             {
                 _context.ProductBinds.RemoveRange(_context.ProductBinds.Where(n => n.ProductId == dto.Id));
@@ -321,6 +323,7 @@ namespace BikeShop.Products.Application.Services
             {
                 var existProdBinds = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n => n.ChildrenId, n => n);
                 List<ProductBind> newProdBinds = new List<ProductBind>();
+                onUpd.AddRange(existProdBinds.Values.Select(n => n.ChildrenId).ToList());
 
                 foreach (var prod in dto.bindedProducts)
                 {
@@ -334,17 +337,15 @@ namespace BikeShop.Products.Application.Services
                         existProdBinds.Remove(prod.Id);
                     }
                 }
-                List<int> onUpd = new List<int>();
-                onUpd.AddRange(existProdBinds.Values.Select(n=>n.ChildrenId).ToList());
                 onUpd.AddRange(newProdBinds.Select(n=>n.ChildrenId));
-                onUpd.Add(product.Id);
-                await UpdateIsMaster(onUpd);
                 _context.ProductBinds.RemoveRange(existProdBinds.Values.ToList());
                 await _context.ProductBinds.AddRangeAsync(newProdBinds);
             }
 
             
             await _context.SaveChangesAsync(new CancellationToken());
+
+            await UpdateIsMaster(onUpd);
 
             return await GetProductCard(dto.Id);
         }
@@ -355,8 +356,8 @@ namespace BikeShop.Products.Application.Services
             var prods = await _context.Products.Where(n => ids.Contains(n.Id)).ToListAsync();
             var binds = await _context.ProductBinds.Where(n=>ids.Contains(n.ProductId) || ids.Contains(n.ChildrenId)).ToListAsync();
 
-            var masters = binds.Select(n => n.ProductId);
-            var slaves = binds.Select(n => n.ChildrenId);
+            var masters = binds.Select(n => n.ProductId).ToList();
+            var slaves = binds.Select(n => n.ChildrenId).ToList();
             foreach (var p in prods)
             {
                 if(masters.Contains(p.Id)) p.IsMaster = true;

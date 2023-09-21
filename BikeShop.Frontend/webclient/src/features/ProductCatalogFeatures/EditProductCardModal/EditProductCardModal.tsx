@@ -5,12 +5,12 @@ import {useSnackbar} from 'notistack'
 import {CustomModal, LoaderScreen} from '../../../shared/ui'
 import {EditProductCardGallery} from './EditProductCardGallery'
 import {EditProductCardStatus} from './EditProductCardStatus'
-import {ProductImage} from '../../../entities'
+import {ProductFullData, ProductImage} from '../../../entities'
 import {EditProductCardDescriptionFull} from './EditProductCardDescriptionFull'
 import {EditProductCardOptionBind} from './EditProductCardOptionBind'
 import {EditProductCardMainButtons} from './EditProductCardMainButtons'
 
-export const EditProductCardModal = () => {
+export const EditProductCardModal = (p: { onUpd?: (p: ProductFullData) => void }) => {
 
     const {enqueueSnackbar} = useSnackbar()
 
@@ -57,7 +57,9 @@ export const EditProductCardModal = () => {
                                 Product Info
                             </div>
                             <EditProductCardStatus name={'checkStatus'}/>
-                            <EditProductCardMainButtons setOpen={setOpen}/>
+                            <EditProductCardMainButtons setOpen={setOpen} onUpd={(prod) => {
+                                p.onUpd ? p.onUpd(prod) : null
+                            }}/>
                         </div>
 
                         <div className={s.editProductCardModal_scrollContainer}>
