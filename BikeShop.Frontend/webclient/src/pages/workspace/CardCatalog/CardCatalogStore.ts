@@ -9,7 +9,7 @@ import {CreateStorageResponse} from "../../../entities/DataTransferObjects/respo
 interface p {
     isLoading: boolean
     catalogState: ProductCatalogResponse | null
-    getCatalogState: () => void
+    getCatalogState: (categoryId: number) => void
 
     storages: CreateStorageResponse[]
     getStorages: () => void
@@ -30,10 +30,10 @@ const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
     },
     catalogState: null,
     isLoading: false,
-    getCatalogState: () => {
+    getCatalogState: (categoryId) => {
         let data: GetCatalogDataRequest = {
-            categoryId: 2,
-            storageId: 1,
+            categoryId: categoryId,
+            storageId: get().selectedStorage!.id,
             page: 1,
             pageSize: 20,
             filtersVariantIds: [],

@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import s from './SelectProductWork.module.scss'
 import {AsyncSelectSearchProduct, Button, UniTable} from '../../../shared/ui'
-import {ProductTagCloud, TagTreeView} from "../../../widgets"
+import {TagTreeView} from "../../../widgets"
 import useSelectProduct from "./SelectProductStore"
 import {columns} from "./SlaveTableConfig"
-import {ProductCategory, ServiceProduct} from "../../../entities"
+import {ServiceProduct} from "../../../entities"
 import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {Product} from "entities"
@@ -20,7 +20,6 @@ export const SelectProduct = (props: SelectProductProps) => {
 
     const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
     const conv = useSelectProduct(s => s.convert)
-    const [tags, setTags] = useState<ProductCategory[]>([])
 
     const addProductHandler = (product: Product) => {
         let prods = props.products
@@ -39,10 +38,10 @@ export const SelectProduct = (props: SelectProductProps) => {
         <div className={s.selectProduct_mainBox}>
             <div className={s.selectProduct_mainBox_leftSide}>
                 <div className={s.leftSide_header}>
-                    <ProductTagCloud tags={tags} setTags={setTags}/>
+
                 </div>
                 <div className={s.leftSide_treeView}>
-                    <TagTreeView tags={tags} setTags={setTags}/>
+                    <TagTreeView/>
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>

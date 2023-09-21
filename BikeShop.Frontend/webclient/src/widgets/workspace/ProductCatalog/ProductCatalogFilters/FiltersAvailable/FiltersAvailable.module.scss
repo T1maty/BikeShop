@@ -1,6 +1,9 @@
 .wrapper {
   border-radius: 20px;
   height: 100%;
+  overflow: auto;
+  margin-right: 10px;
+  margin-bottom: 10px;
 
   .main_label {
     font-weight: bold;

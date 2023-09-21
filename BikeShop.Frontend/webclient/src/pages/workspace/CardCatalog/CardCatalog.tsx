@@ -1,22 +1,30 @@
 import React, {useEffect} from 'react';
 import s from './CardCatalog.module.scss'
-import {ProductCatalogTable} from "../../../widgets";
+import {ProductCatalogTable, TagTreeView} from "../../../widgets";
 import useCardCatalogStore from "./CardCatalogStore";
 import ProductCatalogTableHeader
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableHeader";
+import ProductCatalogFilters
+    from "../../../widgets/workspace/ProductCatalog/ProductCatalogFilters/ProductCatalogFilters";
 
 const CardCatalog = () => {
     const getState = useCardCatalogStore(s => s.getCatalogState)
     const getStorages = useCardCatalogStore(s => s.getStorages)
+    const getCatalogState = useCardCatalogStore(s => s.getCatalogState)
 
     useEffect(() => {
-        getState()
         getStorages()
     }, [])
     return (
         <div className={s.wrapper}>
-            <div className={s.trees}></div>
-
+            <div className={s.trees}>
+                <div className={s.filters}><ProductCatalogFilters/></div>
+                <div className={s.categories}><TagTreeView onNodeClick={(n) => {
+                    getState(n.id)
+                }} onNodeContext={n => {
+                    getState(n.id)
+                }}/></div>
+            </div>
             <div className={s.table}>
                 <div className={s.table_header}><ProductCatalogTableHeader/></div>
                 <div className={s.table_data}><ProductCatalogTable/></div>

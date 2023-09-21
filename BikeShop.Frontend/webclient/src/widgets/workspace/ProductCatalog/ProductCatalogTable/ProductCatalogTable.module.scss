@@ -1,5 +1,6 @@
 .wrapper {
   height: 100%;
+  width: 100%;
   overflow: auto;
   padding: 10px;
   border: 2px black solid;
@@ -8,7 +9,7 @@
   .row {
     border: 2px white solid;
     border-radius: 20px;
-    padding: 3px 3px 0px 3px;
+    padding: 3px 3px 0 3px;
     display: flex;
     flex-direction: column;
     //gap: 5px;

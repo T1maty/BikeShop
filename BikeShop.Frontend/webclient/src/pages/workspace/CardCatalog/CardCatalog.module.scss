@@ -6,10 +6,21 @@
   height: 1vw;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
 
   .trees {
-    border: 1px white solid;
+    display: flex;
+    gap: 15px;
+
+    .filters {
+      background-color: $themeColorDark;
+      border-radius: 25px;
+    }
+
+    .categories {
+      background-color: $themeColorDark;
+      border-radius: 25px;
+    }
   }
 
   .table {

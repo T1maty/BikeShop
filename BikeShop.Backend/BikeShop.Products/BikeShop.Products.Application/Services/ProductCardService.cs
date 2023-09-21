@@ -131,7 +131,9 @@ namespace BikeShop.Products.Application.Services
             var FiltersWhitelist = FindCommonElements(FilterArrays);
             
             //Получили все товары, которае подходят под категорию и ее потомков.
-            var ProductsQuerry = _context.Products.Where(n => category.ChildrenIdsList.Contains(n.CategoryId)).Where(n=>n.IsMaster == true);
+            List<int> allCatids = category.ChildrenIdsList.Select(n=>n).ToList();
+            allCatids.Add(category.Id);
+            var ProductsQuerry = _context.Products.Where(n => allCatids.Contains(n.CategoryId)).Where(n=>n.IsMaster == true);
             //Если были указаны фильтры, фильтруем. 
             if (FiltersWhitelist.Count > 0) ProductsQuerry = ProductsQuerry.Where(n => FiltersWhitelist.Contains(n.Id));
 

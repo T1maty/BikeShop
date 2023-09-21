@@ -21,7 +21,9 @@ export const ChooseProductTagModal: React.FC<ChooseProductTagModalProps> = ({onT
         >
             <div className={s.addProductCardTagModal_mainBox}>
                 <div className={s.addProductCardTagModal_content}>
-                    <TagTreeView onNodeDoubleClick={onTagDoubleClick} NOTchangeProducts/>
+                    <TagTreeView onNodeDoubleClick={(n: ProductCategory) => {
+                        onTagDoubleClick ? onTagDoubleClick(n) : null
+                    }}/>
                 </div>
             </div>
         </CustomModal>

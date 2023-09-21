@@ -13,7 +13,6 @@ import Select from 'react-select'
 import {selectColorStyles} from '../../../app/styles/variables/selectColorStyles'
 import {useProductCatalogStorage} from "./ProductCatalogStorage"
 import DisplayModal from "../../../widgets/workspace/ProductCatalog/DisplayModal";
-import {ProductCategory} from "../../../entities";
 import ProductCatalogFilters
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogFilters/ProductCatalogFilters";
 import CatTable from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/CatTable";
@@ -28,26 +27,10 @@ export const ProductCatalog = () => {
     const getStorages = useCreateStorageModal(s => s.getStorages)
     const selectedStorage = useCreateStorageModal(s => s.selectedStorage)
     const setSelectedStorage = useCreateStorageModal(s => s.setSelectedStorage)
-
     const loadStorageData = useProductCatalogStorage(s => s.loadStorageData)
     const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
     const setRows = useProductCatalogTableStore(s => s.setRows)
-    const productCards = useProductCatalogTableStore(s => s.productCards)
 
-    const storageData = useProductCatalogStorage(s => s.storageData)
-
-    const isLoading = useProductCatalogTableStore(s => s.isLoading)
-    const rows = useProductCatalogTableStore(s => s.rows)
-    const updateRow = useProductCatalogTableStore(s => s.updateRow)
-    const addNewProduct = useProductCatalogTableStore(s => s.addNewProduct)
-    const setContextVisible = useProductCatalogTableStore(s => s.setOpen)
-    const displayedRows = useProductCatalogTableStore(s => s.displayedRows)
-    const reloadDisplayedRows = useProductCatalogTableStore(s => s.reloadDisplayedRows)
-    const getProductCards = useProductCatalogTableStore(s => s.getProductCards)
-
-    const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
-
-    const [tags, setTags] = useState<ProductCategory[]>([])
     const [displayModal, setDisplayModal] = useState(false)
 
     useEffect(() => {
@@ -59,6 +42,7 @@ export const ProductCatalog = () => {
                 })
         }
     }, [isError])
+
 
     useEffect(() => {
         getStorages()
@@ -80,7 +64,14 @@ export const ProductCatalog = () => {
             </div>
             <div className={s.productCatalogTable_leftSide}>
                 <div className={s.leftSide_tree}>
-                    <TagTreeView tags={tags} setTags={setTags}/>
+                    <TagTreeView onNodeDoubleClick={(n) => {
+                        setProductsToTable(n.id)
+                    }}
+                                 onNodeContext={(n) => {
+                                     setProductsToTable(n.id)
+                                 }} onNodeClick={(n) => {
+                        setProductsToTable(n.id)
+                    }}/>
                 </div>
             </div>
 
