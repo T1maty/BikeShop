@@ -669,7 +669,7 @@
 	{
       "UpstreamPathTemplate": "/api/productcard/search",
       "UpstreamHttpMethod": [
-        "Get"
+        "Post"
       ],
       "DownstreamPathTemplate": "/productcard/search",
       "DownstreamScheme": "http",

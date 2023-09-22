@@ -18,6 +18,11 @@ export const ProductCardAPI = {
             $api.post<ProductCatalogResponse>(`/productcard/bycategory`, data)
         )
     },
+    getByCategory(data: GetCatalogDataRequest): Promise<AxiosResponse<ProductCatalogResponse>> {
+        return (
+            $api.post<ProductCatalogResponse>(`/productcard/bycategory`, data)
+        )
+    },
     updateProductCard(data: UpdateProductCardFormModel): Promise<AxiosResponse<ProductFullData>> {
         return (
             $api.put<ProductFullData>('/productcard/updateproductcard', data)
