@@ -10,9 +10,25 @@ const ProductCatalogTableHeader = () => {
     const selectedStorage = useCardCatalogStore(s => s.selectedStorage)
     const setSelectedStorage = useCardCatalogStore(s => s.setSelectedStorage)
     const storages = useCardCatalogStore(s => s.storages)
+    const sortMode = useCardCatalogStore(s => s.sortMode)
+    const setSortMode = useCardCatalogStore(s => s.setSortMode)
 
+    let opt = [{name: "SortByStorageDescend"}, {name: "SortByStorageAscend"}]
     return (
         <>
+            <div className={s.table_header_sort}>
+                <Select
+                    isClearable
+                    placeholder={'Сортировка'}
+                    isSearchable={false}
+                    options={opt}
+                    value={sortMode}
+                    onChange={setSortMode}
+                    getOptionLabel={label => label.name}
+                    getOptionValue={value => value.name}
+                    styles={selectColorStyles}
+                />
+            </div>
             <div className={s.table_header_search}><AsyncSelectSearchProduct onSelect={() => {
             }}/></div>
             <div className={s.table_header_storage}>

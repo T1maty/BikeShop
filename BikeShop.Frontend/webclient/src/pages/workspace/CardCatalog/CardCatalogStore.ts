@@ -5,6 +5,7 @@ import {ProductCatalogResponse} from "../../../entities/models/ProductCatalogRes
 import {GetCatalogDataRequest} from "../../../entities/models/GetCatalogDataRequest";
 import {EntitiesAPI, ProductCardAPI, ProductFullData, useAuth} from "../../../entities";
 import {CreateStorageResponse} from "../../../entities/DataTransferObjects/responses/StorageResponse";
+import {SingleValue} from "react-select";
 
 interface p {
     isLoading: boolean
@@ -16,9 +17,14 @@ interface p {
     selectedStorage: CreateStorageResponse | null
     setSelectedStorage: (storageId: number) => void
     updateItem: (p: ProductFullData) => void
+
+    sortMode: { name: string } | null
+    setSortMode: (v: SingleValue<{ name: string }>) => void
 }
 
 const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
+    sortMode: null,
+    setSortMode: (v) => set({sortMode: v}),
     updateItem: (p) => {
         let nd = get().catalogState?.products.map(n => {
             if (n.product.id == p.product.id) return p
@@ -39,6 +45,8 @@ const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
             filtersVariantIds: [],
             sortingSettings: []
         }
+        let ss = get().sortMode
+        if (ss != null) data.sortingSettings = [ss.name]
 
         set({isLoading: true})
         ProductCardAPI.getByCategory(data).then(r => {

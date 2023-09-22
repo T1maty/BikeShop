@@ -6,15 +6,17 @@ import ProductCatalogTableHeader
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableHeader";
 import ProductCatalogFilters
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogFilters/ProductCatalogFilters";
+import ProductCatalogTablePaggination
+    from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTablePaggination";
 
 const CardCatalog = () => {
     const getState = useCardCatalogStore(s => s.getCatalogState)
     const getStorages = useCardCatalogStore(s => s.getStorages)
-    const getCatalogState = useCardCatalogStore(s => s.getCatalogState)
 
     useEffect(() => {
         getStorages()
     }, [])
+
     return (
         <div className={s.wrapper}>
             <div className={s.trees}>
@@ -28,6 +30,7 @@ const CardCatalog = () => {
             <div className={s.table}>
                 <div className={s.table_header}><ProductCatalogTableHeader/></div>
                 <div className={s.table_data}><ProductCatalogTable/></div>
+                <div className={s.table_pag}><ProductCatalogTablePaggination/></div>
             </div>
         </div>
     );

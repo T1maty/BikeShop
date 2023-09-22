@@ -7,6 +7,7 @@ import ScheduleContextItem from "../../../entities/models/Schedule/ScheduleConte
 import ScheduleContextEmptyItem from "../../../entities/models/Schedule/ScheduleContextEmptyItem";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css';
+import {LoaderScreen} from "../../../shared/ui";
 
 const SchedulePage = () => {
     const selectedShop = useSchedule(s => s.selectedShop)
@@ -22,6 +23,7 @@ const SchedulePage = () => {
     const timePickerValue = useSchedule(s => s.timePickerValue)
     const setTimePickerValue = useSchedule(s => s.setTimePickerValue)
     const setSelectedUser = useSchedule(s => s.setSelectedUser)
+    const isLoading = useSchedule(s => s.isLoading)
 
     const [itemContext, setItemContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
     const [itemContextE, setItemContextE] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
@@ -48,7 +50,7 @@ const SchedulePage = () => {
         day.setDate(startDate.getDate() + i);
         return day;
     });
-
+    if (isLoading) return (<LoaderScreen variant={"ellipsis"}/>)
     return (
         <div className={s.wrapper} onContextMenu={e => e.preventDefault()}>
             <ScheduleContextItem open={itemContext} setOpen={setItemContext}/>

@@ -173,7 +173,7 @@ namespace BikeShop.Products.Application.Services
 
             var Products = await ProductsQuerry.Skip(Skip).Take(Result.PageSize).ToListAsync();
             var ProdsFinishIds = Products.Select(n => n.Id);
-            var TotalProducts = (decimal)(Products.Count);
+            var TotalProducts = (decimal)(await ProductsQuerry.CountAsync());
             var div = TotalProducts / (decimal)Result.PageSize;
             Result.TotalPages = (int)Math.Ceiling(div);
             Result.StorageId = dto.StorageId;

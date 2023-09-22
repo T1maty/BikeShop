@@ -1,8 +1,4 @@
-import React, {
-    AllHTMLAttributes, HTMLAttributes,
-    type MouseEvent, type ReactNode,
-    useCallback, useEffect, useRef, useState
-} from 'react'
+import React, {HTMLAttributes, type ReactNode, useCallback, useEffect, useRef, useState} from 'react'
 import cls from './CustomModal.module.scss'
 import clsx from "clsx"
 import {Portal} from "../../../widgets/workspace/Portal/Portal"
@@ -30,7 +26,7 @@ export const CustomModal = (props: ModalProps) => {
     const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
     const closeHandler = useCallback(() => {
-            if (onClose) {
+        if (onClose) {
             setIsClosing(true)
             timerRef.current = setTimeout(() => {
                 onClose()
@@ -55,9 +51,6 @@ export const CustomModal = (props: ModalProps) => {
         }
     }, [open, onKeyDown])
 
-    const onContentClick = (e: MouseEvent): void => {
-        e.stopPropagation()
-    }
     if (!open) return null
 
     const mods: Record<string, boolean> = {
@@ -68,8 +61,10 @@ export const CustomModal = (props: ModalProps) => {
     return (
         <Portal>
             <div className={clsx(cls.Modal, mods, [className])} {...restProps}>
-                <div className={cls.overlay} onClick={closeHandler}>
-                    <div className={cls.content} onClick={onContentClick}>
+                <div className={cls.overlay} onMouseUp={closeHandler}>
+                    <div className={cls.content} onMouseUp={(event) => {
+                        event.stopPropagation()
+                    }}>
                         {children}
                     </div>
                 </div>

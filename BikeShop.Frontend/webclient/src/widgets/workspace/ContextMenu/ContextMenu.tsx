@@ -1,7 +1,4 @@
-﻿import React, {
-    memo, MouseEvent, useCallback,
-    useEffect, useRef, useState
-} from 'react'
+﻿import React, {memo, MouseEvent, useCallback, useEffect, useRef, useState} from 'react'
 import cls from './ContextMenu.module.scss'
 import {Button} from "shared/ui"
 import {Portal} from "../Portal/Portal"
@@ -10,7 +7,6 @@ import clsx from "clsx"
 interface ContextMenuProps {
     isOpen: boolean
     onClose?: (variant?: string) => void
-    // settings: string[]
     settings: SettingsType[]
     top?: number
     left?: number
@@ -30,12 +26,18 @@ export const ContextMenu = memo(({isOpen, onClose, settings, top, left}: Context
 
     const closeHandler = useCallback((e?: MouseEvent, value?: string, click?: any) => {
         if (onClose) {
-            { click ? click() : '' } // добавлено
-            setIsClosing(true)
-            timerRef.current = setTimeout(() => {
+            {
+                click ? click() : ''
+            } // добавлено
+            //setIsClosing(true)
+            onClose(value)
+
+            /*timerRef.current = setTimeout(() => {
                 onClose(value)
                 setIsClosing(false)
             }, ANIMATION_DELAY)
+
+             */
         }
     }, [onClose])
 
@@ -76,19 +78,9 @@ export const ContextMenu = memo(({isOpen, onClose, settings, top, left}: Context
                 >
                     <div className={cls.content}
                          onClick={(e) => e.stopPropagation()}
-                         style={{left: left, top: top}}
+                         style={{left: left! + 10, top: top! + 10}}
                     >
                         {
-                            // settings.map((value, index) => (
-                            //     <Button key={index}
-                            //             className={cls.button}
-                            //             onAnimate={false}
-                            //             onClick={e => closeHandler(e, e.currentTarget.textContent as string)}
-                            //     >
-                            //         {value}
-                            //     </Button>
-                            // ))
-
                             settings.map((el, index) => (
                                 <Button key={index}
                                         className={cls.button}

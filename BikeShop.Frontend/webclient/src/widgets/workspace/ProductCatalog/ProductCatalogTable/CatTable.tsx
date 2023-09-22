@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ProductCatalogTableContextMenu} from "./ProductCatalogTableContextMenu";
 import {UpdateProductModal, UpdateProductPricesModal} from "../../../../features";
 import {CreateProductModal} from "../CreateProductModal/CreateProductModal";
@@ -7,6 +7,7 @@ import {columns} from "./ProductCatalogTableConfig";
 import {Product} from "../../../../entities";
 import useProductCatalogTableStore from "./ProductCatalogTableStore";
 import {useProductCatalogStorage} from "../../../../pages/workspace/ProductCatalog/ProductCatalogStorage";
+import useProductCatalogFiltersStore from "../ProductCatalogFilters/ProductCatalogFiltersStore";
 
 const CatTable = (p: { onRowDoubleClick: (p: Product) => void }) => {
     const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
@@ -23,6 +24,12 @@ const CatTable = (p: { onRowDoubleClick: (p: Product) => void }) => {
     const displayedRows = useProductCatalogTableStore(s => s.displayedRows)
     const reloadDisplayedRows = useProductCatalogTableStore(s => s.reloadDisplayedRows)
     const getProductCards = useProductCatalogTableStore(s => s.getProductCards)
+    const getFilters = useProductCatalogFiltersStore(s => s.getFilters)
+
+    useEffect(() => {
+        getFilters(rows.map(n => n.id))
+
+    }, [rows])
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)
     return (

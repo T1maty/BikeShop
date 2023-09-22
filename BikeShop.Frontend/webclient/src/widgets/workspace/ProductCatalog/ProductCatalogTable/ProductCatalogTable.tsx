@@ -11,7 +11,10 @@ export const ProductCatalogTable = () => {
     const updateItem = useCardCatalogStore(s => s.updateItem)
     const isLoading = useCardCatalogStore(s => s.isLoading)
 
-    if (isLoading) return (<div className={s.wrapper}><Loader variant={"ellipsis"}/></div>)
+    if (isLoading) return (
+        <div className={s.wrapper} style={{display: "flex", justifyContent: "center"}}><Loader
+            variant={"ellipsis"}/>
+        </div>)
     return (
         <div className={s.wrapper}>
             <EditProductCardModal onUpd={updateItem}/>

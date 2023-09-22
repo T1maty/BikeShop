@@ -89,7 +89,7 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
             finish: w2.toISOString().replace('Z', "+03:00"),
             role: ""
         }
-        set({isLoading: false})
+        set({isLoading: true})
         ScheduleAPI.addShift(data).then(r => {
             set(state => {
                 state.scheduleItems.push(r.data.scheduleItem)

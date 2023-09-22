@@ -189,6 +189,9 @@ export const MainPage = () => {
                                 <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.PRODUCT_CATALOG)}>
                                     Каталог товаров
                                 </Button>
+                                <Button onClick={() => navigate(BikeShopPaths.WORKSPACE.CARD_CATALOG)}>
+                                    Каталог карт товаров
+                                </Button>
                                 <Button onClick={() => {
                                     navigate(BikeShopPaths.WORKSPACE.WORK_CATALOG)
                                 }}>
