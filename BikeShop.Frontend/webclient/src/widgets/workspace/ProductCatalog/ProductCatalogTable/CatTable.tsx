@@ -25,10 +25,11 @@ const CatTable = (p: { onRowDoubleClick: (p: Product) => void }) => {
     const reloadDisplayedRows = useProductCatalogTableStore(s => s.reloadDisplayedRows)
     const getProductCards = useProductCatalogTableStore(s => s.getProductCards)
     const getFilters = useProductCatalogFiltersStore(s => s.getFilters)
+    const selectedFilters = useProductCatalogFiltersStore(s => s.selectedFilters)
 
     useEffect(() => {
         getFilters(rows.map(n => n.id))
-
+        reloadDisplayedRows(selectedFilters, storageData)
     }, [rows])
 
     const setSelected = useProductCatalogTableStore(s => s.setSelectedRows)

@@ -12,6 +12,9 @@ import ProductCatalogTablePaggination
 const CardCatalog = () => {
     const getState = useCardCatalogStore(s => s.getCatalogState)
     const getStorages = useCardCatalogStore(s => s.getStorages)
+    const setSelectedPage = useCardCatalogStore(s => s.setSelectedPage)
+    const setLastCategoryId = useCardCatalogStore(s => s.setLastCategoryId)
+    const selectedPage = useCardCatalogStore(s => s.selectedPage)
 
     useEffect(() => {
         getStorages()
@@ -22,9 +25,11 @@ const CardCatalog = () => {
             <div className={s.trees}>
                 <div className={s.filters}><ProductCatalogFilters/></div>
                 <div className={s.categories}><TagTreeView onNodeClick={(n) => {
-                    getState(n.id)
+                    setLastCategoryId(n.id)
+                    setSelectedPage(1)
                 }} onNodeContext={n => {
-                    getState(n.id)
+                    setLastCategoryId(n.id)
+                    setSelectedPage(1)
                 }}/></div>
             </div>
             <div className={s.table}>

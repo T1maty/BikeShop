@@ -33,6 +33,12 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _productCardService.GetProductCardByCategory(dto);
         }
 
+        [HttpGet("search")]
+        public async Task<ProductCatalogPageDTO> Search(ProductCardCatalogSearchDTO dto)
+        {
+            return await _productCardService.Search(dto);
+        }
+
 
         [HttpPut("updateproductcard")]
         public async Task<ProductCardDTO> UpdateProductCard(UpdateProductCardDTO dto)

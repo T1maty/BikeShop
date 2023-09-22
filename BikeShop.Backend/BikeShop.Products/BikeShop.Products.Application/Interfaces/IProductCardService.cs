@@ -23,6 +23,8 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<OptionDTO> AddOptionVariant(int optionId, string name);
         public Task<List<ProductFilterDTO>> GetFiltersByProducts(List<int> ids);
         public Task<ProductCatalogPageDTO> GetProductCardByCategory(ProductCardCatalogRequestDTO dto);
+        public Task<ProductCatalogPageDTO> Search(ProductCardCatalogSearchDTO dto);
+
 
 
     }

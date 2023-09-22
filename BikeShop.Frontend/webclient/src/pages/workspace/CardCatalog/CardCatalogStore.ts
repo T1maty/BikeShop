@@ -10,7 +10,7 @@ import {SingleValue} from "react-select";
 interface p {
     isLoading: boolean
     catalogState: ProductCatalogResponse | null
-    getCatalogState: (categoryId: number) => void
+    getCatalogState: () => void
 
     storages: CreateStorageResponse[]
     getStorages: () => void
@@ -20,9 +20,22 @@ interface p {
 
     sortMode: { name: string } | null
     setSortMode: (v: SingleValue<{ name: string }>) => void
+
+    selectedPage: number
+    setSelectedPage: (v: number) => void
+
+    lastCategoryId: number | null
+    setLastCategoryId: (v: number) => void
 }
 
 const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
+    lastCategoryId: null,
+    setLastCategoryId: (v) => set({lastCategoryId: v}),
+    selectedPage: 1,
+    setSelectedPage: (v) => {
+        set({selectedPage: v})
+        get().getCatalogState()
+    },
     sortMode: null,
     setSortMode: (v) => set({sortMode: v}),
     updateItem: (p) => {
@@ -36,18 +49,18 @@ const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
     },
     catalogState: null,
     isLoading: false,
-    getCatalogState: (categoryId) => {
+    getCatalogState: () => {
+        if (get().lastCategoryId === null) return
         let data: GetCatalogDataRequest = {
-            categoryId: categoryId,
+            categoryId: get().lastCategoryId!,
             storageId: get().selectedStorage!.id,
-            page: 1,
+            page: get().selectedPage,
             pageSize: 20,
             filtersVariantIds: [],
             sortingSettings: []
         }
         let ss = get().sortMode
         if (ss != null) data.sortingSettings = [ss.name]
-
         set({isLoading: true})
         ProductCardAPI.getByCategory(data).then(r => {
             console.log(r.data)
