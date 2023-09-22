@@ -6,6 +6,7 @@ import {
 import {$api} from "../../shared";
 import {ProductCatalogResponse} from "../models/ProductCatalogResponse";
 import {GetCatalogDataRequest} from "../models/GetCatalogDataRequest";
+import {GetCatalogDataSearchRequest} from "../models/GetCatalogDataSearchRequest";
 
 export const ProductCardAPI = {
     getProductCardById(productId: number): Promise<AxiosResponse<ProductFullData>> {
@@ -18,9 +19,9 @@ export const ProductCardAPI = {
             $api.post<ProductCatalogResponse>(`/productcard/bycategory`, data)
         )
     },
-    getByCategory(data: GetCatalogDataRequest): Promise<AxiosResponse<ProductCatalogResponse>> {
+    search(data: GetCatalogDataSearchRequest): Promise<AxiosResponse<ProductCatalogResponse>> {
         return (
-            $api.post<ProductCatalogResponse>(`/productcard/bycategory`, data)
+            $api.post<ProductCatalogResponse>(`/productcard/search`, data)
         )
     },
     updateProductCard(data: UpdateProductCardFormModel): Promise<AxiosResponse<ProductFullData>> {

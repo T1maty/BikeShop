@@ -477,7 +477,8 @@ namespace BikeShop.Products.Application.Services
                 card.productOptions = AllOptionBinds.Where(n => n.ProductId == p.Id).ToList();
                 card.ProductStorageReserved = Product_StorageReserved.Where(n => allIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
                 card.ProductStorageQuantity = Product_StorageQuantity.Where(n => allIds.Contains(n.Key)).ToDictionary(n => n.Key, n => n.Value);
-                card.productCategory = allCats[p.CategoryId];
+                allCats.TryGetValue(p.CategoryId, out var c);
+                card.productCategory = c;
                 card.productImages = AllImages.Where(n => allIds.Contains(n.ProductId)).ToList();
 
                 prd.Add(card);

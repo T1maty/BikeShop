@@ -1,10 +1,9 @@
 import React from 'react';
 import s from '../../../../pages/workspace/CardCatalog/CardCatalog.module.scss'
-
-import {AsyncSelectSearchProduct} from "../../../../shared/ui";
 import {selectColorStyles} from "../../../../app/styles/variables/selectColorStyles";
 import Select from "react-select";
 import useCardCatalogStore from "../../../../pages/workspace/CardCatalog/CardCatalogStore";
+import {AsyncSelectSearchProductCard} from "../../../../shared/ui/AsyncSelectSearch/AsyncSelectSearchProductCard";
 
 const ProductCatalogTableHeader = () => {
     const selectedStorage = useCardCatalogStore(s => s.selectedStorage)
@@ -29,8 +28,8 @@ const ProductCatalogTableHeader = () => {
                     styles={selectColorStyles}
                 />
             </div>
-            <div className={s.table_header_search}><AsyncSelectSearchProduct onSelect={() => {
-            }}/></div>
+            <div className={s.table_header_search}><AsyncSelectSearchProductCard onSelect={() => {
+            }} selectedStorageId={selectedStorage ? selectedStorage.id : 0}/></div>
             <div className={s.table_header_storage}>
                 <Select
                     placeholder={'Склад'}
