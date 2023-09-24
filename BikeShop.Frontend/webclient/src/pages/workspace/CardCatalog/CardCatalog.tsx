@@ -10,11 +10,9 @@ import ProductCatalogTablePaggination
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTablePaggination";
 
 const CardCatalog = () => {
-    const getState = useCardCatalogStore(s => s.getCatalogState)
     const getStorages = useCardCatalogStore(s => s.getStorages)
     const setSelectedPage = useCardCatalogStore(s => s.setSelectedPage)
     const setLastCategoryId = useCardCatalogStore(s => s.setLastCategoryId)
-    const selectedPage = useCardCatalogStore(s => s.selectedPage)
 
     useEffect(() => {
         getStorages()

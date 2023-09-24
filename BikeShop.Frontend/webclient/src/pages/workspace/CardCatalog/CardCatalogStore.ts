@@ -6,11 +6,14 @@ import {GetCatalogDataRequest} from "../../../entities/models/GetCatalogDataRequ
 import {EntitiesAPI, ProductCardAPI, ProductFullData, useAuth} from "../../../entities";
 import {CreateStorageResponse} from "../../../entities/DataTransferObjects/responses/StorageResponse";
 import {SingleValue} from "react-select";
+import {GetCatalogDataSearchRequest} from "../../../entities/models/GetCatalogDataSearchRequest";
 
 interface p {
     isLoading: boolean
     catalogState: ProductCatalogResponse | null
+    setCatalogState: (v: ProductCatalogResponse | null) => void
     getCatalogState: () => void
+    getCatalogStateSearch: (querry: string) => void
 
     storages: CreateStorageResponse[]
     getStorages: () => void
@@ -29,6 +32,7 @@ interface p {
 }
 
 const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
+    setCatalogState: (v) => set({catalogState: v}),
     lastCategoryId: null,
     setLastCategoryId: (v) => set({lastCategoryId: v}),
     selectedPage: 1,
@@ -37,7 +41,10 @@ const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
         get().getCatalogState()
     },
     sortMode: null,
-    setSortMode: (v) => set({sortMode: v}),
+    setSortMode: (v) => {
+        set({sortMode: v})
+        get().getCatalogState()
+    },
     updateItem: (p) => {
         let nd = get().catalogState?.products.map(n => {
             if (n.product.id == p.product.id) return p
@@ -49,6 +56,26 @@ const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
     },
     catalogState: null,
     isLoading: false,
+    getCatalogStateSearch: (querry) => {
+        if (get().lastCategoryId === null) return
+        let data: GetCatalogDataSearchRequest = {
+            querry: querry,
+            storageId: get().selectedStorage!.id,
+            page: get().selectedPage,
+            pageSize: 20,
+            filtersVariantIds: [],
+            sortingSettings: []
+        }
+        let ss = get().sortMode
+        if (ss != null) data.sortingSettings = [ss.name]
+        set({isLoading: true})
+        ProductCardAPI.search(data).then(r => {
+            console.log(r.data)
+            set({catalogState: r.data})
+        }).finally(() => {
+            set({isLoading: false})
+        })
+    },
     getCatalogState: () => {
         if (get().lastCategoryId === null) return
         let data: GetCatalogDataRequest = {

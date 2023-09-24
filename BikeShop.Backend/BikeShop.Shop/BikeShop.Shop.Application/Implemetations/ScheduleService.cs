@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BikeShop.Shop.Application.Implemetations
 {
@@ -18,11 +19,13 @@ namespace BikeShop.Shop.Application.Implemetations
     {
         private readonly IApplicationDbContext _context;
         private readonly IIdentityClient _identityClient;
+        private readonly IShiftService _shiftService;
 
-        public ScheduleService(IApplicationDbContext context, IIdentityClient identityClient)
+        public ScheduleService(IApplicationDbContext context, IIdentityClient identityClient, IShiftService shiftService)
         {
             _context = context;
             _identityClient = identityClient;
+            _shiftService = shiftService;
         }
 
         public async Task<ResponseScheduleWithHistory> CreateHolydayItem(CreateHolydayItemDTO dto)
@@ -43,12 +46,15 @@ namespace BikeShop.Shop.Application.Implemetations
             var hist = new ScheduleHistory { ShopId = dto.ShopId, Action = ScheduleHistoryAction.AddHolyday.ToString(), ActionTargetUser= dto.TargetUser, ActionTargetUserFIO = userTargetFIO, ActionUser = dto.User, ActionUserFIO = userFIO, IsHolydayActual = true, IsHolydayPrev = false, ItemId = ent.Id, TimeStartActual = date, TimeFinishActual = date };
             await _context.ScheduleHistories.AddAsync(hist);
             await _context.SaveChangesAsync(new CancellationToken());
-            
-            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleItem = ent};
+
+            await _shiftService.UpdateScheduleShift(dto.TargetUser, date);
+
+            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleItem = await _context.ScheduleItems.FindAsync(ent.Id)};
         }
 
         public async Task<ResponseScheduleWithHistory> CreateScheduleItem(CreateScheduleItemDTO dto)
         {
+            if (dto.Start.Date != dto.Finish.Date) throw ScheduleErrors.NotSameSheduleDate;
             if ((await _context.ScheduleItems.Where(n => n.ShopId == dto.ShopId).Where(n=>n.TargetUser == dto.TargetUser).Where(n => n.TimeStart >= dto.Start.Date).Where(n => n.TimeFinish < dto.Finish.Date.AddDays(1)).ToListAsync()).Count > 0) throw ScheduleErrors.ShiftAlreadyExist;
 
             var userFIO = FIOFromUser(await _identityClient.GetById(dto.User));
@@ -74,8 +80,10 @@ namespace BikeShop.Shop.Application.Implemetations
             var hist = new ScheduleHistory { ShopId = dto.ShopId, Action = ScheduleHistoryAction.AddShift.ToString(), ActionTargetUser = dto.TargetUser, ActionTargetUserFIO = userTargetFIO, ActionUser = dto.User, ActionUserFIO = userFIO, IsHolydayActual = true, IsHolydayPrev = false, ItemId = ent.Id, TimeStartActual = dto.Start, TimeFinishActual = dto.Finish };
             await _context.ScheduleHistories.AddAsync(hist);
             await _context.SaveChangesAsync(new CancellationToken());
+            await _shiftService.UpdateScheduleShift(dto.TargetUser, dto.Start.Date);
 
-            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleItem = ent };
+
+            return new ResponseScheduleWithHistory { ScheduleHistory = hist, ScheduleItem = await _context.ScheduleItems.FindAsync(ent.Id) };
         }
 
         public async Task<ScheduleDTO> GetByShop(int shopId, DateTime? Start, DateTime? Finish)

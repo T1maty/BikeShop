@@ -60,5 +60,18 @@ namespace BikeShop.Shop.Application.Errors
                 };
             }
         }
+
+        public static BaseError NotSameSheduleDate
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "date",
+                    Error = "NotSameSheduleDate",
+                    ErrorDescription = "Start and finish of the date should be in one day."
+                };
+            }
+        }
     }
 }

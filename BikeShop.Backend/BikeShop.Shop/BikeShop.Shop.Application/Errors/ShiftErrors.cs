@@ -60,5 +60,18 @@ namespace BikeShop.Shop.Application.Errors
                 };
             }
         }
+
+        public static BaseError NoShiftsToday
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "action",
+                    Error = "NoShiftsToday",
+                    ErrorDescription = "No shifts today was found"
+                };
+            }
+        }
     }
 }

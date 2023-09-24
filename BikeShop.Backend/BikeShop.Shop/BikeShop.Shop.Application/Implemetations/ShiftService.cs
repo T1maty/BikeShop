@@ -31,6 +31,7 @@ namespace BikeShop.Shop.Application.Implemetations
             var item = new UserShiftItem { UserId = UserId, Action = ShiftStatus.Finish };
             await _context.UserShiftItems.AddAsync(item);
             await _context.SaveChangesAsync(new CancellationToken());
+            await UpdateScheduleShift(UserId, item.CreatedAt.Date);
             return item;
         }
 
@@ -44,23 +45,41 @@ namespace BikeShop.Shop.Application.Implemetations
                                                      .Where(n => n.Time < Stop)
                                                      .OrderBy(n => n.Time)
                                                      .ToListAsync();
+
+            if(items.Count == 0) return new TimeSpan(0);
             var result = new TimeSpan(0);
 
-            if(items.FirstOrDefault()!= null && items.FirstOrDefault().Action != ShiftStatus.Open && items.FirstOrDefault().Time.Date == Start.Date) 
-                result = result.Add(items.FirstOrDefault().Time - Start);
-
-            for (int i = 0; i < items.Count-1; i++)
+            var firstItem = items.FirstOrDefault();
+            if (firstItem.Action != ShiftStatus.Open)
             {
-                if (items[i + 1].Time.Date == items[i].Time.Date)
+                var prev = await _context.UserShiftItems.Where(n => n.Enabled == true)
+                                                     .Where(n => n.UserId == UserId)
+                                                     .OrderByDescending(n => n.Time)
+                                                     .Where(n => n.Time < firstItem.Time)
+                                                     .FirstOrDefaultAsync();
+
+                if (prev != null && prev.Action == ShiftStatus.Open && prev.Time.Date == Start.Date) result.Add(firstItem.Time - Start);
+            }
+
+
+
+            var openningItems = items.Where(n => n.Action == ShiftStatus.Open);
+
+            foreach (var i in openningItems)
+            {
+                var index = items.IndexOf(i);
+                if (!(items.Count <= index + 1))
                 {
-                    var spn = items[i + 1].Time - items[i].Time;
-                    result = result.Add(spn);
+                    var closeItem = items[index + 1];
+                    if (closeItem.Action == ShiftStatus.Pause || closeItem.Action == ShiftStatus.Finish)
+                    {
+                        result.Add(closeItem.Time - i.Time);
+                    }
                 }
             }
 
-            var t = items.FirstOrDefault().Time.Date;
-            var t2 = DateTime.Now.Date;
-            if (items.LastOrDefault()!=null&&items.LastOrDefault().Action == ShiftStatus.Open && items.LastOrDefault().Time.Date == DateTime.Now.Date) 
+            var lastItem = items.LastOrDefault();
+            if (lastItem.Action == ShiftStatus.Open && lastItem.Time.Date == DateTime.Now.Date) 
                 result = result.Add(DateTime.Now - items.LastOrDefault().Time);
 
             return result;
@@ -79,40 +98,73 @@ namespace BikeShop.Shop.Application.Implemetations
 
         public async Task<UserShiftItem> PauseShift(Guid UserId)
         {
-            var lastItem = await _context.UserShiftItems.Where(n => n.UserId == UserId).Where(n => n.Enabled == true).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
+            var lastItem = await _context.UserShiftItems.Where(n => n.UserId == UserId).Where(n => n.Time.Date == DateTime.Now.Date).Where(n => n.Enabled == true).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
 
-            if (lastItem == null) throw ShiftErrors.LastActionNotFound;
+            if (lastItem == null) throw ShiftErrors.NoShiftsToday;
             if (lastItem.Action != ShiftStatus.Open) throw ShiftErrors.ShiftOpenningNotFound;
 
             var item = new UserShiftItem { UserId = UserId, Action = ShiftStatus.Pause };
             await _context.UserShiftItems.AddAsync(item);
             await _context.SaveChangesAsync(new CancellationToken());
+            await UpdateScheduleShift(UserId, item.CreatedAt.Date);
             return item;
         }
 
         public async Task<UserShiftItem> ResumeShift(Guid UserId)
         {
-            var lastItem = await _context.UserShiftItems.Where(n => n.UserId == UserId).Where(n => n.Enabled == true).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
+            var lastItem = await _context.UserShiftItems.Where(n => n.UserId == UserId).Where(n => n.Time.Date == DateTime.Now.Date).Where(n => n.Enabled == true).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
 
-            if (lastItem == null) throw ShiftErrors.LastActionNotFound;
+            if (lastItem == null) throw ShiftErrors.NoShiftsToday;
             if (lastItem.Action != ShiftStatus.Pause) throw ShiftErrors.ShiftPauseNotFound;
 
             var item = new UserShiftItem { UserId = UserId, Action = ShiftStatus.Open };
             await _context.UserShiftItems.AddAsync(item);
             await _context.SaveChangesAsync(new CancellationToken());
+            await UpdateScheduleShift(UserId, item.CreatedAt.Date);
             return item;
         }
 
         public async Task<UserShiftItem> StartShift(Guid UserId)
         {
-            var lastItem = await _context.UserShiftItems.Where(n => n.UserId == UserId).Where(n => n.Enabled == true).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
+            var lastItem = await _context.UserShiftItems.Where(n => n.UserId == UserId).Where(n=>n.Time.Date == DateTime.Now.Date).Where(n => n.Enabled == true).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
 
             if (lastItem!=null && lastItem.Action != ShiftStatus.Finish) throw ShiftErrors.ShiftFinishNotFound;
 
             var item = new UserShiftItem { UserId = UserId, Action = ShiftStatus.Open };
             await _context.UserShiftItems.AddAsync(item);
             await _context.SaveChangesAsync(new CancellationToken());
+            await UpdateScheduleShift(UserId, item.CreatedAt.Date);
             return item;
+        }
+
+        public async Task UpdateScheduleShift(Guid UserId, DateTime updateDate)
+        {
+            var item = await _context.ScheduleItems.Where(n => n.TargetUser == UserId).Where(n => n.TimeStart.Date == updateDate.Date).FirstOrDefaultAsync();
+            if (item != null) return;
+
+            var shifts = await _context.UserShiftItems.Where(n => n.Time.Date == updateDate.Date).OrderBy(n=>n.Time).ToListAsync();
+
+            var firstStart = shifts.Where(n => n.Action == ShiftStatus.Open).FirstOrDefault();
+            var lastFinish = shifts.Where(n => n.Action == ShiftStatus.Finish).FirstOrDefault();
+            var span = new TimeSpan(0);
+
+            var openItems = shifts.Where(n => n.Action == ShiftStatus.Open);
+            foreach (var i in openItems)
+            {
+                var index = shifts.IndexOf(i);
+                if (shifts.Count <= index + 1) return;
+                var closeItem = shifts[index + 1];
+                if (closeItem.Action == ShiftStatus.Pause || closeItem.Action == ShiftStatus.Finish)
+                {
+                    span.Add(closeItem.Time - i.Time);
+                }
+            }
+
+            if(firstStart != null) item.ShiftFirstStart = firstStart.Time;
+            if (lastFinish != null) item.ShiftLastFinish = lastFinish.Time;
+            item.FinishedSpan = span;
+            if (shifts.Count > 0) item.ShiftStatus = shifts.Last().Action;
+
         }
     }
 }

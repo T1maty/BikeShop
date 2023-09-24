@@ -16,5 +16,6 @@ namespace BikeShop.Shop.Application.Interfaces
         public Task<UserShiftItem> PauseShift(Guid UserId);
         public Task<UserShiftItem> ResumeShift(Guid UserId);
         public Task<TimeSpan> GetHours(Guid UserId, DateTime Start, DateTime Stop);
+        public Task UpdateScheduleShift(Guid UserId, DateTime updateDate);
     }
 }
