@@ -58,12 +58,12 @@ namespace BikeShop.Shop.Application.Implemetations
                                                      .Where(n => n.Time < firstItem.Time)
                                                      .FirstOrDefaultAsync();
 
-                if (prev != null && prev.Action == ShiftStatus.Open && prev.Time.Date == Start.Date) result.Add(firstItem.Time - Start);
+                if (prev != null && prev.Action == ShiftStatus.Open && prev.Time.Date == Start.Date) result = result.Add(firstItem.Time - Start);
             }
 
 
 
-            var openningItems = items.Where(n => n.Action == ShiftStatus.Open);
+            var openningItems = items.Where(n => n.Action == ShiftStatus.Open).ToList();
 
             foreach (var i in openningItems)
             {
@@ -73,7 +73,7 @@ namespace BikeShop.Shop.Application.Implemetations
                     var closeItem = items[index + 1];
                     if (closeItem.Action == ShiftStatus.Pause || closeItem.Action == ShiftStatus.Finish)
                     {
-                        result.Add(closeItem.Time - i.Time);
+                        result = result.Add(closeItem.Time - i.Time);
                     }
                 }
             }
@@ -144,20 +144,8 @@ namespace BikeShop.Shop.Application.Implemetations
             var shifts = await _context.UserShiftItems.Where(n => n.Time.Date == updateDate.Date).OrderBy(n=>n.Time).ToListAsync();
 
             var firstStart = shifts.Where(n => n.Action == ShiftStatus.Open).FirstOrDefault();
-            var lastFinish = shifts.Where(n => n.Action == ShiftStatus.Finish).FirstOrDefault();
-            var span = new TimeSpan(0);
-
-            var openItems = shifts.Where(n => n.Action == ShiftStatus.Open);
-            foreach (var i in openItems)
-            {
-                var index = shifts.IndexOf(i);
-                if (shifts.Count <= index + 1) return;
-                var closeItem = shifts[index + 1];
-                if (closeItem.Action == ShiftStatus.Pause || closeItem.Action == ShiftStatus.Finish)
-                {
-                    span.Add(closeItem.Time - i.Time);
-                }
-            }
+            var lastFinish = shifts.Where(n => n.Action == ShiftStatus.Finish || n.Action == ShiftStatus.Pause).LastOrDefault();
+            var span = await GetHours(UserId, updateDate.Date, DateTime.Now);
 
             if(firstStart != null) item.ShiftFirstStart = firstStart.Time;
             if (lastFinish != null) item.ShiftLastFinish = lastFinish.Time;

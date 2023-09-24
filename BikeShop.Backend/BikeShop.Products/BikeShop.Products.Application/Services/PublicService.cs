@@ -1,6 +1,8 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
+using BikeShop.Products.Domain.DTO.Requestes.Public;
 using BikeShop.Products.Domain.DTO.Responses;
+using BikeShop.Products.Domain.DTO.Responses.Public;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -22,32 +24,6 @@ namespace BikeShop.Products.Application.Services
             _context = context;
         }
 
-        public async Task<List<ProductCardDTO>> DefaultProducts(int Quantity)
-        {
-            
-            var products = await _context.Products.Where(n => n.Enabled == true)
-                                                  .Where(n=>n.RetailVisibility == true)
-                                                  .Where(n=>n.CheckStatus != ProductCheckStatus.Get(ProductCheckStatusEnum.JustCreatedByScript))
-                                                  .Take(Quantity)
-                                                  .ToListAsync();
-            return await getCards(products);
-        }
-
-        public async Task<List<ProductCardDTO>> GetProducts(List<int> ids)
-        {
-            var cards = new Dictionary<int,ProductCardDTO>();
-            foreach (var item in ids)
-            {
-                if (!cards.ContainsKey(item))
-                {
-                    var card = await getProductCard(item);
-                    if (!cards.ContainsKey(card.product.Id))
-                    cards.Add(item, card);
-                }
-            }
-            return cards.Values.ToList();
-        }
-
         public async Task<List<ProductCategory>> GetCategories()
         {
             var tags = await _context.ProductCategories.Where(n => n.Enabled != false)
@@ -57,58 +33,41 @@ namespace BikeShop.Products.Application.Services
             return tags;
         }
 
-        public async Task<List<Product>> Serch(string querry)
+        public async Task<ProductCardDTO> getProductCard(int productId)
         {
-            var res = querry.ToLower().Split(" ");
-            var contQR = _context.Products.Where(n => n.Enabled == true).Where(n=>n.RetailVisibility == true);
-            foreach (var item in res)
-            {
-                contQR = contQR.Where(n => n.Name.ToLower().Contains(item)
-                                        || n.Id.ToString().Contains(item)
-                                        || n.CatalogKey.ToLower().Contains(item)
-                                        || n.Barcode.ToLower().Contains(item)
-                                        || n.ManufacturerBarcode.ToLower().Contains(item));
-            }
+            var binds = await _context.ProductBinds.Where(n => n.ProductId == productId).ToListAsync();
+            var ids = new List<int> { productId };
+            ids.AddRange(binds.Select(n => n.ChildrenId));
+            var productBinds = await _context.Products.Where(n => ids.Contains(n.Id)).Where(n=>n.RetailVisibility).ToDictionaryAsync(n => n.Id, n => n);
+            var card = await _context.ProductsCards.Where(n => n.ProductId == productId).FirstOrDefaultAsync();
+            var options = await _context.ProductOptionVariantBinds.Where(n => ids.Contains(n.ProductId)).ToListAsync();
+            var images = await _context.ProductImgs.Where(n => ids.Contains(n.ProductId)).ToListAsync();
+            var category = await _context.ProductCategories.FindAsync(productBinds[productId].CategoryId);
+            var quantity = await _context.Products.Where(n => ids.Contains(n.Id)).Join(_context.StorageProducts, n => n.Id, n1 => n1.ProductId, (n, n1) => new { productId = n.Id, storageId = n1.StorageId, quantity = n1.Quantity }).ToListAsync();
+            var reserved = await _context.Products.Where(n => ids.Contains(n.Id)).Join(_context.ProductReservations, n => n.Id, n1 => n1.ProductId, (n, n1) => new { productId = n.Id, storageId = n1.StorageId, reserved = n1.Quantity }).ToListAsync();
+            var quantList = ids.ToDictionary(n => n, n => quantity.Where(n1 => n1.productId == n).GroupBy(n1 => n1.storageId).Select(n1 => new { storageId = n1.Key, quantity = n1.Select(n1 => n1.quantity).Sum() }).ToDictionary(n1 => n1.storageId, n1 => n1.quantity));
+            var reservList = ids.ToDictionary(n => n, n => reserved.Where(n1 => n1.productId == n).GroupBy(n1 => n1.storageId).Select(n1 => new { storageId = n1.Key, quantity = n1.Select(n1 => n1.reserved).Sum() }).ToDictionary(n1 => n1.storageId, n1 => n1.quantity));
+            var Result = new ProductCardDTO();
+            Result.product = productBinds[productId];
+            Result.bindedProducts = productBinds.Values.ToList();
+            Result.productCard = card;
+            Result.productOptions = options;
+            Result.productImages = images;
+            Result.productCategory = category;
+            Result.ProductStorageQuantity = quantList;
+            Result.ProductStorageReserved = reservList;
 
-            return await contQR.Take(10).ToListAsync();
+            return Result;
         }
 
-        public async Task<List<ProductCardDTO>> getCards(List<Product> products)
+        public Task<PublicProductByCategoryResponse> GetProducts(PublicProductByCategoryRequest dto)
         {
-            var response = new Dictionary<int,ProductCardDTO>();
-            foreach (var product in products)
-            {
-                var card = await getProductCard(product.Id);
-                if (!response.ContainsKey(card.product.Id))
-                response.Add(card.product.Id,card);
-            }
-           
-            return response.Values.ToList();
+            throw new NotImplementedException();
         }
 
-        public async Task<ProductCardDTO> getProductCard(int Id)
+        public Task<PublicProductSearchResponse> Serch(PublicProductSearchRequest dto)
         {
-            var result = new ProductCardDTO();
-
-            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == Id).FirstOrDefaultAsync();
-            int masterId = Id;
-            //slaves contains master id
-            List<int> slaveIds = new List<int> { Id };
-            if (bind != null)
-            {
-                masterId = bind.ProductId;
-                slaveIds = await _context.ProductBinds.Where(n => n.ProductId == masterId).Select(n => n.ChildrenId).ToListAsync();
-            }
-
-            result.product = await _context.Products.FindAsync(masterId);
-            result.productCard = await _context.ProductsCards.Where(n=>n.ProductId == masterId).FirstOrDefaultAsync();
-            result.productOptions = await _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
-            result.productImages = await _context.ProductImgs.Where(n => slaveIds.Contains(n.ProductId)).ToListAsync();
-            result.productCategory = await _context.ProductCategories.Where(n=>n.Id == result.product.CategoryId).FirstOrDefaultAsync();
-            if(bind != null) result.bindedProducts = await _context.Products.Where(n=>slaveIds.Contains(n.Id)).ToListAsync();
-            if(bind == null) result.bindedProducts = new List<Product> { result.product };
- 
-            return result;
+            throw new NotImplementedException();
         }
     }
 }

@@ -19,6 +19,9 @@ public class Product : BaseEntity
     public decimal DealerPrice { get; set; }
     public decimal RetailPrice { get; set; }
 
+    public decimal OldIncomePrice { get; set; }
+    public decimal OldDealerPrice { get; set; }
+
     public bool IsMaster { get; set; } = true;
 
     public int BrandId { get; set; } = 1;

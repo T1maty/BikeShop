@@ -1,5 +1,7 @@
 ﻿using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.DTO.Requestes.Public;
 using BikeShop.Products.Domain.DTO.Responses;
+using BikeShop.Products.Domain.DTO.Responses.Public;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,28 +19,22 @@ namespace BikeShop.Products.WebApi.Controllers
             _publicService = publicService;
         }
 
-        [HttpGet("getcategories")]
+        [HttpPost("getcategories")]
         public async Task<List<ProductCategory>> GetCategories()
         {
             return await _publicService.GetCategories();
         }
 
-        [HttpGet("defaultproducts")]
-        public async Task<List<ProductCardDTO>> DefaultProducts(int Quantity)
-        {
-            return await _publicService.DefaultProducts(Quantity);
-        }
-
         [HttpPost("search")]
-        public async Task<List<Product>> Serch(string querry)
+        public async Task<PublicProductSearchResponse> Serch(PublicProductSearchRequest dto)
         {
-            return await _publicService.Serch(querry);
+            return await _publicService.Serch(dto);
         }
 
         [HttpPost("getproducts")]
-        public async Task<List<ProductCardDTO>> GetProducts(List<int> ids)
+        public async Task<PublicProductByCategoryResponse> GetProducts(PublicProductByCategoryRequest dto)
         {
-            return await _publicService.GetProducts(ids);
+            return await _publicService.GetProducts(dto);
         }
     }
 }
