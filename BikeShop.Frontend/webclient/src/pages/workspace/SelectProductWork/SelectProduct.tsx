@@ -9,6 +9,8 @@ import useSelectProductWorkModal
     from "../../../features/ServiceFeatures/SelectProductWorkModals/SelectProductWorkModalStore"
 import {Product} from "entities"
 import CatTable from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/CatTable";
+import useProductCatalogTableStore
+    from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableStore";
 
 interface SelectProductProps {
     products: ServiceProduct[]
@@ -20,6 +22,7 @@ export const SelectProduct = (props: SelectProductProps) => {
 
     const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
     const conv = useSelectProduct(s => s.convert)
+    const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
 
     const addProductHandler = (product: Product) => {
         let prods = props.products
@@ -41,7 +44,9 @@ export const SelectProduct = (props: SelectProductProps) => {
 
                 </div>
                 <div className={s.leftSide_treeView}>
-                    <TagTreeView/>
+                    <TagTreeView onNodeClick={(n) => {
+                        setProductsToTable(n.id)
+                    }}/>
                 </div>
                 <div className={s.leftSide_buttons}>
                     <div>

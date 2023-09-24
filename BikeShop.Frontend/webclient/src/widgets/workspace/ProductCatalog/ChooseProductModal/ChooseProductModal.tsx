@@ -4,6 +4,7 @@ import {TagTreeView} from "../TagTreeView/TagTreeView";
 import {CustomModal, UniTable} from "../../../../shared/ui";
 import {Product} from "../../../../entities";
 import CatTable from "../ProductCatalogTable/CatTable";
+import useProductCatalogTableStore from "../ProductCatalogTable/ProductCatalogTableStore";
 
 interface props {
     open?: boolean,
@@ -18,6 +19,7 @@ interface props {
 export const ChooseProductModal = (props: props) => {
 
     const [open, setOpen] = useState(false)
+    const setProductsToTable = useProductCatalogTableStore(s => s.getProducts)
 
     const setDataHandler = (row: Product) => {
         let finded = false
@@ -48,7 +50,9 @@ export const ChooseProductModal = (props: props) => {
                 <div className={s.chooseProductModal_wrapper}>
 
                     <div className={s.chooseProductModal_tagTreeView}>
-                        <TagTreeView/>
+                        <TagTreeView onNodeClick={(n) => {
+                            setProductsToTable(n.id)
+                        }}/>
                     </div>
 
                     <div className={s.chooseProductModal_catalogTable}>

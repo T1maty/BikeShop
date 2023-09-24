@@ -88,8 +88,7 @@ namespace BikeShop.Shop.Application.Implemetations
         public async Task<UserShiftStatusDTO> GetUserStatus(Guid UserId)
         {
             var data = new UserShiftStatusDTO();
-            var lastAction = await _context.UserShiftItems.Where(n => n.UserId == UserId).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
-            if (lastAction == null) throw ShiftErrors.LastActionNotFound;
+            var lastAction = await _context.UserShiftItems.Where(n => n.UserId == UserId).Where(n=>n.Time.Date == DateTime.Now.Date).OrderByDescending(n => n.Time).FirstOrDefaultAsync();
             data.LastAction = lastAction;
             data.Hours = await GetHours(UserId, DateTime.MinValue, DateTime.Now);
             data.Schedule = await _context.ShopScheduleItems.Where(n=>n.UserId == UserId).Where(n=>n.Start.Date == DateTime.Now.Date).FirstOrDefaultAsync();
@@ -140,7 +139,7 @@ namespace BikeShop.Shop.Application.Implemetations
         public async Task UpdateScheduleShift(Guid UserId, DateTime updateDate)
         {
             var item = await _context.ScheduleItems.Where(n => n.TargetUser == UserId).Where(n => n.TimeStart.Date == updateDate.Date).FirstOrDefaultAsync();
-            if (item != null) return;
+            if (item == null) return;
 
             var shifts = await _context.UserShiftItems.Where(n => n.Time.Date == updateDate.Date).OrderBy(n=>n.Time).ToListAsync();
 
@@ -164,7 +163,7 @@ namespace BikeShop.Shop.Application.Implemetations
             if (lastFinish != null) item.ShiftLastFinish = lastFinish.Time;
             item.FinishedSpan = span;
             if (shifts.Count > 0) item.ShiftStatus = shifts.Last().Action;
-
+            await _context.SaveChangesAsync(new CancellationToken());
         }
     }
 }
