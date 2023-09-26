@@ -25,7 +25,7 @@ const ShiftTime = () => {
         }
 
         const timer = setInterval(() => {
-            if (userShiftStatus?.lastAction.action === 'Open')
+            if (userShiftStatus?.lastAction?.action === 'Open')
                 setSeconds(s => s + 1)
         }, 1000)
         return () => {

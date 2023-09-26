@@ -91,9 +91,9 @@ export const MainPage = () => {
     }
 
     const getShiftButton = () => {
-        if (userShiftStatus?.lastAction.action === 'Open') {
+        if (userShiftStatus?.lastAction?.action === 'Open') {
             return getShiftButtonUniversal('Поставить смену на паузу', ShiftAPI.pause)
-        } else if (userShiftStatus?.lastAction.action === 'Pause') {
+        } else if (userShiftStatus?.lastAction?.action === 'Pause') {
             return getShiftButtonUniversal('Продолжить смену', ShiftAPI.resume)
         } else return getShiftButtonUniversal('Открыть смену', ShiftAPI.open)
     }
@@ -255,12 +255,12 @@ export const MainPage = () => {
                                 <div className={s.bottom_right}>
                                     <div
                                         className={userShiftStatus?.lastAction?.action === 'Open' ? s.shiftStatus_open :
-                                            userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
+                                            userShiftStatus?.lastAction?.action === 'Pause' ? s.shiftStatus_pause :
                                                 s.shiftStatus_closed}
                                     >
                                         {
-                                            userShiftStatus?.lastAction.action === 'Open' ? 'Смена открыта' :
-                                                userShiftStatus?.lastAction.action === 'Pause' ? 'Пауза' : 'Смена закрыта'
+                                            userShiftStatus?.lastAction?.action === 'Open' ? 'Смена открыта' :
+                                                userShiftStatus?.lastAction?.action === 'Pause' ? 'Пауза' : 'Смена закрыта'
                                         }
                                     </div>
                                     <div className={s.shiftTime}>

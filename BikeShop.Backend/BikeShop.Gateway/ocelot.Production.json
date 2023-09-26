@@ -2566,7 +2566,37 @@
           "Port": 80
         }
       ],
-      "SwaggerKey": "acts"
+      "SwaggerKey": "payments"
+    },
+	{
+      "UpstreamPathTemplate": "/api/order/getbyid",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/order/getbyid",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
+	{
+      "UpstreamPathTemplate": "/api/order/getall",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/order/getall",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
     },
 	{
       "UpstreamPathTemplate": "/api/order/publiccreate",
@@ -2581,7 +2611,7 @@
           "Port": 80
         }
       ],
-      "SwaggerKey": "acts"
+      "SwaggerKey": "payments"
     },
 	
 	

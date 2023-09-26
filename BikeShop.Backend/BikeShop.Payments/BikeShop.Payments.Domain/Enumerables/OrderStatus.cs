@@ -17,5 +17,6 @@ namespace BikeShop.Payments.Domain.Enumerables
         public static string ReadyInShop { get { return "ReadyInShop"; } }
         public static string WaitingForMoving { get { return "WaitingForMoving"; } }
         public static string Finished { get { return "Finished"; } }
+        public static string Canceled { get { return "Canceled"; } }
     }
 }

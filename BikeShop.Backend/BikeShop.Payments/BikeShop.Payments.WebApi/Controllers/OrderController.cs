@@ -24,6 +24,18 @@ namespace BikeShop.Payments.WebApi.Controllers
             return await _orderService.GetByShop(ShopId);
         }
 
+        [HttpGet("getall")]
+        public async Task<List<OrderWithProducts>> GetAll(int Take, int Skip)
+        {
+            return await _orderService.GetAll(Take, Skip);
+        }
+
+        [HttpGet("getbyid")]
+        public async Task<OrderWithProducts> GetById(int Id)
+        {
+            return await _orderService.GetById(Id);
+        }
+
         [HttpPost("publiccreate")]
         public async Task<OrderWithProducts> PublicCreate(PublicCreateOrderDTO dto)
         {

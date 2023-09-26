@@ -1,4 +1,5 @@
 ﻿using BikeShop.Acts.Domain.Refit;
+using BikeShop.Payments.Domain.DTO.Refit;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,8 @@ namespace BikeShop.Payments.Application.Refit
     {
         [Put("/balance/editbalance")]
         public Task EditBalance(Guid userId, decimal amount, bool checkLimit);
+
+        [Post("/user/getdictionary")]
+        public Task<Dictionary<string, User>> GetDictionary(List<string> guids);
     }
 }

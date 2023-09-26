@@ -13,5 +13,9 @@ namespace BikeShop.Payments.Application.Interfaces
     {
         public Task<List<OrderWithProducts>> GetByShop(int ShopId);
         public Task<OrderWithProducts> PublicCreate(PublicCreateOrderDTO dto);
+        public Task<List<OrderWithProducts>> GetAll(int Take, int Skip);
+        public Task<OrderWithProducts> GetById(int Id);
+
+
     }
 }

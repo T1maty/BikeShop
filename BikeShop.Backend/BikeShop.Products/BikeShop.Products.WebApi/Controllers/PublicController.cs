@@ -31,10 +31,16 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _publicService.Serch(dto);
         }
 
-        [HttpPost("getproducts")]
+        [HttpPost("catalogproducts")]
         public async Task<PublicProductByCategoryResponse> GetProducts(PublicProductByCategoryRequest dto)
         {
             return await _publicService.GetProducts(dto);
+        }
+
+        [HttpPost("getproductcardbyid")]
+        public async Task<ProductCardDTO> getProductCard(int productId)
+        {
+            return await _publicService.getProductCard(productId);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BikeShop.Acts.Domain.Refit;
+using BikeShop.Payments.Domain.DTO.Refit;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,8 @@ namespace BikeShop.Acts.Application.Refit
 
         //[Get("/storage/getbystorage")]
         //public Task<StorageProductsDTO> GetByStorage(int storageId);
+
+        [Post("/product/getbyids")]
+        public Task<List<Product>> GetProductsByIdsArray(List<int> Ids);
     }
 }
