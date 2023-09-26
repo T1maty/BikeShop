@@ -148,6 +148,8 @@ namespace BikeShop.Payments.Application.Services
 
         public async Task<OrderWithProducts> PublicCreate(PublicCreateOrderDTO dto)
         {
+            var client = await _identityClient.GetDictionary(new List<string> { dto.Order.ClientId.ToString() });
+            if(client.Count < 1) throw OrderErrors.ClientNotFound;
             var order = new Order
             {
                 ClientId = dto.Order.ClientId,
@@ -195,7 +197,7 @@ namespace BikeShop.Payments.Application.Services
             await _context.OrderProducts.AddRangeAsync(products);
             await _context.SaveChangesAsync(new CancellationToken());
 
-            return new OrderWithProducts { Order = order, Products = products };
+            return await GetById(order.Id);
         }
     }
 }
