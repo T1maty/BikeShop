@@ -6,9 +6,11 @@ import {ScheduleItem} from "../../../entities/entities/Schedule/ScheduleItem";
 import {ScheduleAPI} from "../../../entities/api/Schedule/ScheduleAPI";
 import {CreateScheduleItem} from "../../../entities/models/Schedule/CreateScheduleItem";
 import {CreateHolydayItem} from "../../../entities/models/Schedule/CreateHolydayItem";
+import {ScheduleHistory} from "../../../entities/entities/Schedule/ScheduleHistory";
 
 interface p {
     scheduleItems: ScheduleItem[]
+    scheduleHistory: ScheduleHistory[]
     getScheduleItems: () => void
     shops: Shop[]
     selectedShop: Shop | null
@@ -36,9 +38,24 @@ interface p {
 
     isLoading: boolean
     setIsLoading: (v: boolean) => void
+
+    itemContext: { o: boolean, x: number, y: number }
+    setItemContext: (v: { o: boolean, x: number, y: number }) => void
+    itemContextEmpty: { o: boolean, x: number, y: number }
+    setItemContextEmpty: (v: { o: boolean, x: number, y: number }) => void
+
+    role: string
+    setRole: (v: string) => void
 }
 
 const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
+    scheduleHistory: [],
+    role: "Менеджер",
+    setRole: (v) => set({role: v}),
+    itemContext: {o: false, x: 0, y: 0},
+    setItemContext: (v) => set({itemContext: v}),
+    itemContextEmpty: {o: false, x: 0, y: 0},
+    setItemContextEmpty: (v) => set({itemContextEmpty: v}),
     selectedUser: null,
     setSelectedUser: (v) => set({selectedUser: v}),
     timePickerValue: ["10:00", "10:00"],
@@ -63,7 +80,8 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
         ScheduleAPI.addHoliday(data).then(r => {
             console.log(r.data.scheduleItem)
             set({
-                scheduleItems: [...get().scheduleItems, r.data.scheduleItem]
+                scheduleItems: [...get().scheduleItems, r.data.scheduleItem],
+                scheduleHistory: [r.data.scheduleHistory, ...get().scheduleHistory]
             })
         }).finally(() => set({isLoading: false}))
     },
@@ -87,12 +105,13 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
             targetUser: get().selectedUser?.id!,
             start: w1.toISOString().replace('Z', "+03:00"),
             finish: w2.toISOString().replace('Z', "+03:00"),
-            role: ""
+            role: get().role
         }
         set({isLoading: true})
         ScheduleAPI.addShift(data).then(r => {
             set(state => {
                 state.scheduleItems.push(r.data.scheduleItem)
+                state.scheduleHistory.unshift(r.data.scheduleHistory)
             })
         }).finally(() => set({isLoading: false}))
     },
@@ -103,6 +122,7 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
         ScheduleAPI.removeItem(LocalStorage.userId()!, itemId).then(r => {
             set(state => {
                 state.scheduleItems = state.scheduleItems.filter(n => n.id != itemId)
+                state.scheduleHistory.unshift(r.data)
             })
         }).finally(() => set({isLoading: false}))
     },
@@ -113,6 +133,7 @@ const useSchedule = create<p>()(persist(devtools(immer((set, get) => ({
         ScheduleAPI.getByShop(s?.id!).then(r => {
             console.log(r.data.scheduleItems)
             set({scheduleItems: r.data.scheduleItems})
+            set({scheduleHistory: r.data.scheduleHistories.reverse()})
         })
     },
     getUsers: (v) => {

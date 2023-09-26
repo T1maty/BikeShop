@@ -15,4 +15,9 @@ export interface ScheduleItem {
     updatedUser: string;
     updatedUserFIO: string;
     shopId: number
+
+    shiftFirstStart?: string
+    shiftLastFinish?: string
+    finishedSpan: string
+    siftStatus: string
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from './SchedulePage.module.scss'
 import Select from "react-select";
 import useSchedule from "./SchedulePageStore";
@@ -7,7 +7,8 @@ import ScheduleContextItem from "../../../entities/models/Schedule/ScheduleConte
 import ScheduleContextEmptyItem from "../../../entities/models/Schedule/ScheduleContextEmptyItem";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css';
-import {LoaderScreen} from "../../../shared/ui";
+import {CustomInput, LoaderScreen} from "../../../shared/ui";
+import ScheduleItemTSX from "./ScheduleItem";
 
 const SchedulePage = () => {
     const selectedShop = useSchedule(s => s.selectedShop)
@@ -17,28 +18,25 @@ const SchedulePage = () => {
     const users = useSchedule(s => s.users)
     const getScheduleItems = useSchedule(s => s.getScheduleItems)
     const scheduleItems = useSchedule(s => s.scheduleItems)
-    const setHoveredItem = useSchedule(s => s.setHoveredItem)
-    const setSelectedDay = useSchedule(s => s.setSelectedDay)
-    const setSelectedItem = useSchedule(s => s.setSelectedItem)
+
     const timePickerValue = useSchedule(s => s.timePickerValue)
     const setTimePickerValue = useSchedule(s => s.setTimePickerValue)
-    const setSelectedUser = useSchedule(s => s.setSelectedUser)
     const isLoading = useSchedule(s => s.isLoading)
 
-    const [itemContext, setItemContext] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
-    const [itemContextE, setItemContextE] = useState<{ o: boolean, x: number, y: number }>({o: false, x: 0, y: 0})
+    const itemContext = useSchedule(s => s.itemContext)
+    const setItemContext = useSchedule(s => s.setItemContext)
+    const itemContextEmpty = useSchedule(s => s.itemContextEmpty)
+    const setItemContextEmpty = useSchedule(s => s.setItemContextEmpty)
+    const role = useSchedule(s => s.role)
+    const setRole = useSchedule(s => s.setRole)
+    const scheduleHistory = useSchedule(s => s.scheduleHistory)
+
+    const currentDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
 
     useEffect(() => {
         getShops()
         getScheduleItems()
     }, [])
-
-    useEffect(() => {
-        console.log(timePickerValue)
-    }, [timePickerValue])
-
-    // Получение текущей даты
-    const currentDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
 
     // Вычисление начальной даты (текущая дата минус 15 дней)
     const startDate = new Date(currentDate);
@@ -54,7 +52,7 @@ const SchedulePage = () => {
     return (
         <div className={s.wrapper} onContextMenu={e => e.preventDefault()}>
             <ScheduleContextItem open={itemContext} setOpen={setItemContext}/>
-            <ScheduleContextEmptyItem open={itemContextE} setOpen={setItemContextE}/>
+            <ScheduleContextEmptyItem open={itemContextEmpty} setOpen={setItemContextEmpty}/>
             <div className={s.head}>
                 <div className={s.clock}>
                     <TimeRangePicker className={s.clc} onChange={setTimePickerValue} value={timePickerValue}
@@ -72,12 +70,18 @@ const SchedulePage = () => {
 
                 </div>
 
+                <div>
+                    <CustomInput value={role} onChange={(v) => {
+                        setRole(v.target.value)
+                    }}/>
+                </div>
+
             </div>
             <div className={s.calendar}>
                 <div className={s.main_column}>
-                    {users.map(n => {
+                    {users.map((n, indx) => {
                         return (
-                            <div className={s.user}>{n.firstName}</div>
+                            <div className={s.user} key={indx}>{n.firstName}</div>
                         )
                     })}
                 </div>
@@ -88,83 +92,52 @@ const SchedulePage = () => {
                             style={index === 3 ? {backgroundColor: "#656565", border: "1px white solid"} : {}}
                         >
                             {day.toLocaleDateString()}
-                            {users.map(g => {
-                                let nextDay: Date = new Date()
-                                nextDay.setDate(day.getDate() + 1)
 
+                            {users.map((g, ind) => {
                                 let data = scheduleItems.find(h => h.targetUser === g.id && new Date(h.timeStart).getDate().toString() === day.getDate().toString())
 
-                                if (data != null) {
-
-                                    if (data.isHolyday) {
-                                        return (
-                                            <div className={s.cell}
-                                                 onContextMenu={(e) => {
-                                                     setSelectedUser(g)
-                                                     setSelectedDay(day)
-                                                     setSelectedItem(data!)
-                                                     new Date(data!.timeStart) > currentDate ? setItemContext({
-                                                         o: true,
-                                                         x: e.clientX,
-                                                         y: e.clientY
-                                                     }) : null
-                                                 }}
-                                                 style={{
-                                                     backgroundColor: "#313eb2",
-                                                     color: "white"
-                                                 }} onMouseEnter={() => {
-                                                setHoveredItem(data!)
-                                            }}>
-                                                Вихідний
-                                            </div>)
-                                    }
-
-                                    let timeString = new Date(data.timeStart).toLocaleTimeString(undefined, {
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    }) + ` - ` + new Date(data.timeFinish).toLocaleTimeString(undefined, {
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    })
-                                    return (
-                                        <div className={s.cell} onContextMenu={(e) => {
-                                            setSelectedUser(g)
-                                            setSelectedDay(day)
-                                            setSelectedItem(data!)
-                                            new Date(data!.timeStart) >= currentDate ? setItemContext({
-                                                o: true,
-                                                x: e.clientX,
-                                                y: e.clientY
-                                            }) : null
-                                        }}
-                                             style={new Date(data.timeStart) > currentDate ? {
-                                                 backgroundColor: "#FFBA52",
-                                                 color: "black"
-                                             } : {
-                                                 backgroundColor: "#52ff59",
-                                                 color: "black"
-                                             }} onMouseEnter={() => {
-                                            setHoveredItem(data!)
-                                        }}>
-                                            <div>{timeString}</div>
-                                            <div>{data.role}</div>
-                                        </div>)
-                                }
-                                return (
-                                    <div className={s.cell} style={{backgroundColor: "#EAEAEA"}} onContextMenu={(e) => {
-                                        setSelectedUser(g)
-                                        setSelectedDay(day)
-                                        setSelectedItem(null)
-                                        day.getDate() >= currentDate.getDate() ? setItemContextE({
-                                            o: true,
-                                            x: e.clientX,
-                                            y: e.clientY
-                                        }) : null
-                                    }}></div>)
+                                return (<ScheduleItemTSX data={data} day={day} user={g}
+                                                         key={index.toString() + ind.toString()}/>)
                             })}
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className={s.history}>
+                {scheduleHistory?.map(n => {
+                    console.log(n)
+                    return (
+                        <div className={s.hist_item}>
+                            <div style={{fontSize: "10px"}}>Дія</div>
+                            <div>{n.action}</div>
+                            <div style={{fontSize: "10px"}}>Змінив:</div>
+                            <div style={{whiteSpace: "nowrap"}}>{n.actionUserFIO}</div>
+                            <div style={{fontSize: "10px"}}>Користувачу:</div>
+                            <div>{n.actionTargetUserFIO}</div>
+                            <div style={{fontSize: "10px"}}>Було:</div>
+                            <div
+                                style={{fontSize: "14px"}}>{new Date(n.timeStartPrev.split('+')[0]).toLocaleString(undefined, {
+                                day: '2-digit',
+                                month: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }) + " - " + new Date(n.timeFinishPrev.split('+')[0]).toLocaleString(undefined, {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })}</div>
+                            <div style={{fontSize: "10px"}}>Стало:</div>
+                            <div
+                                style={{fontSize: "14px"}}>{new Date(n.timeStartActual.split('+')[0]).toLocaleString(undefined, {
+                                day: '2-digit',
+                                month: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }) + " - " + new Date(n.timeFinishActual.split('+')[0]).toLocaleString(undefined, {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })}</div>
+                        </div>)
+                })}
             </div>
         </div>
     );

@@ -70,7 +70,7 @@ export const MainPage = () => {
     console.log('shop', shop)
     console.log('date', new Date().toString())
     console.log('shift', userShiftStatus?.hours)
-    console.log('shiftStart', userShiftStatus?.lastAction.time)
+    console.log('shiftStart', userShiftStatus?.lastAction?.time)
 
 
     const getShiftButtonUniversal = (buttonTitle: string, requestAPI: any) => {
@@ -253,9 +253,10 @@ export const MainPage = () => {
                                 </div>
 
                                 <div className={s.bottom_right}>
-                                    <div className={userShiftStatus?.lastAction.action === 'Open' ? s.shiftStatus_open :
-                                        userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
-                                            s.shiftStatus_closed}
+                                    <div
+                                        className={userShiftStatus?.lastAction?.action === 'Open' ? s.shiftStatus_open :
+                                            userShiftStatus?.lastAction.action === 'Pause' ? s.shiftStatus_pause :
+                                                s.shiftStatus_closed}
                                     >
                                         {
                                             userShiftStatus?.lastAction.action === 'Open' ? 'Смена открыта' :

@@ -35,7 +35,7 @@ namespace BikeShop.Shop.Application.Implemetations
             var date = dto.Date.Date;
             
             var userFIO = FIOFromUser(await _identityClient.GetById(dto.User));
-            var userTargetFIO = FIOFromUser(await _identityClient.GetById(dto.User));
+            var userTargetFIO = FIOFromUser(await _identityClient.GetById(dto.TargetUser));
             var ent = new ScheduleItem { ShopId = dto.ShopId, IsHolyday = true, CreatedUser = dto.User, CreatedUserFIO = userFIO, Role = "", TargetUser = dto.TargetUser, TargetUserFIO = userTargetFIO, 
                 TimeStart = date, TimeFinish = date, UpdatedUser = dto.User, UpdatedUserFIO = userFIO
             };
@@ -58,7 +58,7 @@ namespace BikeShop.Shop.Application.Implemetations
             if ((await _context.ScheduleItems.Where(n => n.ShopId == dto.ShopId).Where(n=>n.TargetUser == dto.TargetUser).Where(n => n.TimeStart >= dto.Start.Date).Where(n => n.TimeFinish < dto.Finish.Date.AddDays(1)).ToListAsync()).Count > 0) throw ScheduleErrors.ShiftAlreadyExist;
 
             var userFIO = FIOFromUser(await _identityClient.GetById(dto.User));
-            var userTargetFIO = FIOFromUser(await _identityClient.GetById(dto.User));
+            var userTargetFIO = FIOFromUser(await _identityClient.GetById(dto.TargetUser));
             var ent = new ScheduleItem
             {
                 ShopId = dto.ShopId,
@@ -77,7 +77,7 @@ namespace BikeShop.Shop.Application.Implemetations
             await _context.ScheduleItems.AddAsync(ent);
             await _context.SaveChangesAsync(new CancellationToken());
 
-            var hist = new ScheduleHistory { ShopId = dto.ShopId, Action = ScheduleHistoryAction.AddShift.ToString(), ActionTargetUser = dto.TargetUser, ActionTargetUserFIO = userTargetFIO, ActionUser = dto.User, ActionUserFIO = userFIO, IsHolydayActual = true, IsHolydayPrev = false, ItemId = ent.Id, TimeStartActual = dto.Start, TimeFinishActual = dto.Finish };
+            var hist = new ScheduleHistory { ShopId = dto.ShopId, Action = ScheduleHistoryAction.AddShift.ToString(), ActionTargetUser = dto.TargetUser, ActionTargetUserFIO = userTargetFIO, ActionUser = dto.User, ActionUserFIO = userFIO, IsHolydayActual = false, IsHolydayPrev = false, ItemId = ent.Id, TimeStartActual = dto.Start, TimeFinishActual = dto.Finish };
             await _context.ScheduleHistories.AddAsync(hist);
             await _context.SaveChangesAsync(new CancellationToken());
             await _shiftService.UpdateScheduleShift(dto.TargetUser, dto.Start.Date);
@@ -104,7 +104,7 @@ namespace BikeShop.Shop.Application.Implemetations
         {
             var item = await _context.ScheduleItems.FindAsync(ItemId);
             if (item == null) throw ScheduleErrors.ScheduleItemNotFount;
-            if (item.TimeStart < DateTime.Now) throw ScheduleErrors.RemovingOfStartedShift;
+            if (item.TimeStart < DateTime.Now && !item.IsHolyday) throw ScheduleErrors.RemovingOfStartedShift;
             
             var targerUser = item.TargetUser;
             var userFIO = FIOFromUser(await _identityClient.GetById(User));
@@ -112,7 +112,7 @@ namespace BikeShop.Shop.Application.Implemetations
 
             _context.ScheduleItems.Remove(item);
 
-            var hist = new ScheduleHistory {ShopId = item.ShopId, Action = item.IsHolyday ? ScheduleHistoryAction.RemoveHolyday.ToString() : ScheduleHistoryAction.RemoveShift.ToString(), ActionTargetUser = item.TargetUser, ActionTargetUserFIO = userTargetFIO, ActionUser = User, ActionUserFIO = userFIO, IsHolydayActual = item.IsHolyday, IsHolydayPrev = false, ItemId = item.Id, TimeStartPrev = item.TimeStart, TimeFinishPrev = item.TimeFinish };
+            var hist = new ScheduleHistory {ShopId = item.ShopId, Action = item.IsHolyday ? ScheduleHistoryAction.RemoveHolyday.ToString() : ScheduleHistoryAction.RemoveShift.ToString(), ActionTargetUser = item.TargetUser, ActionTargetUserFIO = userTargetFIO, ActionUser = User, ActionUserFIO = userFIO, IsHolydayActual = false, IsHolydayPrev = item.IsHolyday, ItemId = item.Id, TimeStartPrev = item.TimeStart, TimeFinishPrev = item.TimeFinish };
             await _context.ScheduleHistories.AddAsync(hist);
             await _context.SaveChangesAsync(new CancellationToken());
 
