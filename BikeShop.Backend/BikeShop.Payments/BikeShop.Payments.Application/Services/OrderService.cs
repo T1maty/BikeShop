@@ -66,6 +66,8 @@ namespace BikeShop.Payments.Application.Services
                     Manager = Manager,
                     Payment = Payment
                 };
+
+                Result.Add(ent);
             }
 
             return Result;
@@ -80,8 +82,10 @@ namespace BikeShop.Payments.Application.Services
             Result.Products = await _context.OrderProducts.Where(n => n.OrderId == order.Id).ToListAsync();
             Result.Payment = await _context.Payments.FindAsync(order.Id);
 
-            var userList = new List<string>();
-            userList.Add(order.ClientId.ToString());
+            var userList = new List<string>
+            {
+                order.ClientId.ToString()
+            };
             if (order.UserCreated != null) userList.Add(order.UserCreated.ToString());
             if (order.UserUpdated != null) userList.Add(order.UserUpdated.ToString());
             if (order.ManagerId != null) userList.Add(order.ManagerId.ToString());
@@ -141,6 +145,8 @@ namespace BikeShop.Payments.Application.Services
                     Manager = Manager,
                     Payment = Payment
                 };
+
+                Result.Add(ent);
             }
 
             return Result;

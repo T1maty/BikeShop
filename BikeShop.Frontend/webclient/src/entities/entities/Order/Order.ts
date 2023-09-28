@@ -1,23 +1,23 @@
 export interface Order {
-    id: number
-    createdAt: string
-    updatedAt: string
-    enabled: boolean
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    enabled: boolean;
     shopId: number;
     orderType: string;
+    orderStatus: string;
     deliveryType: string;
     deliveryInfo: string;
-    orderStatus: string;
     isPayed: boolean;
-    description: string;
-    descriptionUser: string;
+    paymentId: number;
+    descriptionCilent: string;
     discountId: number;
-    totalDiscount: number;
+    orderDiscount: number;
+    totalProductDiscount: number;
+    totalProductsPrice: number;
     totalPrice: number;
     clientId: string;
-    clientPhone: string;
-    clientFIO: string;
-    clientEmail: string;
-    userId: string;
-    userFIO: string;
+    userCreated: string;
+    userUpdated: string;
+    managerId: string;
 }
