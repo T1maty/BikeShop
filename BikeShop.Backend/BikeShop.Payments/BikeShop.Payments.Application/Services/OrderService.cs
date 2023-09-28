@@ -79,6 +79,7 @@ namespace BikeShop.Payments.Application.Services
             if (order == null) throw OrderErrors.OrderNotFount;
 
             var Result = new OrderWithProducts();
+            Result.Order = order;
             Result.Products = await _context.OrderProducts.Where(n => n.OrderId == order.Id).ToListAsync();
             Result.Payment = await _context.Payments.FindAsync(order.Id);
 
