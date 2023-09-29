@@ -29,6 +29,44 @@ namespace BikeShop.Payments.Application.Services
             _identityClient = identityClient;
         }
 
+        public Task<OrderWithProducts> AddPayment(Guid UserId, int OrderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OrderWithProducts> Cancel(Guid UserId, int OrderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OrderWithProducts> Collected(Guid UserId, int OrderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<OrderWithProducts> Confirm(Guid UserId, int OrderId)
+        {
+            var user = await _identityClient.GetDictionary(new List<string> { UserId.ToString() });
+            if (user.Count < 1) throw OrderErrors.UserNotFount;
+            var order = await _context.Orders.FindAsync(OrderId);
+            if (order == null) throw OrderErrors.OrderNotFount;
+
+            order.UpdatedAt = DateTime.Now;
+            order.UserUpdated = UserId;
+            if (order.ManagerId == null) order.ManagerId = UserId;
+            if (order.IsPrePay) order.OrderStatus = OrderStatus.WaitingForPayment;
+            else order.OrderStatus = OrderStatus.WaitingForCollection;
+            order.ShopId = user[UserId.ToString()].shopId;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+            return await GetById(order.Id);
+        }
+
+        public Task<OrderWithProducts> Delivered(Guid UserId, int OrderId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<OrderWithProducts>> GetAll(int Take, int Skip)
         {
             var orders = await _context.Orders.Skip(Skip).Take(Take).ToListAsync();
@@ -72,7 +110,6 @@ namespace BikeShop.Payments.Application.Services
 
             return Result;
         }
-
         public async Task<OrderWithProducts> GetById(int Id)
         {
             var order = await _context.Orders.FindAsync(Id);
@@ -105,7 +142,6 @@ namespace BikeShop.Payments.Application.Services
 
             return Result;
         }
-
         public async Task<List<OrderWithProducts>> GetByShop(int ShopId)
         {
             List<Order> orders;
@@ -151,6 +187,48 @@ namespace BikeShop.Payments.Application.Services
             }
 
             return Result;
+        }
+
+        public async Task<OrderWithProducts> InternalCreate(InternalCreateOrderDTO dto)
+        {
+            
+            var order = new Order { 
+                ShopId = dto.ShopId, 
+                DeliveryType = dto.DeliveryType,
+                DeliveryInfo = dto.DeliveryInfo,
+                DiscountId = dto.DiscountId,
+                IsPrePay = dto.IsPrePay,
+                IsPayed = false,
+                UserCreated = dto.UserId, UserUpdated = dto.UserId,
+                ClientId= dto.ClientId, ManagerId = dto.ManagerId,
+                DescriptionCilent = dto.DescriptionCilent, 
+                OrderDiscount = 0, TotalPrice = 0, TotalProductDiscount = 0, TotalProductsPrice = 0,
+                OrderStatus = OrderStatus.Created, OrderType = OrderType.FromShop,
+                PaymentId = 0
+            };
+
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            var products = (await _productClient.GetProductsByIdsArray(dto.Products.Select(n => n.ProductId).ToList())).ToDictionary(n => n.Id, n => n);
+
+            await _context.OrderProducts.AddRangeAsync(dto.Products.Select(n => new OrderProduct 
+            {
+                 CatalogKey = products[n.ProductId].CatalogKey,
+                  ProductId= n.ProductId, Description = n.Description, 
+                Discount = 0, Quantity = n.Quantity, Price = products[n.ProductId].RetailPrice,
+                 Name= products[n.ProductId].Name, OrderId = order.Id, QuantityUnitId = products[n.ProductId].QuantityUnitId, QuantityUnitName = products[n.ProductId].QuantityUnitName, SerialNumber = "",
+                  Total = products[n.ProductId].RetailPrice * n.Quantity - 0
+            }));
+
+            await _context.SaveChangesAsync(new CancellationToken());
+
+            return await GetById(order.Id);
+        }
+
+        public Task<OrderWithProducts> Issue(Guid UserId, int OrderId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<OrderWithProducts> PublicCreate(PublicCreateOrderDTO dto)
@@ -205,6 +283,11 @@ namespace BikeShop.Payments.Application.Services
             await _context.SaveChangesAsync(new CancellationToken());
 
             return await GetById(order.Id);
+        }
+
+        public Task<OrderWithProducts> Shipped(Guid UserId, int OrderId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,6 +10,7 @@ export interface Order {
     deliveryInfo: string;
     isPayed: boolean;
     paymentId: number;
+    isPrePay: number;
     descriptionCilent: string;
     discountId: number;
     orderDiscount: number;

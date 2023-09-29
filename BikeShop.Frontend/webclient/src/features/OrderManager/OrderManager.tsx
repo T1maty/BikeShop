@@ -9,6 +9,9 @@ const OrderManager = () => {
     const data = useOrderManager(s => s.orders)
     const getOrders = useOrderManager(s => s.getOrders)
 
+    const newOrders = data.filter(n => n.order.orderStatus === "Created")
+    const processing = data.filter(n => n.order.orderStatus === "1")
+    const finishing = data.filter(n => n.order.orderStatus === "2")
     useEffect(() => {
         getOrders()
     }, [])
@@ -20,7 +23,7 @@ const OrderManager = () => {
                     <div className={s.column_name}>Нове замовлення</div>
                     <div className={s.column_add_button}>+</div>
                     <div className={s.column_orders}>
-                        {data.map((n) => {
+                        {newOrders.map((n) => {
                             return (
                                 <ColumnOrder order={n}/>
                             )
@@ -30,7 +33,7 @@ const OrderManager = () => {
                 <div className={s.column}>
                     <div className={s.column_name}>В обробці</div>
                     <div className={s.column_orders}>
-                        {data.map((n) => {
+                        {processing.map((n) => {
                             return (
                                 <ColumnOrder order={n}/>
                             )
@@ -40,7 +43,7 @@ const OrderManager = () => {
                 <div className={s.column}>
                     <div className={s.column_name}>Завершення</div>
                     <div className={s.column_orders}>
-                        {data.map((n) => {
+                        {finishing.map((n) => {
                             return (
                                 <ColumnOrder order={n}/>
                             )

@@ -2614,8 +2614,37 @@
       "SwaggerKey": "payments"
     },
 	
+	{
+      "UpstreamPathTemplate": "/api/order/internalcreate",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/order/internalcreate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 	
-	
+	{
+      "UpstreamPathTemplate": "/api/order/confirm",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/order/confirm",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 	
 	{
       "UpstreamPathTemplate": "/printhub",

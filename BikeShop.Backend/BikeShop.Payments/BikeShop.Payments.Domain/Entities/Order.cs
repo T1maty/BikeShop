@@ -9,7 +9,6 @@ namespace BikeShop.Payments.Domain.Entities
     public class Order : BaseEntity
     {
         public int ShopId { get; set; }
-
         public string OrderType { get; set; }
         public string OrderStatus { get; set; }
 
@@ -22,6 +21,8 @@ namespace BikeShop.Payments.Domain.Entities
         public string DescriptionCilent { get; set; }
 
         public int DiscountId { get; set; }
+
+        public bool IsPrePay { get; set; } = true;
 
         public decimal OrderDiscount { get; set; }
         public decimal TotalProductDiscount { get; set; }

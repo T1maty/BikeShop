@@ -34,5 +34,18 @@ namespace BikeShop.Payments.Application.Common.Errors
                 };
             }
         }
+
+        public static BaseError UserNotFount
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "id",
+                    Error = "UserNotFount",
+                    ErrorDescription = "User with specified id not found."
+                };
+            }
+        }
     }
 }
