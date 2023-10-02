@@ -106,16 +106,16 @@ namespace BikeShop.Payments.Application.Services
 
             products.ForEach(n => n.BillId = bill.Id);
             await _context.BillProducts.AddRangeAsync(products);
-            await _paymentService.NewPayment(new CreatePayment { ShopId = dto.ShopId, UserId = dto.UserId, Card = dto.Card, Cash = dto.Cash, ClientId = dto.ClientId, BankCount = dto.BankCount, CurrencyId = dto.CurrencyId, PersonalBalance = dto.PersonalBalance, Target = PaymentTarget.Cashbox, TargetId = bill.Id });
-            await _productClient.AddProductsToStorage(products.Select(n => new Acts.Domain.Refit.ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), await _shopClient.GetStorageId(dto.ShopId), "Bill", bill.Id);
+            //await _paymentService.NewPayment(new CreatePayment { ShopId = dto.ShopId, UserId = dto.UserId, Card = dto.Card, Cash = dto.Cash, ClientId = dto.ClientId, BankCount = dto.BankCount, CurrencyId = dto.CurrencyId, PersonalBalance = dto.PersonalBalance, Target = PaymentTarget.Cashbox, TargetId = bill.Id });
+            //await _productClient.AddProductsToStorage(products.Select(n => new Acts.Domain.Refit.ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), await _shopClient.GetStorageId(dto.ShopId), "Bill", bill.Id);
             await _context.SaveChangesAsync(new CancellationToken());
 
             if (dto.IsFiscal == null || dto.IsFiscal == true)
             {
                 try
                 {
-                    var goods = dto.Products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = int.Parse((n.Price * 37 * 100).ToString()) } }).ToList();
-                    var payment = new Pymnt { value = goods.Select(n => int.Parse((n.quantity / 1000 * n.good.price * 37).ToString())).Sum(), label = "Pay", type = "CASHLESS" };
+                    var goods = dto.Products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = (int)(n.Price * 100 * currency.Coefficient) } }).ToList();
+                    var payment = new Pymnt { value = goods.Select(n => (int)(n.quantity/1000 * n.good.price * currency.Coefficient)).Sum(), label = "Pay", type = "CASHLESS" };
                     var receipt = new Receipt { payments = new List<Pymnt> { payment }, goods = goods, id = bill.UUID };
 
                     var settings = await _context.CheckboxSettings.FirstOrDefaultAsync();
@@ -128,12 +128,16 @@ namespace BikeShop.Payments.Application.Services
                     SellResponse res;
                     try
                     {
+                        var data = 
                         res = await _checkbox.Sell(receipt, settings.BearerToken);
                     }
                     catch (Exception e)
                     {
                         await _checkbox.CreateShift(settings.Key, settings.BearerToken);
                         res = await _checkbox.Sell(receipt, settings.BearerToken);
+                        var kekw = 1;
+                        kekw++;
+                        Console.WriteLine(kekw);
                     }
 
                     var qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
@@ -146,9 +150,9 @@ namespace BikeShop.Payments.Application.Services
                     bill.QRCode = Convert.ToBase64String(await qr.Content.ReadAsByteArrayAsync());
                     await _context.SaveChangesAsync(new CancellationToken());
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
+                        var  dsds = e;
                     
                 }
                 

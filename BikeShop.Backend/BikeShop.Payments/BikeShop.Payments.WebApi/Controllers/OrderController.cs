@@ -63,7 +63,7 @@ namespace BikeShop.Payments.WebApi.Controllers
         [HttpPost("collected")]
         public async Task<OrderWithProducts> Collected(Guid UserId, int OrderId)
         {
-            throw new NotImplementedException();
+            return await _orderService.Collected(UserId, OrderId);
         }
 
         [HttpPost("cancel")]
