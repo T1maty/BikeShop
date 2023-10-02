@@ -3,10 +3,12 @@ import s from "./OrderManager.module.scss";
 import {OrderWithProducts} from "../../entities/entities/Order/OrderWithProducts";
 import OrderHovered from "./OrderHovered";
 import OrderUnhovered from "./OrderUnhovered";
+import useOrderManager from "./OrderManagerStore";
 
 const ColumnOrder = (props: { order: OrderWithProducts }) => {
 
     const [hover, setHover] = useState(false)
+    const getStatusString = useOrderManager(s => s.getStatusString)
 
 
     return (
@@ -20,8 +22,8 @@ const ColumnOrder = (props: { order: OrderWithProducts }) => {
                     <div>№</div>
                     <div className={s.first_row_number_number}>{props.order.order.id}</div>
                 </div>
-                <div className={s.first_row_status}>
-                    {props.order.order.orderStatus}
+                <div className={s.first_row_status} style={getStatusString(props.order.order.orderStatus).style}>
+                    {getStatusString(props.order.order.orderStatus).s}
                 </div>
             </div>
             {hover ? <OrderHovered order={props.order}/> : <OrderUnhovered order={props.order}/>}

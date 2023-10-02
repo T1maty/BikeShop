@@ -1,11 +1,8 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes,
-    KeyboardEvent, ReactNode} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode} from 'react'
 import s from './CustomTextarea.module.scss'
 
-type DefaultInputPropsType = DetailedHTMLProps<
-    InputHTMLAttributes<HTMLTextAreaElement>,
-    HTMLTextAreaElement
->
+type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement>
 
 type CustomTextareaPropsType = DefaultInputPropsType & {
     onChangeText?: (value: string) => void
@@ -17,16 +14,16 @@ type CustomTextareaPropsType = DefaultInputPropsType & {
 }
 
 export const CustomTextarea: React.FC<CustomTextareaPropsType> = ({
-    // onChange,
-    onChangeText,
-    onKeyPress,
-    onEnter,
-    error,
-    helperText, // error для Controlled InputUI (React Hook Forms)
-    className,
-    divClassName,
-    ...restProps // все остальные пропсы попадут в объект restProps
-}) => {
+                                                                      // onChange,
+                                                                      onChangeText,
+                                                                      onKeyPress,
+                                                                      onEnter,
+                                                                      error,
+                                                                      helperText, // error для Controlled InputUI (React Hook Forms)
+                                                                      className,
+                                                                      divClassName,
+                                                                      ...restProps // все остальные пропсы попадут в объект restProps
+                                                                  }) => {
     const onChangeCallback = (e: ChangeEvent<HTMLTextAreaElement>) => {
         // onChange && onChange(e);
         onChangeText && onChangeText(e.currentTarget.value);
@@ -36,7 +33,7 @@ export const CustomTextarea: React.FC<CustomTextareaPropsType> = ({
         onEnter && e.key === 'Enter' && onEnter();
     };
 
-    const finalTextareaDivWrapperClassName = `${divClassName ? divClassName : s.textarea_wrapper}`;
+    const finalTextareaDivWrapperClassName = `${divClassName ? s.textarea_wrapper + ' ' + divClassName : s.textarea_wrapper}`;
 
     return (
         <div className={finalTextareaDivWrapperClassName}>

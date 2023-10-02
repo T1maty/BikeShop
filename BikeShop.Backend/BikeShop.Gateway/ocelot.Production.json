@@ -2645,7 +2645,21 @@
       ],
       "SwaggerKey": "payments"
     },
-	
+	{
+      "UpstreamPathTemplate": "/api/order/collected",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/order/collected",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
 	{
       "UpstreamPathTemplate": "/printhub",
       "DownstreamPathTemplate": "/printhub",

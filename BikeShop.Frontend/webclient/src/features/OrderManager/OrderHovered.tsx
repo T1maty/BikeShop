@@ -1,36 +1,54 @@
 import React from 'react';
 import s from "./OrderManager.module.scss";
 import {OrderWithProducts} from "../../entities/entities/Order/OrderWithProducts";
+import icon from './../../shared/assets/workspace/icons8-phone-400.svg'
+import useOrderManager from "./OrderManagerStore";
 
 const OrderHovered = (props: { order: OrderWithProducts }) => {
-
+    const confirm = useOrderManager(s => s.confirm)
 
     let mainButton: JSX.Element = <div></div>
     let subButton: JSX.Element = <div></div>
 
     if (props.order.order.orderStatus === "Created") {
         mainButton = (
-            <div className={s.order_third_row_action_main}>
+            <div className={s.order_third_row_action_main} onClick={() => {
+                confirm(props.order.order.id)
+            }}>
                 Підтвердити
             </div>)
 
         subButton = (
-            <div className={s.order_third_row_action_main}>
-                Підтвердити
+            <div className={s.order_third_row_action_third}>
+                Відмінити
             </div>)
     }
 
     if (props.order.order.orderStatus === "WaitingForPayment") {
-        return (
-            <div className={s.order_third_row_action_main}>
-                Оплата
+        mainButton = (
+            <div className={s.order_third_row_action_main} onClick={() => {
+                confirm(props.order.order.id)
+            }}>
+                Оплатити
+            </div>)
+
+        subButton = (
+            <div className={s.order_third_row_action_third}>
+                Відмінити
             </div>)
     }
 
     if (props.order.order.orderStatus === "WaitingForCollection") {
-        return (
-            <div className={s.order_third_row_action_main}>
-                Укомплектовано!
+        mainButton = (
+            <div className={s.order_third_row_action_main} onClick={() => {
+                confirm(props.order.order.id)
+            }}>
+                Укомплектовано
+            </div>)
+
+        subButton = (
+            <div className={s.order_third_row_action_second}>
+                Очікування логістики
             </div>)
     }
 
@@ -65,7 +83,10 @@ const OrderHovered = (props: { order: OrderWithProducts }) => {
     return (
         <div className={s.order_third_row}>
             <div className={s.order_third_row_crm}>
-                1
+                <div className={s.order_third_row_crm_actions}>
+                    <img src={icon} className={s.order_third_row_crm_actions_call}/>
+                </div>
+                <div className={s.order_third_row_crm_last}></div>
             </div>
             <div className={s.order_third_row_action}>
                 {mainButton}

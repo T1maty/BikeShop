@@ -157,47 +157,103 @@
 
               .order_second_row_data_delivery {
                 text-align: center;
+                font-weight: 500;
               }
             }
           }
-        }
 
-        .order_third_row {
-          border-radius: 10px;
-          margin-top: 10px;
-          display: flex;
-          justify-content: space-between;
-          flex-direction: row;
-          height: 100%;
-          gap: 10px;
+          .order_third_row {
+            border-radius: 10px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            height: 100%;
+            gap: 10px;
 
-          .order_third_row_crm {
-            border: 1px white solid;
-            width: 100%;
+            .order_third_row_crm {
+              width: 100%;
 
-          }
+              .order_third_row_crm_actions {
 
-          .order_third_row_action {
-            width: 100%;
+                .order_third_row_crm_actions_call {
+                  width: 40px;
+                  height: 40px;
+                }
 
-            .order_third_row_action_main {
-              height: 40%;
-              margin: 5px;
-              background: #2aa25a;
-              border-radius: 5px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              font-weight: 600;
-              font-size: 16px;
+                .order_third_row_crm_actions_call:hover {
+                  transform: scale(1.4);
+                  cursor: pointer;
+                }
+              }
+
+              .order_third_row_crm_last {
+
+              }
             }
 
-            .order_third_row_action_main:hover {
-              background: #5acb87;
-              cursor: pointer;
+            .order_third_row_action {
+              width: 100%;
+
+              .order_third_row_action_main {
+                height: 40%;
+                margin: 5px;
+                background: #5acb87;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                font-size: 16px;
+              }
+
+              .order_third_row_action_main:hover {
+                background: #2aa25a;
+                cursor: pointer;
+              }
+
+              .order_third_row_action_third {
+                height: 40%;
+                margin: 5px;
+                color: #4b4b4b;
+                background: #bebebe;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                font-size: 16px;
+              }
+
+              .order_third_row_action_third:hover {
+                background: #737373;
+                color: #000000;
+                cursor: pointer;
+              }
+
+              .order_third_row_action_second {
+                height: 40%;
+                margin: 5px;
+                background-color: #ffb46d;
+                color: #7e7e7e;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                font-size: 14px;
+              }
+
+              .order_third_row_action_second:hover {
+                background: #ff9d3f;
+                color: #000000;
+                cursor: pointer;
+              }
             }
           }
+
         }
+
       }
 
     }

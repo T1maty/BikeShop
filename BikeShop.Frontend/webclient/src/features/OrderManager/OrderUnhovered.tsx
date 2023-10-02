@@ -2,8 +2,10 @@ import React from 'react';
 import s from "./OrderManager.module.scss";
 import {OrderWithProducts} from "../../entities/entities/Order/OrderWithProducts";
 import {useCurrency} from "../../entities";
+import useOrderManager from "./OrderManagerStore";
 
 const OrderUnhovered = (props: { order: OrderWithProducts }) => {
+    const getDeliveryString = useOrderManager(s => s.getDeliveryString)
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
     const r = useCurrency(s => s.roundUp)
@@ -58,7 +60,7 @@ const OrderUnhovered = (props: { order: OrderWithProducts }) => {
                     {isPayed}
                 </div>
                 <div className={s.order_second_row_data_delivery}>
-                    Доставка НоваПочка
+                    {getDeliveryString(props.order.order.deliveryType)}
                 </div>
             </div>
         </div>

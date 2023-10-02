@@ -39,9 +39,20 @@ namespace BikeShop.Payments.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<OrderWithProducts> Collected(Guid UserId, int OrderId)
+        public async Task<OrderWithProducts> Collected(Guid UserId, int OrderId)
         {
-            throw new NotImplementedException();
+            var user = await _identityClient.GetDictionary(new List<string> { UserId.ToString() });
+            if (user.Count < 1) throw OrderErrors.UserNotFount;
+            var order = await _context.Orders.FindAsync(OrderId);
+            if (order == null) throw OrderErrors.OrderNotFount;
+            if (order.OrderStatus != OrderStatus.WaitingForCollection) throw OrderErrors.WronStatus;
+            order.UpdatedAt = DateTime.Now;
+            order.UserUpdated = UserId;
+            if (order.DeliveryType == DeliveryType.Pickup.ToString()) order.OrderStatus = OrderStatus.ReadyInShop;
+            else order.OrderStatus = OrderStatus.WaitingForShipping;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+            return await GetById(order.Id);
         }
 
         public async Task<OrderWithProducts> Confirm(Guid UserId, int OrderId)
@@ -50,6 +61,7 @@ namespace BikeShop.Payments.Application.Services
             if (user.Count < 1) throw OrderErrors.UserNotFount;
             var order = await _context.Orders.FindAsync(OrderId);
             if (order == null) throw OrderErrors.OrderNotFount;
+            if (order.OrderStatus != OrderStatus.Created) throw OrderErrors.WronStatus;
 
             order.UpdatedAt = DateTime.Now;
             order.UserUpdated = UserId;
@@ -62,9 +74,21 @@ namespace BikeShop.Payments.Application.Services
             return await GetById(order.Id);
         }
 
-        public Task<OrderWithProducts> Delivered(Guid UserId, int OrderId)
+        public async Task<OrderWithProducts> Delivered(Guid UserId, int OrderId)
         {
-            throw new NotImplementedException();
+            var user = await _identityClient.GetDictionary(new List<string> { UserId.ToString() });
+            if (user.Count < 1) throw OrderErrors.UserNotFount;
+            var order = await _context.Orders.FindAsync(OrderId);
+            if (order == null) throw OrderErrors.OrderNotFount;
+            if (order.OrderStatus != OrderStatus.Shipped) throw OrderErrors.WronStatus;
+
+            order.UpdatedAt = DateTime.Now;
+            order.UserUpdated = UserId;
+
+            order.OrderStatus = OrderStatus.Finished;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+            return await GetById(order.Id);
         }
 
         public async Task<List<OrderWithProducts>> GetAll(int Take, int Skip)
@@ -285,9 +309,21 @@ namespace BikeShop.Payments.Application.Services
             return await GetById(order.Id);
         }
 
-        public Task<OrderWithProducts> Shipped(Guid UserId, int OrderId)
+        public async Task<OrderWithProducts> Shipped(Guid UserId, int OrderId)
         {
-            throw new NotImplementedException();
+            var user = await _identityClient.GetDictionary(new List<string> { UserId.ToString() });
+            if (user.Count < 1) throw OrderErrors.UserNotFount;
+            var order = await _context.Orders.FindAsync(OrderId);
+            if (order == null) throw OrderErrors.OrderNotFount;
+            if (order.OrderStatus != OrderStatus.WaitingForShipping) throw OrderErrors.WronStatus;
+
+            order.UpdatedAt = DateTime.Now;
+            order.UserUpdated = UserId;
+
+            order.OrderStatus = OrderStatus.Shipped;
+
+            await _context.SaveChangesAsync(new CancellationToken());
+            return await GetById(order.Id);
         }
     }
 }

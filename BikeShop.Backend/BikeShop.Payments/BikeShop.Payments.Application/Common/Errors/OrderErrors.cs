@@ -47,5 +47,18 @@ namespace BikeShop.Payments.Application.Common.Errors
                 };
             }
         }
+
+        public static BaseError WronStatus
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "orderStatus",
+                    Error = "WronStatus",
+                    ErrorDescription = "Status of order cant be updated, coz prev status does not match to new."
+                };
+            }
+        }
     }
 }

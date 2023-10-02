@@ -34,12 +34,6 @@ namespace BikeShop.Payments.Domain.Enumerables
 
 
 
-
-
-
-
-
-
         //Два типа оконченных заказов
         public static string Finished { get { return "Finished"; } }
         public static string Canceled { get { return "Canceled"; } }

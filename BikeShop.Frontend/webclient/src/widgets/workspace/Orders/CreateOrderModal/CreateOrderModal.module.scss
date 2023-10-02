@@ -1,0 +1,258 @@
+.wrapper {
+  height: 650px;
+  width: 500px;
+  color: black;
+  background-color: #D9D9D9;
+  padding: 15px;
+  border-radius: 10px;
+
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .client {
+    .client_title {
+      padding: 0 0 5px 5px;
+      font-size: 12px;
+    }
+
+    .client_fio {
+      border-radius: 5px;
+      background-color: #B1B1B1;
+      padding: 10px;
+      font-weight: 600;
+    }
+
+    .client_fio:hover {
+      background-color: #939393;
+      cursor: pointer;
+    }
+
+    .client_data {
+      padding: 10px;
+      display: flex;
+      gap: 15px;
+    }
+  }
+
+  .products {
+    background-color: #4b4b4b;
+    border-radius: 10px;
+    //border: 1px white solid;
+    height: 380px;
+    padding: 3px;
+
+    .select {
+      display: flex;
+      padding: 5px;
+      gap: 5px;
+      justify-content: space-between;
+
+      .s_b {
+        height: 40px;
+        width: 40px;
+        background-color: #0a66b7;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .s_b:hover {
+        cursor: pointer;
+        background-color: #1c7fd7;
+      }
+    }
+
+    .table {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      height: 86%;
+      overflow: auto;
+      border-radius: 10px;
+
+      .table_row {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 5px 0 5px;
+        padding: 5px;
+        gap: 5px;
+        background: #B1B1B1;
+        border-radius: 5px;
+
+        .table_row_right {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 3px;
+
+          .row_quant {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            user-select: none;
+
+            .row_quant_butt {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 15px;
+              background-color: #dcdcdc;
+              border-radius: 5px;
+
+            }
+
+            .row_quant_butt:hover {
+              background-color: #c4c4c4;
+              cursor: pointer;
+            }
+          }
+
+          .table_row_right_data {
+            text-align: center;
+          }
+        }
+      }
+
+      .table_row:hover {
+        background-color: #939393;
+      }
+    }
+  }
+
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    .stats_item {
+
+      .stats_item_label {
+        font-weight: 400;
+
+      }
+
+      .stats_item_value {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .total {
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .client_info {
+    //border: 1px white solid;
+    color: black;
+
+    .taw {
+      height: 200px;
+    }
+  }
+
+  .delivery_select {
+    color: black;
+
+  }
+
+  .delivery_data {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+  }
+
+  .checkbox {
+    font-weight: 500;
+  }
+
+  .manager {
+    color: black;
+
+
+  }
+
+  .buttons {
+    height: 45px;
+    padding: 2px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    .button_conf {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: #31c56c;
+      border-radius: 5px;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    .button_conf:hover {
+      background: #2aa25a;
+    }
+
+    .button_next {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: #31c56c;
+      border-radius: 5px;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    .button_next:hover {
+      background: #2aa25a;
+    }
+
+    .button_cancel {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: #d5b3b3;
+      border-radius: 5px;
+      font-weight: 600;
+      color: #5e5e5e;
+      width: 100%;
+    }
+
+    .button_cancel:hover {
+      color: black;
+      background: #ee5959;
+    }
+
+    .button_back {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: #b0b0b0;
+      color: #5e5e5e;
+      border-radius: 5px;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    .button_back:hover {
+      color: black;
+      background: #5e5e5e;
+    }
+  }
+}

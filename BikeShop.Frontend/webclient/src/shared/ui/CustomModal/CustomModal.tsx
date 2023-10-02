@@ -61,8 +61,8 @@ export const CustomModal = (props: ModalProps) => {
     return (
         <Portal>
             <div className={clsx(cls.Modal, mods, [className])} {...restProps}>
-                <div className={cls.overlay} onMouseUp={closeHandler}>
-                    <div className={cls.content} onMouseUp={(event) => {
+                <div className={cls.overlay} onMouseDown={closeHandler}>
+                    <div className={cls.content} onMouseDown={(event) => {
                         event.stopPropagation()
                     }}>
                         {children}
