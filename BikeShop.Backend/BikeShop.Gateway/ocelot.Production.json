@@ -2661,6 +2661,51 @@
       "SwaggerKey": "payments"
     },
 	{
+      "UpstreamPathTemplate": "/api/order/shipped",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/order/shipped",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
+	{
+      "UpstreamPathTemplate": "/api/order/fullupd",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/order/fullupd",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
+	{
+      "UpstreamPathTemplate": "/api/order/delivered",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/order/delivered",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.payments",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "payments"
+    },
+	{
       "UpstreamPathTemplate": "/printhub",
       "DownstreamPathTemplate": "/printhub",
       "DownstreamScheme": "ws",

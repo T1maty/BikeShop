@@ -18,6 +18,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<OrderProduct> OrderProducts { get; set; }
 
     public DbSet<CheckboxSettings> CheckboxSettings { get; set; }
+    public DbSet<OrderStatusHistory> OrderStatusHistories { get; set; }
 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

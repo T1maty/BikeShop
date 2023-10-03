@@ -60,5 +60,70 @@ namespace BikeShop.Payments.Application.Common.Errors
                 };
             }
         }
+
+        public static BaseError WronDeliveryType
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "deliveryType",
+                    Error = "WronDeliveryType",
+                    ErrorDescription = "Specified delivery type not exist."
+                };
+            }
+        }
+
+        public static BaseError DeserializeError
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "deliveryInfo",
+                    Error = "DeserializeError",
+                    ErrorDescription = "DeliveryInfo cant be deserialized."
+                };
+            }
+        }
+
+        public static BaseError OrderStatusBlock
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "orderStatus",
+                    Error = "OrderStatusBlock",
+                    ErrorDescription = "Action was blocked coz of order status."
+                };
+            }
+        }
+
+        public static BaseError ProductUpdateBlock
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "products",
+                    Error = "ProductUpdateBlock",
+                    ErrorDescription = "Products cant be updated, probably order already payed"
+                };
+            }
+        }
+
+        public static BaseError PrePayUpdateError
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "isPrePay",
+                    Error = "PrePayUpdateError",
+                    ErrorDescription = "PrePay cant be updated when order is already payed"
+                };
+            }
+        }
     }
 }

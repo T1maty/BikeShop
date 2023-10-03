@@ -11,7 +11,6 @@ namespace BikeShop.Payments.Domain.Entities
         public int ShopId { get; set; }
         public string OrderType { get; set; }
         public string OrderStatus { get; set; }
-
         public string DeliveryType { get; set; }
         public string DeliveryInfo { get; set; }
 

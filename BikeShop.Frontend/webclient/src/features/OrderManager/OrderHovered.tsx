@@ -6,6 +6,7 @@ import useOrderManager from "./OrderManagerStore";
 
 const OrderHovered = (props: { order: OrderWithProducts }) => {
     const confirm = useOrderManager(s => s.confirm)
+    const collected = useOrderManager(s => s.collected)
 
     let mainButton: JSX.Element = <div></div>
     let subButton: JSX.Element = <div></div>
@@ -41,7 +42,7 @@ const OrderHovered = (props: { order: OrderWithProducts }) => {
     if (props.order.order.orderStatus === "WaitingForCollection") {
         mainButton = (
             <div className={s.order_third_row_action_main} onClick={() => {
-                confirm(props.order.order.id)
+                collected(props.order.order.id)
             }}>
                 Укомплектовано
             </div>)
@@ -67,9 +68,16 @@ const OrderHovered = (props: { order: OrderWithProducts }) => {
     }
 
     if (props.order.order.orderStatus === "WaitingForShipping") {
-        return (
-            <div className={s.order_third_row_action_main}>
+        mainButton = (
+            <div className={s.order_third_row_action_main} onClick={() => {
+                collected(props.order.order.id)
+            }}>
                 Відправлено
+            </div>)
+
+        subButton = (
+            <div className={s.order_third_row_action_second}>
+                Створити ТТН
             </div>)
     }
 

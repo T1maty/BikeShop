@@ -18,5 +18,6 @@ namespace BikeShop.Payments.Domain.DTO.Responses
         public User? Manager { get; set; }
         public Payment? Payment { get; set; }
         public List<OrderProduct> Products { get; set; }
+        public List<OrderStatusHistory> StatusHistories { get; set; }
     }
 }

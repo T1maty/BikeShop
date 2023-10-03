@@ -12,9 +12,21 @@ interface p {
     confirm: (id: number) => void
     getStatusString: (status: string) => { s: string, style: {} }
     getDeliveryString: (status: string) => string
+    collected: (id: number) => void
 }
 
+
 const useOrderManager = create<p>()(persist(devtools(immer((set, get) => ({
+    collected: (id) => {
+        OrderApi.Collected(LocalStorage.userId()!, id).then(r => {
+            let data = get().orders.map(n => {
+                if (n.order.id === r.data.order.id) return r.data
+                return n
+            })
+            console.log('afterUpdate:', data)
+            set({orders: data})
+        })
+    },
     getDeliveryString: (status) => {
         switch (status) {
             case "Shipping":
@@ -36,11 +48,11 @@ const useOrderManager = create<p>()(persist(devtools(immer((set, get) => ({
             case "WaitingForCollection":
                 return {s: "На збірці", style: {backgroundColor: "#ffe756", color: "#3f3f3f"}}
             case "WaitingLogistic":
-                return {s: "Очікує логістики", style: {backgroundColor: "#e3d579"}}
+                return {s: "Очікує логістики", style: {backgroundColor: "#ffe756", color: "#3f3f3f"}}
             case "ReadyInShop":
                 return {s: "Готов в магазині", style: {backgroundColor: "#84e379"}}
             case "WaitingForShipping":
-                return {s: "Очікує відправлення", style: {backgroundColor: "#e3d579"}}
+                return {s: "Очікує відправлення", style: {backgroundColor: "#ffe756", color: "#3f3f3f"}}
             case "Shipped":
                 return {s: "Відпарвлено", style: {backgroundColor: "#84e379"}}
             case "Finished":

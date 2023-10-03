@@ -48,6 +48,12 @@ namespace BikeShop.Payments.WebApi.Controllers
             return await _orderService.InternalCreate(dto);
         }
 
+        [HttpPost("fullupd")]
+        public async Task<OrderWithProducts> FullUpdate(FullUpdateOrderDTO dto)
+        {
+            return await _orderService.FullUpdate(dto);
+        }
+
         [HttpPost("confirm")]
         public async Task<OrderWithProducts> Confirm(Guid UserId, int OrderId)
         {
@@ -81,13 +87,13 @@ namespace BikeShop.Payments.WebApi.Controllers
         [HttpPost("shipped")]
         public async Task<OrderWithProducts> Shipped(Guid UserId, int OrderId)
         {
-            throw new NotImplementedException();
+            return await _orderService.Shipped(UserId, OrderId);
         }
 
         [HttpPost("delivered")]
         public async Task<OrderWithProducts> Delivered(Guid UserId, int OrderId)
         {
-            throw new NotImplementedException();
+            return await _orderService.Delivered(UserId, OrderId);
         }
     }
 }

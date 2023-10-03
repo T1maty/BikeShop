@@ -23,6 +23,7 @@ namespace BikeShop.Payments.Application.Interfaces
         public Task<OrderWithProducts> Shipped(Guid UserId, int OrderId);
         public Task<OrderWithProducts> Delivered(Guid UserId, int OrderId);
         public Task<OrderWithProducts> InternalCreate(InternalCreateOrderDTO dto);
+        public Task<OrderWithProducts> FullUpdate(FullUpdateOrderDTO dto);
 
     }
 }
