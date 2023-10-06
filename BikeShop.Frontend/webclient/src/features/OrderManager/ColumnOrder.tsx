@@ -4,11 +4,14 @@ import {OrderWithProducts} from "../../entities/entities/Order/OrderWithProducts
 import OrderHovered from "./OrderHovered";
 import OrderUnhovered from "./OrderUnhovered";
 import useOrderManager from "./OrderManagerStore";
+import useOrderModal from "../../widgets/workspace/Orders/OrderModal/OrderModalStore";
 
 const ColumnOrder = (props: { order: OrderWithProducts }) => {
 
     const [hover, setHover] = useState(false)
     const getStatusString = useOrderManager(s => s.getStatusString)
+    const setOpenModal = useOrderModal(s => s.setOpen)
+    const setCurrentOrder = useOrderManager(s => s.setCurrentOrder)
 
 
     return (
@@ -16,13 +19,16 @@ const ColumnOrder = (props: { order: OrderWithProducts }) => {
             setHover(true)
         }} onMouseLeave={() => {
             setHover(false)
+        }} onClick={() => {
+            setCurrentOrder(props.order)
         }}>
             <div className={s.order_first_row}>
                 <div className={s.first_row_number}>
                     <div>№</div>
                     <div className={s.first_row_number_number}>{props.order.order.id}</div>
                 </div>
-                <div className={s.first_row_status} style={getStatusString(props.order.order.orderStatus).style}>
+                <div onClick={() => setOpenModal(true)} className={s.first_row_status}
+                     style={getStatusString(props.order.order.orderStatus).style}>
                     {getStatusString(props.order.order.orderStatus).s}
                 </div>
             </div>

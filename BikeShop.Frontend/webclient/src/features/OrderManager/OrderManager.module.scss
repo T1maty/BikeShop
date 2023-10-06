@@ -100,6 +100,13 @@
               display: flex;
               justify-content: center;
               align-items: center;
+              padding: 2px;
+            }
+
+            .first_row_status:hover {
+              padding: 0;
+              border: 1px black solid;
+              cursor: pointer;
             }
           }
 
@@ -254,6 +261,9 @@
 
         }
 
+        .column_order:hover {
+          background-color: #bbbbbb;
+        }
       }
 
     }

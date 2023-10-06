@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-    AsyncSelectSearchProduct,
-    CustomCheckbox,
-    CustomModal,
-    CustomTextarea,
-    DeleteButton
-} from "../../../../shared/ui";
+import {CustomCheckbox, CustomModal, CustomTextarea} from "../../../../shared/ui";
 import useCreateOrderModal from "./CreateOrderModalStore";
 import s from './CreateOrderModal.module.scss'
 import ClientSearchModal from "../../../../features/ClientSearchModal/ClientSearchModal";
@@ -14,21 +8,16 @@ import Select from "react-select";
 import {useSnackbar} from "notistack";
 import {Loader} from "../../../../shared/ui/Loader/Loader";
 import useOrderManager from "../../../../features/OrderManager/OrderManagerStore";
-import {ChooseProductModal} from "../../ProductCatalog/ChooseProductModal/ChooseProductModal";
-import {Product} from "entities";
 import {AsyncSelectSearchCityNP} from "../../../../shared/ui/AsyncSelectSearch/AsyncSelectSearchCityNP";
 import {AsyncSelectSearchWarehouseNP} from "../../../../shared/ui/AsyncSelectSearch/AsyncSelectSearchWarehoseNP";
+import OrderProductTable from "./OrderProductTable";
 
 const CreateOrderModal = () => {
     const open = useCreateOrderModal(s => s.open)
     const setOpen = useCreateOrderModal(s => s.setOpen)
     const client = useCreateOrderModal(s => s.client)
     const setClient = useCreateOrderModal(s => s.setClient)
-    const addProduct = useCreateOrderModal(s => s.addProduct)
     const products = useCreateOrderModal(s => s.products)
-    const incButtonHandler = useCreateOrderModal(s => s.incButtonHandler)
-    const decButtonHandler = useCreateOrderModal(s => s.decButtonHandler)
-    const removeButtonHandler = useCreateOrderModal(s => s.removeButtonHandler)
     const isFirstPage = useCreateOrderModal(s => s.isFirstPage)
     const setIsFirstPage = useCreateOrderModal(s => s.setIsFirstPage)
     const clear = useCreateOrderModal(s => s.clear)
@@ -66,7 +55,6 @@ const CreateOrderModal = () => {
         disc: 0
     })
     const [openChooseClient, setOpenChooseClient] = useState(false)
-    const [openChooseProduct, setOpenChooseProduct] = useState(false)
 
     useEffect(() => {
         let data: { poz: number, od: number, withoutDisc: number, disc: number } = {
@@ -114,11 +102,7 @@ const CreateOrderModal = () => {
                     isLoading ? <Loader variant={"ellipsis"}/> :
                         isFirstPage ?
                             <>
-                                <ChooseProductModal open={openChooseProduct} setOpen={setOpenChooseProduct}
-                                                    addData={(p: Product) => {
-                                                        addProduct(p)
-                                                        setOpenChooseProduct(false)
-                                                    }}/>
+
                                 <ClientSearchModal setIsComponentVisible={setOpenChooseClient}
                                                    isComponentVisible={openChooseClient}
                                                    onSuccess={setClient}/>
@@ -142,45 +126,7 @@ const CreateOrderModal = () => {
                                     </div>
                                 </div>
 
-                                <div className={s.products}>
-                                    <div className={s.select}>
-                                        <div style={{width: "100%"}}><AsyncSelectSearchProduct onSelect={addProduct}/>
-                                        </div>
-                                        <div className={s.s_b} onClick={() => {
-                                            setOpenChooseProduct(true)
-                                        }}>+
-                                        </div>
-                                    </div>
-                                    <div className={s.table}>
-                                        {products.map((n, ind) =>
-                                            <div className={s.table_row} key={ind}>
-                                                <div>{n.p.name}</div>
-                                                <div className={s.table_row_right}>
-                                                    <div className={s.row_quant}>
-                                                        <div className={s.row_quant_butt} onClick={() => {
-                                                            decButtonHandler(n.p.id)
-                                                        }}>-
-                                                        </div>
-                                                        <div>{n.q + n.p.quantityUnitName}</div>
-                                                        <div className={s.row_quant_butt} onClick={() => {
-                                                            incButtonHandler(n.p.id)
-                                                        }}>+
-                                                        </div>
-                                                        <DeleteButton className={s.row_quant_butt} size={15}
-                                                                      onClick={() => {
-                                                                          removeButtonHandler(n.p.id)
-                                                                      }}/>
-                                                    </div>
-                                                    <div className={s.table_row_right_data}>
-                                                        {r(n.p.retailPrice * n.q * fbts.c) + fbts.s}
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
+                                <OrderProductTable/>
                                 <div className={s.stats}>
                                     <div className={s.stats_item}>
                                         <div className={s.stats_item_label}>Товарів:</div>

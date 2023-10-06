@@ -3,6 +3,7 @@ import {Button, CustomCheckbox, CustomInput, CustomModal} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import {ClientCard} from "../../widgets"
 import {LocalStorage, PaymentData, useCurrency, User} from "../../entities"
+import * as signalR from '@microsoft/signalr';
 
 interface PayModalProps {
     open: boolean
@@ -19,6 +20,15 @@ export const PayModal = (props: PayModalProps) => {
     const [isPrint, setIsPrint] = useState<boolean>(true)
 
     const r = useCurrency(f => f.roundUp)
+
+
+    let connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5007/agenthub")
+        .build();
+    console.log('con:', connection)
+    connection.start()
+    console.log('con:', connection)
+
 
     return (
         <CustomModal
@@ -89,8 +99,9 @@ export const PayModal = (props: PayModalProps) => {
                         <CustomCheckbox checked={isPrint} onChangeChecked={setIsPrint} children={'Печать'}/>
                         <br/>
                         <br/>
+
                         <Button onClick={() => {
-                            props.result({
+                            /*props.result({
                                 isFiscal: isFiscal,
                                 cash: 0,
                                 card: props.summ,
@@ -98,6 +109,10 @@ export const PayModal = (props: PayModalProps) => {
                                 personalBalance: 0
                             }, isPrint)
                             props.setOpen(false)
+
+                             */
+                            connection?.send("RequestPayment", '1')
+
                         }}>
                             Использовать терминал
                         </Button>

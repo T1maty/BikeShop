@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import s from './OrderManager.module.scss'
 import ColumnOrder from "./ColumnOrder";
-import OrderModal from "../OrderModal/OrderModal";
+import OrderModal from "../../widgets/workspace/Orders/OrderModal/OrderModal";
 import useOrderManager from "./OrderManagerStore";
 import useCreateOrderModal from "../../widgets/workspace/Orders/CreateOrderModal/CreateOrderModalStore";
 import CreateOrderModal from "../../widgets/workspace/Orders/CreateOrderModal/CreateOrderModal";
@@ -20,7 +20,7 @@ const OrderManager = () => {
         getOrders()
     }, [])
     return (
-        <div className={s.wrapper}>
+        <div className={s.wrapper} onContextMenu={e => e.preventDefault()}>
             <OrderModal/>
             <CreateOrderModal/>
             <div className={s.main_block}>

@@ -2736,6 +2736,37 @@
       "Priority": 50
     }
 	
+	{
+      "UpstreamPathTemplate": "/agenthub",
+      "DownstreamPathTemplate": "/agenthub",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+	  "QoSOptions": {
+        "TimeoutValue": 320000
+      },
+      "Priority": 50
+    },
+	{
+      "UpstreamPathTemplate": "/agenthub/{path}",
+      "DownstreamPathTemplate": "/agenthub/{path}",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.acts",
+          "Port": 80
+        }
+      ],
+	  "QoSOptions": {
+        "TimeoutValue": 320000
+      },
+      "Priority": 50
+    }
+	
 
 	
 	

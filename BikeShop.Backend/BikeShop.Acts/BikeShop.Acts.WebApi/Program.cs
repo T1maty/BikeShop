@@ -1,3 +1,4 @@
+using BikeShop.Acts.Application.Hubs;
 using BikeShop.Acts.Application.Refit;
 using BikeShop.Acts.WebApi.Controllers;
 using BikeShop.Products.Application;
@@ -70,9 +71,10 @@ builder.Services.AddCors(options =>
     // Доступ ко всем клиентам
     options.AddPolicy("AllowAll", policy =>
     {
+        policy.AllowAnyOrigin();
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
-        policy.AllowAnyOrigin();
+
     });
 });
 
@@ -119,5 +121,6 @@ app.UseSwaggerUI(config =>
 app.UseHttpsRedirection();
 app.MapControllers();
 app.MapHub<PrintQueueHub>("/printhub");
+app.MapHub<AgentHub>("/agenthub");
 
 app.Run();

@@ -11,5 +11,6 @@ namespace BikeShop.Acts.WebApi.Controllers
         {
             await _context.Clients.All.SendAsync("UpdateQueue", data);
         }
+
     }
 }

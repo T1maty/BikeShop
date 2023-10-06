@@ -137,9 +137,6 @@ namespace BikeShop.Payments.Application.Services
                     {
                         await _checkbox.CreateShift(settings.Key, settings.BearerToken);
                         res = await _checkbox.Sell(receipt, settings.BearerToken);
-                        var kekw = 1;
-                        kekw++;
-                        Console.WriteLine(kekw);
                     }
 
                     var qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
