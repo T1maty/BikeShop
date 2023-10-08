@@ -3,7 +3,7 @@ import {Button, CustomCheckbox, CustomInput, CustomModal} from '../../shared/ui'
 import s from './PayModal.module.scss'
 import {ClientCard} from "../../widgets"
 import {LocalStorage, PaymentData, useCurrency, User} from "../../entities"
-import * as signalR from '@microsoft/signalr';
+import {TerminalConfirmModal} from "./TerminalConfirmModal";
 
 interface PayModalProps {
     open: boolean
@@ -18,17 +18,9 @@ export const PayModal = (props: PayModalProps) => {
     const [cash, setCash] = useState<number>()
     const [isFiscal, setIsFiscal] = useState<boolean>(true)
     const [isPrint, setIsPrint] = useState<boolean>(true)
+    const [openTerminalConfirm, setOpenTerminalConfirm] = useState<boolean>(false)
 
     const r = useCurrency(f => f.roundUp)
-
-
-    let connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:5007/agenthub")
-        .build();
-    console.log('con:', connection)
-    connection.start()
-    console.log('con:', connection)
-
 
     return (
         <CustomModal
@@ -38,7 +30,18 @@ export const PayModal = (props: PayModalProps) => {
             }}
         >
             <div className={s.payModal_mainBox}>
-
+                <TerminalConfirmModal open={openTerminalConfirm} setOpen={setOpenTerminalConfirm} onConfirm={() => {
+                    props.result({
+                        isFiscal: isFiscal,
+                        cash: 0,
+                        card: props.summ,
+                        bankCount: 0,
+                        personalBalance: 0
+                        //parseFloat(r(props.summ * LocalStorage.currency.fbts()))
+                    }, isPrint)
+                    props.setOpen(false)
+                }} onCancel={() => {
+                }} amount={1}/>
                 <div className={s.payModal_header}>
                     <div className={s.header_text}>
                         К оплате:
@@ -100,20 +103,7 @@ export const PayModal = (props: PayModalProps) => {
                         <br/>
                         <br/>
 
-                        <Button onClick={() => {
-                            /*props.result({
-                                isFiscal: isFiscal,
-                                cash: 0,
-                                card: props.summ,
-                                bankCount: 0,
-                                personalBalance: 0
-                            }, isPrint)
-                            props.setOpen(false)
-
-                             */
-                            connection?.send("RequestPayment", '1')
-
-                        }}>
+                        <Button onClick={() => setOpenTerminalConfirm(true)}>
                             Использовать терминал
                         </Button>
                         <br/>

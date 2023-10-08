@@ -1,12 +1,11 @@
-﻿using System;
+﻿using BikeShop.Payments.Domain.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BikeShop.Payments.Domain.Entities
+namespace BikeShop.Acts.Domain.Refit.Bill
 {
     public class Bill : BaseEntity
     {

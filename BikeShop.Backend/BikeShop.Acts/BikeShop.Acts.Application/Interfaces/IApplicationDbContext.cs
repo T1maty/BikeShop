@@ -25,6 +25,7 @@ public interface IApplicationDbContext
     public DbSet<SalaryPaymentHistory> SalaryPaymentHistory { get; set; }
     public DbSet<OutcomeAct> OutcomeActs { get; set; }
     public DbSet<OutcomeActProduct> OutcomeActProducts { get; set; }
+    public DbSet<PrintTamplate> PrintTamplates { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс

@@ -2,8 +2,6 @@
 using BikeShop.Acts.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
-using System.Xml.Linq;
 
 namespace BikeShop.Acts.WebApi.Controllers
 {
@@ -15,6 +13,7 @@ namespace BikeShop.Acts.WebApi.Controllers
         private readonly IPrintService _printService;
         private readonly PrintQueueHub _pq;
         private readonly IHubContext<PrintQueueHub> _hubContext;
+     
 
         public PrintController(IPrintService printService, PrintQueueHub pq, IHubContext<PrintQueueHub> hubContext)
         {
@@ -67,4 +66,5 @@ namespace BikeShop.Acts.WebApi.Controllers
             return await _printService.UpdatePrinterSettings(Id, AgentId, Name, Settings);
         }
     }
+    
 }

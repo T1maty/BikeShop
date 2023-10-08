@@ -1,4 +1,5 @@
-﻿using BikeShop.Acts.Domain.Entities;
+﻿using BikeShop.Acts.Domain.DTO.AgentHub;
+using BikeShop.Acts.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,7 @@ namespace BikeShop.Acts.Application.Interfaces
         public Task<List<PrintSettings>> GetAllPrintSettings();
         public Task<PrintSettings> CreatePrinterSettings(int AgentId, string Name, string Settings);
         public Task<PrintSettings> UpdatePrinterSettings(int Id, int AgentId, string Name, string Settings);
+        public Task<PrintDTO> PrintBill(int AgentId, int BillId, int Copies = 0);
+
     }
 }

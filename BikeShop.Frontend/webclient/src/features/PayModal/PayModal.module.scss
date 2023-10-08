@@ -2,87 +2,98 @@
 @import '../../app/styles/variables/variables';
 
 .payModal_mainBox {
-    @include defaultModalStyle;
-    @include divSmallMarginBottom;
-    width: 350px;
+  @include defaultModalStyle;
+  @include divSmallMarginBottom;
+  width: 350px;
 
-    > * {
-        button {
-            height: 40px;
-        }
+  > * {
+    button {
+      height: 40px;
+    }
+  }
+
+  .payModal_header {
+    @include flexColumn;
+
+    .header_text {
+
     }
 
-    .payModal_header {
-        @include flexColumn;
+    .header_sum {
+      @include largeFontSize;
+    }
+  }
 
-        .header_text {
+  .payModal_clientCard {
+    margin-bottom: 20px !important;
+  }
 
-        }
-        .header_sum {
-            @include largeFontSize;
-        }
+  .payModal_payType {
+    :first-child {
+      margin-bottom: 5px;
     }
 
-    .payModal_clientCard {
-        margin-bottom: 20px !important;
+    button {
+      width: 100%;
+    }
+  }
+
+  .payModal_cashback {
+    @include flexColumn;
+    margin-bottom: 0 !important;
+
+    .cashback_text {
+
     }
 
-    .payModal_payType {
-        :first-child {
-            margin-bottom: 5px;
-        }
+    .cashback_sum {
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
 
-        button {
-            width: 100%;
-        }
+  .payModal_cashValue {
+    @include defaultFiledStyle;
+    min-width: 100%;
+  }
+
+  .payModal_cashbackBlock {
+    @include flexColumn;
+
+    .cashbackBlock_info {
+      margin-bottom: $defaultSmallMargin;
+
+      .cashbackBlock_text {
+
+      }
+
+      .cashbackBlock_value {
+        @include largeFontSize;
+      }
     }
 
-    .payModal_cashback {
-        @include flexColumn;
-        margin-bottom: 0 !important;
+    .cashbackBlock_buttons {
+      width: 100%;
 
-        .cashback_text {
+      .cancelButton {
+        @include deleteButton;
+        margin-bottom: $defaultSmallMargin;
+      }
 
-        }
-        .cashback_sum {
-            font-size: 30px;
-            font-weight: bold;
-        }
+      //:first-child {
+      //    margin-bottom: $defaultSmallMargin;
+      //}
+
+      button {
+        width: 100%;
+      }
     }
+  }
+}
 
-    .payModal_cashValue {
-        @include defaultFiledStyle;
-        min-width: 100%;
-    }
-
-    .payModal_cashbackBlock {
-        @include flexColumn;
-
-        .cashbackBlock_info {
-            margin-bottom: $defaultSmallMargin;
-
-            .cashbackBlock_text {
-
-            }
-            .cashbackBlock_value {
-                @include largeFontSize;
-            }
-        }
-
-        .cashbackBlock_buttons {
-            width: 100%;
-
-            .cancelButton {
-                @include deleteButton;
-                margin-bottom: $defaultSmallMargin;
-            }
-            //:first-child {
-            //    margin-bottom: $defaultSmallMargin;
-            //}
-
-            button {
-                width: 100%;
-            }
-        }
-    }
+.confirm_modal {
+  height: 500px;
+  width: 500px;
+  background-color: #4b4b4b;
+  border-radius: 15px;
 }

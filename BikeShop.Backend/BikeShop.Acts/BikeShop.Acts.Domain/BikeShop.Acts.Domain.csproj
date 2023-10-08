@@ -10,4 +10,8 @@
     <Folder Include="DTO\Resposes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Scriban" Version="5.9.0" />
+  </ItemGroup>
+
 </Project>

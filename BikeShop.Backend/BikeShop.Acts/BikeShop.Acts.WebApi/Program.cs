@@ -35,6 +35,8 @@ builder.Services.AddRefitClient<IShopClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Shop"]));
 builder.Services.AddRefitClient<IIdentityClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Identity"]));
+builder.Services.AddRefitClient<IPaymentsClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Payments"]));
 
 
 builder.Services.AddSignalR(); 
@@ -71,7 +73,8 @@ builder.Services.AddCors(options =>
     // Доступ ко всем клиентам
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin();
+        policy.AllowCredentials();
+       policy.SetIsOriginAllowed((host) => true);
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
 

@@ -25,6 +25,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<SalaryPaymentHistory> SalaryPaymentHistory { get; set; }
     public DbSet<OutcomeAct> OutcomeActs { get; set; }
     public DbSet<OutcomeActProduct> OutcomeActProducts { get; set; }
+    public DbSet<PrintTamplate> PrintTamplates { get; set; }
 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

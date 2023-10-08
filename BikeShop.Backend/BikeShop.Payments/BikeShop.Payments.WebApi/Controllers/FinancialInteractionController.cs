@@ -25,6 +25,12 @@ namespace BikeShop.Payments.WebApi.Controllers
             return await _interactionService.NewBill(dto);
         }
 
+        [HttpGet("getbill")]
+        public async Task<BillWithProducts> GetBill(int BillId)
+        {
+            return await _interactionService.GetBill(BillId);
+        }
+
         [HttpGet("getbillsbyuser")]
         public async Task<List<BillWithProducts>> GetBillsByUser(Guid? UserId, DateTime Start, DateTime Finish)
         {

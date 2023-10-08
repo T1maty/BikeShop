@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using BikeShop.Acts.Application.Interfaces;
+using BikeShop.Acts.Domain.DTO.AgentHub;
+using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +12,32 @@ namespace BikeShop.Acts.Application.Hubs
 {
     public class AgentHub:Hub
     {
-        public async Task ConfirmPayment()
-        {
+        private readonly IPrintService _printService;
 
+        public AgentHub(IPrintService printService)
+        {
+            _printService = printService;
         }
 
-        public async Task RequestPayment(string v)
+        public async Task ConfirmPayment(TerminalPayment dto)
         {
-            await Clients.All.SendAsync("ReqP",v);
+            await Clients.All.SendAsync("ConfirmPay", dto);
+        }
+
+        public async Task CancelPayment(TerminalPayment dto)
+        {
+            await Clients.All.SendAsync("CancelPay", dto);
+        }
+
+        public async Task RequestPayment(TerminalPayment dto)
+        {
+            await Clients.All.SendAsync("RequestPay", dto);
+        }
+
+        public async Task PrintBill(StartPrintDTO dto)
+        {
+            var res = await _printService.PrintBill(dto.AgentId,dto.DataId,dto.Copies);
+            await Clients.All.SendAsync("Printing", res);
         }
 
     }

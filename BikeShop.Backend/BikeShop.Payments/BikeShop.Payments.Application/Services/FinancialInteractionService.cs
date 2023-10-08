@@ -187,5 +187,12 @@ namespace BikeShop.Payments.Application.Services
             await _identityClient.EditBalance(dto.ClientId, dto.Card + dto.Cash + dto.PersonalBalance + dto.BankCount, true);
             return await _paymentService.NewPayment(p);
         }
+
+        public async Task<BillWithProducts> GetBill(int BillId)
+        {
+            var bill = await _context.Bills.FindAsync(BillId);
+            var billProduct = await _context.BillProducts.Where(n => n.BillId == BillId).ToListAsync();
+            return new BillWithProducts { bill = bill, products = billProduct };
+        }
     }
 }

@@ -1,17 +1,16 @@
 ﻿using BikeShop.Acts.Application.Interfaces;
 using BikeShop.Acts.Application.Refit;
 using BikeShop.Acts.Domain.DTO;
+using BikeShop.Acts.Domain.DTO.AgentHub;
+using BikeShop.Acts.Domain.DTO.Scriban;
 using BikeShop.Acts.Domain.Entities;
 using BikeShop.Products.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Refit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Scriban;
 
 namespace BikeShop.Acts.Application.Services
 {
@@ -19,11 +18,13 @@ namespace BikeShop.Acts.Application.Services
     {
         private readonly IApplicationDbContext _context;
         private readonly IFileserviceClient _fileservice;
+        private readonly IPaymentsClient _paymentsClient;
 
-        public PrintService(IApplicationDbContext context, IFileserviceClient fileservice)
+        public PrintService(IApplicationDbContext context, IFileserviceClient fileservice, IPaymentsClient paymentsClient)
         {
             _context = context;
             _fileservice = fileservice;
+            _paymentsClient = paymentsClient;
         }
 
         public async Task<PrintQueue> AddQueue(int actId, string dataName, string? printSettings, int? prioriry, int agentId, IFormFile? imageFile)
@@ -112,6 +113,52 @@ namespace BikeShop.Acts.Application.Services
 
             await _context.SaveChangesAsync(new CancellationToken());
             return ent;
+        }
+
+        public async Task<string> CreateActHTML<T>(T data)
+        {
+            PrintTamplate? tamplate = null;
+
+            if (typeof(CashboxBillModel) == data.GetType())
+            {
+                tamplate = await _context.PrintTamplates.Where(n => n.Name == "CashboxBill").FirstOrDefaultAsync();
+            }
+
+            string tamplateString = "<h1>Tamplate not found<h1>";
+
+            if(tamplate != null)
+            {
+                tamplateString = tamplate.ScribanTamplate;
+            }
+
+            return await Template.Parse(tamplateString).RenderAsync(new TypedContext(data));
+        }
+
+        public async Task<PrintDTO> PrintBill(int AgentId, int BillId, int Copies = 0)
+        {
+            var bill = await _paymentsClient.GetBill(BillId);
+
+            var model = new CashboxBillModel();
+            model.Id = bill.bill.Id.ToString();
+            model.Date = bill.bill.CreatedAt.Date.ToString();
+            model.Products = bill.products.Select(n => new CashboxBillModelProduct { Name = n.Name, Price = n.Price.ToString(), Quantity = n.Quantity.ToString(), QuanUnit = n.QuantityUnitName, Total = n.Total.ToString() }).ToList();
+            model.CurSymbol = "грн.";
+            model.Manager = "Панкратов Eвгений Владимирвич";
+            model.Client = "Панкратов Eвгений Владимирвич";
+            model.WithoutDisc = "1111";
+            model.Disc = "1";
+            model.Total = "1110";
+
+            var tamplate = await CreateActHTML(model);
+
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == AgentId).Where(n => n.Name == "Bill").FirstOrDefaultAsync()).Settings;
+
+            var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+            if(Copies != 0) actual.copies = Copies;
+
+
+
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual};
         }
     }
 }
