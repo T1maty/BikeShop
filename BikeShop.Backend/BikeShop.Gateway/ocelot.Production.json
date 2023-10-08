@@ -2734,7 +2734,7 @@
         "TimeoutValue": 320000
       },
       "Priority": 50
-    }
+    },
 	
 	{
       "UpstreamPathTemplate": "/agenthub",
