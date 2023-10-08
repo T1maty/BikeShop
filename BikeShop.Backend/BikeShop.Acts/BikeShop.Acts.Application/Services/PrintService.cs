@@ -146,7 +146,7 @@ namespace BikeShop.Acts.Application.Services
             var model = new CashboxBillModel();
             model.Id = bill.bill.Id.ToString();
             model.Date = bill.bill.CreatedAt.ToString("dd-MM-yyyy");
-            model.Products = bill.products.Select(n => new CashboxBillModelProduct { Name = n.Name, Price = n.Price.ToString(), Quantity = n.Quantity.ToString(), QuanUnit = n.QuantityUnitName, Total = n.Total.ToString() }).ToList();
+            model.Products = bill.products.Select(n => new CashboxBillModelProduct { Name = n.Name, Price = n.Price.ToString("0.00"), Quantity = n.Quantity.ToString("0.##"), QuanUnit = n.QuantityUnitName, Total = n.Total.ToString("0.00") }).ToList();
             model.CurSymbol = currency.Symbol;
             
             model.Manager = "";
@@ -163,9 +163,9 @@ namespace BikeShop.Acts.Application.Services
                 model.Client = client.lastName + " " + client.firstName + " " + client.patronymic;
             }
 
-            model.WithoutDisc = (bill.bill.Total-bill.bill.Discount).ToString();
-            model.Disc = bill.bill.Discount.ToString();
-            model.Total = bill.bill.Total.ToString();
+            model.WithoutDisc = (bill.bill.Total-bill.bill.Discount).ToString("0.00");
+            model.Disc = bill.bill.Discount.ToString("0.00");
+            model.Total = bill.bill.Total.ToString("0.00");
 
             var tamplate = await CreateActHTML(model);
 
