@@ -83,7 +83,7 @@ namespace BikeShop.Payments.Application.Services
                     Quantity = product.Quantity,
                     QuantityUnitName = product.QuantityUnitName,
                     SerialNumber = product.SerialNumber,
-                    Total = product.Quantity * product.Price - product.Discount
+                    Total = product.Quantity * prc - product.Discount
                 }); ;
             }
 

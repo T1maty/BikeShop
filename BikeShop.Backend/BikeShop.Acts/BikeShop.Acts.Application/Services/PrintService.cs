@@ -176,7 +176,7 @@ namespace BikeShop.Acts.Application.Services
 
 
 
-            return new PrintDTO { HTML = tamplate, PrintSettings = actual};
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = AgentId};
         }
     }
 }

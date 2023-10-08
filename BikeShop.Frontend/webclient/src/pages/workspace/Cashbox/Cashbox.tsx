@@ -15,6 +15,7 @@ import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchM
 import {DiscountTargetEnum} from "../../../entities/enumerables/DiscountTargetEnum";
 import {ChooseDiscountModal, PayModal, PrintModal} from "../../../features";
 import {ChooseProductModal} from "../../../widgets/workspace/ProductCatalog/ChooseProductModal/ChooseProductModal";
+import {useApp} from "../../../entities/globalStore/AppStore";
 
 export const Cashbox = () => {
 
@@ -45,6 +46,8 @@ export const Cashbox = () => {
     const r = useCurrency(s => s.roundUp)
     const currency = useCurrency(s => s.selectedCurrency)
 
+    const AgentPrintBill = useApp(s => s.AgentPrintBill)
+
     const [printTrigger, setPrintTrigger] = useState<null | 'agent'>(null)
     const [openDiscount, setOpenDiscount] = useState<boolean>(false)
 
@@ -55,9 +58,9 @@ export const Cashbox = () => {
             setRes(r)
             console.log(r)
 
-            if (ip) {
-                setOpenPrint(true)
-                setPrintTrigger("agent")
+            if (ip && res != undefined) {
+                AgentPrintBill(res?.bill.id, 1)
+                enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
             }
 
             setData([])

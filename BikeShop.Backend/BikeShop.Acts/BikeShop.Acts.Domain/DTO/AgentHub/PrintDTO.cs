@@ -9,6 +9,7 @@ namespace BikeShop.Acts.Domain.DTO.AgentHub
 {
     public class PrintDTO
     {
+        public int AgentId { get; set; }
         public string HTML { get; set; }
         public Domain.DTO.PrinterSettings PrintSettings { get; set; }
     }

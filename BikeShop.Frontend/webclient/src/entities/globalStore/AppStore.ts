@@ -17,9 +17,13 @@ interface p {
     agentTerminalCancel: (data: { Id: string, Amount: number, AgentId: number }) => void
     setAgentTerminalCancel: (v: (data: { Id: string, Amount: number, AgentId: number }) => void) => void
     createAgentHubConnection: () => void
+    AgentPrintBill: (BillId: number, Copies: number) => void
 }
 
 export const useApp = create<p>()(persist(devtools(immer((set, get) => ({
+    AgentPrintBill: (id, copies) => {
+        get().AgentHubConnection?.send("PrintBill", {AgentId: 1, DataId: id, Copies: copies});
+    },
     setAgentTerminalCancel: (v) => set({agentTerminalCancel: v}),
     setAgentTerminalConfirm: (v) => set({agentTerminalConfirm: v}),
     agentTerminalCancel: () => {
@@ -28,7 +32,7 @@ export const useApp = create<p>()(persist(devtools(immer((set, get) => ({
     },
     createAgentHubConnection: () => {
         let connection = new signalR.HubConnectionBuilder()
-            .withUrl("http://localhost:5007/agenthub")
+            .withUrl("https://bikeshop.1gb.ua/agenthub")
             .build();
 
         connection.on('ConfirmPay', (data: { Id: string, Amount: number, AgentId: number }) => {
