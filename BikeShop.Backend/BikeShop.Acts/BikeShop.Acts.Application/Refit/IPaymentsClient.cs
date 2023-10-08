@@ -16,6 +16,6 @@ namespace BikeShop.Acts.Application.Refit
         public Task<BillWithProducts> GetBill(int BillId);
 
         [Get("/currency/get")]
-        public Task<Currency> GetCurrency(int BillId);
+        public Task<Currency> GetCurrency(int Id);
     }
 }

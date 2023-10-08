@@ -4,6 +4,7 @@ using BikeShop.Acts.Domain.DTO;
 using BikeShop.Acts.Domain.DTO.AgentHub;
 using BikeShop.Acts.Domain.DTO.Scriban;
 using BikeShop.Acts.Domain.Entities;
+using BikeShop.Acts.Domain.Refit;
 using BikeShop.Products.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -140,12 +141,14 @@ namespace BikeShop.Acts.Application.Services
         {
             var bill = await _paymentsClient.GetBill(BillId);
             var currency = await _paymentsClient.GetCurrency(bill.bill.CurrencyId);
+            //var users = new Dictionary<string, UserDTO>();
             var users = await _identityClient.GetDictionary(new List<string> { bill.bill.ClientId.ToString(), bill.bill.UserId.ToString() });
             var model = new CashboxBillModel();
             model.Id = bill.bill.Id.ToString();
             model.Date = bill.bill.CreatedAt.ToString("dd-MM-yyyy");
             model.Products = bill.products.Select(n => new CashboxBillModelProduct { Name = n.Name, Price = n.Price.ToString(), Quantity = n.Quantity.ToString(), QuanUnit = n.QuantityUnitName, Total = n.Total.ToString() }).ToList();
             model.CurSymbol = currency.Symbol;
+            
             model.Manager = "";
 
             if(users.TryGetValue(bill.bill.UserId.ToString(), out var manager))
