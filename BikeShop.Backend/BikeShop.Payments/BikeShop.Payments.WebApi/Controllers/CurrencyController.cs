@@ -23,6 +23,12 @@ namespace BikeShop.Payments.WebApi.Controllers
             return await _currencyService.GetAll();
         }
 
+        [HttpGet("get")]
+        public async Task<Currency> Get(int Id)
+        {
+            return await _currencyService.Get(Id);
+        }
+
         [HttpPost("create")]
         public async Task<Currency> Create(CreateCurrencyDTO dto)
         {

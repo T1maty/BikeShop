@@ -1,4 +1,5 @@
-﻿using BikeShop.Acts.Domain.Refit.Bill;
+﻿using BikeShop.Acts.Domain.Refit;
+using BikeShop.Acts.Domain.Refit.Bill;
 using BikeShop.Products.Domain.DTO.Responses;
 using Refit;
 using System;
@@ -13,5 +14,8 @@ namespace BikeShop.Acts.Application.Refit
     {
         [Get("/financialinteraction/getbill")]
         public Task<BillWithProducts> GetBill(int BillId);
+
+        [Get("/currency/get")]
+        public Task<Currency> GetCurrency(int BillId);
     }
 }

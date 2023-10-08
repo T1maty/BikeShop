@@ -30,6 +30,11 @@ namespace BikeShop.Payments.Application.Services
             return ent;
         }
 
+        public async Task<Currency> Get(int Id)
+        {
+            return await _context.Currencies.FindAsync(Id);
+        }
+
         public async Task<List<Currency>> GetAll()
         {
             return await _context.Currencies.ToListAsync();

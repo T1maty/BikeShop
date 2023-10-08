@@ -19,12 +19,14 @@ namespace BikeShop.Acts.Application.Services
         private readonly IApplicationDbContext _context;
         private readonly IFileserviceClient _fileservice;
         private readonly IPaymentsClient _paymentsClient;
+        private readonly IIdentityClient _identityClient;
 
-        public PrintService(IApplicationDbContext context, IFileserviceClient fileservice, IPaymentsClient paymentsClient)
+        public PrintService(IApplicationDbContext context, IFileserviceClient fileservice, IPaymentsClient paymentsClient, IIdentityClient identityClient)
         {
             _context = context;
             _fileservice = fileservice;
             _paymentsClient = paymentsClient;
+            _identityClient = identityClient;
         }
 
         public async Task<PrintQueue> AddQueue(int actId, string dataName, string? printSettings, int? prioriry, int agentId, IFormFile? imageFile)
@@ -137,17 +139,30 @@ namespace BikeShop.Acts.Application.Services
         public async Task<PrintDTO> PrintBill(int AgentId, int BillId, int Copies = 0)
         {
             var bill = await _paymentsClient.GetBill(BillId);
-
+            var currency = await _paymentsClient.GetCurrency(bill.bill.CurrencyId);
+            var users = await _identityClient.GetDictionary(new List<string> { bill.bill.ClientId.ToString(), bill.bill.UserId.ToString() });
             var model = new CashboxBillModel();
             model.Id = bill.bill.Id.ToString();
-            model.Date = bill.bill.CreatedAt.Date.ToString();
+            model.Date = bill.bill.CreatedAt.ToString("dd-MM-yyyy");
             model.Products = bill.products.Select(n => new CashboxBillModelProduct { Name = n.Name, Price = n.Price.ToString(), Quantity = n.Quantity.ToString(), QuanUnit = n.QuantityUnitName, Total = n.Total.ToString() }).ToList();
-            model.CurSymbol = "грн.";
-            model.Manager = "Панкратов Eвгений Владимирвич";
-            model.Client = "Панкратов Eвгений Владимирвич";
-            model.WithoutDisc = "1111";
-            model.Disc = "1";
-            model.Total = "1110";
+            model.CurSymbol = currency.Symbol;
+            model.Manager = "";
+
+            if(users.TryGetValue(bill.bill.UserId.ToString(), out var manager))
+            {
+                model.Manager = manager.lastName + " " + manager.firstName+ " " +manager.patronymic;
+            }
+            
+
+            model.Client = "";
+            if (users.TryGetValue(bill.bill.UserId.ToString(), out var client))
+            {
+                model.Client = client.lastName + " " + client.firstName + " " + client.patronymic;
+            }
+
+            model.WithoutDisc = (bill.bill.Total-bill.bill.Discount).ToString();
+            model.Disc = bill.bill.Discount.ToString();
+            model.Total = bill.bill.Total.ToString();
 
             var tamplate = await CreateActHTML(model);
 
