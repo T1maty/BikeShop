@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using BikeShop.Shop.Application.DTO;
 using BikeShop.Shop.Application.Interfaces;
 using BikeShop.Shop.Application.ReficClients;
+using BikeShop.Shop.Domain.DTO.Public;
 using Microsoft.EntityFrameworkCore;
 
 namespace BikeShop.Shop.Application.Services;
@@ -30,6 +31,11 @@ public class GetAllService : IGetAllServices
     public async Task<Domain.Entities.Shop> GetById(int ShopId)
     {
         return await _context.Shops.FindAsync(ShopId);
+    }
+
+    public async Task<List<ShopPublicDTO>> GetPublic()
+    {
+        return await _context.Shops.Where(n => n.PublicVisible == true).Select(n=>new ShopPublicDTO{ GeoData = n.GeoData, Id = n.Id, Address = n.Address, Name = n.Name, Phone = n.Phone, StorageId = n.StorageId }).ToListAsync();
     }
 
     public async Task<int> GetStorageId(int ShopId)

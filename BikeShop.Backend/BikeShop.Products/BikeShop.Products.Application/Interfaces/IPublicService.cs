@@ -16,5 +16,9 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<PublicProductSearchResponse> Serch(PublicProductSearchRequest dto);
         public Task<PublicProductByCategoryResponse> GetProducts(PublicProductByCategoryRequest dto);
         public Task<ProductCardDTO> getProductCard(int productId);
+        public Task<List<ProductCardDTO>> GetFavProducts(Guid ClientId);
+        public Task<ProductCardDTO> AddFavProducts(Guid ClientId, int ProductId);
+        public Task DelFavProducts(Guid ClientId, int ProductId);
+
     }
 }

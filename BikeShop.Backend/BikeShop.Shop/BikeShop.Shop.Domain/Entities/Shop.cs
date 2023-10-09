@@ -9,4 +9,6 @@ public class Shop : BaseEntity
     public int StorageId { get; set; }
     public decimal CashboxCash { get; set; }
     public decimal CashboxTerminal { get; set; }
+    public bool PublicVisible { get; set; } = false;
+    public string GeoData { get; set; }
 }

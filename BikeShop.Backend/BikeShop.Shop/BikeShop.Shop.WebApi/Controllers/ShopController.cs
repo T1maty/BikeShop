@@ -3,6 +3,7 @@ using BikeShop.Shop.Application.CQRS.Commands.CreateShop;
 using BikeShop.Shop.Application.CQRS.Commands.UpdateShop;
 using BikeShop.Shop.Application.DTO;
 using BikeShop.Shop.Application.Interfaces;
+using BikeShop.Shop.Domain.DTO.Public;
 using BikeShop.Shop.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -89,7 +90,13 @@ public class ShopController : ControllerBase
     {
         return await _getAllServices.GetAllShops();
     }
-    
+
+    [HttpGet("getpublic")]
+    public async Task<List<ShopPublicDTO>> GetPublic()
+    {
+        return await _getAllServices.GetPublic();
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDTO model)
     {

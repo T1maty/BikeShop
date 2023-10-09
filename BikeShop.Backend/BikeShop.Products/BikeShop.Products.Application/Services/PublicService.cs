@@ -1,4 +1,5 @@
-﻿using BikeShop.Products.Application.Interfaces;
+﻿using BikeShop.Products.Application.Common.Errors;
+using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes.ProductCard;
 using BikeShop.Products.Domain.DTO.Requestes.Public;
 using BikeShop.Products.Domain.DTO.Responses;
@@ -24,6 +25,23 @@ namespace BikeShop.Products.Application.Services
             _context = context;
         }
 
+        public async Task<ProductCardDTO> AddFavProducts(Guid ClientId, int ProductId)
+        {
+            if (await _context.ClientFavProducts.Where(n => n.ClientId == ClientId).Where(n => n.ProductId == ProductId).CountAsync() > 0) throw FavProdErrors.ProductAlreadyInFav;
+            if (await _context.Products.FindAsync(ProductId) == null) throw FavProdErrors.ProductNotFount;
+
+            await _context.ClientFavProducts.AddAsync(new ClientFavProduct { ClientId = ClientId, ProductId = ProductId });
+            await _context.SaveChangesAsync(new CancellationToken());
+            return await getProductCard(ProductId);
+        }
+
+        public async Task DelFavProducts(Guid ClientId, int ProductId)
+        {
+            var toRemove = _context.ClientFavProducts.Where(x => x.ClientId == ClientId && x.ProductId == ProductId);
+            _context.ClientFavProducts.RemoveRange(toRemove);
+            await _context.SaveChangesAsync(new CancellationToken());
+        }
+
         public async Task<List<ProductCategory>> GetCategories()
         {
             var tags = await _context.ProductCategories.Where(n => n.Enabled != false)
@@ -31,6 +49,12 @@ namespace BikeShop.Products.Application.Services
                                                  .OrderBy(n => n.SortOrder)
                                                  .ToListAsync();
             return tags;
+        }
+
+        public async Task<List<ProductCardDTO>> GetFavProducts(Guid ClientId)
+        {
+            var prodIds = await _context.ClientFavProducts.Where(n => n.ClientId == ClientId).Select(n=>n.ProductId).ToListAsync();
+            return prodIds.Select(n => getProductCard(n).Result).ToList();
         }
 
         public async Task<ProductCardDTO> getProductCard(int productId)

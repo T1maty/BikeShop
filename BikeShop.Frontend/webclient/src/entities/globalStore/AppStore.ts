@@ -41,7 +41,7 @@ export const useApp = create<p>()(persist(devtools(immer((set, get) => ({
         const API_URL_DEVELOPMENT = "https://bikeshop.1gb.ua/";
         const API_URL_PRODUCTION = "https://api.bikelove.com.ua/";
         let connection = new signalR.HubConnectionBuilder()
-            .withUrl((environment === "production" ? API_URL_PRODUCTION : API_URL_DEVELOPMENT) + "/agenthub")
+            .withUrl((environment === "production" ? API_URL_PRODUCTION : API_URL_DEVELOPMENT) + "agenthub")
             .build();
 
         connection.on('ConfirmPay', (data: { Id: string, Amount: number, AgentId: number }) => {

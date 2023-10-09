@@ -42,5 +42,21 @@ namespace BikeShop.Products.WebApi.Controllers
         {
             return await _publicService.getProductCard(productId);
         }
+
+        [HttpGet("getfav")]
+        public async Task<List<ProductCardDTO>> GetFavProducts(Guid ClientId)
+        {
+            return await _publicService.GetFavProducts(ClientId);
+        }
+        [HttpPost("addfav")]
+        public async Task<ProductCardDTO> AddFavProducts(Guid ClientId, int ProductId)
+        {
+            return await _publicService.AddFavProducts(ClientId, ProductId);
+        }
+        [HttpDelete("delfav")]
+        public async Task DelFavProducts(Guid ClientId, int ProductId)
+        {
+            await _publicService.DelFavProducts(ClientId,ProductId);
+        }
     }
 }
