@@ -12,15 +12,20 @@ interface p {
     warning: null | string
 
     AgentHubConnection: signalR.HubConnection | null
+    AgentHubStartConnection: (s: () => void, f: () => void) => void
     agentTerminalConfirm: (data: { Id: string, Amount: number, AgentId: number }) => void
     setAgentTerminalConfirm: (v: (data: { Id: string, Amount: number, AgentId: number }) => void) => void
     agentTerminalCancel: (data: { Id: string, Amount: number, AgentId: number }) => void
     setAgentTerminalCancel: (v: (data: { Id: string, Amount: number, AgentId: number }) => void) => void
     createAgentHubConnection: () => void
     AgentPrintBill: (BillId: number, Copies: number) => void
+
 }
 
 export const useApp = create<p>()(persist(devtools(immer((set, get) => ({
+    AgentHubStartConnection: (s, f) => {
+        get().AgentHubConnection?.start().then(() => s()).catch(() => f());
+    },
     AgentPrintBill: (id, copies) => {
         get().AgentHubConnection?.send("PrintBill", {AgentId: 1, DataId: id, Copies: copies});
     },
@@ -31,8 +36,12 @@ export const useApp = create<p>()(persist(devtools(immer((set, get) => ({
     agentTerminalConfirm: () => {
     },
     createAgentHubConnection: () => {
+        const environment = process.env.NODE_ENV;
+
+        const API_URL_DEVELOPMENT = "https://bikeshop.1gb.ua/";
+        const API_URL_PRODUCTION = "https://api.bikelove.com.ua/";
         let connection = new signalR.HubConnectionBuilder()
-            .withUrl("https://bikeshop.1gb.ua/agenthub")
+            .withUrl((environment === "production" ? API_URL_PRODUCTION : API_URL_DEVELOPMENT) + "/agenthub")
             .build();
 
         connection.on('ConfirmPay', (data: { Id: string, Amount: number, AgentId: number }) => {

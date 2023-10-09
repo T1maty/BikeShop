@@ -1,4 +1,4 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, LegacyRef, ReactNode} from 'react'
 import s from './CustomInput.module.scss'
 import InputMask from "react-input-mask";
 
@@ -19,6 +19,7 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     color?: 'black'
     searchInput?: 'white' | 'black'
     mask?: string
+    inputRef?: LegacyRef<HTMLInputElement>
 }
 
 // @ts-ignore
@@ -37,7 +38,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
         searchInput,
         id,
         mask,
-
+        inputRef,
         ...restProps // все остальные пропсы попадут в объект restProps
     }, forwardRef
 ) => {
@@ -84,6 +85,8 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
                     type={'text'}
                     onKeyPress={onKeyPressCallback}
                     className={finalInputClassName}
+                    ref={inputRef}
+                    {...restProps}
                 />
             </InputMask>
 

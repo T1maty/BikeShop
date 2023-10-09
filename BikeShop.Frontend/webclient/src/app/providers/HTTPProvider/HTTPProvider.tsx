@@ -9,6 +9,7 @@ const HttpProvider = (p: { children: ReactElement }) => {
     const isLoading = useApp(n => n.isLoading)
     const AgentHubConnection = useApp(n => n.AgentHubConnection)
     const createAgentHubConnection = useApp(n => n.createAgentHubConnection)
+    const AgentHubStartConnection = useApp(n => n.AgentHubStartConnection)
 
     useEffect(() => console.log("Loading: ", isLoading), [isLoading])
     useEffect(() => {
@@ -20,7 +21,9 @@ const HttpProvider = (p: { children: ReactElement }) => {
             console.log(AgentHubConnection.state)
             if (AgentHubConnection.state === signalR.HubConnectionState.Disconnected) {
                 console.log("Starting connection")
-                AgentHubConnection.start().then(() => console.log('Connection started')).catch(() => console.log('Connection failed'));
+                AgentHubStartConnection(() => {
+                }, () => {
+                })
             }
         }
     }, [AgentHubConnection])

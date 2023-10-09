@@ -75,6 +75,37 @@
     .cashbackBlock_buttons {
       width: 100%;
 
+      .cashbackBlock_buttons_icons {
+        display: flex;
+        padding: 15px;
+        gap: 15px;
+        justify-content: space-around;
+
+        .cash {
+          border-radius: 50%;
+          height: 150px;
+          width: 150px;
+          transition: all .2s ease-in-out;
+        }
+
+        .card {
+          transition: all .2s ease-in-out;
+          border-radius: 50%;
+          height: 150px;
+          width: 150px;
+        }
+
+        .cash:hover {
+          transform: scale(1.2);
+          border: 3px #e35f5f solid;
+        }
+
+        .card:hover {
+          transform: scale(1.2);
+          border: 3px #e35f5f solid;
+        }
+      }
+
       .cancelButton {
         @include deleteButton;
         margin-bottom: $defaultSmallMargin;
@@ -92,8 +123,122 @@
 }
 
 .confirm_modal {
-  height: 500px;
-  width: 500px;
+  height: 400px;
+  width: 300px;
   background-color: #4b4b4b;
-  border-radius: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+  align-items: center;
+
+  .warning {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ff2e2e;
+  }
+
+  .confirm_modal_label {
+    padding: 5px;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+  }
+
+  .pos {
+    height: 150px;
+    width: 150px;
+  }
+
+  .hc {
+
+  }
+
+  .hc:hover {
+    cursor: pointer;
+    font-weight: 500;
+  }
+}
+
+.cash_conf {
+  padding: 15px;
+  height: 480px;
+  width: 300px;
+  background-color: #4b4b4b;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+
+  .cash_conf_data {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+
+  }
+
+  .cash_conf_input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .cash_conf_input_butt {
+      user-select: none;
+      margin-top: 18px;
+      width: 35px;
+      height: 40px;
+      font-weight: 600;
+      color: white;
+      padding: 3px;
+      border-radius: 5px;
+      background-color: #0a66b7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cash_conf_input_butt:hover {
+      cursor: pointer;
+      padding: 1px;
+      border: 1px white solid;
+    }
+  }
+
+  .cash_conf_bills {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 5px;
+
+    .cash_conf_bills_row {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+
+      .cash_conf_bills_row_bill {
+        border-radius: 5px;
+        height: 70px;
+        transition: all .2s ease-in-out;
+      }
+
+      .cash_conf_bills_row_bill:hover {
+        transform: scale(1.2);
+        border: 2px black solid;
+        margin: -2px;
+      }
+    }
+
+  }
+
+  .cashback {
+    text-align: center;
+    padding: 10px;
+    color: white;
+  }
 }

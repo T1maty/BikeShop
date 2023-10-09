@@ -7,6 +7,7 @@ import * as htmlToImage from 'html-to-image';
 import {PrintAPI} from "../../entities/api/Acts/PrintAPI";
 import {Loader} from "../../shared/ui/Loader/Loader";
 import html2canvas from "html2canvas";
+import {useApp} from "../../entities/globalStore/AppStore";
 
 interface PrintModalProps {
     open: boolean
@@ -35,6 +36,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
     const componentRef = useRef<HTMLDivElement>(null)
 
     const [isLoading, setIsLoading] = useState(false)
+    const AgentPrintBill = useApp(s => s.AgentPrintBill)
 
     function saveComponentAsImage() {
 
@@ -114,28 +116,33 @@ export const PrintModal: React.FC<PrintModalProps> = ({
     }
 
     const agent = () => {
-        setIsLoading(true)
-        htmlToImage.toPng(componentRef.current!, {quality: 1, pixelRatio: 3})
-            .then(function (dataUrl) {
-                let file = dataURLtoFile(dataUrl, "ActImage")
-                console.log(file)
-                //let settings: PrintSettings = {copies: 1, pageWight: 501, printerName: "Win2Image"}
-                let settings: string = ""
-                if (copies != undefined) settings = `{"copies": ${copies},"pageWight": 0,"printerName": ""}`
-                let formData = new FormData();
-                formData.append('imageFile', file)
-                PrintAPI.addQueue(formData,
-                    id ? id : 0,
-                    printAgentName ? printAgentName : '',
-                    settings,
-                    100,
-                    1).then(n => {
-                    enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
-                })
-            }).finally(() => {
-            finaly != undefined ? finaly() : false
-            setIsLoading(false)
-        });
+        if (printAgentName === "Bill") {
+            AgentPrintBill(id != undefined ? id : 30, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+        } else {
+            setIsLoading(true)
+            htmlToImage.toPng(componentRef.current!, {quality: 1, pixelRatio: 3})
+                .then(function (dataUrl) {
+                    let file = dataURLtoFile(dataUrl, "ActImage")
+                    console.log(file)
+                    //let settings: PrintSettings = {copies: 1, pageWight: 501, printerName: "Win2Image"}
+                    let settings: string = ""
+                    if (copies != undefined) settings = `{"copies": ${copies},"pageWight": 0,"printerName": ""}`
+                    let formData = new FormData();
+                    formData.append('imageFile', file)
+                    PrintAPI.addQueue(formData,
+                        id ? id : 0,
+                        printAgentName ? printAgentName : '',
+                        settings,
+                        100,
+                        1).then(n => {
+                        enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
+                    })
+                }).finally(() => {
+                finaly != undefined ? finaly() : false
+                setIsLoading(false)
+            });
+        }
     }
 
     const PDF = () => {

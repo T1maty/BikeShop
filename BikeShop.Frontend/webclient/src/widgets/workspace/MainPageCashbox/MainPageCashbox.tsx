@@ -12,6 +12,7 @@ import {PayModal, PrintModal} from "../../../features";
 import {CheckForShop} from "../WorkActs/CheckForShop";
 import {Loader} from "../../../shared/ui/Loader/Loader";
 import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
+import {useApp} from "../../../entities/globalStore/AppStore";
 
 export const MainPageCashbox = () => {
 
@@ -33,6 +34,7 @@ export const MainPageCashbox = () => {
     const setData = useCashboxStore(s => s.setProducts)
     const addProduct = useCashboxStore(s => s.addProduct)
     const paymentHandler = useCashboxStore(s => s.paymentHandler)
+    const AgentPrintBill = useApp(s => s.AgentPrintBill)
 
     const [openPay, setOpenPay] = useState(false)
     const [cs, sCs] = useState(false)
@@ -52,12 +54,9 @@ export const MainPageCashbox = () => {
             setRes(r)
             console.log(r)
 
-            if (ip) {
-                setOpenPrint(true)
-                setPrintTrigger("agent")
-                setTimeout(() => {
-                    setPrintTrigger(null)
-                }, 3000)
+            if (ip && res != undefined) {
+                AgentPrintBill(res?.bill.id, 1)
+                enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
             }
 
             setData([])

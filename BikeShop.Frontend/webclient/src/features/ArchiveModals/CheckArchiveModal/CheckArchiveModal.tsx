@@ -52,7 +52,7 @@ export const CheckArchiveModal = () => {
                         Архив чеков
                     </div>
 
-                    <PrintModal open={openPrint} setOpen={setOpenPrint} printAgentName={'Bill'}>
+                    <PrintModal open={openPrint} setOpen={setOpenPrint} printAgentName={'Bill'} id={selected?.bill.id}>
                         <CheckForShop children={selected!}/>
                     </PrintModal>
 
