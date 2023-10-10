@@ -20,6 +20,7 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     searchInput?: 'white' | 'black'
     mask?: string
     inputRef?: LegacyRef<HTMLInputElement>
+    onClick?: () => void
 }
 
 // @ts-ignore
@@ -39,6 +40,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
         id,
         mask,
         inputRef,
+        onClick,
         ...restProps // все остальные пропсы попадут в объект restProps
     }, forwardRef
 ) => {
@@ -86,7 +88,7 @@ export const CustomInput: React.FC<SuperInputTextPropsType> = React.forwardRef((
                     onKeyPress={onKeyPressCallback}
                     className={finalInputClassName}
                     ref={inputRef}
-                    {...restProps}
+                    onClick={onClick}
                 />
             </InputMask>
 
