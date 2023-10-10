@@ -30,6 +30,7 @@ public interface IApplicationDbContext
     DbSet<TagToCategoryBind> TagToCategoryBinds { get; set; }
      DbSet<ProductCategory> ProductCategories { get; set; }
      DbSet<ClientFavProduct> ClientFavProducts { get; set; }
+    DbSet<ClientCartProduct> ClientCartProducts { get; set; }
 
 
     // Стандартные методы из DbContext, чтобы можно их было вызывать через интерфейс

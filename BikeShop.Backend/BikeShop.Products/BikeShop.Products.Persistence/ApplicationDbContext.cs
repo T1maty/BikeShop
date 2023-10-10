@@ -28,6 +28,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<TagToCategoryBind> TagToCategoryBinds { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<ClientFavProduct> ClientFavProducts { get; set; }
+    public DbSet<ClientCartProduct> ClientCartProducts { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

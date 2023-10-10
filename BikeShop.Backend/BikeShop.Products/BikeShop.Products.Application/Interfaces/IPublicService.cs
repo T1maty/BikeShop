@@ -1,5 +1,6 @@
 ﻿using BikeShop.Products.Domain.DTO.Requestes.Public;
 using BikeShop.Products.Domain.DTO.Responses;
+using BikeShop.Products.Domain.DTO.Responses.ProductCart;
 using BikeShop.Products.Domain.DTO.Responses.Public;
 using BikeShop.Products.Domain.Entities;
 using System;
@@ -19,6 +20,7 @@ namespace BikeShop.Products.Application.Interfaces
         public Task<List<ProductCardDTO>> GetFavProducts(Guid ClientId);
         public Task<ProductCardDTO> AddFavProducts(Guid ClientId, int ProductId);
         public Task DelFavProducts(Guid ClientId, int ProductId);
-
+        public Task<List<ProductCartResponse>> GetCart(Guid ClientId);
+        public Task<ProductCartResponse?> AddToCart(Guid ClientId, int ProductId, decimal Quantity);
     }
 }

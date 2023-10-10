@@ -869,11 +869,11 @@
     },
 	
 	{
-      "UpstreamPathTemplate": "/api/public/getproducts",
+      "UpstreamPathTemplate": "/api/public/catalogproducts",
       "UpstreamHttpMethod": [
         "Post"
       ],
-      "DownstreamPathTemplate": "/public/getproducts",
+      "DownstreamPathTemplate": "/public/catalogproducts",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -886,9 +886,24 @@
 	{
       "UpstreamPathTemplate": "/api/public/search",
       "UpstreamHttpMethod": [
-        "Get"
+        "Post"
       ],
       "DownstreamPathTemplate": "/public/search",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	{
+      "UpstreamPathTemplate": "/api/public/getproductcardbyid",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/public/getproductcardbyid",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -937,6 +952,38 @@
         "Delete"
       ],
       "DownstreamPathTemplate": "/public/delfav",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	
+	{
+      "UpstreamPathTemplate": "/api/public/getcatr",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/public/getcatr",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "bikeshop.products",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "products"
+    },
+	
+	{
+      "UpstreamPathTemplate": "/api/public/addcatr",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamPathTemplate": "/public/addcatr",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

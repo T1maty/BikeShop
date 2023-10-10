@@ -1,6 +1,7 @@
 ﻿using BikeShop.Products.Application.Interfaces;
 using BikeShop.Products.Domain.DTO.Requestes.Public;
 using BikeShop.Products.Domain.DTO.Responses;
+using BikeShop.Products.Domain.DTO.Responses.ProductCart;
 using BikeShop.Products.Domain.DTO.Responses.Public;
 using BikeShop.Products.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace BikeShop.Products.WebApi.Controllers
             _publicService = publicService;
         }
 
-        [HttpPost("getcategories")]
+        [HttpGet("getcategories")]
         public async Task<List<ProductCategory>> GetCategories()
         {
             return await _publicService.GetCategories();
@@ -37,7 +38,7 @@ namespace BikeShop.Products.WebApi.Controllers
             return await _publicService.GetProducts(dto);
         }
 
-        [HttpPost("getproductcardbyid")]
+        [HttpGet("getproductcardbyid")]
         public async Task<ProductCardDTO> getProductCard(int productId)
         {
             return await _publicService.getProductCard(productId);
@@ -57,6 +58,17 @@ namespace BikeShop.Products.WebApi.Controllers
         public async Task DelFavProducts(Guid ClientId, int ProductId)
         {
             await _publicService.DelFavProducts(ClientId,ProductId);
+        }
+
+        [HttpGet("getcart")]
+        public async Task<List<ProductCartResponse>> GetCart(Guid ClientId)
+        {
+            return await _publicService.GetCart(ClientId);
+        }
+        [HttpPost("addcart")]
+        public async Task<ProductCartResponse?> AddToCart(Guid ClientId, int ProductId, decimal Quantity)
+        {
+            return await _publicService.AddToCart(ClientId, ProductId,Quantity);
         }
     }
 }
