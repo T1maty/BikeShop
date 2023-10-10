@@ -62,7 +62,7 @@ namespace BikeShop.Products.Application.Services
             var binds = await _context.ProductBinds.Where(n => n.ProductId == productId).ToListAsync();
             var ids = new List<int> { productId };
             ids.AddRange(binds.Select(n => n.ChildrenId));
-            var productBinds = await _context.Products.Where(n => ids.Contains(n.Id)).Where(n=>n.RetailVisibility).ToDictionaryAsync(n => n.Id, n => n);
+            var productBinds = await _context.Products.Where(n => ids.Contains(n.Id)).ToDictionaryAsync(n => n.Id, n => n);
             var card = await _context.ProductsCards.Where(n => n.ProductId == productId).FirstOrDefaultAsync();
             var options = await _context.ProductOptionVariantBinds.Where(n => ids.Contains(n.ProductId)).ToListAsync();
             var images = await _context.ProductImgs.Where(n => ids.Contains(n.ProductId)).ToListAsync();
