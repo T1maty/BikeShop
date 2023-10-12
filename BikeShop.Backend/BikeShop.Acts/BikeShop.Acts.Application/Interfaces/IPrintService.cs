@@ -17,7 +17,13 @@ namespace BikeShop.Acts.Application.Interfaces
         public Task<List<PrintSettings>> GetAllPrintSettings();
         public Task<PrintSettings> CreatePrinterSettings(int AgentId, string Name, string Settings);
         public Task<PrintSettings> UpdatePrinterSettings(int Id, int AgentId, string Name, string Settings);
-        public Task<PrintDTO> PrintBill(int AgentId, int BillId, int Copies = 0);
+        public Task<PrintDTO> PrintBill(StartPrintDTO dto);
+        public Task<PrintDTO> PrintProductSticker(StartPrintDTO dto);
+        public Task<PrintDTO> PrintServiceSticker(StartPrintDTO dto);
+        public Task<PrintDTO> PrintEncashment(StartPrintDTO dto);
+        public Task<PrintDTO> PrintServiceIncomeAct(StartPrintDTO dto);
+        public Task<PrintDTO> PrintServiceOutcomeShort(StartPrintDTO dto);
+        public Task<PrintDTO> PrintServiceOutcomeFull(StartPrintDTO dto);
 
     }
 }

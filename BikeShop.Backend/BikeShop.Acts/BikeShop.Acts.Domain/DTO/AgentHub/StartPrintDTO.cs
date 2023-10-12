@@ -10,6 +10,7 @@ namespace BikeShop.Acts.Domain.DTO.AgentHub
     {
         public int AgentId{ get; set; }
         public int DataId { get; set; }
-        public int Copies { get; set; }
+        public int? Copies { get; set; } = 1;
+        public int? CurrencyId { get; set; }
     }
 }

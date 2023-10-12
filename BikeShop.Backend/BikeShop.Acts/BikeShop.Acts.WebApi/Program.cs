@@ -37,6 +37,8 @@ builder.Services.AddRefitClient<IIdentityClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Identity"]));
 builder.Services.AddRefitClient<IPaymentsClient>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Payments"]));
+builder.Services.AddRefitClient<IServiceClient>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiAddresses:Service"]));
 
 
 builder.Services.AddSignalR(); 

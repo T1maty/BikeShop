@@ -6,6 +6,7 @@ using BikeShop.Acts.Domain.DTO.Scriban;
 using BikeShop.Acts.Domain.Entities;
 using BikeShop.Acts.Domain.Refit;
 using BikeShop.Products.Application.Interfaces;
+using BikeShop.Products.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -21,13 +22,17 @@ namespace BikeShop.Acts.Application.Services
         private readonly IFileserviceClient _fileservice;
         private readonly IPaymentsClient _paymentsClient;
         private readonly IIdentityClient _identityClient;
+        private readonly IProductClient _productClient;
+        private readonly IServiceClient _serviceClient;
 
-        public PrintService(IApplicationDbContext context, IFileserviceClient fileservice, IPaymentsClient paymentsClient, IIdentityClient identityClient)
+        public PrintService(IApplicationDbContext context, IFileserviceClient fileservice, IPaymentsClient paymentsClient, IIdentityClient identityClient, IProductClient productClient, IServiceClient serviceClient)
         {
             _context = context;
             _fileservice = fileservice;
             _paymentsClient = paymentsClient;
             _identityClient = identityClient;
+            _productClient = productClient;
+            _serviceClient = serviceClient;
         }
 
         public async Task<PrintQueue> AddQueue(int actId, string dataName, string? printSettings, int? prioriry, int agentId, IFormFile? imageFile)
@@ -126,7 +131,15 @@ namespace BikeShop.Acts.Application.Services
             {
                 tamplate = await _context.PrintTamplates.Where(n => n.Name == "CashboxBill").FirstOrDefaultAsync();
             }
-
+            if (typeof(ProductStickerModel) == data.GetType())
+            {
+                tamplate = await _context.PrintTamplates.Where(n => n.Name == "ProductSticker").FirstOrDefaultAsync();
+            }
+            if (typeof(ServiceStickerModel) == data.GetType())
+            {
+                tamplate = await _context.PrintTamplates.Where(n => n.Name == "ServiceSticker").FirstOrDefaultAsync();
+            }
+            
             string tamplateString = "<h1>Tamplate not found<h1>";
 
             if(tamplate != null)
@@ -137,9 +150,9 @@ namespace BikeShop.Acts.Application.Services
             return await Template.Parse(tamplateString).RenderAsync(new TypedContext(data));
         }
 
-        public async Task<PrintDTO> PrintBill(int AgentId, int BillId, int Copies = 0)
+        public async Task<PrintDTO> PrintBill(StartPrintDTO dto)
         {
-            var bill = await _paymentsClient.GetBill(BillId);
+            var bill = await _paymentsClient.GetBill(dto.DataId);
             var currency = await _paymentsClient.GetCurrency(bill.bill.CurrencyId);
             //var users = new Dictionary<string, UserDTO>();
             var users = await _identityClient.GetDictionary(new List<string> { bill.bill.ClientId.ToString(), bill.bill.UserId.ToString() });
@@ -169,14 +182,62 @@ namespace BikeShop.Acts.Application.Services
 
             var tamplate = await CreateActHTML(model);
 
-            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == AgentId).Where(n => n.Name == "Bill").FirstOrDefaultAsync()).Settings;
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "Bill").FirstOrDefaultAsync()).Settings;
 
             var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
-            if(Copies != 0) actual.copies = Copies;
+            if (dto.Copies != 0 && dto.Copies != null) actual.copies = (int)dto.Copies;
 
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId};
+        }
 
+        public async Task<PrintDTO> PrintProductSticker(StartPrintDTO dto)
+        {
+            var product = (await _productClient.GetProductsByIdsArray(new List<int> { dto.DataId })).FirstOrDefault();
 
-            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = AgentId};
+            var currency = await _paymentsClient.GetCurrency(dto.CurrencyId ?? 1);
+
+            var tamplate = await CreateActHTML(new ProductStickerModel { CatalogKey = product.CatalogKey, Id = product.Id, CurSymbol = currency.Symbol, Name = product.Name, Price = product.RetailPrice*currency.Coefficient});
+
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "ProductSticker").FirstOrDefaultAsync()).Settings;
+
+            var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+            if (dto.Copies != 0 && dto.Copies != null) actual.copies = (int)dto.Copies;
+
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
+        }
+
+        public async Task<PrintDTO> PrintServiceSticker(StartPrintDTO dto)
+        {
+            var s = await _serviceClient.GetById(dto.DataId);
+
+            var tamplate = await CreateActHTML(new ServiceStickerModel {Id = s.Id, Client = s.ClientFIO, Phone = s.ClientPhone});
+
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "WorkshopSticker").FirstOrDefaultAsync()).Settings;
+
+            var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+            if (dto.Copies != 0 && dto.Copies != null) actual.copies = (int)dto.Copies;
+
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
+        }
+
+        public Task<PrintDTO> PrintEncashment(StartPrintDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PrintDTO> PrintServiceIncomeAct(StartPrintDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PrintDTO> PrintServiceOutcomeShort(StartPrintDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PrintDTO> PrintServiceOutcomeFull(StartPrintDTO dto)
+        {
+            throw new NotImplementedException();
         }
     }
 }
