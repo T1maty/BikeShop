@@ -360,12 +360,11 @@ namespace BikeShop.Products.Application.Services
             var prods = await _context.Products.Where(n => ids.Contains(n.Id)).ToListAsync();
             var binds = await _context.ProductBinds.Where(n=>ids.Contains(n.ProductId) || ids.Contains(n.ChildrenId)).ToListAsync();
 
-            var masters = binds.Select(n => n.ProductId).ToList();
             var slaves = binds.Select(n => n.ChildrenId).ToList();
             foreach (var p in prods)
             {
-                if(masters.Contains(p.Id)) p.IsMaster = true;
                 if(slaves.Contains(p.Id)) p.IsMaster = false;
+                else p.IsMaster = true;
             }
 
             await _context.SaveChangesAsync(new CancellationToken());
