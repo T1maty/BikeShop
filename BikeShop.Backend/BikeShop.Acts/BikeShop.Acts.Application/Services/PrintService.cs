@@ -139,6 +139,10 @@ namespace BikeShop.Acts.Application.Services
             {
                 tamplate = await _context.PrintTamplates.Where(n => n.Name == "ServiceSticker").FirstOrDefaultAsync();
             }
+            if (typeof(EncashmentModel) == data.GetType())
+            {
+                tamplate = await _context.PrintTamplates.Where(n => n.Name == "Encashment").FirstOrDefaultAsync();
+            }
             
             string tamplateString = "<h1>Tamplate not found<h1>";
 
@@ -220,9 +224,18 @@ namespace BikeShop.Acts.Application.Services
             return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
         }
 
-        public Task<PrintDTO> PrintEncashment(StartPrintDTO dto)
+        public async Task<PrintDTO> PrintEncashment(StartPrintDTO dto)
         {
-            throw new NotImplementedException();
+            var enc = await _context.Encashments.FindAsync(dto.DataId);
+            var cur = await _paymentsClient.GetCurrency(dto.CurrencyId ?? 1);
+            var tamplate = await CreateActHTML(new EncashmentModel { Id = enc.Id, Date = enc.CreatedAt.ToString("dd-MM-yyyy"), Cash = enc.Cash*cur.Coefficient, Left = enc.CashRemain*cur.Coefficient, Terminal = enc.Card*cur.Coefficient, CurSymbol = cur.Symbol});
+
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "Encashment").FirstOrDefaultAsync()).Settings;
+
+            var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+            if (dto.Copies != 0 && dto.Copies != null) actual.copies = (int)dto.Copies;
+
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
         }
 
         public Task<PrintDTO> PrintServiceIncomeAct(StartPrintDTO dto)
