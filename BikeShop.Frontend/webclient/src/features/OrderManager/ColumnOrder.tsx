@@ -10,7 +10,7 @@ const ColumnOrder = (props: { order: OrderWithProducts }) => {
 
     const [hover, setHover] = useState(false)
     const getStatusString = useOrderManager(s => s.getStatusString)
-    const setOpenModal = useOrderModal(s => s.setOpen)
+    const openOrderModal = useOrderModal(s => s.openOrderModal)
     const setCurrentOrder = useOrderManager(s => s.setCurrentOrder)
 
 
@@ -27,7 +27,7 @@ const ColumnOrder = (props: { order: OrderWithProducts }) => {
                     <div>№</div>
                     <div className={s.first_row_number_number}>{props.order.order.id}</div>
                 </div>
-                <div onClick={() => setOpenModal(true)} className={s.first_row_status}
+                <div onClick={() => openOrderModal(props.order)} className={s.first_row_status}
                      style={getStatusString(props.order.order.orderStatus).style}>
                     {getStatusString(props.order.order.orderStatus).s}
                 </div>

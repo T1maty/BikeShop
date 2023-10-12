@@ -1,5 +1,16 @@
 {
   "Language": "UA",
   "Shop": "МагазинUA",
-  "Create repair": "Создать ремонт"
+  "Create repair": "Создать ремонт",
+  "DeliveryService": "Сервіс доставки",
+  "Description": "Опис",
+  "CityName": "Місто",
+  "AreaName": "Область",
+  "CityRef": "Код області",
+  "SettlementType": "Тип населеного пункта",
+  "WarehouseName": "Відділення",
+  "WarehouseAddress": "Адресса відділення",
+  "WarehousePhone": "Телефон відділення",
+  "WarehouseRef": "Код відділення",
+  "WarehouseTypeRef": "Код типу відділення"
 }

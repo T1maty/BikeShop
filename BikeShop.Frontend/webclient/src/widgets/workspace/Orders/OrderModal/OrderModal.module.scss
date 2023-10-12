@@ -192,10 +192,12 @@
     background-color: #A5A5A5;
     height: 100%;
 
+    padding: 5px;
 
   }
 
   .page3 {
+    align-items: center;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -203,11 +205,22 @@
     height: 100%;
     gap: 5px;
 
+    .delivery_select_wrapper {
+      width: 100%;
+
+      .delivery_select {
+        width: 100%;
+        padding: 5px;
+      }
+    }
+
     .delivery_table {
+
+      width: 98%;
       border-radius: 5px;
       margin: 5px;
       background-color: #6e6e6e;
-      height: 200px;
+      height: 250px;
 
       .delivery_table_select {
         padding: 5px;
@@ -221,18 +234,44 @@
         }
 
         .butt {
-          display: flex;
-          justify-content: center;
-          align-items: center;
           height: 30px;
           width: 30px;
           border-radius: 5px;
-          background-color: #0a66b7;
         }
+      }
 
-        .butt:hover {
-          cursor: pointer;
-          background-color: #0c7ee1;
+      .delivery_table_values {
+        padding: 5px;
+        overflow: auto;
+        height: 72%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .delivery_table_values_value {
+          display: flex;
+          justify-content: space-between;
+          gap: 5px;
+          border-radius: 5px;
+          padding: 5px;
+          background-color: #4b4b4b;
+          color: white;
+          align-items: center;
+
+          .name {
+            display: flex;
+            align-items: center;
+          }
+
+          .spn {
+            width: 100%;
+            overflow: hidden;
+          }
+
+          .spn2 {
+            text-align: right;
+            width: 100%;
+          }
         }
       }
     }

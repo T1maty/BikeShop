@@ -3,13 +3,12 @@ import s from "../../../pages/workspace/MainPage/MainPage.module.scss";
 import {AsyncSelectSearchProduct, Button, DeleteButton} from "../../../shared/ui";
 import {useNavigate} from "react-router-dom";
 import {useSnackbar} from "notistack";
-import {BillWithProducts, PaymentData, useCurrency, User} from "../../../entities";
+import {PaymentData, useCurrency, User} from "../../../entities";
 import useChooseClientModal from "../../../features/ChooseClientModal/ChooseClientModalStore";
 import useMainPageStore from "../../../pages/workspace/MainPage/MainPageStore";
 import useCashboxStore from "../../../pages/workspace/Cashbox/CashboxStore";
 import {BikeShopPaths} from "../../../app/routes/paths";
-import {PayModal, PrintModal} from "../../../features";
-import {CheckForShop} from "../WorkActs/CheckForShop";
+import {PayModal} from "../../../features";
 import {Loader} from "../../../shared/ui/Loader/Loader";
 import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
 import {useApp} from "../../../entities/globalStore/AppStore";
@@ -38,9 +37,6 @@ export const MainPageCashbox = () => {
 
     const [openPay, setOpenPay] = useState(false)
     const [cs, sCs] = useState(false)
-    const [res, setRes] = useState<BillWithProducts>()
-    const [openPrint, setOpenPrint] = useState(false)
-    const [printTrigger, setPrintTrigger] = useState<null | 'agent'>(null)
 
     const chooseClientHandler = (user: User) => {
         setUser(user)
@@ -51,11 +47,9 @@ export const MainPageCashbox = () => {
     const paymentResultHandler = (value: PaymentData, ip: boolean) => {
         paymentHandler(value, (r) => {
             enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 4000})
-            setRes(r)
             console.log(r)
-
-            if (ip && res != undefined) {
-                AgentPrintBill(res?.bill.id, 1)
+            if (ip) {
+                AgentPrintBill(r.bill.id, 1)
                 enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
             }
 
@@ -135,13 +129,6 @@ export const MainPageCashbox = () => {
                                   summ={sum}
                                   result={paymentResultHandler}
                         />
-                        <PrintModal printAgentName={'Bill'} open={openPrint} trigger={printTrigger} finaly={() => {
-                            setOpenPrint(false)
-                        }}
-                                    setOpen={setOpenPrint}>
-                            <CheckForShop children={res!}/>
-
-                        </PrintModal>
                         <Button buttonDivWrapper={s.result_payBtn}
                                 onClick={() => {
                                     setOpenPay(true)

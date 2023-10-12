@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+import React, {useState} from 'react'
 import s from './EditableSpan.module.scss'
 
 type EditableSpanPropsType = {
@@ -19,7 +19,6 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [inputTitle, setInputTitle] = useState<string>('')
-    // const [error, setError] = useState<string | null>(null)
 
     const onClickEditSpanHandler = () => {
         setEditMode(true)
@@ -30,39 +29,24 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({
         if (inputTitle.length > 0 && inputTitle.length < 100) {
             onChangeInput(inputTitle)
             setEditMode(false)
-        } else {
-            // setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-            // setLabel(`${MESSAGE_INPUT_VALUE_LENGTH}`)
         }
     }
-
-    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputTitle(event.currentTarget.value)
-    }
-
-    const enterChangeTitle = (event: KeyboardEvent<HTMLInputElement>) => {
-        return event.key === 'Enter' ? onClickNotEditSpanHandler() : ''
-    }
-
-    // useEffect(() => {
-        // if (inputTitle.length < 1 && inputTitle.length > 100) {
-        // setError(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-        // setLabel(`${MESSAGE_INPUT_VALUE_LENGTH}`)
-        // }
-    // }, [])
 
     return (
         editMode
             ?
             <div className={inputDivClassName ? inputDivClassName : ''}>
-                <input
+                <textarea
                     className={inputClassName ? inputClassName : s.editableSpan_input}
                     value={inputTitle}
-                    onChange={onChangeInputHandler}
+                    onChange={(event) => {
+                        setInputTitle(event.currentTarget.value)
+                    }}
                     onBlur={onClickNotEditSpanHandler}
-                    onKeyDown={enterChangeTitle}
+                    onKeyDown={(event) => {
+                        return event.key === 'Enter' ? onClickNotEditSpanHandler() : ''
+                    }}
                     autoFocus
-                    // error={!!error}
                 />
             </div>
             : <span onDoubleClick={onClickEditSpanHandler}

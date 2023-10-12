@@ -3,8 +3,8 @@ import s from './Cashbox.module.scss'
 import {AsyncSelectSearchProduct, Button, LoaderScreen, UniTable} from '../../../shared/ui'
 import useChooseClientModal from '../../../features/ChooseClientModal/ChooseClientModalStore'
 import useCashboxStore from './CashboxStore'
-import {CheckForShop, ClientCard} from '../../../widgets'
-import {BillWithProducts, CatalogAPI, PaymentData, useAuth, useCurrency, User} from '../../../entities'
+import {ClientCard} from '../../../widgets'
+import {CatalogAPI, PaymentData, useAuth, useCurrency, User} from '../../../entities'
 import {columns} from "./CashboxTableConfig"
 import {useSnackbar} from "notistack"
 import {useTranslation} from "react-i18next"
@@ -13,7 +13,7 @@ import {
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider"
 import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
 import {DiscountTargetEnum} from "../../../entities/enumerables/DiscountTargetEnum";
-import {ChooseDiscountModal, PayModal, PrintModal} from "../../../features";
+import {ChooseDiscountModal, PayModal} from "../../../features";
 import {ChooseProductModal} from "../../../widgets/workspace/ProductCatalog/ChooseProductModal/ChooseProductModal";
 import {useApp} from "../../../entities/globalStore/AppStore";
 
@@ -27,7 +27,6 @@ export const Cashbox = () => {
     const [openPrint, setOpenPrint] = useState(false)
     const [openPay, setOpenPay] = useState(false)
     const [clientSearch, setClientSearch] = useState(false)
-    const [res, setRes] = useState<BillWithProducts>()
 
     const setOpenClientModal = useChooseClientModal(s => s.setOpenClientModal)
     const logUser = useAuth(s => s.user)
@@ -48,18 +47,15 @@ export const Cashbox = () => {
 
     const AgentPrintBill = useApp(s => s.AgentPrintBill)
 
-    const [printTrigger, setPrintTrigger] = useState<null | 'agent'>(null)
     const [openDiscount, setOpenDiscount] = useState<boolean>(false)
 
     const paymentResultHandler = (value: PaymentData, ip: boolean) => {
 
         paymentHandler(value, (r) => {
             enqueueSnackbar('Покупка совершена', {variant: 'success', autoHideDuration: 3000})
-            setRes(r)
             console.log(r)
-
-            if (ip && res != undefined) {
-                AgentPrintBill(res?.bill.id, 1)
+            if (ip) {
+                AgentPrintBill(r.bill.id, 1)
                 enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
             }
 
@@ -97,13 +93,6 @@ export const Cashbox = () => {
                                        onSuccess={(u) => {
                                            setUser(u)
                                        }}/>
-                    <PrintModal open={openPrint} trigger={printTrigger} finaly={() => {
-                        setOpenPrint(false)
-                    }}
-                                setOpen={setOpenPrint} printAgentName={'Bill'}>
-                        <CheckForShop children={res!}/>
-                    </PrintModal>
-
                     <div className={s.cashboxMainBlock_leftSideWrapper}>
                         <div className={s.leftSide_tables}>
                             <Button onClick={() => {

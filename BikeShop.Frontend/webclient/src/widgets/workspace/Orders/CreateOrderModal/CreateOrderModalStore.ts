@@ -87,7 +87,7 @@ const useCreateOrderModal = create<p>()(persist(devtools(immer((set, get) => ({
         if (deliveryType.code === "Shipping") info.DeliveryService = "NovaPoshta"
         if (city != null) {
             info.CityName = city.Description
-            info.CityNovaPoshtaRef = city.Ref
+            info.CityRef = city.Ref
             info.AreaName = city.AreaDescription
             info.SettlementType = city.SettlementTypeDescription
         }
@@ -96,8 +96,8 @@ const useCreateOrderModal = create<p>()(persist(devtools(immer((set, get) => ({
             info.WarehouseName = wh.Description
             info.WarehouseAddress = wh.ShortAddress
             info.WarehousePhone = wh.Phone
-            info.WarehouseNovaPoshtaRef = wh.Ref
-            info.WarehouseTypeNovaPoshtaRef = wh.TypeOfWarehouse
+            info.WarehouseRef = wh.Ref
+            info.WarehouseTypeRef = wh.TypeOfWarehouse
         }
 
         let data: CreateOrder = {

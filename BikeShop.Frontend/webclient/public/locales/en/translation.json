@@ -1,5 +1,16 @@
 {
   "Language": "EN",
   "Shop": "Shop",
-  "Create repair": "Create repair"
+  "Create repair": "Create repair",
+  "DeliveryService": "Delivery Service",
+  "Description": "Description",
+  "CityName": "City Name",
+  "AreaName": "Area Name",
+  "CityRef": "City Ref",
+  "SettlementType": "Settlement Type",
+  "WarehouseName": "Warehouse Name",
+  "WarehouseAddress": "Warehouse Address",
+  "WarehousePhone": "Warehouse Phone",
+  "WarehouseRef": "Warehouse Ref",
+  "WarehouseTypeRef": "Warehouse TypeRef"
 }

@@ -101,7 +101,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
             }
 
         setOptions(currentProduct.productOptions.map(n => {
-            if (n.productId === bindedProduct.id && n.productId === r.optionId) return variant
+            if (n.productId === bindedProduct.id && n.optionId === r.optionId) return variant
             return n
         }))
 
@@ -267,7 +267,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
 
                                                                                         <Select
                                                                                             className={s.options_search}
-                                                                                            // classNamePrefix={'react-select'}
                                                                                             placeholder={'Варианты'}
                                                                                             options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
                                                                                                 .filter(n => !Enumerable.from(currentProduct.productOptions)
@@ -275,7 +274,6 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                                     .contains(n.id)) as ProductOptionVariantBind[])}
                                                                                             onChange={(newValue) => {
                                                                                                 onChangeOptionsVariants(bindedProduct, newValue as ProductOptionVariantBind)
-                                                                                                //setEnBut(enBut.filter(n => n.id != variant.id))
                                                                                             }}
                                                                                             onInputChange={(v) => {
                                                                                                 if (v != "" && v != " ") {

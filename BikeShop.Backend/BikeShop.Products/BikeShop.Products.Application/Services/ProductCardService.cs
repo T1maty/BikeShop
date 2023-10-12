@@ -300,6 +300,8 @@ namespace BikeShop.Products.Application.Services
                     ent.SortOrder = variant.SortOrder;
                     ent.Enabled = variant.enabled;
                     ent.UpdatedAt = DateTime.Now;
+
+                    variantBinds.Remove(variant.id);
                 }
                 else
                 {
@@ -314,8 +316,7 @@ namespace BikeShop.Products.Application.Services
             await _context.ProductOptionVariantBinds.AddRangeAsync(newBinds);
 
             //Удаляем все бинды у товара, которых нету.
-            var forRemove = _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).Where(n => !vIds.Contains(n.Id));
-            _context.ProductOptionVariantBinds.RemoveRange(forRemove);
+            _context.ProductOptionVariantBinds.RemoveRange(variantBinds.Values);
 
             List<int> onUpd = new List<int> {product.Id };
 

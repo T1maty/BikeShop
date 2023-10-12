@@ -67,13 +67,24 @@ namespace BikeShop.Products.Application.Services
         }
         public async Task transfer()
         {
-            var ap = await _context.Products.ToListAsync();
-            ap.ForEach(n => n.IsMaster = true);
-            await _context.SaveChangesAsync(new CancellationToken());
+            //не переменено к проде, чистка дубликатов вариантов
+            var variants = await _context.ProductOptionVariantBinds.ToListAsync();
+            var optIds = variants.Select(n => n.OptionId).Distinct();
+            var prodIds = variants.Select(n => n.ProductId).Distinct();
 
-            var childrens = await _context.ProductBinds.Select(n => n.ChildrenId).Distinct().ToListAsync();
-            var prods = await _context.Products.Where(n => childrens.Contains(n.Id)).ToListAsync();
-            prods.ForEach(n => n.IsMaster = false);
+            foreach (var opt in optIds)
+            {
+                foreach (var p in prodIds)
+                {
+                    var list = variants.Where(n => n.OptionId == opt).Where(n=>n.ProductId== p).ToList();
+                    if (list.Count > 1)
+                    {
+                        list.RemoveAt(0);
+                        _context.ProductOptionVariantBinds.RemoveRange(list);
+                    }
+                }
+            }
+
             await _context.SaveChangesAsync(new CancellationToken());
         }
 
