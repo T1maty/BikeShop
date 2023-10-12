@@ -278,13 +278,10 @@ namespace BikeShop.Products.Application.Services
             productCard.Description = dto.productCard.description;
             productCard.DescriptionShort = dto.productCard.shortDescription;
 
-            var bind = await _context.ProductBinds.Where(n => n.ChildrenId == dto.Id).FirstOrDefaultAsync();
+            var bind = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).Select(n => n.ChildrenId).ToListAsync();
             //slaves contains master id
             List<int> slaveIds = new List<int> { dto.Id };
-            if (bind != null)
-            {
-                slaveIds = await _context.ProductBinds.Where(n => n.ProductId == bind.ProductId).Select(n => n.ChildrenId).ToListAsync();
-            }
+            slaveIds.AddRange(bind);
 
             var vIds = dto.productOptions.Select(n1 => n1.id);
             var variantBinds = await _context.ProductOptionVariantBinds.Where(n => vIds.Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);

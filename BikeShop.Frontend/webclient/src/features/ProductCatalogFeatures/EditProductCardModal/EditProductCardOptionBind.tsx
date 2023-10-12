@@ -268,10 +268,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                                                                                         <Select
                                                                                             className={s.options_search}
                                                                                             placeholder={'Варианты'}
-                                                                                            options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants
-                                                                                                .filter(n => !Enumerable.from(currentProduct.productOptions)
-                                                                                                    .select(m => m.optionVariantId)
-                                                                                                    .contains(n.id)) as ProductOptionVariantBind[])}
+                                                                                            options={(allOptions.filter(n => n.id == variant.optionId)[0]?.optionVariants as ProductOptionVariantBind[])}
                                                                                             onChange={(newValue) => {
                                                                                                 onChangeOptionsVariants(bindedProduct, newValue as ProductOptionVariantBind)
                                                                                             }}
