@@ -317,7 +317,11 @@ namespace BikeShop.Products.Application.Services
             var forRemove = _context.ProductOptionVariantBinds.Where(n => slaveIds.Contains(n.ProductId)).Where(n => !vIds.Contains(n.Id));
             _context.ProductOptionVariantBinds.RemoveRange(forRemove);
 
+
+
             List<int> onUpd = new List<int> {product.Id };
+            var existProdBinds = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n => n.ChildrenId, n => n);
+            onUpd.AddRange(existProdBinds.Values.Select(n => n.ChildrenId).ToList());
 
             if (dto.bindedProducts.Count == 1)
             {
@@ -326,9 +330,7 @@ namespace BikeShop.Products.Application.Services
             else
             {
                 dto.bindedProducts.Remove(dto.bindedProducts.Find(n=>n.Id == dto.Id));
-                var existProdBinds = await _context.ProductBinds.Where(n => n.ProductId == dto.Id).ToDictionaryAsync(n => n.ChildrenId, n => n);
                 List<ProductBind> newProdBinds = new List<ProductBind>();
-                onUpd.AddRange(existProdBinds.Values.Select(n => n.ChildrenId).ToList());
                 foreach (var prod in dto.bindedProducts)
                 {
                     if (!existProdBinds.ContainsKey(prod.Id))
@@ -348,7 +350,6 @@ namespace BikeShop.Products.Application.Services
 
             
             await _context.SaveChangesAsync(new CancellationToken());
-
             await UpdateIsMaster(onUpd);
 
             return await GetProductCard(dto.Id);

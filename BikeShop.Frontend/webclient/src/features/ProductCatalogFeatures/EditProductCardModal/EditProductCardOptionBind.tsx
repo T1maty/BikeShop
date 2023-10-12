@@ -163,7 +163,7 @@ export const EditProductCardOptionBind = (props: ProductCardOptionBindProps) => 
                 </div>
 
                 {
-                    currentProduct.bindedProducts.map((bindedProduct: Product, index: number) => {
+                    [...currentProduct.bindedProducts].sort((a, b) => a.isMaster ? 1 : 0).map((bindedProduct: Product, index: number) => {
                         return (
                             <div className={s.optionBind_productBlock} onClick={() => {
                                 setSelectedBindedProductId(bindedProduct.id)

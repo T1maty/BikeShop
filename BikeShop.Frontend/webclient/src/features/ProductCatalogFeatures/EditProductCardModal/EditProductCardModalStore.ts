@@ -148,7 +148,7 @@ const useEditProductCardModal = create<EditProductCardModalStore>()(persist(devt
     updateProductCard: (s) => {
         let buf = get().currentProduct
         let data: UpdateProductCardFormModel = {
-            id: buf.bindedProducts[0].id,
+            id: [...buf.bindedProducts].sort((a, b) => a.isMaster ? 1 : 0)[0].id,
             checkStatus: buf.product.checkStatus,
             productCard: {description: buf.productCard.description, shortDescription: buf.productCard.descriptionShort},
             productOptions: buf.productOptions,
