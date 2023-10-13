@@ -200,7 +200,7 @@ namespace BikeShop.Acts.Application.Services
 
             var currency = await _paymentsClient.GetCurrency(dto.CurrencyId ?? 1);
 
-            var tamplate = await CreateActHTML(new ProductStickerModel { CatalogKey = product.CatalogKey, Id = product.Id, CurSymbol = currency.Symbol, Name = product.Name, Price = product.RetailPrice*currency.Coefficient});
+            var tamplate = await CreateActHTML(new ProductStickerModel { CatalogKey = product.CatalogKey, Id = product.Id, CurSymbol = currency.Symbol, Name = product.Name, Price = (product.RetailPrice*currency.Coefficient).ToString("0.00") });
 
             var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "ProductSticker").FirstOrDefaultAsync()).Settings;
 
@@ -228,7 +228,7 @@ namespace BikeShop.Acts.Application.Services
         {
             var enc = await _context.Encashments.FindAsync(dto.DataId);
             var cur = await _paymentsClient.GetCurrency(dto.CurrencyId ?? 1);
-            var tamplate = await CreateActHTML(new EncashmentModel { Id = enc.Id, Date = enc.CreatedAt.ToString("dd-MM-yyyy"), Cash = enc.Cash*cur.Coefficient, Left = enc.CashRemain*cur.Coefficient, Terminal = enc.Card*cur.Coefficient, CurSymbol = cur.Symbol});
+            var tamplate = await CreateActHTML(new EncashmentModel { Id = enc.Id, Date = enc.CreatedAt.ToString("dd-MM-yyyy"), Cash = (enc.Cash*cur.Coefficient).ToString("0.00"), Left = (enc.CashRemain*cur.Coefficient).ToString("0.00"), Terminal = (enc.Card * cur.Coefficient).ToString("0.00"), CurSymbol = cur.Symbol});
 
             var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "Encashment").FirstOrDefaultAsync()).Settings;
 

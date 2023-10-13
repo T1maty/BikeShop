@@ -10,7 +10,7 @@ namespace BikeShop.Acts.Domain.DTO.Scriban
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
+        public string Price { get; set; }
         public string CurSymbol { get; set; }
         public string CatalogKey { get; set; }
     }
