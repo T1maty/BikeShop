@@ -1,4 +1,5 @@
 ﻿using BikeShop.Acts.Domain.Refit;
+using BikeShop.Acts.Domain.Refit.Service;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,6 @@ namespace BikeShop.Acts.Application.Refit
     public interface IServiceClient
     {
         [Get("/service/getbyid")]
-        public Task<ServiceDTO> GetById(int id);
+        public Task<ServiceWithData> GetById(int id);
     }
 }

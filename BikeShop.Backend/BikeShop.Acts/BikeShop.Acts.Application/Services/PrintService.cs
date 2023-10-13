@@ -214,7 +214,7 @@ namespace BikeShop.Acts.Application.Services
         {
             var s = await _serviceClient.GetById(dto.DataId);
 
-            var tamplate = await CreateActHTML(new ServiceStickerModel {Id = s.Id, Client = s.ClientFIO, Phone = s.ClientPhone});
+            var tamplate = await CreateActHTML(new ServiceStickerModel {Id = s.service.Id, Client = s.service.ClientFIO, Phone = s.service.ClientPhone});
 
             var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "WorkshopSticker").FirstOrDefaultAsync()).Settings;
 
