@@ -11,5 +11,6 @@ namespace BikeShop.Products.Domain.Entities
         public int OptionId { get; set; }
         public string Name { get; set; }
         public string OptionName { get; set; }
+        public string? IconUrl { get; set; }
     }
 }
