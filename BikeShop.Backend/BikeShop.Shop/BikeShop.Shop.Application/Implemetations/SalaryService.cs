@@ -1,4 +1,5 @@
-﻿using BikeShop.Shop.Application.Interfaces;
+﻿using BikeShop.Acts.Domain.Refit;
+using BikeShop.Shop.Application.Interfaces;
 using BikeShop.Shop.Application.ReficClients;
 using BikeShop.Shop.Domain.DTO.Salary;
 using BikeShop.Shop.Domain.Entities;
@@ -38,6 +39,14 @@ namespace BikeShop.Shop.Application.Implemetations
             var works = await _serviceClient.GetWorksByMaster(UserId, Start, Finish);
             var bills = await _paymentClient.GetBillsByUser(UserId, Start, Finish);
 
+            var allCurrencies = new Dictionary<int, Currency>();
+
+            foreach (var i in bills.Select(n => n.bill.CurrencyId).Distinct())
+            {
+                var c = await _paymentClient.GetCurrency(i);
+                allCurrencies.Add(c.Id, c);
+            }
+
             ent.ServiceWorks = works;
             ent.SeviceProducts = prods;
             ent.Bills = bills;
@@ -47,7 +56,7 @@ namespace BikeShop.Shop.Application.Implemetations
 
             var prodsTotal = prods.Select(n=>n.Total).Sum();
             var worksTotal = works.Select(n=>n.Total).Sum();
-            var billsTotal = bills.Select(n => n.products.Select(n=>n.Total).Sum()).Sum();
+            var billsTotal = bills.Select(n => n.bill.Total / allCurrencies[n.bill.CurrencyId].Coefficient).Sum();
 
             ent.WorkTotal = worksTotal / 100 * prms.WorkPercent;
             ent.ProductsTotal = prodsTotal / 100 * prms.WorkshopPercent;

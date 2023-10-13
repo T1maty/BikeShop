@@ -1,4 +1,5 @@
-﻿using BikeShop.Payments.Domain.DTO.Responses;
+﻿using BikeShop.Acts.Domain.Refit;
+using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Service.Domain.Entities;
 using Refit;
 using System;
@@ -13,5 +14,7 @@ namespace BikeShop.Shop.Application.ReficClients
     {
         [Get("/financialinteraction/getbillsbyuser")]
         public Task<List<BillWithProducts>> GetBillsByUser(Guid? UserId, DateTime Start, DateTime Finish);
+        [Get("/currency/get")]
+        public Task<Currency> GetCurrency(int Id);
     }
 }
