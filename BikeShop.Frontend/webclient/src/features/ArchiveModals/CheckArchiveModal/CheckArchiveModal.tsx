@@ -8,6 +8,7 @@ import Enumerable from "linq"
 import {formatDate} from "../../../shared/utils/formatDate"
 import {CheckForShop} from "../../../widgets"
 import {PrintModal} from "../../PrintModal/PrintModal"
+import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
 
 export const CheckArchiveModal = () => {
 
@@ -51,8 +52,8 @@ export const CheckArchiveModal = () => {
                     <div className={s.checkArchiveModal_title}>
                         Архив чеков
                     </div>
-
-                    <PrintModal open={openPrint} setOpen={setOpenPrint} printAgentName={'Bill'} id={selected?.bill.id}>
+                    <PrintModal open={openPrint} setOpen={setOpenPrint} printAgentName={PrintNameEnum.AgentPrintBill}
+                                id={selected!.bill.id}>
                         <CheckForShop children={selected!}/>
                     </PrintModal>
 

@@ -33,7 +33,10 @@ namespace BikeShop.Acts.Application.Hubs
         {
             await Clients.All.SendAsync("RequestPay", dto);
         }
-
+        
+        //
+        //Printing
+        //
         public async Task PrintBill(StartPrintDTO dto)
         {
             var res = await _printService.PrintBill(dto);

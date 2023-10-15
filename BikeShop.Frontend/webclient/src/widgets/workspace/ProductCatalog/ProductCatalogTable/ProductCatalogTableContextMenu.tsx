@@ -12,6 +12,7 @@ import {useSnackbar} from "notistack";
 import useCreateProductModal from "../CreateProductModal/CreateProductModalStore";
 import {PrintModal} from "../../../../features";
 import {ChooseProductTagModal} from "../ChooseProductTagModal/ChooseProductTagModal";
+import {PrintNameEnum} from "../../../../entities/enumerables/PrintNameEnum";
 
 export const ProductCatalogTableContextMenu = () => {
 
@@ -92,10 +93,9 @@ export const ProductCatalogTableContextMenu = () => {
                     enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
                 })
             }}/>
-            <PrintModal open={o1}
-                        setOpen={so1}
+            <PrintModal open={o1} setOpen={so1} id={selected[0].id}
                         children={<ProductSticker product={selected[0]} cur={cur!}/>}
-                        printAgentName={'ProductSticker'}
+                        printAgentName={PrintNameEnum.AgentPrintProductSticker}
             />
             <ContextMenu
                 isOpen={contextMenuVisible}

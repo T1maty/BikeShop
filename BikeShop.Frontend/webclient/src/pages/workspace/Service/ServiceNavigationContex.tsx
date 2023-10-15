@@ -3,6 +3,7 @@ import {ActServiceWork, CheckForServiceWork, ContextMenu, ServiceIncomeInvoice} 
 import ServiceStore from "./ServiceStore"
 import {PrintModal} from "../../../features"
 import {ServiceSticker} from "../../../widgets/workspace/Invoices/Service/ServiceSticker";
+import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
 
 interface p {
     open: { o: boolean, x: number, y: number }
@@ -51,13 +52,16 @@ export const ServiceNavigationContext = (props: p) => {
         <>
             <PrintModal id={selected ? selected!.service.id : 0} open={v1} setOpen={sv1}
                         children={<ServiceIncomeInvoice children={selected!}/>}
-                        printAgentName={'WorkshopIn'}/>
+                        printAgentName={PrintNameEnum.AgentPrintServiceIncomeAct}/>
             <PrintModal open={v2} setOpen={sv2} children={<ServiceSticker children={selected!}/>}
-                        printAgentName={'WorkshopSticker'}/>
+                        printAgentName={PrintNameEnum.AgentPrintServiceSticker}
+                        id={selected ? selected!.service.id : 0}/>
             <PrintModal open={v3} setOpen={sv3} children={<ActServiceWork children={selected!}/>}
-                        printAgentName={"WorkshopOutSmall"}/>
+                        printAgentName={PrintNameEnum.AgentPrintServiceOutcomeSmallAct}
+                        id={selected ? selected!.service.id : 0}/>
             <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={selected!}/>}
-                        printAgentName={'WorkshopOut'}/>
+                        printAgentName={PrintNameEnum.AgentPrintServiceOutcomeFullAct}
+                        id={selected ? selected!.service.id : 0}/>
 
             <ContextMenu
                 isOpen={props.open.o}

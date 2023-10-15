@@ -11,14 +11,10 @@ import {
     UpdateServiceStatus,
     User
 } from '../../../entities'
-import {ErrorStatusTypes} from '../../../entities/enumerables/ErrorStatusTypes'
 
 export type ServiceListStatusType = 'Waiting' | 'InProcess' | 'Ready'
 
 interface ServiceStore {
-    errorStatus: ErrorStatusTypes
-    isLoading: boolean
-    setIsLoading: (value: boolean) => void
     isCreating: boolean
     setIsCreating: (value: boolean) => void
 
@@ -36,7 +32,7 @@ interface ServiceStore {
     filter: () => void
 
     getAllServicesInfo: () => any
-    addNewService: (data: ServiceFormModel, onSuccess: () => void, isInstant: boolean) => any
+    addNewService: (data: ServiceFormModel, onSuccess: (Id: number) => void) => any
     updateService: (updateData: ServiceFormModel, onSuccess: () => void) => any
     updateServiceStatus: (data: UpdateServiceStatus, onSuccess: () => void) => void
 
@@ -44,32 +40,24 @@ interface ServiceStore {
     setSelectedNavService: (v: ServiceWithData) => void,
 
 
-    endService: (id: number, paymentData: PaymentData, onSuccess: () => void) => void
+    endService: (id: number, paymentData: PaymentData, onSuccess: (Id: number) => void) => void
 
     printModalSticker: boolean
     setPrintModalSticker: (v: boolean) => void
-    triggerSticker: "agent" | null
-    setTriggerSticker: (v: "agent" | null) => void
 
     printModalIn: boolean
     setPrintModalIn: (v: boolean) => void
-    triggerIn: "agent" | null
-    setTriggerIn: (v: "agent" | null) => void
 
     printModalOut: boolean
     setPrintModalOut: (v: boolean) => void
-    triggerOut: "agent" | null
-    setTriggerOut: (v: "agent" | null) => void
 
     printModalOutSmall: boolean
     setPrintModalOutSmall: (v: boolean) => void
-    triggerOutSmall: "agent" | null
-    setTriggerOutSmall: (v: "agent" | null) => void
 
     isPrinting: boolean
     setIsPrinting: (v: boolean) => void
 
-    
+
 }
 
 const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => ({
@@ -77,45 +65,28 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
     setIsPrinting: (v) => {
         set({isPrinting: v})
     },
-    triggerSticker: null,
     printModalSticker: false,
-    setTriggerSticker: (v) => {
-        set({triggerSticker: v})
-    },
     setPrintModalSticker: (v) => {
         set({printModalSticker: v})
     },
 
-    triggerIn: null,
     printModalIn: false,
-    setTriggerIn: (v) => {
-        set({triggerIn: v})
-    },
     setPrintModalIn: (v) => {
         set({printModalIn: v})
     },
 
-    triggerOut: null,
     printModalOut: false,
-    setTriggerOut: (v) => {
-        set({triggerOut: v})
-    },
     setPrintModalOut: (v) => {
         set({printModalOut: v})
     },
 
-    triggerOutSmall: null,
     printModalOutSmall: false,
-    setTriggerOutSmall: (v) => {
-        set({triggerOutSmall: v})
-    },
     setPrintModalOutSmall: (v) => {
         set({printModalOutSmall: v})
     },
 
 
     endService: (id, pd, s) => {
-        set({isLoading: true})
         ServiceAPI.endService(id, pd.cash, pd.bankCount, pd.card, pd.personalBalance, pd.isFiscal).then((g) => {
             let newData = get().services.map((i) => {
                 if (i.service.id === g.data.service.id) return g.data
@@ -123,28 +94,12 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             })
             get().setServices(newData)
             get().filter()
-
-            if (get().isPrinting) {
-                get().setPrintModalOut(true)
-                get().setTriggerOut('agent')
-            }
-
-            s()
-            //get().setCurrentService(null)
-            //get().setIsCreating(false)
-        }).catch(() => {
-            set({errorStatus: 'error'})
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
+            s(g.data.service.id)
         })
     },
 
     errorStatus: 'default',
-    isLoading: false,
-    setIsLoading: (value) => {
-        set({isLoading: value})
-    },
+
     isCreating: false,
     setIsCreating: (value) => {
         set({isCreating: value})
@@ -152,7 +107,6 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
 
     masters: [],
     getMasters: () => {
-        set({isLoading: true})
         ServiceAPI.getMasters().then((res: any) => {
 
             console.log('мастера в сервисе', res.data)
@@ -165,12 +119,6 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
                 state.masters = users.filter((n: any) => n !== undefined)
                 console.log('все мастера', state.masters)
             })
-            set({isLoading: false})
-        }).catch((error: any) => {
-            set({errorStatus: 'error'})
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
         })
     },
 
@@ -200,28 +148,20 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
     },
 
     getAllServicesInfo: () => {
-        set({isLoading: true})
         ServiceAPI.getAllServicesInfo().then(res => {
             console.log('все ремонты', res.data)
             set(state => {
                 state.services = res.data
             })
             get().filter()
-            set({isLoading: false})
             set({isCreating: false})
-        }).catch((error: any) => {
-            set({errorStatus: 'error'})
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
         })
     },
-    addNewService: (data, onSuccess, isInstant) => {
-        set({isLoading: true})
+    addNewService: (data, onSuccess) => {
         data.userId = LocalStorage.userId()!
         data.shopId = parseInt(LocalStorage.shopId()!)
 
-        ServiceAPI.addNewService(data).then((res: any) => {
+        ServiceAPI.addNewService(data).then((res) => {
             set(state => {
                 state.services.push(res.data)
             })
@@ -231,23 +171,11 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             set(state => {
                 state.currentService = state.services[state.services.length - 1]
             })
-            if (!isInstant) {
-                get().setPrintModalIn(true)
-                get().setTriggerIn('agent')
-            }
 
-            onSuccess();
-            set({isLoading: false})
-        }).catch((error: any) => {
-            console.log(error)
-            set({errorStatus: 'error'})
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
+            onSuccess(res.data.service.id);
         })
     },
     updateService: (updateData, onSuccess) => {
-        set({isLoading: true})
         updateData.userId = LocalStorage.userId()!
         console.log('sendingToServerUpdate', updateData)
         ServiceAPI.updateService(updateData).then((res) => {
@@ -260,17 +188,9 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             get().filter()
             set({currentService: res.data})
             onSuccess()
-            set({isLoading: false})
-        }).catch((error: any) => {
-            console.log(error)
-            set({errorStatus: 'error'})
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
         })
     },
     updateServiceStatus: (data: UpdateServiceStatus, onSuccess) => {
-        set({isLoading: true})
         ServiceAPI.updateServiceStatus(data).then((res: any) => {
             const currentListStatus = useService.getState().serviceListStatus
 
@@ -292,12 +212,6 @@ const useService = create<ServiceStore>()(persist(devtools(immer((set, get) => (
             }
 
             onSuccess()
-            set({isLoading: false})
-        }).catch((error: any) => {
-            set({errorStatus: 'error'})
-        }).finally(() => {
-            set({errorStatus: 'default'})
-            set({isLoading: false})
         })
     },
     selectedNavService: null,

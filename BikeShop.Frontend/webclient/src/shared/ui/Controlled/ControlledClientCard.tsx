@@ -4,7 +4,6 @@ import {AuthAPI, User} from '../../../entities'
 import {Controller, UseFormReturn} from "react-hook-form"
 import {RegisterOptions} from "react-hook-form/dist/types/validator"
 import {AxiosResponse} from "axios"
-import useService from '../../../pages/workspace/Service/ServiceStore'
 import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
 
 interface ControlledClientCardProps {
@@ -20,8 +19,6 @@ interface ControlledClientCardProps {
 
 export const ControlledClientCard = (props: ControlledClientCardProps) => {
 
-    const isLoading = useService(s => s.isLoading)
-    const setIsLoading = useService(s => s.setIsLoading)
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
@@ -32,12 +29,9 @@ export const ControlledClientCard = (props: ControlledClientCardProps) => {
             // setIsLoading(true)
             AuthAPI.User.getUserById(id).then((r: AxiosResponse<User>) => {
                 setUser(r.data)
-                setIsLoading(false)
             }).catch((error) => {
                 console.log('ошибка загрузки пользователя', error)
                 setUser({} as User)
-            }).finally(() => {
-                setIsLoading(false)
             })
         }
     }, [props.control.watch(props.name)])

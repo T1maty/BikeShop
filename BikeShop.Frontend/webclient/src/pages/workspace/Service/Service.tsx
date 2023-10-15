@@ -4,41 +4,29 @@ import useService from "./ServiceStore"
 import {LoaderScreen} from "../../../shared/ui"
 import {ServiceForm} from "./ServiceForm"
 import {ServiceNavigation} from "./ServiceNavigation"
-import {useSnackbar} from 'notistack'
 import {useForm} from "react-hook-form"
 import {ServiceFormModel} from "../../../entities"
 import {PrintModal} from "../../../features";
 import {ActServiceWork, CheckForServiceWork, ServiceIncomeInvoice} from "../../../widgets";
 import {ServiceSticker} from "../../../widgets/workspace/Invoices/Service/ServiceSticker";
+import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
+import {useApp} from "../../../entities/globalStore/AppStore";
 
 export const Service = () => {
-
-    const {enqueueSnackbar} = useSnackbar()
-
-    const isLoading = useService(s => s.isLoading)
-    const errorStatus = useService(s => s.errorStatus)
+    const isLoading = useApp(s => s.isLoading)
     const getMasters = useService(s => s.getMasters)
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
 
     const setPrintModalIn = useService(s => s.setPrintModalIn)
     const printModalIn = useService(s => s.printModalIn)
-    const setTriggerIn = useService(s => s.setTriggerIn)
-    const triggerIn = useService(s => s.triggerIn)
     const setPrintModalSticker = useService(s => s.setPrintModalSticker)
     const printModalSticker = useService(s => s.printModalSticker)
-    const setTriggerSticker = useService(s => s.setTriggerSticker)
-    const triggerSticker = useService(s => s.triggerSticker)
 
     const printModalOut = useService(s => s.printModalOut)
     const setPrintModalOut = useService(s => s.setPrintModalOut)
-    const triggerOut = useService(s => s.triggerOut)
-    const setTriggerOut = useService(s => s.setTriggerOut)
 
-    const setIsPrinting = useService(s => s.setIsPrinting)
     const setPrintModalOutSmall = useService(s => s.setPrintModalOutSmall)
-    const setTriggerOutSmall = useService(s => s.setTriggerOutSmall)
     const printModalOutSmall = useService(s => s.printModalOutSmall)
-    const triggerOutSmall = useService(s => s.triggerOutSmall)
     const currentService = useService(s => s.currentService)
 
 
@@ -65,15 +53,6 @@ export const Service = () => {
         getAllServicesInfo()
     }, [])
 
-    useEffect(() => {
-        if (errorStatus === 'success') {
-            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
-        }
-        if (errorStatus === 'error') {
-            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
-        }
-    }, [errorStatus])
-
     if (isLoading) {
         return <LoaderScreen variant={'ellipsis'}/>
     } else {
@@ -83,43 +62,24 @@ export const Service = () => {
                 e.preventDefault()
             }}>
 
-                <PrintModal open={printModalIn} trigger={triggerIn} finaly={() => {
-                    setTriggerIn(null)
-                    setPrintModalIn(false)
-                    setTimeout(() => {
-                        setPrintModalSticker(true)
-                        setTriggerSticker("agent")
-                    }, 1000)
-                }}
+                <PrintModal open={printModalIn} id={currentService!.service.id}
                             setOpen={setPrintModalIn}
                             children={<ServiceIncomeInvoice children={currentService!}/>}
-                            printAgentName={"WorkshopIn"} copies={2}
+                            printAgentName={PrintNameEnum.AgentPrintServiceIncomeAct} copies={2}
                 />
-                <PrintModal open={printModalSticker} trigger={triggerSticker} finaly={() => {
-                    setTriggerSticker(null)
-                    setPrintModalSticker(false)
-                }}
-                            setOpen={setPrintModalSticker} printAgentName={"WorkshopSticker"}
+                <PrintModal open={printModalSticker} id={currentService!.service.id}
+                            setOpen={setPrintModalSticker} printAgentName={PrintNameEnum.AgentPrintServiceSticker}
                             children={<ServiceSticker children={currentService!}/>}
                 />
 
-                <PrintModal open={printModalOut} trigger={triggerOut} printAgentName={'WorkshopOut'} finaly={() => {
-                    setPrintModalOut(false)
-                    setTriggerOut(null)
-                    setTimeout(() => {
-                        setPrintModalOutSmall(true)
-                        setTriggerOutSmall('agent')
-                    }, 1000)
-                }}
+                <PrintModal open={printModalOut} id={currentService!.service.id}
+                            printAgentName={PrintNameEnum.AgentPrintServiceOutcomeFullAct}
                             setOpen={setPrintModalOut}
                             children={<CheckForServiceWork children={currentService!}/>}
                 />
 
-                <PrintModal open={printModalOutSmall} trigger={triggerOutSmall} printAgentName={'WorkshopOutSmall'}
-                            finaly={() => {
-                                setPrintModalOutSmall(false)
-                                setTriggerOutSmall(null)
-                            }}
+                <PrintModal open={printModalOutSmall} id={currentService!.service.id}
+                            printAgentName={PrintNameEnum.AgentPrintServiceOutcomeSmallAct}
                             setOpen={setPrintModalOutSmall}
                             children={<ActServiceWork children={currentService!}/>}
                 />

@@ -8,6 +8,7 @@ import {CreateEncashment} from "../../../entities/DataTransferObjects/requests/C
 import {useSnackbar} from "notistack";
 import {PrintModal} from "../../PrintModal/PrintModal";
 import {EncashmentPaper} from "../../../widgets/workspace/Invoices/Encashment/EncashmentPaper";
+import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
 
 export const EncashmentModal = () => {
 
@@ -65,7 +66,7 @@ export const EncashmentModal = () => {
             }}
         >
             <PrintModal open={print} setOpen={setPrint} children={<EncashmentPaper encashmant={result!}/>}
-                        printAgentName={"Encashment"}
+                        printAgentName={PrintNameEnum.AgentPrintEncashment} id={result!.id}
                         finaly={() => {
                             setOpen(false);
                             setPrint(false)

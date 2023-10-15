@@ -2,6 +2,7 @@ import {create} from "zustand"
 import {devtools, persist} from "zustand/middleware"
 import {immer} from "zustand/middleware/immer"
 import * as signalR from '@microsoft/signalr';
+import {LocalStorage} from "./LocalStorage";
 
 interface p {
     isLoading: boolean
@@ -18,7 +19,13 @@ interface p {
     agentTerminalCancel: (data: { Id: string, Amount: number, AgentId: number }) => void
     setAgentTerminalCancel: (v: (data: { Id: string, Amount: number, AgentId: number }) => void) => void
     createAgentHubConnection: () => void
-    AgentPrintBill: (BillId: number, Copies: number) => void
+    AgentPrintBill: (DataId: number, Copies: number) => void
+    AgentPrintProductSticker: (DataId: number, Copies: number) => void
+    AgentPrintEncashment: (DataId: number, Copies: number) => void
+    AgentPrintServiceSticker: (DataId: number, Copies: number) => void
+    AgentPrintServiceIncomeAct: (DataId: number, Copies: number) => void
+    AgentPrintServiceOutcomeSmallAct: (DataId: number, Copies: number) => void
+    AgentPrintServiceOutcomeFullAct: (DataId: number, Copies: number) => void
 
 }
 
@@ -26,9 +33,66 @@ export const useApp = create<p>()(persist(devtools(immer((set, get) => ({
     AgentHubStartConnection: (s, f) => {
         get().AgentHubConnection?.start().then(() => s()).catch(() => f());
     },
+
+    //AgentPrint
     AgentPrintBill: (id, copies) => {
-        get().AgentHubConnection?.send("PrintBill", {AgentId: 1, DataId: id, Copies: copies});
+        get().AgentHubConnection?.send("PrintBill", {
+            AgentId: 1,
+            DataId: id,
+            Copies: copies,
+            CurrencyId: LocalStorage.currency.id()
+        });
     },
+    AgentPrintProductSticker: (id, copies) => {
+        get().AgentHubConnection?.send("PrintProductSticker", {
+            AgentId: 1,
+            DataId: id,
+            Copies: copies,
+            CurrencyId: LocalStorage.currency.id()
+        });
+    },
+    AgentPrintServiceIncomeAct: (id, copies) => {
+        get().AgentHubConnection?.send("PrintServiceIncomeAct", {
+            AgentId: 1,
+            DataId: id,
+            Copies: copies,
+            CurrencyId: LocalStorage.currency.id()
+        });
+    },
+    AgentPrintServiceOutcomeSmallAct: (id, copies) => {
+        get().AgentHubConnection?.send("PrintServiceOutcomeShort", {
+            AgentId: 1,
+            DataId: id,
+            Copies: copies,
+            CurrencyId: LocalStorage.currency.id()
+        });
+    },
+    AgentPrintServiceOutcomeFullAct: (id, copies) => {
+        get().AgentHubConnection?.send("PrintServiceOutcomeFull", {
+            AgentId: 1,
+            DataId: id,
+            Copies: copies,
+            CurrencyId: LocalStorage.currency.id()
+        });
+    },
+    AgentPrintServiceSticker: (id, copies) => {
+        get().AgentHubConnection?.send("PrintServiceSticker", {
+            AgentId: 1,
+            DataId: id,
+            Copies: copies,
+            CurrencyId: LocalStorage.currency.id()
+        });
+    },
+    AgentPrintEncashment: (id, copies) => {
+        get().AgentHubConnection?.send("PrintEncashment", {
+            AgentId: 1,
+            DataId: id,
+            Copies: copies,
+            CurrencyId: LocalStorage.currency.id()
+        });
+    },
+    //
+
     setAgentTerminalCancel: (v) => set({agentTerminalCancel: v}),
     setAgentTerminalConfirm: (v) => set({agentTerminalConfirm: v}),
     agentTerminalCancel: () => {

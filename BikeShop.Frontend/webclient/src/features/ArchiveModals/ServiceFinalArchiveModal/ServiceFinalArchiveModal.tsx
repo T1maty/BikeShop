@@ -13,6 +13,7 @@ import {formatDate} from 'shared/utils/formatDate'
 import {CheckForServiceWork} from "../../../widgets";
 import {PrintModal} from "../../PrintModal/PrintModal";
 import Enumerable from "linq";
+import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
 
 export const ServiceFinalArchiveModal = () => {
 
@@ -55,7 +56,8 @@ export const ServiceFinalArchiveModal = () => {
             >
                 <div className={s.serviceFinalArchiveModal_mainBlock}>
                     <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={service!}/>}
-                                printAgentName={'WorkshopOut'}/>
+                                printAgentName={PrintNameEnum.AgentPrintServiceOutcomeFullAct}
+                                id={service!.service.id}/>
                     <div className={s.serviceFinalArchiveModal_title}>
                         Архив завершённых ремонтов
                     </div>

@@ -13,9 +13,6 @@ import {
 import {Button, DeleteButton, EditableSpan} from "../../../../shared/ui";
 import {useTranslation} from "react-i18next";
 
-class NNPWarehouseResponse {
-}
-
 const OrderModalPage3 = () => {
 
     const deliverySelectOptions = useCreateOrderModal(s => s.deliverySelectOptions)

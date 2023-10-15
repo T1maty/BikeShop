@@ -17,11 +17,13 @@ import {ConfirmModal, PayModal} from "../../../features"
 import {UseFormReturn} from "react-hook-form"
 import {ServiceNavigationContext} from "./ServiceNavigationContex"
 import {formatDateNoYear} from "../../../shared/utils/formatDateNoYear"
+import {useApp} from "../../../entities/globalStore/AppStore";
+import {useSnackbar} from "notistack";
 
 export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
-    const isLoading = useService(s => s.isLoading)
-    const setIsLoading = useService(s => s.setIsLoading)
+    const isLoading = useApp(s => s.isLoading)
+
     const serviceListStatus = useService(s => s.serviceListStatus)
     const setServiceListStatus = useService(s => s.setServiceListStatus)
     const services = useService(s => s.services)
@@ -33,6 +35,11 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     const setIsPrinting = useService(s => s.setIsPrinting)
 
     const endService = useService(s => s.endService)
+    const isPrinting = useService(s => s.isPrinting)
+
+    const AgentPrintServiceOutcomeSmallAct = useApp(n => n.AgentPrintServiceOutcomeSmallAct)
+    const AgentPrintServiceOutcomeFullAct = useApp(n => n.AgentPrintServiceOutcomeFullAct)
+    const {enqueueSnackbar} = useSnackbar()
 
     const [confirm, setConfirm] = useState(false);
     const [payModal, setPayModal] = useState(false);
@@ -68,8 +75,12 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
     }
 
     const updateServiceStatusHandlerEnded = (r: PaymentData) => {
-        endService(currentService?.service.id || -1, r, () => {
-
+        endService(currentService?.service.id || -1, r, (id) => {
+            if (isPrinting) {
+                AgentPrintServiceOutcomeSmallAct(id, 1)
+                AgentPrintServiceOutcomeFullAct(id, 1)
+                enqueueSnackbar('Відправлено на печать акти видачі', {variant: 'success', autoHideDuration: 3000})
+            }
         })
     }
 

@@ -17,6 +17,7 @@ import {
 } from "../../../app/providers/BarcodeScannerListenerProvider/BarcodeScannerListenerProvider";
 import useSelectProduct from "../SelectProductWork/SelectProductStore";
 import InstantServiceModal from "./InstantServiceModal";
+import {useApp} from "../../../entities/globalStore/AppStore";
 
 export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, any> }) => {
 
@@ -25,7 +26,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
 
     const setOpenSelectProductModal = useSelectProductWorkModal(s => s.setOpenSelectProductModal)
     const setOpenSelectWorkModal = useSelectProductWorkModal(s => s.setOpenSelectWorkModal)
-    const errorStatus = useService(s => s.errorStatus)
     const isCreating = useService(s => s.isCreating)
     const setIsCreating = useService(s => s.setIsCreating)
 
@@ -38,6 +38,8 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const updateService = useService(s => s.updateService)
     const conv = useSelectProduct(s => s.convert)
 
+    const AgentPrintServiceIncomeAct = useApp(n => n.AgentPrintServiceIncomeAct)
+    const AgentPrintServiceSticker = useApp(n => n.AgentPrintServiceSticker)
 
     const [openClientModal, setOpenClientModal] = useState(false)
     const [isModal, setISModal] = useState(false)
@@ -49,7 +51,6 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
     const [selectedUserId, setSelectedUserId] = useState('')
 
     const fbts = useCurrency(s => s.fromBaseToSelected)
-    const fstb = useCurrency(s => s.fromSelectedToBase)
     const r = useCurrency(s => s.roundUp)
 
     const checkForZero = (onChange: (d: any[]) => void) => {
@@ -152,23 +153,22 @@ export const ServiceForm = (props: { children: UseFormReturn<ServiceFormModel, a
         })
     }
 
-    useEffect(() => {
-        if (errorStatus === 'success') {
-            enqueueSnackbar('Операция выполнена', {variant: 'success', autoHideDuration: 3000})
-        }
-        if (errorStatus === 'error') {
-            enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
-        }
-    }, [errorStatus])
-
     return (
         <BarcodeScannerListenerProvider onBarcodeRead={onBarcodeHandler}>
             <div className={s.service_rightSide}>
                 <InstantServiceModal open={isModal} setOpen={setISModal} onSuccess={(isInstant) => {
                     console.log('create IF works, new data =', bufData)
-                    addNewService(bufData!, () => {
-                        enqueueSnackbar('Ремонт создан', {variant: 'success', autoHideDuration: 3000})
-                    }, isInstant)
+                    addNewService(bufData!, (id) => {
+                        enqueueSnackbar('Ремонт створено', {variant: 'success', autoHideDuration: 3000})
+                        if (isInstant) {
+                            AgentPrintServiceIncomeAct(id, 2)
+                            AgentPrintServiceSticker(id, 1)
+                            enqueueSnackbar('Печать двух актів приходу та стікеру', {
+                                variant: 'success',
+                                autoHideDuration: 3000
+                            })
+                        }
+                    })
                 }}/>
                 <form onSubmit={formControl.handleSubmit(onSubmit)}>
 

@@ -300,7 +300,7 @@ namespace BikeShop.Acts.Application.Services
                 TotalWorks = (s.service.TotalWork * c.Coefficient).ToString("0.00"),
                 TotalService = (s.service.Total * c.Coefficient).ToString("0.00"),
                 WithoutDiscWorks = ((s.service.TotalWork + s.service.DiscountWork) * c.Coefficient).ToString("0.00"),
-                WithoutDiscProducts = ((s.service.TotalWork + s.service.DiscountWork) * c.Coefficient).ToString("0.00")
+                WithoutDiscProducts = ((s.service.TotalProduct + s.service.DiscountProduct) * c.Coefficient).ToString("0.00")
             };
 
             var tamplate = await CreateActHTML(model);

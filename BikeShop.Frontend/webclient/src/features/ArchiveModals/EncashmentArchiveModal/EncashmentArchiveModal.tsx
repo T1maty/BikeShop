@@ -12,6 +12,7 @@ import Enumerable from "linq"
 import {EncashmentArchiveContext} from "./EncashmentArchiveContext"
 import {PrintModal} from "../../PrintModal/PrintModal";
 import {EncashmentPaper} from "../../../widgets/workspace/Invoices/Encashment/EncashmentPaper";
+import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
 
 export const EncashmentArchiveModal = () => {
 
@@ -54,7 +55,9 @@ export const EncashmentArchiveModal = () => {
                     setOpen(false)
                 }}
             >
-                <PrintModal open={print} setOpen={setPrint} children={<EncashmentPaper encashmant={p!}/>}/>
+                <PrintModal open={print} setOpen={setPrint} printAgentName={PrintNameEnum.AgentPrintEncashment}
+                            id={p!.id}
+                            children={<EncashmentPaper encashmant={p!}/>}/>
                 <EncashmentArchiveContext open={context} setOpen={setContext}/>
                 <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => e.preventDefault()}>
                     <div className={s.encashmentArchiveModal_title}>

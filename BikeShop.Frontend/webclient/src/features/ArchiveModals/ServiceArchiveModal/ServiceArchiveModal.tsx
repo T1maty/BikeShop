@@ -6,6 +6,7 @@ import {Button, CustomModal} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import {PrintModal} from "../../PrintModal/PrintModal";
 import {CheckForServiceWork} from "../../../widgets";
+import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
 
 type ServiceArchiveModalStatusType = 'Ended' | 'Canceled' | 'Deleted'
 
@@ -66,7 +67,8 @@ export const ServiceArchiveModal = () => {
             <div className={s.archiveModal_mainBox}>
 
                 <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={currentService!}/>}
-                            printAgentName={'WorkshopOut'}/>
+                            printAgentName={PrintNameEnum.AgentPrintServiceOutcomeFullAct}
+                            id={currentService!.service.id}/>
 
                 <div className={s.archiveModal_title}>Архив ремонтов</div>
                 <div className={s.archiveModal_services}>

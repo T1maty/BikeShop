@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react'
+import React, {ReactElement, useRef, useState} from 'react'
 import s from './PrintModal.module.scss'
 import {Button, CustomModal} from '../../shared/ui'
 import {useReactToPrint} from 'react-to-print'
@@ -8,15 +8,15 @@ import {PrintAPI} from "../../entities/api/Acts/PrintAPI";
 import {Loader} from "../../shared/ui/Loader/Loader";
 import html2canvas from "html2canvas";
 import {useApp} from "../../entities/globalStore/AppStore";
+import {IPrintNameEnum, PrintNameEnum} from "../../entities/enumerables/PrintNameEnum";
 
 interface PrintModalProps {
     open: boolean
     setOpen: (value: boolean) => void
     children: ReactElement
-    id?: number
+    id: number
     finaly?: () => void,
-    trigger?: 'agent' | 'png' | null
-    printAgentName?: string
+    printAgentName: IPrintNameEnum
     copies?: number
 }
 
@@ -26,7 +26,6 @@ export const PrintModal: React.FC<PrintModalProps> = ({
                                                           children,
                                                           id,
                                                           finaly,
-                                                          trigger,
                                                           printAgentName,
                                                           copies
                                                       }) => {
@@ -37,6 +36,13 @@ export const PrintModal: React.FC<PrintModalProps> = ({
 
     const [isLoading, setIsLoading] = useState(false)
     const AgentPrintBill = useApp(s => s.AgentPrintBill)
+    const AgentPrintProductSticker = useApp(n => n.AgentPrintProductSticker)
+    const AgentPrintServiceIncomeAct = useApp(n => n.AgentPrintServiceIncomeAct)
+    const AgentPrintServiceOutcomeSmallAct = useApp(n => n.AgentPrintServiceOutcomeSmallAct)
+    const AgentPrintServiceOutcomeFullAct = useApp(n => n.AgentPrintServiceOutcomeFullAct)
+    const AgentPrintServiceSticker = useApp(n => n.AgentPrintServiceSticker)
+    const AgentPrintEncashment = useApp(n => n.AgentPrintEncashment)
+
 
     function saveComponentAsImage() {
 
@@ -74,20 +80,6 @@ export const PrintModal: React.FC<PrintModalProps> = ({
             });
     }
 
-    useEffect(() => {
-        if (trigger === 'agent') {
-            setTimeout(() => {
-                agent()
-            }, 100)
-        } else if (trigger === 'png') {
-            setTimeout(() => {
-                pngHandler()
-            }, 100)
-
-        }
-    }, [trigger])
-
-
     const pngHandler = () => {
         htmlToImage.toPng(componentRef.current!, {
             quality: 1,
@@ -116,36 +108,67 @@ export const PrintModal: React.FC<PrintModalProps> = ({
     }
 
     const agent = () => {
-        if (printAgentName === "Bill") {
-            AgentPrintBill(id != undefined ? id : 30, 1)
-            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
-        } else {
-            setIsLoading(true)
-            htmlToImage.toPng(componentRef.current!, {quality: 1, pixelRatio: 3})
-                .then(function (dataUrl) {
-                    let file = dataURLtoFile(dataUrl, "ActImage")
-                    console.log(file)
-                    //let settings: PrintSettings = {copies: 1, pageWight: 501, printerName: "Win2Image"}
-                    let settings: string = ""
-                    if (copies != undefined) settings = `{"copies": ${copies},"pageWight": 0,"printerName": ""}`
-                    let formData = new FormData();
-                    formData.append('imageFile', file)
-                    PrintAPI.addQueue(formData,
-                        id ? id : 0,
-                        printAgentName ? printAgentName : '',
-                        settings,
-                        100,
-                        1).then(n => {
-                        enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
-                    })
-                }).finally(() => {
-                finaly != undefined ? finaly() : false
-                setIsLoading(false)
-            });
-        }
-    }
+        console.log('PrintDataName: ', printAgentName)
+        console.log('PrintDataId: ', id)
 
-    const PDF = () => {
+        if (printAgentName === PrintNameEnum.AgentPrintBill) {
+            AgentPrintBill(id, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+            return
+        }
+        if (printAgentName === PrintNameEnum.AgentPrintProductSticker) {
+            AgentPrintProductSticker(id, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+            return
+        }
+        if (printAgentName === PrintNameEnum.AgentPrintServiceIncomeAct) {
+            AgentPrintServiceIncomeAct(id, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+            return
+        }
+        if (printAgentName === PrintNameEnum.AgentPrintServiceOutcomeSmallAct) {
+            AgentPrintServiceOutcomeSmallAct(id, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+            return
+        }
+        if (printAgentName === PrintNameEnum.AgentPrintServiceOutcomeFullAct) {
+            AgentPrintServiceOutcomeFullAct(id, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+            return
+        }
+        if (printAgentName === PrintNameEnum.AgentPrintServiceSticker) {
+            AgentPrintServiceSticker(id, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+            return
+        }
+        if (printAgentName === PrintNameEnum.AgentPrintEncashment) {
+            AgentPrintEncashment(id, 1)
+            enqueueSnackbar('Отправленно на печать', {variant: 'success', autoHideDuration: 3000})
+            return
+        }
+
+        setIsLoading(true)
+        htmlToImage.toPng(componentRef.current!, {quality: 1, pixelRatio: 3})
+            .then(function (dataUrl) {
+                let file = dataURLtoFile(dataUrl, "ActImage")
+                console.log(file)
+                //let settings: PrintSettings = {copies: 1, pageWight: 501, printerName: "Win2Image"}
+                let settings: string = ""
+                if (copies != undefined) settings = `{"copies": ${copies},"pageWight": 0,"printerName": ""}`
+                let formData = new FormData();
+                formData.append('imageFile', file)
+                PrintAPI.addQueue(formData,
+                    id ? id : 0,
+                    printAgentName ? printAgentName : '',
+                    settings,
+                    100,
+                    1).then(n => {
+                    enqueueSnackbar('Отправлено на печать агентом', {variant: 'success', autoHideDuration: 3000})
+                })
+            }).finally(() => {
+            finaly != undefined ? finaly() : false
+            setIsLoading(false)
+        });
 
     }
 
