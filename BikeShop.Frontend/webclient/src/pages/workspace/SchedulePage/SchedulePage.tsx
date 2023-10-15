@@ -94,7 +94,7 @@ const SchedulePage = () => {
                             {day.toLocaleDateString()}
 
                             {users.map((g, ind) => {
-                                let data = scheduleItems.find(h => h.targetUser === g.id && new Date(h.timeStart).getMilliseconds() === day.getMilliseconds())
+                                let data = scheduleItems.find(h => h.targetUser === g.id && new Date(h.timeStart).toLocaleDateString() === day.toLocaleDateString())
 
                                 return (<ScheduleItemTSX data={data} day={day} user={g}
                                                          key={index.toString() + ind.toString()}/>)

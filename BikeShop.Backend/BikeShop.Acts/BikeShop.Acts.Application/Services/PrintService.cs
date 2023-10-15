@@ -143,7 +143,19 @@ namespace BikeShop.Acts.Application.Services
             {
                 tamplate = await _context.PrintTamplates.Where(n => n.Name == "Encashment").FirstOrDefaultAsync();
             }
-            
+            if (typeof(ServiceIncomeActModel) == data.GetType())
+            {
+                tamplate = await _context.PrintTamplates.Where(n => n.Name == "ServiceIncomeAct").FirstOrDefaultAsync();
+            }
+            if (typeof(ServiceOutSmallActModel) == data.GetType())
+            {
+                tamplate = await _context.PrintTamplates.Where(n => n.Name == "ServiceOutSmallAct").FirstOrDefaultAsync();
+            }
+            if (typeof(ServiceOutFullActModel) == data.GetType())
+            {
+                tamplate = await _context.PrintTamplates.Where(n => n.Name == "ServiceOutFullAct").FirstOrDefaultAsync();
+            }
+
             string tamplateString = "<h1>Tamplate not found<h1>";
 
             if(tamplate != null)
@@ -238,19 +250,67 @@ namespace BikeShop.Acts.Application.Services
             return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
         }
 
-        public Task<PrintDTO> PrintServiceIncomeAct(StartPrintDTO dto)
+        public async Task<PrintDTO> PrintServiceIncomeAct(StartPrintDTO dto)
         {
-            throw new NotImplementedException();
+            var s = await _serviceClient.GetById(dto.DataId);
+
+            var tamplate = await CreateActHTML(new ServiceIncomeActModel { Id = s.service.Id, ClientFIO = s.service.ClientFIO, ClientPhone = s.service.ClientPhone, Bike = s.service.Name, Description = s.service.ClientDescription, Date = s.service.CreatedAt.ToString("dd-MM-yyyy"), ManagerFIO = s.service.UserFIO });
+
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "WorkshopIn").FirstOrDefaultAsync()).Settings;
+
+            var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+            if (dto.Copies != 0 && dto.Copies != null) actual.copies = (int)dto.Copies;
+
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
         }
 
-        public Task<PrintDTO> PrintServiceOutcomeShort(StartPrintDTO dto)
+        public async Task<PrintDTO> PrintServiceOutcomeShort(StartPrintDTO dto)
         {
-            throw new NotImplementedException();
+            var s = await _serviceClient.GetById(dto.DataId);
+
+            var tamplate = await CreateActHTML(new ServiceOutSmallActModel { Id = s.service.Id, ClientFIO = s.service.ClientFIO, ClientPhone = s.service.ClientPhone, Bike = s.service.Name, Date = s.service.CreatedAt.ToString("dd-MM-yyyy"), ManagerFIO = s.service.UserFIO });
+
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "WorkshopOutSmall").FirstOrDefaultAsync()).Settings;
+
+            var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+            if (dto.Copies != 0 && dto.Copies != null) actual.copies = (int)dto.Copies;
+
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
         }
 
-        public Task<PrintDTO> PrintServiceOutcomeFull(StartPrintDTO dto)
+        public async Task<PrintDTO> PrintServiceOutcomeFull(StartPrintDTO dto)
         {
-            throw new NotImplementedException();
+            var s = await _serviceClient.GetById(dto.DataId);
+            var c = await _paymentsClient.GetCurrency(dto.CurrencyId ?? 1);
+
+            var model = new ServiceOutFullActModel
+            {
+                CurSymbol = c.Symbol,
+                Id = s.service.Id,
+                ClientFIO = s.service.ClientFIO,
+                ClientPhone = s.service.ClientPhone,
+                Bike = s.service.Name,
+                Date = s.service.CreatedAt.ToString("dd-MM-yyyy"),
+                ManagerFIO = s.service.UserFIO,
+                Products = s.products.Select(n => new ServiceProductModel { Name = n.Name, Price = (n.Price * c.Coefficient).ToString("0.00"), Quantity = n.Quantity.ToString(), QuanUnit = n.QuantityUnitName, Total = (n.Total * c.Coefficient).ToString("0.00") }).ToList(),
+                Works = s.works.Select(n=>new ServiceWorkModel { Name = n.Name, Price = (n.Price * c.Coefficient).ToString("0.00"), Quantity = n.Quantity.ToString(), Total = (n.Total * c.Coefficient).ToString("0.00") }).ToList(),
+                DiscWorks = (s.service.DiscountWork * c.Coefficient).ToString("0.00"),
+                DiscProducts = (s.service.DiscountProduct * c.Coefficient).ToString("0.00"),
+                TotalProducts = (s.service.TotalProduct * c.Coefficient).ToString("0.00"),
+                TotalWorks = (s.service.TotalWork * c.Coefficient).ToString("0.00"),
+                TotalService = (s.service.Total * c.Coefficient).ToString("0.00"),
+                WithoutDiscWorks = ((s.service.TotalWork + s.service.DiscountWork) * c.Coefficient).ToString("0.00"),
+                WithoutDiscProducts = ((s.service.TotalWork + s.service.DiscountWork) * c.Coefficient).ToString("0.00")
+            };
+
+            var tamplate = await CreateActHTML(model);
+
+            var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "WorkshopOut").FirstOrDefaultAsync()).Settings;
+
+            var actual = JsonConvert.DeserializeObject<PrinterSettings>(storagedSettings);
+            if (dto.Copies != 0 && dto.Copies != null) actual.copies = (int)dto.Copies;
+
+            return new PrintDTO { HTML = tamplate, PrintSettings = actual, AgentId = dto.AgentId };
         }
     }
 }
