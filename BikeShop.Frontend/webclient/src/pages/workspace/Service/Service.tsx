@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 import s from './Service.module.scss'
 import useService from "./ServiceStore"
-import {LoaderScreen} from "../../../shared/ui"
 import {ServiceForm} from "./ServiceForm"
 import {ServiceNavigation} from "./ServiceNavigation"
 import {useForm} from "react-hook-form"
@@ -10,10 +9,8 @@ import {PrintModal} from "../../../features";
 import {ActServiceWork, CheckForServiceWork, ServiceIncomeInvoice} from "../../../widgets";
 import {ServiceSticker} from "../../../widgets/workspace/Invoices/Service/ServiceSticker";
 import {PrintNameEnum} from "../../../entities/enumerables/PrintNameEnum";
-import {useApp} from "../../../entities/globalStore/AppStore";
 
 export const Service = () => {
-    const isLoading = useApp(s => s.isLoading)
     const getMasters = useService(s => s.getMasters)
     const getAllServicesInfo = useService(s => s.getAllServicesInfo)
 
@@ -53,41 +50,37 @@ export const Service = () => {
         getAllServicesInfo()
     }, [])
 
-    if (isLoading) {
-        return <LoaderScreen variant={'ellipsis'}/>
-    } else {
+    return (
+        <div className={s.serviceBlock} onContextMenu={e => {
+            e.preventDefault()
+        }}>
 
-        return (
-            <div className={s.serviceBlock} onContextMenu={e => {
-                e.preventDefault()
-            }}>
+            <PrintModal open={printModalIn} id={currentService ? currentService.service.id : 0}
+                        setOpen={setPrintModalIn}
+                        children={<ServiceIncomeInvoice children={currentService!}/>}
+                        printAgentName={PrintNameEnum.AgentPrintServiceIncomeAct} copies={2}
+            />
+            <PrintModal open={printModalSticker} id={currentService ? currentService.service.id : 0}
+                        setOpen={setPrintModalSticker} printAgentName={PrintNameEnum.AgentPrintServiceSticker}
+                        children={<ServiceSticker children={currentService!}/>}
+            />
 
-                <PrintModal open={printModalIn} id={currentService!.service.id}
-                            setOpen={setPrintModalIn}
-                            children={<ServiceIncomeInvoice children={currentService!}/>}
-                            printAgentName={PrintNameEnum.AgentPrintServiceIncomeAct} copies={2}
-                />
-                <PrintModal open={printModalSticker} id={currentService!.service.id}
-                            setOpen={setPrintModalSticker} printAgentName={PrintNameEnum.AgentPrintServiceSticker}
-                            children={<ServiceSticker children={currentService!}/>}
-                />
+            <PrintModal open={printModalOut} id={currentService ? currentService.service.id : 0}
+                        printAgentName={PrintNameEnum.AgentPrintServiceOutcomeFullAct}
+                        setOpen={setPrintModalOut}
+                        children={<CheckForServiceWork children={currentService!}/>}
+            />
 
-                <PrintModal open={printModalOut} id={currentService!.service.id}
-                            printAgentName={PrintNameEnum.AgentPrintServiceOutcomeFullAct}
-                            setOpen={setPrintModalOut}
-                            children={<CheckForServiceWork children={currentService!}/>}
-                />
-
-                <PrintModal open={printModalOutSmall} id={currentService!.service.id}
-                            printAgentName={PrintNameEnum.AgentPrintServiceOutcomeSmallAct}
-                            setOpen={setPrintModalOutSmall}
-                            children={<ActServiceWork children={currentService!}/>}
-                />
+            <PrintModal open={printModalOutSmall} id={currentService ? currentService.service.id : 0}
+                        printAgentName={PrintNameEnum.AgentPrintServiceOutcomeSmallAct}
+                        setOpen={setPrintModalOutSmall}
+                        children={<ActServiceWork children={currentService!}/>}
+            />
 
 
-                <ServiceNavigation children={formControl}/>
-                <ServiceForm children={formControl}/>
-            </div>
-        )
-    }
+            <ServiceNavigation children={formControl}/>
+            <ServiceForm children={formControl}/>
+        </div>
+    )
+
 }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import s from "./Service.module.scss"
-import {Button} from "../../../shared/ui"
+import {Button, LoaderScreen} from "../../../shared/ui"
 import style from "../../../shared/ui/Button/Button.module.scss"
 import useService from "./ServiceStore"
 import ServiceStore, {ServiceListStatusType} from "./ServiceStore"
@@ -83,6 +83,8 @@ export const ServiceNavigation = (props: { children: UseFormReturn<ServiceFormMo
             }
         })
     }
+
+    if (isLoading) return <LoaderScreen variant={'ellipsis'}/>
 
     return (
         <div className={s.service_leftSide}>

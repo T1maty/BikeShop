@@ -19,11 +19,11 @@ const InstantServiceModal = (props: p) => {
         >
             <div className={s.InstantWrapper}>
                 <Button onClick={() => {
-                    props.onSuccess(true)
+                    props.onSuccess(false)
                     props.setOpen(false)
                 }} className={s.InstantYes}>Ремонт сразу (Без печати)</Button>
                 <Button className={s.InstantNo} onClick={() => {
-                    props.onSuccess(false)
+                    props.onSuccess(true)
                     props.setOpen(false)
                 }}>Оставляем технику (Печать документов)</Button>
             </div>

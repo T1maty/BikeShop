@@ -1,9 +1,9 @@
-import React, {ReactElement, useEffect} from 'react';
+import React, {memo, ReactElement, useEffect} from 'react';
 import {useApp} from "../../../entities/globalStore/AppStore";
 import {$api} from "../../../shared";
 import * as signalR from '@microsoft/signalr';
 
-const HttpProvider = (p: { children: ReactElement }) => {
+const HttpProvider = memo((p: { children: ReactElement }) => {
 
     const setIsLoading = useApp(n => n.setIsLoading)
     const isLoading = useApp(n => n.isLoading)
@@ -39,7 +39,9 @@ const HttpProvider = (p: { children: ReactElement }) => {
 
 // Add a response interceptor
     $api.interceptors.response.use(function (response) {
+
         setIsLoading(false)
+
         // Any status code that lie within the range of 2xx cause this function to trigger
         // Do something with response data
         return response;
@@ -51,6 +53,6 @@ const HttpProvider = (p: { children: ReactElement }) => {
     });
 
     return p.children;
-};
+});
 
 export default HttpProvider;

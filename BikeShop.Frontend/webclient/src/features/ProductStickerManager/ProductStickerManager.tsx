@@ -8,10 +8,12 @@ import Enumerable from "linq";
 import {TableRow} from "./TableRow";
 import s from './ProductStickerManager.module.scss'
 import {useApp} from "../../entities/globalStore/AppStore";
+import {useSnackbar} from "notistack";
 
 const ProductStickerManager = (props: { items: SupplyInvoiceProduct[] }) => {
     const {open, setOpen, products, setProducts} = useProductStickerManager(s => s)
     const AgentPrintProductSticker = useApp(n => n.AgentPrintProductSticker)
+    const {enqueueSnackbar} = useSnackbar()
 
     useEffect(() => {
         if (open) {
@@ -38,6 +40,8 @@ const ProductStickerManager = (props: { items: SupplyInvoiceProduct[] }) => {
         products.filter(n => n.quantitySticker > 0).forEach((n) => {
             AgentPrintProductSticker(n.product.id, n.quantitySticker)
         })
+        enqueueSnackbar('Стікери відправлені на друк', {variant: 'success', autoHideDuration: 3000})
+        setOpen(false)
     }
 
     return (

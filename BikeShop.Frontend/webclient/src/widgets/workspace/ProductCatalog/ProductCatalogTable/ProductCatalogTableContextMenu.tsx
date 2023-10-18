@@ -93,7 +93,7 @@ export const ProductCatalogTableContextMenu = () => {
                     enqueueSnackbar('Ошибка сервера', {variant: 'error', autoHideDuration: 3000})
                 })
             }}/>
-            <PrintModal open={o1} setOpen={so1} id={selected[0].id}
+            <PrintModal open={o1} setOpen={so1} id={selected[0] ? selected[0].id : 0}
                         children={<ProductSticker product={selected[0]} cur={cur!}/>}
                         printAgentName={PrintNameEnum.AgentPrintProductSticker}
             />

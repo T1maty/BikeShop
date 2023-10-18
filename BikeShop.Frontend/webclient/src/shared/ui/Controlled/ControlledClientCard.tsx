@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {memo, useEffect, useState} from 'react'
 import {ClientCard} from "../../../widgets"
 import {AuthAPI, User} from '../../../entities'
 import {Controller, UseFormReturn} from "react-hook-form"
 import {RegisterOptions} from "react-hook-form/dist/types/validator"
 import {AxiosResponse} from "axios"
 import ClientSearchModal from "../../../features/ClientSearchModal/ClientSearchModal";
+import {validate} from "uuid";
 
 interface ControlledClientCardProps {
     control: UseFormReturn<any>
@@ -17,21 +18,23 @@ interface ControlledClientCardProps {
 }
 
 
-export const ControlledClientCard = (props: ControlledClientCardProps) => {
+export const ControlledClientCard = memo((props: ControlledClientCardProps) => {
 
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
-        let id = props.control.getValues(props.name)
 
-        if (user === undefined || user?.id !== id) {
+        let id = props.control.getValues(props.name)
+        console.log('reload', user)
+
+        if ((user === null || user.id !== id) && validate(id)) {
             console.log('Пытаемся загружать юзера', user?.id, id)
-            // setIsLoading(true)
             AuthAPI.User.getUserById(id).then((r: AxiosResponse<User>) => {
+                console.log(r.data)
                 setUser(r.data)
             }).catch((error) => {
                 console.log('ошибка загрузки пользователя', error)
-                setUser({} as User)
+                setUser(null)
             })
         }
     }, [props.control.watch(props.name)])
@@ -68,4 +71,4 @@ export const ControlledClientCard = (props: ControlledClientCardProps) => {
             />
         </div>
     )
-}
+})

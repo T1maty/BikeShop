@@ -56,7 +56,7 @@ export const EncashmentArchiveModal = () => {
                 }}
             >
                 <PrintModal open={print} setOpen={setPrint} printAgentName={PrintNameEnum.AgentPrintEncashment}
-                            id={p!.id}
+                            id={p ? p.id : 0}
                             children={<EncashmentPaper encashmant={p!}/>}/>
                 <EncashmentArchiveContext open={context} setOpen={setContext}/>
                 <div className={s.encashmentArchiveModal_mainBlock} onContextMenu={e => e.preventDefault()}>

@@ -66,7 +66,7 @@ export const EncashmentModal = () => {
             }}
         >
             <PrintModal open={print} setOpen={setPrint} children={<EncashmentPaper encashmant={result!}/>}
-                        printAgentName={PrintNameEnum.AgentPrintEncashment} id={result!.id}
+                        printAgentName={PrintNameEnum.AgentPrintEncashment} id={result ? result.id : 0}
                         finaly={() => {
                             setOpen(false);
                             setPrint(false)

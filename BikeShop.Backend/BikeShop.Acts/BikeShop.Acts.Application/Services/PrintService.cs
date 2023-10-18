@@ -212,7 +212,7 @@ namespace BikeShop.Acts.Application.Services
 
             var currency = await _paymentsClient.GetCurrency(dto.CurrencyId ?? 1);
 
-            var tamplate = await CreateActHTML(new ProductStickerModel { CatalogKey = product.CatalogKey, Id = product.Id, CurSymbol = currency.Symbol, Name = product.Name, Price = (product.RetailPrice*currency.Coefficient).ToString("0.00") });
+            var tamplate = await CreateActHTML(new ProductStickerModel { Barcode = product.Barcode, CatalogKey = product.CatalogKey, Id = product.Id, CurSymbol = currency.Symbol, Name = product.Name, Price = (product.RetailPrice*currency.Coefficient).ToString("0.00") });
 
             var storagedSettings = (await _context.PrintSettings.Where(n => n.AgentId == dto.AgentId).Where(n => n.Name == "ProductSticker").FirstOrDefaultAsync()).Settings;
 

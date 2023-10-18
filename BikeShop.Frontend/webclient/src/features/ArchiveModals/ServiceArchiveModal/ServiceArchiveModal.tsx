@@ -68,7 +68,7 @@ export const ServiceArchiveModal = () => {
 
                 <PrintModal open={v4} setOpen={sv4} children={<CheckForServiceWork children={currentService!}/>}
                             printAgentName={PrintNameEnum.AgentPrintServiceOutcomeFullAct}
-                            id={currentService!.service.id}/>
+                            id={currentService ? currentService.service.id : 0}/>
 
                 <div className={s.archiveModal_title}>Архив ремонтов</div>
                 <div className={s.archiveModal_services}>
