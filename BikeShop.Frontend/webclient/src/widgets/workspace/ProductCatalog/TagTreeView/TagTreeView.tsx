@@ -19,6 +19,7 @@ export const TagTreeView = (props: TagTreeViewProps) => {
     const updateTag = useTagTreeView(s => s.updateTag)
     const treeViewData = useTagTreeView(s => s.treeViewTags)
     const setContextMenuVisible = useTagTreeView(s => s.setContextMenuVisible)
+    const setSelectedTag = useTagTreeView(s => s.setSelectedTag)
 
     const [selectedN, setSelectedN] = useState()
 
@@ -42,14 +43,17 @@ export const TagTreeView = (props: TagTreeViewProps) => {
                          selected={selectedN}
                          setSelected={setSelectedN}
                          onNodeClick={(node) => {
+                             setSelectedTag(node.id)
                              props.onNodeClick ? props.onNodeClick(node) : true
                          }}
                          onNodeContext={(node, event) => {
+                             setSelectedTag(node.id)
                              setContextMenuVisible(true, event.clientX, event.clientY)
                              setSelectedN(node)
                              props.onNodeContext ? props.onNodeContext(node) : true
                          }}
                          onNodeDoubleClick={(node) => {
+                             setSelectedTag(node.id)
                              props.onNodeDoubleClick ? props.onNodeDoubleClick(node) : true
                          }}
             />

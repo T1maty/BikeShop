@@ -4,10 +4,9 @@ import {ProductCatalogTable, TagTreeView} from "../../../widgets";
 import useCardCatalogStore from "./CardCatalogStore";
 import ProductCatalogTableHeader
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTableHeader";
-import ProductCatalogFilters
-    from "../../../widgets/workspace/ProductCatalog/ProductCatalogFilters/ProductCatalogFilters";
 import ProductCatalogTablePaggination
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTablePaggination";
+import CardCatalogFilters from "./CartCatalogFilters/CardCatalogFilters";
 
 const CardCatalog = () => {
     const getStorages = useCardCatalogStore(s => s.getStorages)
@@ -21,7 +20,7 @@ const CardCatalog = () => {
     return (
         <div className={s.wrapper}>
             <div className={s.trees}>
-                <div className={s.filters}><ProductCatalogFilters/></div>
+                <div className={s.filters}><CardCatalogFilters/></div>
                 <div className={s.categories}><TagTreeView onNodeClick={(n) => {
                     setLastCategoryId(n.id)
                     setSelectedPage(1)

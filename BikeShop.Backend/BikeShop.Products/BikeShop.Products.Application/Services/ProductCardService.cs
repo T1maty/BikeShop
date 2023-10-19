@@ -167,6 +167,11 @@ namespace BikeShop.Products.Application.Services
                 }
             }
 
+            var AllMasterQuerryProds = await ProductsQuerry.Select(n => n.Id).ToListAsync();
+            var AllSlaveQuerryProds = await _context.ProductBinds.Where(n=> AllMasterQuerryProds.Contains(n.ProductId)).Select(n=>n.ChildrenId).ToListAsync();
+            var AllQuerryProducts = new List<int>();
+            AllQuerryProducts.AddRange(AllMasterQuerryProds);
+            AllQuerryProducts.AddRange(AllSlaveQuerryProds);
 
             if (dto.Page != null) Result.Page = (int)dto.Page;
             if (dto.PageSize != null) Result.PageSize = (int)dto.PageSize;
@@ -174,7 +179,8 @@ namespace BikeShop.Products.Application.Services
 
             var Products = await ProductsQuerry.Skip(Skip).Take(Result.PageSize).ToListAsync();
             var ProdsFinishIds = Products.Select(n => n.Id);
-            var TotalProducts = (decimal)(await ProductsQuerry.CountAsync());
+
+            var TotalProducts = (decimal)(AllMasterQuerryProds.Count());
             var div = TotalProducts / (decimal)Result.PageSize;
             Result.TotalPages = (int)Math.Ceiling(div);
             Result.StorageId = dto.StorageId;
@@ -194,11 +200,12 @@ namespace BikeShop.Products.Application.Services
             var IdsAllProducts = new List<int>();
             IdsAllProducts.AddRange(ProdsFinishIds);
             IdsAllProducts.AddRange(SlaveIds);
-            var AllOptionBinds = await _context.ProductOptionVariantBinds.Where(n => IdsAllProducts.Contains(n.ProductId)).ToListAsync();
+
+            var AllOptionBinds = await _context.ProductOptionVariantBinds.Where(n => AllQuerryProducts.Contains(n.ProductId)).ToListAsync();
             var AllImages = await _context.ProductImgs.Where(n => IdsAllProducts.Contains(n.ProductId)).ToListAsync();
 
-            var variantIds = AllOptionBinds.Select(n => n.OptionVariantId).Distinct();
-            Result.Options = await _context.OptionVariants.Where(n=>variantIds.Contains(n.Id)).ToListAsync();
+            var FilterVariantIds = AllOptionBinds.Select(n => n.OptionVariantId).Distinct();
+            Result.Options = await _context.OptionVariants.Where(n=> FilterVariantIds.Contains(n.Id)).ToListAsync();
 
             var prd = new List<ProductCardDTO>();
             foreach (var p in Products)

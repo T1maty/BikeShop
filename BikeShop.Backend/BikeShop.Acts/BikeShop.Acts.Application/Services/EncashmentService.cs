@@ -46,7 +46,7 @@ namespace BikeShop.Acts.Application.Services
 
         public async Task<List<Encashment>> GetByShop(int ShopId, int Take)
         {
-            return await _context.Encashments.Where(n => n.ShopId == ShopId).Take(Take).ToListAsync();
+            return await _context.Encashments.Where(n => n.ShopId == ShopId).OrderByDescending(n=>n.CreatedAt).Take(Take).ToListAsync();
         }
 
         public async Task<Encashment> SetStatusToFinish(int Id, Guid UserId)
