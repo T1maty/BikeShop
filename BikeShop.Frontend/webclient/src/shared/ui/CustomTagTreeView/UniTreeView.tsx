@@ -1,5 +1,7 @@
 import React, {memo, useEffect, useState} from 'react'
 import cls from './CustomTagTreeView.module.scss'
+import plus from './../../assets/workspace/plus and minus/icons8-plus-30.png'
+import minus from './../../assets/workspace/plus and minus/icons8-minus-30.png'
 
 interface UniTreeView {
     data: Array<object>
@@ -56,9 +58,12 @@ export const UniTreeView = memo((props: UniTreeView) => {
         return tree
     }
 
-    const renderItem = (item: any) => {
+    const renderItem = (item: any, depth: number = 0) => {
         const isExpanded = expandedItems.includes(item.id)
         const hasChildren = item.children && item.children.length > 0
+        const hasParent = item.parentId != 0
+
+        console.log(depth)
 
         const onClickHandlerCollapsed = () => {
             if (hasChildren && isExpanded) {
@@ -81,10 +86,21 @@ export const UniTreeView = memo((props: UniTreeView) => {
                 >
                     <div
                         className={selected?.id === item?.id ? `${cls.selected} ${cls.innerWrap}` : `${cls.innerWrap}`}>
+
                         <div className={cls.toggle}
                              onClick={onClickHandlerCollapsed}
                         >
-                            {hasChildren && (isExpanded ? '\\/' : '>')}
+                            {hasChildren && (isExpanded ? <>
+
+                                    <img className={cls.img} src={minus} alt={'-'}/>
+                                </> :
+                                <>
+                                    {hasParent ? <div className={cls.plus_brd}></div> : <></>}
+                                    <img className={cls.img_plus} src={plus} alt={'+'}/>
+                                </>)}
+
+                            {hasChildren && (isExpanded ? <div className={cls.brd}></div> : <></>)}
+                            {hasParent && !hasChildren ? <div className={cls.brd2}></div> : <></>}
                         </div>
 
                         <div className={cls.content}
@@ -107,7 +123,9 @@ export const UniTreeView = memo((props: UniTreeView) => {
                 {
                     hasChildren && isExpanded && (
                         <div className={cls.child}>
-                            {item.children.map(renderItem)}
+                            {item.children.map((i: any) => {
+                                return (renderItem(i, depth + 1))
+                            })}
                         </div>
                     )
                 }
@@ -117,7 +135,9 @@ export const UniTreeView = memo((props: UniTreeView) => {
 
     return (
         <>
-            {data !== undefined ? buildTree(data, 0).map(renderItem) : false}
+            {data !== undefined ? buildTree(data, 0).map(i => {
+                return (renderItem(i, 1))
+            }) : false}
         </>
     )
 })

@@ -1,12 +1,90 @@
 .wrapper {
   width: 100%;
   height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 
   .selected {
+    border: 1px white solid;
+    border-radius: 15px;
+    padding: 5px;
 
+    .sel_head {
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .sel_content {
+      padding: 5px;
+
+      .sel_item {
+        padding: 3px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .sel_item:hover {
+        font-weight: 600;
+        cursor: pointer;
+      }
+    }
   }
 
   .available {
+    padding: 5px;
+    flex-grow: 1;
+    overflow: auto;
 
+    .av_head {
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .av_content {
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .av_section {
+        border: 1px white solid;
+        border-radius: 15px;
+        padding: 5px;
+
+        .av_section_label {
+          padding: 5px;
+          text-align: center;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .av_item {
+          padding: 3px;
+        }
+
+        .av_item:hover {
+          font-weight: 600;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }

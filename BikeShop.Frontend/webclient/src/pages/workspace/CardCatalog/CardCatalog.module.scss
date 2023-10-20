@@ -18,6 +18,8 @@
     }
 
     .categories {
+      max-width: 400px;
+      overflow: auto;
       background-color: $themeColorDark;
       border-radius: 25px;
     }

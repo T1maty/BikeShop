@@ -9,5 +9,10 @@ namespace BikeShop.Products.Domain.Enums
     public enum ProductSortAction
     {
         SortByStorageDescend, SortByStorageAscend,
+        SortByRetailPriceDescend, SortByRetailPriceAscend,
+        SortByDealerPriceDescend, SortByDealerPriceAscend,
+        SortByIncomePriceDescend, SortByIncomePriceAscend,
+        SortByPopularityDescend, SortByPopularityAscend,
+        SortByCardStatusDescend, SortByCardStatusAscend,
     }
 }

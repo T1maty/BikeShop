@@ -6,6 +6,7 @@ using BikeShop.Products.Domain.DTO.Responses.Option;
 using BikeShop.Products.Domain.Entities;
 using BikeShop.Products.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI.Common;
 using System.Transactions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -122,6 +123,77 @@ namespace BikeShop.Products.Application.Services
             return common.ToList();
         }
 
+        private IQueryable<Product>? GetSorting(IQueryable<Product> ProductsQuerry, string sortAction, List<string> UsedSortAction, int StorageId = 0)
+        {
+            switch (Enum.Parse(typeof(ProductSortAction), sortAction))
+            {
+                //Сортировка по складу
+                case ProductSortAction.SortByStorageDescend:
+                    ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n => n.StorageId == StorageId), n => n.Id, n1 => n1.ProductId, (n, n1) => new { prod = n, quant = n1.Quantity }).OrderByDescending(n => n.quant).Select(n => n.prod);
+                    UsedSortAction.Add(ProductSortAction.SortByStorageDescend.ToString());
+                    break;
+                case ProductSortAction.SortByStorageAscend:
+                    ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n => n.StorageId == StorageId), n => n.Id, n1 => n1.ProductId, (n, n1) => new { prod = n, quant = n1.Quantity }).OrderBy(n => n.quant).Select(n => n.prod);
+                    UsedSortAction.Add(ProductSortAction.SortByStorageAscend.ToString());
+                    break;
+
+                //Соритровка по Приходной цене
+                case ProductSortAction.SortByIncomePriceAscend:
+                    ProductsQuerry = ProductsQuerry.OrderBy(n => n.IncomePrice);
+                    UsedSortAction.Add(ProductSortAction.SortByIncomePriceAscend.ToString());
+                    break;
+                case ProductSortAction.SortByIncomePriceDescend:
+                    ProductsQuerry = ProductsQuerry.OrderByDescending(n => n.IncomePrice);
+                    UsedSortAction.Add(ProductSortAction.SortByIncomePriceDescend.ToString());
+                    break;
+
+                //Соритровка по Диллерской цене
+                case ProductSortAction.SortByDealerPriceAscend:
+                    ProductsQuerry = ProductsQuerry.OrderBy(n => n.DealerPrice);
+                    UsedSortAction.Add(ProductSortAction.SortByDealerPriceAscend.ToString());
+                    break;
+                case ProductSortAction.SortByDealerPriceDescend:
+                    ProductsQuerry = ProductsQuerry.OrderByDescending(n => n.DealerPrice);
+                    UsedSortAction.Add(ProductSortAction.SortByDealerPriceDescend.ToString());
+                    break;
+
+                //Соритровка по Розничной цене
+                case ProductSortAction.SortByRetailPriceAscend:
+                    ProductsQuerry = ProductsQuerry.OrderBy(n => n.RetailPrice);
+                    UsedSortAction.Add(ProductSortAction.SortByRetailPriceAscend.ToString());
+                    break;
+                case ProductSortAction.SortByRetailPriceDescend:
+                    ProductsQuerry = ProductsQuerry.OrderByDescending(n => n.RetailPrice);
+                    UsedSortAction.Add(ProductSortAction.SortByRetailPriceDescend.ToString());
+                    break;
+
+                //Соритровка по Популярности NOT READY
+                case ProductSortAction.SortByPopularityAscend:
+                    //UsedSortAction.Add(ProductSortAction.SortByPopularityAscend.ToString());
+                    break;
+                case ProductSortAction.SortByPopularityDescend:
+                    //UsedSortAction.Add(ProductSortAction.SortByPopularityDescend.ToString());
+                    break;
+
+                //Соритровка по Статусу карточки
+                case ProductSortAction.SortByCardStatusAscend:
+                    ProductsQuerry = ProductsQuerry.OrderBy(n => n.CheckStatus);
+
+                    //UsedSortAction.Add(ProductSortAction.SortByStorageAscend.ToString());
+                    break;
+                case ProductSortAction.SortByCardStatusDescend:
+                    ProductsQuerry = ProductsQuerry.OrderBy(n => n.CheckStatus);
+
+                    //UsedSortAction.Add(ProductSortAction.SortByStorageAscend.ToString());
+                    break;
+
+                default:
+                    break;
+            }
+
+            return ProductsQuerry;
+        }
+
         public async Task<ProductCatalogPageDTO> GetProductCardByCategory(ProductCardCatalogRequestDTO dto)
         {
             var category = await _context.ProductCategories.FindAsync(dto.CategoryId);
@@ -151,20 +223,7 @@ namespace BikeShop.Products.Application.Services
             var Result = new ProductCatalogPageDTO();
             foreach (var i in dto.SortingSettings)
             {
-                switch (Enum.Parse(typeof(ProductSortAction), i))
-                {
-                    case ProductSortAction.SortByStorageDescend:
-                        
-                        ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n=>n.StorageId == dto.StorageId), n=>n.Id, n1=>n1.ProductId, (n,n1)=>new { prod = n, quant = n1.Quantity }).OrderByDescending(n=>n.quant).Select(n=>n.prod);
-                        Result.SortingSettings.Add(ProductSortAction.SortByStorageDescend.ToString());
-                        break;
-                    case ProductSortAction.SortByStorageAscend:
-                        ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n => n.StorageId == dto.StorageId), n => n.Id, n1 => n1.ProductId, (n, n1) => new { prod = n, quant = n1.Quantity }).OrderBy(n => n.quant).Select(n => n.prod);
-                        Result.SortingSettings.Add(ProductSortAction.SortByStorageAscend.ToString());
-                        break;
-                    default:
-                        break;
-                }
+                ProductsQuerry = GetSorting(ProductsQuerry, i, Result.SortingSettings, dto.StorageId);
             }
 
             var AllMasterQuerryProds = await ProductsQuerry.Select(n => n.Id).ToListAsync();
@@ -410,20 +469,7 @@ namespace BikeShop.Products.Application.Services
             var Result = new ProductCatalogPageDTO();
             foreach (var i in dto.SortingSettings)
             {
-                switch (Enum.Parse(typeof(ProductSortAction), i))
-                {
-                    case ProductSortAction.SortByStorageDescend:
-
-                        ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n => n.StorageId == dto.StorageId), n => n.Id, n1 => n1.ProductId, (n, n1) => new { prod = n, quant = n1.Quantity }).OrderByDescending(n => n.quant).Select(n => n.prod);
-                        Result.SortingSettings.Add(ProductSortAction.SortByStorageDescend.ToString());
-                        break;
-                    case ProductSortAction.SortByStorageAscend:
-                        ProductsQuerry = ProductsQuerry.Join(_context.StorageProducts.Where(n => n.StorageId == dto.StorageId), n => n.Id, n1 => n1.ProductId, (n, n1) => new { prod = n, quant = n1.Quantity }).OrderBy(n => n.quant).Select(n => n.prod);
-                        Result.SortingSettings.Add(ProductSortAction.SortByStorageAscend.ToString());
-                        break;
-                    default:
-                        break;
-                }
+                ProductsQuerry = GetSorting(ProductsQuerry, i, Result.SortingSettings, dto.StorageId);
             }
 
 

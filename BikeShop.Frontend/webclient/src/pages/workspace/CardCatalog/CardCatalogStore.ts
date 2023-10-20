@@ -15,6 +15,8 @@ interface p {
     getCatalogState: () => void
     getCatalogStateSearch: (querry: string) => void
 
+    selectedOptions: number[]
+    setSelectedOptions: (v: number[]) => void
     storages: CreateStorageResponse[]
     getStorages: () => void
     selectedStorage: CreateStorageResponse | null
@@ -32,6 +34,11 @@ interface p {
 }
 
 const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
+    selectedOptions: [],
+    setSelectedOptions: (v) => {
+        set({selectedOptions: v})
+        get().getCatalogState()
+    },
     setCatalogState: (v) => set({catalogState: v}),
     lastCategoryId: null,
     setLastCategoryId: (v) => set({lastCategoryId: v}),
@@ -83,7 +90,7 @@ const useCardCatalogStore = create<p>()(persist(devtools(immer((set, get) => ({
             storageId: get().selectedStorage!.id,
             page: get().selectedPage,
             pageSize: 20,
-            filtersVariantIds: [],
+            filtersVariantIds: get().selectedOptions,
             sortingSettings: []
         }
         let ss = get().sortMode

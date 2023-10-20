@@ -1,32 +1,82 @@
 .wrapper {
-    user-select: none;
+  user-select: none;
 
-    .parent {
-        .selected {
-            background-color: #5C636A;
+  .parent {
+
+
+    .selected {
+      background-color: #5C636A;
+    }
+
+    .innerWrap {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .toggle {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .img {
+          height: 25px;
+          z-index: 1;
         }
-        .innerWrap {
-            display: flex;
-            flex-direction: row;
 
-            .toggle {
-                width: 25px;
-                display: flex;
-                justify-content: center;
-            }
-
-            .content {
-                width: 100%;
-                word-break: break-word;
-            }
+        .img_plus {
+          margin-left: -2px;
+          height: 25px;
+          z-index: 1;
         }
-    }
 
-    .parent:hover {
-        background-color: grey;
-    }
+        .brd {
+          position: relative;
+          top: 0.4em;
+          margin-right: 3px;
+          margin-left: 3px;
+          display: block;
+          height: 1em;
+          width: 8px;
+          border-top: 2px solid #777;
+          border-right: 2px solid #777;
+          border-radius: 0 .3em 0 0;
+        }
 
-    .child {
-        margin-left: 16px;
+        .brd2 {
+          position: relative;
+          left: -7px;
+          top: -0.5em;
+          margin-left: 18px;
+          display: block;
+          height: 16px;
+          width: 10px;
+          border-left: 2px solid #777;
+          border-bottom: 2px solid #777;
+        }
+
+        .plus_brd {
+          position: relative;
+          left: 11px;
+          top: -15px;
+          display: block;
+          height: 12px;
+          border-right: 2px solid #777;
+        }
+      }
+
+      .content {
+        width: 100%;
+        white-space: nowrap;
+      }
     }
+  }
+
+  .parent:hover {
+    background-color: grey;
+  }
+
+  .child {
+    margin-left: 23px;
+  }
 }

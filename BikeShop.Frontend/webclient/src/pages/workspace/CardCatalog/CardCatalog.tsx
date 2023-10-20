@@ -7,6 +7,7 @@ import ProductCatalogTableHeader
 import ProductCatalogTablePaggination
     from "../../../widgets/workspace/ProductCatalog/ProductCatalogTable/ProductCatalogTablePaggination";
 import CardCatalogFilters from "./CartCatalogFilters/CardCatalogFilters";
+import {CreateProductModal} from "../../../widgets/workspace/ProductCatalog/CreateProductModal/CreateProductModal";
 
 const CardCatalog = () => {
     const getStorages = useCardCatalogStore(s => s.getStorages)
@@ -19,6 +20,7 @@ const CardCatalog = () => {
 
     return (
         <div className={s.wrapper}>
+            <CreateProductModal/>
             <div className={s.trees}>
                 <div className={s.filters}><CardCatalogFilters/></div>
                 <div className={s.categories}><TagTreeView onNodeClick={(n) => {
