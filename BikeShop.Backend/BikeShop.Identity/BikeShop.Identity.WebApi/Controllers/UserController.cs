@@ -1,8 +1,4 @@
 ﻿using System.Security.Claims;
-using AutoMapper;
-using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
-using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
-using BikeShop.Identity.Application.CQRS.Commands.UpdateUserPublic;
 using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
 using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Application.Interfaces;
@@ -12,7 +8,6 @@ using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.WebApi.Models.Auth;
 using BikeShop.Identity.WebApi.Models.User;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,24 +20,16 @@ namespace BikeShop.Identity.WebApi.Controllers;
 [Produces("application/json")]
 public class UserController : ControllerBase
 {
-    private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
     private readonly IUserService _userService;
     private readonly JwtService _jwtService; // для генерации JWT-токенов
     private readonly CookieService _cookieService; // для вставки рефреш токена в куки
 
-    public UserController(IMapper mapper, IMediator mediator, IUserService userService, JwtService jwtService, CookieService cookieService)
+    public UserController(IUserService userService, JwtService jwtService, CookieService cookieService)
     {
-        _mapper = mapper;
-        _mediator = mediator;
         _userService = userService;
         _jwtService = jwtService;
         _cookieService = cookieService;
     }
-
-
-
-
 
 
     /// <summary>
@@ -70,12 +57,6 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
     public async Task<IActionResult> UpdateUserPublic([FromBody] UpdateUserPublicModel model)
     {
-        // Console.WriteLine("start");
-        // var claims = (User.Identity as ClaimsIdentity)?.Claims;
-
-        // foreach(var claim in claims)
-        //     System.Console.WriteLine(claim.Type + " " + claim.Value);
-
         // Получаю id пользователя из jwt токена
         var req = (User.Identity as ClaimsIdentity)?.Claims
             .FirstOrDefault(c => c.Type == "id");
@@ -89,19 +70,7 @@ public class UserController : ControllerBase
                 error = "invalid_access_token",
                 errorDescription = "Update user public data error. Access token does not contains user id"
             });
-
-        // Леплю команду и посылаю её на исполнение
-        var command = new UpdateUserPublicCommand
-        {
-            UserId = id,
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Patronymic = model.Patronymic,
-            Email = model.Email
-        };
-
-        await _mediator.Send(command);
-
+        await _userService.UpdatePublic(model, id);
         return Ok();
     }
 
@@ -151,10 +120,7 @@ public class UserController : ControllerBase
         if (!ModelState.IsValid)
             return UnprocessableEntity(ModelState);
 
-        var query = _mapper.Map<GetUsersByPhoneOrFIOQuery>(model);
-        var usersModel = await _mediator.Send(query);
-
-        return Ok(usersModel);
+        return Ok(await _userService.GetUsersByPhoneOrFio(model));
     }
 
     [HttpGet("getbyid")]
@@ -207,31 +173,6 @@ public class UserController : ControllerBase
     public async Task<string> RegenerateSecret(Guid user)
     {
         return await _userService.RegenerateSecret(user);
-    }
-
-    [HttpPost("secretlogin")]
-    public async Task<ActionResult<LoginResponseModel>> SecretLogin(string secret)
-    {
-        var uvd = await _userService.GetUserBySecret(secret);
-
-        // Создаю/обновляю рефреш сессию для пользователя и получаю рефреш токен
-        var setSessionCommand = new SetRefreshSessionCommand { UserId = Guid.Parse(uvd.User.Id) };
-        var refreshToken = await _mediator.Send(setSessionCommand);
-
-        // Добавляю рефреш токен в httpOnly cookie
-        _cookieService.AddRefreshCookieToResponse(HttpContext.Response, refreshToken);
-
-        // Генерирую access token для пользователя
-        var accessToken = _jwtService.GenerateUserJwt(uvd.User, uvd.Roles);
-
-        var userResponseModel = _mapper.Map<LoginResponseUserModel>(uvd.User);
-        userResponseModel.Roles = uvd.Roles;
-
-        return Ok(new LoginResponseModel
-        {
-            AccessToken = accessToken,
-            User = userResponseModel
-        });
     }
 
     [HttpPost("getFromBRUA")]

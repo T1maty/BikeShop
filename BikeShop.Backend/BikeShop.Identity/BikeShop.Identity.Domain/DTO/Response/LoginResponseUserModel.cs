@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using BikeShop.Identity.Application.Common.Mappings;
-using BikeShop.Identity.Domain.DTO.Response;
+﻿using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
 
 namespace BikeShop.Identity.WebApi.Models.Auth;
 
-public class LoginResponseUserModel : IMappable
+public class LoginResponseUserModel
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
@@ -13,7 +11,6 @@ public class LoginResponseUserModel : IMappable
     
     public int ShopId { get; set; }
     public decimal Balance { get; set; }
-    public int BalanceCurrencyId { get; set; }
     public decimal CreditLimit { get; set; }
     
     public Guid Id { get; set; }
@@ -24,10 +21,4 @@ public class LoginResponseUserModel : IMappable
     public bool PhoneNumberConfirmed { get; set; }
     
     public IList<string> Roles { get; set; }
-    
-    
-    public void Mapping(Profile profile)
-    {
-        profile.CreateMap<ApplicationUser, LoginResponseUserModel>();
-    }
 }

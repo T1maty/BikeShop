@@ -23,8 +23,8 @@ interface p {
     setSelectedStorage: (storageId: number) => void
     updateItem: (p: ProductFullData) => void
 
-    sortMode: { name: string } | null
-    setSortMode: (v: SingleValue<{ name: string }>) => void
+    sortMode: { name: string, label: string } | null
+    setSortMode: (v: SingleValue<{ name: string, label: string }>) => void
 
     selectedPage: number
     setSelectedPage: (v: number) => void

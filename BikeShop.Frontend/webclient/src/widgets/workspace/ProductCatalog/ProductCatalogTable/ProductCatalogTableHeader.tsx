@@ -13,7 +13,20 @@ const ProductCatalogTableHeader = () => {
     const setSortMode = useCardCatalogStore(s => s.setSortMode)
     const getCatalogStateSearch = useCardCatalogStore(s => s.getCatalogStateSearch)
 
-    let opt = [{name: "SortByStorageDescend"}, {name: "SortByStorageAscend"}]
+    let opt = [
+        {name: "SortByStorageDescend", label: "Спочатку більше на складі"},
+        {name: "SortByStorageAscend", label: "Спочатку менше на складі"},
+        {name: "SortByRetailPriceDescend", label: "Спочатку дорожче по роздрібу"},
+        {name: "SortByRetailPriceAscend", label: "Спочатку дешевше по роздрібу"},
+        {name: "SortByDealerPriceDescend", label: "Спочатку дорожче по опту"},
+        {name: "SortByDealerPriceAscend", label: "Спочатку дешевше по опту"},
+        {name: "SortByIncomePriceDescend", label: "Спочатку дорожче по закупу"},
+        {name: "SortByIncomePriceAscend", label: "Спочатку дешевше по закупу"},
+        {name: "SortByPopularityDescend", label: "Популярність Дес"},
+        {name: "SortByPopularityAscend", label: "Популярність Асе"},
+        {name: "SortByCardStatusDescend", label: "Статус Дес"},
+        {name: "SortByCardStatusAscend", label: "Статус Асе"},
+    ]
     return (
         <>
             <div className={s.table_header_sort}>
@@ -24,8 +37,8 @@ const ProductCatalogTableHeader = () => {
                     options={opt}
                     value={sortMode}
                     onChange={setSortMode}
-                    getOptionLabel={label => label.name}
-                    getOptionValue={value => value.name}
+                    getOptionLabel={label => label.label}
+                    getOptionValue={value => value.label}
                     styles={selectColorStyles}
                 />
             </div>

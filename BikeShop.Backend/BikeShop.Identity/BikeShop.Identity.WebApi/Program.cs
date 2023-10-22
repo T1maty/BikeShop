@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.Json;
 using BikeShop.Identity.Application;
 using BikeShop.Identity.Application.Common.Configurations;
-using BikeShop.Identity.Application.Common.Mappings;
 using BikeShop.Identity.Domain.Entities;
 using BikeShop.Identity.Persistence;
 using BikeShop.Identity.WebApi.Middleware;
@@ -88,13 +87,6 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
     });
-
-// Регистрация конфигурации автомаппера
-builder.Services.AddAutoMapper(config =>
-{
-    config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
-    config.AddProfile(new AssemblyMappingProfile(typeof(AssemblyMappingProfile).Assembly));
-});
 
 // Регистрация identity системы
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

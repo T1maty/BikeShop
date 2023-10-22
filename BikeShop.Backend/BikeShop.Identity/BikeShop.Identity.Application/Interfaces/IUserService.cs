@@ -1,7 +1,9 @@
-﻿using BikeShop.Identity.Application.DTO;
+﻿using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
+using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Domain.DTO.Request;
 using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
+using BikeShop.Identity.WebApi.Models.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,7 +19,8 @@ namespace BikeShop.Identity.Application.Interfaces
         public Task<UserDTO> GetUserById(Guid id);
         public Task<Dictionary<string, UserDTO>> GetUsersDictionary(List<string> guids);
         public Task SetUsersShop(Guid userId, int shopId);
-
+        public Task UpdatePublic(UpdateUserPublicModel dto, string Id);
+        public Task<UserModelListModel> GetUsersByPhoneOrFio(GetUserByPhoneOrFioModel dto);
         public Task<List<UserWithRoles>> Search(string Querry, int Take);
         public Task<List<UserWithRoles>> GetEmployees(int ShopId);
         public Task addUserToRole(Guid userId, string Role);

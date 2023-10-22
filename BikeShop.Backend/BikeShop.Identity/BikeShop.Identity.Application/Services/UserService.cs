@@ -1,20 +1,25 @@
-﻿using AutoMapper;
+﻿using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
+using BikeShop.Identity.Application.CQRS.Queries.GetUsersByPhoneOrFio;
 using BikeShop.Identity.Application.DTO;
 using BikeShop.Identity.Application.Exceptions;
 using BikeShop.Identity.Application.Interfaces;
 using BikeShop.Identity.Domain.DTO.Request;
 using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.Domain.Entities;
-using MediatR;
+using BikeShop.Identity.WebApi.Models.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -24,13 +29,11 @@ namespace BikeShop.Identity.Application.Services
     {
         private readonly IAuthDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IMapper _mapper;
 
-        public UserService(IAuthDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public UserService(IAuthDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
-            _mapper = mapper;
         }
 
         public async Task<List<UserWithRoles>> GetEmployees(int ShopId)
@@ -66,7 +69,8 @@ namespace BikeShop.Identity.Application.Services
             if (user is null)
                 return new UserDTO();
 
-            var res = _mapper.Map<UserDTO>(user);
+            var res = new UserDTO { balance = user.Balance, creditLimit = user.CreditLimit, email = user.Email, emailConfirmed = user.EmailConfirmed
+            , firstName = user.FirstName, id=Guid.Parse(user.Id), lastName =user.LastName, patronymic=user.Patronymic, phoneNumber= user.PhoneNumber, phoneNumberConfirmed= user.PhoneNumberConfirmed, shopId=user.ShopId};
             return res;
         }
 
@@ -78,7 +82,21 @@ namespace BikeShop.Identity.Application.Services
                 var user = await _userManager.FindByIdAsync(guid);
                 if(user != null && !dict.ContainsKey(guid))
                 {
-                    dict.Add(guid, _mapper.Map<UserDTO>(user));
+                    dict.Add(guid, new UserDTO
+                    {
+                        balance = user.Balance,
+                        creditLimit = user.CreditLimit,
+                        email = user.Email,
+                        emailConfirmed = user.EmailConfirmed
+            ,
+                        firstName = user.FirstName,
+                        id = Guid.Parse(user.Id),
+                        lastName = user.LastName,
+                        patronymic = user.Patronymic,
+                        phoneNumber = user.PhoneNumber,
+                        phoneNumberConfirmed = user.PhoneNumberConfirmed,
+                        shopId = user.ShopId
+                    });
                 }
             }
 
@@ -295,5 +313,97 @@ namespace BikeShop.Identity.Application.Services
 
             return userResp;
         }
+
+        public async Task UpdatePublic(UpdateUserPublicModel dto, string Id)
+        {
+            // Ищу пользователя по айди
+            var user = await _userManager.FindByIdAsync(Id);
+
+            // Если не найден - ошибка
+            if (user is null)
+                throw new NotFoundException($"Update user public error. User with id {Id} not found")
+                {
+                    Error = "user_not_found",
+                    ErrorDescription = "Update user public error. User with given id not found",
+                    ReasonField = "userId"
+                };
+
+            // Если есть юзер с такой почтой - ошибка
+            if (dto.Email is not null)
+            {
+                var emailUser = await _userManager.FindByEmailAsync(dto.Email);
+                if (emailUser is not null)
+                    throw new AlreadyExistsException(
+                        $"Update user public error. User with email {dto.Email} already exists")
+                    {
+                        Error = "email_already_exists",
+                        ErrorDescription = "Update user public error. User with given email already exists",
+                        ReasonField = "email"
+                    };
+            }
+
+            // Если все ок - обновляю
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.Patronymic = dto.Patronymic;
+            user.Email = dto.Email;
+
+            await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<UserModelListModel> GetUsersByPhoneOrFio(GetUserByPhoneOrFioModel dto)
+        {
+            if (dto.Phone is null && dto.FIO is null)
+                throw new GetUsersException("Create user error")
+                {
+                    Error = "phone_fio_null",
+                    ErrorDescription = "Get users error. Phone AND FIO are absent",
+                    ReasonField = "phone_fio"
+                };
+
+            // Получить юзеров по куску телефона или по куску ФИО
+            // это пиздец
+            //////////////// ниже до конца говнокод не смотрите
+
+            Expression<Func<ApplicationUser, bool>> pred;
+            dto.FIO = dto.FIO?.ToLower();
+
+            // Если И телефон И ФИО указаны
+            if (dto.Phone is not null && dto.FIO is not null)
+                // Predicate - у юзера с базы есть кусок введенного телефона И 
+                //             у ФИО юзера с базы есть кусок введеного фио
+                pred = user => user.PhoneNumber.Contains(dto.Phone) &&
+                               (user.LastName + user.FirstName + user.Patronymic)
+                               .ToLower().Contains(dto.FIO);
+
+            // Если телефон не указан, ищем только кусок ФИО
+            else if (dto.Phone is null)
+                pred = user => (user.LastName + user.FirstName + user.Patronymic)
+                    .ToLower().Contains(dto.FIO);
+
+            // Если ФИО не указано, а телефон указан, ищу кусок телефона
+            else
+                pred = user => user.PhoneNumber.Contains(dto.Phone);
+
+            // Ищу пользователя по сформированному предикату
+            var users = await _userManager.Users.Where(pred).ToListAsync();
+
+            var resultModel = new UserModelListModel
+            {
+                Users = new List<GetUserModel>()
+            };
+
+            // Подтягиваю роли всех найденных юзеров
+            foreach (var user in users)
+            {
+                resultModel.Users.Add(new GetUserModel
+                {
+                    User = user,
+                    UserRoles = await _userManager.GetRolesAsync(user)
+                });
+            }
+
+            return resultModel;
+        }
     }
-    }
+}

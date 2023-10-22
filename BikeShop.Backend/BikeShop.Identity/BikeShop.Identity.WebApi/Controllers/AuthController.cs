@@ -1,18 +1,11 @@
-using AutoMapper;
-using BikeShop.Identity.Application.CQRS.Commands.CreateUser;
-using BikeShop.Identity.Application.CQRS.Commands.DeleteRefreshSessionByToken;
-using BikeShop.Identity.Application.CQRS.Commands.SetRefreshSession;
-using BikeShop.Identity.Application.CQRS.Commands.UpdateRefreshSession;
-using BikeShop.Identity.Application.CQRS.Queries.GetUserById;
-using BikeShop.Identity.Application.CQRS.Queries.GetUserBySignInData;
 using BikeShop.Identity.Application.Exceptions;
 using BikeShop.Identity.Application.Interfaces;
 using BikeShop.Identity.Application.Services;
 using BikeShop.Identity.Domain.DTO.Request;
+using BikeShop.Identity.Domain.DTO.Request.Social;
 using BikeShop.Identity.Domain.DTO.Response;
 using BikeShop.Identity.WebApi.Models.Auth;
 using BikeShop.Identity.WebApi.Models.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeShop.Identity.WebApi.Controllers;
@@ -23,23 +16,12 @@ namespace BikeShop.Identity.WebApi.Controllers;
 [Produces("application/json")]
 public class AuthController : ControllerBase
 {
-    private readonly JwtService _jwtService; // для генерации JWT-токенов
-    private readonly CookieService _cookieService; // для вставки рефреш токена в куки
-
-    private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
     private readonly IAuthService _authService;
 
-    public AuthController(JwtService jwtService, CookieService cookieService, IMapper mapper, IMediator mediator, IAuthService authService)
+    public AuthController(IAuthService authService)
     {
-        _jwtService = jwtService;
-        _cookieService = cookieService;
-        _mapper = mapper;
-        _mediator = mediator;
         _authService = authService;
     }
-
-
 
     /// <summary>
     /// Логин пользователя и создании сессии. Получение JWT-токенов доступа и рефреша.
@@ -57,38 +39,10 @@ public class AuthController : ControllerBase
     /// <response code="404">Пользователь с такими учетными данными не найден (user_not_found)</response>
     /// <response code="422">Невалидная модель (например не указан пароль)</response>
     [HttpPost("login")]
-    [ProducesResponseType(typeof(LoginResponseModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ValidationResultModel), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginRequestModel requestModel)
+    public async Task<LoginResponseModel> Login([FromBody] LoginRequestModel dto)
     {
-        // Если невалидная модель
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState);
-
-        // Получаю пользователя по данным логина
-        var getUserQuery = _mapper.Map<GetUserBySignInDataQuery>(requestModel);
-        var userData = await _mediator.Send(getUserQuery);
-
-        // Создаю/обновляю рефреш сессию для пользователя и получаю рефреш токен
-        var setSessionCommand = new SetRefreshSessionCommand { UserId = Guid.Parse(userData.User.Id) };
-        var refreshToken = await _mediator.Send(setSessionCommand);
-
-        // Добавляю рефреш токен в httpOnly cookie
-        _cookieService.AddRefreshCookieToResponse(HttpContext.Response, refreshToken);
-
-        // Генерирую access token для пользователя
-        var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
-
-        var userResponseModel = _mapper.Map<LoginResponseUserModel>(userData.User);
-        userResponseModel.Roles = userData.UserRoles;
-
-        return Ok(new LoginResponseModel
-        {
-            AccessToken = accessToken,
-            User = userResponseModel
-        });
+        var User = await _authService.Login(dto);
+        return await _authService.AppUserLoginTokensAsync(User, HttpContext);
     }
 
     /// <summary>
@@ -108,9 +62,6 @@ public class AuthController : ControllerBase
     /// <response code="422">Невалидная модель (например не указаны обязательные поля)</response>
     [HttpPost("register")]
     [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(ValidationResultModel), StatusCodes.Status422UnprocessableEntity)]
     public async Task<UserResponseWithRoles> Register(RegisterFullDTO dto)
     {
         return await _authService.Register(dto);
@@ -131,37 +82,10 @@ public class AuthController : ControllerBase
     /// <response code="404">Не найдена сессия на переданный refresh токен / Не найден пользователь, который привязан к сессии.</response>
     /// <response code="406">Не передан cookie X-Refresh-Token с рефреш токеном</response>
     [HttpPost("refresh")]
-    [ProducesResponseType(typeof(AccessTokenModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(IException), StatusCodes.Status406NotAcceptable)]
     public async Task<ActionResult<AccessTokenModel>> Refresh()
     {
-        // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
-        // if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-        //     throw new RefreshTokenException("Cookie refresh token not found")
-        //     {
-        //         Error = "cookie_refresh_token_not_found",
-        //         ErrorDescription = "Expected refresh token in httponly cookie does not exists"
-        //     };
-
-        var refreshToken = _cookieService.GetRefreshTokenFromCookie(Request);
-
-        // Обновляю рефреш сессию. Если пришедший рефреш токен невалидный - получим исключение
-        // Если все ок - получу всю сессию, в том числе id пользователя
-        var updateSessionCommand = new UpdateRefreshSessionCommand { RefreshToken = Guid.Parse(refreshToken) };
-        var refreshSession = await _mediator.Send(updateSessionCommand);
-
-        // Получаю пользователя этой сессии
-        var getUserQuery = new GetUserByIdQuery { UserId = refreshSession.UserId };
-        var userData = await _mediator.Send(getUserQuery);
-
-        // Добавляю рефреш токен в httpOnly cookie
-        _cookieService.AddRefreshCookieToResponse(HttpContext.Response, refreshSession.RefreshToken);
-
-        // Генерирую новый access токен и возвращаю его 
-        var accessToken = _jwtService.GenerateUserJwt(userData.User, userData.UserRoles);
-
-        return Ok(new AccessTokenModel { AccessToken = accessToken });
+        var token = await _authService.Refresh(HttpContext);
+        return Ok(new AccessTokenModel { AccessToken = token });
     }
 
     /// <summary>
@@ -179,28 +103,26 @@ public class AuthController : ControllerBase
     /// <response code="404">Не найдена сессия с переданным refresh токеном</response>
     /// <response code="406">Не передан cookie X-Refresh-Token с рефреш токеном</response>
     [HttpPost("logout")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
     public async Task<IActionResult> Logout()
     {
-        // Пытаюсь достать из куки рефреш токен. Если его нет - исключение
-        // if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-        //     throw new RefreshTokenException("Cookie refresh token not found")
-        //     {
-        //         Error = "cookie_refresh_token_not_found",
-        //         ErrorDescription = "Expected refresh token in httponly cookie does not exists"
-        //     };
-
-        string refreshToken = _cookieService.GetRefreshTokenFromCookie(Request);
-
-        // Удаляю сессию по рефреш токену из базы
-        var deleteCommand = new DeleteRefreshSessionByTokenCommand() { RefreshToken = Guid.Parse(refreshToken) };
-        await _mediator.Send(deleteCommand);
-
-        // Удаляю кукас
-        Response.Cookies.Delete("X-Refresh-Token");
-
+        await _authService.Logout(HttpContext);
         return Ok();
     }
+
+    [HttpPost("sociallogin")]
+    public async Task<LoginResponseModel> SocialLogin([FromBody] SocialLoginDTO dto)
+    {
+        var user = await _authService.SocialLogin(dto);
+        return await _authService.AppUserLoginTokensAsync(user, HttpContext);
+        
+    }
+
+    [HttpPost("socialregister")]
+    public async Task<LoginResponseModel> SocialRegister(SocialRegisterDTO dto)
+    {
+        var User = await _authService.SocialRegister(dto);
+
+        return await _authService.AppUserLoginTokensAsync(User, HttpContext);
+    }
+
 }

@@ -31,6 +31,7 @@
         display: flex;
         flex-direction: column;
         max-height: 80px;
+        flex-grow: 1;
 
         .m_data_name {
           font-size: 15px;
@@ -139,22 +140,22 @@
 
       .m_desc {
         word-break: break-word;
-        max-width: 100%;
-        //width: 80%;
+
         border-right: 3px white solid;
         border-left: 3px white solid;
         padding: 5px;
 
         font-size: 12px;
         font-weight: 500;
+        width: 300px;
 
         overflow: auto;
       }
 
       .m_ind {
-        max-width: 20%;
         padding: 5px;
         max-height: 80px;
+        width: 250px;
 
         .m_ind_art {
 
