@@ -1,8 +1,10 @@
-﻿using BikeShop.Payments.Application.Interfaces;
+﻿using BikeShop.Payments.Application.Common.Errors;
+using BikeShop.Payments.Application.Interfaces;
 using BikeShop.Payments.Application.Refit;
 using BikeShop.Payments.Domain.DTO.Requests;
 using BikeShop.Payments.Domain.Entities;
-using BikeShop.Payments.Domain.Enumerables;
+using BikeShop.Payments.Domain.Enumerables.PaymentEnums;
+using BikeShop.Products.Application.Common.Errors;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
 using Microsoft.EntityFrameworkCore;
@@ -31,34 +33,43 @@ namespace BikeShop.Payments.Application.Services
 
         public async Task<List<Payment>> GetPayments(int limit)
         {
-            return await _context.Payments.OrderBy(n=>n.CreatedAt).Take(limit).ToListAsync();
+            return await _context.Payments.OrderByDescending(n=>n.CreatedAt).Take(limit).ToListAsync();
         }
 
         public async Task<Payment> NewPayment(CreatePayment dto)
         {
+            var currency = await _context.Currencies.FindAsync(dto.Payment.CurrencyId);
+            if (currency == null) throw CurrencyError.CurrencyNotFound;
+
             var payment = new Payment
             {
                 ShopId = dto.ShopId,
-                CurrencyId = dto.CurrencyId,
+                CurrencyId = currency.Id,
+                TotalInCurrency = dto.Payment.Amount * currency.Coefficient,
+                Source = dto.Source, 
+                Type = dto.Payment.PaymentType,
                 Target = dto.Target,
-                Card = dto.Card,
-                Cash = dto.Cash,
-                BankCount = dto.BankCount,
                 ClientId = dto.ClientId,
-                PersonalBalance = dto.PersonalBalance,
                 TargetId = dto.TargetId,
-                Total = dto.BankCount + dto.Cash + dto.Card + dto.PersonalBalance,
+                Total = dto.Payment.Amount,
                 UserId = dto.UserId,
             };
 
-            if(dto.Target == PaymentTarget.Cashbox || dto.Target == PaymentTarget.Workshop || dto.Target == PaymentTarget.ReplenishBalance)
+            if(dto.Source == PaymentSource.Shop.ToString())
             {
-                if(dto.Card != 0 || dto.Cash != 0)
-                await _shopClient.Action(dto.ShopId, dto.Target, dto.TargetId, dto.Cash, dto.Card);
+                if (dto.ShopId == null) throw PaymentError.SourceShopWithoutShopId;
 
-                if (dto.PersonalBalance != 0)
+                if (dto.Payment.PaymentType != PaymentType.UserBalance.ToString())
                 {
-                    await _identityClient.EditBalance(dto.ClientId, dto.PersonalBalance * -1, true);
+                    await _shopClient.Action((int)dto.ShopId, dto.Target, dto.TargetId, 
+                        dto.Payment.PaymentType ==  PaymentType.Cash.ToString() ? dto.Payment.Amount:0,
+                        (dto.Payment.PaymentType == PaymentType.Card.ToString() || dto.Payment.PaymentType == PaymentType.Terminal.ToString()) ? dto.Payment.Amount : 0);
+                }
+
+                if (dto.Payment.PaymentType == PaymentType.UserBalance.ToString())
+                {
+                    if (dto.ClientId == null) throw PaymentError.UserBalanceWithoutClientId;
+                    await _identityClient.EditBalance((Guid)dto.ClientId, dto.Payment.Amount * -1, true);
                 }
             }
 

@@ -13,12 +13,34 @@ interface p {
     getStatusString: (status: string) => { s: string, style: {} }
     getDeliveryString: (status: string) => string
     collected: (id: number) => void
+    shipped: (id: number) => void
+    delivered: (id: number) => void
     currentOrder: OrderWithProducts | null
     setCurrentOrder: (v: OrderWithProducts) => void
 }
 
 
 const useOrderManager = create<p>()(persist(devtools(immer((set, get) => ({
+    delivered: (id) => {
+        OrderApi.Delivered(LocalStorage.userId()!, id).then(r => {
+            let data = get().orders.map(n => {
+                if (n.order.id === r.data.order.id) return r.data
+                return n
+            })
+            console.log('afterUpdate:', data)
+            set({orders: data})
+        })
+    },
+    shipped: (id) => {
+        OrderApi.Shipped(LocalStorage.userId()!, id).then(r => {
+            let data = get().orders.map(n => {
+                if (n.order.id === r.data.order.id) return r.data
+                return n
+            })
+            console.log('afterUpdate:', data)
+            set({orders: data})
+        })
+    },
     setCurrentOrder: (v) => set({currentOrder: v}),
     currentOrder: null,
     collected: (id) => {

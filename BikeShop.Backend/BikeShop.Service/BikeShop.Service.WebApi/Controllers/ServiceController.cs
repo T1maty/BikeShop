@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
+using BikeShop.Service.Domain.DTO;
 using BikeShop.Service.Domain.DTO.Response;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.Service;
@@ -86,9 +87,9 @@ public class ServiceController : ControllerBase
         return await _serviceService.UpdateStatus(status, id);
     }
     [HttpPut("endservice")]
-    public async Task<ServiceWithProductsWorksDTO> EndService([FromQuery] int id, decimal cash, decimal bankCount, decimal card, decimal personalBalance, bool isFiscal)
+    public async Task<ServiceWithProductsWorksDTO> EndService(ServiceEndDTO dto)
     {
-        return await _serviceService.EndService(id, cash, bankCount, card, personalBalance, isFiscal);
+        return await _serviceService.EndService(dto);
     }
     [HttpPost("create")]
     public async Task<ServiceWithProductsWorksDTO> Create([FromBody] CreateServiceModel model)

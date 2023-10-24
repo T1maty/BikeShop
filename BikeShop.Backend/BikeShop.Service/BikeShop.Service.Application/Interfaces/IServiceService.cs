@@ -1,4 +1,5 @@
 ﻿using BikeShop.Service.Application.DTO;
+using BikeShop.Service.Domain.DTO;
 using BikeShop.Service.Domain.DTO.Response;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.WebApi.Models.Service;
@@ -15,5 +16,5 @@ public interface IServiceService
 
     public Task<List<ServiceWork>> GetWorksByMaster(Guid? userId, DateTime Start, DateTime Finish);
     public Task<List<ServiceProduct>> GetProductsByMaster(Guid? userId, DateTime Start, DateTime Finish);
-    public Task<ServiceWithProductsWorksDTO> EndService(int id, decimal cash, decimal bankCount, decimal card, decimal personalBalance, bool isFiscal);
+    public Task<ServiceWithProductsWorksDTO> EndService(ServiceEndDTO dto);
 }

@@ -125,5 +125,18 @@ namespace BikeShop.Payments.Application.Common.Errors
                 };
             }
         }
+
+        public static BaseError PaymentAlreadyExist
+        {
+            get
+            {
+                return new BaseError
+                {
+                    ReasonField = "isPayed",
+                    Error = "PaymentAlreadyExist",
+                    ErrorDescription = "This order is already payed, you cant pay for it again"
+                };
+            }
+        }
     }
 }

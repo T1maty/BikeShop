@@ -192,8 +192,8 @@ namespace BikeShop.Acts.Application.Services
                 model.Client = client.lastName + " " + client.firstName + " " + client.patronymic;
             }
 
-            model.WithoutDisc = (bill.bill.Total-bill.bill.Discount).ToString("0.00");
-            model.Disc = bill.bill.Discount.ToString("0.00");
+            model.WithoutDisc = (bill.bill.Total-bill.bill.TotalDiscount).ToString("0.00");
+            model.Disc = bill.bill.TotalDiscount.ToString("0.00");
             model.Total = bill.bill.Total.ToString("0.00");
 
             var tamplate = await CreateActHTML(model);

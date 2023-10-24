@@ -7,6 +7,7 @@ using BikeShop.Payments.Domain.DTO.Requests.Order;
 using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Payments.Domain.Entities;
 using BikeShop.Payments.Domain.Enumerables;
+using BikeShop.Payments.Domain.Enumerables.PaymentEnums;
 using BikeShop.Products.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -24,17 +25,43 @@ namespace BikeShop.Payments.Application.Services
         private readonly IApplicationDbContext _context;
         private readonly IProductClient _productClient;
         private readonly IIdentityClient _identityClient;
+        private readonly IPaymentService _paymentService;
 
-        public OrderService(IApplicationDbContext context, IProductClient productClient, IIdentityClient identityClient)
+        public OrderService(IApplicationDbContext context, IProductClient productClient, IIdentityClient identityClient, IPaymentService paymentService)
         {
             _context = context;
             _productClient = productClient;
             _identityClient = identityClient;
+            _paymentService = paymentService;
         }
 
-        public Task<OrderWithProducts> AddPayment(Guid UserId, int OrderId)
+        public async Task<OrderWithProducts> AddPayment(AddOrderPaymentDTO dto)
         {
-            throw new NotImplementedException();
+            var UserIds = new List<string>();
+            if (dto.UserId != null) UserIds.Add(dto.UserId.ToString());
+            if (dto.ClientId != null) UserIds.Add(dto.ClientId.ToString());
+            var users = await _identityClient.GetDictionary(UserIds);
+            if (users.Count < 1) throw OrderErrors.UserNotFount;
+
+            var order = await _context.Orders.FindAsync(dto.OrderId);
+            if (order == null) throw OrderErrors.OrderNotFount;
+            if (order.IsPayed) throw OrderErrors.PaymentAlreadyExist;
+
+            order.UpdatedAt = DateTime.Now;
+
+            if(dto.UserId!=null) order.UserUpdated = dto.UserId;
+            else order.UserUpdated = dto.ClientId;
+
+
+            var p = await _paymentService.NewPayment(new Domain.DTO.Requests.CreatePayment { Payment = dto.Payment, TargetId = order.Id, Target= PaymentTarget.Order.ToString(), ClientId = dto.ClientId, ShopId = order.ShopId, Source = PaymentSource.Shop.ToString(), UserId = dto.UserId  });
+            order.PaymentId = p.Id;
+            order.IsPayed = true;
+
+            users.TryGetValue(dto.UserId != null ? dto.UserId.ToString():"", out var u);
+            await UpdateOrderStatus(order.Id, u);
+
+            await _context.SaveChangesAsync(new CancellationToken());
+            return await GetById(order.Id);
         }
 
         public Task<OrderWithProducts> Cancel(Guid UserId, int OrderId)
@@ -460,7 +487,7 @@ namespace BikeShop.Payments.Application.Services
             return await GetById(order.Id);
         }
 
-        private async Task UpdateOrderStatus(int OrderId, User user)
+        private async Task UpdateOrderStatus(int OrderId, User? user)
         {
             var Order = await _context.Orders.FindAsync(OrderId);
             if (Order == null) throw OrderErrors.OrderNotFount;

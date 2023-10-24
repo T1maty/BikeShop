@@ -1,6 +1,7 @@
 ﻿using BikeShop.Payments.Application.Interfaces;
 using BikeShop.Payments.Domain.DTO.Refit.Checkbox;
 using BikeShop.Payments.Domain.DTO.Requests;
+using BikeShop.Payments.Domain.DTO.Requests.Payment;
 using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Payments.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -44,9 +45,9 @@ namespace BikeShop.Payments.WebApi.Controllers
         }
 
         [HttpPost("replenishuserbalance")]
-        public async Task<Payment> ReplenishUserBalance(PaymentDTO dto)
+        public async Task<Payment> ReplenishUserBalance(ReplenishUserBalanceDTO dto)
         {
-            return await _interactionService.ReplenishUserBalance(dto);
+            return await _interactionService.ReplenishUserBalance(dto.Payment, dto.ClientId, Domain.Enumerables.PaymentEnums.PaymentSource.Shop, dto.UserId, dto.ShopId);
         }
 
         [HttpGet("test")]

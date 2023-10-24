@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using BikeShop.Products.Application.Common.Errors;
+using BikeShop.Service.Application.Common.Errors;
 using BikeShop.Service.Application.DTO;
 using BikeShop.Service.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
+using BikeShop.Service.Domain.DTO;
 using BikeShop.Service.Domain.DTO.Response;
 using BikeShop.Service.Domain.Entities;
 using BikeShop.Service.Domain.Enums;
@@ -409,21 +411,14 @@ public class ServiceService : IServiceService
 
     public async Task<ServiceWithProductsWorksDTO> UpdateStatus(string status, int id)
     {
-        if (StatusDict.Get().ContainsKey(status) && status != "Ended")
-        {
-            var service = await _context.Services.FindAsync(id);
-            service.Status = status;
+        if (!Enum.IsDefined(typeof(Status), status)) throw ServiceErrors.StatusNotFound;
+        if (status == Status.Ended.ToString()) throw ServiceErrors.UnsupportedActionForStatus;
 
-            await _context.SaveChangesAsync(new CancellationToken());
-        }
-        else
-        {
-            throw Errors.StatusNotFound;
-        }
+        var service = await _context.Services.FindAsync(id);
+        service.Status = status;
+        await _context.SaveChangesAsync(new CancellationToken());
 
-        var r = await GetServiceById(id);
-
-        return r;
+        return await GetServiceById(id);
     }
 
     private async Task UpdateReservation(List<ProductQuantitySmplDTO> OldProducts, List<ServiceProduct> NewProducts, int storageId)
@@ -434,33 +429,24 @@ public class ServiceService : IServiceService
         await _productsClient.UpdateReservationProducts(data, storageId);
     }
 
-    public async Task<ServiceWithProductsWorksDTO> EndService(int id, decimal cash, decimal bankCount, decimal card, decimal personalBalance, bool isFiscal)
+    public async Task<ServiceWithProductsWorksDTO> EndService(ServiceEndDTO dto)
     {
-        
-        var service = await _context.Services.FindAsync(id);
+        var service = await _context.Services.FindAsync(dto.ServiceId);
+        if (service == null) throw ServiceErrors.ServiceNotFound;
+        if (service.Status != Status.Ready.ToString()) throw ServiceErrors.UnsupportedActionForStatus;
 
-        if (service.Status == "Ready")
-        {
-            service.Status = "Ended";
-            service.UpdatedAt = DateTime.Now;
-            var storageId = await _shopClient.GetStorageId(service.ShopId);
-            var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == id).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
-            await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
-            await _productsClient.AddProductsToStorage(oldServiceProducts.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), storageId, "Service", id);
+        service.Status = Status.Ended.ToString();
+        service.UpdatedAt = DateTime.Now;
+        var storageId = await _shopClient.GetStorageId(service.ShopId);
+        var oldServiceProducts = await _context.ServiceProducts.Where(n => n.ServiceId == dto.ServiceId).Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity }).ToListAsync();
+        await UpdateReservation(oldServiceProducts, new List<ServiceProduct>(), storageId);
+        await _productsClient.AddProductsToStorage(oldServiceProducts.Select(n => new ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), storageId, "Service", dto.ServiceId);
 
-            var payment = new CreatePayment { BankCount = bankCount, Card = card, Cash = cash, ClientId = service.ClientId, CurrencyId = 1, PersonalBalance = personalBalance, ShopId = service.ShopId, Target = "Workshop", TargetId = service.Id, UserId = service.UserCreatedId };
-            await _paymentsClient.NewPayment(payment);
-            await _context.SaveChangesAsync(new CancellationToken());
-        }
-        else
-        {
-            throw Errors.StatusNotFound;
-        }
-        
+        var payment = new CreatePayment { Payment = dto.Payment, ClientId = service.ClientId, ShopId = service.ShopId, Source = "Shop", Target = "Workshop", TargetId = service.Id, UserId = dto.UserId };
+        await _paymentsClient.NewPayment(payment);
+        await _context.SaveChangesAsync(new CancellationToken());
 
-
-
-        var r = await GetServiceById(id);
+        var r = await GetServiceById(dto.ServiceId);
         return r;
     }
 }

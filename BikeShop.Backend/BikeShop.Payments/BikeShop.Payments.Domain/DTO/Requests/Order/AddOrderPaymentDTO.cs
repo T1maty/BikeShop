@@ -5,16 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BikeShop.Payments.Domain.DTO.Requests
+namespace BikeShop.Payments.Domain.DTO.Requests.Order
 {
-    public class NewBillDTO
+    public class AddOrderPaymentDTO
     {
-        public int ShopId { get; set; }
-        public string Description { get; set; }
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
         public Guid? ClientId { get; set; }
-
-        public List<BillProductDTO> Products { get; set; }
+        public int OrderId { get; set; }
         public AddPaymentDTO Payment { get; set; }
     }
 }

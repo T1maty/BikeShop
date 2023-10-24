@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace BikeShop.Payments.Domain.DTO.Requests
 {
-    public class NewBillDTO
+    public class ReplenishUserBalanceDTO
     {
-        public int ShopId { get; set; }
-        public string Description { get; set; }
-        public Guid UserId { get; set; }
-        public Guid? ClientId { get; set; }
-
-        public List<BillProductDTO> Products { get; set; }
         public AddPaymentDTO Payment { get; set; }
-    }
+        public Guid ClientId { get; set; }
+        public Guid UserId { get; set; }
+        public int ShopId { get; set; }
+}
 }

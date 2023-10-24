@@ -11,5 +11,6 @@ namespace BikeShop.Payments.Domain.DTO.Responses
     {
         public Bill bill { get; set; }
         public List<BillProduct> products { get; set; }
+        public Payment Payment { get; set; }
     }
 }

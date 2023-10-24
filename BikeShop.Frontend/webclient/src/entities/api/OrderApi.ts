@@ -28,4 +28,14 @@ export const OrderApi = {
             $api.post<OrderWithProducts>(`/order/collected?UserId=${userId}&OrderId=${orderId}`)
         )
     },
+    Shipped(userId: string, orderId: number): Promise<AxiosResponse<OrderWithProducts>> {
+        return (
+            $api.post<OrderWithProducts>(`/order/shipped?UserId=${userId}&OrderId=${orderId}`)
+        )
+    },
+    Delivered(userId: string, orderId: number): Promise<AxiosResponse<OrderWithProducts>> {
+        return (
+            $api.post<OrderWithProducts>(`/order/delivered?UserId=${userId}&OrderId=${orderId}`)
+        )
+    },
 }

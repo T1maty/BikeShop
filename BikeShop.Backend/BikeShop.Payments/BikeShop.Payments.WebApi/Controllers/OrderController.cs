@@ -1,4 +1,5 @@
 ﻿using BikeShop.Payments.Application.Interfaces;
+using BikeShop.Payments.Domain.DTO.Refit;
 using BikeShop.Payments.Domain.DTO.Requests.Order;
 using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Payments.Domain.Entities;
@@ -61,9 +62,10 @@ namespace BikeShop.Payments.WebApi.Controllers
         }
 
         [HttpPost("pay")]
-        public async Task<OrderWithProducts> AddPayment(Guid UserId, int OrderId)
+        public async Task<OrderWithProducts> AddPayment(AddOrderPaymentDTO dto)
         {
-            throw new NotImplementedException();
+            return await _orderService.AddPayment(dto);
+
         }
 
         [HttpPost("collected")]

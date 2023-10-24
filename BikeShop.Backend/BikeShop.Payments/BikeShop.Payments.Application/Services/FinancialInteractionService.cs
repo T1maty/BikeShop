@@ -3,9 +3,10 @@ using BikeShop.Payments.Application.Interfaces;
 using BikeShop.Payments.Application.Refit;
 using BikeShop.Payments.Domain.DTO.Refit.Checkbox;
 using BikeShop.Payments.Domain.DTO.Requests;
+using BikeShop.Payments.Domain.DTO.Requests.Payment;
 using BikeShop.Payments.Domain.DTO.Responses;
 using BikeShop.Payments.Domain.Entities;
-using BikeShop.Payments.Domain.Enumerables;
+using BikeShop.Payments.Domain.Enumerables.PaymentEnums;
 using BikeShop.Products.Application.Interfaces;
 using BikeShop.Service.Application.RefitClients;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,8 @@ namespace BikeShop.Payments.Application.Services
         {
             var bills = await _context.Bills.Where(n=>n.ShopId == ShopId).Take(Take).ToListAsync();
             var prods = await _context.BillProducts.Where(n => bills.Select(m => m.Id).Contains(n.BillId)).ToListAsync();
-            return bills.Select(n => new BillWithProducts { bill = n, products = prods.Where(m => m.BillId == n.Id).ToList() }).ToList();
+            var payments = await _context.Payments.Where(n => bills.Select(h => h.PaymentId).Contains(n.Id)).ToDictionaryAsync(n=>n.Id, n=>n);
+            return bills.Select(n => new BillWithProducts { bill = n, products = prods.Where(m => m.BillId == n.Id).ToList(), Payment = payments[n.PaymentId] }).ToList();
         }
 
         public async Task<List<BillWithProducts>> GetBillsByUser(Guid? UserId, DateTime Start, DateTime Finish)
@@ -58,46 +60,62 @@ namespace BikeShop.Payments.Application.Services
 
         public async Task<BillWithProducts> NewBill(NewBillDTO dto)
         {
-            var currencies = await _context.Currencies.ToListAsync();
-            var currency = currencies.Where(n => n.Id == dto.CurrencyId).FirstOrDefault();
+            var currency = await _context.Currencies.FindAsync(dto.Payment.CurrencyId);
+            var Prods = (await _productClient.GetProductsByIdsArray(dto.Products.Select(n=>n.ProductId).ToList())).ToDictionary(n=>n.Id,n=>n);
             var products = new List<BillProduct>();
+            
             foreach (var product in dto.Products)
             {
-                var prc = product.Price;
-                if (dto.CurrencyId != product.CurrencyId)
-                {
-                    var inbase = product.Price * (1 / currencies.Where(n => n.Id == product.CurrencyId).FirstOrDefault().Coefficient);
-                    prc = inbase * currency.Coefficient;
-                }
+                var P = Prods[product.ProductId];
                 products.Add(new BillProduct
                 {
-                    CatalogKey = product.CatalogKey,
-                    CurrencySymbol = currency.Symbol,
+                    CatalogKey = P.CatalogKey,
                     Description = product.Description,
-                    Discount = product.Discount,
-                    Name = product.Name,
-                    CurrencyId = dto.CurrencyId,
+                    Discount = 0,
+                    Name = P.Name,
                     ProductId = product.ProductId,
 
-                    Price = prc,
+                    Price = P.RetailPrice,
                     Quantity = product.Quantity,
-                    QuantityUnitName = product.QuantityUnitName,
-                    SerialNumber = product.SerialNumber,
-                    Total = product.Quantity * prc - product.Discount
+                    QuantityUnitName = P.QuantityUnitName,
+                    SerialNumber = "",
+                    Total = product.Quantity * P.RetailPrice - 0,//Disc
+                    
+                    DiscountInCurrency= 0, 
+                    PriceInCurrency= P.RetailPrice * currency.Coefficient, 
+                    TotalInCurrency =product.Quantity * P.RetailPrice * currency.Coefficient - 0//Disc
                 }); ;
             }
 
             var price = products.Select(n => n.Price * n.Quantity).Sum();
             var discount = products.Sum(n => n.Discount);
+            var total = price - discount;
 
             var bill = new Bill {
                 ClientId = dto.ClientId,
-                CurrencyId = dto.CurrencyId,
+                CurrencyId = currency.Id,
                 Description = dto.Description,
                 ShopId = dto.ShopId,
                 UserId = dto.UserId,
+                CurrencyName = currency.Name, 
+                CurrencySymbol = currency.Symbol,
+                FiscalId = null,
+
                 Price = price,
-                Discount = discount,
+                PriceInCurrency = price * currency.Coefficient,
+
+                DiscountId = 0,
+
+                DiscountBill = 0,
+                DiscountBillInCurrency = 0,
+
+                DiscountProducts = 0,
+                DiscountProductsInCurrency = 0,
+
+                TotalDiscountInCurrency = 0, 
+                TotalDiscount = 0,
+
+                TotalInCurrency = total * currency.Coefficient,
                 Total = price - discount,
             };
 
@@ -106,58 +124,59 @@ namespace BikeShop.Payments.Application.Services
 
             products.ForEach(n => n.BillId = bill.Id);
             await _context.BillProducts.AddRangeAsync(products);
-            await _paymentService.NewPayment(new CreatePayment { ShopId = dto.ShopId, UserId = dto.UserId, Card = dto.Card, Cash = dto.Cash, ClientId = dto.ClientId, BankCount = dto.BankCount, CurrencyId = dto.CurrencyId, PersonalBalance = dto.PersonalBalance, Target = PaymentTarget.Cashbox, TargetId = bill.Id });
+            var payment = await _paymentService.NewPayment(new CreatePayment { ShopId = dto.ShopId, UserId = dto.UserId, ClientId = dto.ClientId,  Target = PaymentTarget.Cashbox.ToString(), TargetId = bill.Id,
+             Payment = dto.Payment, Source = PaymentSource.Shop.ToString()});
+            bill.PaymentId = payment.Id;
             await _productClient.AddProductsToStorage(products.Select(n => new Acts.Domain.Refit.ProductQuantitySmplDTO { ProductId = n.ProductId, Quantity = n.Quantity * -1 }).ToList(), await _shopClient.GetStorageId(dto.ShopId), "Bill", bill.Id);
             await _context.SaveChangesAsync(new CancellationToken());
 
-            if (dto.IsFiscal == null || dto.IsFiscal == true)
+            if (dto.Payment.IsFiscal == true)
             {
-                try
-                {
-                    var goods = dto.Products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = (int)(n.Price * 100 * currency.Coefficient) } }).ToList();
-                    string type = "CASHLESS";
-                    if (dto.Cash == 0) type = "CASH";
-                    var payment = new Pymnt { value = goods.Select(n => (int)(n.quantity/1000 * n.good.price)).Sum(), label = "Pay", type = type };
-                    var receipt = new Receipt { payments = new List<Pymnt> { payment }, goods = goods, id = bill.UUID };
-
-                    var settings = await _context.CheckboxSettings.FirstOrDefaultAsync();
-
-                    var check = await _checkbox.CheckSignature(settings.BearerToken);
-
-                    if (check.StatusCode == HttpStatusCode.Unauthorized || check.StatusCode == HttpStatusCode.Forbidden) settings.BearerToken = await LoginToCheckbox();
-                    else if (check.StatusCode != HttpStatusCode.OK) throw new Exception();
-
-                    SellResponse res;
-                    try
-                    {
-                        var data = 
-                        res = await _checkbox.Sell(receipt, settings.BearerToken);
-                    }
-                    catch (Exception e)
-                    {
-                        await _checkbox.CreateShift(settings.Key, settings.BearerToken);
-                        res = await _checkbox.Sell(receipt, settings.BearerToken);
-                    }
-
-                    var qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
-                    while (qr.StatusCode == HttpStatusCode.FailedDependency)
-                    {
-                        await Task.Delay(1000);
-                        qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
-                    }
-                    bill.FiscalId = res.id;
-                    bill.QRCode = Convert.ToBase64String(await qr.Content.ReadAsByteArrayAsync());
-                    await _context.SaveChangesAsync(new CancellationToken());
-                }
-                catch (Exception e)
-                {
-                        var  dsds = e;
-                    
-                }
-                
+                var goods = products.Select(n => new GoodModel { quantity = (int)(n.Quantity * 1000), good = new Good { code = n.ProductId.ToString(), name = n.Name, price = (int)(n.Price * 100 * currency.Coefficient) } }).ToList();
+                var res = await CheckboxFiscalize(goods, dto.Payment.PaymentType == PaymentType.Cash.ToString() ? true : false, bill.UUID);
+                bill.FiscalId = res.id;
+                //bill.QRCode = Convert.ToBase64String(await qr.Content.ReadAsByteArrayAsync());
             }
 
             return new BillWithProducts { bill = bill, products = products};
+        }
+
+        private async Task<SellResponse> CheckboxFiscalize(List<GoodModel> goods, bool isCash, Guid UUID)
+        {
+            string type = "CASHLESS";
+            if (isCash) type = "CASH";
+            var payment = new Pymnt { value = goods.Select(n => (int)(n.quantity / 1000 * n.good.price)).Sum(), label = "Pay", type = type };
+            var receipt = new Receipt { payments = new List<Pymnt> { payment }, goods = goods, id = UUID };
+
+            var settings = await _context.CheckboxSettings.FirstOrDefaultAsync();
+
+            var check = await _checkbox.CheckSignature(settings.BearerToken);
+
+            if (check.StatusCode == HttpStatusCode.Unauthorized || check.StatusCode == HttpStatusCode.Forbidden) settings.BearerToken = await LoginToCheckbox();
+            else if (check.StatusCode != HttpStatusCode.OK) throw new Exception();
+
+            SellResponse res;
+            try
+            {
+                res = await _checkbox.Sell(receipt, settings.BearerToken);
+                return res;
+            }
+            catch (Exception e)
+            {
+                await _checkbox.CreateShift(settings.Key, settings.BearerToken);
+                res = await _checkbox.Sell(receipt, settings.BearerToken);
+                return res;
+
+            }
+
+            /*
+            var qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
+            while (qr.StatusCode == HttpStatusCode.FailedDependency)
+            {
+                await Task.Delay(1000);
+                qr = await _checkbox.GerQRCode(res.id, settings.BearerToken);
+            }
+            */
         }
 
         public async Task<string> LoginToCheckbox()
@@ -181,10 +200,12 @@ namespace BikeShop.Payments.Application.Services
             return data;
         }
 
-        public async Task<Payment> ReplenishUserBalance(PaymentDTO dto)
+        public async Task<Payment> ReplenishUserBalance(AddPaymentDTO dto, Guid ClientId, PaymentSource Source, Guid? UserId, int ShopId =0, int TargetId = 0)
         {
-            var p = new CreatePayment { BankCount = dto.BankCount, Card = dto.Card, Cash = dto.Cash, ClientId = dto.ClientId, CurrencyId = 1, PersonalBalance = dto.PersonalBalance, ShopId = dto.ShopId, UserId = dto.UserId, Target = PaymentTarget.ReplenishBalance, TargetId = 0 };
-            await _identityClient.EditBalance(dto.ClientId, dto.Card + dto.Cash + dto.PersonalBalance + dto.BankCount, true);
+            var p = new CreatePayment {
+             ClientId = ClientId, Payment = dto, Source = Source.ToString(), ShopId = ShopId, Target = PaymentTarget.ReplenishBalance.ToString(), TargetId = TargetId, UserId = UserId
+            };
+            await _identityClient.EditBalance(ClientId, dto.Amount, true);
             return await _paymentService.NewPayment(p);
         }
 
@@ -192,7 +213,8 @@ namespace BikeShop.Payments.Application.Services
         {
             var bill = await _context.Bills.FindAsync(BillId);
             var billProduct = await _context.BillProducts.Where(n => n.BillId == BillId).ToListAsync();
-            return new BillWithProducts { bill = bill, products = billProduct };
+            var payment = await _context.Payments.FindAsync(bill.PaymentId);
+            return new BillWithProducts { bill = bill, products = billProduct, Payment = payment };
         }
     }
 }
